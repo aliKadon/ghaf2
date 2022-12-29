@@ -1,0 +1,112 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart' as dio;
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/data/api/controllers/seller/submit_form_api_controller.dart';
+import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+class SubmitFormViewGetXController extends GetxController with Helpers {
+  // notifiable.
+  File? _licencePDFFile;
+
+  File? get licencePDFFile => _licencePDFFile;
+
+  set licencePDFFile(File? value) {
+    _licencePDFFile = value;
+    update(['licencePDFFile']);
+  }
+
+  // constructor fields.
+  final BuildContext context;
+
+  // constructor.
+  SubmitFormViewGetXController({
+    required this.context,
+  });
+
+  // vars.
+  late final SubmitFormApiController _submitFormApiController =
+      SubmitFormApiController();
+  late final GlobalKey<FormState> formKey = GlobalKey();
+  late final LatLng latLng = const LatLng(31.5180304, 34.430782);
+  LatLng? selectedLatLng;
+
+  // fields.
+  late String storeName;
+  late String phoneNumber;
+  late String website;
+  late String socialMediaAccount;
+  late bool isInUAE;
+  late String businessLicenceNumber;
+  late int numberOfBranches;
+  late String addressName;
+  late dio.MultipartFile licencePDF;
+
+  // submit form.
+  void submitForm() async {
+    try {
+      if (!formKey.currentState!.validate()) return;
+      formKey.currentState!.save();
+      if (selectedLatLng == null) {
+        showSnackBar(context,
+            message: 'Please select address on map', error: true);
+        return;
+      }
+      if (licencePDFFile == null) {
+        showSnackBar(context, message: 'Licence PDF is required', error: true);
+        return;
+      }
+      showLoadingDialog(context: context, title: 'Submitting');
+      final ApiResponse apiResponse = await _submitFormApiController.submitForm(
+        phoneNumber: phoneNumber,
+        addressLat: selectedLatLng!.latitude.toString(),
+        addressLong: selectedLatLng!.longitude.toString(),
+        addressName: addressName,
+        businessLicenceNumber: businessLicenceNumber,
+        isInUAE: isInUAE,
+        numberOfBranches: numberOfBranches,
+        socialMediaAccount: socialMediaAccount,
+        storeName: storeName,
+        website: website,
+        licencePDF: await dio.MultipartFile.fromFile(licencePDFFile!.path),
+      );
+      if (apiResponse.status == 200) {
+        // success.
+        Navigator.pop(context);
+        showSnackBar(context, message: apiResponse.message, error: false);
+        Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
+      } else {
+        // failed.
+        debugPrint('failed : ${apiResponse.message}');
+        Navigator.pop(context);
+        showSnackBar(context, message: apiResponse.message, error: true);
+      }
+    } on DioError catch (error) {
+      // error.
+      debugPrint(error.response?.data.toString());
+      Navigator.pop(context);
+      showSnackBar(context, message: error.toString(), error: true);
+    } catch (error) {
+      // error.
+      debugPrint('error : ${error.toString()}');
+      Navigator.pop(context);
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  // pick pdf file.
+  void pickPdfFile() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+    if (result != null) {
+      licencePDFFile = File(result.files.single.path!);
+    }
+  }
+}

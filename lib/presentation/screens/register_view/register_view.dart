@@ -1,0 +1,295 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+
+import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
+
+class RegisterView extends StatefulWidget {
+  const RegisterView({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> with Helpers {
+  // controller.
+  late final RegisterViewGetXController _registerViewGetXController =
+      Get.find<RegisterViewGetXController>();
+
+  // dispose.
+  @override
+  void dispose() {
+    Get.delete<RegisterViewGetXController>();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _registerViewGetXController.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: AppSize.s9,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.getting_started,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                ),
+                SizedBox(
+                  height: AppSize.s31,
+                ),
+                Image.asset(
+                  ImageAssets.logo2,
+                  fit: BoxFit.fill,
+                  height: AppSize.s92,
+                  width: AppSize.s82,
+                ),
+                SizedBox(
+                  height: AppSize.s32,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        hint: 'First Name',
+                        validator: (value) {
+                          if (value == null || value.isEmpty)
+                            return 'First name is required';
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _registerViewGetXController.firstName = value;
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: AppTextField(
+                        hint: 'Last Name',
+                        validator: (value) {
+                          if (value == null || value.isEmpty)
+                            return 'Last name is required';
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _registerViewGetXController.lastName = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                AppTextField(
+                  hint: AppLocalizations.of(context)!.user_name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Username is required';
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _registerViewGetXController.userName = value;
+                  },
+                ),
+                AppTextField(
+                  hint: AppLocalizations.of(context)!.hint_email_phone,
+                  textInputType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Email is required';
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _registerViewGetXController.email = value;
+                  },
+                ),
+                AppTextField(
+                  hint: AppLocalizations.of(context)!.hint_password,
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Password is required';
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _registerViewGetXController.password = value;
+                  },
+                ),
+                AppTextField(
+                  hint: 'Confirm Password',
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Confirm password is required';
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _registerViewGetXController.confirmPassword = value;
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppPadding.p16,
+                  ),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    style: getMediumStyle(
+                      color: ColorManager.black,
+                      fontSize: FontSize.s14,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.phone_number,
+                      hintStyle: getMediumStyle(
+                        color: ColorManager.hintTextFiled,
+                      ),
+                      filled: false,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: AppPadding.p18, horizontal: AppPadding.p4),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.r10),
+                        borderSide: BorderSide(
+                          width: AppSize.s1,
+                          color: ColorManager.grey,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.r10),
+                        borderSide: BorderSide(
+                          width: AppSize.s1,
+                          color: ColorManager.grey,
+                        ),
+                      ),
+                      prefixIcon: IntrinsicHeight(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: AppSize.s15,
+                            ),
+                            Image.asset(
+                              ImageAssets.uaeFlag,
+                              fit: BoxFit.fill,
+                              height: AppSize.s34,
+                              width: AppSize.s34,
+                            ),
+                            SizedBox(
+                              width: AppSize.s15,
+                            ),
+                            Container(
+                              height: double.infinity,
+                              width: AppSize.s1,
+                              color: ColorManager.grey,
+                            ),
+                            SizedBox(
+                              width: AppSize.s15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return 'Phone number is required';
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _registerViewGetXController.telephone = value;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s16,
+                ),
+                Visibility(
+                  visible: true,
+                  child: AppTextField(
+                    hint: AppLocalizations.of(context)!.referral_code,
+                    onSaved: (value) {
+                      _registerViewGetXController.referralCode = value;
+                    },
+                  ),
+                ),
+                AppTextField(
+                  textController: _registerViewGetXController
+                      .birthDateTextEditingController,
+                  onTap: () {
+                    _registerViewGetXController.selectBirthDate(
+                        context: context);
+                  },
+                  hint: AppLocalizations.of(context)!.date_of_birth,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.datetime,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Date of birth is required';
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _registerViewGetXController.referralCode = value;
+                  },
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: AppMargin.m16,
+                  ),
+                  width: double.infinity,
+                  height: AppSize.s55,
+                  child: ElevatedButton(
+                    onPressed: _registerViewGetXController.register,
+                    child: Text(
+                      AppLocalizations.of(context)!.sign_up,
+                      style: getSemiBoldStyle(
+                          color: ColorManager.white, fontSize: FontSize.s18),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s55,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.i_already_have_account,
+                        style: getRegularStyle(
+                            color: ColorManager.grey, fontSize: FontSize.s16),
+                      ),
+                      SizedBox(
+                        width: AppSize.s2,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.login,
+                        style: getExtraBoldStyle(
+                            color: ColorManager.primary,
+                            fontSize: FontSize.s16),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s16,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

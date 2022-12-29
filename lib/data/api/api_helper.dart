@@ -1,0 +1,18 @@
+import 'dart:io';
+
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+
+import '../../domain/model/api_response.dart';
+
+mixin ApiHelper {
+  ApiResponse get failedResponse =>
+      ApiResponse(message: 'something went wrong, try again!', status: 400);
+
+  Map<String, String> get headers {
+    return {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+      HttpHeaders.contentTypeHeader: 'application/json',
+      // HttpHeaders.acceptHeader: 'application/json; charset=UTF-8',
+    };
+  }
+}
