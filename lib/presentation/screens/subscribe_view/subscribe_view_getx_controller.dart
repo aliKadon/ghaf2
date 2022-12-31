@@ -9,7 +9,7 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 class SubscribeViewGetXController extends GetxController with Helpers {
   // vars.
   late final SubscriptionApiController _subscriptionApiController =
-      SubscriptionApiController();
+  SubscriptionApiController();
   late final AuthApiController _authApiController = AuthApiController();
 
   // constructor fields.
@@ -25,7 +25,7 @@ class SubscribeViewGetXController extends GetxController with Helpers {
     try {
       showLoadingDialog(context: context, title: 'Skipping');
       final ApiResponse subscripeAsFreeApiResponse =
-          await _subscriptionApiController.subscribeAsFree();
+      await _subscriptionApiController.subscribeAsFree();
       final ApiResponse profileApiResponse = await _authApiController.profile();
       if (subscripeAsFreeApiResponse.status == 200 &&
           profileApiResponse.status == 200) {
@@ -54,7 +54,7 @@ class SubscribeViewGetXController extends GetxController with Helpers {
     try {
       showLoadingDialog(context: context, title: 'Subscribing');
       final ApiResponse subscribeAsGhafGoldenApiResponse =
-          await _subscriptionApiController.subscribeAsGhafGolden();
+      await _subscriptionApiController.subscribeAsGhafGolden();
       final ApiResponse profileApiResponse = await _authApiController.profile();
       if (subscribeAsGhafGoldenApiResponse.status == 200 &&
           profileApiResponse.status == 200) {
@@ -83,7 +83,7 @@ class SubscribeViewGetXController extends GetxController with Helpers {
     try {
       showLoadingDialog(context: context, title: 'Canceling');
       final ApiResponse cancelSubscriptionApiResponse =
-          await _subscriptionApiController.cancelSubscription();
+      await _subscriptionApiController.cancelSubscription();
       final ApiResponse profileApiResponse = await _authApiController.profile();
       if (cancelSubscriptionApiResponse.status == 200 &&
           profileApiResponse.status == 200) {

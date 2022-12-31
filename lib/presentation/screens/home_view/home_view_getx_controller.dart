@@ -142,6 +142,6 @@ class HomeViewGetXController extends GetxController with Helpers {
 
   // on ghaf icon tapped.
   void onGhafIconTapped() {
-    Navigator.pushNamed(context, Routes.subscribeRoute);
+    Navigator.pushNamed(context, Routes.subscribeFromHomePage);
   }
 }

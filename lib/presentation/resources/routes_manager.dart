@@ -16,6 +16,7 @@ import 'package:ghaf_application/presentation/screens/forget_password_view/forge
 import 'package:ghaf_application/presentation/screens/forget_password_view/forgot_password_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view.dart';
 import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen.dart';
@@ -24,6 +25,7 @@ import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_view.dart';
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';
+import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view_getx_controller.dart';
@@ -59,8 +61,10 @@ import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
 import 'package:ghaf_application/presentation/screens/sub_categories_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_from_home_page.dart';
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 
+import '../../data/api/controllers/subscription_api_controller.dart';
 import '../screens/login_view/login_view.dart';
 import '../screens/onboarding_view.dart';
 import '../screens/register_view/register_view.dart';
@@ -106,6 +110,11 @@ class Routes {
   static const String ordersToPay = "/ordersToPay";
   static const String gifts = "/gifts";
 
+  //new routs
+  static const String orderTrackingScreen = "/orderTrackingScreen";
+  static const String subscribeFromHomePage = "/subscribeFromHomePage";
+  static const String homePage = "/homePage";
+
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
   static const String registerSellerRoute = "/register_seller";
@@ -139,10 +148,15 @@ class RouteGenerator {
       //customer
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case Routes.orderTrackingScreen:
+        return MaterialPageRoute(builder: (_) => OrderTrackingScreen());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.welcomeRoute:
         return MaterialPageRoute(builder: (_) => const WelcomeView());
+        //new
+      case Routes.homePage:
+        return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.loginRoute:
         return MaterialPageRoute(
           builder: (_) => Builder(
@@ -258,7 +272,9 @@ class RouteGenerator {
       case Routes.products:
         return MaterialPageRoute(
           builder: (_) => ProductsScreen(
-            categoryId: settings.arguments as String,
+            // categoryId: settings.arguments as String,
+            // categoryName: settings.arguments as String,
+            category: settings.arguments as Map<String,dynamic>,
           ),
         );
       case Routes.myFavorite:
@@ -281,6 +297,19 @@ class RouteGenerator {
                 SubscribeViewGetXController(context: _),
               );
               return const SubscribeView();
+            },
+          ),
+        );
+
+      //new
+      case Routes.subscribeFromHomePage:
+        return MaterialPageRoute(
+          builder: (_) => Builder(
+            builder: (context) {
+              Get.put<SubscribeViewGetXController>(
+                SubscribeViewGetXController(context: _),
+              );
+              return const SubscribeViewFromHomePage();
             },
           ),
         );

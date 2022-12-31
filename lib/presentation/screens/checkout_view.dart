@@ -42,10 +42,13 @@ class _CheckOutViewState extends State<CheckOutView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                     Spacer(),
                     Text(

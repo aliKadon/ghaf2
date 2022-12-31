@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';
+import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -92,7 +93,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (builder) => OrderInformationView()),
+                            builder: (builder) => OrderTrackingScreen()),
                       );
                     },
                     child: Text(
@@ -106,7 +107,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                   height: AppSize.s22,
                 ),
                 GestureDetector(
-                  onTap: ()=>_customDialogProgress(),
+                  onTap: ()=>Navigator.of(context).pushNamed(Routes.homePage),
                   child: Text(
                     AppLocalizations.of(context)!.back_to_home,
                     style: getSemiBoldStyle(

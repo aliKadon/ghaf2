@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -76,7 +77,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                     },
                     initialCameraPosition: CameraPosition(
                       target: _addAddressViewGetXController.latLng,
-                      zoom: 17,
+                      zoom: 14.5,
                     ),
                     markers: _addAddressViewGetXController.selectedLatLng ==
                             null
@@ -91,6 +92,9 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                     onTap: (latLng) async {
                       setState(() {
                         _addAddressViewGetXController.selectedLatLng = latLng;
+
+                        print('=============================');
+                        print(latLng);
                       });
                     },
                   ),

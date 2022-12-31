@@ -21,13 +21,19 @@ class LoginViewGetXController extends GetxController with Helpers {
   late final AuthApiController _authApiController = AuthApiController();
   late final GlobalKey<FormState> formKey = GlobalKey();
 
+  late final errorMessageLoginApiResponse;
+  late final errorMessageProfileApiResponse;
+
+
   // fields.
   String? userName;
   String? password;
 
   // login.
   void login() async {
+
     try {
+
       if (!formKey.currentState!.validate()) return;
       formKey.currentState!.save();
       showLoadingDialog(context: context, title: 'Logging In');
@@ -35,7 +41,12 @@ class LoginViewGetXController extends GetxController with Helpers {
         userName: userName!,
         password: password!,
       );
+      print('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
+      errorMessageLoginApiResponse = loginApiResponse.message;
+
+
       ApiResponse profileApiResponse = await AuthApiController().profile();
+      errorMessageProfileApiResponse = profileApiResponse.message;
       if (loginApiResponse.status == 200 && profileApiResponse.status == 200) {
         // success.
         Navigator.pop(context);
@@ -51,13 +62,22 @@ class LoginViewGetXController extends GetxController with Helpers {
       } else {
         // failed.
         Navigator.pop(context);
-        showSnackBar(context, message: loginApiResponse.message, error: true);
+        showSnackBar(context, message: loginApiResponse.message);
         showSnackBar(context, message: profileApiResponse.message, error: true);
       }
     } catch (error) {
       // error.
       Navigator.pop(context);
-      showSnackBar(context, message: error.toString(), error: true);
+      // showSnackBar(context, message: error.toString(), error: true);
+
+      if (errorMessageLoginApiResponse != null) {
+        showSnackBar(context, message: errorMessageLoginApiResponse, error: true);
+
+      }else {
+        showSnackBar(context, message: errorMessageProfileApiResponse, error: true);
+
+      }
+
     }
   }
 }

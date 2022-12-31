@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../domain/model/models.dart';
 import '../resources/assets_manager.dart';
@@ -38,84 +40,87 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: SafeArea(
-        child: testFun(context)[_currentIndex].widget,
-      ),
-      bottomNavigationBar: SizedBox(
-        height: AppSize.s73,
-        child: BottomNavigationBar(
-          onTap: (int index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: ColorManager.primary,
-          selectedFontSize: 16,
-          unselectedFontSize: 14,
-          elevation: 30,
-          selectedLabelStyle: getMediumStyle(
-              color: ColorManager.primary, fontSize: FontSize.s12),
-          unselectedLabelStyle: getMediumStyle(
-              color: ColorManager.primary, fontSize: FontSize.s10),
-          backgroundColor: ColorManager.white,
-          currentIndex: _currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconsAssets.home,
-                width: AppSize.s24,
-                height: AppSize.s20,
+    return ChangeNotifierProvider.value(
+      value: ProductProvider(),
+      child: Scaffold(
+        key: _scaffoldKey,
+        body: SafeArea(
+          child: testFun(context)[_currentIndex].widget,
+        ),
+        bottomNavigationBar: SizedBox(
+          height: AppSize.s73,
+          child: BottomNavigationBar(
+            onTap: (int index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: ColorManager.primary,
+            selectedFontSize: 16,
+            unselectedFontSize: 14,
+            elevation: 30,
+            selectedLabelStyle: getMediumStyle(
+                color: ColorManager.primary, fontSize: FontSize.s12),
+            unselectedLabelStyle: getMediumStyle(
+                color: ColorManager.primary, fontSize: FontSize.s10),
+            backgroundColor: ColorManager.white,
+            currentIndex: _currentIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconsAssets.home,
+                  width: AppSize.s24,
+                  height: AppSize.s20,
+                ),
+                activeIcon: Image.asset(
+                  IconsAssets.home1,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                label: AppLocalizations.of(context)!.home,
               ),
-              activeIcon: Image.asset(
-                IconsAssets.home1,
-                width: AppSize.s24,
-                height: AppSize.s24,
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconsAssets.categories,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                activeIcon: Image.asset(
+                  IconsAssets.categories1,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                label: AppLocalizations.of(context)!.categories,
               ),
-              label: AppLocalizations.of(context)!.home,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconsAssets.categories,
-                width: AppSize.s24,
-                height: AppSize.s24,
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconsAssets.cart,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                activeIcon: Image.asset(
+                  IconsAssets.cart1,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                label: AppLocalizations.of(context)!.cart,
               ),
-              activeIcon: Image.asset(
-                IconsAssets.categories1,
-                width: AppSize.s24,
-                height: AppSize.s24,
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconsAssets.account,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                activeIcon: Image.asset(
+                  IconsAssets.account1,
+                  width: AppSize.s24,
+                  height: AppSize.s24,
+                ),
+                label: AppLocalizations.of(context)!.account,
               ),
-              label: AppLocalizations.of(context)!.categories,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconsAssets.cart,
-                width: AppSize.s24,
-                height: AppSize.s24,
-              ),
-              activeIcon: Image.asset(
-                IconsAssets.cart1,
-                width: AppSize.s24,
-                height: AppSize.s24,
-              ),
-              label: AppLocalizations.of(context)!.cart,
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconsAssets.account,
-                width: AppSize.s24,
-                height: AppSize.s24,
-              ),
-              activeIcon: Image.asset(
-                IconsAssets.account1,
-                width: AppSize.s24,
-                height: AppSize.s24,
-              ),
-              label: AppLocalizations.of(context)!.account,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

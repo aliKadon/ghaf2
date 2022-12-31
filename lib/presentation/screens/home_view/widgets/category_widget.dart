@@ -22,8 +22,13 @@ class CategoryWidget extends StatelessWidget {
         Navigator.pushNamed(
           context,
           Routes.products,
-          arguments: category.id,
+          arguments: {
+            'id' : category.id,
+            'name' : category.name
+          },
         );
+        print("===========================================");
+        print(category);
       },
       child: Container(
         width: AppSize.s92,

@@ -109,7 +109,7 @@ class AuthApiController with ApiHelper {
     };
     print(data);
     var response = await _dio.post(
-      'Auth/reset-password',
+      '/reset-password',
       data: data,
       options: Options(
         headers: headers,

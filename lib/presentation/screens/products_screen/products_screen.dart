@@ -8,11 +8,13 @@ import 'package:ghaf_application/presentation/screens/products_screen/products_s
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final String categoryId;
+  final Map<String, dynamic> category;
+  // final String categoryName;
 
   const ProductsScreen({
     Key? key,
-    required this.categoryId,
+    required this.category,
+    // required this.categoryName
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     _productsScreenGetXController.init(
       context: context,
-      categoryId: widget.categoryId,
+      categoryId: widget.category['id'].toString(),
     );
     super.initState();
   }
@@ -45,7 +47,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text(widget.category['name'].toString()),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
