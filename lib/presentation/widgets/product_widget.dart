@@ -11,6 +11,8 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductWidget extends StatefulWidget {
   final String tag;
@@ -43,6 +45,9 @@ class _ProductWidgetState extends State<ProductWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // var product = Provider.of<ProductProvider>(context).productDiscount;
+    // print('ALI================================================');
+    // print(product);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(

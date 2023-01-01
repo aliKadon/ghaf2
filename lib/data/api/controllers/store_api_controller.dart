@@ -41,12 +41,13 @@ class StoreApiController with ApiHelper {
     String search = '',
     num? minPrice,
     num? maxPrice,
+    String? filterBy,
   }) async {
     print('send request : getProducts');
     Map<String, dynamic> queryParameters = {
       'cid': cid,
       'filter':
-          "Name~contains~'$search'~and~price~gte~${minPrice ?? 0}~and~price~lte~${maxPrice ?? 500}",
+          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
     print(queryParameters);
     final Response response = await _dio.get(
@@ -56,7 +57,7 @@ class StoreApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
+    print('============================================PRODUCT');
     print(response.statusCode);
     print(response.data);
     if (response.statusCode == 200) {

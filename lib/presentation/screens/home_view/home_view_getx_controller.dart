@@ -48,6 +48,9 @@ class HomeViewGetXController extends GetxController with Helpers {
   // filter.
   num? minPrice;
   num? maxPrice;
+  String? filterBy;
+  // num? minDiscount;
+  // num? maxDiscount;
 
   // init.
   void init({
@@ -68,17 +71,20 @@ class HomeViewGetXController extends GetxController with Helpers {
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
-
   // get products.
   void getProducts({
     bool notifyLoading = false,
   }) async {
     try {
       if (notifyLoading) isProductsLoading = true;
+      print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
+      // print(ModalRoute.of(context)?.settings.arguments as String);
       products = await _storeApiController.getProducts(
         search: search,
         maxPrice: maxPrice,
         minPrice: minPrice,
+        filterBy: filterBy,
+        // filterBy: ModalRoute.of(context)?.settings.arguments as String,
       );
       isProductsLoading = false;
     } on DioError catch (error) {
@@ -92,6 +98,30 @@ class HomeViewGetXController extends GetxController with Helpers {
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
+
+  // // get products By Discount.
+  // void getProductsByDiscount({
+  //   bool notifyLoading = false,
+  // }) async {
+  //   try {
+  //     if (notifyLoading) isProductsLoading = true;
+  //     products = await _storeApiController.getProductsSortedDiscount(
+  //       search: search,
+  //       maxDiscount: maxPrice,
+  //       minDiscount: minPrice,
+  //     );
+  //     isProductsLoading = false;
+  //   } on DioError catch (error) {
+  //     // error.
+  //     debugPrint(error.response?.data);
+  //     debugPrint(error.toString());
+  //     showSnackBar(context, message: error.toString(), error: true);
+  //   } catch (error) {
+  //     // error.
+  //     debugPrint(error.toString());
+  //     showSnackBar(context, message: error.toString(), error: true);
+  //   }
+  // }
 
   // on search.
   void onSearch(String? value) {
@@ -122,6 +152,8 @@ class HomeViewGetXController extends GetxController with Helpers {
               onFilter: filter,
               minPrice: minPrice,
               maxPrice: maxPrice,
+              filterBy: filterBy,
+
             ),
           );
           return FilterSheetWidget();
@@ -134,9 +166,11 @@ class HomeViewGetXController extends GetxController with Helpers {
   void filter({
     num? minPrice,
     num? maxPrice,
+    String? filterBy,
   }) {
     this.minPrice = minPrice;
     this.maxPrice = maxPrice;
+    this.filterBy = filterBy;
     getProducts(notifyLoading: true);
   }
 

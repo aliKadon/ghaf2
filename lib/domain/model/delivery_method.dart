@@ -8,7 +8,7 @@ class DeliveryMethod {
     this.methodName,
   });
 
-  String? id;
+  int? id;
   String? storeId;
   String? deliveryMethodId;
   String? isoCurrencySymbol;

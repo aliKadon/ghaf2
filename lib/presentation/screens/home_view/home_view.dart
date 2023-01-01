@@ -29,13 +29,19 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   // controller.
   HomeViewGetXController _homeViewGetXController =
-  Get.put<HomeViewGetXController>(HomeViewGetXController());
+      Get.put<HomeViewGetXController>(HomeViewGetXController());
 
   // init state.
   @override
   void initState() {
     _homeViewGetXController.init(context: context);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<ProductProvider>(context,listen: false).getProductDiscount(15);
+    super.didChangeDependencies();
   }
 
   // dispose.
@@ -47,6 +53,9 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    var prodDiscount = Provider.of<ProductProvider>(context).productDiscount;
+    // print('============================================ALI');
+    // print(prodDiscount);
     return ChangeNotifierProvider.value(
       value: ProductProvider(),
       child: Scaffold(
@@ -88,12 +97,9 @@ class _HomeViewState extends State<HomeView> {
                             width: 40.h,
                             height: 40.h,
                             color: AppSharedData.currentUser!.ghafGold ?? false
-                                ? Theme
-                                .of(context)
-                                .primaryColor
+                                ? Theme.of(context).primaryColor
                                 : null,
                           ),
-
                         ),
                         SizedBox(
                           width: 5.w,
@@ -103,13 +109,11 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.hello_welcome,
-                              style:
-                              getRegularStyle(color: ColorManager.blackLight),
+                              style: getRegularStyle(
+                                  color: ColorManager.blackLight),
                             ),
                             Text(
-                              '${AppSharedData.currentUser!
-                                  .firstName} ${AppSharedData.currentUser!
-                                  .lastName}',
+                              '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
                               style: getBoldStyle(
                                 color: ColorManager.blackLight,
                                 fontSize: FontSize.s12,
@@ -126,9 +130,7 @@ class _HomeViewState extends State<HomeView> {
                             IconsAssets.heart,
                             height: AppSize.s20,
                             width: AppSize.s20,
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         SizedBox(
@@ -178,7 +180,7 @@ class _HomeViewState extends State<HomeView> {
                                   horizontal: AppPadding.p16,
                                   vertical: AppPadding.p16),
                               hintText:
-                              AppLocalizations.of(context)!.search_flower,
+                                  AppLocalizations.of(context)!.search_flower,
                               hintStyle: getMediumStyle(
                                 color: ColorManager.hintTextFiled,
                               ),
@@ -218,97 +220,98 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   GetBuilder<HomeViewGetXController>(
                     id: 'isSearching',
-                    builder: (controller) =>
-                    controller.isSearching
+                    builder: (controller) => controller.isSearching
                         ? SizedBox()
                         : Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Stack(
                             children: [
-                              Image.asset(
-                                ImageAssets.main,
-                                height: AppSize.s148,
-                                width: AppSize.s360,
-                                fit: BoxFit.fill,
-                              ),
-                              PositionedDirectional(
-                                top: AppSize.s30,
-                                start: AppSize.s30,
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              Container(
+                                alignment: Alignment.center,
+                                child: Stack(
                                   children: [
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .stay_home_we_deliver,
-                                      style: TextStyle(
-                                          height: 1,
-                                          fontSize: FontSize.s30,
-                                          fontFamily:
-                                          FontConstants.fontFamily,
-                                          color: ColorManager.white,
-                                          fontWeight:
-                                          FontWeightManager.medium),
+                                    Image.asset(
+                                      ImageAssets.main,
+                                      height: AppSize.s148,
+                                      width: AppSize.s360,
+                                      fit: BoxFit.fill,
                                     ),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .any_where_any_time,
-                                      style: getMediumStyle(
-                                          color: ColorManager.white,
-                                          fontSize: FontSize.s12),
+                                    PositionedDirectional(
+                                      top: AppSize.s30,
+                                      start: AppSize.s30,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .stay_home_we_deliver,
+                                            style: TextStyle(
+                                                height: 1,
+                                                fontSize: FontSize.s30,
+                                                fontFamily:
+                                                    FontConstants.fontFamily,
+                                                color: ColorManager.white,
+                                                fontWeight:
+                                                    FontWeightManager.medium),
+                                          ),
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .any_where_any_time,
+                                            style: getMediumStyle(
+                                                color: ColorManager.white,
+                                                fontSize: FontSize.s12),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: AppSize.s24,
-                        ),
-                        Container(
-                          height: AppSize.s85,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: AppPadding.p16),
-                            child: GetBuilder<HomeViewGetXController>(
-                              id: 'categories',
-                              builder: (HomeViewGetXController controller) {
-                                if (controller.isCategoryLoading) {
-                                  return Center(
-                                    child: Container(
-                                      width: 20.h,
-                                      height: 20.h,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 1,
-                                      ),
-                                    ),
-                                  );
-                                } else if (controller
-                                    .categories.isNotEmpty) {
-                                  return ListView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: controller.categories.length,
-                                    itemBuilder: (context, index) {
-                                      return CategoryWidget(
-                                        category:
-                                        controller.categories[index],
-                                      );
+                              SizedBox(
+                                height: AppSize.s24,
+                              ),
+                              Container(
+                                height: AppSize.s85,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: AppPadding.p16),
+                                  child: GetBuilder<HomeViewGetXController>(
+                                    id: 'categories',
+                                    builder:
+                                        (HomeViewGetXController controller) {
+                                      if (controller.isCategoryLoading) {
+                                        return Center(
+                                          child: Container(
+                                            width: 20.h,
+                                            height: 20.h,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 1,
+                                            ),
+                                          ),
+                                        );
+                                      } else if (controller
+                                          .categories.isNotEmpty) {
+                                        return ListView.builder(
+                                          physics: BouncingScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount:
+                                              controller.categories.length,
+                                          itemBuilder: (context, index) {
+                                            return CategoryWidget(
+                                              category:
+                                                  controller.categories[index],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        return Center(
+                                          child: Text(
+                                            'No categories found',
+                                          ),
+                                        );
+                                      }
                                     },
-                                  );
-                                } else {
-                                  return Center(
-                                    child: Text(
-                                      'No categories found',
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            /*
+                                  ),
+                                  /*
                         ListView.builder(
                             itemCount: controller.listCategory.length,
                             itemBuilder: (context,index){
@@ -359,7 +362,7 @@ class _HomeViewState extends State<HomeView> {
                           );
                         }),
                        */
-                            /*
+                                  /*
                         ListView(
                           shrinkWrap: true,
                           physics: BouncingScrollPhysics(),
@@ -503,10 +506,10 @@ class _HomeViewState extends State<HomeView> {
                           ],
                         ),
                         */
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                   ),
                   SizedBox(
                     height: AppSize.s4,
@@ -525,7 +528,7 @@ class _HomeViewState extends State<HomeView> {
                         Spacer(),
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.products);
+                            Navigator.pushNamed(context, Routes.allProductScreen);
                           },
                           child: Text(
                             AppLocalizations.of(context)!.more,
@@ -539,55 +542,74 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   GetBuilder<HomeViewGetXController>(
-                    id: 'products',
-                    builder: (controller) =>
-                    controller.isProductsLoading
-                        ? Center(
-                      child: Container(
-                        width: 20.h,
-                        height: 20.h,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
+                          id: 'products',
+                          builder: (controller) => controller.isProductsLoading
+                              ? Center(
+                                  child: Container(
+                                    width: 20.h,
+                                    height: 20.h,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1,
+                                    ),
+                                  ),
+                                )
+                              : _homeViewGetXController.products.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        'No products found',
+                                      ),
+                                    )
+                                  : GridView.builder(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: AppPadding.p8,
+                                          vertical: AppPadding.p4),
+                                      shrinkWrap: true,
+                                      itemCount: _homeViewGetXController
+                                          .products.length,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount:
+                                            Constants.crossAxisCount,
+                                        mainAxisExtent:
+                                            Constants.mainAxisExtent,
+                                        mainAxisSpacing:
+                                            Constants.mainAxisSpacing,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return Builder(
+                                          builder: (context) {
+                                            Get.put<Product>(
+                                              _homeViewGetXController
+                                                  .products[index],
+                                              tag:
+                                                  '${_homeViewGetXController.products[index].id}home',
+                                            );
+                                            return ProductWidget(
+                                              tag:
+                                                  '${_homeViewGetXController.products[index].id}home',
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                         ),
-                      ),
-                    )
-                        : _homeViewGetXController.products.isEmpty
-                        ? Center(
-                      child: Text(
-                        'No products found',
-                      ),
-                    )
-                        : GridView.builder(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p8,
-                          vertical: AppPadding.p4),
-                      shrinkWrap: true,
-                      itemCount:
-                      _homeViewGetXController.products.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: Constants.crossAxisCount,
-                        mainAxisExtent: Constants.mainAxisExtent,
-                        mainAxisSpacing: Constants.mainAxisSpacing,
-                      ),
-                      itemBuilder: (context, index) {
-                        return Builder(
-                          builder: (context) {
-                            Get.put<Product>(
-                              _homeViewGetXController.products[index],
-                              tag:
-                              '${_homeViewGetXController.products[index].id}home',
-                            );
-                            return ProductWidget(
-                              tag:
-                              '${_homeViewGetXController.products[index].id}home',
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                      // : GridView.builder(
+                      //     gridDelegate:
+                      //         SliverGridDelegateWithFixedCrossAxisCount(
+                      //       crossAxisCount: Constants.crossAxisCount,
+                      //     ),
+                      //     itemCount: prodDiscount.length,
+                      //     itemBuilder: (context, index) {
+                      //       return ProductWidget2(
+                      //           name: prodDiscount[index].name!,
+                      //           discount: prodDiscount[index].discount!,
+                      //           branchName: 'HIIIII',
+                      //           tag:
+                      //               '${_homeViewGetXController.products[index].id}home');
+                      //     },
+                      //   )
                 ],
               ),
             ),

@@ -18,9 +18,11 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
       Get.find<FilterSheetWidgetGetXController>();
 
   //new
-  var color = Colors.white;
-  var colorText = Color(0xff125051);
-  var onPressDiscount = '';
+  var color1 = Colors.white;
+  var colorText1 = Color(0xff125051);
+  var color2 = Colors.white;
+  var colorText2 = Color(0xff125051);
+  var onPressDiscount = 'productDiscount.discount';
 
   // dispose.
   @override
@@ -78,118 +80,105 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             SizedBox(
               height: 5.h,
             ),
-             InkWell(
-                onTap: () {
-                  setState(() {
-                    if (color == Color(0xff125051)) {
-                      color = Colors.white;
-                      colorText = Color(0xff125051);
-                      onPressDiscount = '';
-                    }else if (color == Colors.white) {
-                      color = Color(0xff125051);
-                      colorText = Colors.white;
-                      onPressDiscount = 'discount';
-                    }
-                  });
+             Row(
+               children: [
+                 Spacer(),
+                 GetBuilder<FilterSheetWidgetGetXController>(
+                   id: 'filterBYDiscount',
+                   builder:(controller) => GestureDetector(
+                     onTap: () {
+                       onPressDiscount = 'productDiscount.discount';
+                       controller.filterBy1 = onPressDiscount;
+                       setState(() {
+                         if (color1 == Color(0xff125051)) {
+                           color1 = Colors.white;
+                           color2 = Color(0xff125051);
+                           colorText2 = Colors.white;
+                           colorText1 = Color(0xff125051);
+                           onPressDiscount = '';
+                         }else if (color1 == Colors.white) {
+                           color1 = Color(0xff125051);
+                           colorText1 = Colors.white;
+                           color2 = Colors.white;
+                           colorText2 = Color(0xff125051);
+                           onPressDiscount = 'productDiscount.discount';
+                         }
+                       });
 
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 16.h, horizontal: 16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
-                    color: color,
-                    border: Border.all(
-                      color: Color(0xff125051),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Discount',
-                      style: TextStyle(
-                        color: colorText,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            GetBuilder<FilterSheetWidgetGetXController>(
-              id: onPressDiscount,
-              builder: (controller) => RangeSlider(
-                min: 0,
-                max: 500,
-                activeColor: Color(0xff125051),
-                values: controller.rangeValues,
-                onChanged: _filterSheetWidgetGetXController.onSliderChanged,
-                labels: RangeLabels(
-                  controller.rangeValues.start.toInt().toString(),
-                  controller.rangeValues.end.toInt().toString(),
-                ),
-                divisions: 100,
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: InkWell(
-                    onTap: () {
-                      product.getProductDiscount(15);
-                      print(product.productDiscount);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 16.h, horizontal: 16.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        color: Color(0xff125051),
-                        border: Border.all(
-                          color: Color(0xff125051),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Apply Filter',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: _filterSheetWidgetGetXController.onClearTapped,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 16.h, horizontal: 16.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(
-                          color: Color(0xff125051),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Clear',
-                          style: TextStyle(
-                            color: Color(0xff125051),
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                     },
+                     child: Container(
+                       padding: EdgeInsets.symmetric(
+                           vertical: 16.h, horizontal: 16.w),
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(12.r),
+                         color: color1,
+                         border: Border.all(
+                           color: Color(0xff125051),
+                         ),
+                       ),
+                       child: Center(
+                         child: Text(
+                           'Discount',
+                           style: TextStyle(
+                             color: colorText1,
+                             fontSize: 16.sp,
+                           ),
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+
+                 Spacer(),
+
+                 GetBuilder<FilterSheetWidgetGetXController>(
+                   id: 'filterBYPrice',
+                   builder:(controller) => GestureDetector(
+                     onTap: () {
+                       onPressDiscount = 'price';
+                       controller.filterBy1 = onPressDiscount;
+                       setState(() {
+                         if (color2 == Color(0xff125051)) {
+                           color2 = Colors.white;
+                           colorText2 = Color(0xff125051);
+                           color1 = Color(0xff125051);
+                           colorText1 = Colors.white;
+                           onPressDiscount = '';
+                         }else if (color2 == Colors.white) {
+                           color2 = Color(0xff125051);
+                           colorText2 = Colors.white;
+                           onPressDiscount = 'price';
+                           color1 = Colors.white;
+                           colorText1 = Color(0xff125051);
+                         }
+                       });
+
+                     },
+                     child: Container(
+                       padding: EdgeInsets.symmetric(
+                           vertical: 16.h, horizontal: 16.w),
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(12.r),
+                         color: color2,
+                         border: Border.all(
+                           color: Color(0xff125051),
+                         ),
+                       ),
+                       child: Center(
+                         child: Text(
+                           'Price',
+                           style: TextStyle(
+                             color: colorText2,
+                             fontSize: 16.sp,
+                           ),
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+                 Spacer(),
+               ],
+             ),
 
 
             Row(

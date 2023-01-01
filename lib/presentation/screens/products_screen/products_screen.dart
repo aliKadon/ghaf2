@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,9 +7,11 @@ import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final Map<String, dynamic> category;
+  final category;
   // final String categoryName;
 
   const ProductsScreen({
@@ -31,8 +34,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     _productsScreenGetXController.init(
       context: context,
-      categoryId: widget.category['id'].toString(),
+      categoryId: widget.category.id.toString(),
     );
+
     super.initState();
   }
 
@@ -45,9 +49,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category['name'].toString()),
+        title: Text(widget.category.name.toString()),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/domain/model/address.dart';
+import 'package:ghaf_application/domain/model/order.dart';
 import 'package:ghaf_application/presentation/resources/string_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/add_or_edit_address_view.dart';
@@ -27,11 +28,13 @@ import 'package:ghaf_application/presentation/screens/offers_view/offers_view.da
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';
 import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
+import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view.dart';
+import 'package:ghaf_application/presentation/screens/products_screen/all_products_screen.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen.dart';
 import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view.dart';
 import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view_getx_controller.dart';
@@ -65,6 +68,7 @@ import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_v
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 
 import '../../data/api/controllers/subscription_api_controller.dart';
+import '../../domain/model/available_delevey_method.dart';
 import '../screens/login_view/login_view.dart';
 import '../screens/onboarding_view.dart';
 import '../screens/register_view/register_view.dart';
@@ -114,6 +118,7 @@ class Routes {
   static const String orderTrackingScreen = "/orderTrackingScreen";
   static const String subscribeFromHomePage = "/subscribeFromHomePage";
   static const String homePage = "/homePage";
+  static const String allProductScreen = "/allProductScreen";
 
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
@@ -157,6 +162,8 @@ class RouteGenerator {
         //new
       case Routes.homePage:
         return MaterialPageRoute(builder: (_) => const HomeView());
+      case Routes.allProductScreen:
+        return MaterialPageRoute(builder: (_) => AllProductScreen());
       case Routes.loginRoute:
         return MaterialPageRoute(
           builder: (_) => Builder(
@@ -207,7 +214,9 @@ class RouteGenerator {
           ),
         );
       case Routes.checkOutRoute:
-        return MaterialPageRoute(builder: (_) => const CheckOutView());
+        return MaterialPageRoute(builder: (_) => CheckOutView(
+          settings.arguments as OrderAllInformation
+        ));
       case Routes.checkOutConfirmRoute:
         return MaterialPageRoute(builder: (_) => const CheckOutConfirmView());
       case Routes.orderInformationRoute:
@@ -274,7 +283,7 @@ class RouteGenerator {
           builder: (_) => ProductsScreen(
             // categoryId: settings.arguments as String,
             // categoryName: settings.arguments as String,
-            category: settings.arguments as Map<String,dynamic>,
+            category: settings.arguments as dynamic,
           ),
         );
       case Routes.myFavorite:
@@ -313,17 +322,19 @@ class RouteGenerator {
             },
           ),
         );
-      case Routes.ordersToPay:
-        return MaterialPageRoute(
-          builder: (_) => Builder(
-            builder: (context) {
-              Get.put<OrdersToPayViewGetXController>(
-                OrdersToPayViewGetXController(context: _),
-              );
-              return const OrdersToPayView();
-            },
-          ),
-        );
+      // case Routes.ordersToPay:
+      //   return MaterialPageRoute(
+      //     builder: (_) => Builder(
+      //       builder: (context) {
+      //         Get.put<OrdersToPayViewGetXController>(
+      //           OrdersToPayViewGetXController(context: _),
+      //         );
+      //         return const OrdersToPayView();
+      //       },
+      //     ),
+      //   );
+      case Routes.ordersToPay :
+        return MaterialPageRoute(builder: (_) => OrderToPay2());
       case Routes.gifts:
         return MaterialPageRoute(
           builder: (_) => Builder(

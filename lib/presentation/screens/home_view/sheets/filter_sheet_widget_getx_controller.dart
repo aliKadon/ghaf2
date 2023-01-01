@@ -14,19 +14,32 @@ class FilterSheetWidgetGetXController extends GetxController with Helpers {
     update(['price']);
   }
 
+  late String _filterBy;
+  String get filterBy1 => _filterBy;
+
+  set filterBy1(String value) {
+    _filterBy = value;
+    print('=================================HERE');
+    print(_filterBy);
+    update(['filterBYPrice']);
+  }
+
   // constructor fields.
   final BuildContext context;
   num? minPrice;
   num? maxPrice;
+  String? filterBy;
   final void Function({
     num? minPrice,
     num? maxPrice,
+    String? filterBy,
   }) onFilter;
 
   // constructor.
   FilterSheetWidgetGetXController({
     required this.context,
     required this.onFilter,
+    this.filterBy,
     this.minPrice,
     this.maxPrice,
   });
@@ -42,7 +55,11 @@ class FilterSheetWidgetGetXController extends GetxController with Helpers {
     onFilter(
       minPrice: rangeValues.start.toInt(),
       maxPrice: rangeValues.end.toInt(),
+      filterBy: filterBy1,
     );
+    filterBy = filterBy1;
+    print('====================================HERE1');
+    print(filterBy);
   }
 
   // on clear tapped.
@@ -52,5 +69,12 @@ class FilterSheetWidgetGetXController extends GetxController with Helpers {
       minPrice: null,
       maxPrice: null,
     );
+  }
+
+  String? getFilterBy(String filter) {
+    filterBy = filter;
+    print('=================================HERE');
+    print(filterBy);
+    return filterBy;
   }
 }

@@ -68,15 +68,15 @@ class LoginViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      // showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'password error', error: true);
 
-      if (errorMessageLoginApiResponse != null) {
-        showSnackBar(context, message: errorMessageLoginApiResponse, error: true);
-
-      }else {
-        showSnackBar(context, message: errorMessageProfileApiResponse, error: true);
-
-      }
+      // if (errorMessageLoginApiResponse != null) {
+      //   showSnackBar(context, message: errorMessageLoginApiResponse, error: true);
+      //
+      // }else {
+      //   showSnackBar(context, message: errorMessageProfileApiResponse, error: true);
+      //
+      // }
 
     }
   }

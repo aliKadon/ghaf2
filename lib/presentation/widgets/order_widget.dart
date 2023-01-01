@@ -7,13 +7,16 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 
+import '../../domain/model/available_delevey_method.dart';
+
 class OrderWidget extends StatelessWidget {
-  final Order order;
+  final OrderAllInformation order;
 
   const OrderWidget({
     Key? key,
     required this.order,
   }) : super(key: key);
+  // OrderWidget(this.order);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class OrderWidget extends StatelessWidget {
         children: [
           Column(
             children: List.generate(
-              order.items!.length,
+              1,
               (index) => Column(
                 children: [
                   Row(
@@ -50,7 +53,7 @@ class OrderWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              order.items![index].name ?? '',
+                              order.orderDetails['items']![index]['name'] ?? '',
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
@@ -60,7 +63,7 @@ class OrderWidget extends StatelessWidget {
                               height: 5.h,
                             ),
                             Text(
-                              'X${order.items![index].quanity}   ${order.items![index].price} ${order.items![index].isoCurrencySymbol}',
+                              'X${order.orderDetails['items']![index]['quanity']}   ${order.orderDetails['items']![index]['price']} ${order.orderDetails['items']![index]['isoCurrencySymbol']}',
                               style: TextStyle(
                                 fontSize: 13.sp,
                                 color: Theme.of(context).primaryColor,
@@ -89,7 +92,7 @@ class OrderWidget extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '${order.orderCostForCustomer!.toStringAsFixed(1)} ${order.items![0].isoCurrencySymbol}',
+                '${order.orderDetails['orderCostForCustomer']!.toStringAsFixed(1)} ${order.orderDetails['items']![0]['isoCurrencySymbol']}',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -97,7 +100,7 @@ class OrderWidget extends StatelessWidget {
               ),
             ],
           ),
-          if (order.canPayLaterValue != 0)
+          if (order.orderDetails['canPayLaterValue'] != 0)
             Row(
               children: [
                 Text(
@@ -108,7 +111,7 @@ class OrderWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  '${order.canPayLaterValue!.toStringAsFixed(1)} ${order.items![0].isoCurrencySymbol}',
+                  '${order.orderDetails['canPayLaterValue']!.toStringAsFixed(1)} ${order.orderDetails['items']![0]['isoCurrencySymbol']}',
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
@@ -116,7 +119,7 @@ class OrderWidget extends StatelessWidget {
                 ),
               ],
             ),
-          if (order.totalCostForItems! != order.orderCostForCustomer!) ...[
+          if (order.orderDetails['totalCostForItems']! != order.orderDetails['orderCostForCustomer']!) ...[
             SizedBox(
               height: 5.h,
             ),
@@ -138,7 +141,7 @@ class OrderWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${(order.totalCostForItems! - order.orderCostForCustomer!).toStringAsFixed(1)} ${order.items![0].isoCurrencySymbol}',
+                  '${(order.orderDetails['totalCostForItems']! - order.orderDetails['orderCostForCustomer']!).toStringAsFixed(1)} ${order.orderDetails['items']![0]['isoCurrencySymbol']}',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
@@ -166,7 +169,9 @@ class OrderWidget extends StatelessWidget {
             height: 45.h,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.checkOutRoute);
+                Navigator.pushNamed(context, Routes.checkOutRoute,
+                    arguments: order);
+                print("it is here: ${order.orderDetails['id']}");
               },
               child: Text(
                 'Checkout',

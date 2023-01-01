@@ -216,6 +216,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -291,6 +298,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
+  flutter_stripe:
+    dependency: "direct main"
+    description:
+      name: flutter_stripe
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.0.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -691,6 +705,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  stripe_android:
+    dependency: transitive
+    description:
+      name: stripe_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.0.1"
+  stripe_ios:
+    dependency: transitive
+    description:
+      name: stripe_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.0.0"
+  stripe_platform_interface:
+    dependency: transitive
+    description:
+      name: stripe_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.0.0"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.4.41"
+  syncfusion_flutter_datepicker:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datepicker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "20.4.41"
   term_glyph:
     dependency: transitive
     description:

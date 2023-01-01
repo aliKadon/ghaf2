@@ -107,7 +107,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                   height: AppSize.s22,
                 ),
                 GestureDetector(
-                  onTap: ()=>Navigator.of(context).pushNamed(Routes.homePage),
+                  onTap: ()=>Navigator.of(context).pop(),
                   child: Text(
                     AppLocalizations.of(context)!.back_to_home,
                     style: getSemiBoldStyle(

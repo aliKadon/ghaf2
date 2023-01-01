@@ -29,21 +29,21 @@ class OrdersApiController with ApiHelper {
   }
 
   // get ready orders to pay.
-  Future<List<Order>> getReadyOrdersToPay() async {
-    print('send request : get-ready-order-to-pay');
-    var response = await _dio.post(
-      'Orders/get-ready-order-to-pay',
-      options: Options(
-        headers: headers,
-      ),
-    );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
-    if (response.statusCode == 200) {
-      return List<Order>.from(
-          response.data["data"].map((x) => Order.fromJson(x['orderDetails'])));
-    }
-    return [];
-  }
+  // Future<List<Order>> getReadyOrdersToPay() async {
+  //   print('send request : get-ready-order-to-pay');
+  //   var response = await _dio.post(
+  //     'Orders/get-ready-order-to-pay',
+  //     options: Options(
+  //       headers: headers,
+  //     ),
+  //   );
+  //   print('============================================');
+  //   print(response.statusCode);
+  //   print(response.data);
+  //   if (response.statusCode == 200) {
+  //     return List<Order>.from(
+  //         response.data["data"].map((x) => Order.fromJson(x['orderDetails'])));
+  //   }
+  //   return [];
+  // }
 }

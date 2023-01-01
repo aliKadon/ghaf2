@@ -30,18 +30,18 @@ class OrdersToPayViewGetXController extends GetxController with Helpers {
   // init.
   @override
   void onInit() {
-    getReadyOrdersToPay();
+    // getReadyOrdersToPay();
     super.onInit();
   }
 
-  // get orders to pay.
-  void getReadyOrdersToPay() async {
-    try {
-      orders = await _ordersApiController.getReadyOrdersToPay();
-      isOrdersLoading = false;
-    } catch (error) {
-      // error.
-      showSnackBar(context, message: error.toString(), error: true);
-    }
-  }
+  // // get orders to pay.
+  // void getReadyOrdersToPay() async {
+  //   try {
+  //     orders = await _ordersApiController.getReadyOrdersToPay();
+  //     isOrdersLoading = false;
+  //   } catch (error) {
+  //     // error.
+  //     showSnackBar(context, message: error.toString(), error: true);
+  //   }
+  // }
 }

@@ -4,6 +4,8 @@ import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/order_widget.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -21,6 +23,18 @@ class _OrdersToPayViewState extends State<OrdersToPayView> {
   late final OrdersToPayViewGetXController _ordersToPayViewGetXController =
       Get.find<OrdersToPayViewGetXController>();
 
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<ProductProvider>(context,listen: false).getOrders();
+    super.didChangeDependencies();
+  }
   // dispose.
   @override
   void dispose() {
@@ -30,6 +44,9 @@ class _OrdersToPayViewState extends State<OrdersToPayView> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ProductProvider>(context).orders;
+    // print('++++++++++++++++++++++++++++++++++');
+    // print(provider);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -76,17 +93,21 @@ class _OrdersToPayViewState extends State<OrdersToPayView> {
                               child: Text(
                                 'No orders found',
                               ),
-                            )
-                          : ListView.separated(
-                              itemCount: controller.orders.length,
-                              separatorBuilder: (_, index) => Divider(),
-                              itemBuilder: (context, index) {
-                                return OrderWidget(
-                                  order: _ordersToPayViewGetXController
-                                      .orders[index],
-                                );
-                              },
-                            ),
+                            ): Container(),
+                          // : ListView.separated(
+                          //     itemCount: controller.orders.length,
+                          //     separatorBuilder: (_, index) => Divider(),
+                          //     itemBuilder: (context, index) {
+                          //       print('+++++++++++++++++++++++++++++++================');
+                          //       // print(provider[index]);
+                          //       // return OrderWidget(
+                          //       //   order: _ordersToPayViewGetXController
+                          //       //       .orders[index],
+                          //       //   provider[index],
+                          //       // );
+                          //
+                          //     },
+                          //   ),
                 ),
               ),
             ],
