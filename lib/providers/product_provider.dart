@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:ghaf_application/domain/model/order.dart';
-import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/domain/model/redeem_points.dart';
+import 'package:ghaf_application/domain/model/unpaid_order.dart';
 import 'package:http/http.dart' as http;
 
 import '../app/constants.dart';
@@ -15,6 +16,11 @@ import '../domain/model/product2.dart';
 import '../domain/model/product_discount.dart';
 
 class ProductProvider extends ChangeNotifier {
+  num allRedeemPoints = 0;
+
+  var unPaidCount = 0;
+  var paidCount = 0;
+
   List<ProductDiscount> _productDiscount = [];
 
   List<ProductDiscount> get productDiscount {
@@ -49,6 +55,18 @@ class ProductProvider extends ChangeNotifier {
 
   List<Product2> get product {
     return [..._product];
+  }
+
+  List<RedeemPoints> _redeemsPoints = [];
+
+  List<RedeemPoints> get redeemsPoints {
+    return [..._redeemsPoints];
+  }
+
+  List<UnpaidOrder> _unpaidOrder = [];
+
+  List<UnpaidOrder> get unpaidOrder {
+    return [..._unpaidOrder];
   }
 
   // var x = FirebaseMessagingService.instance.getToken();
@@ -91,8 +109,7 @@ class ProductProvider extends ChangeNotifier {
     var y = SharedPrefController().token;
     print(y);
     final response = await http.get(
-      Uri.parse(
-          "${Constants.urlBase}/product/read-product"),
+      Uri.parse("${Constants.urlBase}/product/read-product"),
       headers: {
         HttpHeaders.authorizationHeader: y,
       },
@@ -172,6 +189,11 @@ class ProductProvider extends ChangeNotifier {
         branch: orders[i]['orderDetails']['branch'],
         id: orders[i]['orderDetails']['id'],
       ));
+      if (orders[i]['orderDetails']['payed'] == false) {
+        unPaidCount++;
+      }else {
+        paidCount++;
+      }
     }
 
     _orders = list;
@@ -234,5 +256,127 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addOrder(
+      String orderId,
+      String deliveryMethodId,
+      DateTime DesiredDeliveryDate,
+      Address address,
+      bool UseRedeemPoints,
+      bool UsePayLater,
+      String CardNumber,
+      double CardExpMonth,
+      String CardExpCvc,
+      double CardExpYear) async {
+    var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
+    // final response =
+    print('========================addOrder');
+    print(orderId);
+    print(deliveryMethodId);
+    print(DesiredDeliveryDate);
+    print(address);
+    print(UseRedeemPoints.toString());
+    print(UsePayLater.toString());
+    print(CardNumber);
+    try {
+      await http.post(url, headers: {
+        HttpHeaders.authorizationHeader: SharedPrefController().token,
+      }, body: {
+        'OrderId': orderId,
+        'DeliveryMethodId': deliveryMethodId,
+        'DesiredDeliveryDate': DesiredDeliveryDate,
+            // DateTime.parse(DesiredDeliveryDate) == null ?? '',
+        'DeliveryPoint': address == null ?? '',
+        'UseRedeemPoints': UseRedeemPoints,
+        'UsePayLater': UsePayLater,
+        'paymentMethodType': 'card',
+        'CardNumber': CardNumber,
+        'CardExpMonth': CardExpMonth,
+        'CardExpCvc': CardExpCvc,
+        'CardExpYear': CardExpYear,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
+  Future<void> getRedeemPoints() async {
+    var url =
+        Uri.parse('${Constants.urlBase}/GiftAndReward/get-customer-redeem');
+    final response = await http.get(url, headers: {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+    });
+    List redeem = json.decode(response.body)['data'];
+    List<RedeemPoints> list = [];
+
+    for (int i = 0; i < redeem.length; i++) {
+      list.add(
+        RedeemPoints(
+          redeem[i]['id'],
+          redeem[i]['points'],
+          redeem[i]['storeId'],
+          redeem[i]['storeName'],
+          redeem[i]['userCredentialsId'],
+        ),
+      );
+      allRedeemPoints = allRedeemPoints + redeem[i]['points'];
+    }
+    _redeemsPoints = list;
+    print('=====================redeem');
+    print(_redeemsPoints);
+    notifyListeners();
+  }
+
+  Future<void> getUnpaidOrder() async {
+    var url = Uri.parse('${Constants.urlBase}/orders/get-customer-order');
+    final response = await http.get(url, headers: {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+    });
+
+    List unpaid = json.decode(response.body)['data'];
+    List<UnpaidOrder> list = [];
+
+    for (int i = 0; i < unpaid.length; i++) {
+      list.add(
+        UnpaidOrder(
+          unpaid[i]['id'],
+          unpaid[i]['createDate'],
+          unpaid[i]['estimatedDeliveryDate'],
+          unpaid[i]['desiredDeliveryDate'],
+          unpaid[i]['deliverdAt'],
+          unpaid[i]['deliveryPoint'],
+          unpaid[i]['currentLocation'],
+          unpaid[i]['status'],
+          unpaid[i]['payed'],
+          unpaid[i]['deliveryMethod'],
+          unpaid[i]['deleveryCost'],
+          unpaid[i]['orderCostForCustomer'],
+          unpaid[i]['totalCostForItems'],
+          unpaid[i]['statusName'],
+          unpaid[i]['customer'],
+          unpaid[i]['items'],
+          unpaid[i]['userCredentialsId'],
+          unpaid[i]['branch'],
+          unpaid[i]['canPayLaterValue'],
+          unpaid[i]['redeemPointsForProducts'],
+          unpaid[i]['redeemPointsForBill'],
+          unpaid[i]['redeemPointsFactor'],
+        ),
+      );
+    }
+
+    _unpaidOrder = list;
+    print('=======================unpaid');
+    print(_unpaidOrder);
+    notifyListeners();
+  }
+
+  int getTotalPoints() {
+    num totla = 0;
+    for (int i = 0 ; i < _orders.length; i++) {
+      totla = totla + _orders[i].totalCostForItems!;
+    }
+
+    return int.parse(totla.toString());
+
+  }
 }

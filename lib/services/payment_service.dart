@@ -1,17 +1,24 @@
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../app/constants.dart';
+import '../app/preferences/shared_pref_controller.dart';
 
 class PaymentController extends GetxController {
   Map<String, dynamic>? paymentIntentData;
 
   Future<void> makePayment(
       {required BuildContext context,required String amount, required String currency}) async {
+    // displayPaymentSheet(context);
     try {
       paymentIntentData = await createPaymentIntent(amount, currency);
+      print('=================STRIPE');
+      print(paymentIntentData);
       if (paymentIntentData != null) {
         await Stripe.instance.initPaymentSheet(
             paymentSheetParameters: SetupPaymentSheetParameters(
@@ -63,11 +70,14 @@ class PaymentController extends GetxController {
         'currency': currency,
         'payment_method_types[]': 'card'
       };
+      //https://api.stripe.com/v1/payment_intents
+      // Bearer sk_test_51MLP4SIQef6xe4xw6JFXtWWrBmt2gsL4aat9wb3VKXRNp2P7tQ34iiqmg8Ua1OCUvtdne9QzOpeWinx1ix94BOto005KnKf7xD
+      //'Authorization':
       var response = await http.post(
           Uri.parse('https://api.stripe.com/v1/payment_intents'),
           body: body,
           headers: {
-            'Authorization': 'Bearer sk_test_51MLP4SIQef6xe4xw6JFXtWWrBmt2gsL4aat9wb3VKXRNp2P7tQ34iiqmg8Ua1OCUvtdne9QzOpeWinx1ix94BOto005KnKf7xD',
+            'Authorization':'Bearer sk_test_51MLP4SIQef6xe4xw6JFXtWWrBmt2gsL4aat9wb3VKXRNp2P7tQ34iiqmg8Ua1OCUvtdne9QzOpeWinx1ix94BOto005KnKf7xD',
             'Content-Type': 'application/x-www-form-urlencoded'
           });
       return jsonDecode(response.body);

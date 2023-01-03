@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/constants.dart';
 import '../resources/color_manager.dart';
@@ -18,8 +22,19 @@ class PayLaterView extends StatefulWidget {
 class _PayLaterViewState extends State<PayLaterView> {
   int index1 = 0;
 
+  var isLoading = true;
+
+  @override
+  void initState() {
+    Provider.of<ProductProvider>(context, listen: false)
+        .getUnpaidOrder()
+        .then((value) => isLoading = false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var unpaid = Provider.of<ProductProvider>(context).unpaidOrder;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -53,115 +68,129 @@ class _PayLaterViewState extends State<PayLaterView> {
               ),
               Divider(height: 1, color: ColorManager.greyLight),
               Expanded(
-                child: GridView.builder(
-                    padding: EdgeInsets.symmetric(vertical: AppPadding.p4),
-                    shrinkWrap: true,
-                    itemCount: 10,
-                    physics: const BouncingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: Constants.crossAxisCount,
-                      mainAxisExtent: Constants.mainAxisExtent,
-                      mainAxisSpacing: Constants.mainAxisSpacing,
-                    ),
-                    itemBuilder: (context, index) {
-                      index1 = index;
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (builder) => ProductView()),
-                          // );
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Stack(
+                child: isLoading
+                    ? Center(
+                        child: Container(
+                          width: 20.h,
+                          height: 20.h,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1,
+                          ),
+                        ),
+                      )
+                    : GridView.builder(
+                        padding: EdgeInsets.symmetric(vertical: AppPadding.p4),
+                        shrinkWrap: true,
+                        itemCount: unpaid.length,
+                        physics: const BouncingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: Constants.crossAxisCount,
+                          mainAxisExtent: Constants.mainAxisExtent,
+                          mainAxisSpacing: Constants.mainAxisSpacing,
+                        ),
+                        itemBuilder: (context, index) {
+                          index1 = index;
+                          return GestureDetector(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (builder) => ProductView()),
+                              // );
+                              Navigator.of(context).pushNamed(Routes.unpaidItemScreen,arguments: unpaid[index]);
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(AppRadius.r14),
-                                  child: Image.asset(
-                                    ImageAssets.test,
-                                    height: AppSize.s211,
-                                    width: AppSize.s154,
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(AppRadius.r14),
+                                      child: Image.asset(
+                                        ImageAssets.test,
+                                        height: AppSize.s211,
+                                        width: AppSize.s154,
+                                      ),
+                                    ),
+                                    // PositionedDirectional(
+                                    //   end: AppSize.s12,
+                                    //   top: AppSize.s12,
+                                    //   child: CircleAvatar(
+                                    //     radius: AppRadius.r14,
+                                    //     backgroundColor: ColorManager.burgundy,
+                                    //     child: Image.asset(
+                                    //       IconsAssets.heart,
+                                    //       height: AppSize.s16,
+                                    //       width: AppSize.s16,
+                                    //     ),
+                                    //   ),
+                                    // )
+                                  ],
+                                ),
+                                Text(
+                                  'Unpaid',
+                                  style: getSemiBoldStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontSize: FontSize.s14,
                                   ),
                                 ),
-                                PositionedDirectional(
-                                  end: AppSize.s12,
-                                  top: AppSize.s12,
-                                  child: CircleAvatar(
-                                    radius: AppRadius.r14,
-                                    backgroundColor: ColorManager.burgundy,
-                                    child: Image.asset(
-                                      IconsAssets.heart,
-                                      height: AppSize.s16,
-                                      width: AppSize.s16,
+                                SizedBox(
+                                  height: AppSize.s4,
+                                ),
+                                Container(
+                                  padding: EdgeInsetsDirectional.only(
+                                      start: AppPadding.p22),
+                                  alignment: AlignmentDirectional.topStart,
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      'You have ${unpaid[index].items?.length} item unpaid!',
+                                      style: getRegularStyle(
+                                        color: ColorManager.grey,
+                                        fontSize: FontSize.s10,
+                                      ),
                                     ),
                                   ),
-                                )
+                                ),
+                                SizedBox(
+                                  height: AppSize.s8,
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.only(
+                                      start: AppPadding.p22),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '${unpaid[index].totalCostForItems} AED',
+                                        style: getSemiBoldStyle(
+                                          color: ColorManager.primaryDark,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Image.asset(
+                                        IconsAssets.start,
+                                        height: AppSize.s14,
+                                        width: AppSize.s15,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      // Text(
+                                      //   '5.0',
+                                      //   style: getRegularStyle(
+                                      //     color: ColorManager.black,
+                                      //     fontSize: FontSize.s12,
+                                      //   ),
+                                      // ),
+                                      Spacer()
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                            Text(
-                              'Modern light clothes',
-                              style: getSemiBoldStyle(
-                                color: ColorManager.primaryDark,
-                                fontSize: FontSize.s14,
-                              ),
-                            ),
-                            SizedBox(
-                              height: AppSize.s4,
-                            ),
-                            Container(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: AppPadding.p22),
-                              alignment: AlignmentDirectional.topStart,
-                              child: Text(
-                                'Dress modern',
-                                style: getRegularStyle(
-                                  color: ColorManager.grey,
-                                  fontSize: FontSize.s10,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: AppSize.s8,
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: AppPadding.p22),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '\$212.99',
-                                    style: getSemiBoldStyle(
-                                      color: ColorManager.primaryDark,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    IconsAssets.start,
-                                    height: AppSize.s14,
-                                    width: AppSize.s15,
-                                  ),
-                                  SizedBox(
-                                    width: AppSize.s8,
-                                  ),
-                                  Text(
-                                    '5.0',
-                                    style: getRegularStyle(
-                                      color: ColorManager.black,
-                                      fontSize: FontSize.s12,
-                                    ),
-                                  ),
-                                  Spacer()
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                          );
+                        }),
               ),
             ],
           ),

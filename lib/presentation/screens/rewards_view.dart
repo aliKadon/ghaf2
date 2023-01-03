@@ -1,18 +1,49 @@
+import 'dart:math' as math; // import this
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
 import '../../app/constants.dart';
+import '../../providers/product_provider.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'dart:math' as math; // import this
 
-class RewardsView extends StatelessWidget {
+
+class RewardsView extends StatefulWidget {
   const RewardsView({Key? key}) : super(key: key);
 
   @override
+  State<RewardsView> createState() => _RewardsViewState();
+}
+
+class _RewardsViewState extends State<RewardsView> {
+
+
+  var isLoading = true;
+
+
+  @override
+  void initState() {
+    Provider.of<ProductProvider>(context, listen: false)
+        .getRedeemPoints()
+        .then((value) => isLoading = false);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var redeem = Provider
+        .of<ProductProvider>(context)
+        .redeemsPoints;
+
+    var allRedeemPoint = Provider.of<ProductProvider>(context).allRedeemPoints;
+    print('=======================rewards');
+    print(allRedeemPoint);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -23,7 +54,10 @@ class RewardsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      allRedeemPoint = 0;
+                      Navigator.pop(context);
+                    },
                     child: Image.asset(
                       IconsAssets.arrow,
                       height: AppSize.s18,
@@ -45,85 +79,85 @@ class RewardsView extends StatelessWidget {
                 height: AppSize.s12,
               ),
               Divider(height: 1, color: ColorManager.greyLight),
-              SizedBox(
-                height: AppSize.s30,
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppPadding.p10, vertical: AppPadding.p14),
-                    decoration: BoxDecoration(
-                      color: ColorManager.greyLight,
-                      borderRadius: BorderRadius.circular(AppRadius.r8),
-                    ),
-                    child: Image.asset(
-                      IconsAssets.rewards,
-                      height: AppSize.s34,
-                      width: AppSize.s44,
-                    ),
-                  ),
-                  SizedBox(
-                    width: AppSize.s10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '355 point',
-                        style: getBoldStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s18,
-                        ),
-                      ),
-                      Text(
-                        'Points expire',
-                        style: getRegularStyle(
-                          color: ColorManager.grey,
-                          fontSize: FontSize.s14,
-                        ),
-                      ),
-                      Text(
-                        ' 22\10\2022',
-                        style: getRegularStyle(
-                          color: ColorManager.grey,
-                          fontSize: FontSize.s14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              // SizedBox(
+              //   height: AppSize.s30,
+              // ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       padding: EdgeInsets.symmetric(
+              //           horizontal: AppPadding.p10, vertical: AppPadding.p14),
+              //       decoration: BoxDecoration(
+              //         color: ColorManager.greyLight,
+              //         borderRadius: BorderRadius.circular(AppRadius.r8),
+              //       ),
+              //       child: Image.asset(
+              //         IconsAssets.rewards,
+              //         height: AppSize.s34,
+              //         width: AppSize.s44,
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: AppSize.s10,
+              //     ),
+              //     Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           '$allRedeemPoint point',
+              //           style: getBoldStyle(
+              //             color: ColorManager.primaryDark,
+              //             fontSize: FontSize.s18,
+              //           ),
+              //         ),
+              //         Text(
+              //           'All Points You Have',
+              //           style: getRegularStyle(
+              //             color: ColorManager.grey,
+              //             fontSize: FontSize.s14,
+              //           ),
+              //         ),
+              //         Text(
+              //           ' Congrats',
+              //           style: getRegularStyle(
+              //             color: ColorManager.grey,
+              //             fontSize: FontSize.s14,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: AppSize.s24,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: AppPadding.p8, horizontal: AppPadding.p8),
-                decoration: BoxDecoration(
-                  color: ColorManager.whiteLight,
-                  borderRadius: BorderRadius.circular(AppRadius.r8),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      '90 points spent',
-                      style: getMediumStyle(
-                        color: ColorManager.primaryDark,
-                        fontSize: FontSize.s16,
-                      ),
-                    ),
-                    Spacer(),
-                    Text(
-                      AppLocalizations.of(context)!.browse_history,
-                      style: getRegularStyle(
-                        color: ColorManager.grey,
-                        fontSize: FontSize.s14,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(
+              //       vertical: AppPadding.p8, horizontal: AppPadding.p8),
+              //   decoration: BoxDecoration(
+              //     color: ColorManager.whiteLight,
+              //     borderRadius: BorderRadius.circular(AppRadius.r8),
+              //   ),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         '90 points spent',
+              //         style: getMediumStyle(
+              //           color: ColorManager.primaryDark,
+              //           fontSize: FontSize.s16,
+              //         ),
+              //       ),
+              //       Spacer(),
+              //       Text(
+              //         AppLocalizations.of(context)!.browse_history,
+              //         style: getRegularStyle(
+              //           color: ColorManager.grey,
+              //           fontSize: FontSize.s14,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: AppSize.s24,
               ),
@@ -139,25 +173,33 @@ class RewardsView extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    Text(
-                      AppLocalizations.of(context)!.more,
-                      style: getMediumStyle(
-                        color: ColorManager.greyLight,
-                        fontSize: FontSize.s16,
-                      ),
-                    ),
+                    // Text(
+                    //   AppLocalizations.of(context)!.more,
+                    //   style: getMediumStyle(
+                    //     color: ColorManager.greyLight,
+                    //     fontSize: FontSize.s16,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
               SizedBox(
                 height: AppSize.s8,
               ),
-              Expanded(
+              isLoading ? Center(
+                child: Container(
+                  width: 20.h,
+                  height: 20.h,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1,
+                  ),
+                ),
+              ) : Expanded(
                 child: GridView.builder(
                     padding: EdgeInsets.symmetric(
                         horizontal: AppPadding.p8, vertical: AppPadding.p4),
                     shrinkWrap: true,
-                    itemCount: 10,
+                    itemCount: redeem.length,
                     physics: const BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: Constants.crossAxisCount,
@@ -172,30 +214,30 @@ class RewardsView extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius:
-                                    BorderRadius.circular(AppRadius.r14),
+                                BorderRadius.circular(AppRadius.r14),
                                 child: Image.asset(
                                   ImageAssets.test,
                                   height: AppSize.s211,
                                   width: AppSize.s154,
                                 ),
                               ),
-                              PositionedDirectional(
-                                end: AppSize.s12,
-                                top: AppSize.s12,
-                                child: CircleAvatar(
-                                  radius: AppRadius.r14,
-                                  backgroundColor: ColorManager.burgundy,
-                                  child: Image.asset(
-                                    IconsAssets.heart,
-                                    height: AppSize.s16,
-                                    width: AppSize.s16,
-                                  ),
-                                ),
-                              )
+                              // PositionedDirectional(
+                              //   end: AppSize.s12,
+                              //   top: AppSize.s12,
+                              //   child: CircleAvatar(
+                              //     radius: AppRadius.r14,
+                              //     backgroundColor: ColorManager.burgundy,
+                              //     child: Image.asset(
+                              //       IconsAssets.heart,
+                              //       height: AppSize.s16,
+                              //       width: AppSize.s16,
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                           Text(
-                            'Modern light clothes',
+                            'Congrats',
                             style: getSemiBoldStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s14,
@@ -209,11 +251,14 @@ class RewardsView extends StatelessWidget {
                                 start: AppPadding.p22),
                             child: Row(
                               children: [
-                                Text(
-                                  'Dress modern',
-                                  style: getRegularStyle(
-                                    color: ColorManager.grey,
-                                    fontSize: FontSize.s10,
+                                FittedBox(
+
+                                  child: Text(
+                                    redeem[index].storeName,
+                                    style: getRegularStyle(
+                                      color: ColorManager.grey,
+                                      fontSize: FontSize.s14,
+                                    ),
                                   ),
                                 ),
                                 Spacer(),
@@ -225,11 +270,14 @@ class RewardsView extends StatelessWidget {
                                 SizedBox(
                                   width: AppSize.s8,
                                 ),
-                                Text(
-                                  '5.0',
-                                  style: getRegularStyle(
-                                    color: ColorManager.black,
-                                    fontSize: FontSize.s12,
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    redeem[index].points.toString(),
+                                    style: getRegularStyle(
+                                      color: ColorManager.black,
+                                      fontSize: FontSize.s10,
+                                    ),
                                   ),
                                 ),
                                 Spacer()

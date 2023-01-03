@@ -1,24 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:ghaf_application/presentation/screens/checkout_confirm_view.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/services/payment_service.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-
 
 import '../../domain/model/available_delevey_method.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
+import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 
@@ -31,7 +26,6 @@ class CheckOutView extends StatefulWidget {
   // }) : super(key: key);
   // const CheckOutView({Key? key}) : super(key: key);
   CheckOutView(this.order);
-
 
   @override
   State<CheckOutView> createState() => _CheckOutViewState();
@@ -47,9 +41,10 @@ class _CheckOutViewState extends State<CheckOutView> {
   late var payLater = widget.order.orderDetails['totalCostForItems'];
   late var paymentIntent;
   DateTime? date;
+  var myAddress;
+  var isAddressSelected = false;
 
   final paymentController = Get.put(PaymentController());
-
 
   @override
   void initState() {
@@ -57,7 +52,7 @@ class _CheckOutViewState extends State<CheckOutView> {
     Provider.of<ProductProvider>(context, listen: false).getAddress();
     if (widget.order.orderDetails['canPayLaterValue'] == 0) {
       visibilityChecked = false;
-    }else {
+    } else {
       visibilityChecked = true;
     }
     super.initState();
@@ -69,9 +64,6 @@ class _CheckOutViewState extends State<CheckOutView> {
     _paymentMethodTextController.dispose();
     super.dispose();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -277,138 +269,140 @@ class _CheckOutViewState extends State<CheckOutView> {
                     physics: BouncingScrollPhysics(),
                     itemCount: addresses.length,
                     itemBuilder: (context, index) {
-                      return Visibility(
-                        visible: visibility,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-
-                            });
-                          },
-                          child: Column(
-                            children: [
-                              Row(children: [
-                                Text(
-                                  AppLocalizations.of(context)!.address,
-                                  style: getSemiBoldStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16,
-                                  ),
-                                ),
-                                Spacer(),
-                                // Image.asset(
-                                //   IconsAssets.plus2,
-                                //   height: AppSize.s22,
-                                //   width: AppSize.s22,
-                                // ),
-                              ]),
-                              SizedBox(
-                                height: AppSize.s12,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: AppPadding.p8),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(AppRadius.r8),
-                                  border: Border.all(
-                                      width: AppSize.s1,
-                                      color: ColorManager.grey),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: AppSize.s14,
+                      return GestureDetector(
+                        onTap: () {
+                          print('====================address checkout');
+                          print(addresses[index]);
+                          myAddress = addresses[index];
+                          SnackBar(content: Text('You pick address Number $index'),backgroundColor: Colors.green,);
+                        },
+                        child: Visibility(
+                          visible: visibility,
+                            child: Column(
+                              children: [
+                                Row(children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.address,
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontSize: FontSize.s16,
                                     ),
-                                    Row(
-                                      children: [
+                                  ),
+                                  Spacer(),
+                                  // Image.asset(
+                                  //   IconsAssets.plus2,
+                                  //   height: AppSize.s22,
+                                  //   width: AppSize.s22,
+                                  // ),
+                                ]),
+                                SizedBox(
+                                  height: AppSize.s12,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: AppPadding.p8),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(AppRadius.r8),
+                                    border: Border.all(
+                                        width: AppSize.s1,
+                                        color: ColorManager.grey),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: AppSize.s14,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            addresses[index].addressName!,
+                                            style: getSemiBoldStyle(
+                                              color: ColorManager.primaryDark,
+                                              fontSize: FontSize.s16,
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Visibility(
+                                            visible: false,
+                                            child: Icon(
+                                              Icons.check_circle,
+                                              color: Colors.lightGreenAccent,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+
+                                      SizedBox(
+                                        height: AppSize.s10,
+                                      ),
+                                      Row(children: [
+                                        Image.asset(
+                                          IconsAssets.location1,
+                                          height: AppSize.s15,
+                                          width: AppSize.s11,
+                                        ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
                                         Text(
                                           addresses[index].addressName!,
-                                          style: getSemiBoldStyle(
-                                            color: ColorManager.primaryDark,
-                                            fontSize: FontSize.s16,
+                                          style: getRegularStyle(
+                                            color: ColorManager.black,
                                           ),
                                         ),
-                                        Spacer(),
-                                        Visibility(
-                                          visible: false,
-                                          child: Icon(
-                                            Icons.check_circle,
-                                            color: Colors.lightGreenAccent,
+                                      ]),
+                                      SizedBox(
+                                        height: AppSize.s10,
+                                      ),
+                                      // Row(children: [
+                                      //   Image.asset(
+                                      //     IconsAssets.person,
+                                      //     height: AppSize.s15,
+                                      //     width: AppSize.s14,
+                                      //   ),
+                                      //   SizedBox(
+                                      //     width: AppSize.s8,
+                                      //   ),
+                                      //   Text(
+                                      //     'zidan zidan',
+                                      //     style: getRegularStyle(
+                                      //       color: ColorManager.black,
+                                      //     ),
+                                      //   ),
+                                      // ]),
+                                      SizedBox(
+                                        height: AppSize.s10,
+                                      ),
+                                      Row(children: [
+                                        Image.asset(
+                                          IconsAssets.call,
+                                          height: AppSize.s18,
+                                          width: AppSize.s18,
+                                        ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        Text(
+                                          addresses[index].phone!,
+                                          style: getRegularStyle(
+                                            color: ColorManager.black,
                                           ),
-                                        )
-                                      ],
-                                    ),
-
-                                    SizedBox(
-                                      height: AppSize.s10,
-                                    ),
-                                    Row(children: [
-                                      Image.asset(
-                                        IconsAssets.location1,
-                                        height: AppSize.s15,
-                                        width: AppSize.s11,
-                                      ),
-                                      SizedBox(
-                                        width: AppSize.s8,
-                                      ),
-                                      Text(
-                                        addresses[index].addressName!,
-                                        style: getRegularStyle(
-                                          color: ColorManager.black,
                                         ),
-                                      ),
-                                    ]),
-                                    SizedBox(
-                                      height: AppSize.s10,
-                                    ),
-                                    // Row(children: [
-                                    //   Image.asset(
-                                    //     IconsAssets.person,
-                                    //     height: AppSize.s15,
-                                    //     width: AppSize.s14,
-                                    //   ),
-                                    //   SizedBox(
-                                    //     width: AppSize.s8,
-                                    //   ),
-                                    //   Text(
-                                    //     'zidan zidan',
-                                    //     style: getRegularStyle(
-                                    //       color: ColorManager.black,
-                                    //     ),
-                                    //   ),
-                                    // ]),
-                                    SizedBox(
-                                      height: AppSize.s10,
-                                    ),
-                                    Row(children: [
-                                      Image.asset(
-                                        IconsAssets.call,
-                                        height: AppSize.s18,
-                                        width: AppSize.s18,
-                                      ),
+                                      ]),
                                       SizedBox(
-                                        width: AppSize.s8,
+                                        height: AppSize.s22,
                                       ),
-                                      Text(
-                                        addresses[index].phone!,
-                                        style: getRegularStyle(
-                                          color: ColorManager.black,
-                                        ),
-                                      ),
-                                    ]),
-                                    SizedBox(
-                                      height: AppSize.s22,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: AppSize.s10,
-                              ),
-                            ],
-                          ),
+                                SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                              ],
+                            ),
+
                         ),
                       );
                     },
@@ -559,11 +553,13 @@ class _CheckOutViewState extends State<CheckOutView> {
                                 }
                                 if (isSwitchedPayLater) {
                                   setState(() {
-                                    payLater = widget.order.orderDetails['canPayLaterValue'];
+                                    payLater = widget
+                                        .order.orderDetails['canPayLaterValue'];
                                   });
-                                }else {
+                                } else {
                                   setState(() {
-                                    payLater = widget.order.orderDetails['totalCostForItems'];
+                                    payLater = widget.order
+                                        .orderDetails['totalCostForItems'];
                                   });
                                 }
                                 print(isSwitchedPayLater);
@@ -605,6 +601,12 @@ class _CheckOutViewState extends State<CheckOutView> {
                       ],
                     ),
                   ),
+                  CardField(
+                    enablePostalCode: false,
+                    onCardChanged: (card) {
+                      setState(() {});
+                    },
+                  ),
                   SizedBox(
                     height: AppSize.s44,
                   ),
@@ -616,7 +618,22 @@ class _CheckOutViewState extends State<CheckOutView> {
                     height: AppSize.s55,
                     child: ElevatedButton(
                       onPressed: () {
-                        paymentController.makePayment(context: context,amount: payLater.toString(), currency: 'AED');
+                        print('================================orderID');
+                        print(widget.order.orderDetails['id']);
+                        print(widget.order.orderDetails['deliveryMethod']['id']);
+                        print(date.toString());
+                        print(myAddress);
+                        print(isSwitched);
+                        Navigator.of(context)
+                            .pushNamed(Routes.snapsheet, arguments: {
+                          'orderId': widget.order.orderDetails['id'],
+                          'deliveryMethodId':widget.order.orderDetails['deliveryMethod']['id'],
+                          'date' : date,
+                          'address': myAddress ?? '',
+                          'reedem': isSwitched,
+                          'paylater': isSwitchedPayLater
+                        });
+                        // paymentController.makePayment(context: context,amount: payLater.toString(), currency: 'AED');
                         // Navigator.push(
                         //   context,
                         //   MaterialPageRoute(
@@ -633,6 +650,11 @@ class _CheckOutViewState extends State<CheckOutView> {
                   SizedBox(
                     height: AppSize.s24,
                   ),
+                  // SnappingSheet(
+                  //   sheetBelow: SnappingSheetContent(child: Container(child: Text('HIII'),)),
+                  //   grabbingHeight: 75,
+                  //
+                  // ),
                 ],
               ),
             ),
@@ -651,73 +673,71 @@ class _CheckOutViewState extends State<CheckOutView> {
       ),
     );
   }
-  // Future<void> makePayment() async {
-  //   try {
-  //     //STEP 1: Create Payment Intent
-  //     paymentIntent = await createPaymentIntent('11000', 'USD');
-  //
-  //     //STEP 2: Initialize Payment Sheet
-  //     await Stripe.instance
-  //         .initPaymentSheet(
-  //
-  //         paymentSheetParameters: SetupPaymentSheetParameters(
-  //             paymentIntentClientSecret: paymentIntent![
-  //             'client_secret'], //Gotten from payment intent
-  //             style: ThemeMode.light,
-  //             merchantDisplayName: 'Ikay'))
-  //         .then((value) {});
-  //
-  //     //STEP 3: Display Payment sheet
-  //     displayPaymentSheet();
-  //   } catch (err) {
-  //     throw Exception(err);
-  //   }
-  // }
-  // createPaymentIntent(String amount, String currency) async {
-  //   try {
-  //     //Request body
-  //     Map<String, dynamic> body = {
-  //       'amount': amount,
-  //       'currency': currency,
-  //     };
-  //
-  //     //Make post request to Stripe
-  //     var response = await http.post(
-  //       Uri.parse('https://api.stripe.com/v1/payment_intents'),
-  //       headers: {
-  //         'Authorization': 'Bearer sk_test_51MLP4SIQef6xe4xw6JFXtWWrBmt2gsL4aat9wb3VKXRNp2P7tQ34iiqmg8Ua1OCUvtdne9QzOpeWinx1ix94BOto005KnKf7xD}',
-  //         'Content-Type': 'application/x-www-form-urlencoded'
-  //       },
-  //       body: body,
-  //     );
-  //     return json.decode(response.body);
-  //   } catch (err) {
-  //     throw Exception(err.toString());
-  //   }
-  // }
-  //
-  // displayPaymentSheet() async {
-  //   try {
-  //     await Stripe.instance.presentPaymentSheet().then((value) {
-  //
-  //       //Clear paymentIntent variable after successful payment
-  //       paymentIntent = null;
-  //
-  //     })
-  //         .onError((error, stackTrace) {
-  //       throw Exception(error);
-  //     });
-  //   }
-  //   on StripeException catch (e) {
-  //     print('Error is:---> $e');
-  //   }
-  //   catch (e) {
-  //     print('$e');
-  //   }
-  // }
+// Future<void> makePayment() async {
+//   try {
+//     //STEP 1: Create Payment Intent
+//     paymentIntent = await createPaymentIntent('11000', 'USD');
+//
+//     //STEP 2: Initialize Payment Sheet
+//     await Stripe.instance
+//         .initPaymentSheet(
+//
+//         paymentSheetParameters: SetupPaymentSheetParameters(
+//             paymentIntentClientSecret: paymentIntent![
+//             'client_secret'], //Gotten from payment intent
+//             style: ThemeMode.light,
+//             merchantDisplayName: 'Ikay'))
+//         .then((value) {});
+//
+//     //STEP 3: Display Payment sheet
+//     displayPaymentSheet();
+//   } catch (err) {
+//     throw Exception(err);
+//   }
+// }
+// createPaymentIntent(String amount, String currency) async {
+//   try {
+//     //Request body
+//     Map<String, dynamic> body = {
+//       'amount': amount,
+//       'currency': currency,
+//     };
+//
+//     //Make post request to Stripe
+//     var response = await http.post(
+//       Uri.parse('https://api.stripe.com/v1/payment_intents'),
+//       headers: {
+//         'Authorization': 'Bearer sk_test_51MLP4SIQef6xe4xw6JFXtWWrBmt2gsL4aat9wb3VKXRNp2P7tQ34iiqmg8Ua1OCUvtdne9QzOpeWinx1ix94BOto005KnKf7xD}',
+//         'Content-Type': 'application/x-www-form-urlencoded'
+//       },
+//       body: body,
+//     );
+//     return json.decode(response.body);
+//   } catch (err) {
+//     throw Exception(err.toString());
+//   }
+// }
+//
+// displayPaymentSheet() async {
+//   try {
+//     await Stripe.instance.presentPaymentSheet().then((value) {
+//
+//       //Clear paymentIntent variable after successful payment
+//       paymentIntent = null;
+//
+//     })
+//         .onError((error, stackTrace) {
+//       throw Exception(error);
+//     });
+//   }
+//   on StripeException catch (e) {
+//     print('Error is:---> $e');
+//   }
+//   catch (e) {
+//     print('$e');
+//   }
+// }
 }
-
-
 
 // void _dateDialog(BuildContext context) async {
 //   showDialog(
