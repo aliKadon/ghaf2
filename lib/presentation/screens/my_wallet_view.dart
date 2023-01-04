@@ -92,8 +92,7 @@ class MyWalletView extends StatelessWidget {
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushReplacementNamed(
-                      context, Routes.registerRoute),
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                       textStyle: getMediumStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
@@ -110,20 +109,20 @@ class MyWalletView extends StatelessWidget {
               SizedBox(
                 height: AppSize.s27,
               ),
-              Text(
-                AppLocalizations.of(context)!.recent_transactions,
-                style: getSemiBoldStyle(
-                  color: ColorManager.primaryDark,
-                  fontSize: FontSize.s18,
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s16,
-              ),
-              RecentTransactions(),
-              RecentTransactions(),
-              RecentTransactions(),
-              RecentTransactions(),
+              // Text(
+              //   AppLocalizations.of(context)!.recent_transactions,
+              //   style: getSemiBoldStyle(
+              //     color: ColorManager.primaryDark,
+              //     fontSize: FontSize.s18,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: AppSize.s16,
+              // ),
+              // RecentTransactions(),
+              // RecentTransactions(),
+              // RecentTransactions(),
+              // RecentTransactions(),
               SizedBox(
                 height: AppSize.s18,
               ),
@@ -134,51 +133,51 @@ class MyWalletView extends StatelessWidget {
     );
   }
 
-  Padding RecentTransactions() {
-    return Padding(
-      padding:  EdgeInsets.only(bottom: AppPadding.p12),
-      child: Row(
-                children: [
-                  ClipOval(
-                    child: Image.asset(
-                      ImageAssets.test,
-                      height: AppSize.s48,
-                      width: AppSize.s48,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(
-                    width: AppSize.s8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Shopping',
-                        style: getRegularStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s18,
-                        ),
-                      ),
-                      Text(
-                        '15 March 2022, 8:20PM',
-                        style: getRegularStyle(
-                          color: ColorManager.grey,
-                          fontSize: FontSize.s12,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Text(
-                    '- 120 UAE',
-                    style: getRegularStyle(
-                      color: ColorManager.grey,
-                      fontSize: FontSize.s18,
-                    ),
-                  ),
-                ],
-              ),
-    );
-  }
+  // Padding RecentTransactions() {
+  //   return Padding(
+  //     padding:  EdgeInsets.only(bottom: AppPadding.p12),
+  //     child: Row(
+  //               children: [
+  //                 ClipOval(
+  //                   child: Image.asset(
+  //                     ImageAssets.test,
+  //                     height: AppSize.s48,
+  //                     width: AppSize.s48,
+  //                     fit: BoxFit.cover,
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: AppSize.s8,
+  //                 ),
+  //                 Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Text(
+  //                       'Shopping',
+  //                       style: getRegularStyle(
+  //                         color: ColorManager.primaryDark,
+  //                         fontSize: FontSize.s18,
+  //                       ),
+  //                     ),
+  //                     Text(
+  //                       '15 March 2022, 8:20PM',
+  //                       style: getRegularStyle(
+  //                         color: ColorManager.grey,
+  //                         fontSize: FontSize.s12,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 Spacer(),
+  //                 Text(
+  //                   '- 120 UAE',
+  //                   style: getRegularStyle(
+  //                     color: ColorManager.grey,
+  //                     fontSize: FontSize.s18,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //   );
+  // }
 }

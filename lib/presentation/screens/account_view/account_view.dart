@@ -67,7 +67,7 @@ class _AccountViewState extends State<AccountView> {
                       // borderRadius: BorderRadius.circular(AppRadius.r14),
                       child: Image.asset(
                         fit: BoxFit.cover,
-                        ImageAssets.person1,
+                        'assets/images/avatar_person.png',
                         height: AppSize.s82,
                         width: AppSize.s82,
                       ),
@@ -139,8 +139,7 @@ class _AccountViewState extends State<AccountView> {
                           );
                         },
                         child: accountWidget(context, IconsAssets.rewards,
-                            AppLocalizations.of(context)!.rewards,
-                            subTitle: '333 Point'),
+                            AppLocalizations.of(context)!.rewards,),
                       ),
                       GestureDetector(
                         onTap: () => _customDialogProgress(),
@@ -178,8 +177,8 @@ class _AccountViewState extends State<AccountView> {
                           );
                         },
                         child: accountWidget(context, IconsAssets.wallet,
-                            AppLocalizations.of(context)!.my_wallet,
-                            subTitle: '120 AED'),
+                            AppLocalizations.of(context)!.my_wallet,),
+                            // subTitle: '120 AED'),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -216,20 +215,20 @@ class _AccountViewState extends State<AccountView> {
                           iconName: CupertinoIcons.gift,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => CouponsView()),
-                          );
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.coupons,
-                          AppLocalizations.of(context)!.coupons,
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (builder) => CouponsView()),
+                      //     );
+                      //   },
+                      //   child: accountWidget(
+                      //     context,
+                      //     IconsAssets.coupons,
+                      //     AppLocalizations.of(context)!.coupons,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -329,6 +328,7 @@ class _AccountViewState extends State<AccountView> {
                             //   MaterialPageRoute(
                             //       builder: (builder) => AboutAppView()),
                             // );
+                            Navigator.of(context).pushNamed(Routes.inviteScreen);
                           },
                           child: accountWidget(
                             context,

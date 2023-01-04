@@ -1,61 +1,58 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:ghaf_application/domain/model/product.dart';
-import 'package:ghaf_application/presentation/resources/assets_manager.dart';
-import 'package:ghaf_application/presentation/resources/font_manager.dart';
-import 'package:ghaf_application/presentation/screens/product_view/product_view_getx_controller.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:ghaf_application/domain/model/product2.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/model/product2.dart';
-import '../../../providers/product_provider.dart';
+import '../../../domain/model/product.dart';
+import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-class ProductView extends StatefulWidget {
-  final String tag;
+class ProductView2 extends StatefulWidget {
 
-  const ProductView({
-    Key? key,
-    required this.tag,
-  }) : super(key: key);
+  final Product2 product2;
+
+  ProductView2(this.product2);
+
+
 
   @override
-  State<ProductView> createState() => _ProductViewState();
+  State<ProductView2> createState() => _ProductView2State();
 }
 
-class _ProductViewState extends State<ProductView> {
-  // controller.
-  late final ProductViewGetXController _productViewGetXController =
-      Get.put(ProductViewGetXController());
-  late final Product _product = Get.find<Product>(tag: widget.tag);
+class _ProductView2State extends State<ProductView2> {
 
-  // init state.
+  // final int cost = 0;
+
+  // void getStoreDelevery(Product2 product2, int cost) {
+  //   for(int i = 0 ; i < 4; i++) {
+  //     if (product2.branch!['storeDeliveryCost']['methodName'] == 'Delivery'){
+  //       cost = int.parse(product2.branch!['storeDeliveryCost']['cost']);
+  //     }
+  //   }
+  //
+  // }
+
+  var isAdded = false;
+
   @override
   void initState() {
-    _productViewGetXController.init(
-      context: context,
-    );
-    Provider.of<ProductProvider>(context,listen: false).getProducts();
-    super.initState();
-  }
 
-  // dispose.
-  @override
-  void dispose() {
-    Get.delete<ProductViewGetXController>();
-    super.dispose();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // var product2 = Provider.of<ProductProvider>(context).product;
-    // var cost = product2['branch']['storeDeliveryCost'][2]['cost'];
-    // var cost = _product.branch.details.
+    var cost = widget.product2.branch!['storeDeliveryCost'][2]['cost'];
+    print('===============================const');
+    print(cost);
+    // getStoreDelevery(widget.product2,cost);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -78,7 +75,7 @@ class _ProductViewState extends State<ProductView> {
                   ),
                   Spacer(),
                   Text(
-                    _product.name ?? '',
+                    widget.product2.name ?? '',
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -94,20 +91,20 @@ class _ProductViewState extends State<ProductView> {
             Expanded(
               child: Stack(
                 children: [
-                  _product.ghafImage!.isEmpty
+                  widget.product2.ghafImage == null
                       ? SizedBox(
-                          height: 350.h,
-                          width: double.infinity,
-                          child: Icon(
-                            Icons.broken_image,
-                          ),
-                        )
+                    height: 350.h,
+                    width: double.infinity,
+                    child: Icon(
+                      Icons.broken_image,
+                    ),
+                  )
                       : Image.memory(
-                          base64Decode(_product.ghafImage?[0].data ?? ''),
-                          width: double.infinity,
-                          height: 350.h,
-                          fit: BoxFit.fill,
-                        ),
+                    base64Decode(widget.product2.ghafImage?[0]['data'] ?? ''),
+                    width: double.infinity,
+                    height: 350.h,
+                    fit: BoxFit.fill,
+                  ),
                   // PositionedDirectional(
                   //   top: 10,
                   //   start: 20,
@@ -141,7 +138,7 @@ class _ProductViewState extends State<ProductView> {
                   //           width: AppSize.s7,
                   //         ),
                   //         Text(
-                  //           AppLocalizations.of(context)!.min,
+                  //           'min',
                   //           style: getRegularStyle(
                   //             color: ColorManager.grey,
                   //           ),
@@ -174,7 +171,7 @@ class _ProductViewState extends State<ProductView> {
                             Row(
                               children: [
                                 Text(
-                                  _product.name ?? '',
+                                  widget.product2.name ?? '',
                                   style: getRegularStyle(
                                       color: ColorManager.primaryDark,
                                       fontSize: FontSize.s26),
@@ -184,7 +181,7 @@ class _ProductViewState extends State<ProductView> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '\$ ${_product.price!.toStringAsFixed(1)}',
+                                      '\$ ${widget.product2.price!.toStringAsFixed(1)}',
                                       style: TextStyle(
                                         fontSize: FontSize.s14,
                                         fontFamily: FontConstants.fontFamily,
@@ -193,10 +190,10 @@ class _ProductViewState extends State<ProductView> {
                                         decoration: TextDecoration.lineThrough,
                                       ),
                                     ),
-                                    if (_product.productDiscount != null) ...[
+                                    if (widget.product2.productDiscount != null) ...[
                                       SizedBox(height: AppSize.s4),
                                       Text(
-                                        '\$ ${((_product.price! * _product.productDiscount!.discount! / 100).toStringAsFixed(1))}',
+                                        '\$ ${((widget.product2.price! * widget.product2.productDiscount!['discount']! / 100).toStringAsFixed(1))}',
                                         style: getBoldStyle(
                                             color: ColorManager.primary,
                                             fontSize: FontSize.s26),
@@ -215,7 +212,7 @@ class _ProductViewState extends State<ProductView> {
                                   IconsAssets.start,
                                   height: AppSize.s17,
                                   width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 1
+                                  color: (widget.product2.stars ?? 0) >= 1
                                       ? null
                                       : Colors.grey,
                                 ),
@@ -226,7 +223,7 @@ class _ProductViewState extends State<ProductView> {
                                   IconsAssets.start,
                                   height: AppSize.s17,
                                   width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 2
+                                  color: (widget.product2.stars ?? 0) >= 2
                                       ? null
                                       : Colors.grey,
                                 ),
@@ -237,7 +234,7 @@ class _ProductViewState extends State<ProductView> {
                                   IconsAssets.start,
                                   height: AppSize.s17,
                                   width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 3
+                                  color: (widget.product2.stars ?? 0) >= 3
                                       ? null
                                       : Colors.grey,
                                 ),
@@ -248,7 +245,7 @@ class _ProductViewState extends State<ProductView> {
                                   IconsAssets.start,
                                   height: AppSize.s17,
                                   width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 4
+                                  color: (widget.product2.stars ?? 0) >= 4
                                       ? null
                                       : Colors.grey,
                                 ),
@@ -259,7 +256,7 @@ class _ProductViewState extends State<ProductView> {
                                   IconsAssets.start,
                                   height: AppSize.s17,
                                   width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 5
+                                  color: (widget.product2.stars ?? 0) >= 5
                                       ? null
                                       : Colors.grey,
                                 ),
@@ -267,7 +264,7 @@ class _ProductViewState extends State<ProductView> {
                                   width: AppSize.s6,
                                 ),
                                 Text(
-                                  '(${_product.productReview ?? '0'})',
+                                  '(${widget.product2.productReview ?? '0'})',
                                   style: getRegularStyle(
                                       color: ColorManager.grey,
                                       fontSize: FontSize.s14),
@@ -278,7 +275,7 @@ class _ProductViewState extends State<ProductView> {
                               height: AppSize.s10,
                             ),
                             Text(
-                              _product.description ?? '',
+                              widget.product2.description ?? '',
                               style: getRegularStyle(
                                 color: ColorManager.grey,
                               ),
@@ -329,25 +326,30 @@ class _ProductViewState extends State<ProductView> {
                                 // ),
                                 GestureDetector(
                                   onTap: () {
-                                    _product.toggleIsAddToCart(
-                                        context: context);
+                                    Provider.of<ProductProvider>(context,listen: false).addToCart(widget.product2.id!);
+                                    setState(() {
+                                      isAdded = !isAdded;
+                                    });
+                                    // widget.product2.toggleIsAddToCart(
+                                    //     context: context);
                                   },
-                                  child: GetBuilder<Product>(
-                                    id: 'isInCart',
-                                    tag: widget.tag,
-                                    builder: (controller) => Container(
+                                  // child: GetBuilder<Product>(
+                                  //   id: 'isInCart',
+                                  //   // tag: widget.tag,
+                                  //   builder: (controller) => Container(
+                                      child : Container(
                                       height: MediaQuery.of(context).size.height * 0.05,
                                       width: MediaQuery.of(context).size.height * 0.3,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             AppRadius.r14),
-                                        color: controller.isInCart!
+                                        color: isAdded
                                             ? Colors.red
                                             : ColorManager.primary,
                                       ),
                                       child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: [
                                             Image.asset(
                                               IconsAssets.bag,
@@ -358,11 +360,9 @@ class _ProductViewState extends State<ProductView> {
                                               width: AppSize.s8,
                                             ),
                                             Text(
-                                              controller.isInCart!
+                                              isAdded
                                                   ? 'Remove from cart'
-                                                  : AppLocalizations.of(
-                                                          context)!
-                                                      .add_to_cart,
+                                                  : 'Add to Cart',
                                               style: getRegularStyle(
                                                   color: ColorManager.white,
                                                   fontSize: FontSize.s14),
@@ -370,7 +370,6 @@ class _ProductViewState extends State<ProductView> {
                                           ]),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                           ],
@@ -378,38 +377,38 @@ class _ProductViewState extends State<ProductView> {
                       ),
                     ),
                   ),
-                  // PositionedDirectional(
-                  //   bottom: 311,
-                  //   end: 30,
-                  //   child: Container(
-                  //     height: AppSize.s30,
-                  //     width: AppSize.s130,
-                  //     decoration: BoxDecoration(
-                  //       color: ColorManager.primaryDark,
-                  //       borderRadius: BorderRadius.circular(AppRadius.r4),
-                  //       boxShadow: [
-                  //         BoxShadow(
-                  //           color: ColorManager.primaryDark,
-                  //           spreadRadius: 2,
-                  //           blurRadius: AppSize.s20,
-                  //           offset: Offset(
-                  //               AppSize.s2, AppSize.s2), // Shadow position
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Text(
-                  //           'AED 12 deliver',
-                  //           style: getRegularStyle(
-                  //             color: ColorManager.white,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  PositionedDirectional(
+                    bottom: 311,
+                    end: 30,
+                    child: Container(
+                      height: AppSize.s30,
+                      width: AppSize.s130,
+                      decoration: BoxDecoration(
+                        color: ColorManager.primaryDark,
+                        borderRadius: BorderRadius.circular(AppRadius.r4),
+                        boxShadow: [
+                          BoxShadow(
+                            color: ColorManager.primaryDark,
+                            spreadRadius: 2,
+                            blurRadius: AppSize.s20,
+                            offset: Offset(
+                                AppSize.s2, AppSize.s2), // Shadow position
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'AED $cost deliver',
+                            style: getRegularStyle(
+                              color: ColorManager.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 
@@ -146,10 +147,19 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> {
                       width: double.infinity,
                       height: AppSize.s55,
                       child: ElevatedButton(
-                        onPressed: AppSharedData.currentUser!.ghafGold ?? false
-                            ? _subscribeViewGetXController.cancelSubscription
-                            : _subscribeViewGetXController
-                            .subscribeAsGhafGolden,
+
+                        // onPressed: AppSharedData.currentUser!.ghafGold ?? false
+                        //     ? _subscribeViewGetXController.cancelSubscription
+                        //     : _subscribeViewGetXController
+                        //     .subscribeAsGhafGolden,
+                        onPressed: () {
+                          if (AppSharedData.currentUser!.ghafGold == false) {
+                            Navigator.of(context).pushNamed(Routes.paymentMethodeForSubscribe);
+                          }else {
+                            Navigator.of(context).pushNamed(Routes.paymentMethodRoute);
+
+                          }
+                        },
                         child: Text(
                           AppSharedData.currentUser!.ghafGold ?? false
                               ? 'Un Subscribe'

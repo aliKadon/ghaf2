@@ -41,6 +41,7 @@ class PaymentController extends GetxController {
   displayPaymentSheet(BuildContext context) async {
     try {
       await Stripe.instance.presentPaymentSheet();
+
       // Get.snackbar('Payment', 'Payment Successful',
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.green,

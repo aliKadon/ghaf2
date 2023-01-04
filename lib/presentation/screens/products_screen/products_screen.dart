@@ -34,7 +34,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     _productsScreenGetXController.init(
       context: context,
-      categoryId: widget.category.id.toString(),
+      categoryId: widget.category['id'].toString(),
     );
 
     super.initState();
@@ -52,7 +52,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category.name.toString()),
+        title: Text(widget.category['name'].toString()),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),

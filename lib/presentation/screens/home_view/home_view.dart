@@ -136,11 +136,11 @@ class _HomeViewState extends State<HomeView> {
                         SizedBox(
                           width: 15.w,
                         ),
-                        Image.asset(
-                          ImageAssets.person,
-                          height: AppSize.s40,
-                          width: AppSize.s40,
-                        ),
+                        // Image.asset(
+                        //   ImageAssets.person,
+                        //   height: AppSize.s40,
+                        //   width: AppSize.s40,
+                        // ),
                       ],
                     ),
                   ),

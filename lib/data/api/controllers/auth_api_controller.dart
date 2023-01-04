@@ -53,6 +53,8 @@ class AuthApiController with ApiHelper {
     print(response.body);
     if (response.statusCode == 200) {
       print('222');
+      print('======================================fcm');
+      print(' ++++++++++====================this is fcm ${await FirebaseMessagingService.instance.getToken()}');
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
         SharedPrefController().setToken(jsonResponse['data']);

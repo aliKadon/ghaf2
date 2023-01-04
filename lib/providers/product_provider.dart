@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,8 @@ class ProductProvider extends ChangeNotifier {
 
   var unPaidCount = 0;
   var paidCount = 0;
+
+  var referralCode = '';
 
   List<ProductDiscount> _productDiscount = [];
 
@@ -259,7 +262,7 @@ class ProductProvider extends ChangeNotifier {
   Future<void> addOrder(
       String orderId,
       String deliveryMethodId,
-      DateTime DesiredDeliveryDate,
+      String DesiredDeliveryDate,
       Address address,
       bool UseRedeemPoints,
       bool UsePayLater,
@@ -370,6 +373,34 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addToCart(String id) async {
+    var Url = Uri.parse('${Constants.urlBase}/Product/add-remove-to-basket?id=$id');
+    try {
+      final response = await http.post(Url,headers: {
+        HttpHeaders.authorizationHeader: SharedPrefController().token,
+      });
+      print('=======================addTocart');
+      print(response);
+    }catch(e) {
+      print(e);
+    }
+  }
+
+  Future<void> getReferralCode() async {
+    var Url = Uri.parse('${Constants.urlBase}/Auth/get-my-referral');
+    try {
+      final response = await http.get(Url,headers: {
+        HttpHeaders.authorizationHeader: SharedPrefController().token,
+      });
+      final referralCode1 = json.decode(response.body)['data'];
+      referralCode = referralCode1;
+      print('=======================referral');
+      print(response);
+    }catch(e) {
+      print(e);
+    }
+  }
+
   int getTotalPoints() {
     num totla = 0;
     for (int i = 0 ; i < _orders.length; i++) {
@@ -377,6 +408,5 @@ class ProductProvider extends ChangeNotifier {
     }
 
     return int.parse(totla.toString());
-
   }
 }

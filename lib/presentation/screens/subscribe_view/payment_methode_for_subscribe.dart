@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:ghaf_application/presentation/resources/routes_manager.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 
+import '../../resources/routes_manager.dart';
+import '../../resources/values_manager.dart';
 
-import '../resources/values_manager.dart';
-
-class SnapsheetScreen extends StatefulWidget {
-  final Map<String, dynamic> orderinfo;
-
-  SnapsheetScreen(this.orderinfo);
+class PaymentMethodeForSubscribe extends StatefulWidget {
 
   @override
-  State<SnapsheetScreen> createState() => _SnapsheetScreenState();
+  State<PaymentMethodeForSubscribe> createState() => _PaymentMethodeForSubscribeState();
 }
 
-class _SnapsheetScreenState extends State<SnapsheetScreen> {
-//
-// Stripe.setOptions(StripeOptions(
-// publishableKey: 'YOUR_STRIPE_PUBLISHABLE_KEY',
-// ));
-
-
-
-
-
+class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe> {
   final _form = GlobalKey<FormState>();
 
   DateTime dateTime = DateTime.now();
@@ -59,7 +43,10 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
-              height: MediaQuery.of(context).size.height * 1,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 1,
               child: Column(
                 children: [
                   SizedBox(
@@ -76,7 +63,8 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                           cvvCode: cardInfo['cvc']!,
                           showBackView: isCVV,
                           onCreditCardWidgetChange:
-                              (CreditCardBrand) {}, //true when you want to show cvv(back) view
+                              (
+                              CreditCardBrand) {}, //true when you want to show cvv(back) view
                         ),
                         // CreditCardForm(
                         //   formKey: _form,
@@ -184,7 +172,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                   LengthLimitingTextInputFormatter(4),
                                 ],
                                 decoration:
-                                    const InputDecoration(hintText: "MONTH"),
+                                const InputDecoration(hintText: "MONTH"),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = true;
@@ -209,7 +197,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                   LengthLimitingTextInputFormatter(5),
                                 ],
                                 decoration:
-                                    const InputDecoration(hintText: "YEAR"),
+                                const InputDecoration(hintText: "YEAR"),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = true;
@@ -238,26 +226,8 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                     child: ElevatedButton(
                       child: const Text("Add card"),
                       onPressed: () {
-                        print('=========================checkout');
-                        print(widget.orderinfo['order'],);
-                        saveItem();
-                        Provider.of<ProductProvider>(context, listen: false)
-                            .addOrder(
-                              widget.orderinfo['orderId'],
-                              widget.orderinfo['deliveryMethodId'],
-                              widget.orderinfo['date'],
-                              widget.orderinfo['address'],
-                              widget.orderinfo['reedem'],
-                              widget.orderinfo['paylater'],
-                              cardInfo['cardNumber']!,
-                              double.parse(cardInfo['expiredMonth']!),
-                              cardInfo['cvc']!,
-                              double.parse(cardInfo['expiredYear']!),
-                            )
-                            .then(
-                                (value) => SnackBar(content: Text('success')));
                         Navigator.of(context)
-                            .pushNamed(Routes.checkOutConfirmRoute);
+                            .pushNamed(Routes.paymentMethodRoute);
                       },
                     ),
                   ),

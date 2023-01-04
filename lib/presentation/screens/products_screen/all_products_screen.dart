@@ -59,6 +59,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
             ),
           )
               : GridView.builder(
+
             padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.p8, vertical: AppPadding.p4),
             itemCount: product.length,
@@ -73,7 +74,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
               //   tag:
               //   '${_productsScreenGetXController.products[index].id}products',
               // );
-              return ProductWidget2(product[index]);
+              return ProductWidget2(product[index],'${product[index].id}products');
 
             },
           ),

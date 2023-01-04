@@ -7,6 +7,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/services/firebase_messaging_service.dart';
 
 class LoginViewGetXController extends GetxController with Helpers {
   // constructor fields.
@@ -28,6 +29,7 @@ class LoginViewGetXController extends GetxController with Helpers {
   // fields.
   String? userName;
   String? password;
+  FirebaseMessagingService? firebaseMessagingService;
 
   // login.
   void login() async {
@@ -68,7 +70,7 @@ class LoginViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       // Navigator.pop(context);
-      // showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: error.toString(), error: true);
       print(error.toString());
 
       // if (errorMessageLoginApiResponse != null) {

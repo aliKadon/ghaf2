@@ -1,8 +1,8 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
@@ -43,6 +43,7 @@ class _CheckOutViewState extends State<CheckOutView> {
   DateTime? date;
   var myAddress;
   var isAddressSelected = false;
+  var deleveryMethod;
 
   final paymentController = Get.put(PaymentController());
 
@@ -58,6 +59,8 @@ class _CheckOutViewState extends State<CheckOutView> {
     super.initState();
     _paymentMethodTextController = TextEditingController();
   }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -75,6 +78,7 @@ class _CheckOutViewState extends State<CheckOutView> {
     var addresses = Provider.of<ProductProvider>(context).address;
     return Scaffold(
       body: SafeArea(
+        key: _scaffoldKey,
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
           child: SingleChildScrollView(
@@ -113,12 +117,24 @@ class _CheckOutViewState extends State<CheckOutView> {
                   SizedBox(
                     height: AppSize.s12,
                   ),
-                  Text(
-                    AppLocalizations.of(context)!.delivery_method,
-                    style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s16,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.delivery_method,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s16,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        '(Choose one)',
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s10,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: AppSize.s12,
@@ -134,15 +150,38 @@ class _CheckOutViewState extends State<CheckOutView> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
+                              final snackBar = SnackBar(
+                                /// need to set following properties for best effect of awesome_snackbar_content
+                                elevation: 0,
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                content: AwesomeSnackbarContent(
+                                  title: 'Great!',
+                                  message:
+                                      'You Choose the ${widget.order.availableDeliveryMethod[index]['methodName']}!',
+
+                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                  contentType: ContentType.success,
+                                ),
+                              );
+
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(snackBar);
+
                               if (widget.order.availableDeliveryMethod[index]
                                       ['methodName'] ==
                                   'Pick up') {
                                 setState(() {
                                   visibility = false;
+                                  deleveryMethod = widget.order
+                                      .availableDeliveryMethod[index]['id'];
                                 });
                               } else {
                                 setState(() {
                                   visibility = true;
+                                  deleveryMethod = widget.order
+                                      .availableDeliveryMethod[index]['id'];
                                 });
                               }
                             },
@@ -274,135 +313,161 @@ class _CheckOutViewState extends State<CheckOutView> {
                           print('====================address checkout');
                           print(addresses[index]);
                           myAddress = addresses[index];
-                          SnackBar(content: Text('You pick address Number $index'),backgroundColor: Colors.green,);
+                          final snackBar = SnackBar(
+                            /// need to set following properties for best effect of awesome_snackbar_content
+                            elevation: 0,
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                            content: AwesomeSnackbarContent(
+                              title: 'Great!',
+                              message: 'You pick address Number ${index + 1} !',
+
+                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                              contentType: ContentType.success,
+                            ),
+                          );
+
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(snackBar);
+                          SnackBar(
+                            content: Text('You pick address Number $index'),
+                            backgroundColor: Colors.green,
+                          );
                         },
                         child: Visibility(
                           visible: visibility,
-                            child: Column(
-                              children: [
-                                Row(children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.address,
-                                    style: getSemiBoldStyle(
-                                      color: ColorManager.primaryDark,
-                                      fontSize: FontSize.s16,
-                                    ),
+                          child: Column(
+                            children: [
+                              Row(children: [
+                                Text(
+                                  AppLocalizations.of(context)!.address,
+                                  style: getSemiBoldStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontSize: FontSize.s16,
                                   ),
-                                  Spacer(),
-                                  // Image.asset(
-                                  //   IconsAssets.plus2,
-                                  //   height: AppSize.s22,
-                                  //   width: AppSize.s22,
-                                  // ),
-                                ]),
-                                SizedBox(
-                                  height: AppSize.s12,
                                 ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: AppPadding.p8),
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(AppRadius.r8),
-                                    border: Border.all(
-                                        width: AppSize.s1,
-                                        color: ColorManager.grey),
+                                Spacer(),
+                                Text(
+                                  '(Choose one)',
+                                  style: getSemiBoldStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontSize: FontSize.s10,
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: AppSize.s14,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            addresses[index].addressName!,
-                                            style: getSemiBoldStyle(
-                                              color: ColorManager.primaryDark,
-                                              fontSize: FontSize.s16,
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Visibility(
-                                            visible: false,
-                                            child: Icon(
-                                              Icons.check_circle,
-                                              color: Colors.lightGreenAccent,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-
-                                      SizedBox(
-                                        height: AppSize.s10,
-                                      ),
-                                      Row(children: [
-                                        Image.asset(
-                                          IconsAssets.location1,
-                                          height: AppSize.s15,
-                                          width: AppSize.s11,
-                                        ),
-                                        SizedBox(
-                                          width: AppSize.s8,
-                                        ),
+                                ),
+                                // Image.asset(
+                                //   IconsAssets.plus2,
+                                //   height: AppSize.s22,
+                                //   width: AppSize.s22,
+                                // ),
+                              ]),
+                              SizedBox(
+                                height: AppSize.s12,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppPadding.p8),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.r8),
+                                  border: Border.all(
+                                      width: AppSize.s1,
+                                      color: ColorManager.grey),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: AppSize.s14,
+                                    ),
+                                    Row(
+                                      children: [
                                         Text(
                                           addresses[index].addressName!,
-                                          style: getRegularStyle(
-                                            color: ColorManager.black,
+                                          style: getSemiBoldStyle(
+                                            color: ColorManager.primaryDark,
+                                            fontSize: FontSize.s16,
                                           ),
                                         ),
-                                      ]),
-                                      SizedBox(
-                                        height: AppSize.s10,
-                                      ),
-                                      // Row(children: [
-                                      //   Image.asset(
-                                      //     IconsAssets.person,
-                                      //     height: AppSize.s15,
-                                      //     width: AppSize.s14,
-                                      //   ),
-                                      //   SizedBox(
-                                      //     width: AppSize.s8,
-                                      //   ),
-                                      //   Text(
-                                      //     'zidan zidan',
-                                      //     style: getRegularStyle(
-                                      //       color: ColorManager.black,
-                                      //     ),
-                                      //   ),
-                                      // ]),
-                                      SizedBox(
-                                        height: AppSize.s10,
-                                      ),
-                                      Row(children: [
-                                        Image.asset(
-                                          IconsAssets.call,
-                                          height: AppSize.s18,
-                                          width: AppSize.s18,
-                                        ),
-                                        SizedBox(
-                                          width: AppSize.s8,
-                                        ),
-                                        Text(
-                                          addresses[index].phone!,
-                                          style: getRegularStyle(
-                                            color: ColorManager.black,
+                                        Spacer(),
+                                        Visibility(
+                                          visible: false,
+                                          child: Icon(
+                                            Icons.check_circle,
+                                            color: Colors.lightGreenAccent,
                                           ),
-                                        ),
-                                      ]),
-                                      SizedBox(
-                                        height: AppSize.s22,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: AppSize.s10,
-                                ),
-                              ],
-                            ),
+                                        )
+                                      ],
+                                    ),
 
+                                    SizedBox(
+                                      height: AppSize.s10,
+                                    ),
+                                    Row(children: [
+                                      Image.asset(
+                                        IconsAssets.location1,
+                                        height: AppSize.s15,
+                                        width: AppSize.s11,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(
+                                        addresses[index].addressName!,
+                                        style: getRegularStyle(
+                                          color: ColorManager.black,
+                                        ),
+                                      ),
+                                    ]),
+                                    SizedBox(
+                                      height: AppSize.s10,
+                                    ),
+                                    // Row(children: [
+                                    //   Image.asset(
+                                    //     IconsAssets.person,
+                                    //     height: AppSize.s15,
+                                    //     width: AppSize.s14,
+                                    //   ),
+                                    //   SizedBox(
+                                    //     width: AppSize.s8,
+                                    //   ),
+                                    //   Text(
+                                    //     'zidan zidan',
+                                    //     style: getRegularStyle(
+                                    //       color: ColorManager.black,
+                                    //     ),
+                                    //   ),
+                                    // ]),
+                                    SizedBox(
+                                      height: AppSize.s10,
+                                    ),
+                                    Row(children: [
+                                      Image.asset(
+                                        IconsAssets.call,
+                                        height: AppSize.s18,
+                                        width: AppSize.s18,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(
+                                        addresses[index].phone!,
+                                        style: getRegularStyle(
+                                          color: ColorManager.black,
+                                        ),
+                                      ),
+                                    ]),
+                                    SizedBox(
+                                      height: AppSize.s22,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // SizedBox(
+                              //   height: AppSize.s10,
+                              // ),
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -478,8 +543,8 @@ class _CheckOutViewState extends State<CheckOutView> {
                             builder: (context) {
                               return Dialog(
                                 child: Container(
-                                  height: AppSize.s258,
-                                  width: AppSize.s258,
+                                  // height: MediaQuery.of(context).size.height * 0.7,
+                                  // width: MediaQuery.of(context).size.height * 0.7,
                                   padding: EdgeInsets.symmetric(
                                       horizontal: AppPadding.p12),
                                   decoration: BoxDecoration(
@@ -487,20 +552,96 @@ class _CheckOutViewState extends State<CheckOutView> {
                                     borderRadius:
                                         BorderRadius.circular(AppRadius.r8),
                                   ),
-                                  child: SizedBox(
-                                    height: 200,
-                                    child: CupertinoDatePicker(
-                                      mode: CupertinoDatePickerMode.date,
-                                      initialDateTime: DateTime(2023, 1, 1),
-                                      onDateTimeChanged:
-                                          (DateTime newDateTime) {
-                                        // Do something
-                                        setState(() {
-                                          date = newDateTime;
-                                        });
-                                      },
+                                  // child: SizedBox(
+                                  // height: MediaQuery.of(context).size.height * 1,
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height * 0.4,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context).size.height * 0.3,
+                                          child: CupertinoDatePicker(
+                                            mode: CupertinoDatePickerMode.date,
+                                            initialDateTime: DateTime(2023, 1, 1),
+                                            onDateTimeChanged:
+                                                (DateTime newDateTime) {
+                                              print(
+                                                  '======================newDate');
+                                              print(newDateTime);
+                                              // Do something
+                                              setState(() {
+                                                if (newDateTime == null) {
+                                                  date = null;
+                                                } else {
+                                                  date = newDateTime;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                    GestureDetector(
+                                        onTap: () => Navigator.pop(context),
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.height * 0.5,
+                                          height: MediaQuery.of(context).size.height * 0.07,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.primary,
+                                            borderRadius:
+                                            BorderRadius.circular(AppRadius.r8),
+                                          ),
+                                          child: Text(
+                                            AppLocalizations.of(context)!.yes,
+                                            textAlign: TextAlign.center,
+                                            style:
+                                            getMediumStyle(color: ColorManager.white),
+                                          ),
+                                        ),
+                                      ),
+                                      ],
                                     ),
                                   ),
+                                  // Column(
+                                  //   children: [
+                                  //     CupertinoDatePicker(
+                                  //       mode: CupertinoDatePickerMode.date,
+                                  //       initialDateTime: DateTime(2023, 1, 1),
+                                  //       onDateTimeChanged:
+                                  //           (DateTime newDateTime) {
+                                  //         print('======================newDate');
+                                  //         print(newDateTime);
+                                  //         // Do something
+                                  //         setState(() {
+                                  //           if(newDateTime == null) {
+                                  //             date = null;
+                                  //           }else {
+                                  //             date = newDateTime;
+                                  //           }
+                                  //         });
+                                  //       },
+                                  //     ),
+                                  // GestureDetector(
+                                  //   onTap: () => Navigator.pop(context),
+                                  //   child: Container(
+                                  //     width: AppSize.s110,
+                                  //     height: AppSize.s38,
+                                  //     alignment: Alignment.center,
+                                  //     decoration: BoxDecoration(
+                                  //       color: ColorManager.primaryDark,
+                                  //       borderRadius:
+                                  //       BorderRadius.circular(AppRadius.r8),
+                                  //     ),
+                                  //     child: Text(
+                                  //       AppLocalizations.of(context)!.yes,
+                                  //       textAlign: TextAlign.center,
+                                  //       style:
+                                  //       getMediumStyle(color: ColorManager.white),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  //   ],
+                                  // ) ,
+                                  // ),
                                 ),
                               );
                             },
@@ -601,12 +742,12 @@ class _CheckOutViewState extends State<CheckOutView> {
                       ],
                     ),
                   ),
-                  CardField(
-                    enablePostalCode: false,
-                    onCardChanged: (card) {
-                      setState(() {});
-                    },
-                  ),
+                  // CardField(
+                  //   enablePostalCode: false,
+                  //   onCardChanged: (card) {
+                  //     setState(() {});
+                  //   },
+                  // ),
                   SizedBox(
                     height: AppSize.s44,
                   ),
@@ -620,19 +761,52 @@ class _CheckOutViewState extends State<CheckOutView> {
                       onPressed: () {
                         print('================================orderID');
                         print(widget.order.orderDetails['id']);
-                        print(widget.order.orderDetails['deliveryMethod']['id']);
+                        print(deleveryMethod);
                         print(date.toString());
                         print(myAddress);
                         print(isSwitched);
-                        Navigator.of(context)
-                            .pushNamed(Routes.snapsheet, arguments: {
-                          'orderId': widget.order.orderDetails['id'],
-                          'deliveryMethodId':widget.order.orderDetails['deliveryMethod']['id'],
-                          'date' : date,
-                          'address': myAddress ?? '',
-                          'reedem': isSwitched,
-                          'paylater': isSwitchedPayLater
-                        });
+                        if (deleveryMethod == 'Pick up' && date == 'null') {
+                          final snackBar = SnackBar(
+                            /// need to set following properties for best effect of awesome_snackbar_content
+                            elevation: 0,
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                            content: AwesomeSnackbarContent(
+                              title: 'Oh No!',
+                              message: 'You must pick a date please !',
+
+                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                              contentType: ContentType.failure,
+                            ),
+                          );
+                        }
+
+                        if (deleveryMethod != 'Pick up' && addresses == null) {
+                          final snackBar = SnackBar(
+                            /// need to set following properties for best effect of awesome_snackbar_content
+                            elevation: 0,
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                            content: AwesomeSnackbarContent(
+                              title: 'Oh No!',
+                              message: 'You must pick a delivery method !',
+
+                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                              contentType: ContentType.failure,
+                            ),
+                          );
+                        }else {
+                          Navigator.of(context)
+                              .pushNamed(Routes.snapsheet, arguments: {
+                            'orderId': widget.order.orderDetails['id'],
+                            'deliveryMethodId': deleveryMethod ?? '',
+                            'date': date.toString() ?? '',
+                            'address': myAddress ?? '',
+                            'reedem': isSwitched,
+                            'paylater': isSwitchedPayLater
+                          });
+                        }
+
                         // paymentController.makePayment(context: context,amount: payLater.toString(), currency: 'AED');
                         // Navigator.push(
                         //   context,

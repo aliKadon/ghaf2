@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/domain/model/address.dart';
 import 'package:ghaf_application/domain/model/order.dart';
+import 'package:ghaf_application/domain/model/product2.dart';
 import 'package:ghaf_application/presentation/resources/string_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/add_or_edit_address_view.dart';
@@ -18,6 +19,7 @@ import 'package:ghaf_application/presentation/screens/forget_password_view/forgo
 import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view.dart';
 import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
+import 'package:ghaf_application/presentation/screens/invite.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen.dart';
@@ -30,8 +32,9 @@ import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
-import 'package:ghaf_application/presentation/screens/payment_method_view.dart';
+import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view.dart';
+import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/all_products_screen.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen.dart';
 import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view.dart';
@@ -73,6 +76,7 @@ import '../screens/onboarding_view.dart';
 import '../screens/register_view/register_view.dart';
 import '../screens/seller/create_payment_link_seller_view.dart';
 import '../screens/splash_view.dart';
+import '../screens/subscribe_view/payment_methode_for_subscribe.dart';
 import '../screens/unpaid_items_screen.dart';
 import '../screens/welcome_view.dart';
 
@@ -146,6 +150,9 @@ class Routes {
 
   static const String snapsheet = '/snapsheet';
   static const String unpaidItemScreen =  '/unpainItemScreen';
+  static const String productView2 = '/productView2';
+  static const String inviteScreen = '/invite';
+  static const String paymentMethodeForSubscribe = '/paymentSubscribe';
 }
 
 class RouteGenerator {
@@ -160,6 +167,10 @@ class RouteGenerator {
                 settings.arguments as Map<String,dynamic>));
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case Routes.inviteScreen:
+        return MaterialPageRoute(builder: (_) => Invite());
+      case Routes.paymentMethodeForSubscribe:
+        return MaterialPageRoute(builder: (_) => PaymentMethodeForSubscribe());
       case Routes.orderTrackingScreen:
         return MaterialPageRoute(builder: (_) => OrderTrackingScreen());
       case Routes.onBoardingRoute:
@@ -223,6 +234,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => ProductView(
             tag: settings.arguments as String,
+          ),
+        );
+      case Routes.productView2:
+        return MaterialPageRoute(
+          builder: (_) => ProductView2(
+            settings.arguments as Product2,
           ),
         );
       case Routes.checkOutRoute:

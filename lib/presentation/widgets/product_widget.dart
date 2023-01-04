@@ -68,9 +68,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                   width: AppSize.s154,
                   color: Colors.grey,
                   child: _product.ghafImage!.isEmpty
-                      ? Icon(
-                          Icons.broken_image,
-                        )
+                      // ? Icon(
+                      //     Icons.broken_image,
+                      //   )
+                    ? Image.asset('assets/images/checkout.png')
                       : Image.memory(
                           base64Decode(_product.ghafImage![0].data!),
                           height: AppSize.s211,

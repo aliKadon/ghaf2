@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 
+import '../../../services/firebase_messaging_service.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -23,6 +25,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
   // controller.
   late final LoginViewGetXController _loginViewGetXController =
       Get.find<LoginViewGetXController>();
+
 
   // dispose.
   @override

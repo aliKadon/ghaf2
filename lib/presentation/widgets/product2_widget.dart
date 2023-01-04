@@ -14,19 +14,30 @@ import '../resources/font_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
+import '../screens/products_screen/products_screen_getx_controller.dart';
 
 class ProductWidget2 extends StatefulWidget {
 
   final Product2 product;
+  final String tag;
 
 
-  ProductWidget2(this.product);
+  ProductWidget2(this.product,this.tag);
 
   @override
   State<ProductWidget2> createState() => _ProductWidget2State();
 }
 
 class _ProductWidget2State extends State<ProductWidget2> {
+
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
   // // controller.
   // late final Product _product = Get.find<Product>(
   //   tag: widget.tag,
@@ -35,10 +46,11 @@ class _ProductWidget2State extends State<ProductWidget2> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+
         Navigator.pushNamed(
           context,
-          Routes.productRoute,
-          // arguments: widget.tag,
+          Routes.productView2,
+          arguments: widget.product,
         );
       },
       child: Column(

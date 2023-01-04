@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +34,17 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   late final CartViewGetXController _cartViewGetXController =
       Get.find<CartViewGetXController>();
 
+
+  //  File file =  File('path/to/image.png');
+  // Uint8List? imageData = await file.readAsBytesSync();
+
+  Future<Uint8List> getImageData() async {
+    File file = File('assets/images/checkout.png');
+    return file.readAsBytes();
+  }
+
+  String imageData = 'iVBORw0KGgoAAAANSUhEUgAAAO8AAADSCAMAAACVSmf4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADDUExURf///8ESHAAAAPb29sXFxePj48AAEp2dnWxsbENDQ8xSVsAACtaAg7wAAPz8/LOzs/Ly8uzs7OTk5MzMzNra2tLS0rm5udbW1qOjo93d3YeHh5CQkL+/v6urq4+Pj29vb4GBgWNjY0tLS1hYWIODg3h4eDs7O09PTy8vLzQ0NCgoKNR5e/Pa2/rv8Dg4OOa0tRsbG+rAwd6cnfbj5MhFScEdI+m+v9Fvce/P0NqQkuKoqc1dYM9jZsQvNMdBRcQ1ORYWFs4biS8AAA64SURBVHhe7Z1rf9o2FIdJgQBNsbk6gLmDQ5Jubdet3bqtXb//p9o5R8eWDZJsYy62fzxvKi5JObHQI8t/QeXGjRs3bty4cePGjQJiIdwuOVBotdpBqtXyFw3Fdrrd+ngwGIzr3W4HSuZHSolldbr1Qb82dRxnWus/1rFifqyEwMHtPdacWcN153O3MXNqj71ueQu2qt1x3xm53ma9WSw2u+Z85PTHpS0Yy63NXK/l9alCq7/cuLNaWQsW5c6b6wHfAYw329IWbHXq/dl8teKbzGI5q9U7JazXqvaGttvcUPvzjy9ffnymKldze9gr3wGG3jyYNhbPHWj/1m7f393dt9tf4UZn3XAG5evR0Jtrs+V6BM2/2ndM+ze4OWuOytej4fAO7flqjc0HrhZoV+GOzcQeluwAw7xqPG14z2Novw8O793dw59wx3jXmA66pZpYwmDVn213E2j+EioXDvBfcNfcm/VL1aOhNz86bvMZ299hqJLcf8f71nP7sUw9GnpzbeS91KD5OXJ44QB/gztrm0ZtXJ4DjOqdTTYLaP6+Vy4U/Dvc7W1n/dJImNX7iup9G+nNyP0fcHe15Tql6dGo3tGyNYPmx4PDCwf4Izxgl0fCrN4dNkPqlbR/hYdWpZGwUO8rqvdPZb0k4d66JBK';
+
   // dispose.
   @override
   void dispose() {
@@ -42,6 +56,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('================================data');
+    print(_cartItem.product!.ghafImage);
     return Dismissible(
       key: ValueKey<int>(widget.index),
       onDismissed: (DismissDirection direction) {
@@ -71,12 +87,15 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(AppRadius.r8),
-                child: Image.memory(
-                  base64Decode(_cartItem.product?.ghafImage?[0].data ?? ''),
+                child:_cartItem.product?.ghafImage?.length == 0 ?
+                    Icon(Icons.add_box) :
+                Image.memory(
+                  base64Decode(_cartItem.product!.ghafImage![0].data!),
                   height: AppSize.s84,
                   width: AppSize.s77,
                   fit: BoxFit.cover,
-                ),
+                )
+                // child: Icon(Icons.add),
               ),
               SizedBox(
                 width: AppSize.s12,
