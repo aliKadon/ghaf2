@@ -45,6 +45,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<SellerProvider>(context).readIndividualProduct;
