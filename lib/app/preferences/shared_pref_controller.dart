@@ -90,6 +90,22 @@ class SharedPrefController {
   bool get loggedIn =>
       _sharedPreferences.getBool(PrefKeys.loggedIn.name) ?? false;
 
+  String get userName =>
+      _sharedPreferences.getString(PrefKeys.userName.name) ?? 'userName';
+
+  String get email =>
+      _sharedPreferences.getString(PrefKeys.email.name) ?? 'Email';
+
+  Future<void> setUserName(String userName) async {
+    await _sharedPreferences.setString(PrefKeys.userName.name, '${userName}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
+  Future<void> setEmail(String email) async {
+    await _sharedPreferences.setString(PrefKeys.userName.name, '${email}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
   // void set loggedIn(bool loggedIn) => _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
 
   String get token => _sharedPreferences.getString(PrefKeys.token.name) ?? '';

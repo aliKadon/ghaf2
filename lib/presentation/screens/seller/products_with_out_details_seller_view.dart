@@ -14,61 +14,63 @@ class ProductsWithOutDetailsSellerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            ImageAssets.logo2,
-            fit: BoxFit.fill,
-            height: AppSize.s206,
-            width: AppSize.s184,
-          ),
-          SizedBox(
-            height: AppSize.s148,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.m16,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              ImageAssets.logo2,
+              fit: BoxFit.fill,
+              height: AppSize.s206,
+              width: AppSize.s184,
             ),
-            width: double.infinity,
-            height: AppSize.s55,
-            child: ElevatedButton(
-              onPressed: () =>Navigator.pushNamed(context, Routes.createPaymentLinkSellerRoute),
-              child: Text(
-                AppLocalizations.of(context)!.products_with_details,
-                style: getSemiBoldStyle(
-                    color: ColorManager.white, fontSize: FontSize.s18),
+            SizedBox(
+              height: AppSize.s148,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: AppMargin.m16,
               ),
-            ),
-          ),
-          SizedBox(
-            height: AppSize.s26,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.m16,
-            ),
-            width: double.infinity,
-            height: AppSize.s55,
-            child: ElevatedButton(
-              onPressed: () =>Navigator.pushNamed(context, Routes.loginRoute),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorManager.transparent,
-                elevation: 0,
-                side: BorderSide(
-                  color: ColorManager.primaryDark,
-                  width: AppSize.s1,
+              width: double.infinity,
+              height: AppSize.s55,
+              child: ElevatedButton(
+                onPressed: () =>Navigator.pushNamed(context, Routes.addItem2SellerRoute),
+                child: Text(
+                  AppLocalizations.of(context)!.products_with_details,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.white, fontSize: FontSize.s18),
                 ),
               ),
-              child: Text(
-                AppLocalizations.of(context)!.products_without_details,
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s18),
+            ),
+            SizedBox(
+              height: AppSize.s26,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: AppMargin.m16,
+              ),
+              width: double.infinity,
+              height: AppSize.s55,
+              child: ElevatedButton(
+                onPressed: () =>Navigator.pushNamed(context, Routes.createPaymentLinkSellerRoute),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorManager.transparent,
+                  elevation: 0,
+                  side: BorderSide(
+                    color: ColorManager.primaryDark,
+                    width: AppSize.s1,
+                  ),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.products_without_details,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark, fontSize: FontSize.s18),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../../../domain/model/order.dart';
 import '../../../providers/product_provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -26,11 +27,23 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
     super.initState();
   }
 
+  var unpaidOrders = 0;
+  var paidOrders = 0;
+
+  Future<void> getUnpaidOrders(List<Order> order) async {
+    for (int i = 0; i < order.length;i++) {
+      if (order[i].payed == false) {
+        unpaidOrders = unpaidOrders+1;
+      }else {
+        paidOrders = paidOrders + 1;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var order = Provider.of<ProductProvider>(context);
-    var unpaidCount = order.unPaidCount;
-    var paidCount = order.paidCount;
+    var order = Provider.of<ProductProvider>(context).orders;
+    getUnpaidOrders(order);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -43,8 +56,10 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      paidCount = 0;
-                      unpaidCount = 0;
+                      setState(() {
+                        paidOrders = 0;
+                        unpaidOrders = 0;
+                      });
                       Navigator.pop(context);
                     } ,
                     child: Image.asset(
@@ -95,7 +110,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                   },
                   {
                     'status': 'Completed',
-                    'count': '${paidCount}',
+                    'count': '${paidOrders}',
                   },
                   {
                     'status': 'Canceled',
@@ -111,13 +126,17 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                   },
                   {
                     'status': 'Un Paid',
-                    'count': '${unpaidCount}',
+                    'count': '${unpaidOrders}',
                   },
                 ]
                     .map(
                       (e) => InkWell(
                         onTap: () {
                           if (e['status'] == 'Un Paid') {
+                            setState(() {
+                              unpaidOrders = 0;
+                              paidOrders = 0;
+                            });
                             Navigator.pushNamed(context, Routes.ordersToPay);
                           }
                         },

@@ -15,4 +15,12 @@ mixin ApiHelper {
       // HttpHeaders.acceptHeader: 'application/json; charset=UTF-8',
     };
   }
+
+  Map<String, String> get headers1 {
+    return {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+      HttpHeaders.contentTypeHeader: ' application/octet-stream',
+      // HttpHeaders.acceptHeader: 'application/json; charset=UTF-8',
+    };
+  }
 }

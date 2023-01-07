@@ -69,6 +69,12 @@ dependencies:
   snapping_sheet: ^3.1.0
   flutter_credit_card: ^3.0.4
   awesome_snackbar_content: ^0.1.0
+  image_picker: ^0.8.6
+  firebase_auth: ^4.2.5
+  google_sign_in: ^5.4.2
+  url_launcher: ^6.1.7
+  json_annotation: ^4.7.0
+
 #  flutter_stripe: ^1.1.0
 #  stripe_payment: ^1.0.0
 

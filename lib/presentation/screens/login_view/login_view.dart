@@ -2,9 +2,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
+import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
 
 import '../../../services/firebase_messaging_service.dart';
 import '../../resources/assets_manager.dart';
@@ -13,6 +17,9 @@ import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -24,7 +31,19 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with Helpers {
   // controller.
   late final LoginViewGetXController _loginViewGetXController =
-      Get.find<LoginViewGetXController>();
+  Get.find<LoginViewGetXController>();
+
+  GoogleSignInAccount? _currentUser;
+
+
+  @override
+  void initState() {
+    _loginViewGetXController.getLocation();
+    _googleSignIn.onCurrentUserChanged.listen((event) {
+      _currentUser = event;
+    });
+    super.initState();
+  }
 
 
   // dispose.
@@ -36,6 +55,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
 
   @override
   Widget build(BuildContext context) {
+    GoogleSignInAccount? user = _currentUser;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -135,7 +155,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                               height: AppSize.s1)),
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                        EdgeInsets.symmetric(horizontal: AppPadding.p24),
                         child: Text(
                           AppLocalizations.of(context)!.or,
                           style: getSemiBoldStyle(
@@ -164,62 +184,72 @@ class _LoginViewState extends State<LoginView> with Helpers {
                     border: Border.all(
                         width: AppSize.s1, color: ColorManager.greyLight),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        ImageAssets.google,
-                        fit: BoxFit.fill,
-                        height: AppSize.s22,
-                        width: AppSize.s28,
-                      ),
-                      SizedBox(
-                        width: AppSize.s10,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.login_with_google,
-                        style: getRegularStyle(
-                            color: ColorManager.primaryDark,
-                            fontSize: FontSize.s14),
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      signinWithGoogle().then((value) =>
+                          _showDialog());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.google,
+                          fit: BoxFit.fill,
+                          height: AppSize.s22,
+                          width: AppSize.s28,
+                        ),
+                        SizedBox(
+                          width: AppSize.s10,
+                        ),
+                        Text(
+                          // AppLocalizations.of(context)!.login_with_google,
+                          'Register with Google',
+                          style: getRegularStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s14),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: AppSize.s18,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: AppMargin.m16,
-                  ),
-                  width: double.infinity,
-                  height: AppSize.s50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppRadius.r10),
-                    border: Border.all(
-                        width: AppSize.s1, color: ColorManager.greyLight),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        ImageAssets.apple,
-                        fit: BoxFit.fill,
-                        height: AppSize.s22,
-                        width: AppSize.s28,
-                      ),
-                      SizedBox(
-                        width: AppSize.s10,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.login_with_apple,
-                        style: getRegularStyle(
-                            color: ColorManager.primaryDark,
-                            fontSize: FontSize.s14),
-                      ),
-                    ],
-                  ),
-                ),
+
+                // Register with Apple
+                // SizedBox(
+                //   height: AppSize.s18,
+                // ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(
+                //     horizontal: AppMargin.m16,
+                //   ),
+                //   width: double.infinity,
+                //   height: AppSize.s50,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(AppRadius.r10),
+                //     border: Border.all(
+                //         width: AppSize.s1, color: ColorManager.greyLight),
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Image.asset(
+                //         ImageAssets.apple,
+                //         fit: BoxFit.fill,
+                //         height: AppSize.s22,
+                //         width: AppSize.s28,
+                //       ),
+                //       SizedBox(
+                //         width: AppSize.s10,
+                //       ),
+                //       Text(
+                //         // AppLocalizations.of(context)!.login_with_apple,
+                //         'Register with Apple',
+                //         style: getRegularStyle(
+                //             color: ColorManager.primaryDark,
+                //             fontSize: FontSize.s14),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: AppSize.s23,
                 ),
@@ -237,8 +267,9 @@ class _LoginViewState extends State<LoginView> with Helpers {
                         width: AppSize.s1,
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                            context, Routes.welcomeSellerRoute),
+                        onTap: () =>
+                            Navigator.pushNamed(
+                                context, Routes.welcomeSellerRoute),
                         child: Text(
                           AppLocalizations.of(context)!.seller,
                           style: getExtraBoldStyle(
@@ -274,6 +305,63 @@ class _LoginViewState extends State<LoginView> with Helpers {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> signinWithGoogle() async {
+    try {
+      await _googleSignIn.signIn();
+    } catch (e) {
+      print('================================googleSignIn');
+      print(e.toString());
+    }
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Chose Route'),
+          children: <Widget>[
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
+                  'role' : Constants.roleRegisterCustomer,
+                });
+                // Perform some action
+                // Navigator.pop(context);
+              },
+              child: Text('Register as a Customer'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
+                  'role' : Constants.roleRegisterSeller,
+                });
+                // Perform some action
+                // Navigator.pop(context);
+              },
+              child: Text('Register as a Seller'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                print('==========================google UserName');
+                print(_currentUser?.displayName);
+                print(_currentUser?.email);
+                SharedPrefController().setUserName(_currentUser?.displayName ?? 'User Name');
+                SharedPrefController().setUserName(_currentUser?.email ?? 'Enter Email');
+                Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
+                  'role' : Constants.roleRegisterIndividual,
+                });
+                // Perform some action
+                // Navigator.pop(context);
+              },
+              child: Text('Register as a Seller(individual)'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

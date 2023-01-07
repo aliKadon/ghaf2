@@ -360,7 +360,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
               width: double.infinity,
               height: AppSize.s55,
               child: ElevatedButton(
-                onPressed: () => _nextPageView(),
+                onPressed: () => Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute),
                 style: ElevatedButton.styleFrom(backgroundColor: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary),
                 child: Text(
                   AppLocalizations.of(context)!.subscribe_now,

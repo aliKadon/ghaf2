@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ghaf_application/domain/model/order.dart';
 import 'package:ghaf_application/domain/model/redeem_points.dart';
 import 'package:ghaf_application/domain/model/unpaid_order.dart';
@@ -259,17 +259,16 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addOrder(
+  Future<void> addOrderWithoutAddress(
       String orderId,
       String deliveryMethodId,
       String DesiredDeliveryDate,
-      Address address,
-      bool UseRedeemPoints,
-      bool UsePayLater,
+      String UseRedeemPoints,
+      String UsePayLater,
       String CardNumber,
-      double CardExpMonth,
+      String CardExpMonth,
       String CardExpCvc,
-      double CardExpYear) async {
+      String CardExpYear) async {
     var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
     // final response =
     print('========================addOrder');
@@ -280,26 +279,99 @@ class ProductProvider extends ChangeNotifier {
     print(UseRedeemPoints.toString());
     print(UsePayLater.toString());
     print(CardNumber);
-    try {
-      await http.post(url, headers: {
-        HttpHeaders.authorizationHeader: SharedPrefController().token,
-      }, body: {
-        'OrderId': orderId,
-        'DeliveryMethodId': deliveryMethodId,
-        'DesiredDeliveryDate': DesiredDeliveryDate,
-            // DateTime.parse(DesiredDeliveryDate) == null ?? '',
-        'DeliveryPoint': address == null ?? '',
-        'UseRedeemPoints': UseRedeemPoints,
-        'UsePayLater': UsePayLater,
-        'paymentMethodType': 'card',
-        'CardNumber': CardNumber,
-        'CardExpMonth': CardExpMonth,
-        'CardExpCvc': CardExpCvc,
-        'CardExpYear': CardExpYear,
-      });
-    } catch (e) {
-      print(e.toString());
-    }
+    final response = await http.post(url, headers: {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+    }, body: {
+      'OrderId': orderId,
+      'DeliveryMethodId': deliveryMethodId,
+      'DesiredDeliveryDate': DesiredDeliveryDate,
+      // DateTime.parse(DesiredDeliveryDate) == null ?? '',
+      'DeliveryPoint': '',
+      'UseRedeemPoints': UseRedeemPoints,
+      'UsePayLater': UsePayLater,
+      'paymentMethodType': 'card',
+      'CardNumber': CardNumber,
+      'CardExpMonth': CardExpMonth,
+      'CardExpCvc': CardExpCvc,
+      'CardExpYear': CardExpYear,
+    });
+    print('======================================statusCode');
+    print(response.statusCode);
+  }
+
+  Future<void> giveReviewForProduct(String productId, String point) async{
+    var url = Uri.parse('${Constants.urlBase}/product/read-product');
+    final response = await http.post(url, headers: {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+    }, body: {
+      'prodiId': productId,
+      'points':point
+    });
+    print('======================================statusCode');
+    print(response.statusCode);
+  }
+
+  Future<void> addOrder(
+      String orderId,
+      String deliveryMethodId,
+      String DesiredDeliveryDate,
+      String address,
+      String UseRedeemPoints,
+      String UsePayLater,
+      String CardNumber,
+      String CardExpMonth,
+      String CardExpCvc,
+      String CardExpYear) async {
+    var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
+    // final response =
+    print('========================addOrder');
+    print(orderId);
+    print(deliveryMethodId);
+    print(DesiredDeliveryDate);
+    print(address);
+    print(UseRedeemPoints.toString());
+    print(UsePayLater.toString());
+    print(CardNumber);
+    final response = await http.post(url, headers: {
+      HttpHeaders.authorizationHeader: SharedPrefController().token,
+    }, body: {
+      'OrderId': orderId,
+      'DeliveryMethodId': deliveryMethodId,
+      'DesiredDeliveryDate': DesiredDeliveryDate,
+      // DateTime.parse(DesiredDeliveryDate) == null ?? '',
+      'DeliveryPoint': address,
+      'UseRedeemPoints': UseRedeemPoints,
+      'UsePayLater': UsePayLater,
+      'paymentMethodType': 'card',
+      'CardNumber': CardNumber,
+      'CardExpMonth': CardExpMonth,
+      'CardExpCvc': CardExpCvc,
+      'CardExpYear': CardExpYear,
+    });
+    print('======================================statusCode');
+    print(response.statusCode);
+    // try {
+    //   final response = await http.post(url, headers: {
+    //     HttpHeaders.authorizationHeader: SharedPrefController().token,
+    //   }, body: {
+    //     'OrderId': orderId,
+    //     'DeliveryMethodId': deliveryMethodId,
+    //     'DesiredDeliveryDate': DesiredDeliveryDate,
+    //         // DateTime.parse(DesiredDeliveryDate) == null ?? '',
+    //     'DeliveryPoint': address == null ?? '',
+    //     'UseRedeemPoints': UseRedeemPoints.toString(),
+    //     'UsePayLater': UsePayLater.toString(),
+    //     'paymentMethodType': 'card',
+    //     'CardNumber': CardNumber,
+    //     'CardExpMonth': CardExpMonth,
+    //     'CardExpCvc': CardExpCvc,
+    //     'CardExpYear': CardExpYear,
+    //   });
+    //   print(response.statusCode);
+    // } catch (e) {
+    //   // print(response.statusCode);
+    //   print(e.toString());
+    // }
   }
 
   Future<void> getRedeemPoints() async {

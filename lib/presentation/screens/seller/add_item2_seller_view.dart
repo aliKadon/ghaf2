@@ -1,11 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/domain/model/ghaf_image.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-import '../../../data/api/controllers/auth_api_controller.dart';
-import '../../../domain/model/api_response.dart';
-import '../../../domain/model/user.dart';
+import 'package:ghaf_application/providers/seller_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -16,16 +22,18 @@ class AddItem2SellerView extends StatefulWidget {
   const AddItem2SellerView({Key? key}) : super(key: key);
 
   @override
-  State<AddItem2SellerView> createState() =>
-      _AddItem2SellerViewState();
+  State<AddItem2SellerView> createState() => _AddItem2SellerViewState();
 }
 
-class _AddItem2SellerViewState
-    extends State<AddItem2SellerView> with Helpers {
+class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
+
+  List<GhafImage>? imageProduct;
+
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
   late TextEditingController _phoneTextController;
+  late TextEditingController _discTextController;
 
   @override
   void initState() {
@@ -34,6 +42,7 @@ class _AddItem2SellerViewState
     _emailTextController = TextEditingController();
     _passwordTextController = TextEditingController();
     _phoneTextController = TextEditingController();
+    _discTextController = TextEditingController();
   }
 
   @override
@@ -42,7 +51,36 @@ class _AddItem2SellerViewState
     _emailTextController.dispose();
     _passwordTextController.dispose();
     _phoneTextController.dispose();
+    _discTextController.dispose();
     super.dispose();
+  }
+
+  List<String> listImage = [];
+
+  // Image? image;
+
+  File? image;
+  String? base64;
+
+  Future pickImage() async {
+    try {
+      final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
+      print('====================================image');
+      print(image);
+      if (image1 == null) return;
+      final imageTemp = File(image1.path);
+      this.image = imageTemp;
+      List<int> byts = (await image!.readAsBytes());
+      setState(() {
+        base64 = base64Encode(byts);
+        listImage.add('data:image/jpeg;base64,$base64');
+        imageProduct?[0].data = base64Decode(base64!).toString();
+        print('================================listImage');
+        print(listImage.toString());
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
   }
 
   @override
@@ -60,11 +98,13 @@ class _AddItem2SellerViewState
                 padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
                 child: Row(
                   children: [
-                    Text(
-                      AppLocalizations.of(context)!.cancel,
-                      style: getMediumStyle(
-                          color: ColorManager.grey,
-                          fontSize: FontSize.s16),
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Text(
+                        AppLocalizations.of(context)!.cancel,
+                        style: getMediumStyle(
+                            color: ColorManager.grey, fontSize: FontSize.s16),
+                      ),
                     ),
                     Spacer(),
                     Text(
@@ -74,16 +114,41 @@ class _AddItem2SellerViewState
                           fontSize: FontSize.s24),
                     ),
                     Spacer(),
-                    Text(
-                      AppLocalizations.of(context)!.save,
-                      style: getMediumStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s16),
+                    GestureDetector(
+                      onTap: () {
+                        showLoadingDialog(context: context, title: 'Loading');
+                        Provider.of<SellerProvider>(context,listen: false)
+                            .createIndividualProducts(
+                            _nameTextController.text,
+                            _passwordTextController.text,
+                            _phoneTextController.text,
+                            _discTextController.text,
+                            int.parse(_emailTextController.text),
+                            listImage )
+                            .then((value) => ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(
+                          content: Text('Success'),
+                          backgroundColor: Colors.green,
+                        ))).then((value) => Navigator.of(context).pop())
+                            .then((value) => Navigator.of(context)
+                            .pushNamed(Routes.addItemSellerRoute)
+                            .catchError((e) => ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(
+                          content: Text(e.toString()),
+                          backgroundColor: Colors.red,
+                        ))));
+
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.save,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s16),
+                      ),
                     ),
                   ],
                 ),
               ),
-
               SizedBox(
                 height: AppSize.s30,
               ),
@@ -91,10 +156,14 @@ class _AddItem2SellerViewState
                 alignment: AlignmentDirectional.centerStart,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-                  child: Text(
-                    AppLocalizations.of(context)!.add_photo,
-                    style: getMediumStyle(
-                        color: ColorManager.primaryDark, fontSize: FontSize.s16),
+                  child: ElevatedButton(
+                    onPressed: () => pickImage(),
+                    child: Text(
+                      AppLocalizations.of(context)!.add_photo,
+                      style: getMediumStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s16),
+                    ),
                   ),
                 ),
               ),
@@ -102,18 +171,18 @@ class _AddItem2SellerViewState
                 height: AppSize.s20,
               ),
               Container(
-                padding: EdgeInsets.all(AppPadding.p10),
-                decoration: BoxDecoration(
-                  color: ColorManager.white,
-                  borderRadius: BorderRadius.circular(AppRadius.r8),
-                ),
-                child: Image.asset(
-                  ImageAssets.photoGallery,
-                  height: AppSize.s55,
-                  width: AppSize.s55,
-                ),
-              ),
-
+                  padding: EdgeInsets.all(AppPadding.p10),
+                  decoration: BoxDecoration(
+                    color: ColorManager.white,
+                    borderRadius: BorderRadius.circular(AppRadius.r8),
+                  ),
+                  child: base64 != null
+                      ? Image.memory(base64Decode(base64!))
+                      : Image.asset(
+                          ImageAssets.photoGallery,
+                          height: AppSize.s55,
+                          width: AppSize.s55,
+                        )),
               SizedBox(
                 height: AppSize.s20,
               ),
@@ -122,12 +191,26 @@ class _AddItem2SellerViewState
                 hint: AppLocalizations.of(context)!.name_of_product,
               ),
               AppTextField(
-                textController: _nameTextController,
+                textController: _emailTextController,
                 hint: AppLocalizations.of(context)!.price,
               ),
               AppTextField(
-                textController: _nameTextController,
-                hint: AppLocalizations.of(context)!.additional_details_optional,
+                textController: _passwordTextController,
+                hint: 'Description',
+              ),
+              SizedBox(
+                height: AppSize.s16,
+              ),
+              AppTextField(
+                textController: _phoneTextController,
+                hint: 'characteristics',
+              ),
+              SizedBox(
+                height: AppSize.s16,
+              ),
+              AppTextField(
+                textController: _discTextController,
+                hint: 'productType',
               ),
               SizedBox(
                 height: AppSize.s16,
@@ -300,7 +383,8 @@ class _AddItem2SellerViewState
                           width: AppSize.s8,
                         ),
                         Text(
-                          AppLocalizations.of(context)!.use_as_pay_button_on_website,
+                          AppLocalizations.of(context)!
+                              .use_as_pay_button_on_website,
                           style: getMediumStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s14),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-import '../../../data/api/controllers/auth_api_controller.dart';
-import '../../../domain/model/api_response.dart';
-import '../../../domain/model/user.dart';
+import 'package:ghaf_application/providers/seller_provider.dart';
+import 'package:provider/provider.dart';
+
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
@@ -26,6 +26,7 @@ class _CreatePaymentLinkSellerViewState
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
   late TextEditingController _phoneTextController;
+  late TextEditingController _discTextController;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _CreatePaymentLinkSellerViewState
     _emailTextController = TextEditingController();
     _passwordTextController = TextEditingController();
     _phoneTextController = TextEditingController();
+    _discTextController = TextEditingController();
   }
 
   @override
@@ -42,8 +44,12 @@ class _CreatePaymentLinkSellerViewState
     _emailTextController.dispose();
     _passwordTextController.dispose();
     _phoneTextController.dispose();
+    _discTextController.dispose();
+
     super.dispose();
   }
+  
+  List<String> list = ['null'];
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +64,13 @@ class _CreatePaymentLinkSellerViewState
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-                child: Text(
-                  AppLocalizations.of(context)!.create_payment_link,
-                  style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                child: Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.create_payment_link,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s24),
+                  ),
                 ),
               ),
               SizedBox(
@@ -80,7 +89,9 @@ class _CreatePaymentLinkSellerViewState
               ),
               AppTextField(
                 textController: _nameTextController,
-                hint: AppLocalizations.of(context)!.customer_name,
+                // hint: AppLocalizations.of(context)!.customer_name,
+                hint: 'Product Name',
+                textInputType: TextInputType.name,
               ),
               Row(
                 children: [
@@ -88,22 +99,30 @@ class _CreatePaymentLinkSellerViewState
                     child: AppTextField(
                       textController: _passwordTextController,
                       hint: AppLocalizations.of(context)!.payment_amount,
-                      textInputType: TextInputType.visiblePassword,
+                      textInputType: TextInputType.number,
                       obscureText: true,
                     ),
                   ),
                   Expanded(
                     child: AppTextField(
-                      textController: _passwordTextController,
-                      hint: AppLocalizations.of(context)!.link_expiration_date,
-                      textInputType: TextInputType.visiblePassword,
+                      textController: _emailTextController,
+                      // hint: AppLocalizations.of(context)!.link_expiration_date,
+                      hint: 'Product Type',
+                      textInputType: TextInputType.text,
                       obscureText: true,
                     ),
                   ),
                 ],
               ),
               AppTextField(
-                textController: _nameTextController,
+                textController: _phoneTextController,
+                // hint: AppLocalizations.of(context)!.link_expiration_date,
+                hint: 'Amount',
+                textInputType: TextInputType.number,
+                obscureText: true,
+              ),
+              AppTextField(
+                textController: _discTextController,
                 hint: AppLocalizations.of(context)!.description,
                 lines: 4,
               ),
@@ -117,7 +136,26 @@ class _CreatePaymentLinkSellerViewState
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () => _customDialogProgress(),
+                  onPressed: () {
+                    showLoadingDialog(context: context, title: 'Loading');
+                    Provider.of<SellerProvider>(context, listen: false)
+                        .createIndividualProducts(
+                            _nameTextController.text,
+                            _discTextController.text,
+                            'aaa',
+                            _emailTextController.text,
+                            int.parse(_passwordTextController.text),
+                        list)
+                        .then((value) => ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text('Success'))))
+                        .then((value) => Navigator.of(context).pop())
+                        .then((value) => Navigator.of(context).pushNamed(
+                            Routes.createPaymentLink2SellerRoute,
+                            arguments: int.parse(_phoneTextController.text)))
+                        .catchError(((e) => ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                                SnackBar(content: Text(e.toString())))));
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.create_link,
                     style: getSemiBoldStyle(
@@ -296,7 +334,8 @@ class _CreatePaymentLinkSellerViewState
                           width: AppSize.s8,
                         ),
                         Text(
-                          AppLocalizations.of(context)!.use_as_pay_button_on_website,
+                          AppLocalizations.of(context)!
+                              .use_as_pay_button_on_website,
                           style: getMediumStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s14),

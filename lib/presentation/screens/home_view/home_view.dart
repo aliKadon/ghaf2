@@ -61,6 +61,7 @@ class _HomeViewState extends State<HomeView> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.only(top: AppPadding.p16),
               child: Column(

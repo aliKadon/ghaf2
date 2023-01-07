@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 
 import '../../resources/assets_manager.dart';
@@ -10,14 +10,43 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
+enum businessSector {
+  corporate,
+  individual,
+}
+
 class RegisterPaymentLinkSellerView extends StatefulWidget {
   const RegisterPaymentLinkSellerView({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPaymentLinkSellerView> createState() => _RegisterPaymentLinkSellerViewState();
+  State<RegisterPaymentLinkSellerView> createState() =>
+      _RegisterPaymentLinkSellerViewState();
 }
 
-class _RegisterPaymentLinkSellerViewState extends State<RegisterPaymentLinkSellerView> with Helpers{
+class _RegisterPaymentLinkSellerViewState
+    extends State<RegisterPaymentLinkSellerView> with Helpers {
+  var sectorName = 'Business Sector';
+  var sectorNumber = 0;
+
+  var business = [
+    'Corporate business',
+    'Accessories',
+    'Agriculture And Landscaping',
+    'Beauty services',
+    'Cleaning services',
+    'computer services',
+    'Grocery store',
+    'Media services',
+    'Repair services',
+    'Software-Development/Design',
+    'web-Development/Design',
+    'Other'
+  ];
+  var businessType = 'Corporate business';
+
+  var option = '';
+  var Agree = false;
+
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
@@ -162,32 +191,121 @@ class _RegisterPaymentLinkSellerViewState extends State<RegisterPaymentLinkSelle
                   hint: AppLocalizations.of(context)!.company_name,
                 ),
               ),
-              AppTextField(
-                textController: _boDTextController,
-                hint: AppLocalizations.of(context)!.business_sector,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.datetime,
-                // onSubmitted: (){},
-              ),  AppTextField(
-                textController: _boDTextController,
-                hint: AppLocalizations.of(context)!.corporate_business,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.datetime,
-                // onSubmitted: (){},
+              Container(
+                // height: AppSize.s75,
+                margin: EdgeInsets.only(left: 12, right: 12),
+                width: MediaQuery.of(context).size.width * 1,
+                padding: EdgeInsets.only(left: AppPadding.p12),
+                decoration: BoxDecoration(
+                  color: ColorManager.white,
+                  border:
+                      Border.all(width: AppSize.s1, color: Color(0xff125051)),
+                  borderRadius: BorderRadius.circular(AppRadius.r4),
+                ),
+                child: DropdownButton<String>(
+                  dropdownColor: Colors.black54,
+                  value: sectorName,
+                  onChanged: (sector) {
+                    setState(() {
+                      sectorName = sector!;
+                    });
+                    if (sectorName == 'corporate') {
+                      setState(() {
+                        sectorNumber = businessSector.corporate.index;
+                        print('==================================sectore');
+                        print(sectorNumber);
+                      });
+                    } else {
+                      sectorNumber = businessSector.individual.index;
+                      print('==================================sectore');
+                      print(sectorNumber);
+                    }
+                    // if (sectorName == 'individual') {
+                    //   sectorNumber = businessSector.individual as int;
+                    // }
+                  },
+                  items: <String>['Business Sector', 'corporate', 'individual']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
               ),
-              AppTextField(
-                textController: _passwordTextController,
-                hint: AppLocalizations.of(context)!.hint_password,
-                textInputType: TextInputType.visiblePassword,
-                obscureText: true,
+              SizedBox(
+                height: AppSize.s16,
               ),
+              Container(
+                // height: AppSize.s75,
+                margin: EdgeInsets.only(left: 12, right: 12),
+                width: MediaQuery.of(context).size.width * 1,
+                // padding: EdgeInsets.all(AppPadding.p12),
+                padding: EdgeInsets.only(left: AppPadding.p12),
+                decoration: BoxDecoration(
+                  color: ColorManager.white,
+                  border:
+                      Border.all(width: AppSize.s1, color: Color(0xff125051)),
+                  borderRadius: BorderRadius.circular(AppRadius.r4),
+                ),
+                child: DropdownButton<String>(
+                  dropdownColor: Colors.black54,
+                  value: businessType,
+                  onChanged: (sector) {
+                    setState(() {
+                      businessType = sector!;
+                    });
+                  },
+                  items: business.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(
+                height: AppSize.s16,
+              ),
+              // AppTextField(
+              //   textController: _boDTextController,
+              //   hint: AppLocalizations.of(context)!.business_sector,
+              //   textInputAction: TextInputAction.done,
+              //   textInputType: TextInputType.datetime,
+              //   // onSubmitted: (){},
+              // ),
+              // AppTextField(
+              //   textController: _boDTextController,
+              //   hint: AppLocalizations.of(context)!.corporate_business,
+              //   textInputAction: TextInputAction.done,
+              //   textInputType: TextInputType.datetime,
+              //   // onSubmitted: (){},
+              // ),
+              // AppTextField(
+              //   textController: _passwordTextController,
+              //   hint: AppLocalizations.of(context)!.hint_password,
+              //   textInputType: TextInputType.visiblePassword,
+              //   obscureText: true,
+              // ),
               GestureDetector(
-                onTap: ()=>Navigator.pop(context),
+                // onTap: () => Navigator.pop(context),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Radio(
+                        value: 'Agree',
+                        onChanged: (n) {
+                          setState(() {
+                            Agree = !Agree;
+                            option = n!;
+                          });
+                          print('--------------------------------agree');
+                          print(Agree);
+                        },
+                        groupValue: option),
                     Text(
-                      AppLocalizations.of(context)!.i_agree_to_the_terms_of_service,
+                      AppLocalizations.of(context)!
+                          .i_agree_to_the_terms_of_service,
                       style: getRegularStyle(
                           color: ColorManager.grey, fontSize: FontSize.s16),
                     ),
@@ -202,9 +320,22 @@ class _RegisterPaymentLinkSellerViewState extends State<RegisterPaymentLinkSelle
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () => _performRegister(),
+                  onPressed: () {
+                    if (_checkData()) {
+                      Navigator.of(context)
+                          .pushNamed(Routes.shopAddressSellerRoute, arguments: {
+                        'storeName': _nameTextController.text,
+                        'email': _emailTextController.text,
+                        'phoneNumber': _phoneTextController.text,
+                        'companyName': _referralCodeTextController.text,
+                        'businessType': sectorNumber,
+                        'businessSector': businessType
+                      });
+                    }
+                  },
                   child: Text(
-                    AppLocalizations.of(context)!.sign_up,
+                    // AppLocalizations.of(context)!.sign_up,
+                    'Next',
                     style: getSemiBoldStyle(
                         color: ColorManager.white, fontSize: FontSize.s18),
                   ),
@@ -229,10 +360,8 @@ class _RegisterPaymentLinkSellerViewState extends State<RegisterPaymentLinkSelle
   bool _checkData() {
     if (_nameTextController.text.isNotEmpty &&
         _emailTextController.text.isNotEmpty &&
-        _passwordTextController.text.isNotEmpty &&
         _phoneTextController.text.isNotEmpty &&
-        _boDTextController.text.isNotEmpty
-    ) {
+        Agree) {
       return true;
     }
     showSnackBar(context, message: 'Enter Required Data!', error: true);
@@ -246,18 +375,18 @@ class _RegisterPaymentLinkSellerViewState extends State<RegisterPaymentLinkSelle
     // showSnackBar(context, message: apiResponse.message??' ', error: true);
   }
 
-  // User get user {
-  //   User user = User();
-  //   user.userName = _nameTextController.text;
-  //   user.password = _passwordTextController.text;
-  //   user.confirmPassword = _passwordTextController.text;
-  //   user.firstName = _nameTextController.text; // todo add first and last name on ui
-  //   user.lastName = _nameTextController.text;
-  //   user.telephone = _phoneTextController.text;
-  //   user.role = Constants.roleRegister;
-  //   user.email = _emailTextController.text;
-  //   user.birthDate = _boDTextController.text;
-  //   return user;
-  // }
+// User get user {
+//   User user = User();
+//   user.userName = _nameTextController.text;
+//   user.password = _passwordTextController.text;
+//   user.confirmPassword = _passwordTextController.text;
+//   user.firstName = _nameTextController.text; // todo add first and last name on ui
+//   user.lastName = _nameTextController.text;
+//   user.telephone = _phoneTextController.text;
+//   user.role = Constants.roleRegister;
+//   user.email = _emailTextController.text;
+//   user.birthDate = _boDTextController.text;
+//   return user;
+// }
 
 }

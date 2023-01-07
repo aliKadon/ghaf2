@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-import '../../../data/api/controllers/auth_api_controller.dart';
-import '../../../domain/model/api_response.dart';
-import '../../../domain/model/user.dart';
-import '../../resources/assets_manager.dart';
+import 'package:ghaf_application/providers/seller_provider.dart';
+import 'package:provider/provider.dart';
+
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class AddPaymentCardSellerView extends StatefulWidget {
-  const AddPaymentCardSellerView({Key? key}) : super(key: key);
+  // const AddPaymentCardSellerView({Key? key}) : super(key: key);
+  final String planeId;
+
+  AddPaymentCardSellerView(this.planeId);
 
   @override
-  State<AddPaymentCardSellerView> createState() => _AddPaymentCardSellerViewState();
+  State<AddPaymentCardSellerView> createState() =>
+      _AddPaymentCardSellerViewState();
 }
 
-class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> with Helpers{
+class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
+    with Helpers {
+  var monthly = false;
+  var annual = false;
+  var option = '';
+  var subscribeResponse;
+
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
@@ -45,6 +54,9 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
 
   @override
   Widget build(BuildContext context) {
+    var message = Provider.of<SellerProvider>(context).repo;
+    print('============================repo');
+    print(message);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -63,21 +75,21 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
                 height: AppSize.s55,
               ),
               Text(
-                AppLocalizations.of(context)!.to_complete_the_store_registration,
+                AppLocalizations.of(context)!
+                    .to_complete_the_store_registration,
                 style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                    color: ColorManager.primaryDark, fontSize: FontSize.s20),
               ),
               SizedBox(
                 height: AppSize.s82,
               ),
               AppTextField(
                 textController: _nameTextController,
-                hint: AppLocalizations.of(context)!.store_name,
+                hint: 'Card number',
               ),
-
               AppTextField(
                 textController: _emailTextController,
-                hint: AppLocalizations.of(context)!.website,
+                hint: 'CVV',
                 textInputType: TextInputType.emailAddress,
               ),
               Row(
@@ -85,23 +97,77 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
                   Expanded(
                     child: AppTextField(
                       textController: _passwordTextController,
-                      hint: AppLocalizations.of(context)!.social_media_account,
+                      hint: 'Expired Month',
                       textInputType: TextInputType.visiblePassword,
                       obscureText: true,
                     ),
                   ),
                   Expanded(
                     child: AppTextField(
-                      textController: _passwordTextController,
-                      hint: AppLocalizations.of(context)!.social_media_account,
+                      textController: _phoneTextController,
+                      hint: 'Expired Year',
                       textInputType: TextInputType.visiblePassword,
                       obscureText: true,
                     ),
                   ),
                 ],
               ),
-
-              SizedBox(height: AppSize.s92,),
+              // Row(
+              //   children: [
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Radio(
+              //             value: '538ca56d-059d-4aa1-9e76-08daecd00fd8',
+              //             onChanged: (n) {
+              //               setState(() {
+              //                 monthly = !monthly;
+              //                 option = n!;
+              //                 print('==============================option');
+              //                 print(option);
+              //               });
+              //             },
+              //             groupValue: option),
+              //         Text(
+              //           'Monthly',
+              //           style: getRegularStyle(
+              //               color: ColorManager.grey, fontSize: FontSize.s16),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(
+              //       height: AppSize.s82,
+              //     ),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Radio(
+              //             value: 'b744fc7b-1d84-4dfb-9e77-08daecd00fd8',
+              //             onChanged: (n) {
+              //               setState(() {
+              //                 print('==============================option');
+              //
+              //                 annual = !annual;
+              //                 option = n!;
+              //                 print(n);
+              //               });
+              //             },
+              //             groupValue: option),
+              //         Text(
+              //           'Annual',
+              //           style: getRegularStyle(
+              //               color: ColorManager.grey, fontSize: FontSize.s16),
+              //         ),
+              //         SizedBox(
+              //           height: AppSize.s82,
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              SizedBox(
+                height: AppSize.s92,
+              ),
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: AppMargin.m16,
@@ -109,7 +175,28 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () => _customDialogProgress(),
+                  onPressed: () {
+                    _checkData();
+                    if (_checkData()) {
+                      Provider.of<SellerProvider>(context, listen: false)
+                          .addPaymentCard(
+                              context,
+                              _nameTextController.text,
+                              _emailTextController.text,
+                              int.parse(_passwordTextController.text),
+                              int.parse(_phoneTextController.text),
+                              widget.planeId)
+                          .then((value) => ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(message,style: TextStyle(color: Colors.red)),
+                                backgroundColor: Colors.green,
+                              )))
+                          .then((value) => _customDialogProgress())
+                          .catchError((e) => ScaffoldMessenger.of(context)
+                              .showSnackBar(
+                                  SnackBar(content: Text(e.toString()))));
+                    }
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.create_store,
                     style: getSemiBoldStyle(
@@ -137,17 +224,14 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
     if (_nameTextController.text.isNotEmpty &&
         _emailTextController.text.isNotEmpty &&
         _passwordTextController.text.isNotEmpty &&
-        _phoneTextController.text.isNotEmpty
-    ) {
+        _phoneTextController.text.isNotEmpty) {
       return true;
     }
     showSnackBar(context, message: 'Enter Required Data!', error: true);
     return false;
   }
 
-  Future<void> _register() async {
-
-  }
+  Future<void> _register() async {}
 
   void _customDialogProgress() async {
     showDialog(
@@ -177,16 +261,17 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
                       height: AppSize.s40,
                     ),
                     Text(
-                      AppLocalizations.of(context)!.your_account_is_under_approval_process,
+                      AppLocalizations.of(context)!
+                          .your_account_is_under_approval_process,
                       style: getMediumStyle(
-                          color: ColorManager.primary,
-                          fontSize: FontSize.s12),
+                          color: ColorManager.primary, fontSize: FontSize.s12),
                     ),
                     SizedBox(
                       height: AppSize.s40,
                     ),
                     GestureDetector(
-                      onTap: ()=>Navigator.pop(context),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.loginRoute),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: AppPadding.p55,
@@ -210,7 +295,4 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView> wit
           );
         });
   }
-
-
-
 }

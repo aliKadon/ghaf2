@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,8 @@ import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
+import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewGetXController extends GetxController with Helpers {
   // constructor fields.
@@ -22,8 +25,44 @@ class LoginViewGetXController extends GetxController with Helpers {
   late final AuthApiController _authApiController = AuthApiController();
   late final GlobalKey<FormState> formKey = GlobalKey();
 
-  late final errorMessageLoginApiResponse;
-  late final errorMessageProfileApiResponse;
+  // late final errorMessageLoginApiResponse;
+  // late final errorMessageProfileApiResponse;
+
+  Location location = new Location();
+  bool? _serviceEnabled;
+  PermissionStatus? _permissionGranted;
+  LocationData? locationData;
+
+  var isLoading = true;
+
+  void getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled!) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled!) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    locationData = await location.getLocation();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('latitude', locationData!.latitude!);
+    prefs.setDouble('longitude', locationData!.longitude!);
+
+    if( locationData!.latitude != null) {
+      isLoading = false;
+    }
+    print('===========================location');
+    print(locationData!.latitude);
+  }
 
 
   // fields.
@@ -44,22 +83,34 @@ class LoginViewGetXController extends GetxController with Helpers {
         password: password!,
       );
       print('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
-      errorMessageLoginApiResponse = loginApiResponse.message;
+      // errorMessageLoginApiResponse = loginApiResponse.message;
 
 
       ApiResponse profileApiResponse = await AuthApiController().profile();
-      errorMessageProfileApiResponse = profileApiResponse.message;
+      // errorMessageProfileApiResponse = profileApiResponse.message;
       if (loginApiResponse.status == 200 && profileApiResponse.status == 200) {
+        print('=======================================role');
+        print(AppSharedData.currentUser!.role);
         // success.
         Navigator.pop(context);
         if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
+
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(context, Routes.mainRoute);
           } else {
             Navigator.pushReplacementNamed(context, Routes.subscribeRoute);
           }
-        } else {
-          Navigator.pushReplacementNamed(context, Routes.submitForm);
+        } else if (AppSharedData.currentUser!.role == Constants.roleRegisterSeller) {
+          Navigator.pushReplacementNamed(context, Routes.submitForm,arguments: locationData);
+        }else {
+          if (AppSharedData.currentUser!.active!) {
+            Navigator.pushReplacementNamed(context, Routes.registerPaymentLinkSellerRoute);
+          } else {
+            Navigator.pushReplacementNamed(context, Routes.paymentLinkSubscriptionSellerRoute);
+
+
+          }
+
         }
       } else {
         // failed.

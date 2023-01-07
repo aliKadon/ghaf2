@@ -32,6 +32,7 @@ import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
@@ -68,12 +69,15 @@ import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_v
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_from_home_page.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
+import 'package:location/location.dart';
 
 import '../../domain/model/available_delevey_method.dart';
 import '../../domain/model/unpaid_order.dart';
 import '../screens/login_view/login_view.dart';
 import '../screens/onboarding_view.dart';
 import '../screens/register_view/register_view.dart';
+import '../screens/registration_screen.dart';
+import '../screens/review_product.dart';
 import '../screens/seller/create_payment_link_seller_view.dart';
 import '../screens/splash_view.dart';
 import '../screens/subscribe_view/payment_methode_for_subscribe.dart';
@@ -153,6 +157,10 @@ class Routes {
   static const String productView2 = '/productView2';
   static const String inviteScreen = '/invite';
   static const String paymentMethodeForSubscribe = '/paymentSubscribe';
+  static const String reviewProduct = '/reviewProduct';
+  static const String registeraition= '/registeraition';
+
+  static const String storeSellerView = '/storeSellerView';
 }
 
 class RouteGenerator {
@@ -165,14 +173,28 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => SnapsheetScreen(
                 settings.arguments as Map<String,dynamic>));
+
+      case Routes.reviewProduct:
+        return MaterialPageRoute(
+            builder: (_) => ReviewProduct(
+                settings.arguments as Map<String,dynamic>));
+
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+
+      case Routes.registeraition:
+        return MaterialPageRoute(builder: (_) =>  RegistrationScreen(
+          settings.arguments as String
+        ));
+
       case Routes.inviteScreen:
         return MaterialPageRoute(builder: (_) => Invite());
       case Routes.paymentMethodeForSubscribe:
         return MaterialPageRoute(builder: (_) => PaymentMethodeForSubscribe());
       case Routes.orderTrackingScreen:
-        return MaterialPageRoute(builder: (_) => OrderTrackingScreen());
+        return MaterialPageRoute(builder: (_) => OrderTrackingScreen(
+            settings.arguments as Map<String,dynamic>
+        ));
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.welcomeRoute:
@@ -202,7 +224,7 @@ class RouteGenerator {
             builder: (context) {
               Get.put(
                 RegisterViewGetXController(
-                    context: context, isSeller: args?['isSeller'] ?? false),
+                    context: context, role: args?['role'] ?? 'Customer'),
               );
               return const RegisterView();
             },
@@ -247,7 +269,9 @@ class RouteGenerator {
             builder: (_) =>
                 CheckOutView(settings.arguments as OrderAllInformation));
       case Routes.checkOutConfirmRoute:
-        return MaterialPageRoute(builder: (_) => const CheckOutConfirmView());
+        return MaterialPageRoute(builder: (_) => CheckOutConfirmView(
+            settings.arguments as Map<String,dynamic>
+        ));
       case Routes.orderInformationRoute:
         return MaterialPageRoute(builder: (_) => const OrderInformationView());
       case Routes.allRestaurantRoute:
@@ -378,6 +402,8 @@ class RouteGenerator {
       //seller
       case Routes.welcomeSellerRoute:
         return MaterialPageRoute(builder: (_) => const WelcomeSellerView());
+      case Routes.storeSellerView:
+        return MaterialPageRoute(builder: (_) => const StoreSellerView());
       case Routes.registerSellerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterSellerView());
       case Routes.subscriptionSellerRoute:
@@ -391,7 +417,9 @@ class RouteGenerator {
             builder: (_) => const ChoosePaymentMethodView());
       case Routes.addPaymentCardSelleRoute:
         return MaterialPageRoute(
-            builder: (_) => const AddPaymentCardSellerView());
+            builder: (_) => AddPaymentCardSellerView(
+              settings.arguments as String
+            ));
       case Routes.paymentLinkSubscriptionSellerRoute:
         return MaterialPageRoute(
             builder: (_) => const PaymentLinkSubscriptionSellerView());
@@ -399,7 +427,9 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => const RegisterPaymentLinkSellerView());
       case Routes.shopAddressSellerRoute:
-        return MaterialPageRoute(builder: (_) => const ShopAddressSellerView());
+        return MaterialPageRoute(builder: (_) => ShopAddressSellerView(
+          settings.arguments as Map<String,dynamic>
+        ));
       case Routes.addBankAccountSellerRoute:
         return MaterialPageRoute(
             builder: (_) => const AddBankAccountSellerView());
@@ -413,7 +443,9 @@ class RouteGenerator {
             builder: (_) => const CreatePaymentLinkSellerView());
       case Routes.createPaymentLink2SellerRoute:
         return MaterialPageRoute(
-            builder: (_) => const CreatePaymentLink2SellerView());
+            builder: (_) => CreatePaymentLink2SellerView(
+              settings.arguments as int
+            ));
       case Routes.addItemSellerRoute:
         return MaterialPageRoute(builder: (_) => const AddItemSellerView());
       case Routes.addItem2SellerRoute:
@@ -429,7 +461,9 @@ class RouteGenerator {
               Get.put<SubmitFormViewGetXController>(
                 SubmitFormViewGetXController(context: _),
               );
-              return const SubmitFormView();
+              return SubmitFormView(
+                  // settings.arguments as LocationData
+              );
             },
           ),
         );

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
-import 'package:ghaf_application/presentation/screens/order_information_view.dart';
-import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
+
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CheckOutConfirmView extends StatefulWidget {
-  const CheckOutConfirmView({Key? key}) : super(key: key);
+  // const CheckOutConfirmView({Key? key}) : super(key: key);
+
+  final Map<String, dynamic> orderinfo;
+
+  CheckOutConfirmView(this.orderinfo);
 
   @override
   State<CheckOutConfirmView> createState() => _CheckOutConfirmViewState();
@@ -31,7 +34,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: ()=>Navigator.pop(context),
+                      onTap: () => Navigator.pop(context),
                       child: Image.asset(
                         IconsAssets.arrow,
                         height: AppSize.s18,
@@ -90,11 +93,16 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                   height: AppSize.s55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => OrderTrackingScreen()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (builder) => OrderTrackingScreen(widget.orderinfo)),
+                      // );
+                      print('=================================checkout confirm orderInfo');
+                      print(widget.orderinfo['item']);
+                      Navigator.of(context).pushNamed(
+                          Routes.orderTrackingScreen,
+                          arguments: widget.orderinfo);
                     },
                     child: Text(
                       AppLocalizations.of(context)!.order_tracking,
@@ -107,7 +115,8 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                   height: AppSize.s22,
                 ),
                 GestureDetector(
-                  onTap: ()=>Navigator.of(context).pushNamed(Routes.mainRoute),
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(Routes.mainRoute),
                   child: Text(
                     AppLocalizations.of(context)!.back_to_home,
                     style: getSemiBoldStyle(
@@ -134,7 +143,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
           return Dialog(
             child: Container(
               height: AppSize.s214,
-              width:  AppSize.s258,
+              width: AppSize.s258,
               decoration: BoxDecoration(
                 color: ColorManager.white,
                 borderRadius: BorderRadius.circular(AppRadius.r8),
@@ -143,43 +152,56 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height:AppSize.s28,
+                      height: AppSize.s28,
                     ),
                     Text(
                       AppLocalizations.of(context)!.rewarding_progress,
-                      style: getMediumStyle(color: ColorManager.primaryDark,fontSize: FontSize.s20),
+                      style: getMediumStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s20),
                     ),
                     SizedBox(
-                      height:AppSize.s40,
+                      height: AppSize.s40,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppPadding.p12,),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppPadding.p12,
+                      ),
                       child: Text(
                         textAlign: TextAlign.center,
-                        AppLocalizations.of(context)!.you_have_completed_10_orders,
-                        style: getMediumStyle(color: ColorManager.primary,fontSize: FontSize.s12),
+                        AppLocalizations.of(context)!
+                            .you_have_completed_10_orders,
+                        style: getMediumStyle(
+                            color: ColorManager.primary,
+                            fontSize: FontSize.s12),
                       ),
                     ),
                     SizedBox(
-                      height:AppSize.s24,
+                      height: AppSize.s24,
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.popUntil(context,ModalRoute.withName(Routes.mainRoute));
+                      onTap: () {
+                        Navigator.popUntil(
+                            context, ModalRoute.withName(Routes.mainRoute));
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: AppPadding.p55,vertical: AppPadding.p8,),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppPadding.p55,
+                          vertical: AppPadding.p8,
+                        ),
                         decoration: BoxDecoration(
                           color: ColorManager.primaryDark,
                           borderRadius: BorderRadius.circular(AppRadius.r8),
                         ),
-                        child: Text(AppLocalizations.of(context)!.close,style: getMediumStyle(color: ColorManager.white),),
+                        child: Text(
+                          AppLocalizations.of(context)!.close,
+                          style: getMediumStyle(color: ColorManager.white),
+                        ),
                       ),
                     ),
                     SizedBox(
-                      height:AppSize.s18,
+                      height: AppSize.s18,
                     ),
-
                   ]),
             ),
           );

@@ -1,3 +1,6 @@
+
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -15,9 +18,16 @@ import 'package:ghaf_application/presentation/screens/register_view/register_vie
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 class SubmitFormView extends StatefulWidget {
-  const SubmitFormView({Key? key}) : super(key: key);
+
+  // final LocationData locationData;
+  // // const SubmitFormView({Key? key}) : super(key: key);
+  // SubmitFormView(this.locationData);
 
   @override
   State<SubmitFormView> createState() => _SubmitFormViewState();
@@ -27,6 +37,68 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
   // controller.
   late final SubmitFormViewGetXController _submitFormViewGetXController =
       Get.find<SubmitFormViewGetXController>();
+
+
+  // Location location = new Location();
+  // bool? _serviceEnabled;
+  // PermissionStatus? _permissionGranted;
+  // LocationData? locationData;
+  //
+  // var isLoading = true;
+  //
+  // void getLocation() async {
+  //   _serviceEnabled = await location.serviceEnabled();
+  //   if (!_serviceEnabled!) {
+  //     _serviceEnabled = await location.requestService();
+  //     if (!_serviceEnabled!) {
+  //       return;
+  //     }
+  //   }
+  //
+  //   _permissionGranted = await location.hasPermission();
+  //   if (_permissionGranted == PermissionStatus.denied) {
+  //     _permissionGranted = await location.requestPermission();
+  //     if (_permissionGranted != PermissionStatus.granted) {
+  //       return;
+  //     }
+  //   }
+  //
+  //   locationData = await location.getLocation();
+  //
+  //   if( locationData!.latitude != null) {
+  //     isLoading = false;
+  //   }
+  //   print('===========================location');
+  //   print(locationData!.latitude);
+  // }
+  double? latitude;
+  double? longitude;
+
+  Future<void> getLocation () async {
+    final prefs = await SharedPreferences.getInstance();
+    latitude = prefs.getDouble('latitude') ?? 37.33429383;
+    longitude = prefs.getDouble('longitude') ?? -122.06600055;
+  }
+
+  @override
+  void initState() {
+    getLocation();
+    super.initState();
+  }
+
+  // @override
+  // Future<void> initState() {
+  //   // getLocation();
+  //   // Timer(Duration(seconds: 7), () {
+  //   //   setState(() {
+  //   //     isLoading = false;
+  //   //   });
+  //   // });
+  //
+  //
+  //
+  //   super.initState();
+  // }
 
   // dispose.
   @override
@@ -38,7 +110,13 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body:
+      // isLoading ? Center(
+      //   child: CircularProgressIndicator(
+      //     strokeWidth: 1,
+      //   ),
+      // ):
+      SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _submitFormViewGetXController.formKey,
@@ -377,7 +455,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   ),
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
-                      target: _submitFormViewGetXController.latLng,
+                      target: LatLng(latitude ?? 37.33429383, longitude ?? -122.06600055),
                       zoom: 17,
                     ),
                     gestureRecognizers: {

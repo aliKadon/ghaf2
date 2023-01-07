@@ -44,8 +44,19 @@ class _CheckOutViewState extends State<CheckOutView> {
   var myAddress;
   var isAddressSelected = false;
   var deleveryMethod;
+  var deleveryName;
 
   final paymentController = Get.put(PaymentController());
+
+  bool _checkData(String methodName) {
+    print(methodName);
+    if (methodName == 'Pick up') {
+      if (date != null) return true;
+    } else {
+      if (myAddress != null) return true;
+    }
+    return false;
+  }
 
   @override
   void initState() {
@@ -173,12 +184,18 @@ class _CheckOutViewState extends State<CheckOutView> {
                                       ['methodName'] ==
                                   'Pick up') {
                                 setState(() {
+                                  deleveryName = widget
+                                          .order.availableDeliveryMethod[index]
+                                      ['methodName'];
                                   visibility = false;
                                   deleveryMethod = widget.order
                                       .availableDeliveryMethod[index]['id'];
                                 });
                               } else {
                                 setState(() {
+                                  deleveryName = widget
+                                          .order.availableDeliveryMethod[index]
+                                      ['methodName'];
                                   visibility = true;
                                   deleveryMethod = widget.order
                                       .availableDeliveryMethod[index]['id'];
@@ -555,14 +572,19 @@ class _CheckOutViewState extends State<CheckOutView> {
                                   // child: SizedBox(
                                   // height: MediaQuery.of(context).size.height * 1,
                                   child: Container(
-                                    height: MediaQuery.of(context).size.height * 0.4,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
                                     child: Column(
                                       children: [
                                         Container(
-                                          height: MediaQuery.of(context).size.height * 0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
                                           child: CupertinoDatePicker(
                                             mode: CupertinoDatePickerMode.date,
-                                            initialDateTime: DateTime(2023, 1, 1),
+                                            initialDateTime:
+                                                DateTime(2023, 1, 1),
                                             onDateTimeChanged:
                                                 (DateTime newDateTime) {
                                               print(
@@ -579,25 +601,32 @@ class _CheckOutViewState extends State<CheckOutView> {
                                             },
                                           ),
                                         ),
-                                    GestureDetector(
-                                        onTap: () => Navigator.pop(context),
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.height * 0.5,
-                                          height: MediaQuery.of(context).size.height * 0.07,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: ColorManager.primary,
-                                            borderRadius:
-                                            BorderRadius.circular(AppRadius.r8),
-                                          ),
-                                          child: Text(
-                                            AppLocalizations.of(context)!.yes,
-                                            textAlign: TextAlign.center,
-                                            style:
-                                            getMediumStyle(color: ColorManager.white),
+                                        GestureDetector(
+                                          onTap: () => Navigator.pop(context),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.5,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.07,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: ColorManager.primary,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppRadius.r8),
+                                            ),
+                                            child: Text(
+                                              AppLocalizations.of(context)!.yes,
+                                              textAlign: TextAlign.center,
+                                              style: getMediumStyle(
+                                                  color: ColorManager.white),
+                                            ),
                                           ),
                                         ),
-                                      ),
                                       ],
                                     ),
                                   ),
@@ -765,47 +794,67 @@ class _CheckOutViewState extends State<CheckOutView> {
                         print(date.toString());
                         print(myAddress);
                         print(isSwitched);
-                        if (deleveryMethod == 'Pick up' && date == 'null') {
-                          final snackBar = SnackBar(
-                            /// need to set following properties for best effect of awesome_snackbar_content
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                            content: AwesomeSnackbarContent(
-                              title: 'Oh No!',
-                              message: 'You must pick a date please !',
+                        // if (deleveryMethod == 'Pick up' && date == 'null') {
+                        //   final snackBar = SnackBar(
+                        //     /// need to set following properties for best effect of awesome_snackbar_content
+                        //     elevation: 0,
+                        //     behavior: SnackBarBehavior.floating,
+                        //     backgroundColor: Colors.transparent,
+                        //     content: AwesomeSnackbarContent(
+                        //       title: 'Oh No!',
+                        //       message: 'You must pick a date please !',
+                        //
+                        //       /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                        //       contentType: ContentType.failure,
+                        //     ),
+                        //   );
+                        // }
 
-                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                              contentType: ContentType.failure,
-                            ),
-                          );
-                        }
-
-                        if (deleveryMethod != 'Pick up' && addresses == null) {
-                          final snackBar = SnackBar(
-                            /// need to set following properties for best effect of awesome_snackbar_content
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                            content: AwesomeSnackbarContent(
-                              title: 'Oh No!',
-                              message: 'You must pick a delivery method !',
-
-                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                              contentType: ContentType.failure,
-                            ),
-                          );
-                        }else {
+                        if (_checkData(deleveryName)) {
                           Navigator.of(context)
                               .pushNamed(Routes.snapsheet, arguments: {
+                            'branchAddress': widget.order.orderDetails['branch']
+                                ['branchAddress'],
+                            'deliveryPoint':
+                                widget.order.orderDetails['deliveryPoint'],
+                            'statusName':
+                                widget.order.orderDetails['statusName'],
                             'orderId': widget.order.orderDetails['id'],
+                            'item': widget.order.orderDetails['items'][0]['id'],
                             'deliveryMethodId': deleveryMethod ?? '',
                             'date': date.toString() ?? '',
                             'address': myAddress ?? '',
-                            'reedem': isSwitched,
-                            'paylater': isSwitchedPayLater
+                            'reedem': isSwitched.toString(),
+                            'paylater': isSwitchedPayLater.toString()
                           });
                         }
+                        if (_checkData(deleveryName) == false) {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                              content: Text('Fill all data'),
+                              backgroundColor: Colors.red,
+                            ));
+                          // final snackBar = SnackBar(
+                          //   /// need to set following properties for best effect of awesome_snackbar_content
+                          //   elevation: 0,
+                          //   behavior: SnackBarBehavior.floating,
+                          //   backgroundColor: Colors.transparent,
+                          //   content: AwesomeSnackbarContent(
+                          //     title: 'Oh No!',
+                          //     message: 'You must pick a delivery method !',
+                          //
+                          //     /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                          //     contentType: ContentType.failure,
+                          //   ),
+                          // );
+                        }
+
+                        // if (deleveryMethod != 'Pick up' && addresses == null) {
+                        //
+                        // }else {
+                        //
+                        // }
 
                         // paymentController.makePayment(context: context,amount: payLater.toString(), currency: 'AED');
                         // Navigator.push(

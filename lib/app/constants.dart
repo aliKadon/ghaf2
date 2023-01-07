@@ -11,6 +11,8 @@ class Constants {
   static const int orderDetailsLines = 5;
   static const String roleRegisterCustomer = 'Customer';
   static const String roleRegisterSeller = 'Seller';
+  static const String roleRegisterIndividual = 'IndividualSeller';
+
   static const String vectorsPath = 'assets/vectors/';
   static const String imagesPath = 'assets/images/';
 

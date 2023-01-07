@@ -32,6 +32,19 @@ class _AccountViewState extends State<AccountView> {
   late final AccountViewGetXController _accountViewGetXController =
       Get.put(AccountViewGetXController());
 
+  var subscribe = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (AppSharedData.currentUser!.ghafGold == false){
+      subscribe = 'Unsubscribed';
+    }
+    if (AppSharedData.currentUser!.ghafGold == true) {
+      subscribe = 'Subscribed';
+    }
+  }
+
   @override
   void dispose() {
     Get.delete<AccountViewGetXController>();
@@ -142,10 +155,13 @@ class _AccountViewState extends State<AccountView> {
                             AppLocalizations.of(context)!.rewards,),
                       ),
                       GestureDetector(
-                        onTap: () => _customDialogProgress(),
+                        onTap: () {
+
+                        },
                         child: accountWidget(context, IconsAssets.start1,
                             AppLocalizations.of(context)!.ghaf_gold,
-                            subTitle: AppLocalizations.of(context)!.gold),
+                            // subscribe,
+                            subTitle: subscribe),
                       ),
                       GestureDetector(
                         onTap: () {

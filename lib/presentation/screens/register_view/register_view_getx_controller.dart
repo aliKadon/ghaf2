@@ -10,12 +10,12 @@ import 'package:ghaf_application/domain/model/user.dart';
 class RegisterViewGetXController extends GetxController with Helpers {
   // constructor fields.
   final BuildContext context;
-  bool isSeller;
+  String role;
 
   // constructor.
   RegisterViewGetXController({
     required this.context,
-    required this.isSeller,
+    required this.role,
   });
 
   // vars.
@@ -47,9 +47,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
         lastName: lastName,
         email: email,
         referralCode: referralCode,
-        role: isSeller
-            ? Constants.roleRegisterSeller
-            : Constants.roleRegisterCustomer,
+        role: role,
         password: password,
         confirmPassword: confirmPassword,
         birthDate: birthDate,
@@ -62,7 +60,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pop(context);
         Navigator.pop(context);
-        if (isSeller) Navigator.pop(context);
+        if (role == Constants.roleRegisterSeller) Navigator.pop(context);
       } else {
         // failed.
         Navigator.pop(context);

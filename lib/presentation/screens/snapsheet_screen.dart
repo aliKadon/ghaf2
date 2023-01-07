@@ -4,8 +4,6 @@ import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-
 
 import '../resources/values_manager.dart';
 
@@ -24,19 +22,15 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
 // publishableKey: 'YOUR_STRIPE_PUBLISHABLE_KEY',
 // ));
 
-
-
-
-
   final _form = GlobalKey<FormState>();
 
   DateTime dateTime = DateTime.now();
 
   var cardInfo = {
-    'cardNumber': '212151',
-    'expiredMonth': '15454',
-    'expiredYear': '15454',
-    'cvc': '1545',
+    'cardNumber': '5555 5555 5555 4444',
+    'expiredMonth': '12',
+    'expiredYear': '22',
+    'cvc': '1234',
   };
 
   void saveItem() {
@@ -51,6 +45,13 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
   TextEditingController cvvController = TextEditingController();
   TextEditingController expirationController = TextEditingController();
 
+  bool _checkData() {
+    if (cardNumberController.text.isNotEmpty) {
+      return true;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Enter Required Data!'),backgroundColor: Colors.red,));
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,7 +188,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                     const InputDecoration(hintText: "MONTH"),
                                 onChanged: (_) {
                                   setState(() {
-                                    isCVV = true;
+                                    isCVV = false;
                                   });
                                 },
                                 onSaved: (value) {
@@ -212,7 +213,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                     const InputDecoration(hintText: "YEAR"),
                                 onChanged: (_) {
                                   setState(() {
-                                    isCVV = true;
+                                    isCVV = false;
                                   });
                                 },
                                 onSaved: (value) {
@@ -239,25 +240,69 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                       child: const Text("Add card"),
                       onPressed: () {
                         print('=========================checkout');
-                        print(widget.orderinfo['order'],);
+                        print(
+                          widget.orderinfo['order'],
+                        );
+                        print(
+                          widget.orderinfo['paylater'],
+                        );
                         saveItem();
-                        Provider.of<ProductProvider>(context, listen: false)
-                            .addOrder(
+                        if (_checkData()) {
+                          if (widget.orderinfo['address'] == '') {
+                            Provider.of<ProductProvider>(context, listen: false)
+                                .addOrderWithoutAddress(
+                                widget.orderinfo['orderId'],
+                                widget.orderinfo['deliveryMethodId'],
+                                widget.orderinfo['date'],
+                                widget.orderinfo['reedem'],
+                                widget.orderinfo['paylater'],
+                                cardInfo['cardNumber']!,
+                                cardInfo['expiredMonth']!,
+                                cardInfo['cvc']!,
+                                cardInfo['expiredYear']!)
+                                .then((value) => ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(
+                              content: Text('success'),
+                              backgroundColor: Colors.green,
+                            )))
+                                .then((value) => Navigator.of(context)
+                                .pushNamed(Routes.checkOutConfirmRoute,arguments: widget.orderinfo))
+                                .catchError((error) =>
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(error.toString()),
+                                  backgroundColor: Colors.red,
+                                )));
+                            ;
+                          } else {
+                            Provider.of<ProductProvider>(context, listen: false)
+                                .addOrder(
                               widget.orderinfo['orderId'],
                               widget.orderinfo['deliveryMethodId'],
                               widget.orderinfo['date'],
-                              widget.orderinfo['address'],
+                              widget.orderinfo['address'].toString(),
                               widget.orderinfo['reedem'],
                               widget.orderinfo['paylater'],
                               cardInfo['cardNumber']!,
-                              double.parse(cardInfo['expiredMonth']!),
+                              cardInfo['expiredMonth']!,
                               cardInfo['cvc']!,
-                              double.parse(cardInfo['expiredYear']!),
+                              cardInfo['expiredYear']!,
                             )
-                            .then(
-                                (value) => SnackBar(content: Text('success')));
-                        Navigator.of(context)
-                            .pushNamed(Routes.checkOutConfirmRoute);
+                                .then((value) => ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(
+                              content: Text('success'),
+                              backgroundColor: Colors.green,
+                            )))
+                                .then((value) => Navigator.of(context)
+                                .pushNamed(Routes.checkOutConfirmRoute,arguments: widget.orderinfo))
+                                .catchError((error) =>
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(error.toString()),
+                                  backgroundColor: Colors.red,
+                                )));
+                          }
+                        }
                       },
                     ),
                   ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/app/constants.dart';
+import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import 'package:ghaf_application/providers/seller_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
@@ -14,10 +16,12 @@ class AddBankAccountSellerView extends StatefulWidget {
   const AddBankAccountSellerView({Key? key}) : super(key: key);
 
   @override
-  State<AddBankAccountSellerView> createState() => _AddBankAccountSellerViewState();
+  State<AddBankAccountSellerView> createState() =>
+      _AddBankAccountSellerViewState();
 }
 
-class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView> with Helpers{
+class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
+    with Helpers {
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
@@ -53,15 +57,31 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView> wit
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: AppSize.s22,
               ),
-              Text(
-                AppLocalizations.of(context)!.add_bank_account,
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // GestureDetector(
+                  //   onTap: () => Navigator.pop(context),
+                  //   child: Image.asset(
+                  //     IconsAssets.arrow,
+                  //     height: AppSize.s18,
+                  //     width: AppSize.s10,
+                  //   ),
+                  // ),
+                  // Spacer(),
+                  Text(
+                    AppLocalizations.of(context)!.add_bank_account,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s24),
+                  ),
+                  // Spacer(),
+                ],
               ),
               SizedBox(
                 height: AppSize.s58,
@@ -75,8 +95,19 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView> wit
                 hint: AppLocalizations.of(context)!.account_number,
                 textInputType: TextInputType.emailAddress,
               ),
-
-              SizedBox(height: AppSize.s50,),
+              AppTextField(
+                textController: _passwordTextController,
+                hint: 'name Holder',
+                textInputType: TextInputType.name,
+              ),
+              AppTextField(
+                textController: _phoneTextController,
+                hint: 'Bank Name',
+                textInputType: TextInputType.name,
+              ),
+              SizedBox(
+                height: AppSize.s50,
+              ),
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: AppMargin.m16,
@@ -84,7 +115,27 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView> wit
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () => _performRegister(),
+                  onPressed: () {
+                    if (_checkData()) {
+                      showLoadingDialog(context: context, title: 'Loading');
+                      Provider.of<SellerProvider>(context, listen: false)
+                          .addBankInfo(
+                              context,
+                              _nameTextController.text,
+                              _emailTextController.text,
+                              _passwordTextController.text,
+                              _phoneTextController.text)
+                          .then((value) => ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Success'),
+                                backgroundColor: Colors.green,
+                              )))
+                          .then((value) => Navigator.of(context)
+                              .pushNamed(
+                                  Routes.productsWithOutDetailsSellerRoute)
+                              ).catchError((e) => print(e.toString()));
+                    }
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.confirm,
                     style: getSemiBoldStyle(
@@ -112,9 +163,7 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView> wit
     if (_nameTextController.text.isNotEmpty &&
         _emailTextController.text.isNotEmpty &&
         _passwordTextController.text.isNotEmpty &&
-        _phoneTextController.text.isNotEmpty &&
-        _boDTextController.text.isNotEmpty
-    ) {
+        _phoneTextController.text.isNotEmpty) {
       return true;
     }
     showSnackBar(context, message: 'Enter Required Data!', error: true);
@@ -128,18 +177,18 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView> wit
     // showSnackBar(context, message: apiResponse.message??' ', error: true);
   }
 
-  // User get user {
-  //   User user = User();
-  //   user.userName = _nameTextController.text;
-  //   user.password = _passwordTextController.text;
-  //   user.confirmPassword = _passwordTextController.text;
-  //   user.firstName = _nameTextController.text; // todo add first and last name on ui
-  //   user.lastName = _nameTextController.text;
-  //   user.telephone = _phoneTextController.text;
-  //   user.role = Constants.roleRegister;
-  //   user.email = _emailTextController.text;
-  //   user.birthDate = _boDTextController.text;
-  //   return user;
-  // }
+// User get user {
+//   User user = User();
+//   user.userName = _nameTextController.text;
+//   user.password = _passwordTextController.text;
+//   user.confirmPassword = _passwordTextController.text;
+//   user.firstName = _nameTextController.text; // todo add first and last name on ui
+//   user.lastName = _nameTextController.text;
+//   user.telephone = _phoneTextController.text;
+//   user.role = Constants.roleRegister;
+//   user.email = _emailTextController.text;
+//   user.birthDate = _boDTextController.text;
+//   return user;
+// }
 
 }

@@ -37,7 +37,7 @@ class WelcomeSellerView extends StatelessWidget {
               onPressed: () => Navigator.pushNamed(
                   context, Routes.registerRoute,
                   arguments: {
-                    'isSeller': true,
+                    'role': 'Seller',
                   }),
               child: Text(
                 AppLocalizations.of(context)!.register_create_account,
@@ -56,7 +56,9 @@ class WelcomeSellerView extends StatelessWidget {
             width: double.infinity,
             height: AppSize.s55,
             child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, Routes.loginRoute),
+              onPressed: () => Navigator.pushNamed(
+                  context, Routes.registeraition,
+                  arguments: 'IndividualSeller'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorManager.transparent,
                 elevation: 0,

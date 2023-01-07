@@ -1,14 +1,30 @@
+
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:location/location.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 
-class WelcomeView extends StatelessWidget {
+class WelcomeView extends StatefulWidget {
   const WelcomeView({Key? key}) : super(key: key);
+
+  @override
+  State<WelcomeView> createState() => _WelcomeViewState();
+}
+
+class _WelcomeViewState extends State<WelcomeView> {
+
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +67,9 @@ class WelcomeView extends StatelessWidget {
             width: double.infinity,
             height: AppSize.s55,
             child: ElevatedButton(
-              onPressed: () =>Navigator.pushNamed(context, Routes.loginRoute),
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.loginRoute);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorManager.transparent,
                 elevation: 0,
@@ -64,6 +82,24 @@ class WelcomeView extends StatelessWidget {
                 AppLocalizations.of(context)!.login,
                 style: getSemiBoldStyle(
                     color: ColorManager.primaryDark, fontSize: FontSize.s18),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: AppSize.s148,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: AppMargin.m16,
+            ),
+            width: double.infinity,
+            height: AppSize.s55,
+            child: ElevatedButton(
+              onPressed: () =>Navigator.pushNamed(context, Routes.welcomeSellerRoute),
+              child: Text(
+                'Create Account as Seller',
+                style: getSemiBoldStyle(
+                    color: ColorManager.white, fontSize: FontSize.s18),
               ),
             ),
           ),

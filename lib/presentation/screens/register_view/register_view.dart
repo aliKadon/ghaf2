@@ -4,10 +4,13 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
@@ -22,6 +25,22 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
   // controller.
   late final RegisterViewGetXController _registerViewGetXController =
       Get.find<RegisterViewGetXController>();
+
+  var userName = '';
+
+  // late SharedPreferences _sharedPreferences;
+  // static SharedPrefController? _instance;
+
+  @override
+  void initState() {
+    // SharedPrefController._internal();
+
+    super.initState();
+  }
+
+  // Future<void> initPref() async {
+  //   _sharedPreferences = await SharedPreferences.getInstance();
+  // }
 
   // dispose.
   @override
@@ -90,19 +109,39 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     ),
                   ],
                 ),
+                 AppTextField(
+                        // hint: AppLocalizations.of(context)!.user_name,
+                        hint: SharedPrefController().userName,
+                        validator: (value) {
+                          if (value == null || value.isEmpty)
+                            return 'Username is required';
+                          return null;
+                        },
+                        onSaved: (value) {
+                          if( value == null) {
+                            _registerViewGetXController.userName = SharedPrefController().email;
+                          }else {
+                            _registerViewGetXController.userName = value;
+                          }
+                          print('=================================userName');
+                          print(_registerViewGetXController.userName);
+
+                        },
+                      ),
+                    // : AppTextField(
+                    //     hint: AppLocalizations.of(context)!.user_name,
+                    //     // hint: userName,
+                    //     validator: (value) {
+                    //       if (value == null || value.isEmpty)
+                    //         return 'Username is required';
+                    //       return null;
+                    //     },
+                    //     onSaved: (value) {
+                    //       _registerViewGetXController.userName = value;
+                    //     },
+                    //   ),
                 AppTextField(
-                  hint: AppLocalizations.of(context)!.user_name,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Username is required';
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _registerViewGetXController.userName = value;
-                  },
-                ),
-                AppTextField(
-                  hint: AppLocalizations.of(context)!.hint_email_phone,
+                  hint: SharedPrefController().email,
                   textInputType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty)
@@ -110,7 +149,13 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     return null;
                   },
                   onSaved: (value) {
-                    _registerViewGetXController.email = value;
+                    if( value == null) {
+                      _registerViewGetXController.email = SharedPrefController().email;
+                    }else {
+                      _registerViewGetXController.email = value;
+                    }
+                    print('=================================email');
+                    print(_registerViewGetXController.email);
                   },
                 ),
                 AppTextField(
@@ -261,7 +306,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   height: AppSize.s55,
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.pushNamed(context, Routes.loginRoute),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 
 import '../../resources/color_manager.dart';
@@ -119,7 +120,9 @@ class CheckoutSellerView extends StatelessWidget {
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute);
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.payment,
                     style: getSemiBoldStyle(
