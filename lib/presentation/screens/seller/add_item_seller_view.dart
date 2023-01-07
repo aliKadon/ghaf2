@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
@@ -31,9 +30,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
 
   //send from email
   void _contactEmail(String body) async {
-    String subject = "Hello from Ghaf";
     launch("mailto:");
-    final url = Uri.parse('mailto:ghaf@gmail.com');
     // if (await canLaunchUrl(url)) {
     //   await launchUrl(url);
     // } else {
@@ -113,6 +110,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 SizedBox(
                   height: AppSize.s22,
                 ),
+
                 ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
@@ -400,7 +398,6 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                       onTap: () {
                             () async {
                           String message = "Hello from Flutter!";
-                          String whatsappUrl = "whatsapp://send?phone=&text=$message";
                           final urlWhatsUP = "https://wa.me/?text=${_textController.text}";
                           await launch(urlWhatsUP);
                         };
