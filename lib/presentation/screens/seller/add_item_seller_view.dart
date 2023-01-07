@@ -115,6 +115,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 ),
                 ListView.builder(
                   shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
                   itemCount: provider.length,
                   itemBuilder: (context, index) {
                     return Card(
