@@ -7,6 +7,7 @@ import 'package:ghaf_application/domain/model/order.dart';
 import 'package:ghaf_application/domain/model/redeem_points.dart';
 import 'package:ghaf_application/domain/model/unpaid_order.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../app/constants.dart';
 import '../app/preferences/shared_pref_controller.dart';
@@ -19,8 +20,8 @@ import '../domain/model/product_discount.dart';
 class ProductProvider extends ChangeNotifier {
   num allRedeemPoints = 0;
 
-  var unPaidCount = 0;
-  var paidCount = 0;
+  num unPaidCount = 0;
+  num paidCount = 0;
 
   var referralCode = '';
 
@@ -71,6 +72,8 @@ class ProductProvider extends ChangeNotifier {
   List<UnpaidOrder> get unpaidOrder {
     return [..._unpaidOrder];
   }
+
+  num allPointsWallet = 0;
 
   // var x = FirebaseMessagingService.instance.getToken();
   Future<void> getProductDiscount(int discountCount) async {
@@ -166,6 +169,9 @@ class ProductProvider extends ChangeNotifier {
     // print('=================================ALI ALI');
     // print(orders);
 
+    num pay = 0;
+    num unPay = 0;
+
     List<Order> list = [];
     for (int i = 0; i < orders.length; i++) {
       list.add(Order(
@@ -193,12 +199,14 @@ class ProductProvider extends ChangeNotifier {
         id: orders[i]['orderDetails']['id'],
       ));
       if (orders[i]['orderDetails']['payed'] == false) {
-        unPaidCount++;
+        unPay++;
       }else {
-        paidCount++;
+        pay++;
       }
     }
 
+    unPaidCount = unPay;
+    paidCount = pay;
     _orders = list;
     // print('==================alialialaialailai');
     // for(int i = 0; i<= li.length;i++) {
@@ -217,6 +225,7 @@ class ProductProvider extends ChangeNotifier {
 
     // print('=================================ALI ALI');
     // print(orders);
+    num wallet = 0;
 
     List<OrderAllInformation> list = [];
     for (int i = 0; i < orders.length; i++) {
@@ -227,8 +236,10 @@ class ProductProvider extends ChangeNotifier {
           orders[i]['customerPoints'],
         ),
       );
-    }
 
+      wallet = wallet +  orders[i]['customerPoints'];
+    }
+    allPointsWallet = wallet;
     _orderAllInformation = list;
     // print('==================alialialaialailai');
     // for(int i = 0; i<= li.length;i++) {
@@ -480,5 +491,13 @@ class ProductProvider extends ChangeNotifier {
     }
 
     return int.parse(totla.toString());
+  }
+
+  getWebpage(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'an error occurred';
+    }
   }
 }

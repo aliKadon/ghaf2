@@ -8,11 +8,11 @@ import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/coupons_view.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/rewards_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -37,12 +37,21 @@ class _AccountViewState extends State<AccountView> {
   @override
   void initState() {
     super.initState();
-    if (AppSharedData.currentUser!.ghafGold == false){
+    if (AppSharedData.currentUser!.ghafGold == false) {
       subscribe = 'Unsubscribed';
     }
     if (AppSharedData.currentUser!.ghafGold == true) {
       subscribe = 'Subscribed';
     }
+  }
+
+  void _contactEmail() async {
+    launch("mailto:info@ghafgate.com");
+    // if (await canLaunchUrl(url)) {
+    //   await launchUrl(url);
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
   }
 
   @override
@@ -151,13 +160,14 @@ class _AccountViewState extends State<AccountView> {
                                 builder: (builder) => RewardsView()),
                           );
                         },
-                        child: accountWidget(context, IconsAssets.rewards,
-                            AppLocalizations.of(context)!.rewards,),
+                        child: accountWidget(
+                          context,
+                          IconsAssets.rewards,
+                          AppLocalizations.of(context)!.rewards,
+                        ),
                       ),
                       GestureDetector(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         child: accountWidget(context, IconsAssets.start1,
                             AppLocalizations.of(context)!.ghaf_gold,
                             // subscribe,
@@ -181,7 +191,8 @@ class _AccountViewState extends State<AccountView> {
                         child: accountWidget(
                           context,
                           IconsAssets.note,
-                          'Orders History',
+                          // 'Orders History',
+                          AppLocalizations.of(context)!.order_history,
                         ),
                       ),
                       GestureDetector(
@@ -192,9 +203,12 @@ class _AccountViewState extends State<AccountView> {
                                 builder: (builder) => MyWalletView()),
                           );
                         },
-                        child: accountWidget(context, IconsAssets.wallet,
-                            AppLocalizations.of(context)!.my_wallet,),
-                            // subTitle: '120 AED'),
+                        child: accountWidget(
+                          context,
+                          IconsAssets.wallet,
+                          AppLocalizations.of(context)!.my_wallet,
+                        ),
+                        // subTitle: '120 AED'),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -227,7 +241,8 @@ class _AccountViewState extends State<AccountView> {
                         child: accountWidget(
                           context,
                           '',
-                          'Gifts',
+                          // 'Gifts',
+                          AppLocalizations.of(context)!.gifts,
                           iconName: CupertinoIcons.gift,
                         ),
                       ),
@@ -290,11 +305,14 @@ class _AccountViewState extends State<AccountView> {
                           );
                         },
                         child: accountWidget(context, IconsAssets.notifications,
-                            AppLocalizations.of(context)!.notifications,
-                            subTitle: '5'),
+                            AppLocalizations.of(context)!.notifications,),
                       ),
                       GestureDetector(
-                        onTap: () => print('get help'),
+                        onTap: () {
+                          // info@ghafgate.com
+                          //send from email
+                          _contactEmail();
+                        },
                         child: accountWidget(
                           context,
                           IconsAssets.help,
@@ -308,7 +326,8 @@ class _AccountViewState extends State<AccountView> {
                         child: accountWidget(
                           context,
                           'star',
-                          'Rate Us',
+                          // 'Rate Us',
+                          AppLocalizations.of(context)!.rate_us,
                           isVector: true,
                         ),
                       ),
@@ -320,7 +339,8 @@ class _AccountViewState extends State<AccountView> {
                         child: accountWidget(
                           context,
                           '',
-                          'Forgot Password',
+                          // 'Forgot Password',
+                          AppLocalizations.of(context)!.forget_password,
                           iconName: CupertinoIcons.lock_fill,
                         ),
                       ),
@@ -344,12 +364,38 @@ class _AccountViewState extends State<AccountView> {
                             //   MaterialPageRoute(
                             //       builder: (builder) => AboutAppView()),
                             // );
-                            Navigator.of(context).pushNamed(Routes.inviteScreen);
+                            Navigator.of(context)
+                                .pushNamed(Routes.inviteScreen);
                           },
                           child: accountWidget(
                             context,
                             IconsAssets.share,
                             AppLocalizations.of(context)!.invite_friend,
+                          )),
+                      GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (builder) => AboutAppView()),
+                            // );
+                            Navigator.of(context)
+                                .pushNamed(Routes.language);
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.language, color: ColorManager.primary),
+                              SizedBox(
+                                width: AppSize.s8,
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.language,
+                                style: getRegularStyle(
+                                  color: ColorManager.primaryDark,
+                                  fontSize: FontSize.s16,
+                                ),
+                              ),
+                            ],
                           )),
                     ],
                   ),
@@ -413,6 +459,58 @@ class _AccountViewState extends State<AccountView> {
       ),
     );
   }
+
+  // Padding accountWidget1(
+  //     BuildContext context,
+  //     IconData icon,
+  //     String title, {
+  //       String? subTitle,
+  //       bool isVector = false,
+  //       IconData? iconName,
+  //     }) {
+  //   return Padding(
+  //     padding: EdgeInsets.only(bottom: AppPadding.p22),
+  //     child: Row(
+  //       children: [
+  //         iconName == null
+  //             ? isVector
+  //             ? SvgPicture.asset(
+  //           '${Constants.vectorsPath}$icon.svg',
+  //           width: AppSize.s24,
+  //           height: AppSize.s24,
+  //           color: ColorManager.primary,
+  //         )
+  //             : Image.asset(
+  //           icon,
+  //           height: AppSize.s24,
+  //           width: AppSize.s24,
+  //         )
+  //             : Icon(
+  //           iconName,
+  //           color: ColorManager.primary,
+  //         ),
+  //         SizedBox(
+  //           width: AppSize.s8,
+  //         ),
+  //         Text(
+  //           title,
+  //           style: getRegularStyle(
+  //             color: ColorManager.primaryDark,
+  //             fontSize: FontSize.s16,
+  //           ),
+  //         ),
+  //         Spacer(),
+  //         Text(
+  //           subTitle ?? '',
+  //           style: getRegularStyle(
+  //             color: ColorManager.grey,
+  //             fontSize: FontSize.s14,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _customDialogProgress() async {
     showDialog(

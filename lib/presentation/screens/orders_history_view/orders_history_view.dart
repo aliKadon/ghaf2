@@ -27,23 +27,28 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
     super.initState();
   }
 
-  var unpaidOrders = 0;
-  var paidOrders = 0;
+  num unpaidOrders = 0;
+  num paidOrders = 0;
 
-  Future<void> getUnpaidOrders(List<Order> order) async {
-    for (int i = 0; i < order.length;i++) {
-      if (order[i].payed == false) {
-        unpaidOrders = unpaidOrders+1;
-      }else {
-        paidOrders = paidOrders + 1;
-      }
-    }
-  }
+  // Future<void> getUnpaidOrders(List<Order> order) async {
+  //   for (int i = 0; i < order.length;i++) {
+  //     if (order[i].payed == false) {
+  //       unpaidOrders = unpaidOrders+1;
+  //     }else {
+  //       paidOrders = paidOrders + 1;
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var order = Provider.of<ProductProvider>(context).orders;
-    getUnpaidOrders(order);
+    var orderPay = Provider.of<ProductProvider>(context).paidCount;
+    var orderUnPay = Provider.of<ProductProvider>(context).unPaidCount;
+    setState(() {
+      unpaidOrders = orderUnPay;
+      paidOrders = orderPay;
+    });
+    // getUnpaidOrders(order);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -57,8 +62,8 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        paidOrders = 0;
-                        unpaidOrders = 0;
+                        // paidOrders = 0;
+                        // unpaidOrders = 0;
                       });
                       Navigator.pop(context);
                     } ,
@@ -134,8 +139,8 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                         onTap: () {
                           if (e['status'] == 'Un Paid') {
                             setState(() {
-                              unpaidOrders = 0;
-                              paidOrders = 0;
+                              // unpaidOrders = 0;
+                              // paidOrders = 0;
                             });
                             Navigator.pushNamed(context, Routes.ordersToPay);
                           }

@@ -150,7 +150,7 @@ class _CreatePaymentLinkSellerViewState
                             'aaa',
                             _emailTextController.text,
                             int.parse(_passwordTextController.text),
-                        list!)
+                        ['hu'])
                         .then((value) => ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(repo))))
                         .then((value) => Navigator.of(context).pop())

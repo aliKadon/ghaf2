@@ -46,6 +46,9 @@ class _CheckOutViewState extends State<CheckOutView> {
   var deleveryMethod;
   var deleveryName;
 
+  var selected = 0;
+  var pickUPID = 'a81c89e4-89e3-4cd9-7701-08dae6cfbd9a';
+
   final paymentController = Get.put(PaymentController());
 
   bool _checkData(String methodName) {
@@ -161,6 +164,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
+                              selected = index;
                               final snackBar = SnackBar(
                                 /// need to set following properties for best effect of awesome_snackbar_content
                                 elevation: 0,
@@ -208,7 +212,26 @@ class _CheckOutViewState extends State<CheckOutView> {
                               ),
                               child: Column(
                                 children: [
+                                  selected == index ?
                                   Container(
+                                    height: AppSize.s75,
+                                    width: AppSize.s75,
+                                    padding: EdgeInsets.all(AppPadding.p12),
+                                    decoration: BoxDecoration(
+                                      color: ColorManager.primary,
+                                      border: Border.all(
+                                          width: AppSize.s1,
+                                          color: ColorManager.greyLight),
+                                      borderRadius:
+                                      BorderRadius.circular(AppRadius.r4),
+                                    ),
+                                    child: Image.asset(
+                                      IconsAssets.cart,
+                                      height: AppSize.s36,
+                                      width: AppSize.s36,
+                                    ),
+                                  )
+                                      :Container(
                                     height: AppSize.s75,
                                     width: AppSize.s75,
                                     padding: EdgeInsets.all(AppPadding.p12),
@@ -821,7 +844,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                 widget.order.orderDetails['statusName'],
                             'orderId': widget.order.orderDetails['id'],
                             'item': widget.order.orderDetails['items'][0]['id'],
-                            'deliveryMethodId': deleveryMethod ?? '',
+                            'deliveryMethodId': deleveryMethod ?? pickUPID,
                             'date': date.toString() ?? '',
                             'address': myAddress ?? '',
                             'reedem': isSwitched.toString(),

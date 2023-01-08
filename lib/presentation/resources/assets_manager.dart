@@ -19,6 +19,7 @@ class ImageAssets {
   static const String deleted = "$imagePath/deleted.png";
   static const String faq = "$imagePath/faq.png";
   static const String main = "$imagePath/main.png";
+  static const String main2 = "$imagePath/main2.png";
   static const String person = "$imagePath/person.png";
   static const String person1 = "$imagePath/person1.png";
   static const String rate = "$imagePath/rate.png";
@@ -43,6 +44,7 @@ class ImageAssets {
   static const String visa = "$imagePath/visa.png";
   static const String store = "$imagePath/store.png";
   static const String photoGallery = "$imagePath/photo_gallery.png";
+
 
 
 }

@@ -20,6 +20,7 @@ import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view.dart
 import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
 import 'package:ghaf_application/presentation/screens/invite.dart';
+import 'package:ghaf_application/presentation/screens/language.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen.dart';
@@ -161,6 +162,7 @@ class Routes {
   static const String registeraition= '/registeraition';
 
   static const String storeSellerView = '/storeSellerView';
+  static const String language = '/language';
 }
 
 class RouteGenerator {
@@ -250,6 +252,8 @@ class RouteGenerator {
         );
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainView());
+      case Routes.language:
+        return MaterialPageRoute(builder: (_) => Language());
       case Routes.subCategoriesRoute:
         return MaterialPageRoute(builder: (_) => const SubCategoriesView());
       case Routes.productRoute:
@@ -336,7 +340,7 @@ class RouteGenerator {
           builder: (_) => ProductsScreen(
             // categoryId: settings.arguments as String,
             // categoryName: settings.arguments as String,
-            category: settings.arguments as dynamic,
+            category: settings.arguments as Map<String, dynamic>,
           ),
         );
       case Routes.myFavorite:

@@ -11,7 +11,7 @@ import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final category;
+  final Map<String,dynamic> category;
   // final String categoryName;
 
   const ProductsScreen({
@@ -28,6 +28,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
   // controller.
   late final ProductsScreenGetXController _productsScreenGetXController =
       Get.put(ProductsScreenGetXController());
+
+  void getCategory(Category category) {
+
+  }
 
   // init state.
   @override

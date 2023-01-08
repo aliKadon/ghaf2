@@ -49,6 +49,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   num? minPrice;
   num? maxPrice;
   String? filterBy;
+
   // num? minDiscount;
   // num? maxDiscount;
 
@@ -71,6 +72,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
+
   // get products.
   void getProducts({
     bool notifyLoading = false,
@@ -153,7 +155,6 @@ class HomeViewGetXController extends GetxController with Helpers {
               minPrice: minPrice,
               maxPrice: maxPrice,
               filterBy: filterBy,
-
             ),
           );
           return FilterSheetWidget();

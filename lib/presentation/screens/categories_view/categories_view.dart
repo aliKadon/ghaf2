@@ -33,7 +33,7 @@ class _CategoriesViewState extends State<CategoriesView> {
     _categoriesViewGetXController.init(
       context: context,
     );
-    Provider.of<ProductProvider>(context,listen: false).getProducts();
+    Provider.of<ProductProvider>(context, listen: false).getProducts();
     super.initState();
   }
 
@@ -44,8 +44,6 @@ class _CategoriesViewState extends State<CategoriesView> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     var products1 = Provider.of<ProductProvider>(context).product;
@@ -53,142 +51,150 @@ class _CategoriesViewState extends State<CategoriesView> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
-            child: Column(
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.categories,
-                  style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark,
-                    fontSize: FontSize.s18,
-                  ),
+          child: Column(
+            children: [
+              Text(
+                AppLocalizations.of(context)!.categories,
+                style: getSemiBoldStyle(
+                  color: ColorManager.primaryDark,
+                  fontSize: FontSize.s18,
                 ),
-                SizedBox(
-                  height: AppSize.s12,
-                ),
-                Divider(height: 1, color: ColorManager.greyLight),
-                SizedBox(
-                  height: AppSize.s12,
-                ),
-                Expanded(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 1,
-                    width: MediaQuery.of(context).size.width * 1,
-                    child: GetBuilder<CategoriesViewGetXController>(
-                      id: 'isLoading',
-                      builder: (controller) => controller.isLoading
-                          ? Container(
-                              height: MediaQuery.of(context).size.height * 0.6,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1,
-                                ),
+              ),
+              SizedBox(
+                height: AppSize.s12,
+              ),
+              Divider(height: 1, color: ColorManager.greyLight),
+              SizedBox(
+                height: AppSize.s12,
+              ),
+              Expanded(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 1,
+                  width: MediaQuery.of(context).size.width * 1,
+                  child: GetBuilder<CategoriesViewGetXController>(
+                    id: 'isLoading',
+                    builder: (controller) => controller.isLoading
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.6,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
                               ),
-                            )
-                          : _categoriesViewGetXController.data.isEmpty
-                              ? Center(
-                                  child: Text(
-                                    'No categories found',
+                            ),
+                          )
+                        : _categoriesViewGetXController.data.isEmpty
+                            ? Center(
+                                child: Text(
+                                  // 'No categories found',
+                                  AppLocalizations.of(context)!
+                                      .no_categories_found,
+                                ),
+                              )
+                            : Container(
+                                width: MediaQuery.of(context).size.width * 1,
+                                child: ListView.separated(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppPadding.p4),
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      _categoriesViewGetXController.data.length,
+                                  physics: const BouncingScrollPhysics(),
+                                  separatorBuilder: (_, index) => SizedBox(
+                                    height: 5.h,
                                   ),
-                                )
-                              : Container(
-                                  width: MediaQuery.of(context).size.width * 1,
-                                  child: ListView.separated(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: AppPadding.p4),
-                                    shrinkWrap: true,
-                                    itemCount: _categoriesViewGetXController
-                                        .data.length,
-                                    physics: const BouncingScrollPhysics(),
-                                    separatorBuilder: (_, index) => SizedBox(
-                                      height: 5.h,
-                                    ),
-                                    itemBuilder: (context, index) {
-                                      final Category category =
-                                          _categoriesViewGetXController
-                                                  .data[index]['category']
-                                              as Category;
-                                      final List<Product> products =
-                                          _categoriesViewGetXController
-                                                  .data[index]['products']
-                                              as List<Product>;
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  category.name ?? '',
-                                                  style: TextStyle(
-                                                    fontSize: 18.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                  itemBuilder: (context, index) {
+                                    final Category category =
+                                        _categoriesViewGetXController
+                                                .data[index]['category']
+                                            as Category;
+                                    final List<Product> products =
+                                        _categoriesViewGetXController
+                                                .data[index]['products']
+                                            as List<Product>;
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                category.name ?? '',
+                                                style: TextStyle(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              InkWell(
-                                                onTap: () {
-                                                  Navigator.pushNamed(
-                                                    context,
-                                                    Routes.products,
-                                                    arguments: products1[index].category,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  Routes.products,
+                                                  arguments:
+                                                      products1[index].category,
+                                                );
+                                              },
+                                              child: Text(
+                                                // 'More',
+                                                AppLocalizations.of(context)!
+                                                    .more,
+                                                style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        SizedBox(
+                                          height: 300.h,
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                1,
+                                            child: ListView.separated(
+                                              physics: BouncingScrollPhysics(),
+                                              itemCount: products.length,
+                                              scrollDirection: Axis.horizontal,
+                                              separatorBuilder: (_, index) =>
+                                                  SizedBox(
+                                                width: 5.w,
+                                              ),
+                                              itemBuilder: (_, index) =>
+                                                  Builder(
+                                                builder: (context) {
+                                                  Get.put<Product>(
+                                                    products[index],
+                                                    tag:
+                                                        '${products[index].id}categories',
+                                                  );
+                                                  return SizedBox(
+                                                    width: 150.w,
+                                                    child: ProductWidget(
+                                                      tag:
+                                                          '${products[index].id}categories',
+                                                    ),
                                                   );
                                                 },
-                                                child: Text(
-                                                  'More',
-                                                  style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 5.h,
-                                          ),
-                                          SizedBox(
-                                            height: 300.h,
-                                            child: Container(
-                                              width: MediaQuery.of(context).size.width * 1,
-                                              child: ListView.separated(physics: BouncingScrollPhysics(),
-                                                itemCount: products.length,
-                                                scrollDirection: Axis.horizontal,
-
-                                                separatorBuilder: (_, index) =>
-                                                    SizedBox(
-                                                      width: 5.w,
-                                                    ),
-                                                itemBuilder: (_, index) =>
-                                                    Builder(
-                                                      builder: (context) {
-                                                        Get.put<Product>(
-                                                          products[index],
-                                                          tag:
-                                                          '${products[index].id}categories',
-                                                        );
-                                                        return SizedBox(
-                                                          width: 150.w,
-                                                          child: ProductWidget(
-                                                            tag:
-                                                            '${products[index].id}categories',
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 ),
-                    ),
+                              ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

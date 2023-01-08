@@ -1,21 +1,31 @@
+import 'dart:math' as math; // import this
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/screens/faq_view.dart';
 import 'package:ghaf_application/presentation/screens/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
+
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'dart:math' as math; // import this
 
-class AboutAppView extends StatelessWidget {
+class AboutAppView extends StatefulWidget {
   const AboutAppView({Key? key}) : super(key: key);
 
   @override
+  State<AboutAppView> createState() => _AboutAppViewState();
+}
+
+class _AboutAppViewState extends State<AboutAppView> {
+  @override
   Widget build(BuildContext context) {
+    var ghaf = Provider.of<ProductProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -27,7 +37,7 @@ class AboutAppView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: ()=>Navigator.pop(context),
+                      onTap: () => Navigator.pop(context),
                       child: Image.asset(
                         IconsAssets.arrow,
                         height: AppSize.s18,
@@ -53,44 +63,63 @@ class AboutAppView extends StatelessWidget {
                   height: AppSize.s40,
                 ),
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (builder) => FAQView()),
+                        MaterialPageRoute(builder: (builder) => FAQView()),
                       );
                     },
-                    child: aboutApp(context, AppLocalizations.of(context)!.faqs)),
+                    child:
+                        aboutApp(context, AppLocalizations.of(context)!.faqs)),
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (builder) => SharaYourOpinionView()),
                       );
                     },
-                    child: aboutApp(context, AppLocalizations.of(context)!.share_your_opinion)),
+                    child: aboutApp(context,
+                        AppLocalizations.of(context)!.share_your_opinion)),
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (builder) => SitePrivacyView()),
                       );
                     },
-                    child: aboutApp(context, AppLocalizations.of(context)!.site_privacy)),
+                    child: aboutApp(
+                        context, AppLocalizations.of(context)!.site_privacy)),
                 GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (builder) => TermsOfUseView()),
                       );
                     },
-                    child: aboutApp(context, AppLocalizations.of(context)!.terms_of_use)),
-                aboutApp(context, AppLocalizations.of(context)!.facebook),
-                aboutApp(context, AppLocalizations.of(context)!.twitter),
-                aboutApp(context, AppLocalizations.of(context)!.instagram),
+                    child: aboutApp(
+                        context, AppLocalizations.of(context)!.terms_of_use)),
+                GestureDetector(
+                    onTap: () {
+                      ghaf.getWebpage(
+                          'https://www.facebook.com/profile.php?id=100086435884352');
+                    },
+                    child: aboutApp(
+                        context, AppLocalizations.of(context)!.facebook)),
+                GestureDetector(
+                  onTap: () {
+                    ghaf.getWebpage(
+                        'https://www.facebook.com/profile.php?id=100086435884352');
+                  },
+                    child: aboutApp(context, AppLocalizations.of(context)!.twitter)),
+                GestureDetector(
+                  onTap: () {
+                    ghaf.getWebpage(
+                        'https://www.facebook.com/profile.php?id=100086435884352');
+                  },
+                    child: aboutApp(context, AppLocalizations.of(context)!.instagram)),
                 SizedBox(
                   height: AppSize.s22,
                 ),

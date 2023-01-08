@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -7,11 +10,27 @@ import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MyWalletView extends StatelessWidget {
+class MyWalletView extends StatefulWidget {
   const MyWalletView({Key? key}) : super(key: key);
 
   @override
+  State<MyWalletView> createState() => _MyWalletViewState();
+}
+
+class _MyWalletViewState extends State<MyWalletView> {
+
+
+  var isLoading = true;
+
+  @override
+  void initState() {
+    Provider.of<ProductProvider>(context,listen: false).getAllDetailsOrder().then((value) => isLoading = false);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var product = Provider.of<ProductProvider>(context).allPointsWallet;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -23,7 +42,12 @@ class MyWalletView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: ()=>Navigator.pop(context),
+                    onTap: () {
+                      setState(() {
+                        product = 0;
+                      });
+                      Navigator.pop(context);
+                    },
                     child: Image.asset(
                       IconsAssets.arrow,
                       height: AppSize.s18,
@@ -70,8 +94,16 @@ class MyWalletView extends StatelessWidget {
                                 color: ColorManager.white,
                                 fontSize: FontSize.s16),
                           ),
-                          Text(
-                            '\$ 1.234',
+                          isLoading ? Center(
+                            child: Container(
+                              width: 20.h,
+                              height: 20.h,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          ) : Text(
+                            product.toString(),
                             style: getBoldStyle(
                                 color: ColorManager.white,
                                 fontSize: FontSize.s24),
@@ -100,7 +132,8 @@ class MyWalletView extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.r8))),
                   child: Text(
-                    AppLocalizations.of(context)!.add_balance,
+                    // AppLocalizations.of(context)!.add_balance,
+                    'Your Balance',
                     style: getSemiBoldStyle(
                         color: ColorManager.white, fontSize: FontSize.s18),
                   ),
@@ -132,52 +165,4 @@ class MyWalletView extends StatelessWidget {
       ),
     );
   }
-
-  // Padding RecentTransactions() {
-  //   return Padding(
-  //     padding:  EdgeInsets.only(bottom: AppPadding.p12),
-  //     child: Row(
-  //               children: [
-  //                 ClipOval(
-  //                   child: Image.asset(
-  //                     ImageAssets.test,
-  //                     height: AppSize.s48,
-  //                     width: AppSize.s48,
-  //                     fit: BoxFit.cover,
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   width: AppSize.s8,
-  //                 ),
-  //                 Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     Text(
-  //                       'Shopping',
-  //                       style: getRegularStyle(
-  //                         color: ColorManager.primaryDark,
-  //                         fontSize: FontSize.s18,
-  //                       ),
-  //                     ),
-  //                     Text(
-  //                       '15 March 2022, 8:20PM',
-  //                       style: getRegularStyle(
-  //                         color: ColorManager.grey,
-  //                         fontSize: FontSize.s12,
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 Spacer(),
-  //                 Text(
-  //                   '- 120 UAE',
-  //                   style: getRegularStyle(
-  //                     color: ColorManager.grey,
-  //                     fontSize: FontSize.s18,
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //   );
-  // }
 }

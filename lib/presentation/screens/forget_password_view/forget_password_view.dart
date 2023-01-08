@@ -121,7 +121,8 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   textInputType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Email address is required';
+                      // return 'Email address is required';
+                      return AppLocalizations.of(context)!.email_address_is_required;
                     return null;
                   },
                   onSaved: (value) {

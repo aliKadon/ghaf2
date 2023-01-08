@@ -356,7 +356,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                           ),
                           child: Text(
                             // controller: _textController,
-                            pro['url'],
+                            pro,
                             style: getMediumStyle(
                                 color: ColorManager.grey,
                                 fontSize: FontSize.s14),
@@ -367,7 +367,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                           child: GestureDetector(
                             onTap: () {
                               Clipboard.setData(
-                                  ClipboardData(text: pro['url']));
+                                  ClipboardData(text: pro));
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text("Copied"),

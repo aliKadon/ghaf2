@@ -133,37 +133,65 @@ class NotificationView extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
-                height: AppSize.s18,
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: AppMargin.m16,
-                ),
-                width: double.infinity,
-                height: AppSize.s55,
-                child: ElevatedButton(
-                  onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute),
-                  child: Text(
-                    AppLocalizations.of(context)!.turn_on_notifications,
+              SizedBox(height: AppSize.s24,),
+              Row(
+                children: [
+                  // Image.asset(
+                  //   IconsAssets.notifications1,
+                  //   height: AppSize.s32,
+                  //   width: AppSize.s32,
+                  // ),
+                  Icon(Icons.payments_outlined,size: AppSize.s32,color: ColorManager.primaryDark.withOpacity(0.8)),
+                  SizedBox(width: AppSize.s14,),
+                  Text(
+                    AppLocalizations.of(context)!.pay_later_notify,
                     style: getSemiBoldStyle(
-                        color: ColorManager.white, fontSize: FontSize.s18),
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s16,
+                    ),
                   ),
+                ],
+              ),
+              SizedBox(height: AppSize.s16,),
+              Text(
+                AppLocalizations.of(context)!.pay_later_description,
+                style: getRegularStyle(
+                  color: ColorManager.grey,
+                  fontSize: FontSize.s14,
                 ),
               ),
-              SizedBox(
-                height: AppSize.s18,
-              ),
-              Align(
-                alignment: AlignmentDirectional.center,
-                child: Text(
-                  AppLocalizations.of(context)!.no_thanks,
-                  style: getMediumStyle(
-                    color: ColorManager.grey,
-                    fontSize: FontSize.s14,
-                  ),
-                ),
-              ),
+
+              // SizedBox(
+              //   height: AppSize.s18,
+              // ),
+              // Container(
+              //   margin: EdgeInsets.symmetric(
+              //     horizontal: AppMargin.m16,
+              //   ),
+              //   width: double.infinity,
+              //   height: AppSize.s55,
+              //   child: ElevatedButton(
+              //     onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute),
+              //     child: Text(
+              //       AppLocalizations.of(context)!.turn_on_notifications,
+              //       style: getSemiBoldStyle(
+              //           color: ColorManager.white, fontSize: FontSize.s18),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: AppSize.s18,
+              // ),
+              // Align(
+              //   alignment: AlignmentDirectional.center,
+              //   child: Text(
+              //     AppLocalizations.of(context)!.no_thanks,
+              //     style: getMediumStyle(
+              //       color: ColorManager.grey,
+              //       fontSize: FontSize.s14,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

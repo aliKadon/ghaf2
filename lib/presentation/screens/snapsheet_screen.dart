@@ -5,9 +5,10 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../app/utils/helpers.dart';
 import '../resources/values_manager.dart';
 
-class SnapsheetScreen extends StatefulWidget {
+class SnapsheetScreen extends StatefulWidget with Helpers {
   final Map<String, dynamic> orderinfo;
 
   SnapsheetScreen(this.orderinfo);
@@ -239,6 +240,8 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                     child: ElevatedButton(
                       child: const Text("Add card"),
                       onPressed: () {
+                        // showLoadingDialog(context: context, title: 'Logging In');
+
                         print('=========================checkout');
                         print(
                           widget.orderinfo['order'],

@@ -85,7 +85,8 @@ class _CartViewState extends State<CartView> {
                       : _cartViewGetXController.cartItems.isEmpty
                           ? Center(
                               child: Text(
-                                'Cart is empty',
+                                // 'Cart is empty',
+                                AppLocalizations.of(context)!.cart_is_empty,
                               ),
                             )
                           : Column(
@@ -199,7 +200,8 @@ class _CartViewState extends State<CartView> {
                                     onPressed:
                                         _cartViewGetXController.createOrder,
                                     child: Text(
-                                      'Create Order',
+                                      // 'Create Order',
+                                      AppLocalizations.of(context)!.create_order,
                                       style: getSemiBoldStyle(
                                         color: ColorManager.white,
                                         fontSize: FontSize.s18,

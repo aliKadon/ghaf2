@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -109,17 +110,35 @@ class _InviteState extends State<Invite> {
                 ),
               ),
 
-              ElevatedButton(onPressed: (){
-                setState(() {
-                  isLoading =  true;
-                  Provider.of<ProductProvider>(context,listen: false).getReferralCode().then((value) => isLoading = false);
-                  var referral = Provider.of<ProductProvider>(context,listen: false).referralCode;
-                  isLoading = false;
-                  refCode = referral;
-                });
-              }, child: Text('Generate',style: getSemiBoldStyle(
-                  color: Colors.white,
-                  fontSize: FontSize.s26),),)
+              Column(
+                children: [
+                  ElevatedButton(onPressed: (){
+                    setState(() {
+                      isLoading =  true;
+                      Provider.of<ProductProvider>(context,listen: false).getReferralCode().then((value) => isLoading = false);
+                      var referral = Provider.of<ProductProvider>(context,listen: false).referralCode;
+                      isLoading = false;
+                      refCode = referral;
+                    });
+                  }, child: Text('Generate',style: getSemiBoldStyle(
+                      color: Colors.white,
+                      fontSize: FontSize.s26),),),
+
+                  ElevatedButton(onPressed: (){
+                    setState(() {
+                      Clipboard.setData(
+                          ClipboardData(text: refCode));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Copied"),
+                        ),
+                      );
+                    });
+                  }, child: Text('copy',style: getSemiBoldStyle(
+                      color: Colors.white,
+                      fontSize: FontSize.s26),),),
+                ],
+              )
             ],
           ),
         ),

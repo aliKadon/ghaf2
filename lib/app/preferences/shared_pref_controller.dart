@@ -20,6 +20,7 @@ enum PrefKeys {
   ghafGold,
   sellerSubmittedForm,
   fcmToken,
+  language,
 }
 
 class SharedPrefController {
@@ -83,6 +84,8 @@ class SharedPrefController {
           );
   }
 
+  var key = 'ar';
+
   Future<bool> clear() async {
     return _sharedPreferences.clear();
   }
@@ -96,6 +99,12 @@ class SharedPrefController {
   String get email =>
       _sharedPreferences.getString(PrefKeys.email.name) ?? 'Email';
 
+  String get lang1 {
+    return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'ar';
+  }
+
+
+
   Future<void> setUserName(String userName) async {
     await _sharedPreferences.setString(PrefKeys.userName.name, '${userName}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
@@ -105,6 +114,11 @@ class SharedPrefController {
     await _sharedPreferences.setString(PrefKeys.userName.name, '${email}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
+
+  // Future<bool> setLanguage(String language) async {
+  //   await _sharedPreferences.setBool();
+  //   // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  // }
 
   // void set loggedIn(bool loggedIn) => _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
 
@@ -123,7 +137,10 @@ class SharedPrefController {
   }
 
   Future<bool> changeLanguage({required String language}) async {
-    return _sharedPreferences.setString(PrefKeys.lang.name, language);
+    return  _sharedPreferences.setString(PrefKeys.language.toString(), language);
+  }
+  Future<bool> changeLanguage1({required bool language}) async {
+    return  _sharedPreferences.setBool(key, language);
   }
 
   Future<bool> removeValue({required String key}) async {

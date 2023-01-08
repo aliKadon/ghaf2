@@ -16,11 +16,11 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     return [..._readIndividualProducts];
   }
 
-  Map<String, dynamic> _createPaymentLink = {};
+  String createPaymentLink = '';
 
-  Map<String, dynamic> get createPaymentLink {
-    return {..._createPaymentLink};
-  }
+  // Map<String, dynamic> get createPaymentLink {
+  //   return {..._createPaymentLink};
+  // }
 
   List<PlanSellerIndividual> _planSellerIndividual = [];
 
@@ -182,10 +182,10 @@ class SellerProvider with ChangeNotifier, ApiHelper {
   Future<void> createIndividualProducts(
       String name,
       String description,
-      String characteristics,
+      String? characteristics,
       String productType,
       int price,
-      List<String> image) async {
+      List<String>? image) async {
     var url =
         Uri.parse('${Constants.urlBase}/product/create-individual-products');
     try {
@@ -200,11 +200,11 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'images': image,
           }));
 
-      // print('=====================addItemSeller============');
-      // print(response.statusCode);
-      // print(response.body);
-      // print(json.decode(response.body));
-      // print('=====================================repo');
+      print('=====================addItemSeller============');
+      print(response.statusCode);
+      print(response.body);
+      print(json.decode(response.body));
+      print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
       // print(repo);
@@ -285,16 +285,16 @@ class SellerProvider with ChangeNotifier, ApiHelper {
         '${Constants.urlBase}/product/create-paymnet-link?prodId=$productId&Quantity=$count');
 
     final response = await http.get(url, headers: headers);
+    print('response : ${response.body}');
 
     var data = jsonDecode(response.body)['data'];
-    // print('============================================data0');
-    // print(data.toString());
+    print('============================================data0');
+    print(data.toString());
 
-    Map<String, dynamic> list = {};
     // print('=====================================repo');
     repo = jsonDecode(response.body)['message'];
     // print(repo);
-    _createPaymentLink = data;
+    createPaymentLink = data.toString();
 
     notifyListeners();
     // for (int i = 0; i < data.length; i++) {

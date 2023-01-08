@@ -159,6 +159,7 @@ class _CreatePaymentLink2SellerViewState
               height: AppSize.s55,
               child: ElevatedButton(
                 onPressed: () {
+                  print('id : ${readProduct[0].id}');
                   Provider.of<SellerProvider>(context, listen: false)
                       .createPaymnetLink(readProduct[0].id, widget.amount)
                       .then((value) => _customDialogProgress());
@@ -242,7 +243,7 @@ class _CreatePaymentLink2SellerViewState
                             borderRadius: BorderRadius.circular(AppRadius.r8),
                           ),
                           child: Text(
-                          pro['url'],
+                          pro,
                             style: getMediumStyle(
                                 color: ColorManager.grey,
                                 fontSize: FontSize.s14),
@@ -257,7 +258,7 @@ class _CreatePaymentLink2SellerViewState
                                   content: Text("Copied"),
                                 ),
                               );
-                              Clipboard.setData(ClipboardData(text: pro['url']));
+                              Clipboard.setData(ClipboardData(text: pro));
                             } ,
                             child: Container(
                               width: AppSize.s92,
@@ -337,7 +338,7 @@ class _CreatePaymentLink2SellerViewState
                       //   _contactEmail(pro['url']);
                       // },
                       onTap: () {
-                        _contactEmail(pro['url']);
+                        _contactEmail(pro);
                       },
                       child: Row(
                         children: [

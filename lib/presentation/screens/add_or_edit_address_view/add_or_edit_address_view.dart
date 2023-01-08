@@ -132,13 +132,15 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                 AppTextField(
                                   initialValue:
                                       _addAddressViewGetXController.addressName,
-                                  hint: 'Address name',
+                                  // hint: 'Address name',
+                                  hint: AppLocalizations.of(context)!.name_address,
                                   onSaved: (value) =>
                                       _addAddressViewGetXController
                                           .addressName = value,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Address name is required';
+                                      // return 'Address name is required';
+                                      return AppLocalizations.of(context)!.address_name_required;
                                     }
                                     return null;
                                   },
@@ -146,14 +148,14 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                 AppTextField(
                                   initialValue:
                                       _addAddressViewGetXController.phoneNumber,
-                                  hint: 'Phone Number',
+                                  hint: AppLocalizations.of(context)!.phone_number,
                                   textInputType: TextInputType.phone,
                                   onSaved: (value) =>
                                       _addAddressViewGetXController
                                           .phoneNumber = value,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Phone number is required';
+                                      return AppLocalizations.of(context)!.phone_number_is_required;
                                     }
                                     return null;
                                   },
@@ -170,7 +172,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                     child: Text(
                                       _addAddressViewGetXController.address ==
                                               null
-                                          ? 'Add Address'
+                                          ? AppLocalizations.of(context)!.add_address
                                           : 'Edit Address',
                                       style: getSemiBoldStyle(
                                           color: ColorManager.white,

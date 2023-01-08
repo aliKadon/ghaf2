@@ -19,6 +19,9 @@ import 'package:ghaf_application/presentation/widgets/product_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
+import '../../../providers/language_provider.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -35,8 +38,28 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     _homeViewGetXController.init(context: context);
+    // localLanguage();
     super.initState();
   }
+
+  // bool isArabic = false;
+
+  // Future<bool> localLanguage() async{
+  //   var language = Provider.of<LocaleProvider>(context, listen: false).locale;
+  //   print('language $language');
+  //   if(language.toString() == 'en') {
+  //     isArabic = false;
+  //     print(isArabic);
+  //     return await true;
+  //
+  //
+  //   }else {
+  //     isArabic = true;
+  //
+  //     print(isArabic);
+  //     return await false;
+  //   }
+  // }
 
   @override
   void didChangeDependencies() {
@@ -53,6 +76,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+
+    var isArabic = SharedPrefController().lang1;
     var prodDiscount = Provider.of<ProductProvider>(context).productDiscount;
     // print('============================================ALI');
     // print(prodDiscount);
@@ -79,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
                         width: AppSize.s17,
                       ),
                       Text(
-                        'Shipping to Dubai',
+                        AppLocalizations.of(context)!.shipping,
                         style: getRegularStyle(color: ColorManager.primaryDark),
                       ),
                     ],
@@ -229,12 +254,18 @@ class _HomeViewState extends State<HomeView> {
                                 alignment: Alignment.center,
                                 child: Stack(
                                   children: [
-                                    Image.asset(
+                                    //image main
+                                    isArabic == 'en' ? Image.asset(
                                       ImageAssets.main,
                                       height: AppSize.s148,
                                       width: AppSize.s360,
                                       fit: BoxFit.fill,
-                                    ),
+                                    ) : Image.asset(
+                                      ImageAssets.main2,
+                                      height: AppSize.s148,
+                                      width: AppSize.s360,
+                                      fit: BoxFit.fill,
+                                    ) ,
                                     PositionedDirectional(
                                       top: AppSize.s30,
                                       start: AppSize.s30,

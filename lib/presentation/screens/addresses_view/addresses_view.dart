@@ -85,7 +85,8 @@ class _AddressesViewState extends State<AddressesView> {
                       : _addressesViewGetXController.addresses.isEmpty
                           ? Center(
                               child: Text(
-                                'No addresses found',
+                                // 'No addresses found',
+                                  AppLocalizations.of(context)!.no_addresses_found,
                               ),
                             )
                           : ListView.separated(
