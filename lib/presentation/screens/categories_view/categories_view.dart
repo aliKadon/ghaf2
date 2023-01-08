@@ -48,8 +48,7 @@ class _CategoriesViewState extends State<CategoriesView> {
 
   @override
   Widget build(BuildContext context) {
-    var products = Provider.of<ProductProvider>(context).product;
-
+    var products1 = Provider.of<ProductProvider>(context).product;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -130,7 +129,7 @@ class _CategoriesViewState extends State<CategoriesView> {
                                                   Navigator.pushNamed(
                                                     context,
                                                     Routes.products,
-                                                    arguments: products[index].category,
+                                                    arguments: products1[index].category,
                                                   );
                                                 },
                                                 child: Text(
@@ -150,9 +149,10 @@ class _CategoriesViewState extends State<CategoriesView> {
                                             height: 300.h,
                                             child: Container(
                                               width: MediaQuery.of(context).size.width * 1,
-                                              child: ListView.separated(
+                                              child: ListView.separated(physics: BouncingScrollPhysics(),
                                                 itemCount: products.length,
                                                 scrollDirection: Axis.horizontal,
+
                                                 separatorBuilder: (_, index) =>
                                                     SizedBox(
                                                       width: 5.w,

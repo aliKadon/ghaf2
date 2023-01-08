@@ -18,9 +18,6 @@ void main() async {
   // Stripe.merchantIdentifier = 'any string works';
   // await Stripe.instance.applySettings();
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (_) => MyApp(),
-    ),
+      MyApp()
   );
 }

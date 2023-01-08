@@ -51,16 +51,16 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       ));
       repo = json.decode(response.body)['message'];
       notifyListeners();
-      print('=====================addPaymentCard============');
-      print(response.statusCode);
-      print(response.body);
-      print(json.decode(response.body)['message']);
-      print('=====================================repo');
+      // print('=====================addPaymentCard============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print(json.decode(response.body)['message']);
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
-      print(repo);
+      // print(repo);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -97,15 +97,15 @@ class SellerProvider with ChangeNotifier, ApiHelper {
         ),
         backgroundColor: Colors.green,
       ));
-      print('=====================submitIndividualForm============');
-      print(response.statusCode);
-      print(response.body);
-      print('=====================================repo');
+      // print('=====================submitIndividualForm============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
-      print(repo);
+      // print(repo);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -127,15 +127,15 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       //     response.body.toString(),
       //   ),
       // ));
-      print('=====================bank============');
-      print(response.statusCode);
-      print(response.body);
-      print('=====================================repo');
+      // print('=====================bank============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
-      print(repo);
+      // print(repo);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -167,15 +167,15 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'birthDate': birthDate,
           }));
 
-      print('=====================register============');
-      print(response.statusCode);
-      print(response.body);
-      print('=====================================repo');
+      // print('=====================register============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
-      print(repo);
+      // print(repo);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -200,16 +200,16 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'images': image,
           }));
 
-      print('=====================addItemSeller============');
-      print(response.statusCode);
-      print(response.body);
-      print(json.decode(response.body));
-      print('=====================================repo');
+      // print('=====================addItemSeller============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print(json.decode(response.body));
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
-      print(repo);
+      // print(repo);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -236,14 +236,14 @@ class SellerProvider with ChangeNotifier, ApiHelper {
           data[i]['isoCurrencySymbol'],
           data[i]['addedAt'],
           data[i]['ghafImageIndividual']));
-      print('=================================ReadIndividualProducts');
-      print(response.statusCode);
-      print(json.decode(response.body));
+      // print('=================================ReadIndividualProducts');
+      // print(response.statusCode);
+      // print(json.decode(response.body));
     }
     _readIndividualProducts = list;
-    print('=====================================repo');
+    // print('=====================================repo');
     repo = jsonDecode(response.body)['message'];
-    print(repo);
+    // print(repo);
     notifyListeners();
   }
 
@@ -271,13 +271,13 @@ class SellerProvider with ChangeNotifier, ApiHelper {
           typeName: data[i]['typeName']));
     }
     _planSellerIndividual = list;
-    print('=====================================repo');
+    // print('=====================================repo');
     repo = jsonDecode(response.body)['message'];
-    print(repo);
+    // print(repo);
     notifyListeners();
-    print('=================================ReadIndividualProducts');
-    print(response.statusCode);
-    print(json.decode(response.body));
+    // print('=================================ReadIndividualProducts');
+    // print(response.statusCode);
+    // print(json.decode(response.body));
   }
 
   Future<void> createPaymnetLink(String productId, int count) async {
@@ -287,13 +287,13 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     final response = await http.get(url, headers: headers);
 
     var data = jsonDecode(response.body)['data'];
-    print('============================================data0');
-    print(data.toString());
+    // print('============================================data0');
+    // print(data.toString());
 
     Map<String, dynamic> list = {};
-    print('=====================================repo');
+    // print('=====================================repo');
     repo = jsonDecode(response.body)['message'];
-    print(repo);
+    // print(repo);
     _createPaymentLink = data;
 
     notifyListeners();
@@ -337,8 +337,8 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     //   }
     // }
     // _createPaymentLink = data;
-    print('=================================createPaymnetLink');
-    print(response.statusCode);
-    print(data.toString());
+    // print('=================================createPaymnetLink');
+    // print(response.statusCode);
+    // print(data.toString());
   }
 }

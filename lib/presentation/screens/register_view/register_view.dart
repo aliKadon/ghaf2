@@ -303,7 +303,34 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   ),
                 ),
                 SizedBox(
-                  height: AppSize.s55,
+                  height: AppSize.s35,
+                ),
+                Visibility(
+                  visible: true,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.register_as_a,
+                        style: getRegularStyle(
+                            color: ColorManager.grey, fontSize: FontSize.s16),
+                      ),
+                      SizedBox(
+                        width: AppSize.s1,
+                      ),
+                      GestureDetector(
+                        onTap: () =>
+                            Navigator.pushNamed(
+                                context, Routes.welcomeSellerRoute),
+                        child: Text(
+                          AppLocalizations.of(context)!.seller,
+                          style: getExtraBoldStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pushNamed(context, Routes.loginRoute),
@@ -327,6 +354,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     ],
                   ),
                 ),
+
                 SizedBox(
                   height: AppSize.s16,
                 ),

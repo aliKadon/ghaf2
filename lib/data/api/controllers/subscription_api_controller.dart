@@ -8,7 +8,7 @@ class SubscriptionApiController with ApiHelper {
 
   // subscribe as ghaf golden.
   Future<ApiResponse> subscribeAsGhafGolden() async {
-    print('send request : customer-subscripe-as-ghafgold');
+    // print('send request : customer-subscripe-as-ghafgold');
     Map<String, dynamic> data = {
       "paymentMethodType": "card",
       "cardNumber": "4242424242424242",
@@ -17,7 +17,7 @@ class SubscriptionApiController with ApiHelper {
       "cardExpYear": 2023,
       "PlanId": "23649D13-7E5F-4962-94BC-08DAE4189B69"
     };
-    print(data);
+    // print(data);
     var response = await _dio.post(
       'Auth/customer-subscripe-as-ghafgold',
       data: data,
@@ -25,9 +25,9 @@ class SubscriptionApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(
@@ -41,16 +41,16 @@ class SubscriptionApiController with ApiHelper {
 
   // subscribe as free.
   Future<ApiResponse> subscribeAsFree() async {
-    print('send request : customer-subscripe-for-free');
+    // print('send request : customer-subscripe-for-free');
     var response = await _dio.post(
       'Auth/customer-subscripe-for-free',
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(
@@ -64,16 +64,16 @@ class SubscriptionApiController with ApiHelper {
 
   // cancel subscription.
   Future<ApiResponse> cancelSubscription() async {
-    print('send request : customer-cancel-subscribtion');
+    // print('send request : customer-cancel-subscribtion');
     var response = await _dio.post(
       'Auth/customer-cancel-subscribtion',
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(

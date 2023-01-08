@@ -8,16 +8,16 @@ class GiftsApiController with ApiHelper {
 
   // get gift.
   Future<List<Gift>> getGifts() async {
-    print('send request : read-gift');
+    // print('send request : read-gift');
     var response = await _dio.get(
       'GiftAndReward/read-gift',
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       return List<Gift>.from(
           response.data["data"].map((x) => Gift.fromJson(x)));

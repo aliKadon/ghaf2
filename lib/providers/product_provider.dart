@@ -74,9 +74,9 @@ class ProductProvider extends ChangeNotifier {
 
   // var x = FirebaseMessagingService.instance.getToken();
   Future<void> getProductDiscount(int discountCount) async {
-    print('================================================');
+    // print('================================================');
     var y = SharedPrefController().token;
-    print(y);
+    // print(y);
     final response = await http.get(
       Uri.parse(
           "${Constants.urlBase}/product/read-product?filter=productDiscount.discount~eq~$discountCount"),
@@ -84,10 +84,10 @@ class ProductProvider extends ChangeNotifier {
         HttpHeaders.authorizationHeader: y,
       },
     );
-    // print('=============================HIII');
-    // print(response.statusCode);
+    // // print('=============================HIII');
+    // // print(response.statusCode);
     List productDiscount = json.decode(response.body)['data'];
-    // print(productDiscount);
+    // // print(productDiscount);
     List<ProductDiscount> prDs = [];
     for (int i = 0; i < productDiscount.length; i++) {
       prDs.add(ProductDiscount(
@@ -108,19 +108,19 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<void> getProducts() async {
-    print('================================================');
+    // // print('================================================');
     var y = SharedPrefController().token;
-    print(y);
+    // // print(y);
     final response = await http.get(
       Uri.parse("${Constants.urlBase}/product/read-product"),
       headers: {
         HttpHeaders.authorizationHeader: y,
       },
     );
-    // print('=============================HIII');
-    // print(response.statusCode);
+    // // print('=============================HIII');
+    // // print(response.statusCode);
     List product = json.decode(response.body)['data'];
-    // print(productDiscount);
+    // // print(productDiscount);
     List<Product2> list = [];
     for (int i = 0; i < product.length; i++) {
       list.add(Product2(
@@ -163,8 +163,8 @@ class ProductProvider extends ChangeNotifier {
     });
     List orders = json.decode(response.body)['data'];
 
-    print('=================================ALI ALI');
-    print(orders);
+    // print('=================================ALI ALI');
+    // print(orders);
 
     List<Order> list = [];
     for (int i = 0; i < orders.length; i++) {
@@ -200,9 +200,9 @@ class ProductProvider extends ChangeNotifier {
     }
 
     _orders = list;
-    print('==================alialialaialailai');
+    // print('==================alialialaialailai');
     // for(int i = 0; i<= li.length;i++) {
-    //   print(_orders[i].toJson());
+    //   // print(_orders[i].toJson());
     // }
     notifyListeners();
   }
@@ -215,8 +215,8 @@ class ProductProvider extends ChangeNotifier {
     });
     List orders = json.decode(response.body)['data'];
 
-    print('=================================ALI ALI');
-    print(orders);
+    // print('=================================ALI ALI');
+    // print(orders);
 
     List<OrderAllInformation> list = [];
     for (int i = 0; i < orders.length; i++) {
@@ -230,9 +230,9 @@ class ProductProvider extends ChangeNotifier {
     }
 
     _orderAllInformation = list;
-    print('==================alialialaialailai');
+    // print('==================alialialaialailai');
     // for(int i = 0; i<= li.length;i++) {
-    //   print(_orders[i].toJson());
+    //   // print(_orders[i].toJson());
     // }
     notifyListeners();
   }
@@ -271,14 +271,14 @@ class ProductProvider extends ChangeNotifier {
       String CardExpYear) async {
     var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
     // final response =
-    print('========================addOrder');
-    print(orderId);
-    print(deliveryMethodId);
-    print(DesiredDeliveryDate);
-    print(address);
-    print(UseRedeemPoints.toString());
-    print(UsePayLater.toString());
-    print(CardNumber);
+    // print('========================addOrder');
+    // print(orderId);
+    // print(deliveryMethodId);
+    // print(DesiredDeliveryDate);
+    // print(address);
+    // print(UseRedeemPoints.toString());
+    // print(UsePayLater.toString());
+    // print(CardNumber);
     final response = await http.post(url, headers: {
       HttpHeaders.authorizationHeader: SharedPrefController().token,
     }, body: {
@@ -295,8 +295,8 @@ class ProductProvider extends ChangeNotifier {
       'CardExpCvc': CardExpCvc,
       'CardExpYear': CardExpYear,
     });
-    print('======================================statusCode');
-    print(response.statusCode);
+    // print('======================================statusCode');
+    // print(response.statusCode);
   }
 
   Future<void> giveReviewForProduct(String productId, String point) async{
@@ -307,8 +307,8 @@ class ProductProvider extends ChangeNotifier {
       'prodiId': productId,
       'points':point
     });
-    print('======================================statusCode');
-    print(response.statusCode);
+    // print('======================================statusCode');
+    // print(response.statusCode);
   }
 
   Future<void> addOrder(
@@ -324,14 +324,14 @@ class ProductProvider extends ChangeNotifier {
       String CardExpYear) async {
     var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
     // final response =
-    print('========================addOrder');
-    print(orderId);
-    print(deliveryMethodId);
-    print(DesiredDeliveryDate);
-    print(address);
-    print(UseRedeemPoints.toString());
-    print(UsePayLater.toString());
-    print(CardNumber);
+    // print('========================addOrder');
+    // print(orderId);
+    // print(deliveryMethodId);
+    // print(DesiredDeliveryDate);
+    // print(address);
+    // print(UseRedeemPoints.toString());
+    // print(UsePayLater.toString());
+    // print(CardNumber);
     final response = await http.post(url, headers: {
       HttpHeaders.authorizationHeader: SharedPrefController().token,
     }, body: {
@@ -348,8 +348,8 @@ class ProductProvider extends ChangeNotifier {
       'CardExpCvc': CardExpCvc,
       'CardExpYear': CardExpYear,
     });
-    print('======================================statusCode');
-    print(response.statusCode);
+    // print('======================================statusCode');
+    // print(response.statusCode);
     // try {
     //   final response = await http.post(url, headers: {
     //     HttpHeaders.authorizationHeader: SharedPrefController().token,
@@ -367,10 +367,10 @@ class ProductProvider extends ChangeNotifier {
     //     'CardExpCvc': CardExpCvc,
     //     'CardExpYear': CardExpYear,
     //   });
-    //   print(response.statusCode);
-    // } catch (e) {
     //   // print(response.statusCode);
-    //   print(e.toString());
+    // } catch (e) {
+    //   // // print(response.statusCode);
+    //   // print(e.toString());
     // }
   }
 
@@ -396,8 +396,8 @@ class ProductProvider extends ChangeNotifier {
       allRedeemPoints = allRedeemPoints + redeem[i]['points'];
     }
     _redeemsPoints = list;
-    print('=====================redeem');
-    print(_redeemsPoints);
+    // print('=====================redeem');
+    // print(_redeemsPoints);
     notifyListeners();
   }
 
@@ -440,8 +440,8 @@ class ProductProvider extends ChangeNotifier {
     }
 
     _unpaidOrder = list;
-    print('=======================unpaid');
-    print(_unpaidOrder);
+    // print('=======================unpaid');
+    // print(_unpaidOrder);
     notifyListeners();
   }
 
@@ -451,10 +451,10 @@ class ProductProvider extends ChangeNotifier {
       final response = await http.post(Url,headers: {
         HttpHeaders.authorizationHeader: SharedPrefController().token,
       });
-      print('=======================addTocart');
-      print(response);
+      // print('=======================addTocart');
+      // print(response);
     }catch(e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -466,10 +466,10 @@ class ProductProvider extends ChangeNotifier {
       });
       final referralCode1 = json.decode(response.body)['data'];
       referralCode = referralCode1;
-      print('=======================referral');
-      print(response);
+      // print('=======================referral');
+      // print(response);
     }catch(e) {
-      print(e);
+      // print(e);
     }
   }
 

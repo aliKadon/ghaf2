@@ -88,21 +88,21 @@ class _WelcomeViewState extends State<WelcomeView> {
           SizedBox(
             height: AppSize.s148,
           ),
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.m16,
-            ),
-            width: double.infinity,
-            height: AppSize.s55,
-            child: ElevatedButton(
-              onPressed: () =>Navigator.pushNamed(context, Routes.welcomeSellerRoute),
-              child: Text(
-                'Create Account as Seller',
-                style: getSemiBoldStyle(
-                    color: ColorManager.white, fontSize: FontSize.s18),
-              ),
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.symmetric(
+          //     horizontal: AppMargin.m16,
+          //   ),
+          //   width: double.infinity,
+          //   height: AppSize.s55,
+          //   child: ElevatedButton(
+          //     onPressed: () =>Navigator.pushNamed(context, Routes.welcomeSellerRoute),
+          //     child: Text(
+          //       'Create Account as Seller',
+          //       style: getSemiBoldStyle(
+          //           color: ColorManager.white, fontSize: FontSize.s18),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

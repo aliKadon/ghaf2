@@ -11,12 +11,12 @@ class AppApiController with ApiHelper {
     required String description,
     required int rate,
   }) async {
-    print('send request : add-user-review');
+    // print('send request : add-user-review');
     Map<String, dynamic> data = {
       "description": description,
       "points": rate,
     };
-    print(data);
+    // print(data);
     var response = await _dio.post(
       'AppReview/add-user-review',
       data: data,
@@ -24,9 +24,9 @@ class AppApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(

@@ -297,9 +297,9 @@ class _LoginViewState extends State<LoginView> with Helpers {
                         color: ColorManager.primary, fontSize: FontSize.s16),
                   ),
                 ),
-                SizedBox(
-                  height: AppSize.s16,
-                ),
+                // SizedBox(
+                //   height: AppSize.s16,
+                // ),
               ],
             ),
           ),

@@ -19,12 +19,12 @@ class StoreApiController with ApiHelper {
       uri,
       headers: headers,
     );
-    print('111');
-    print('============================================');
-    print(response.statusCode);
-    print(response.body);
+    // // print('111');
+    // // print('============================================');
+    // // print(response.statusCode);
+    // // print(response.body);
     if (response.statusCode == 200) {
-      print('222');
+      // // print('222');
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
         var jsonArray = jsonResponse['data'] as List;
@@ -43,13 +43,13 @@ class StoreApiController with ApiHelper {
     num? maxPrice,
     String? filterBy,
   }) async {
-    print('send request : getProducts');
+    // // print('send request : getProducts');
     Map<String, dynamic> queryParameters = {
       'cid': cid,
       'filter':
           "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
-    print(queryParameters);
+    // // print(queryParameters);
     final Response response = await _dio.get(
       'Product/read-product',
       queryParameters: queryParameters,
@@ -57,9 +57,9 @@ class StoreApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================PRODUCT');
-    print(response.statusCode);
-    print(response.data);
+    // // print('============================================PRODUCT');
+    // // print(response.statusCode);
+    // // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<Product>.from(
@@ -71,16 +71,16 @@ class StoreApiController with ApiHelper {
 
   // get offers.
   Future<List<Product>> getOffers() async {
-    print('send request : read-discount');
+    // print('send request : read-discount');
     final Response response = await _dio.get(
       'GiftAndReward/read-discount',
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<Product>.from(
@@ -98,13 +98,13 @@ class StoreApiController with ApiHelper {
       uri,
       headers: headers,
     );
-    print('111');
-    print('============================================');
-    print(productId);
-    print(response.statusCode);
-    print(response.body);
+    // print('111');
+    // print('============================================');
+    // print(productId);
+    // print(response.statusCode);
+    // print(response.body);
     if (response.statusCode == 200) {
-      print('222');
+      // print('222');
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
         return ApiResponse(
@@ -122,12 +122,12 @@ class StoreApiController with ApiHelper {
       uri,
       headers: headers,
     );
-    print('111');
-    print('============================================');
-    print(response.statusCode);
-    print(response.body);
+    // print('111');
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.body);
     if (response.statusCode == 200) {
-      print('222');
+      // print('222');
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
         var jsonArray = jsonResponse['data'] as List;
@@ -142,11 +142,11 @@ class StoreApiController with ApiHelper {
   Future<ApiResponse> toggleAddToCart({
     required String productId,
   }) async {
-    print('send request : add-remove-to-basket');
+    // print('send request : add-remove-to-basket');
     Map<String, dynamic> queryParameters = {
       'id': productId,
     };
-    print(queryParameters);
+    // print(queryParameters);
     var response = await _dio.post(
       'Product/add-remove-to-basket',
       queryParameters: queryParameters,
@@ -154,9 +154,9 @@ class StoreApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(
@@ -169,16 +169,16 @@ class StoreApiController with ApiHelper {
   }
 
   Future<List<CartItem>> getMyCart() async {
-    print('send request : get-my-basket');
+    // print('send request : get-my-basket');
     var response = await _dio.get(
       'Product/get-my-basket',
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<CartItem>.from(
@@ -193,12 +193,12 @@ class StoreApiController with ApiHelper {
     required String cartItemId,
     required int count,
   }) async {
-    print('send request : add-remove-to-basket');
+    // print('send request : add-remove-to-basket');
     Map<String, dynamic> queryParameters = {
       'id': cartItemId,
       'count': count,
     };
-    print(queryParameters);
+    // print(queryParameters);
     var response = await _dio.post(
       'Product/change-basket-item-count',
       queryParameters: queryParameters,
@@ -206,9 +206,9 @@ class StoreApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(

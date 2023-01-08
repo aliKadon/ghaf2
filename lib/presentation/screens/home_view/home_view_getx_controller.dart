@@ -77,7 +77,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   }) async {
     try {
       if (notifyLoading) isProductsLoading = true;
-      print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
+      // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
       // print(ModalRoute.of(context)?.settings.arguments as String);
       products = await _storeApiController.getProducts(
         search: search,

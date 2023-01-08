@@ -16,9 +16,9 @@ class OrdersApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       return ApiResponse(
         message: response.data['message'],

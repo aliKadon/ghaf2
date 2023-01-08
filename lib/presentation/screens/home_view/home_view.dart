@@ -242,6 +242,7 @@ class _HomeViewState extends State<HomeView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          // Text for image up
                                           Text(
                                             AppLocalizations.of(context)!
                                                 .stay_home_we_deliver,
@@ -515,6 +516,7 @@ class _HomeViewState extends State<HomeView> {
                   SizedBox(
                     height: AppSize.s4,
                   ),
+                  // Most Popular
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),
                     child: Row(

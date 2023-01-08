@@ -14,6 +14,8 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../domain/model/product2.dart';
+
 class ProductWidget extends StatefulWidget {
   final String tag;
   final int? minProductCountForGift;
@@ -36,6 +38,13 @@ class _ProductWidgetState extends State<ProductWidget> {
     tag: widget.tag,
   );
 
+
+// @override
+//   void initState() {
+//     // TODO: implement initState
+//     Provider.of<ProductProvider>(context,listen: false).getProducts();
+//     super.initState();
+//   }
   // dispose.
   @override
   void dispose() {
@@ -48,6 +57,8 @@ class _ProductWidgetState extends State<ProductWidget> {
     // var product = Provider.of<ProductProvider>(context).productDiscount;
     // print('ALI================================================');
     // print(product);
+    // var _product2 = Provider.of<ProductProvider>(context).product;
+    // String p = _product2[0].ghafImage![0]['data'];
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -72,8 +83,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                       //     Icons.broken_image,
                       //   )
                     ? Image.asset('assets/images/checkout.png')
-                      : Image.memory(
-                          base64Decode(_product.ghafImage![0].data!),
+                      :
+                  // FadeInImage.memoryNetwork(
+                  //   placeholder: base64.decode(_product.ghafImage![0].data!),
+                  //   image: _product.ghafImage![0].data! ,
+                  // )
+
+
+                  Image.memory(
+                    //_product2['ghafImage']![0]['data']
+                          base64Decode(_product.ghafImage?[0].data ?? ''),
                           height: AppSize.s211,
                           width: AppSize.s154,
                           fit: BoxFit.cover,
@@ -175,9 +194,9 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
             ),
           ),
-          SizedBox(
-            height: AppSize.s8,
-          ),
+          // SizedBox(
+          //   height: AppSize.s8,
+          // ),
           Padding(
             padding: EdgeInsetsDirectional.only(start: AppPadding.p22),
             child: Row(
@@ -221,6 +240,24 @@ class _ProductWidgetState extends State<ProductWidget> {
               ],
             ),
           ),
+
+          // Image.memory(
+          //   //_product2['ghafImage']![0]['data']
+          //   base64Decode(_product.ghafImage![0].data!),
+          //   height: AppSize.s211,
+          //   width: AppSize.s154,
+          //   fit: BoxFit.cover,
+          //   errorBuilder: (
+          //       BuildContext context,
+          //       Object error,
+          //       StackTrace? stackTrace,
+          //       ) =>
+          //       Center(
+          //         child: Icon(
+          //           Icons.broken_image,
+          //         ),
+          //       ),
+          // ),
         ],
       ),
     );

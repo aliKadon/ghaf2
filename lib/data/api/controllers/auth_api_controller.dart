@@ -18,10 +18,10 @@ class AuthApiController with ApiHelper {
     Uri uri = Uri.parse(ApiSettings.register);
     var response =
         await http.post(uri, headers: headers, body: jsonEncode(user.toJson()));
-    print('============================================');
-    print(response.statusCode);
-    print(response.body);
-    print(user.toJson());
+    // // print('============================================');
+    // // print(response.statusCode);
+    // // print(response.body);
+    // // print(user.toJson());
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
@@ -47,14 +47,14 @@ class AuthApiController with ApiHelper {
           'password': password,
           'fcm_token': await FirebaseMessagingService.instance.getToken(),
         }));
-    print('111');
-    print('============================================');
-    print(response.statusCode);
-    print(response.body);
+    // // print('111');
+    // // print('============================================');
+    // // print(response.statusCode);
+    // // print(response.body);
     if (response.statusCode == 200) {
-      print('222');
-      print('======================================fcm');
-      print(' ++++++++++====================this is fcm ${await FirebaseMessagingService.instance.getToken()}');
+      // // print('222');
+      // // print('======================================fcm');
+      // // print(' ++++++++++====================this is fcm ${await FirebaseMessagingService.instance.getToken()}');
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
         SharedPrefController().setToken(jsonResponse['data']);
@@ -71,11 +71,11 @@ class AuthApiController with ApiHelper {
   Future<ApiResponse> forgotPassword({
     required String email,
   }) async {
-    print('send request : forgot-password');
+    // // print('send request : forgot-password');
     Map<String, dynamic> queryParameters = {
       'email': email,
     };
-    print(queryParameters);
+    // // print(queryParameters);
     var response = await _dio.post(
       'Auth/forgot-password',
       queryParameters: queryParameters,
@@ -83,9 +83,9 @@ class AuthApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // // print('============================================');
+    // // print(response.statusCode);
+    // // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(
@@ -103,13 +103,13 @@ class AuthApiController with ApiHelper {
     required String password,
     required String confirmPassword,
   }) async {
-    print('send request : reset-password');
+    // // print('send request : reset-password');
     Map<String, dynamic> data = {
       "token": code,
       "password": password,
       "confirmPassword": confirmPassword,
     };
-    print(data);
+    // // print(data);
     var response = await _dio.post(
       '/reset-password',
       data: data,
@@ -117,9 +117,9 @@ class AuthApiController with ApiHelper {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // // print('============================================');
+    // // print(response.statusCode);
+    // // print(response.data);
     if (response.statusCode == 200) {
       return ApiResponse(
         message: response.data['message'],
@@ -130,17 +130,17 @@ class AuthApiController with ApiHelper {
   }
 
   Future<ApiResponse> profile() async {
-    print('send request : getUserDetails');
-    print(headers);
+    // // print('send request : getUserDetails');
+    // // print(headers);
     var response = await _dio.get(
       'Auth/getUserDetails',
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // // print('============================================');
+    // // print(response.statusCode);
+    // // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         User user = User.fromJson(response.data['data']);
