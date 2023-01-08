@@ -55,6 +55,8 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
 
   @override
   Widget build(BuildContext context) {
+    var repo = Provider.of<SellerProvider>(context).repo;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -122,14 +124,14 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
                               _passwordTextController.text)
                           .then((value) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text('Success'),
+                                content: Text(repo),
                                 backgroundColor: Colors.green,
                               )))
                           .then((value) => Navigator.of(context)
                               .pushNamed(Routes.addBankAccountSellerRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)
                               .showSnackBar(
-                                  SnackBar(content: Text(e.toString()))));
+                                  SnackBar(content: Text(repo))));
                     }
                     // _performRegister();
 

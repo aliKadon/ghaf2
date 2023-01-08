@@ -55,6 +55,10 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       print(response.statusCode);
       print(response.body);
       print(json.decode(response.body)['message']);
+      print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      print(repo);
     } catch (e) {
       print(e);
     }
@@ -89,12 +93,17 @@ class SellerProvider with ChangeNotifier, ApiHelper {
           }));
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-          'good',
+          jsonDecode(response.body)['message'],
         ),
+        backgroundColor: Colors.green,
       ));
       print('=====================submitIndividualForm============');
       print(response.statusCode);
       print(response.body);
+      print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      print(repo);
     } catch (e) {
       print(e);
     }
@@ -113,14 +122,18 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'accountHolder': name,
             'bankName': bankName,
           }));
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          response.body.toString(),
-        ),
-      ));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text(
+      //     response.body.toString(),
+      //   ),
+      // ));
       print('=====================bank============');
       print(response.statusCode);
       print(response.body);
+      print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      print(repo);
     } catch (e) {
       print(e);
     }
@@ -157,6 +170,10 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       print('=====================register============');
       print(response.statusCode);
       print(response.body);
+      print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      print(repo);
     } catch (e) {
       print(e);
     }
@@ -187,6 +204,10 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       print(response.statusCode);
       print(response.body);
       print(json.decode(response.body));
+      print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      print(repo);
     } catch (e) {
       print(e);
     }
@@ -220,6 +241,9 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       print(json.decode(response.body));
     }
     _readIndividualProducts = list;
+    print('=====================================repo');
+    repo = jsonDecode(response.body)['message'];
+    print(repo);
     notifyListeners();
   }
 
@@ -247,6 +271,9 @@ class SellerProvider with ChangeNotifier, ApiHelper {
           typeName: data[i]['typeName']));
     }
     _planSellerIndividual = list;
+    print('=====================================repo');
+    repo = jsonDecode(response.body)['message'];
+    print(repo);
     notifyListeners();
     print('=================================ReadIndividualProducts');
     print(response.statusCode);
@@ -264,7 +291,9 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     print(data.toString());
 
     Map<String, dynamic> list = {};
-
+    print('=====================================repo');
+    repo = jsonDecode(response.body)['message'];
+    print(repo);
     _createPaymentLink = data;
 
     notifyListeners();

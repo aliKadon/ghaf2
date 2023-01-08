@@ -85,6 +85,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
 
   @override
   Widget build(BuildContext context) {
+    var repo = Provider.of<SellerProvider>(context).repo;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -127,14 +129,14 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                             listImage )
                             .then((value) => ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(
-                          content: Text('Success'),
+                          content: Text(repo),
                           backgroundColor: Colors.green,
                         ))).then((value) => Navigator.of(context).pop())
                             .then((value) => Navigator.of(context)
                             .pushNamed(Routes.addItemSellerRoute)
                             .catchError((e) => ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(
-                          content: Text(e.toString()),
+                          content: Text(repo),
                           backgroundColor: Colors.red,
                         ))));
 
@@ -372,46 +374,46 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                     SizedBox(
                       height: AppSize.s12,
                     ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          IconsAssets.email,
-                          height: AppSize.s16,
-                          width: AppSize.s16,
-                        ),
-                        SizedBox(
-                          width: AppSize.s8,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .use_as_pay_button_on_website,
-                          style: getMediumStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s14),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          IconsAssets.email,
-                          height: AppSize.s16,
-                          width: AppSize.s16,
-                        ),
-                        SizedBox(
-                          width: AppSize.s8,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.show_qr_code,
-                          style: getMediumStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s14),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       IconsAssets.email,
+                    //       height: AppSize.s16,
+                    //       width: AppSize.s16,
+                    //     ),
+                    //     SizedBox(
+                    //       width: AppSize.s8,
+                    //     ),
+                    //     Text(
+                    //       AppLocalizations.of(context)!
+                    //           .use_as_pay_button_on_website,
+                    //       style: getMediumStyle(
+                    //           color: ColorManager.black,
+                    //           fontSize: FontSize.s14),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: AppSize.s12,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       IconsAssets.email,
+                    //       height: AppSize.s16,
+                    //       width: AppSize.s16,
+                    //     ),
+                    //     SizedBox(
+                    //       width: AppSize.s8,
+                    //     ),
+                    //     Text(
+                    //       AppLocalizations.of(context)!.show_qr_code,
+                    //       style: getMediumStyle(
+                    //           color: ColorManager.black,
+                    //           fontSize: FontSize.s14),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: AppSize.s12,
                     ),

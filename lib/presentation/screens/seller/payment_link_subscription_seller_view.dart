@@ -31,6 +31,8 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
 
   @override
   Widget build(BuildContext context) {
+    var repo = Provider.of<SellerProvider>(context).repo;
+
     var plane = Provider.of<SellerProvider>(context).planSellerIndividual;
     return Scaffold(
       body: SafeArea(

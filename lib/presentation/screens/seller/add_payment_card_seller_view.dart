@@ -54,9 +54,9 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
 
   @override
   Widget build(BuildContext context) {
-    var message = Provider.of<SellerProvider>(context).repo;
+    var repo = Provider.of<SellerProvider>(context).repo;
     print('============================repo');
-    print(message);
+    print(repo);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -188,13 +188,13 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                               widget.planeId)
                           .then((value) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text(message,style: TextStyle(color: Colors.red)),
+                                content: Text(repo,style: TextStyle(color: Colors.red)),
                                 backgroundColor: Colors.green,
                               )))
                           .then((value) => _customDialogProgress())
                           .catchError((e) => ScaffoldMessenger.of(context)
                               .showSnackBar(
-                                  SnackBar(content: Text(e.toString()))));
+                                  SnackBar(content: Text(repo))));
                     }
                   },
                   child: Text(

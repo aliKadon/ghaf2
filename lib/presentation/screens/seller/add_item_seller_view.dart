@@ -25,7 +25,6 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
   var productCount = 0;
   var selected = 0;
 
-
   final TextEditingController _textController = TextEditingController();
 
   //send from email
@@ -45,9 +44,10 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
+    var repo = Provider.of<SellerProvider>(context).repo;
+
     var provider = Provider.of<SellerProvider>(context).readIndividualProduct;
     return Scaffold(
       body: SingleChildScrollView(
@@ -111,7 +111,17 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 SizedBox(
                   height: AppSize.s22,
                 ),
-
+                Center(
+                  child: Text(
+                    'Please Select un Item For each Link!!',
+                    style: getMediumStyle(
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s18),
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s22,
+                ),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
@@ -120,7 +130,8 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                     return Card(
                       // padding: EdgeInsets.all(AppSize.s6),
                       child: ListTile(
-                        leading: provider[index].ghafImageIndividual?[0]['data']==
+                        leading: provider[index].ghafImageIndividual?[0]
+                                    ['data'] ==
                                 null
                             ? ClipRRect(
                                 borderRadius:
@@ -131,8 +142,10 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                                   width: AppSize.s73,
                                 ),
                               )
-                            : Image.memory(base64Decode(provider[index]
-                                .ghafImageIndividual![0]['data']!)),
+                            : ClipRRect(
+                                child: Image.memory(base64Decode(provider[index]
+                                    .ghafImageIndividual![0]['data']!)),
+                              ),
                         title: Text(
                           provider[index].name,
                           style: getMediumStyle(
@@ -146,7 +159,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                               fontSize: FontSize.s16),
                         ),
                         trailing: Container(
-                          width: MediaQuery.of(context).size.width * 0.12,
+                          // width: MediaQuery.of(context).size.width * 0.12,
                           child: FittedBox(
                             child: Row(children: [
                               InkWell(
@@ -165,13 +178,18 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                               SizedBox(
                                 width: AppSize.s8,
                               ),
-                              Text(productCount.toString(),style: TextStyle(color: Colors.orange)),
+                              selected == index
+                                  ? Text(productCount.toString(),
+                                      style: TextStyle(color: Colors.orange))
+                                  : Text('0',
+                                      style: TextStyle(color: Colors.orange)),
                               SizedBox(
                                 width: AppSize.s8,
                               ),
                               InkWell(
                                 onTap: () {
                                   setState(() {
+                                    selected = index;
                                     if (productCount == 0) {
                                       productCount = 0;
                                     } else {
@@ -268,7 +286,10 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Provider.of<SellerProvider>(context,listen: false).createPaymnetLink(provider[selected].id, productCount).then((value) => _customDialogProgress());
+                      Provider.of<SellerProvider>(context, listen: false)
+                          .createPaymnetLink(
+                              provider[selected].id, productCount)
+                          .then((value) => _customDialogProgress());
 
                       // Provider.of<SellerProvider>(context,listen: false)
                       //     .createPaymnetLink(
@@ -291,7 +312,8 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
   }
 
   void _customDialogProgress() async {
-    var pro = Provider.of<SellerProvider>(context,listen: false).createPaymentLink;
+    var pro =
+        Provider.of<SellerProvider>(context, listen: false).createPaymentLink;
     print('==============================create Link');
     print(pro.toString());
     showDialog(
@@ -344,7 +366,8 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                           end: 0,
                           child: GestureDetector(
                             onTap: () {
-                              Clipboard.setData(ClipboardData(text: pro['url']));
+                              Clipboard.setData(
+                                  ClipboardData(text: pro['url']));
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text("Copied"),
@@ -359,7 +382,8 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                               alignment: AlignmentDirectional.center,
                               decoration: BoxDecoration(
                                 color: ColorManager.white,
-                                borderRadius: BorderRadius.circular(AppRadius.r8),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.r8),
                               ),
                               child: Text(
                                 AppLocalizations.of(context)!.copy,
@@ -397,9 +421,10 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                     ),
                     GestureDetector(
                       onTap: () {
-                            () async {
+                        () async {
                           String message = "Hello from Flutter!";
-                          final urlWhatsUP = "https://wa.me/?text=${_textController.text}";
+                          final urlWhatsUP =
+                              "https://wa.me/?text=${_textController.text}";
                           await launch(urlWhatsUP);
                         };
                       },
@@ -426,7 +451,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                       height: AppSize.s12,
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         _contactEmail(_textController.text);
                       },
                       child: Row(

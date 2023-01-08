@@ -59,6 +59,7 @@ class _CreatePaymentLink2SellerViewState
         Provider.of<SellerProvider>(context).readIndividualProduct;
     print('======================================readProduct');
     print(readProduct);
+
     return Scaffold(
       body: SafeArea(
         child: isLoading ? Center(
@@ -283,12 +284,6 @@ class _CreatePaymentLink2SellerViewState
                       height: AppSize.s16,
                     ),
                     GestureDetector(
-                      onTap: () async {
-                        String message = "Hello from Flutter!";
-                        String whatsappUrl = "whatsapp://send?phone=&text=$message";
-                        final urlWhatsUP = "https://wa.me/?text=${_textController.text}";
-                        await launch(urlWhatsUP);
-                      },
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(
@@ -309,8 +304,11 @@ class _CreatePaymentLink2SellerViewState
                       height: AppSize.s30,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        _contactEmail(_textController.text);
+                      onTap: () async {
+                        String message = "Hello from Flutter!";
+                        String whatsappUrl = "whatsapp://send?phone=&text=$message";
+                        final urlWhatsUP = "https://wa.me/?text=${_textController.text}";
+                        await launch(urlWhatsUP);
                       },
                       child: Row(
                         children: [
@@ -334,67 +332,75 @@ class _CreatePaymentLink2SellerViewState
                     SizedBox(
                       height: AppSize.s12,
                     ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          IconsAssets.email,
-                          height: AppSize.s16,
-                          width: AppSize.s16,
-                        ),
-                        SizedBox(
-                          width: AppSize.s8,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.send_by_email,
-                          style: getMediumStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s14),
-                        ),
-                      ],
+                    GestureDetector(
+                      // onTap: () {
+                      //   _contactEmail(pro['url']);
+                      // },
+                      onTap: () {
+                        _contactEmail(pro['url']);
+                      },
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            IconsAssets.email,
+                            height: AppSize.s16,
+                            width: AppSize.s16,
+                          ),
+                          SizedBox(
+                            width: AppSize.s8,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.send_by_email,
+                            style: getMediumStyle(
+                                color: ColorManager.black,
+                                fontSize: FontSize.s14),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: AppSize.s12,
                     ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          IconsAssets.email,
-                          height: AppSize.s16,
-                          width: AppSize.s16,
-                        ),
-                        SizedBox(
-                          width: AppSize.s8,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .use_as_pay_button_on_website,
-                          style: getMediumStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s14),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          IconsAssets.email,
-                          height: AppSize.s16,
-                          width: AppSize.s16,
-                        ),
-                        SizedBox(
-                          width: AppSize.s8,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.show_qr_code,
-                          style: getMediumStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s14),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       IconsAssets.email,
+                    //       height: AppSize.s16,
+                    //       width: AppSize.s16,
+                    //     ),
+                    //     SizedBox(
+                    //       width: AppSize.s8,
+                    //     ),
+                    //     Text(
+                    //       AppLocalizations.of(context)!
+                    //           .use_as_pay_button_on_website,
+                    //       style: getMediumStyle(
+                    //           color: ColorManager.black,
+                    //           fontSize: FontSize.s14),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: AppSize.s12,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     Image.asset(
+                    //       IconsAssets.email,
+                    //       height: AppSize.s16,
+                    //       width: AppSize.s16,
+                    //     ),
+                    //     SizedBox(
+                    //       width: AppSize.s8,
+                    //     ),
+                    //     Text(
+                    //       AppLocalizations.of(context)!.show_qr_code,
+                    //       style: getMediumStyle(
+                    //           color: ColorManager.black,
+                    //           fontSize: FontSize.s14),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: AppSize.s12,
                     ),

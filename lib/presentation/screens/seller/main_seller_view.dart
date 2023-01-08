@@ -42,6 +42,7 @@ class _MainSellerViewState extends State<MainSellerView> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(

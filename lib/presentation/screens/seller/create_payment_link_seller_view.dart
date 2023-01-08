@@ -49,10 +49,15 @@ class _CreatePaymentLinkSellerViewState
     super.dispose();
   }
   
-  List<String> list = ['null'];
+  List<String>? list = ['data:image/jpeg;base64,'];
+
+
 
   @override
   Widget build(BuildContext context) {
+    var repo = Provider.of<SellerProvider>(context).repo;
+
+    list?.add('data:image/jpeg;base64,');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -145,16 +150,16 @@ class _CreatePaymentLinkSellerViewState
                             'aaa',
                             _emailTextController.text,
                             int.parse(_passwordTextController.text),
-                        list)
+                        list!)
                         .then((value) => ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text('Success'))))
+                            .showSnackBar(SnackBar(content: Text(repo))))
                         .then((value) => Navigator.of(context).pop())
                         .then((value) => Navigator.of(context).pushNamed(
                             Routes.createPaymentLink2SellerRoute,
                             arguments: int.parse(_phoneTextController.text)))
                         .catchError(((e) => ScaffoldMessenger.of(context)
                             .showSnackBar(
-                                SnackBar(content: Text(e.toString())))));
+                                SnackBar(content: Text(repo)))));
                   },
                   child: Text(
                     AppLocalizations.of(context)!.create_link,

@@ -73,6 +73,15 @@ class LoginViewGetXController extends GetxController with Helpers {
   // login.
   void login() async {
 
+    // if (!formKey.currentState!.validate()) return;
+    // formKey.currentState!.save();
+    // showLoadingDialog(context: context, title: 'Logging In');
+    // final ApiResponse loginApiResponse = await _authApiController.login(
+    //   userName: userName!,
+    //   password: password!,
+    // );
+    // ApiResponse profileApiResponse = await AuthApiController().profile();
+
     try {
 
       if (!formKey.currentState!.validate()) return;
@@ -115,13 +124,16 @@ class LoginViewGetXController extends GetxController with Helpers {
       } else {
         // failed.
         Navigator.pop(context);
-        showSnackBar(context, message: loginApiResponse.message);
+        showSnackBar(context, message: loginApiResponse.message,error: true);
         showSnackBar(context, message: profileApiResponse.message, error: true);
       }
     } catch (error) {
       // error.
       // Navigator.pop(context);
-      showSnackBar(context, message: error.toString(), error: true);
+      // showSnackBar(context, message: loginApiResponse.message, error: true);
+      // showSnackBar(context, message: profileApiResponse.message, error: true);
+      showSnackBar(context, message: 'Un Error Occurred', error: true);
+
       print(error.toString());
 
       // if (errorMessageLoginApiResponse != null) {

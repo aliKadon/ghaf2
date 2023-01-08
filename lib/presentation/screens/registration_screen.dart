@@ -102,6 +102,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     'dateBirth': '',
   };
 
+  var repo;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -447,16 +449,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               _referralCodeTextController.text,
                               _phoneTextController.text,
                               _selectedDate.toString())
+                          .then((value) =>
+                              repo = Provider.of<SellerProvider>(context).repo)
                           .then((value) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text('Success, wait the email before login'),
+                                content: Text(
+                                    repo),
                                 backgroundColor: Colors.green,
                               )))
                           .then((value) => Navigator.of(context)
                               .pushNamed(Routes.loginRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text(e.toString()),
+                                content: Text(repo),
                                 backgroundColor: Colors.red,
                               )));
                     },

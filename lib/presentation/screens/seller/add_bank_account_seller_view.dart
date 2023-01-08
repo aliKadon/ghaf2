@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
@@ -53,6 +52,7 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
 
   @override
   Widget build(BuildContext context) {
+    var repo = Provider.of<SellerProvider>(context).repo;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -127,13 +127,13 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
                               _phoneTextController.text)
                           .then((value) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text('Success'),
+                                content: Text(repo),
                                 backgroundColor: Colors.green,
                               )))
-                          .then((value) => Navigator.of(context)
-                              .pushNamed(
-                                  Routes.productsWithOutDetailsSellerRoute)
-                              ).catchError((e) => print(e.toString()));
+                          .then((value) => Navigator.of(context).pushNamed(
+                              Routes.productsWithOutDetailsSellerRoute))
+                          .catchError((e) => ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(repo))));
                     }
                   },
                   child: Text(
