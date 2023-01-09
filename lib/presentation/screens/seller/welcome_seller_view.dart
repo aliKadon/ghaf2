@@ -91,7 +91,8 @@ class _WelcomeSellerViewState extends State<WelcomeSellerView> {
                   context, Routes.submitForm,
                   arguments: {
                     'role': 'Seller',
-                    'location': locationData,
+                    'locationLat': locationData?.latitude,
+                    'locationLong': locationData?.longitude,
                   }),
               child: Text(
                 AppLocalizations.of(context)!.register_create_account,

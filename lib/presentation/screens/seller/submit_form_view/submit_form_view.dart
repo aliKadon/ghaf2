@@ -83,6 +83,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
   @override
   void initState() {
     getLocation();
+    print('====================================location');
+    print('location : ${widget.locationData['locationLat']}');
     super.initState();
   }
 
@@ -110,12 +112,14 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
 
 
 
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body:
       // isLoading ? Center(
@@ -464,7 +468,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     onMapCreated: _onMapCreated,
                     
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(latitude ?? 24.400661, longitude ?? 54.635448),
+                      target: LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
                       zoom: 9,
 
                     ),
@@ -485,11 +489,14 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                             Marker(
                               markerId: MarkerId('address'),
                               position:
-                                  _submitFormViewGetXController.selectedLatLng!,
+                                  // _submitFormViewGetXController.selectedLatLng!
+                              LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
                             )
                           },
                     onTap: (latLng) async {
                       setState(() {
+                        print('================================================latLng');
+                        print(latLng);
                         _submitFormViewGetXController.selectedLatLng = latLng;
                       });
                     },
