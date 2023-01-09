@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/domain/model/product.dart';
@@ -209,71 +210,80 @@ class _ProductViewState extends State<ProductView> {
                             SizedBox(
                               height: AppSize.s6,
                             ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 1
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 2
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 3
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 4
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (_product.stars ?? 0) >= 5
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s6,
-                                ),
+
+                            // Start Review
+                            // Row(
+                            //   children: [
+                            //     Image.asset(
+                            //       IconsAssets.start,
+                            //       height: AppSize.s17,
+                            //       width: AppSize.s18,
+                            //       color: (_product.stars ?? 0) >= 1
+                            //           ? null
+                            //           : Colors.grey,
+                            //     ),
+                            //     SizedBox(
+                            //       width: AppSize.s2,
+                            //     ),
+                            //     Image.asset(
+                            //       IconsAssets.start,
+                            //       height: AppSize.s17,
+                            //       width: AppSize.s18,
+                            //       color: (_product.stars ?? 0) >= 2
+                            //           ? null
+                            //           : Colors.grey,
+                            //     ),
+                            //     SizedBox(
+                            //       width: AppSize.s2,
+                            //     ),
+                            //     Image.asset(
+                            //       IconsAssets.start,
+                            //       height: AppSize.s17,
+                            //       width: AppSize.s18,
+                            //       color: (_product.stars ?? 0) >= 3
+                            //           ? null
+                            //           : Colors.grey,
+                            //     ),
+                            //     SizedBox(
+                            //       width: AppSize.s2,
+                            //     ),
+                            //     Image.asset(
+                            //       IconsAssets.start,
+                            //       height: AppSize.s17,
+                            //       width: AppSize.s18,
+                            //       color: (_product.stars ?? 0) >= 4
+                            //           ? null
+                            //           : Colors.grey,
+                            //     ),
+                            //     SizedBox(
+                            //       width: AppSize.s2,
+                            //     ),
+                            //     Image.asset(
+                            //       IconsAssets.start,
+                            //       height: AppSize.s17,
+                            //       width: AppSize.s18,
+                            //       color: (_product.stars ?? 0) >= 5
+                            //           ? null
+                            //           : Colors.grey,
+                            //     ),
+                            //     SizedBox(
+                            //       width: AppSize.s6,
+                            //     ),
+                            //     Text(
+                            //       '(${_product.productReview ?? '0'})',
+                            //       style: getRegularStyle(
+                            //           color: ColorManager.grey,
+                            //           fontSize: FontSize.s14),
+                            //     ),
+                            //   ],
+                            // ),
+                            buildRating(
                                 Text(
-                                  '(${_product.productReview ?? '0'})',
-                                  style: getRegularStyle(
-                                      color: ColorManager.grey,
-                                      fontSize: FontSize.s14),
+                                  '2',
+                                  style: TextStyle(fontSize: 16),
                                 ),
-                              ],
-                            ),
+                                widget),
+
                             SizedBox(
                               height: AppSize.s10,
                             ),
@@ -418,4 +428,28 @@ class _ProductViewState extends State<ProductView> {
       ),
     );
   }
+
+  Widget buildRating(Widget ifYouNeedRate, widget) => Row(
+    children: [
+      RatingBar.builder(
+          initialRating: 2,
+          minRating: 1,
+          itemSize: 20,
+          updateOnDrag: false,
+          allowHalfRating: true,
+          ignoreGestures: true,
+          itemBuilder: (context, _) => Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) {
+            print(rating);
+          }),
+      SizedBox(
+        width: 5,
+      ),
+      ifYouNeedRate,
+    ],
+  );
+
 }
