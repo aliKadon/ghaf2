@@ -469,7 +469,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     
                     initialCameraPosition: CameraPosition(
                       target: LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
-                      zoom: 9,
+                      zoom: 13,
 
                     ),
                     gestureRecognizers: {
@@ -482,12 +482,11 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       Factory<VerticalDragGestureRecognizer>(
                           () => VerticalDragGestureRecognizer())
                     },
-                    markers: _submitFormViewGetXController.selectedLatLng ==
-                            null
-                        ? {}
-                        : {
+                    markers:  {
                             Marker(
-                              markerId: MarkerId('address'),
+                              visible: true,
+                              markerId: MarkerId('source'),
+                              flat: true,
                               position:
                                   // _submitFormViewGetXController.selectedLatLng!
                               LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
