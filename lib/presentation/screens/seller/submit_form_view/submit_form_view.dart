@@ -106,6 +106,13 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
     Get.delete<RegisterViewGetXController>();
     super.dispose();
   }
+  GoogleMapController? mapController;
+
+
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -454,9 +461,12 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     border: Border.all(color: Colors.grey.shade300),
                   ),
                   child: GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(widget.locationData['location'].latitude ?? 24.400661, widget.locationData['location'].longitude ?? 54.635448),
-                      zoom: 17,
+                      target: LatLng(latitude ?? 24.400661, longitude ?? 54.635448),
+                      zoom: 9,
+
                     ),
                     gestureRecognizers: {
                       Factory<PanGestureRecognizer>(

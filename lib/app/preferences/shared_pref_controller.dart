@@ -100,7 +100,7 @@ class SharedPrefController {
       _sharedPreferences.getString(PrefKeys.email.name) ?? 'Email';
 
   String get lang1 {
-    return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'ar';
+    return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'en';
   }
 
 

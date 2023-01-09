@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           print(provider.locale);
           
           var isArabic = SharedPrefController().lang1;
-          print('isArabic : $isArabic');
+          // print('isArabic : $isArabic');
 
           return MaterialApp(
             localizationsDelegates: const [
