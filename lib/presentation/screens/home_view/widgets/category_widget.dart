@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/domain/model/category.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
@@ -54,11 +56,19 @@ class CategoryWidget extends StatelessWidget {
                 ],
                 borderRadius: BorderRadius.circular(AppRadius.r4),
               ),
-              child: Image.asset(
-                IconsAssets.cart,
-                height: AppSize.s36,
-                width: AppSize.s36,
+              child: Image.memory(
+                base64Decode(category.categoryImage ?? ''),
+                width: AppSize.s60,
+                height: AppSize.s60,
+                fit: BoxFit.fill,
               ),
+
+
+              // Image.asset(
+              //   IconsAssets.cart,
+              //   height: AppSize.s36,
+              //   width: AppSize.s36,
+              // ),
             ),
             SizedBox(
               height: AppSize.s6,
