@@ -25,9 +25,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SubmitFormView extends StatefulWidget {
 
-  // final LocationData locationData;
+  final Map<String,dynamic> locationData;
   // // const SubmitFormView({Key? key}) : super(key: key);
-  // SubmitFormView(this.locationData);
+  SubmitFormView(this.locationData);
 
   @override
   State<SubmitFormView> createState() => _SubmitFormViewState();
@@ -76,8 +76,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
 
   Future<void> getLocation () async {
     final prefs = await SharedPreferences.getInstance();
-    latitude = prefs.getDouble('latitude') ?? 37.33429383;
-    longitude = prefs.getDouble('longitude') ?? -122.06600055;
+    latitude = prefs.getDouble('latitude') ?? 24.400661;
+    longitude = prefs.getDouble('longitude') ?? 54.635448;
   }
 
   @override
@@ -455,7 +455,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   ),
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(latitude ?? 37.33429383, longitude ?? -122.06600055),
+                      target: LatLng(widget.locationData['location'].latitude ?? 24.400661, widget.locationData['location'].longitude ?? 54.635448),
                       zoom: 17,
                     ),
                     gestureRecognizers: {

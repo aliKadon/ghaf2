@@ -474,7 +474,7 @@ class RouteGenerator {
                 SubmitFormViewGetXController(context: _),
               );
               return SubmitFormView(
-                  // settings.arguments as LocationData
+                  settings.arguments as Map<String,dynamic>
               );
             },
           ),
