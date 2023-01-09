@@ -131,7 +131,7 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
                                 backgroundColor: Colors.green,
                               )))
                           .then((value) => Navigator.of(context).pushNamed(
-                              Routes.productsWithOutDetailsSellerRoute))
+                              Routes.mainSellerRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(content: Text(repo))));
                     }

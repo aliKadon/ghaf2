@@ -18,6 +18,8 @@ class SellerProvider with ChangeNotifier, ApiHelper {
 
   String createPaymentLink = '';
 
+  Map<String,dynamic> userDetails = {};
+
   // Map<String, dynamic> get createPaymentLink {
   //   return {..._createPaymentLink};
   // }
@@ -278,6 +280,20 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     // print('=================================ReadIndividualProducts');
     // print(response.statusCode);
     // print(json.decode(response.body));
+  }
+
+  Future<void> getUserDetails() async {
+    var url = Uri.parse(
+        '${Constants.urlBase}/Auth/getUserDetails');
+    final response = await http.get(url,headers: headers);
+
+    var data = jsonDecode(response.body)['data'];
+
+    print('============================userDetails');
+    print(data);
+
+    userDetails = data;
+    notifyListeners();
   }
 
   Future<void> createPaymnetLink(String productId, int count) async {

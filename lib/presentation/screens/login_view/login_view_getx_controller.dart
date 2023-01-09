@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,13 +56,12 @@ class LoginViewGetXController extends GetxController with Helpers {
     prefs.setDouble('latitude', locationData!.latitude!);
     prefs.setDouble('longitude', locationData!.longitude!);
 
-    if( locationData!.latitude != null) {
+    if (locationData!.latitude != null) {
       isLoading = false;
     }
     print('===========================location');
     print(locationData!.latitude);
   }
-
 
   // fields.
   String? userName;
@@ -72,7 +70,6 @@ class LoginViewGetXController extends GetxController with Helpers {
 
   // login.
   void login() async {
-
     // if (!formKey.currentState!.validate()) return;
     // formKey.currentState!.save();
     // showLoadingDialog(context: context, title: 'Logging In');
@@ -83,7 +80,6 @@ class LoginViewGetXController extends GetxController with Helpers {
     // ApiResponse profileApiResponse = await AuthApiController().profile();
 
     try {
-
       if (!formKey.currentState!.validate()) return;
       formKey.currentState!.save();
       showLoadingDialog(context: context, title: 'Logging In');
@@ -94,7 +90,6 @@ class LoginViewGetXController extends GetxController with Helpers {
       print('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
       // errorMessageLoginApiResponse = loginApiResponse.message;
 
-
       ApiResponse profileApiResponse = await AuthApiController().profile();
       // errorMessageProfileApiResponse = profileApiResponse.message;
       if (loginApiResponse.status == 200 && profileApiResponse.status == 200) {
@@ -103,28 +98,32 @@ class LoginViewGetXController extends GetxController with Helpers {
         // success.
         Navigator.pop(context);
         if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
-
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(context, Routes.mainRoute);
           } else {
             Navigator.pushReplacementNamed(context, Routes.subscribeRoute);
           }
-        } else if (AppSharedData.currentUser!.role == Constants.roleRegisterSeller) {
-          Navigator.pushReplacementNamed(context, Routes.submitForm,arguments: locationData);
-        }else {
+        } else if (AppSharedData.currentUser!.role ==
+            Constants.roleRegisterSeller) {
+          print('==============================sellerStatus');
+          print(profileApiResponse);
+          Navigator.pushReplacementNamed(context, Routes.loginRoute,
+                  arguments: profileApiResponse.message)
+              .then((value) => ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('success'))));
+        } else {
           if (AppSharedData.currentUser!.active!) {
-            Navigator.pushReplacementNamed(context, Routes.registerPaymentLinkSellerRoute);
+            Navigator.pushReplacementNamed(
+                context, Routes.registerPaymentLinkSellerRoute);
           } else {
-            Navigator.pushReplacementNamed(context, Routes.paymentLinkSubscriptionSellerRoute);
-
-
+            Navigator.pushReplacementNamed(
+                context, Routes.paymentLinkSubscriptionSellerRoute);
           }
-
         }
       } else {
         // failed.
         Navigator.pop(context);
-        showSnackBar(context, message: loginApiResponse.message,error: true);
+        showSnackBar(context, message: loginApiResponse.message, error: true);
         showSnackBar(context, message: profileApiResponse.message, error: true);
       }
     } catch (error) {

@@ -59,6 +59,7 @@ class IconsAssets{
   static const String account = "$iconPath/account.png";
   static const String account1 = "$iconPath/account1.png";
   static const String arrow = "$iconPath/arrow.png";
+  static const String arrow2 = "$iconPath/arrow2.png";
   static const String bag = "$iconPath/bag.png";
   static const String bag1 = "$iconPath/bag1.png";
   static const String call = "$iconPath/call.png";

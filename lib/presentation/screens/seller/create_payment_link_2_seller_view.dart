@@ -284,23 +284,23 @@ class _CreatePaymentLink2SellerViewState
                     SizedBox(
                       height: AppSize.s16,
                     ),
-                    GestureDetector(
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                            vertical: AppPadding.p12, horizontal: AppPadding.p4),
-                        alignment: AlignmentDirectional.center,
-                        decoration: BoxDecoration(
-                          color: ColorManager.greyLight,
-                          borderRadius: BorderRadius.circular(AppRadius.r8),
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)!.preview_link,
-                          style: getBoldStyle(
-                              color: ColorManager.grey, fontSize: FontSize.s16),
-                        ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   child: Container(
+                    //     width: double.infinity,
+                    //     padding: EdgeInsets.symmetric(
+                    //         vertical: AppPadding.p12, horizontal: AppPadding.p4),
+                    //     alignment: AlignmentDirectional.center,
+                    //     decoration: BoxDecoration(
+                    //       color: ColorManager.greyLight,
+                    //       borderRadius: BorderRadius.circular(AppRadius.r8),
+                    //     ),
+                    //     child: Text(
+                    //       AppLocalizations.of(context)!.preview_link,
+                    //       style: getBoldStyle(
+                    //           color: ColorManager.grey, fontSize: FontSize.s16),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: AppSize.s30,
                     ),

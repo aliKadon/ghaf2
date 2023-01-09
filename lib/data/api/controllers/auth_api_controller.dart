@@ -18,10 +18,10 @@ class AuthApiController with ApiHelper {
     Uri uri = Uri.parse(ApiSettings.register);
     var response =
         await http.post(uri, headers: headers, body: jsonEncode(user.toJson()));
-    // // print('============================================');
-    // // print(response.statusCode);
-    // // print(response.body);
-    // // print(user.toJson());
+    print('============================================');
+    print(response.statusCode);
+    print(response.body);
+    print(user.toJson());
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
@@ -47,14 +47,14 @@ class AuthApiController with ApiHelper {
           'password': password,
           'fcm_token': await FirebaseMessagingService.instance.getToken(),
         }));
-    // // print('111');
-    // // print('============================================');
-    // // print(response.statusCode);
-    // // print(response.body);
+    print('111');
+    print('============================================log in');
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
-      // // print('222');
-      // // print('======================================fcm');
-      // // print(' ++++++++++====================this is fcm ${await FirebaseMessagingService.instance.getToken()}');
+      print('222');
+      print('======================================fcm');
+      print(' ++++++++++====================this is fcm ${await FirebaseMessagingService.instance.getToken()}');
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == 200) {
         SharedPrefController().setToken(jsonResponse['data']);

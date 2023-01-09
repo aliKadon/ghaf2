@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../app/preferences/shared_pref_controller.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -23,6 +24,7 @@ class AboutAppView extends StatefulWidget {
 }
 
 class _AboutAppViewState extends State<AboutAppView> {
+  
   @override
   Widget build(BuildContext context) {
     var ghaf = Provider.of<ProductProvider>(context);
@@ -132,6 +134,7 @@ class _AboutAppViewState extends State<AboutAppView> {
   }
 
   Padding aboutApp(BuildContext context, String title) {
+    var isArabic = SharedPrefController().lang1;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: AppPadding.p12),
       child: Row(
@@ -146,12 +149,18 @@ class _AboutAppViewState extends State<AboutAppView> {
           Spacer(),
           Transform(
             transform: Matrix4.rotationY(math.pi),
-            child: Image.asset(
+            child: isArabic == 'en'? Image.asset(
               IconsAssets.arrow,
               height: AppSize.s18,
               width: AppSize.s10,
+            ) : Image.asset(
+              IconsAssets.arrow2,
+              height: AppSize.s18,
+              width: AppSize.s10,
             ),
+
           ),
+          SizedBox(width: AppSize.s10),
         ],
       ),
     );

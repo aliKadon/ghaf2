@@ -117,6 +117,7 @@
   "pay_later_notify": "الدفع اللاحق ",
   "pay_later_description" : "سوف يتم تنبيهك بالدفع اللاحق الخاص بالمنتجات التي تم شراؤها بشكل دوري",
   "shipping" : "اطلب إلى منزلك",
+  "userName_or_email" : "اسم المستخدم أو الإيميل",
   "order_status": "حالة الطلب",
   "receive_status_alerts_about": "تلقي تنبيهات الحالة حول نشاط الطلب الأخير الخاص بك.",
   "announcements_and_offers": "الإعلانات والعروض",

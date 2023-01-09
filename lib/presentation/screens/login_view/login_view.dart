@@ -85,7 +85,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   height: AppSize.s32,
                 ),
                 AppTextField(
-                  hint: AppLocalizations.of(context)!.user_name,
+                  hint: AppLocalizations.of(context)!.userName_or_email,
                   validator: (value) {
                     if (value == null || value.isEmpty)
                       return 'Username is required';

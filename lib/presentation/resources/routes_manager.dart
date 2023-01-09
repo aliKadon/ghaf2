@@ -80,6 +80,7 @@ import '../screens/register_view/register_view.dart';
 import '../screens/registration_screen.dart';
 import '../screens/review_product.dart';
 import '../screens/seller/create_payment_link_seller_view.dart';
+import '../screens/seller_status.dart';
 import '../screens/splash_view.dart';
 import '../screens/subscribe_view/payment_methode_for_subscribe.dart';
 import '../screens/unpaid_items_screen.dart';
@@ -163,6 +164,7 @@ class Routes {
 
   static const String storeSellerView = '/storeSellerView';
   static const String language = '/language';
+  static const String sellerStatus = '/sellerStatus';
 }
 
 class RouteGenerator {
@@ -452,6 +454,12 @@ class RouteGenerator {
             ));
       case Routes.addItemSellerRoute:
         return MaterialPageRoute(builder: (_) => const AddItemSellerView());
+
+      case Routes.sellerStatus:
+        return MaterialPageRoute(builder: (_) => SellerStatus(
+          settings.arguments as String
+        ));
+
       case Routes.addItem2SellerRoute:
         return MaterialPageRoute(builder: (_) => const AddItem2SellerView());
       case Routes.payLaterRoute:
