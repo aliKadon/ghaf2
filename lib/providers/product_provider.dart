@@ -561,16 +561,11 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
 
   Future<void> updateInfo(String? firstName, String? lastName, String? phone,
       String? birthdate) async {
-    var url = Uri.parse('${Constants.urlBase}/Auth/update-user-info');
+    var url = Uri.parse('${Constants.urlBase}/Auth/update-user-info?firstname=$firstName&lastname=$lastName&phone=$phone&Birthdate=$birthdate');
     try {
       final response =await http.post(url,
           headers: headers,
-          body: jsonEncode({
-            'firstname': firstName,
-            'lastname': lastName,
-            'phone': phone,
-            'Birthdate': birthdate
-          }));
+          );
 
       print('============================update');
       print(response.body);

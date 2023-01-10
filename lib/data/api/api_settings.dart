@@ -1,6 +1,7 @@
 class ApiSettings {
   static const String baseUrl = 'https://api.ghafgate.com/';
 
+
   // --- Auth
   static const String register = '${baseUrl}Auth/register';
   static const String login = '${baseUrl}Auth/login';

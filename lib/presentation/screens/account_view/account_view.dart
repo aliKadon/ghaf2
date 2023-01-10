@@ -70,6 +70,7 @@ class _AccountViewState extends State<AccountView> {
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
                 Text(
@@ -415,7 +416,17 @@ class _AccountViewState extends State<AccountView> {
                       SizedBox(
                         height: AppSize.s14,
                       ),
-                      GestureDetector(
+
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height *0.2,
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 30 ),
+                      child: GestureDetector(
                           onTap: () {
                             // Navigator.push(
                             //   context,
@@ -424,9 +435,9 @@ class _AccountViewState extends State<AccountView> {
                             // );
                             _accountViewGetXController.logout(context: context);
                           },
-                          child: Row(
+                          child: Column(
                             children: [
-                              Icon(Icons.logout, color: ColorManager.primary),
+                              Icon(Icons.logout, color: ColorManager.primary,size: 35,),
                               SizedBox(
                                 width: AppSize.s8,
                               ),
@@ -435,12 +446,12 @@ class _AccountViewState extends State<AccountView> {
                                 'Logout',
                                 style: getRegularStyle(
                                   color: ColorManager.red,
-                                  fontSize: FontSize.s16,
+                                  fontSize: FontSize.s20,
                                 ),
                               ),
                             ],
                           )),
-                    ],
+                    ),
                   ),
                 ),
               ],

@@ -178,20 +178,24 @@ class _ProductViewState extends State<ProductView> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      '\$ ${_product.price!.toStringAsFixed(1)}',
-                                      style: TextStyle(
-                                        fontSize: FontSize.s14,
-                                        fontFamily: FontConstants.fontFamily,
-                                        color: ColorManager.grey,
-                                        fontWeight: FontWeight.w400,
-                                        // decoration: TextDecoration.lineThrough,
-                                      ),
-                                    ),
+                                    // if(_product.productDiscount == null) ...[
+                                    //   Text(
+                                    //     '\$ ${_product.price!.toStringAsFixed(1)}',
+                                    //     style: TextStyle(
+                                    //       fontSize: FontSize.s14,
+                                    //       fontFamily: FontConstants.fontFamily,
+                                    //       color: ColorManager.grey,
+                                    //       fontWeight: FontWeight.w400,
+                                    //       // decoration: TextDecoration.lineThrough,
+                                    //     ),
+                                    //   ),
+                                    // ],
+
+
                                     if (_product.productDiscount != null) ...[
                                       SizedBox(height: AppSize.s4),
                                       Text(
-                                        '\$ ${((_product.price! * _product.productDiscount!.discount! / 100).toStringAsFixed(1))}',
+                                        '\$ ${((_product.price!-(_product.price! * _product.productDiscount!.discount! / 100)).toStringAsFixed(1))}',
                                         style: getBoldStyle(
                                             color: ColorManager.red,
                                             fontSize: FontSize.s26),
