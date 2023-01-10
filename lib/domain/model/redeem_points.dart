@@ -1,10 +1,6 @@
 class RedeemPoints {
-  final String id;
-  final int points;
-  final String userCredentialsId;
-  final String storeId;
-  final String storeName;
+  final List<dynamic> listOfStorePoins;
+  final double totalPoints;
 
-  RedeemPoints(this.id, this.points, this.storeId, this.storeName,
-      this.userCredentialsId);
+  RedeemPoints(this.listOfStorePoins,this.totalPoints);
 }

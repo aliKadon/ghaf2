@@ -20,6 +20,8 @@ class SellerProvider with ChangeNotifier, ApiHelper {
 
   Map<String,dynamic> userDetails = {};
 
+  Map<String,dynamic> sellerDetails = {};
+
   // Map<String, dynamic> get createPaymentLink {
   //   return {..._createPaymentLink};
   // }
@@ -294,6 +296,20 @@ class SellerProvider with ChangeNotifier, ApiHelper {
 
     userDetails = data;
     notifyListeners();
+  }
+
+  Future<void> getSellerDetails() async {
+    var url = Uri.parse(
+        '${Constants.urlBase}/Auth/getsellerdetails');
+
+    final response = await http.get(url, headers: headers);
+    var data = jsonDecode(response.body)['data'];
+    print('response : ${response.body}');
+
+    sellerDetails = data;
+    notifyListeners();
+
+
   }
 
   Future<void> createPaymnetLink(String productId, int count) async {

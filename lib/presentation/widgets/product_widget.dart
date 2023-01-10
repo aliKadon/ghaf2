@@ -90,9 +90,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                   // )
 
 
-                  Image.memory(
+                  Image.network(
                     //_product2['ghafImage']![0]['data']
-                          base64Decode(_product.ghafImage?[0].data ?? ''),
+                    //       base64Decode(_product.ghafImage?[0].data ?? ''),
+                    _product.ghafImage![0].data!,
                           height: AppSize.s211,
                           width: AppSize.s154,
                           fit: BoxFit.cover,

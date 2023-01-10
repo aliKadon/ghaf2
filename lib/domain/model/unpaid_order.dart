@@ -10,7 +10,7 @@ class UnpaidOrder {
   final bool? payed;
   final Map<String, dynamic>? deliveryMethod;
   final String? deleveryCost;
-  final int? orderCostForCustomer;
+  final double? orderCostForCustomer;
   final int? totalCostForItems;
   final String? statusName;
   final String? customer;

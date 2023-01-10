@@ -41,14 +41,22 @@ class _RewardsViewState extends State<RewardsView> {
         .of<ProductProvider>(context)
         .redeemsPoints;
 
-    var allRedeemPoint = Provider.of<ProductProvider>(context).allRedeemPoints;
+    var allRedeemPoint = Provider.of<ProductProvider>(context).redeemsPoints;
     print('=======================rewards');
     print(allRedeemPoint);
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
-          child: Column(
+          child: isLoading ? Center(
+            child: Container(
+              width: 20.h,
+              height: 20.h,
+              child: CircularProgressIndicator(
+                strokeWidth: 1,
+              ),
+            ),
+          ) :Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -79,55 +87,55 @@ class _RewardsViewState extends State<RewardsView> {
                 height: AppSize.s12,
               ),
               Divider(height: 1, color: ColorManager.greyLight),
-              // SizedBox(
-              //   height: AppSize.s30,
-              // ),
-              // Row(
-              //   children: [
-              //     Container(
-              //       padding: EdgeInsets.symmetric(
-              //           horizontal: AppPadding.p10, vertical: AppPadding.p14),
-              //       decoration: BoxDecoration(
-              //         color: ColorManager.greyLight,
-              //         borderRadius: BorderRadius.circular(AppRadius.r8),
-              //       ),
-              //       child: Image.asset(
-              //         IconsAssets.rewards,
-              //         height: AppSize.s34,
-              //         width: AppSize.s44,
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: AppSize.s10,
-              //     ),
-              //     Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text(
-              //           '$allRedeemPoint point',
-              //           style: getBoldStyle(
-              //             color: ColorManager.primaryDark,
-              //             fontSize: FontSize.s18,
-              //           ),
-              //         ),
-              //         Text(
-              //           'All Points You Have',
-              //           style: getRegularStyle(
-              //             color: ColorManager.grey,
-              //             fontSize: FontSize.s14,
-              //           ),
-              //         ),
-              //         Text(
-              //           ' Congrats',
-              //           style: getRegularStyle(
-              //             color: ColorManager.grey,
-              //             fontSize: FontSize.s14,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
+              SizedBox(
+                height: AppSize.s30,
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppPadding.p10, vertical: AppPadding.p14),
+                    decoration: BoxDecoration(
+                      color: ColorManager.greyLight,
+                      borderRadius: BorderRadius.circular(AppRadius.r8),
+                    ),
+                    child: Image.asset(
+                      IconsAssets.rewards,
+                      height: AppSize.s34,
+                      width: AppSize.s44,
+                    ),
+                  ),
+                  SizedBox(
+                    width: AppSize.s10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${allRedeemPoint['total']} point',
+                        style: getBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s18,
+                        ),
+                      ),
+                      Text(
+                        'All Points You Have',
+                        style: getRegularStyle(
+                          color: ColorManager.grey,
+                          fontSize: FontSize.s14,
+                        ),
+                      ),
+                      Text(
+                        ' Congrats',
+                        style: getRegularStyle(
+                          color: ColorManager.grey,
+                          fontSize: FontSize.s14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               SizedBox(
                 height: AppSize.s24,
               ),
@@ -186,15 +194,7 @@ class _RewardsViewState extends State<RewardsView> {
               SizedBox(
                 height: AppSize.s8,
               ),
-              isLoading ? Center(
-                child: Container(
-                  width: 20.h,
-                  height: 20.h,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1,
-                  ),
-                ),
-              ) : Expanded(
+               Expanded(
                 child: GridView.builder(
                     padding: EdgeInsets.symmetric(
                         horizontal: AppPadding.p8, vertical: AppPadding.p4),
@@ -254,7 +254,7 @@ class _RewardsViewState extends State<RewardsView> {
                                 FittedBox(
 
                                   child: Text(
-                                    redeem[index].storeName,
+                                    allRedeemPoint['list'][index]['storeName'],
                                     style: getRegularStyle(
                                       color: ColorManager.grey,
                                       fontSize: FontSize.s14,
@@ -273,7 +273,7 @@ class _RewardsViewState extends State<RewardsView> {
                                 FittedBox(
                                   fit: BoxFit.scaleDown,
                                   child: Text(
-                                    redeem[index].points.toString(),
+                                    allRedeemPoint['list'][index]['points'].toString(),
                                     style: getRegularStyle(
                                       color: ColorManager.black,
                                       fontSize: FontSize.s10,

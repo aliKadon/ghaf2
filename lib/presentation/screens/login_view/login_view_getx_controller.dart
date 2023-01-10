@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
@@ -56,6 +57,10 @@ class LoginViewGetXController extends GetxController with Helpers {
     prefs.setDouble('latitude', locationData!.latitude!);
     prefs.setDouble('longitude', locationData!.longitude!);
 
+    SharedPrefController().setLocationLat(locationLat: locationData!.latitude!);
+    SharedPrefController().setLocationLat(locationLat: locationData!.longitude!);
+
+
     if (locationData!.latitude != null) {
       isLoading = false;
     }
@@ -107,7 +112,7 @@ class LoginViewGetXController extends GetxController with Helpers {
             Constants.roleRegisterSeller) {
           print('==============================sellerStatus');
           print(profileApiResponse);
-          Navigator.pushReplacementNamed(context, Routes.loginRoute,
+          Navigator.pushReplacementNamed(context, Routes.sellerStatus,
                   arguments: profileApiResponse.message)
               .then((value) => ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text('success'))));

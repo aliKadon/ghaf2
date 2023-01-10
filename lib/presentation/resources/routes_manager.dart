@@ -333,7 +333,9 @@ class RouteGenerator {
                       : settings.arguments as Address,
                 ),
               );
-              return const AddOrEditAddressView();
+              return AddOrEditAddressView(
+                // settings.arguments as LocationData
+              );
             },
           ),
         );
@@ -393,7 +395,9 @@ class RouteGenerator {
       //     ),
       //   );
       case Routes.ordersToPay:
-        return MaterialPageRoute(builder: (_) => OrderToPay2());
+        return MaterialPageRoute(builder: (_) => OrderToPay2(
+          settings.arguments as String
+        ));
       case Routes.gifts:
         return MaterialPageRoute(
           builder: (_) => Builder(

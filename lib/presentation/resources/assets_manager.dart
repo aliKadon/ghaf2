@@ -44,12 +44,9 @@ class ImageAssets {
   static const String visa = "$imagePath/visa.png";
   static const String store = "$imagePath/store.png";
   static const String photoGallery = "$imagePath/photo_gallery.png";
-
-
-
 }
 
-class IconsAssets{
+class IconsAssets {
   static const String home = "$iconPath/home.png";
   static const String home1 = "$iconPath/home1.png";
   static const String categories = "$iconPath/categories.png";
@@ -63,6 +60,9 @@ class IconsAssets{
   static const String bag = "$iconPath/bag.png";
   static const String bag1 = "$iconPath/bag1.png";
   static const String call = "$iconPath/call.png";
+
+  static const String call2 = "$iconPath/call2.png";
+
   static const String clock = "$iconPath/clock.png";
   static const String clock1 = "$iconPath/clock1.png";
   static const String coupons = "$iconPath/coupons.png";
@@ -73,6 +73,9 @@ class IconsAssets{
   static const String help1 = "$iconPath/help1.png";
   static const String location = "$iconPath/location.png";
   static const String location1 = "$iconPath/location1.png";
+
+  static const String location2 = "$iconPath/location2.png";
+
   static const String minus = "$iconPath/minus.png";
   static const String minus1 = "$iconPath/minus1.png";
   static const String motorcycleDelivery = "$iconPath/motorcycle_delivery.png";
@@ -111,6 +114,4 @@ class IconsAssets{
   static const String offers1 = "$iconPath/offers1.png";
   static const String share = "$iconPath/share.png";
   static const String start1 = "$iconPath/start1.png";
-
-
 }

@@ -10,25 +10,46 @@ import '../../resources/values_manager.dart';
 import '../../widgets/order_widget.dart';
 
 class OrderToPay2 extends StatefulWidget {
+  final String isOrderTrack;
+
+  OrderToPay2(this.isOrderTrack);
 
   @override
   State<OrderToPay2> createState() => _OrderToPay2State();
 }
 
 class _OrderToPay2State extends State<OrderToPay2> {
+  var listOrder;
 
   var isLoading = true;
 
   @override
   void initState() {
-    Provider.of<ProductProvider>(context,listen: false).getAllDetailsOrder().then((value) => isLoading = false);
+    Provider.of<ProductProvider>(context, listen: false)
+        .getAllDetailsOrder()
+        .then((value) => isLoading = false);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var order = Provider.of<ProductProvider>(context).orderAllInformation;
+    // var order = Provider.of<ProductProvider>(context).orderAllInformation;
+
+    if (widget.isOrderTrack == 'Pending') {
+      listOrder = Provider.of<ProductProvider>(context).orderspending;
+    } else if (widget.isOrderTrack == 'Completed') {
+      listOrder = Provider.of<ProductProvider>(context).ordersPay;
+    } else if (widget.isOrderTrack == 'Delivery') {
+      listOrder = Provider.of<ProductProvider>(context).ordersdelivery;
+    } else if (widget.isOrderTrack == 'In Progress') {
+      listOrder = Provider.of<ProductProvider>(context).ordersinProgress;
+    } else if (widget.isOrderTrack == 'unPay') {
+      listOrder = Provider.of<ProductProvider>(context).ordersUnPay;
+    } else if (widget.isOrderTrack == 'orderTrack') {
+      listOrder = Provider.of<ProductProvider>(context).orderAllInformation;
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -63,31 +84,38 @@ class _OrderToPay2State extends State<OrderToPay2> {
               Divider(height: 1, color: ColorManager.greyLight),
               Expanded(
                 child: isLoading
-                      ? Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1,
-                    ),
-                  )
-                      : order.isEmpty
-                      ? Center(
-                    child: Text(
-                      'No orders found',
-                    ),
-                  )
-                      : ListView.separated(
-                    itemCount: order.length,
-                    separatorBuilder: (_, index) => Divider(),
-                    itemBuilder: (context, index) {
-                      print('+++++++++++++++++++++++++++++++================');
-                      print(order[index]);
-                      return OrderWidget(
-                        // order: _ordersToPayViewGetXController
-                        //     .orders[index],
-                        order: order[index],
-                      );
-                    },
-                  ),
-
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
+                        ),
+                      )
+                    : listOrder == null
+                        ? Center(
+                            child: Text(
+                              'No orders found',
+                            ),
+                          )
+                        : listOrder.length == 0
+                            ? Center(
+                                child: Text(
+                                  'No orders found',
+                                ),
+                              )
+                            : ListView.separated(
+                                itemCount: listOrder.length,
+                                separatorBuilder: (_, index) => Divider(),
+                                itemBuilder: (context, index) {
+                                  print(
+                                      '+++++++++++++++++++++++++++++++================');
+                                  print(listOrder[index]);
+                                  return OrderWidget(
+                                    // order: _ordersToPayViewGetXController
+                                    //     .orders[index],
+                                    listOrder![index],
+                                    widget.isOrderTrack,
+                                  );
+                                },
+                              ),
               ),
             ],
           ),

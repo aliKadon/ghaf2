@@ -10,6 +10,8 @@ import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
+import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
+import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/rewards_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,6 +21,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../checkout_view.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -222,6 +225,17 @@ class _AccountViewState extends State<AccountView> {
                           context,
                           IconsAssets.pay,
                           AppLocalizations.of(context)!.pay_later,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.ordersToPay, arguments: 'orderTrack');
+                        },
+                        child: accountWidget(
+                          context,
+                          IconsAssets.location,
+                          // AppLocalizations.of(context)!.pay_later,
+                          'Order Track'
                         ),
                       ),
                       GestureDetector(

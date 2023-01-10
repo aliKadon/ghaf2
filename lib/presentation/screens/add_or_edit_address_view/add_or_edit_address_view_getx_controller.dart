@@ -6,15 +6,19 @@ import 'package:ghaf_application/data/api/controllers/addresses_api_controller.d
 import 'package:ghaf_application/domain/model/address.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class AddOrEditAddressViewGetXController extends GetxController with Helpers {
+
+  // final LocationData locationData;
+  // AddOrEditAddressViewGetXController(this.locationData);
   // vars.
   late final AddressesApiController _addressesApiController =
       AddressesApiController();
   late final GlobalKey<FormState> formKey = GlobalKey();
   late final GoogleMapController googleMapController;
   late final LatLng latLng =
-      selectedLatLng ?? const LatLng(31.5180304, 34.430782);
+      selectedLatLng ?? const LatLng(24.400661, 54.635448);
 
   // constructor fields.
   final BuildContext context;

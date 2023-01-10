@@ -21,6 +21,7 @@ class OrderTrackingScreen extends StatefulWidget {
 
   @override
   State<OrderTrackingScreen> createState() => _OrderTrackingScreenState();
+
 }
 
 class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
@@ -178,9 +179,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       print('=========================location');
       print(locationData?.longitude);
       print(widget.orderinfo['statusName']);
-      setState(() {
-        isLoading = false;
-      });
+      // setState(() {
+      //
+      // });
       PolylinePoints polylinePoints = PolylinePoints();
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         Constants.google_key_map, // Your Google Map Key
@@ -208,7 +209,11 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
             LatLng(point.latitude, point.longitude),
           ),
         );
-        setState(() {});
+
+        if(!mounted) return;
+        setState(() {
+          isLoading = false;
+        });
       }
     });
   }

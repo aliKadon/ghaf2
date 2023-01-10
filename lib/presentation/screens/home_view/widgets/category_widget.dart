@@ -56,8 +56,9 @@ class CategoryWidget extends StatelessWidget {
                 ],
                 borderRadius: BorderRadius.circular(AppRadius.r4),
               ),
-              child: Image.memory(
-                base64Decode(category.categoryImage ?? ''),
+              child: Image.network(
+                // base64Decode(category.categoryImage ?? ''),
+                category.categoryImage!,
                 width: AppSize.s60,
                 height: AppSize.s60,
                 fit: BoxFit.fill,

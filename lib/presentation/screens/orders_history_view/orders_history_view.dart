@@ -44,6 +44,9 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
   Widget build(BuildContext context) {
     var orderPay = Provider.of<ProductProvider>(context).paidCount;
     var orderUnPay = Provider.of<ProductProvider>(context).unPaidCount;
+    var pending = Provider.of<ProductProvider>(context).pendingCount;
+    var inprogress = Provider.of<ProductProvider>(context).inProgressCount;
+    var delivery = Provider.of<ProductProvider>(context).deliveryCount;
     setState(() {
       unpaidOrders = orderUnPay;
       paidOrders = orderPay;
@@ -111,11 +114,11 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                 children: [
                   {
                     'status': 'Pending',
-                    'count': '0',
+                    'count': '${pending}',
                   },
                   {
                     'status': 'Completed',
-                    'count': '${paidOrders}',
+                    'count': '${orderPay}',
                   },
                   {
                     'status': 'Canceled',
@@ -123,15 +126,15 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                   },
                   {
                     'status': 'Delivery',
-                    'count': '0',
+                    'count': '${delivery}',
                   },
                   {
                     'status': 'In Progress',
-                    'count': '0',
+                    'count': '${inprogress}',
                   },
                   {
                     'status': 'Un Paid',
-                    'count': '${unpaidOrders}',
+                    'count': '${orderUnPay}',
                   },
                 ]
                     .map(
@@ -142,7 +145,37 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay);
+                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'unPay');
+                          }else if (e['status'] == 'Un Paid') {
+                            setState(() {
+                              // unpaidOrders = 0;
+                              // paidOrders = 0;
+                            });
+                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'unPay');
+                          } else if (e['status'] == 'Pending') {
+                            setState(() {
+                              // unpaidOrders = 0;
+                              // paidOrders = 0;
+                            });
+                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Pending');
+                          } else if (e['status'] == 'Completed') {
+                            setState(() {
+                              // unpaidOrders = 0;
+                              // paidOrders = 0;
+                            });
+                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Completed');
+                          } else if (e['status'] == 'Delivery') {
+                            setState(() {
+                              // unpaidOrders = 0;
+                              // paidOrders = 0;
+                            });
+                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Delivery');
+                          }else if (e['status'] == 'In Progress') {
+                            setState(() {
+                              // unpaidOrders = 0;
+                              // paidOrders = 0;
+                            });
+                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'In Progress');
                           }
                         },
                         child: Card(

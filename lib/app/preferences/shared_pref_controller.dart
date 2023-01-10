@@ -21,6 +21,8 @@ enum PrefKeys {
   sellerSubmittedForm,
   fcmToken,
   language,
+  locationLat,
+  locationLong,
 }
 
 class SharedPrefController {
@@ -103,6 +105,14 @@ class SharedPrefController {
     return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'en';
   }
 
+  double get locationLat {
+    return _sharedPreferences.getDouble(PrefKeys.locationLat.toString()) ?? 24.400661;
+  }
+
+  double get locationLong {
+    return _sharedPreferences.getDouble(PrefKeys.locationLong.toString()) ?? 54.635448;
+  }
+
 
 
   Future<void> setUserName(String userName) async {
@@ -134,6 +144,14 @@ class SharedPrefController {
       return _sharedPreferences.get(key) as T;
     }
     return null;
+  }
+
+  Future<bool> setLocationLat({required double locationLat}) async {
+    return  _sharedPreferences.setDouble(PrefKeys.locationLat.toString(), locationLat);
+  }
+
+  Future<bool> setLocationLong({required double locationLong}) async {
+    return  _sharedPreferences.setDouble(PrefKeys.locationLong.toString(), locationLong);
   }
 
   Future<bool> changeLanguage({required String language}) async {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ghaf_application/domain/model/order.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
@@ -11,11 +10,16 @@ import '../../domain/model/available_delevey_method.dart';
 
 class OrderWidget extends StatelessWidget {
   final OrderAllInformation order;
+  final String isOrderToPay;
 
-  const OrderWidget({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
+  OrderWidget(this.order,this.isOrderToPay);
+
+  // OrderWidget(
+  //   Key? key,
+  //   this.order,
+  //   this.isOrderToPay,
+  // ) : super(key: key);
+
   // OrderWidget(this.order);
 
   @override
@@ -119,7 +123,8 @@ class OrderWidget extends StatelessWidget {
                 ),
               ],
             ),
-          if (order.orderDetails['totalCostForItems']! != order.orderDetails['orderCostForCustomer']!) ...[
+          if (order.orderDetails['totalCostForItems']! !=
+              order.orderDetails['orderCostForCustomer']!) ...[
             SizedBox(
               height: 5.h,
             ),
@@ -169,11 +174,23 @@ class OrderWidget extends StatelessWidget {
             height: 45.h,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.checkOutRoute,
-                    arguments: order);
+                if (isOrderToPay == 'orderTrack') {
+                  Navigator.of(context)
+                      .pushNamed(Routes.orderTrackingScreen, arguments: order.orderDetails);
+                }else {
+                  Navigator.pushNamed(context, Routes.checkOutRoute,
+                      arguments: order);
+                }
+
                 print("it is here: ${order.orderDetails['id']}");
               },
-              child: Text(
+              child: isOrderToPay == 'orderTrack' ? Text(
+                'Track Order',
+                style: getSemiBoldStyle(
+                  color: ColorManager.white,
+                  fontSize: FontSize.s18,
+                ),
+              ) : Text(
                 'Checkout',
                 style: getSemiBoldStyle(
                   color: ColorManager.white,
