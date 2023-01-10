@@ -49,7 +49,7 @@ class _WelcomeViewState extends State<WelcomeView> {
             width: double.infinity,
             height: AppSize.s55,
             child: ElevatedButton(
-              onPressed: () =>Navigator.pushNamed(context, Routes.registerRoute),
+              onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute),
               child: Text(
                 AppLocalizations.of(context)!.create_account,
                 style: getSemiBoldStyle(
@@ -68,7 +68,7 @@ class _WelcomeViewState extends State<WelcomeView> {
             height: AppSize.s55,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, Routes.loginRoute);
+                Navigator.pushReplacementNamed(context, Routes.loginRoute);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorManager.transparent,
@@ -88,21 +88,6 @@ class _WelcomeViewState extends State<WelcomeView> {
           SizedBox(
             height: AppSize.s148,
           ),
-          // Container(
-          //   margin: EdgeInsets.symmetric(
-          //     horizontal: AppMargin.m16,
-          //   ),
-          //   width: double.infinity,
-          //   height: AppSize.s55,
-          //   child: ElevatedButton(
-          //     onPressed: () =>Navigator.pushNamed(context, Routes.welcomeSellerRoute),
-          //     child: Text(
-          //       'Create Account as Seller',
-          //       style: getSemiBoldStyle(
-          //           color: ColorManager.white, fontSize: FontSize.s18),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +10,7 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../../widgets/order_widget.dart';
+import '../cart_view/cart_view_getx_controller.dart';
 
 class OrderToPay2 extends StatefulWidget {
   final String isOrderTrack;
@@ -20,7 +23,8 @@ class OrderToPay2 extends StatefulWidget {
 
 class _OrderToPay2State extends State<OrderToPay2> {
   var listOrder;
-
+  late final CartViewGetXController _cartViewGetXController =
+  Get.put(CartViewGetXController());
   var isLoading = true;
 
   @override
@@ -48,6 +52,8 @@ class _OrderToPay2State extends State<OrderToPay2> {
       listOrder = Provider.of<ProductProvider>(context).ordersUnPay;
     } else if (widget.isOrderTrack == 'orderTrack') {
       listOrder = Provider.of<ProductProvider>(context).orderAllInformation;
+    }else {
+      listOrder = Provider.of<ProductProvider>(context).orderAllInformation;
     }
 
     return Scaffold(
@@ -60,7 +66,12 @@ class _OrderToPay2State extends State<OrderToPay2> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      Navigator.pop(context);
+        _cartViewGetXController.init(
+        context: context,
+        );
+        } ,
                     child: Image.asset(
                       IconsAssets.arrow,
                       height: AppSize.s18,
@@ -83,13 +94,7 @@ class _OrderToPay2State extends State<OrderToPay2> {
               ),
               Divider(height: 1, color: ColorManager.greyLight),
               Expanded(
-                child: isLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                        ),
-                      )
-                    : listOrder == null
+                child:  listOrder == null
                         ? Center(
                             child: Text(
                               'No orders found',

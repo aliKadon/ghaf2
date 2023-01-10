@@ -18,6 +18,6 @@ class AccountViewGetXController extends GetxController with Helpers {
     await _sharedPrefController.logout();
     await Future.delayed(Duration(seconds: 1));
     Navigator.pop(context);
-    Navigator.pushNamed(context, Routes.welcomeRoute);
+    Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
   }
 }

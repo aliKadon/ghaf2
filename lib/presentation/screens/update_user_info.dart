@@ -56,6 +56,8 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
     _phoneTextController.dispose();
     super.dispose();
   }
+  final _focusNode = FocusNode();
+  final _focusNode1 = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
     _emailTextController.text = userInfo['lastName'] ?? '';
     _passwordTextController.text = userInfo['telephone'] ?? '';
     _phoneTextController.text = userInfo['birthDate'] ?? '';
+
     return Scaffold(
       body: isLoading
           ? Center(
@@ -97,7 +100,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                         ),
                         Spacer(),
                         Text(
-                          'Update Your Information',
+                          'Edit Profile',
                           style: getSemiBoldStyle(
                             color: ColorManager.primaryDark,
                             fontSize: FontSize.s18,
@@ -143,8 +146,13 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                     AppTextField(
                       textController: _passwordTextController,
                       hint: 'phone Number',
+                     textInputAction:TextInputAction.go ,
+                      onSaved: (value){
+                        value ==  _passwordTextController.text;
+                      },
                       // textInputType: TextInputType.emailAddress,
                     ),
+
                     // Container(
                     //   height: 100,
                     //   width: 100,
@@ -257,47 +265,6 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                                         ],
                                       ),
                                     ),
-                                    // Column(
-                                    //   children: [
-                                    //     CupertinoDatePicker(
-                                    //       mode: CupertinoDatePickerMode.date,
-                                    //       initialDateTime: DateTime(2023, 1, 1),
-                                    //       onDateTimeChanged:
-                                    //           (DateTime newDateTime) {
-                                    //         print('======================newDate');
-                                    //         print(newDateTime);
-                                    //         // Do something
-                                    //         setState(() {
-                                    //           if(newDateTime == null) {
-                                    //             date = null;
-                                    //           }else {
-                                    //             date = newDateTime;
-                                    //           }
-                                    //         });
-                                    //       },
-                                    //     ),
-                                    // GestureDetector(
-                                    //   onTap: () => Navigator.pop(context),
-                                    //   child: Container(
-                                    //     width: AppSize.s110,
-                                    //     height: AppSize.s38,
-                                    //     alignment: Alignment.center,
-                                    //     decoration: BoxDecoration(
-                                    //       color: ColorManager.primaryDark,
-                                    //       borderRadius:
-                                    //       BorderRadius.circular(AppRadius.r8),
-                                    //     ),
-                                    //     child: Text(
-                                    //       AppLocalizations.of(context)!.yes,
-                                    //       textAlign: TextAlign.center,
-                                    //       style:
-                                    //       getMediumStyle(color: ColorManager.white),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    //   ],
-                                    // ) ,
-                                    // ),
                                   ),
                                 );
                               },

@@ -77,12 +77,12 @@ class _ProductWidgetState extends State<ProductWidget> {
                 child: Container(
                   height: AppSize.s211,
                   width: AppSize.s154,
-                  color: Colors.grey,
+                  color: Colors.white,
                   child: _product.ghafImage!.isEmpty
                       // ? Icon(
                       //     Icons.broken_image,
                       //   )
-                    ? Image.asset('assets/images/checkout.png')
+                    ? Image.asset('assets/images/product_image.png',fit: BoxFit.cover,)
                       :
                   // FadeInImage.memoryNetwork(
                   //   placeholder: base64.decode(_product.ghafImage![0].data!),
@@ -197,11 +197,12 @@ class _ProductWidgetState extends State<ProductWidget> {
             padding: EdgeInsetsDirectional.only(start: AppPadding.p22),
             child: Row(
               children: [
-
+                if (_product.productDiscount == null)
                 Text(
                   '\$${_product.price!.toStringAsFixed(1)}',
                   style: TextStyle(
                     fontSize: FontSize.s12,
+
                     fontFamily: FontConstants.fontFamily,
                     color: ColorManager.primaryDark,
                     fontWeight: FontWeight.w400,
@@ -211,6 +212,14 @@ class _ProductWidgetState extends State<ProductWidget> {
 
                 // SizedBox(width: AppSize.s10),
                 if (_product.productDiscount != null) ...[
+
+                  Text(
+                    'NEW \$${(_product.price!-(_product.price! * (_product.productDiscount!.discount! / 100))).toStringAsFixed(1)}',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.red,
+                    ),
+                  ),
+                  SizedBox(width: AppSize.s6,),
                   Text(
                     '\$${_product.price!.toStringAsFixed(1)}',
                     style: TextStyle(
@@ -221,13 +230,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
-                  Text(
-                    '\$ ${(_product.price! * (_product.productDiscount!.discount! / 100)).toStringAsFixed(1)}',
-                    style: getSemiBoldStyle(
-                      color: ColorManager.red,
-                    ),
-                  ),
-
                 ],
 
 

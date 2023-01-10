@@ -122,6 +122,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     notifyListeners();
   }
 
+
   Future<void> getProducts() async {
     // // print('================================================');
     var y = SharedPrefController().token;
@@ -386,13 +387,10 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   }
 
   Future<void> giveReviewForProduct(String productId, String point) async {
-    var url = Uri.parse('${Constants.urlBase}/product/read-product');
+    var url = Uri.parse('${Constants.urlBase}/product/read-product?prodiId=$productId&points=$point');
     final response = await http.post(url, headers: {
       HttpHeaders.authorizationHeader: SharedPrefController().token,
-    }, body: {
-      'prodiId': productId,
-      'points': point
-    });
+    },);
     // print('======================================statusCode');
     // print(response.statusCode);
   }
@@ -584,6 +582,18 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
       print('============================update');
       print(response.body);
       repo = jsonDecode(response.body)['message'];
+
+  }
+
+  Future<void> clearCart() async {
+    var url = Uri.parse('${Constants.urlBase}/Product/empty-basket');
+
+    final response =await http.post(url,
+      headers: headers, );
+
+    print('============================update');
+    print(response.body);
+    repo = jsonDecode(response.body)['message'];
 
   }
 

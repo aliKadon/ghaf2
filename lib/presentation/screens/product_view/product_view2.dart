@@ -172,28 +172,44 @@ class _ProductView2State extends State<ProductView2> {
                                       fontSize: FontSize.s26),
                                 ),
                                 Spacer(),
+                                if (widget.product2.productDiscount != null) ...[
+                                  // SizedBox(height: AppSize.s4),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '\$${((widget.product2.price!-(widget.product2.price! * widget.product2.productDiscount!['discount']! / 100)).toStringAsFixed(1))}',
+                                        style: getBoldStyle(
+                                            color: ColorManager.red,
+                                            fontSize: FontSize.s26),
+                                      ),
+                                      Text(
+                                        '\$${widget.product2.price!.toStringAsFixed(1)}',
+                                        style: TextStyle(
+                                          fontSize: FontSize.s14,
+                                          fontFamily: FontConstants.fontFamily,
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          decoration: TextDecoration.lineThrough,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
+                                    if (widget.product2.productDiscount == null)
                                     Text(
-                                      '\$ ${widget.product2.price!.toStringAsFixed(1)}',
+                                      '\$${widget.product2.price!.toStringAsFixed(1)}',
                                       style: TextStyle(
-                                        fontSize: FontSize.s14,
+                                        fontSize: FontSize.s20,
                                         fontFamily: FontConstants.fontFamily,
                                         color: ColorManager.grey,
                                         fontWeight: FontWeight.w400,
                                         // decoration: TextDecoration.lineThrough,
                                       ),
                                     ),
-                                    if (widget.product2.productDiscount != null) ...[
-                                      SizedBox(height: AppSize.s4),
-                                      Text(
-                                        '\$ ${((widget.product2.price! * widget.product2.productDiscount!['discount']! / 100).toStringAsFixed(1))}',
-                                        style: getBoldStyle(
-                                            color: ColorManager.red,
-                                            fontSize: FontSize.s26),
-                                      )
-                                    ],
                                   ],
                                 ),
                               ],

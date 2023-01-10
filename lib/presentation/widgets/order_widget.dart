@@ -41,14 +41,9 @@ class OrderWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        height: 70.h,
-                        width: 70.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.r),
-                          color: Colors.grey,
-                        ),
-                      ),
+                      Image.asset('assets/images/product_image.png',fit: BoxFit.cover, height: 70.h,
+                        width: 70.h,),
+
                       SizedBox(
                         width: 15.w,
                       ),

@@ -41,7 +41,7 @@ class _ProductViewState extends State<ProductView> {
     _productViewGetXController.init(
       context: context,
     );
-    Provider.of<ProductProvider>(context,listen: false).getProducts();
+    Provider.of<ProductProvider>(context, listen: false).getProducts();
     super.initState();
   }
 
@@ -96,9 +96,12 @@ class _ProductViewState extends State<ProductView> {
               child: Stack(
                 children: [
                   _product.ghafImage!.isEmpty
-                      ? Image.asset('assets/images/product_image.png',fit: BoxFit.cover,)
+                      ? Image.asset(
+                          'assets/images/product_image.png',
+                          fit: BoxFit.cover,
+                        )
                       : Image.network(
-                    _product.ghafImage?[0].data ?? '',
+                          _product.ghafImage?[0].data ?? '',
                           width: double.infinity,
                           height: 350.h,
                           fit: BoxFit.fill,
@@ -175,32 +178,46 @@ class _ProductViewState extends State<ProductView> {
                                       fontSize: FontSize.s26),
                                 ),
                                 Spacer(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    // if(_product.productDiscount == null) ...[
-                                    //   Text(
-                                    //     '\$ ${_product.price!.toStringAsFixed(1)}',
-                                    //     style: TextStyle(
-                                    //       fontSize: FontSize.s14,
-                                    //       fontFamily: FontConstants.fontFamily,
-                                    //       color: ColorManager.grey,
-                                    //       fontWeight: FontWeight.w400,
-                                    //       // decoration: TextDecoration.lineThrough,
-                                    //     ),
-                                    //   ),
-                                    // ],
-
-
-                                    if (_product.productDiscount != null) ...[
-                                      SizedBox(height: AppSize.s4),
+                                if (_product.productDiscount != null) ...[
+                                  // SizedBox(height: AppSize.s4),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
                                       Text(
-                                        '\$ ${((_product.price!-(_product.price! * _product.productDiscount!.discount! / 100)).toStringAsFixed(1))}',
+                                        '\$${((_product.price! - (_product.price! * _product.productDiscount!.discount! / 100)).toStringAsFixed(1))}',
                                         style: getBoldStyle(
                                             color: ColorManager.red,
                                             fontSize: FontSize.s26),
-                                      )
+                                      ),
+                                      Text(
+                                        '\$${_product.price!.toStringAsFixed(1)}',
+                                        style: TextStyle(
+                                          fontSize: FontSize.s14,
+                                          fontFamily: FontConstants.fontFamily,
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                        ),
+                                      ),
                                     ],
+                                  )
+                                ],
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    if (_product.productDiscount == null)
+                                      Text(
+                                        '\$${_product.price!.toStringAsFixed(1)}',
+                                        style: TextStyle(
+                                          fontSize: FontSize.s20,
+                                          fontFamily: FontConstants.fontFamily,
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          // decoration: TextDecoration.lineThrough,
+                                        ),
+                                      ),
                                   ],
                                 ),
                               ],
@@ -208,80 +225,12 @@ class _ProductViewState extends State<ProductView> {
                             SizedBox(
                               height: AppSize.s6,
                             ),
-
-                            // Start Review
-                            // Row(
-                            //   children: [
-                            //     Image.asset(
-                            //       IconsAssets.start,
-                            //       height: AppSize.s17,
-                            //       width: AppSize.s18,
-                            //       color: (_product.stars ?? 0) >= 1
-                            //           ? null
-                            //           : Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: AppSize.s2,
-                            //     ),
-                            //     Image.asset(
-                            //       IconsAssets.start,
-                            //       height: AppSize.s17,
-                            //       width: AppSize.s18,
-                            //       color: (_product.stars ?? 0) >= 2
-                            //           ? null
-                            //           : Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: AppSize.s2,
-                            //     ),
-                            //     Image.asset(
-                            //       IconsAssets.start,
-                            //       height: AppSize.s17,
-                            //       width: AppSize.s18,
-                            //       color: (_product.stars ?? 0) >= 3
-                            //           ? null
-                            //           : Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: AppSize.s2,
-                            //     ),
-                            //     Image.asset(
-                            //       IconsAssets.start,
-                            //       height: AppSize.s17,
-                            //       width: AppSize.s18,
-                            //       color: (_product.stars ?? 0) >= 4
-                            //           ? null
-                            //           : Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: AppSize.s2,
-                            //     ),
-                            //     Image.asset(
-                            //       IconsAssets.start,
-                            //       height: AppSize.s17,
-                            //       width: AppSize.s18,
-                            //       color: (_product.stars ?? 0) >= 5
-                            //           ? null
-                            //           : Colors.grey,
-                            //     ),
-                            //     SizedBox(
-                            //       width: AppSize.s6,
-                            //     ),
-                            //     Text(
-                            //       '(${_product.productReview ?? '0'})',
-                            //       style: getRegularStyle(
-                            //           color: ColorManager.grey,
-                            //           fontSize: FontSize.s14),
-                            //     ),
-                            //   ],
-                            // ),
                             buildRating(
                                 Text(
                                   "${_product.stars}",
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 _product),
-
                             SizedBox(
                               height: AppSize.s10,
                             ),
@@ -344,8 +293,12 @@ class _ProductViewState extends State<ProductView> {
                                     id: 'isInCart',
                                     tag: widget.tag,
                                     builder: (controller) => Container(
-                                      height: MediaQuery.of(context).size.height * 0.05,
-                                      width: MediaQuery.of(context).size.height * 0.3,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                      width:
+                                          MediaQuery.of(context).size.height *
+                                              0.3,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             AppRadius.r14),
@@ -428,26 +381,25 @@ class _ProductViewState extends State<ProductView> {
   }
 
   Widget buildRating(Widget ifYouNeedRate, Product _product) => Row(
-    children: [
-      RatingBar.builder(
-          initialRating: _product.stars!.toDouble(),
-          minRating: 1,
-          itemSize: 20,
-          updateOnDrag: false,
-          allowHalfRating: true,
-          ignoreGestures: true,
-          itemBuilder: (context, _) => Icon(
-            Icons.star,
-            color: Colors.amber,
+        children: [
+          RatingBar.builder(
+              initialRating: _product.stars!.toDouble(),
+              minRating: 1,
+              itemSize: 20,
+              updateOnDrag: false,
+              allowHalfRating: true,
+              ignoreGestures: true,
+              itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+              onRatingUpdate: (rating) {
+                print(rating);
+              }),
+          SizedBox(
+            width: 5,
           ),
-          onRatingUpdate: (rating) {
-            print(rating);
-          }),
-      SizedBox(
-        width: 5,
-      ),
-      ifYouNeedRate,
-    ],
-  );
-
+          ifYouNeedRate,
+        ],
+      );
 }

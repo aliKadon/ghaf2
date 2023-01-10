@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/presentation/screens/cart_view/cart_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/cart_view/widgets/cart_item_widget.dart';
+import 'package:provider/provider.dart';
 
+import '../../../providers/product_provider.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -42,6 +44,7 @@ class _CartViewState extends State<CartView> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -197,8 +200,12 @@ class _CartViewState extends State<CartView> {
                                   width: double.infinity,
                                   height: AppSize.s55,
                                   child: ElevatedButton(
-                                    onPressed:
-                                        _cartViewGetXController.createOrder,
+                                    onPressed:(){
+                                      _cartViewGetXController.createOrder();
+
+
+                                    }
+                                       ,
                                     child: Text(
                                       // 'Create Order',
                                       AppLocalizations.of(context)!.create_order,

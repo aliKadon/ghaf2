@@ -1,8 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:io';
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -88,9 +84,14 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(AppRadius.r8),
                 child:_cartItem.product?.ghafImage?.length == 0 ?
-                    Icon(Icons.add_box) :
-                Image.memory(
-                  base64Decode(_cartItem.product!.ghafImage![0].data!),
+                Image.asset(
+                  'assets/images/product_image.png',
+                  height: AppSize.s84,
+                  width: AppSize.s77,
+                  fit: BoxFit.cover,
+                ) :
+                Image.network(
+                  _cartItem.product!.ghafImage![0].data! ,
                   height: AppSize.s84,
                   width: AppSize.s77,
                   fit: BoxFit.cover,

@@ -160,27 +160,44 @@ class _ProductWidget2State extends State<ProductWidget2> {
           ),
           Padding(
             padding: EdgeInsetsDirectional.only(start: AppPadding.p22),
-            child: Row(
+            child:  Row(
               children: [
-                if (widget.product.productDiscount != null) ...[
+                if (widget.product.productDiscount == null)
                   Text(
-                    '\$ ${(widget.product.price! * (widget.product.productDiscount!['discount']! / 100)).toStringAsFixed(1)}',
-                    style: getSemiBoldStyle(
+                    '\$${widget.product.price!.toStringAsFixed(1)}',
+                    style: TextStyle(
+                      fontSize: FontSize.s12,
+
+                      fontFamily: FontConstants.fontFamily,
                       color: ColorManager.primaryDark,
+                      fontWeight: FontWeight.w400,
+                      // decoration: TextDecoration.lineThrough,
                     ),
                   ),
-                  SizedBox(width: AppSize.s10),
-                ],
-                Text(
-                  '\$${widget.product.price!.toStringAsFixed(1)}',
-                  style: TextStyle(
-                    fontSize: FontSize.s10,
-                    fontFamily: FontConstants.fontFamily,
-                    color: ColorManager.red,
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.lineThrough,
+
+                // SizedBox(width: AppSize.s10),
+                if (widget.product.productDiscount != null) ...[
+
+                  Text(
+                    'NEW \$${(widget.product.price!-(widget.product.price! * (widget.product.productDiscount!['discount'] / 100))).toStringAsFixed(1)}',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.red,
+                    ),
                   ),
-                ),
+                  SizedBox(width: AppSize.s6,),
+                  Text(
+                    '\$${widget.product.price!.toStringAsFixed(1)}',
+                    style: TextStyle(
+                      fontSize: FontSize.s12,
+                      fontFamily: FontConstants.fontFamily,
+                      color: ColorManager.primaryDark,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+                ],
+
+
                 // Spacer(),
                 // Image.asset(
                 //   IconsAssets.start,
@@ -191,7 +208,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
                 //   width: AppSize.s8,
                 // ),
                 // Text(
-                //   widget.product.productReview ?? '',
+                //   _product.productReview ?? '',
                 //   style: getRegularStyle(
                 //     color: ColorManager.black,
                 //     fontSize: FontSize.s12,

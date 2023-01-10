@@ -6,6 +6,9 @@ import 'package:ghaf_application/data/api/controllers/store_api_controller.dart'
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/product_provider.dart';
 
 class CartViewGetXController extends GetxController with Helpers {
   // notifiable.
@@ -83,10 +86,10 @@ class CartViewGetXController extends GetxController with Helpers {
         // success.
         Navigator.pop(context);
         showSnackBar(context, message: apiResponse.message, error: false);
-        cartItems.clear();
         notifyBell();
         notifyMyCart();
-        Navigator.pushNamed(context, Routes.ordersToPay);
+        Provider.of<ProductProvider>(context,listen: false).clearCart();
+        Navigator.pushNamed(context, Routes.ordersToPay,arguments: '');
       } else {
         // failed.
         Navigator.pop(context);
