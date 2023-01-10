@@ -99,8 +99,8 @@ class _ProductView2State extends State<ProductView2> {
                       Icons.broken_image,
                     ),
                   )
-                      : Image.memory(
-                    base64Decode(widget.product2.ghafImage?[0]['data'] ?? ''),
+                      : Image.network(
+                    widget.product2.ghafImage?[0]['data'],
                     width: double.infinity,
                     height: 350.h,
                     fit: BoxFit.fill,
