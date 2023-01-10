@@ -107,7 +107,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                   Text(
                     _addAddressViewGetXController.address == null
                         ? AppLocalizations.of(context)!.add_address
-                        : 'Edit Address',
+                        : AppLocalizations.of(context)!.edit_address,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -176,7 +176,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                 markerId: MarkerId("2"),
                                 position: LatLng(value.latitude, value.longitude),
                                 infoWindow: InfoWindow(
-                                  title: 'My Current Location',
+                                  title: AppLocalizations.of(context)!.my_current_location,
                                 ),
                               )
                           );
@@ -271,7 +271,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                       _addAddressViewGetXController.address ==
                                               null
                                           ? AppLocalizations.of(context)!.add_address
-                                          : 'Edit Address',
+                                          : AppLocalizations.of(context)!.edit_address,
                                       style: getSemiBoldStyle(
                                           color: ColorManager.white,
                                           fontSize: FontSize.s18),

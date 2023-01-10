@@ -40,7 +40,7 @@ class ProductsScreenGetXController extends GetxController with Helpers {
       isProductsLoading = false;
     } catch (error) {
       // error.
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

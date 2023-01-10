@@ -1,42 +1,29 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../app/constants.dart';
-import '../../domain/model/product.dart';
 import '../../domain/model/product2.dart';
-import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
-import '../screens/products_screen/products_screen_getx_controller.dart';
 
 class ProductWidget2 extends StatefulWidget {
-
   final Product2 product;
   final String tag;
 
-
-  ProductWidget2(this.product,this.tag);
+  ProductWidget2(this.product, this.tag);
 
   @override
   State<ProductWidget2> createState() => _ProductWidget2State();
 }
 
 class _ProductWidget2State extends State<ProductWidget2> {
-
-
-
   @override
   void initState() {
     super.initState();
   }
-
 
   // // controller.
   // late final Product _product = Get.find<Product>(
@@ -46,7 +33,6 @@ class _ProductWidget2State extends State<ProductWidget2> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
         Navigator.pushNamed(
           context,
           Routes.productView2,
@@ -63,60 +49,58 @@ class _ProductWidget2State extends State<ProductWidget2> {
                 child: Container(
                   height: AppSize.s211,
                   width: AppSize.s154,
-                  color: Colors.grey,
+                  color: Colors.white,
                   child: widget.product.ghafImage == null
-                      ? Icon(
-                    Icons.broken_image,
-                  )
+                      ? Image.asset('assets/images/product_image.png',fit: BoxFit.cover,)
                       : Image.network(
-                    widget.product.ghafImage![0]['data'],
-                    height: AppSize.s211,
-                    width: AppSize.s154,
-                    fit: BoxFit.cover,
-                    errorBuilder: (
-                        BuildContext context,
-                        Object error,
-                        StackTrace? stackTrace,
-                        ) =>
-                        Center(
-                          child: Icon(
-                            Icons.broken_image,
+                          widget.product.ghafImage![0]['data'],
+                          height: AppSize.s211,
+                          width: AppSize.s154,
+                          fit: BoxFit.cover,
+                          errorBuilder: (
+                            BuildContext context,
+                            Object error,
+                            StackTrace? stackTrace,
+                          ) =>
+                              Center(
+                            child: Icon(
+                              Icons.broken_image,
+                            ),
                           ),
                         ),
-                  ),
                 ),
               ),
               // if (widget.minProductCountForGift != null)
-                PositionedDirectional(
-                  start: 0,
-                  end: 0,
-                  top: -55,
-                  child: Image.asset(
-                    '${Constants.imagesPath}gift.png',
-                  ),
+              PositionedDirectional(
+                start: 0,
+                end: 0,
+                top: -55,
+                child: Image.asset(
+                  '${Constants.imagesPath}gift.png',
                 ),
+              ),
               // if (widget.minProductCountForGift != null)
-                PositionedDirectional(
-                  start: 0,
-                  end: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(14.r)),
-                    ),
-                    // child: Center(
-                    //   child: Text(
-                    //     'Buy ${widget.minProductCountForGift} get ${widget.giftCount} free',
-                    //     style: TextStyle(
-                    //       color: Colors.white,
-                    //       fontSize: 14.sp,
-                    //     ),
-                    //   ),
-                    ),
+              PositionedDirectional(
+                start: 0,
+                end: 0,
+                bottom: 0,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(14.r)),
                   ),
+                  // child: Center(
+                  //   child: Text(
+                  //     'Buy ${widget.minProductCountForGift} get ${widget.giftCount} free',
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 14.sp,
+                  //     ),
+                  //   ),
+                ),
+              ),
 
               // PositionedDirectional(
               //   end: AppSize.s12,
@@ -192,28 +176,28 @@ class _ProductWidget2State extends State<ProductWidget2> {
                   style: TextStyle(
                     fontSize: FontSize.s10,
                     fontFamily: FontConstants.fontFamily,
-                    color: ColorManager.grey,
+                    color: ColorManager.red,
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.lineThrough,
                   ),
                 ),
-                Spacer(),
-                Image.asset(
-                  IconsAssets.start,
-                  height: AppSize.s14,
-                  width: AppSize.s15,
-                ),
-                SizedBox(
-                  width: AppSize.s8,
-                ),
-                Text(
-                  widget.product.productReview ?? '',
-                  style: getRegularStyle(
-                    color: ColorManager.black,
-                    fontSize: FontSize.s12,
-                  ),
-                ),
-                Spacer(),
+                // Spacer(),
+                // Image.asset(
+                //   IconsAssets.start,
+                //   height: AppSize.s14,
+                //   width: AppSize.s15,
+                // ),
+                // SizedBox(
+                //   width: AppSize.s8,
+                // ),
+                // Text(
+                //   widget.product.productReview ?? '',
+                //   style: getRegularStyle(
+                //     color: ColorManager.black,
+                //     fontSize: FontSize.s12,
+                //   ),
+                // ),
+                // Spacer(),
               ],
             ),
           ),

@@ -137,7 +137,7 @@ class _CartViewState extends State<CartView> {
                                         ),
                                         Spacer(),
                                         Text(
-                                          '${controller.subTotal} AED',
+                                          '${controller.subTotal} ${AppLocalizations.of(context)!.aed}',
                                           style: getRegularStyle(
                                             color: ColorManager.primaryDark,
                                           ),
@@ -156,7 +156,7 @@ class _CartViewState extends State<CartView> {
                                         ),
                                         Spacer(),
                                         Text(
-                                          '${controller.discount} AED',
+                                          '${controller.discount} ${AppLocalizations.of(context)!.aed}',
                                           style: getRegularStyle(
                                             color: ColorManager.primaryDark,
                                           ),
@@ -177,7 +177,7 @@ class _CartViewState extends State<CartView> {
                                         ),
                                         Spacer(),
                                         Text(
-                                          '${controller.total} AED',
+                                          '${controller.total} ${AppLocalizations.of(context)!.aed}',
                                           style: getSemiBoldStyle(
                                             color: ColorManager.primaryDark,
                                             fontSize: FontSize.s16,

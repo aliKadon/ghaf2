@@ -10,13 +10,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../app/constants.dart';
 import '../app/preferences/shared_pref_controller.dart';
+import '../data/api/api_helper.dart';
 import '../domain/model/address.dart';
 import '../domain/model/available_delevey_method.dart';
 import '../domain/model/delivery_method.dart';
 import '../domain/model/product2.dart';
 import '../domain/model/product_discount.dart';
 
-class ProductProvider extends ChangeNotifier {
+class ProductProvider extends ChangeNotifier with ApiHelper {
   num allRedeemPoints = 0;
 
   num unPaidCount = 0;
@@ -25,6 +26,8 @@ class ProductProvider extends ChangeNotifier {
   num pendingCount = 0;
   num inProgressCount = 0;
   num deliveryCount = 0;
+
+  String repo = '';
 
   List<OrderAllInformation> ordersPay = [];
   List<OrderAllInformation> orderspending = [];
@@ -554,6 +557,39 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       // print(e);
     }
+  }
+
+  Future<void> updateInfo(String? firstName, String? lastName, String? phone,
+      String? birthdate) async {
+    var url = Uri.parse('${Constants.urlBase}/Auth/update-user-info');
+    try {
+      final response =await http.post(url,
+          headers: headers,
+          body: jsonEncode({
+            'firstname': firstName,
+            'lastname': lastName,
+            'phone': phone,
+            'Birthdate': birthdate
+          }));
+
+      print('============================update');
+      print(response.body);
+      repo = jsonDecode(response.body)['message'];
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    var url = Uri.parse('${Constants.urlBase}/auth/GetUserDetails');
+
+      final response =await http.post(url,
+          headers: headers, );
+
+      print('============================update');
+      print(response.body);
+      repo = jsonDecode(response.body)['message'];
+
   }
 
   int getTotalPoints() {

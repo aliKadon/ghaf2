@@ -110,7 +110,7 @@ class _AddressesViewState extends State<AddressesView> {
                   ),
                   Spacer(),
                   Text(
-                    'My Addresses',
+                    AppLocalizations.of(context)!.my_address,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,

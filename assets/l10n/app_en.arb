@@ -6,6 +6,24 @@
   "on_boarding_img3": "Register with us to generate a payment link, share it with your customer, and get paid immediately to your bank account.\nNo integration, No contracts, No code, and No gateways.",
   "continue1": "Continue",
   "skip": "Skip",
+  "order_track" : "Order Track",
+  "edit_address" : "Edit Address",
+  "my_current_location": "My Current Location",
+  "my_address" : "My Address",
+  "no_product_found": "No product Found",
+  "userName_or_Email_is_required" : "User Name Or Emails is Required",
+  "password_is_required" : "Password is Required",
+  "register_with_google" : "Register with google",
+  "choose_route" : "Choose Route",
+  "register_as_customer" : "register as customer",
+  "register_as_seller" : "register as seller",
+  "register_as_seller_individual" : "register as seller (individual)",
+  "no_offer_found" : "no offer found",
+
+
+
+
+
   "create_account": "Create An Account",
   "login": "Login",
   "welcome_back": "Welcome Back",

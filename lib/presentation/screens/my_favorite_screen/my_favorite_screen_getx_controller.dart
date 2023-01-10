@@ -35,7 +35,7 @@ class MyFavoriteScreenGetXController extends GetxController with Helpers {
       isMyFavoriteLoading = false;
     } catch (error) {
       // error.
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

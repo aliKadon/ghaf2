@@ -92,12 +92,12 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
       // error.
       debugPrint(error.response?.data.toString());
       Navigator.pop(context);
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     } catch (error) {
       // error.
-      debugPrint('error : ${error.toString()}');
+      debugPrint('error : ${'An Error Occurred, Please Try again'}');
       Navigator.pop(context);
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 

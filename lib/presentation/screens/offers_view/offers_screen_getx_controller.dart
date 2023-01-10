@@ -41,7 +41,7 @@ class OffersScreenGetXController extends GetxController with Helpers {
       isOffersLoading = false;
     } catch (error) {
       // error.
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

@@ -90,7 +90,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   hint: AppLocalizations.of(context)!.userName_or_email,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Username is required';
+                      return AppLocalizations.of(context)!.userName_or_Email_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -104,7 +104,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   textInputAction: TextInputAction.done,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Password is required';
+                      return AppLocalizations.of(context)!.password_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -205,7 +205,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                         ),
                         Text(
                           // AppLocalizations.of(context)!.login_with_google,
-                          'Register with Google',
+                          AppLocalizations.of(context)!.register_with_google,
                           style: getRegularStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s14),
@@ -324,7 +324,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: Text('Chose Route'),
+          title: Text(AppLocalizations.of(context)!.choose_route),
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
@@ -334,7 +334,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 // Perform some action
                 // Navigator.pop(context);
               },
-              child: Text('Register as a Customer'),
+              child: Text(AppLocalizations.of(context)!.register_as_customer),
             ),
             SimpleDialogOption(
               onPressed: () {
@@ -344,7 +344,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 // Perform some action
                 // Navigator.pop(context);
               },
-              child: Text('Register as a Seller'),
+              child: Text(AppLocalizations.of(context)!.register_as_seller),
             ),
             SimpleDialogOption(
               onPressed: () {
@@ -359,7 +359,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 // Perform some action
                 // Navigator.pop(context);
               },
-              child: Text('Register as a Seller(individual)'),
+              child: Text(AppLocalizations.of(context)!.register_as_seller_individual),
             ),
           ],
         );

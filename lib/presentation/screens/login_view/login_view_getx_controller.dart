@@ -136,7 +136,7 @@ class LoginViewGetXController extends GetxController with Helpers {
       // Navigator.pop(context);
       // showSnackBar(context, message: loginApiResponse.message, error: true);
       // showSnackBar(context, message: profileApiResponse.message, error: true);
-      showSnackBar(context, message: 'Un Error Occurred', error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
 
       print(error.toString());
 

@@ -70,6 +70,7 @@ import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_v
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_from_home_page.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
+import 'package:ghaf_application/presentation/screens/update_user_info.dart';
 import 'package:location/location.dart';
 
 import '../../domain/model/available_delevey_method.dart';
@@ -129,6 +130,7 @@ class Routes {
   static const String subscribeFromHomePage = "/subscribeFromHomePage";
   static const String homePage = "/homePage";
   static const String allProductScreen = "/allProductScreen";
+  static const String updateUserInfo = "/updateUserInfo";
 
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
@@ -297,6 +299,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const RewardsView());
       case Routes.fAQRoute:
         return MaterialPageRoute(builder: (_) => const FAQView());
+
+      case Routes.updateUserInfo:
+        return MaterialPageRoute(builder: (_) => UpdateUserInfo());
       case Routes.sharaYourOpinionRoute:
         return MaterialPageRoute(builder: (_) => const SharaYourOpinionView());
       case Routes.notificationRoute:

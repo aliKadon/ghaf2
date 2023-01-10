@@ -69,7 +69,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       isCategoryLoading = false;
     } catch (error) {
       // error.
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 
@@ -93,11 +93,11 @@ class HomeViewGetXController extends GetxController with Helpers {
       // error.
       debugPrint(error.response?.data);
       debugPrint(error.toString());
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     } catch (error) {
       // error.
       debugPrint(error.toString());
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 

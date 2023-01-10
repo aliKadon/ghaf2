@@ -95,7 +95,7 @@ class CartViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

@@ -51,7 +51,7 @@ class ForgotPasswordViewGetXController extends GetxController with Helpers {
       // error.
       debugPrint(error.toString());
       Navigator.pop(context);
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

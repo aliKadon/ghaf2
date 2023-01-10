@@ -77,7 +77,7 @@ class _OffersViewState extends State<OffersView> {
                       : _offersScreenGetXController.offers.isEmpty
                           ? Center(
                               child: Text(
-                                'No offers found',
+                                AppLocalizations.of(context)!.no_offer_found,
                               ),
                             )
                           : GridView.builder(

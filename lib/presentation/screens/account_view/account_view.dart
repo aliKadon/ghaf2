@@ -126,11 +126,12 @@ class _AccountViewState extends State<AccountView> {
                     ),
                     InkWell(
                       onTap: () {
-                        _accountViewGetXController.logout(context: context);
+                        // _accountViewGetXController.logout(context: context);
+                        Navigator.of(context).pushNamed(Routes.updateUserInfo);
                       },
-                      child: Icon(
-                        Icons.exit_to_app,
-                        color: Colors.red,
+                      child: Image.asset(
+                        'assets/icons/editProfile.png',
+                        color: ColorManager.primaryDark,
                       ),
                     ),
                   ],
@@ -234,8 +235,8 @@ class _AccountViewState extends State<AccountView> {
                         child: accountWidget(
                           context,
                           IconsAssets.location,
-                          // AppLocalizations.of(context)!.pay_later,
-                          'Order Track'
+                          AppLocalizations.of(context)!.order_track,
+                          // 'Order Track'
                         ),
                       ),
                       GestureDetector(
@@ -406,6 +407,34 @@ class _AccountViewState extends State<AccountView> {
                                 AppLocalizations.of(context)!.language,
                                 style: getRegularStyle(
                                   color: ColorManager.primaryDark,
+                                  fontSize: FontSize.s16,
+                                ),
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        height: AppSize.s14,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (builder) => AboutAppView()),
+                            // );
+                            _accountViewGetXController.logout(context: context);
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.logout, color: ColorManager.primary),
+                              SizedBox(
+                                width: AppSize.s8,
+                              ),
+                              Text(
+                                // AppLocalizations.of(context)!.language,
+                                'Logout',
+                                style: getRegularStyle(
+                                  color: ColorManager.red,
                                   fontSize: FontSize.s16,
                                 ),
                               ),

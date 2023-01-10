@@ -338,7 +338,7 @@ class _HomeViewState extends State<HomeView> {
                                       } else {
                                         return Center(
                                           child: Text(
-                                            'No categories found',
+                                            AppLocalizations.of(context)!.no_categories_found,
                                           ),
                                         );
                                       }
@@ -590,7 +590,7 @@ class _HomeViewState extends State<HomeView> {
                               : _homeViewGetXController.products.isEmpty
                                   ? Center(
                                       child: Text(
-                                        'No products found',
+                                        AppLocalizations.of(context)!.no_product_found,
                                       ),
                                     )
                                   : GridView.builder(

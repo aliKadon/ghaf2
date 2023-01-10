@@ -45,7 +45,7 @@ class RateUsViewGetXController extends GetxController with Helpers {
       // error.
       Navigator.pop(context);
       debugPrint(error.toString());
-      showSnackBar(context, message: error.toString(), error: true);
+      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

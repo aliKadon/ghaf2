@@ -96,13 +96,7 @@ class _ProductViewState extends State<ProductView> {
               child: Stack(
                 children: [
                   _product.ghafImage!.isEmpty
-                      ? SizedBox(
-                          height: 350.h,
-                          width: double.infinity,
-                          child: Icon(
-                            Icons.broken_image,
-                          ),
-                        )
+                      ? Image.asset('assets/images/product_image.png',fit: BoxFit.cover,)
                       : Image.network(
                     _product.ghafImage?[0].data ?? '',
                           width: double.infinity,
@@ -191,7 +185,7 @@ class _ProductViewState extends State<ProductView> {
                                         fontFamily: FontConstants.fontFamily,
                                         color: ColorManager.grey,
                                         fontWeight: FontWeight.w400,
-                                        decoration: TextDecoration.lineThrough,
+                                        // decoration: TextDecoration.lineThrough,
                                       ),
                                     ),
                                     if (_product.productDiscount != null) ...[
@@ -199,7 +193,7 @@ class _ProductViewState extends State<ProductView> {
                                       Text(
                                         '\$ ${((_product.price! * _product.productDiscount!.discount! / 100).toStringAsFixed(1))}',
                                         style: getBoldStyle(
-                                            color: ColorManager.primary,
+                                            color: ColorManager.red,
                                             fontSize: FontSize.s26),
                                       )
                                     ],

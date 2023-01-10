@@ -65,17 +65,15 @@ class _ReviewProductState extends State<ReviewProduct> {
                 SizedBox(
                   height: AppSize.s12,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Image.asset(
-                    '${Constants.imagesPath}rate.png',
-                  ),
+                Image.asset(
+                  '${Constants.imagesPath}reviewProduct.png',
+                  fit: BoxFit.cover,
                 ),
                 SizedBox(
                   height: 15.h,
                 ),
                 Text(
-                  'How do you see us?',
+                  'How do you see this Product?',
                   style: getRegularStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
@@ -104,13 +102,13 @@ class _ReviewProductState extends State<ReviewProduct> {
                 ),
                 Row(
                   children: [
-                    Text(
-                      'Do you have notes to tell us?',
-                      style: getRegularStyle(
-                        color: ColorManager.primaryDark,
-                        fontSize: FontSize.s14,
-                      ),
-                    ),
+                    // Text(
+                    //   'Do you have notes to tell us?',
+                    //   style: getRegularStyle(
+                    //     color: ColorManager.primaryDark,
+                    //     fontSize: FontSize.s14,
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(
@@ -143,7 +141,7 @@ class _ReviewProductState extends State<ReviewProduct> {
                               )));
                     },
                     child: Text(
-                      'Send A Note',
+                      'Send Your Review',
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),

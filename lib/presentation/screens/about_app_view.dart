@@ -106,20 +106,20 @@ class _AboutAppViewState extends State<AboutAppView> {
                 GestureDetector(
                     onTap: () {
                       ghaf.getWebpage(
-                          'https://www.facebook.com/profile.php?id=100086435884352');
+                          'https://www.facebook.com/');
                     },
                     child: aboutApp(
                         context, AppLocalizations.of(context)!.facebook)),
                 GestureDetector(
                   onTap: () {
                     ghaf.getWebpage(
-                        'https://www.facebook.com/profile.php?id=100086435884352');
+                        'https://twitter.com/');
                   },
                     child: aboutApp(context, AppLocalizations.of(context)!.twitter)),
                 GestureDetector(
                   onTap: () {
                     ghaf.getWebpage(
-                        'https://www.facebook.com/profile.php?id=100086435884352');
+                        'https://www.instagram.com/ghaf.app/?igshid=MWI4MTIyMDE%3D');
                   },
                     child: aboutApp(context, AppLocalizations.of(context)!.instagram)),
                 SizedBox(

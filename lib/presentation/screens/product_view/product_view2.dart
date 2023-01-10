@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:ghaf_application/domain/model/product2.dart';
@@ -92,13 +93,7 @@ class _ProductView2State extends State<ProductView2> {
               child: Stack(
                 children: [
                   widget.product2.ghafImage == null
-                      ? SizedBox(
-                    height: 350.h,
-                    width: double.infinity,
-                    child: Icon(
-                      Icons.broken_image,
-                    ),
-                  )
+                      ? Image.asset('assets/images/product_image.png',fit: BoxFit.cover,)
                       : Image.network(
                     widget.product2.ghafImage?[0]['data'],
                     width: double.infinity,
@@ -187,7 +182,7 @@ class _ProductView2State extends State<ProductView2> {
                                         fontFamily: FontConstants.fontFamily,
                                         color: ColorManager.grey,
                                         fontWeight: FontWeight.w400,
-                                        decoration: TextDecoration.lineThrough,
+                                        // decoration: TextDecoration.lineThrough,
                                       ),
                                     ),
                                     if (widget.product2.productDiscount != null) ...[
@@ -195,7 +190,7 @@ class _ProductView2State extends State<ProductView2> {
                                       Text(
                                         '\$ ${((widget.product2.price! * widget.product2.productDiscount!['discount']! / 100).toStringAsFixed(1))}',
                                         style: getBoldStyle(
-                                            color: ColorManager.primary,
+                                            color: ColorManager.red,
                                             fontSize: FontSize.s26),
                                       )
                                     ],
@@ -206,71 +201,12 @@ class _ProductView2State extends State<ProductView2> {
                             SizedBox(
                               height: AppSize.s6,
                             ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (widget.product2.stars ?? 0) >= 1
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (widget.product2.stars ?? 0) >= 2
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (widget.product2.stars ?? 0) >= 3
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (widget.product2.stars ?? 0) >= 4
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s2,
-                                ),
-                                Image.asset(
-                                  IconsAssets.start,
-                                  height: AppSize.s17,
-                                  width: AppSize.s18,
-                                  color: (widget.product2.stars ?? 0) >= 5
-                                      ? null
-                                      : Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s6,
-                                ),
+                            buildRating(
                                 Text(
-                                  '(${widget.product2.productReview ?? '0'})',
-                                  style: getRegularStyle(
-                                      color: ColorManager.grey,
-                                      fontSize: FontSize.s14),
+                                  "${widget.product2.stars}",
+                                  style: TextStyle(fontSize: 16),
                                 ),
-                              ],
-                            ),
+                                widget.product2),
                             SizedBox(
                               height: AppSize.s10,
                             ),
@@ -417,4 +353,26 @@ class _ProductView2State extends State<ProductView2> {
       ),
     );
   }
+  Widget buildRating(Widget ifYouNeedRate, Product2 product2) => Row(
+    children: [
+      RatingBar.builder(
+          initialRating: product2.stars!.toDouble(),
+          minRating: 1,
+          itemSize: 20,
+          updateOnDrag: false,
+          allowHalfRating: true,
+          ignoreGestures: true,
+          itemBuilder: (context, _) => Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) {
+            print(rating);
+          }),
+      SizedBox(
+        width: 5,
+      ),
+      ifYouNeedRate,
+    ],
+  );
 }
