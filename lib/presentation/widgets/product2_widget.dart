@@ -157,9 +157,9 @@ class _ProductWidget2State extends State<ProductWidget2> {
               ),
             ),
           ),
-          SizedBox(
-            height: AppSize.s4,
-          ),
+          // SizedBox(
+          //   height: AppSize.s4,
+          // ),
           Container(
             padding: EdgeInsetsDirectional.only(start: AppPadding.p22),
             alignment: AlignmentDirectional.topStart,

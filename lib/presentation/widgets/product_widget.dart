@@ -91,8 +91,6 @@ class _ProductWidgetState extends State<ProductWidget> {
 
 
                   Image.network(
-                    //_product2['ghafImage']![0]['data']
-                    //       base64Decode(_product.ghafImage?[0].data ?? ''),
                     _product.ghafImage![0].data!,
                           height: AppSize.s211,
                           width: AppSize.s154,
@@ -181,9 +179,9 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
             ),
           ),
-          SizedBox(
-            height: AppSize.s4,
-          ),
+          // SizedBox(
+          //   height: AppSize.s4,
+          // ),
           Container(
             padding: EdgeInsetsDirectional.only(start: AppPadding.p22),
             alignment: AlignmentDirectional.topStart,
@@ -195,9 +193,6 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
             ),
           ),
-          // SizedBox(
-          //   height: AppSize.s8,
-          // ),
           Padding(
             padding: EdgeInsetsDirectional.only(start: AppPadding.p22),
             child: Row(
@@ -241,24 +236,6 @@ class _ProductWidgetState extends State<ProductWidget> {
               ],
             ),
           ),
-
-          // Image.memory(
-          //   //_product2['ghafImage']![0]['data']
-          //   base64Decode(_product.ghafImage![0].data!),
-          //   height: AppSize.s211,
-          //   width: AppSize.s154,
-          //   fit: BoxFit.cover,
-          //   errorBuilder: (
-          //       BuildContext context,
-          //       Object error,
-          //       StackTrace? stackTrace,
-          //       ) =>
-          //       Center(
-          //         child: Icon(
-          //           Icons.broken_image,
-          //         ),
-          //       ),
-          // ),
         ],
       ),
     );

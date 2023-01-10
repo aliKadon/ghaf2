@@ -629,21 +629,6 @@ class _HomeViewState extends State<HomeView> {
                                       },
                                     ),
                         ),
-                      // : GridView.builder(
-                      //     gridDelegate:
-                      //         SliverGridDelegateWithFixedCrossAxisCount(
-                      //       crossAxisCount: Constants.crossAxisCount,
-                      //     ),
-                      //     itemCount: prodDiscount.length,
-                      //     itemBuilder: (context, index) {
-                      //       return ProductWidget2(
-                      //           name: prodDiscount[index].name!,
-                      //           discount: prodDiscount[index].discount!,
-                      //           branchName: 'HIIIII',
-                      //           tag:
-                      //               '${_homeViewGetXController.products[index].id}home');
-                      //     },
-                      //   )
                 ],
               ),
             ),
