@@ -80,9 +80,10 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                   height: AppSize.s20,
                 ),
                 Image.asset(
-                  ImageAssets.store,
-                  height: AppSize.s86,
-                  width: AppSize.s86,
+                  fit: BoxFit.cover,
+                  'assets/images/avatar_person.png',
+                  height: AppSize.s82,
+                  width: AppSize.s82,
                 ),
                 SizedBox(
                   height: AppSize.s12,

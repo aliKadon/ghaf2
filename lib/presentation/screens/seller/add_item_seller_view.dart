@@ -143,8 +143,8 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                                 ),
                               )
                             : ClipRRect(
-                                child: Image.memory(base64Decode(provider[index]
-                                    .ghafImageIndividual![0]['data']!)),
+                                child: Image.network(provider[index]
+                                    .ghafImageIndividual![0]['data']!),
                               ),
                         title: Text(
                           provider[index].name,

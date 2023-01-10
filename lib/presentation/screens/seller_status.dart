@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -38,8 +39,8 @@ class _SellerStatusState extends State<SellerStatus> {
   Widget build(BuildContext context) {
     var sellerStatus =
         Provider.of<SellerProvider>(context, listen: false).sellerDetails;
-    print('============================sellerStatus2');
-    print(sellerStatus);
+    // print('============================sellerStatus2');
+    // print(sellerStatus);
     // if(sellerStatus != null) {
     //   setState(() {
     //     isLoading = false;
@@ -61,12 +62,15 @@ class _SellerStatusState extends State<SellerStatus> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: FontSize.s30,
+                      height: AppSize.s146,
                     ),
                     Image.asset('assets/images/welcome.png'),
-                    Spacer(),
+                    // Spacer(),
+                    SizedBox(
+                      height: AppSize.s50,
+                    ),
                     Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(30),
 
                       child: Text(
                         sellerStatus['submittedFormStatus'],
