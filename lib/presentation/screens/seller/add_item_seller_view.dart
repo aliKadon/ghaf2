@@ -24,6 +24,7 @@ class AddItemSellerView extends StatefulWidget {
 class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
   var productCount = 0;
   var selected = 0;
+  var selected2 = 0;
 
   final TextEditingController _textController = TextEditingController();
 
@@ -165,7 +166,12 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                               InkWell(
                                 onTap: () {
                                   setState(() {
+
                                     selected = index;
+                                    if(selected2 != selected) {
+                                      selected2 = selected;
+                                      productCount = 0;
+                                    }
                                     productCount++;
                                   });
                                 },
@@ -190,6 +196,10 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                                 onTap: () {
                                   setState(() {
                                     selected = index;
+                                    if(selected2 != selected) {
+                                      selected2 = selected;
+                                      productCount = 0;
+                                    }
                                     if (productCount == 0) {
                                       productCount = 0;
                                     } else {

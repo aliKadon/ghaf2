@@ -34,6 +34,7 @@ import 'package:ghaf_application/presentation/screens/orders_history_view/orders
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/update_info_seller.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
@@ -131,6 +132,7 @@ class Routes {
   static const String homePage = "/homePage";
   static const String allProductScreen = "/allProductScreen";
   static const String updateUserInfo = "/updateUserInfo";
+  static const String updateSellerInfo = "/updateSellerInfo";
 
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
@@ -417,6 +419,10 @@ class RouteGenerator {
       //seller
       case Routes.welcomeSellerRoute:
         return MaterialPageRoute(builder: (_) => const WelcomeSellerView());
+
+      case Routes.updateSellerInfo:
+        return MaterialPageRoute(builder: (_) =>  UpdateInfoSeller());
+
       case Routes.storeSellerView:
         return MaterialPageRoute(builder: (_) => const StoreSellerView());
       case Routes.registerSellerRoute:

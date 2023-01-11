@@ -573,6 +573,21 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     }
   }
 
+  Future<void> changeUserInfo(String? oldPassword, String? newPassword, String? confirmNewPassword,) async {
+    var url = Uri.parse('${Constants.urlBase}oldPassword?oldPassword=$oldPassword&newPassword=$newPassword&confirmNewPassword=$confirmNewPassword');
+    try {
+      final response =await http.post(url,
+        headers: headers,
+      );
+
+      print('============================update');
+      print(response.body);
+      repo = jsonDecode(response.body)['message'];
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> deleteAccount() async {
     var url = Uri.parse('${Constants.urlBase}/auth/GetUserDetails');
 

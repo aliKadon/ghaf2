@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +15,11 @@ import '../../../app/constants.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../about_app_view.dart';
+import '../account_view/account_view_getx_controller.dart';
 
 class StoreSellerView extends StatefulWidget {
   const StoreSellerView({Key? key}) : super(key: key);
@@ -25,6 +29,9 @@ class StoreSellerView extends StatefulWidget {
 }
 
 class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
+
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
 
   var isLoading = true;
 
@@ -254,6 +261,68 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                     IconsAssets.help,
                     AppLocalizations.of(context)!.get_help,
                   ),
+                ),
+
+                SizedBox(
+                  height: AppSize.s40,
+                ),
+
+
+                Row(
+                  children: [
+
+                    GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (builder) => AboutAppView()),
+                          // );
+                          _accountViewGetXController.logout(context: context);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.logout, color: ColorManager.primary,size: 25,),
+                            SizedBox(
+                              width: AppSize.s8,
+                            ),
+                            Text(
+                              // AppLocalizations.of(context)!.language,
+                              'Logout',
+                              style: getRegularStyle(
+                                color: ColorManager.red,
+                                fontSize: FontSize.s16,
+                              ),
+                            ),
+                          ],
+                        )),
+
+
+                    Spacer(),
+
+                    InkWell(
+                      onTap: () {
+                        // _accountViewGetXController.logout(context: context);
+                        Navigator.of(context).pushNamed(Routes.updateSellerInfo);
+                      },
+                      child: Row(
+                        children: [
+                          Text('Edit',style: TextStyle(fontSize: AppSize.s16)),
+                          SizedBox(
+                            width: AppSize.s8,
+                          ),
+                          Image.asset(
+                            'assets/icons/editProfile.png',
+                            color: ColorManager.primaryDark,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: AppSize.s40,
+                    ),
+                  ],
                 ),
                 // Padding(
                 //   padding: EdgeInsets.symmetric(vertical: AppPadding.p16),

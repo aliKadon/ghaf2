@@ -58,6 +58,7 @@ class _OrderToPay2State extends State<OrderToPay2> {
 
     return Scaffold(
       body: SafeArea(
+
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
           child: Column(
