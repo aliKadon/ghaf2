@@ -85,17 +85,17 @@ class _SplashViewState extends State<SplashView> {
           children: [
             Image.asset(
               ImageAssets.logo1,
-              width: AppSize.s132,
-              height: AppSize.s148,
+              width: AppSize.s206,
+              height: AppSize.s222,
             ),
             SizedBox(
               height: AppSize.s62,
             ),
             Text(
-              AppLocalizations.of(context)!.click_and_get,
+              '    ${AppLocalizations.of(context)!.click_and_get}',
               style: getSemiBoldStyle(
                 color: ColorManager.primaryDark,
-                fontSize: FontSize.s24,
+                fontSize: FontSize.s26,
               ),
             ),
           ],

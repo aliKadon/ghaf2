@@ -69,6 +69,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 SizedBox(
                   height: AppSize.s9,
                 ),
+
                 Text(
                   AppLocalizations.of(context)!.welcome_back,
                   style: getSemiBoldStyle(

@@ -36,8 +36,8 @@ class _WelcomeViewState extends State<WelcomeView> {
           Image.asset(
             ImageAssets.logo2,
             fit: BoxFit.fill,
-            height: AppSize.s206,
-            width: AppSize.s184,
+            height: AppSize.s263,
+            width: AppSize.s263,
           ),
           SizedBox(
             height: AppSize.s148,
