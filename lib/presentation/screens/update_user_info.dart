@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
@@ -296,6 +297,8 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(240, 40),),
                         onPressed: () {
+                          SharedPrefController().setFirstName(_nameTextController.text);
+                          SharedPrefController().setLastName(_emailTextController.text);
                           Provider.of<ProductProvider>(context, listen: false)
                               .updateInfo(
                                   _nameTextController.text,

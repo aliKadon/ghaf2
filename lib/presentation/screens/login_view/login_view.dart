@@ -351,8 +351,8 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 print('==========================google UserName');
                 print(_currentUser?.displayName);
                 print(_currentUser?.email);
-                SharedPrefController().setUserName(_currentUser?.displayName ?? 'User Name');
-                SharedPrefController().setUserName(_currentUser?.email ?? 'Enter Email');
+                SharedPrefController().setgoogleUserName(googleUserName: _currentUser?.displayName ?? 'User Name');
+                SharedPrefController().setgoogleEmail(googleEmail: _currentUser?.email ?? 'Enter Email');
                 Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
                   'role' : Constants.roleRegisterIndividual,
                 });

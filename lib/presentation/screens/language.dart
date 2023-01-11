@@ -40,7 +40,8 @@ class _LanguageState extends State<Language> {
               children: [
 
                 GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.of(context)
+                      .pushReplacementNamed(Routes.mainRoute),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
                     child: Image.asset(
@@ -50,6 +51,7 @@ class _LanguageState extends State<Language> {
                     ),
                   ),
                 ),
+
                 Spacer(),
                 Text(
                   'Language',

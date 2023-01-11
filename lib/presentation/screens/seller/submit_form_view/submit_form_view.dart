@@ -138,7 +138,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   height: AppSize.s9,
                 ),
                 Text(
-                  'Submit Form',
+                  AppLocalizations.of(context)!.submit_form,
                   style: getSemiBoldStyle(
                       color: ColorManager.primaryDark, fontSize: FontSize.s24),
                 ),
@@ -155,10 +155,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   height: AppSize.s32,
                 ),
                 AppTextField(
-                  hint: 'Store Name',
+                  hint: AppLocalizations.of(context)!.store_name,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Store name is required';
+                      return AppLocalizations.of(context)!.store_name_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -229,7 +229,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return 'Phone number is required';
+                        return AppLocalizations.of(context)!.phone_number_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -241,10 +241,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   height: AppSize.s16,
                 ),
                 AppTextField(
-                  hint: 'Website',
+                  hint: AppLocalizations.of(context)!.website,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Website is required';
+                      return AppLocalizations.of(context)!.website_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -252,10 +252,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   },
                 ),
                 AppTextField(
-                  hint: 'Social Media Account',
+                  hint: AppLocalizations.of(context)!.social_media_account,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Social media account is required';
+                      return AppLocalizations.of(context)!.social_media_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -285,7 +285,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       _submitFormViewGetXController.isInUAE = value!;
                     },
                     decoration: InputDecoration(
-                      hintText: 'Is your company registered in the UAE',
+                      hintText: AppLocalizations.of(context)!.is_company_registered_in_uae,
                       hintStyle: getMediumStyle(
                         color: ColorManager.hintTextFiled,
                       ),
@@ -308,17 +308,17 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     ),
                     icon: Icon(Icons.keyboard_arrow_down),
                     validator: (value) {
-                      if (value == null) return 'This field is required';
+                      if (value == null) return AppLocalizations.of(context)!.field_required;
                       return null;
                     },
                   ),
                 ),
                 AppTextField(
-                  hint: 'Business License Number',
+                  hint: AppLocalizations.of(context)!.business_license_number,
                   textInputType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Business license number is required';
+                      return AppLocalizations.of(context)!.busniss_number_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -349,7 +349,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       _submitFormViewGetXController.numberOfBranches = value!;
                     },
                     decoration: InputDecoration(
-                      hintText: 'Number Of Branches',
+                      hintText: AppLocalizations.of(context)!.number_branch,
                       hintStyle: getMediumStyle(
                         color: ColorManager.hintTextFiled,
                       ),

@@ -57,7 +57,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   ),
                   Spacer(),
                   Text(
-                    'Reset Password',
+                    AppLocalizations.of(context)!.reset_password,
                     style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s24),
@@ -82,7 +82,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   horizontal: AppMargin.m16,
                 ),
                 child: Text(
-                  'Enter verification code that sent to your email',
+                  AppLocalizations.of(context)!.enter_verification_code_email,
                   style: getMediumStyle(
                       color: ColorManager.grey, fontSize: FontSize.s18),
                 ),
@@ -95,10 +95,10 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 child: Column(
                   children: [
                     AppTextField(
-                      hint: 'Verification Code',
+                      hint: AppLocalizations.of(context)!.verification_code,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return 'Verification code is required';
+                          return AppLocalizations.of(context)!.verification_required;
                         return null;
                       },
                       onSaved: (value) {
@@ -106,11 +106,11 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       },
                     ),
                     AppTextField(
-                      hint: 'New Password',
+                      hint: AppLocalizations.of(context)!.new_password,
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return 'New password is required';
+                          return AppLocalizations.of(context)!.new_password_is_required;
                         return null;
                       },
                       onSaved: (value) {
@@ -118,11 +118,11 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       },
                     ),
                     AppTextField(
-                      hint: 'Confirm Password',
+                      hint: AppLocalizations.of(context)!.confirm_password,
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return 'Confirm password is required';
+                          return AppLocalizations.of(context)!.confirmed_password_is_required;
                         return null;
                       },
                       onSaved: (value) {

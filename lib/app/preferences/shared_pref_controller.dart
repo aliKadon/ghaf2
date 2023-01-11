@@ -23,6 +23,8 @@ enum PrefKeys {
   language,
   locationLat,
   locationLong,
+  googleUserName,
+  googleEmail,
 }
 
 class SharedPrefController {
@@ -95,15 +97,16 @@ class SharedPrefController {
   bool get loggedIn =>
       _sharedPreferences.getBool(PrefKeys.loggedIn.name) ?? false;
 
-  String get userName =>
-      _sharedPreferences.getString(PrefKeys.userName.name) ?? 'userName';
+  String get userNameGoogle =>
+      _sharedPreferences.getString(PrefKeys.googleUserName.toString()) ?? 'user Name';
 
-  String get email =>
-      _sharedPreferences.getString(PrefKeys.email.name) ?? 'Email';
+  String get emailGoogle =>
+      _sharedPreferences.getString(PrefKeys.googleEmail.toString()) ?? 'Email';
 
   String get lang1 {
     return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'en';
   }
+
 
   double get locationLat {
     return _sharedPreferences.getDouble(PrefKeys.locationLat.toString()) ?? 24.400661;
@@ -117,6 +120,15 @@ class SharedPrefController {
 
   Future<void> setUserName(String userName) async {
     await _sharedPreferences.setString(PrefKeys.userName.name, '${userName}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
+  Future<void> setFirstName(String firstName) async {
+    await _sharedPreferences.setString(PrefKeys.firstName.name, '${firstName}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+  Future<void> setLastName(String lastName) async {
+    await _sharedPreferences.setString(PrefKeys.lastName.name, '${lastName}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 
@@ -152,6 +164,14 @@ class SharedPrefController {
 
   Future<bool> setLocationLong({required double locationLong}) async {
     return  _sharedPreferences.setDouble(PrefKeys.locationLong.toString(), locationLong);
+  }
+
+  Future<bool> setgoogleUserName({required String googleUserName}) async {
+    return  _sharedPreferences.setString(PrefKeys.googleUserName.toString(), googleUserName);
+  }
+
+  Future<bool> setgoogleEmail({required String googleEmail}) async {
+    return  _sharedPreferences.setString(PrefKeys.googleEmail.toString(), googleEmail);
   }
 
   Future<bool> changeLanguage({required String language}) async {

@@ -320,7 +320,7 @@ class _ProductViewState extends State<ProductView> {
                                             ),
                                             Text(
                                               controller.isInCart!
-                                                  ? 'Remove from cart'
+                                                  ? AppLocalizations.of(context)!.remove_from_cart
                                                   : AppLocalizations.of(
                                                           context)!
                                                       .add_to_cart,

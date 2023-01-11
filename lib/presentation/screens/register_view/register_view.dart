@@ -83,10 +83,10 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   children: [
                     Expanded(
                       child: AppTextField(
-                        hint: 'First Name',
+                        hint: AppLocalizations.of(context)!.first_name,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return 'First name is required';
+                            return AppLocalizations.of(context)!.first_name_is_required;
                           return null;
                         },
                         onSaved: (value) {
@@ -96,10 +96,10 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     ),
                     Expanded(
                       child: AppTextField(
-                        hint: 'Last Name',
+                        hint: AppLocalizations.of(context)!.last_name,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return 'Last name is required';
+                            return AppLocalizations.of(context)!.last_name_is_required;
                           return null;
                         },
                         onSaved: (value) {
@@ -111,15 +111,15 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                 ),
                  AppTextField(
                         // hint: AppLocalizations.of(context)!.user_name,
-                        hint: SharedPrefController().userName,
+                        hint: SharedPrefController().userNameGoogle,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return 'Username is required';
+                            return AppLocalizations.of(context)!.userName_or_Email_is_required;
                           return null;
                         },
                         onSaved: (value) {
                           if( value == null) {
-                            _registerViewGetXController.userName = SharedPrefController().email;
+                            _registerViewGetXController.userName = SharedPrefController().emailGoogle;
                           }else {
                             _registerViewGetXController.userName = value;
                           }
@@ -141,16 +141,16 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     //     },
                     //   ),
                 AppTextField(
-                  hint: SharedPrefController().email,
+                  hint: SharedPrefController().emailGoogle,
                   textInputType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Email is required';
+                      return AppLocalizations.of(context)!.email_address_is_required;
                     return null;
                   },
                   onSaved: (value) {
                     if( value == null) {
-                      _registerViewGetXController.email = SharedPrefController().email;
+                      _registerViewGetXController.email = SharedPrefController().emailGoogle;
                     }else {
                       _registerViewGetXController.email = value;
                     }
@@ -164,7 +164,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Password is required';
+                      return AppLocalizations.of(context)!.password_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -177,7 +177,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Confirm password is required';
+                      return AppLocalizations.of(context)!.confirmed_password_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -248,7 +248,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return 'Phone number is required';
+                        return AppLocalizations.of(context)!.phone_number_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -280,7 +280,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   textInputType: TextInputType.datetime,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Date of birth is required';
+                      return AppLocalizations.of(context)!.date_of_barth_is_required;
                     return null;
                   },
                   onSaved: (value) {

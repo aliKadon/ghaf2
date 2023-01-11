@@ -396,7 +396,7 @@ class _AccountViewState extends State<AccountView> {
                             //       builder: (builder) => AboutAppView()),
                             // );
                             Navigator.of(context)
-                                .pushNamed(Routes.language);
+                                .pushReplacementNamed(Routes.language);
                           },
                           child: Row(
                             children: [

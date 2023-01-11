@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,7 @@ import '../resources/values_manager.dart';
 import 'cart_view/cart_view.dart';
 import 'categories_view/categories_view.dart';
 import 'home_view/home_view.dart';
+import 'login_view/login_view_getx_controller.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -36,6 +39,14 @@ class _MainViewState extends State<MainView> {
       BnScreen(
           widget: AccountView(), title: AppLocalizations.of(context)!.account),
     ];
+  }
+  // late final LoginViewGetXController _loginViewGetXController =
+  // Get.put(LoginViewGetXController(context: context));
+
+  @override
+  void initState() {
+    // _loginViewGetXController.login();
+    super.initState();
   }
 
   @override

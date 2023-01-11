@@ -517,7 +517,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 Container(
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(Routes.reviewProduct,
+                        Navigator.of(context).pushReplacementNamed(Routes.reviewProduct,
                             arguments: widget.orderinfo);
                       },
                       child: Text('Give Feedback for product')),

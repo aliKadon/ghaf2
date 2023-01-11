@@ -78,7 +78,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                   ),
                   Spacer(),
                   Text(
-                    'Orders History',
+                    AppLocalizations.of(context)!.order_history,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -95,7 +95,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                 height: AppSize.s17,
               ),
               Text(
-                'Orders Statistics',
+                AppLocalizations.of(context)!.order_statistics,
                 style: getSemiBoldStyle(
                   color: ColorManager.primaryDark,
                   fontSize: FontSize.s16,
@@ -113,11 +113,11 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                 ),
                 children: [
                   {
-                    'status': 'Pending',
+                    'status': '${AppLocalizations.of(context)!.pending}',
                     'count': '${pending}',
                   },
                   {
-                    'status': 'Completed',
+                    'status': '${AppLocalizations.of(context)!.completed}',
                     'count': '${orderPay}',
                   },
                   {
@@ -125,52 +125,52 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                     'count': '0',
                   },
                   {
-                    'status': 'Delivery',
+                    'status': '${AppLocalizations.of(context)!.delivery}',
                     'count': '${delivery}',
                   },
                   {
-                    'status': 'In Progress',
+                    'status': '${AppLocalizations.of(context)!.in_progress}',
                     'count': '${inprogress}',
                   },
                   {
-                    'status': 'Un Paid',
+                    'status': '${AppLocalizations.of(context)!.unpaid}',
                     'count': '${orderUnPay}',
                   },
                 ]
                     .map(
                       (e) => InkWell(
                         onTap: () {
-                          if (e['status'] == 'Un Paid') {
+                          if (e['status'] == AppLocalizations.of(context)!.unpaid) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
                             Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'unPay');
-                          }else if (e['status'] == 'Un Paid') {
+                          }else if (e['status'] == AppLocalizations.of(context)!.unpaid) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
                             Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'unPay');
-                          } else if (e['status'] == 'Pending') {
+                          } else if (e['status'] == AppLocalizations.of(context)!.pending) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
                             Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Pending');
-                          } else if (e['status'] == 'Completed') {
+                          } else if (e['status'] == AppLocalizations.of(context)!.completed) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
                             Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Completed');
-                          } else if (e['status'] == 'Delivery') {
+                          } else if (e['status'] == AppLocalizations.of(context)!.delivery) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
                             Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Delivery');
-                          }else if (e['status'] == 'In Progress') {
+                          }else if (e['status'] == AppLocalizations.of(context)!.in_progress) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;

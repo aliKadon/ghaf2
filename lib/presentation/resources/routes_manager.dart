@@ -5,6 +5,7 @@ import 'package:ghaf_application/domain/model/order.dart';
 import 'package:ghaf_application/domain/model/product2.dart';
 import 'package:ghaf_application/presentation/resources/string_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
+import 'package:ghaf_application/presentation/screens/account_view/account_view.dart';
 import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/add_or_edit_address_view.dart';
 import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/add_or_edit_address_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view.dart';
@@ -133,6 +134,8 @@ class Routes {
   static const String allProductScreen = "/allProductScreen";
   static const String updateUserInfo = "/updateUserInfo";
   static const String updateSellerInfo = "/updateSellerInfo";
+  static const String accountView = "/accountView";
+
 
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
@@ -217,6 +220,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.allProductScreen:
         return MaterialPageRoute(builder: (_) => AllProductScreen());
+      case Routes.accountView:
+        return MaterialPageRoute(builder: (_) => AccountView());
       case Routes.loginRoute:
         return MaterialPageRoute(
           builder: (_) => Builder(

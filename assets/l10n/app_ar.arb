@@ -3,6 +3,52 @@
   "gifts" : "الهدايا",
   "order_track" : "تتبع الطلب",
   "edit_address" : "تعديل العنوان",
+  "order_statistics" : "إحصائيات الطلب",
+  "pending" : "انتظار",
+  "completed" : "المكتملة",
+  "in_progress" : "قيد العمل",
+  "unpaid" : "غير مدفوعة",
+  "orders_to_pay" : "طلبات للدفع",
+  "remove_from_cart" : "حذف من السلة",
+  "first_name" : "الاسم الأول",
+  "first_name_is_required" : "الاسم الأول خانة مطلوبة",
+  "last_name" : "اسم العائلة",
+  "last_name_is_required" : "اسم العائلة خانة مطلوبة",
+  "confirmed_password_is_required" : "تأكيد كلمة السر خانة مطلوبة",
+  "date_of_barth_is_required" : "تاريخ الميلاد خانة مطلوبة",
+  "reset_password" : "إعادة تعيين كلمة المرور",
+  "enter_verification_code_email" : "أدخل رمز التحقق الذي أرسل الى بريدك الإلكتروني",
+  "verification_code" : "رمز التحقق",
+  "verification_required" : "رمز التحقق خانة مطلوبة",
+  "new_password" : "كلمة السر الجديدة",
+  "new_password_is_required" : "كلمة السر الجديدة خانة مطلوبة",
+  "confirm_password" : "تأكيد كلمة السر",
+  "confirm_password_is_required" : "تأكيد كلمة السر خانوة مطلوبة",
+  "submit_form": "نموذج التقديم",
+  "storm_name" : "اسم المتجر",
+  "store_name_is_required" : "اسم المتجر مطلوب",
+  "website_is_required" : "صفحة الويب خانة مطلوبة",
+  "social_media-is_required" :  "حساب وسائل الاعلام الاجتماعية خانة مطلوبة",
+  "reqister_in_uae" : "هل شركتك مسجلة في الإمارات",
+  "field_required" : "هذا الحقل مطلوب",
+  "busniss_number" : "رقم رخصة العمل",
+  "busniss_number_required" : "رقم رخصة العمل خانة مطلوبة",
+  "number_branch" : "رقم الافرع",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   "my_current_location": "عنواني الحالي",
   "my_address" : "عنواني",
   "phone_number_is_required" : "رقم الجوال خانة مطلوبة",
