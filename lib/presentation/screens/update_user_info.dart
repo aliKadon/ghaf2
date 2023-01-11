@@ -58,8 +58,6 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
     _phoneTextController.dispose();
     super.dispose();
   }
-  final _focusNode = FocusNode();
-  final _focusNode1 = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -142,24 +140,11 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                         ),
                       ],
                     ),
-                    // SizedBox(
-                    //   height: AppSize.s40,
-                    // ),
                     AppTextField(
                       textController: _passwordTextController,
                       hint: 'phone Number',
-                     textInputAction:TextInputAction.go ,
-                      onSaved: (value){
-                        value ==  _passwordTextController.text;
-                      },
-                      // textInputType: TextInputType.emailAddress,
                     ),
 
-                    // Container(
-                    //   height: 100,
-                    //   width: 100,
-                    //   color: Colors.red,
-                    // ),
                     Row(
                       children: [
                         SizedBox(

@@ -85,7 +85,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     return [..._unpaidOrder];
   }
 
-  num allPointsWallet = 0;
+  num  allPointsWallet = 0;
 
   // var x = FirebaseMessagingService.instance.getToken();
   Future<void> getProductDiscount(int discountCount) async {

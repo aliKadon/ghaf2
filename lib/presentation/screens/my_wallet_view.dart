@@ -125,6 +125,7 @@ class _MyWalletViewState extends State<MyWalletView> {
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {},
+
                   style: ElevatedButton.styleFrom(
                       textStyle: getMediumStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),

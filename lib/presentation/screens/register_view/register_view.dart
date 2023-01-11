@@ -74,7 +74,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   ImageAssets.logo2,
                   fit: BoxFit.fill,
                   height: AppSize.s92,
-                  width: AppSize.s82,
+                  width: AppSize.s92,
                 ),
                 SizedBox(
                   height: AppSize.s32,

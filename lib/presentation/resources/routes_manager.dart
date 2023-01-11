@@ -87,6 +87,7 @@ import '../screens/seller_status.dart';
 import '../screens/splash_view.dart';
 import '../screens/subscribe_view/payment_methode_for_subscribe.dart';
 import '../screens/unpaid_items_screen.dart';
+import '../screens/verified_email.dart';
 import '../screens/welcome_view.dart';
 
 class Routes {
@@ -172,6 +173,7 @@ class Routes {
   static const String storeSellerView = '/storeSellerView';
   static const String language = '/language';
   static const String sellerStatus = '/sellerStatus';
+  static const String verifiedEmail = '/verifiedEmail';
 }
 
 class RouteGenerator {
@@ -189,6 +191,10 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => ReviewProduct(
                 settings.arguments as Map<String,dynamic>));
+
+      case Routes.verifiedEmail:
+        return MaterialPageRoute(
+            builder: (_) => VerifiedEmail());
 
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
@@ -237,7 +243,7 @@ class RouteGenerator {
             builder: (context) {
               Get.put(
                 RegisterViewGetXController(
-                    context: context, role: args?['role'] ?? 'Customer'),
+                    context: context, role: args?['role'],latitude: args?['locationLat'],longitude: args?['locationLong']),
               );
               return const RegisterView();
             },

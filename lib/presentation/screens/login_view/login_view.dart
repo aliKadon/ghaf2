@@ -82,7 +82,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   ImageAssets.logo2,
                   fit: BoxFit.fill,
                   height: AppSize.s138,
-                  width: AppSize.s123,
+                  width: AppSize.s138,
                 ),
                 SizedBox(
                   height: AppSize.s32,
@@ -215,44 +215,6 @@ class _LoginViewState extends State<LoginView> with Helpers {
                     ),
                   ),
                 ),
-
-                // Register with Apple
-                // SizedBox(
-                //   height: AppSize.s18,
-                // ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(
-                //     horizontal: AppMargin.m16,
-                //   ),
-                //   width: double.infinity,
-                //   height: AppSize.s50,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(AppRadius.r10),
-                //     border: Border.all(
-                //         width: AppSize.s1, color: ColorManager.greyLight),
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       Image.asset(
-                //         ImageAssets.apple,
-                //         fit: BoxFit.fill,
-                //         height: AppSize.s22,
-                //         width: AppSize.s28,
-                //       ),
-                //       SizedBox(
-                //         width: AppSize.s10,
-                //       ),
-                //       Text(
-                //         // AppLocalizations.of(context)!.login_with_apple,
-                //         'Register with Apple',
-                //         style: getRegularStyle(
-                //             color: ColorManager.primaryDark,
-                //             fontSize: FontSize.s14),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 SizedBox(
                   height: AppSize.s23,
                 ),

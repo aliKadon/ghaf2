@@ -49,7 +49,14 @@ class _WelcomeViewState extends State<WelcomeView> {
             width: double.infinity,
             height: AppSize.s55,
             child: ElevatedButton(
-              onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute),
+              onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute,arguments:
+                {
+                  'role': 'Customer',
+                  'locationLat': 24.400661,
+                  'locationLong': 54.635448,
+                }
+
+              ),
               child: Text(
                 AppLocalizations.of(context)!.create_account,
                 style: getSemiBoldStyle(
@@ -88,8 +95,11 @@ class _WelcomeViewState extends State<WelcomeView> {
           SizedBox(
             height: AppSize.s148,
           ),
+
+          // ElevatedButton(onPressed:() {_customDialogProgress();}, child: Text('an')),
         ],
       ),
     );
   }
+
 }

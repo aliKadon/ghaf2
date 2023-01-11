@@ -34,12 +34,12 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(AppPadding.p16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
@@ -63,120 +63,41 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                     Spacer(),
                   ],
                 ),
-                SizedBox(
-                  height: AppSize.s12,
+              ),
+              SizedBox(
+                height: AppSize.s110
+                ,
+              ),
+              SizedBox(
+                height: AppSize.s85,
+              ),
+              Image.asset('assets/images/welcome.png',height: MediaQuery.of(context).size.height * 0.2,
+              width: double.infinity ,fit: BoxFit.cover,),
+              SizedBox(
+                height: AppSize.s85,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: AppMargin.m16,
                 ),
-                Divider(height: 1, color: ColorManager.greyLight),
-                SizedBox(
-                  height: AppSize.s15,
-                ),
-                // Row(
-                //   children: [
-                //     Text(
-                //       AppLocalizations.of(context)!.payment_method,
-                //       style: getSemiBoldStyle(
-                //         color: ColorManager.primaryDark,
-                //         fontSize: FontSize.s18,
-                //       ),
-                //     ),
-                //     Spacer(),
-                //     Image.asset(
-                //       IconsAssets.plus2,
-                //       height: AppSize.s22,
-                //       width: AppSize.s22,
-                //     ),
-                //   ],
-                // ),
-                SizedBox(
-                  height: AppSize.s15,
-                ),
-                Image.asset('assets/images/welcome.png',height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 0.7,),
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: AppPadding.p8),
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(AppRadius.r8),
-                //     border:
-                //         Border.all(width: AppSize.s1, color: ColorManager.grey),
-                //   ),
-                //   child: Padding(
-                //     padding: EdgeInsets.symmetric(
-                //       horizontal: AppPadding.p18,
-                //       vertical: AppPadding.p12,
-                //     ),
-                //     child: Row(
-                //       children: [
-                //         Image.asset(
-                //           ImageAssets.test,
-                //           height: AppSize.s50,
-                //           width: AppSize.s50,
-                //           fit: BoxFit.cover,
-                //         ),
-                //         SizedBox(
-                //           width: AppSize.s18,
-                //         ),
-                //         Column(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //               Text(
-                //                 '**** **** **** 1234',
-                //                 style: getMediumStyle(
-                //                   color: ColorManager.black,
-                //                   fontSize: FontSize.s16,
-                //                 ),
-                //               ),
-                //               Text(
-                //                 'expir 2-2023',
-                //                 style: getRegularStyle(
-                //                   color: ColorManager.grey,
-                //                   fontSize: FontSize.s12,
-                //                 ),
-                //               ),
-                //             ]),
-                //         SizedBox(
-                //           height: AppSize.s10,
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                SizedBox(
-                  height: AppSize.s40,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: AppMargin.m16,
-                  ),
-                  width: double.infinity,
-                  height: AppSize.s55,
-                  child: ElevatedButton(
-                    onPressed: AppSharedData.currentUser!.ghafGold ?? false
-                        ? _subscribeViewGetXController.cancelSubscription
-                        : _subscribeViewGetXController
-                        .subscribeAsGhafGolden,
-                    // onPressed: () {
-                    //   // Navigator.pushReplacementNamed(
-                    //   //     context, Routes.snapsheet);
-                    //   var x = AppSharedData.currentUser!.ghafGold ?? false
-                    //   ? _subscribeViewGetXController.cancelSubscription
-                    //   : _subscribeViewGetXController
-                    //   .subscribeAsGhafGolden;
-                    //
-                    //   print('================================subscribe');
-                    //   print(AppSharedData.currentUser!.ghafGold);
-                    // } ,
-                    child: Text(
-                      AppLocalizations.of(context)!.done,
-                      style: getSemiBoldStyle(
-                          color: ColorManager.white, fontSize: FontSize.s18),
-                    ),
+                width: double.infinity,
+                height: AppSize.s55,
+                child: ElevatedButton(
+                  onPressed: AppSharedData.currentUser!.ghafGold ?? false
+                      ? _subscribeViewGetXController.cancelSubscription
+                      : _subscribeViewGetXController
+                      .subscribeAsGhafGolden,
+                  child: Text(
+                    AppLocalizations.of(context)!.done,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.white, fontSize: FontSize.s18),
                   ),
                 ),
-                SizedBox(
-                  height: AppSize.s22,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: AppSize.s22,
+              ),
+            ],
           ),
         ),
       ),

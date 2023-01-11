@@ -75,7 +75,7 @@ class _WelcomeSellerViewState extends State<WelcomeSellerView> {
             ImageAssets.logo2,
             fit: BoxFit.fill,
             height: AppSize.s206,
-            width: AppSize.s184,
+            width: AppSize.s206,
           ),
           SizedBox(
             height: AppSize.s148,
@@ -87,13 +87,19 @@ class _WelcomeSellerViewState extends State<WelcomeSellerView> {
             width: double.infinity,
             height: AppSize.s55,
             child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(
-                  context, Routes.submitForm,
+              onPressed: () {
+
+                Navigator.pushNamed(
+                  context, Routes.registerRoute,
                   arguments: {
                     'role': 'Seller',
                     'locationLat': locationData?.latitude,
                     'locationLong': locationData?.longitude,
-                  }),
+                  }
+
+                  );
+
+                } ,
               child: Text(
                 AppLocalizations.of(context)!.register_create_account,
                 style: getSemiBoldStyle(
