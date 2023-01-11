@@ -6,6 +6,7 @@ import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/api/controllers/auth_api_controller.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -296,25 +297,26 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(240, 40),),
-                        onPressed: () {
-                          SharedPrefController().setFirstName(_nameTextController.text);
-                          SharedPrefController().setLastName(_emailTextController.text);
+                        onPressed: () async{
+                          // await AuthApiController().profile();
+                          // SharedPrefController().setFirstName(_nameTextController.text);
+                          // SharedPrefController().setLastName(_emailTextController.text);
                           Provider.of<ProductProvider>(context, listen: false)
                               .updateInfo(
                                   _nameTextController.text,
                                   _emailTextController.text,
                                   _passwordTextController.text,
-                                  _phoneTextController.text)
+                                  _phoneTextController.text).then((value) => AuthApiController().profile())
                               .then((value) => ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: Text(message),
+                                    content: Text('Success'),
                                     backgroundColor: Colors.green,
                                   )))
                               .then((value) => Navigator.of(context)
                                   .pushReplacementNamed(Routes.mainRoute))
                               .catchError((e) => ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
-                                    content: Text(message),
+                                    content: Text('Error Occurred'),
                                     backgroundColor: Colors.red,
                                   )));
                         },
