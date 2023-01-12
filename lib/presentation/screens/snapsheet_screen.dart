@@ -279,7 +279,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                       backgroundColor: Colors.green,
                                     )))
                                 .then((value) => Navigator.of(context)
-                                    .pushNamed(Routes.checkOutConfirmRoute,
+                                    .pushReplacementNamed(Routes.checkOutConfirmRoute,
                                         arguments: widget.orderinfo))
                                 .catchError((error) =>
                                     ScaffoldMessenger.of(context)
@@ -310,7 +310,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                       backgroundColor: Colors.green,
                                     )))
                                 .then((value) => Navigator.of(context)
-                                    .pushNamed(Routes.checkOutConfirmRoute,
+                                    .pushReplacementNamed(Routes.checkOutConfirmRoute,
                                         arguments: widget.orderinfo))
                                 .catchError((error) =>
                                     ScaffoldMessenger.of(context)
