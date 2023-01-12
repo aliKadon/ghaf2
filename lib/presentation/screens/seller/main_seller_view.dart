@@ -31,11 +31,11 @@ class _MainSellerViewState extends State<MainSellerView> {
       BnScreen(
           widget: ProductsWithOutDetailsSellerView(),
           title: AppLocalizations.of(context)!.new_order),
+      // BnScreen(
+      //     widget: NotificationView(),
+      //     title: AppLocalizations.of(context)!.notifications),
       BnScreen(
-          widget: NotificationView(),
-          title: AppLocalizations.of(context)!.notifications),
-      BnScreen(
-          widget: AddItemSellerView(),
+          widget: AddItemSellerView(false),
           title: AppLocalizations.of(context)!.store),
       BnScreen(
           widget: StoreSellerView(), title: AppLocalizations.of(context)!.account),
@@ -83,19 +83,19 @@ class _MainSellerViewState extends State<MainSellerView> {
               ),
               label: AppLocalizations.of(context)!.new_order,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                IconsAssets.notification,
-                width: AppSize.s24,
-                height: AppSize.s24,
-              ),
-              activeIcon: Image.asset(
-                IconsAssets.notification1,
-                width: AppSize.s24,
-                height: AppSize.s24,
-              ),
-              label: AppLocalizations.of(context)!.notifications,
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Image.asset(
+            //     IconsAssets.notification,
+            //     width: AppSize.s24,
+            //     height: AppSize.s24,
+            //   ),
+            //   activeIcon: Image.asset(
+            //     IconsAssets.notification1,
+            //     width: AppSize.s24,
+            //     height: AppSize.s24,
+            //   ),
+            //   label: AppLocalizations.of(context)!.notifications,
+            // ),
             BottomNavigationBarItem(
               icon: Image.asset(
                 IconsAssets.store,

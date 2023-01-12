@@ -19,7 +19,10 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class AddItem2SellerView extends StatefulWidget {
-  const AddItem2SellerView({Key? key}) : super(key: key);
+  // const AddItem2SellerView({Key? key}) : super(key: key);
+
+  final bool isShow;
+  AddItem2SellerView(this.isShow);
 
   @override
   State<AddItem2SellerView> createState() => _AddItem2SellerViewState();
@@ -62,6 +65,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
   File? image;
   String? base64;
 
+  var isShow2 = true;
+
   Future pickImage() async {
     try {
       final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -86,6 +91,9 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
   @override
   Widget build(BuildContext context) {
     var repo = Provider.of<SellerProvider>(context).repo;
+    // var result = ModalRoute.of(context)!.settings.arguments as bool;
+    print('===================================result');
+    print(widget.isShow);
 
     return Scaffold(
       body: SafeArea(
@@ -133,7 +141,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                           backgroundColor: Colors.green,
                         ))).then((value) => Navigator.of(context).pop())
                             .then((value) => Navigator.of(context)
-                            .pushNamed(Routes.addItemSellerRoute)
+                            .pushNamed(Routes.addItemSellerRoute,arguments: isShow2)
                             .catchError((e) => ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(
                           content: Text(repo),

@@ -8,8 +8,15 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 
-class ProductsWithOutDetailsSellerView extends StatelessWidget {
+class ProductsWithOutDetailsSellerView extends StatefulWidget {
   const ProductsWithOutDetailsSellerView({Key? key}) : super(key: key);
+
+  @override
+  State<ProductsWithOutDetailsSellerView> createState() => _ProductsWithOutDetailsSellerViewState();
+}
+
+class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetailsSellerView> {
+  var isShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +26,14 @@ class ProductsWithOutDetailsSellerView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: AppSize.s15,
+            ),
             Image.asset(
               ImageAssets.logo2,
               fit: BoxFit.fill,
               height: AppSize.s206,
-              width: AppSize.s184,
+              width: AppSize.s206,
             ),
             SizedBox(
               height: AppSize.s148,
@@ -35,7 +45,7 @@ class ProductsWithOutDetailsSellerView extends StatelessWidget {
               width: double.infinity,
               height: AppSize.s55,
               child: ElevatedButton(
-                onPressed: () =>Navigator.pushNamed(context, Routes.addItem2SellerRoute),
+                onPressed: () =>Navigator.pushNamed(context, Routes.addItem2SellerRoute,arguments: isShow),
                 child: Text(
                   AppLocalizations.of(context)!.products_with_details,
                   style: getSemiBoldStyle(

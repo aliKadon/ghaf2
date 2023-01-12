@@ -15,7 +15,10 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class AddItemSellerView extends StatefulWidget {
-  const AddItemSellerView({Key? key}) : super(key: key);
+  // const AddItemSellerView({Key? key}) : super(key: key);
+
+  var isShow2;
+  AddItemSellerView(this.isShow2);
 
   @override
   State<AddItemSellerView> createState() => _AddItemSellerViewState();
@@ -45,13 +48,21 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
     super.initState();
   }
 
+  var isStrore = false;
+
+
+
   @override
   Widget build(BuildContext context) {
     var repo = Provider.of<SellerProvider>(context).repo;
+    if( widget.isShow2 != null) {
+      isStrore = widget.isShow2;
+    }
 
     var provider = Provider.of<SellerProvider>(context).readIndividualProduct;
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
@@ -63,14 +74,14 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 ),
                 Row(
                   children: [
-                    GestureDetector(
+                    isStrore ? GestureDetector(
                       onTap: () => Navigator.of(context).pop(),
                       child: Image.asset(
                         IconsAssets.arrow,
                         height: AppSize.s24,
                         width: AppSize.s24,
                       ),
-                    ),
+                    ) : Container(),
                     Spacer(),
                     Text(
                       AppLocalizations.of(context)!.add_item,
@@ -85,30 +96,33 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                     ),
                   ],
                 ),
-                SizedBox(
+                isStrore ? SizedBox(
                   height: AppSize.s20,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        IconsAssets.plus2,
-                        height: AppSize.s24,
-                        width: AppSize.s24,
-                      ),
-                      SizedBox(
-                        width: AppSize.s8,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.create_new_item,
-                        style: getMediumStyle(
-                            color: ColorManager.primaryDark,
-                            fontSize: FontSize.s18),
-                      ),
-                    ],
+                ) : Container(),
+                isStrore ? Padding(
+                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          IconsAssets.plus2,
+                          height: AppSize.s24,
+                          width: AppSize.s24,
+                        ),
+                        SizedBox(
+                          width: AppSize.s8,
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.create_new_item,
+                          style: getMediumStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s18),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ) : Container(),
                 SizedBox(
                   height: AppSize.s22,
                 ),
@@ -139,8 +153,8 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                                     BorderRadius.all(Radius.circular(30)),
                                 child: Image.asset(
                                   ImageAssets.logo1,
-                                  height: AppSize.s73,
-                                  width: AppSize.s73,
+                                  height: AppSize.s60,
+                                  width: AppSize.s60,
                                 ),
                               )
                             : ClipRRect(
@@ -294,25 +308,27 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 SizedBox(
                   height: AppSize.s20,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      Provider.of<SellerProvider>(context, listen: false)
-                          .createPaymnetLink(
-                              provider[selected].id, productCount)
-                          .then((value) => _customDialogProgress());
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Provider.of<SellerProvider>(context, listen: false)
+                            .createPaymnetLink(
+                                provider[selected].id, productCount)
+                            .then((value) => _customDialogProgress());
 
-                      // Provider.of<SellerProvider>(context,listen: false)
-                      //     .createPaymnetLink(
-                      //         provider[selected].id, productCount)
-                      //     .then((value) => ScaffoldMessenger.of(context)
-                      //             .showSnackBar(SnackBar(
-                      //           content: Text('Wait a second please!'),
-                      //           backgroundColor: Colors.green,
-                      //         )))
-                      //     .then((value) => _customDialogProgress());
-                      // _customDialogProgress();
-                    },
-                    child: Text('Create Link'))
+                        // Provider.of<SellerProvider>(context,listen: false)
+                        //     .createPaymnetLink(
+                        //         provider[selected].id, productCount)
+                        //     .then((value) => ScaffoldMessenger.of(context)
+                        //             .showSnackBar(SnackBar(
+                        //           content: Text('Wait a second please!'),
+                        //           backgroundColor: Colors.green,
+                        //         )))
+                        //     .then((value) => _customDialogProgress());
+                        // _customDialogProgress();
+                      },
+                      child: Text('Create Link')),
+                )
               ],
             ),
           ),

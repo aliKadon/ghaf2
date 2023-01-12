@@ -481,7 +481,9 @@ class RouteGenerator {
               settings.arguments as int
             ));
       case Routes.addItemSellerRoute:
-        return MaterialPageRoute(builder: (_) => const AddItemSellerView());
+        return MaterialPageRoute(builder: (_) => AddItemSellerView(
+          settings.arguments as bool
+        ));
 
       case Routes.sellerStatus:
         return MaterialPageRoute(builder: (_) => SellerStatus(
@@ -489,7 +491,9 @@ class RouteGenerator {
         ));
 
       case Routes.addItem2SellerRoute:
-        return MaterialPageRoute(builder: (_) => const AddItem2SellerView());
+        return MaterialPageRoute(builder: (_) =>  AddItem2SellerView(
+          settings.arguments as bool
+        ));
       case Routes.payLaterRoute:
         return MaterialPageRoute(builder: (_) => const PayLaterView());
       case Routes.couponsRoute:
