@@ -172,6 +172,16 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
   // destination = LatLng(locationData!.latitude!, locationData!.latitude!);
 
+  // final url = "https://maps.googleapis.com/maps/api/directions/json?origin=$startLat,$startLng&destination=$endLat,$endLng&key=$apiKey";
+  //
+  // final response = await http.get(url);
+  // final data = json.decode(response.body);
+  //
+  // final distance = data["routes"][0]["legs"][0]["distance"]["text"];
+  // final duration = data["routes"][0]["legs"][0]["duration"]["text"];
+
+
+
   List<LatLng> polylineCoordinates = [];
 
   void getPolyPoints() async {
@@ -210,7 +220,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
           ),
         );
 
-        if(!mounted) return;
+        // if(!mounted) return;
         setState(() {
           isLoading = false;
         });
@@ -224,6 +234,16 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       Navigator.of(context).pushNamed(Routes.checkOutConfirmRoute);
     }
   }
+
+  // Future Time () async{
+  //   final directions = await GoogleMapDirections(apiKey: 'YOUR_API_KEY').directionsWithLocation(
+  //     origin: Location(startLat, startLng),
+  //     destination: Location(endLat, endLng),
+  //   );
+  //
+  //   final distance = directions.distance;
+  //   final duration = directions.duration;
+  // }
 
   @override
   Widget build(BuildContext context) {

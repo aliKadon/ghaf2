@@ -186,13 +186,13 @@ class _ProductViewState extends State<ProductView> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '\$${((_product.price! - (_product.price! * _product.productDiscount!.discount! / 100)).toStringAsFixed(1))}',
+                                        '${((_product.price! - (_product.price! * _product.productDiscount!.discount! / 100)).toStringAsFixed(1))} AED',
                                         style: getBoldStyle(
                                             color: ColorManager.red,
                                             fontSize: FontSize.s26),
                                       ),
                                       Text(
-                                        '\$${_product.price!.toStringAsFixed(1)}',
+                                        '${_product.price!.toStringAsFixed(1)}',
                                         style: TextStyle(
                                           fontSize: FontSize.s14,
                                           fontFamily: FontConstants.fontFamily,
@@ -210,7 +210,7 @@ class _ProductViewState extends State<ProductView> {
                                   children: [
                                     if (_product.productDiscount == null)
                                       Text(
-                                        '\$${_product.price!.toStringAsFixed(1)}',
+                                        '${_product.price!.toStringAsFixed(1)} AED',
                                         style: TextStyle(
                                           fontSize: FontSize.s20,
                                           fontFamily: FontConstants.fontFamily,
@@ -240,6 +240,7 @@ class _ProductViewState extends State<ProductView> {
                               style: getRegularStyle(
                                 color: ColorManager.grey,
                               ),
+                              maxLines: 5,
                             ),
                             SizedBox(
                               height: AppSize.s30,

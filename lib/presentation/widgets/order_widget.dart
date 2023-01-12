@@ -21,6 +21,7 @@ class OrderWidget extends StatelessWidget {
   // ) : super(key: key);
 
   // OrderWidget(this.order);
+List a = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class OrderWidget extends StatelessWidget {
         children: [
           Column(
             children: List.generate(
-              1,
+              order.orderDetails['items'].length,
               (index) => Column(
                 children: [
                   Row(
