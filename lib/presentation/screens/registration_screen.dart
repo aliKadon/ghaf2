@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/seller_provider.dart';
@@ -450,7 +451,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               _phoneTextController.text,
                               _selectedDate.toString())
                           .then((value) =>
-                              repo = Provider.of<SellerProvider>(context).repo)
+                              repo = Provider.of<SellerProvider>(context,listen: false).repo)
                           .then((value) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text(
@@ -459,11 +460,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               )))
                           .then((value) => Navigator.of(context)
                               .pushNamed(Routes.loginRoute))
-                          .catchError((e) => ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(repo),
-                                backgroundColor: Colors.red,
-                              )));
+                          .catchError((e) => print(e.toString()));
                     },
                     child: Text(
                       // AppLocalizations.of(context)!.sign_up,

@@ -50,11 +50,11 @@ class SubscribeViewGetXController extends GetxController with Helpers {
   }
 
   // subscribe as ghaf golden.
-  void subscribeAsGhafGolden() async {
+  void subscribeAsGhafGolden(Map<String,dynamic> cardInfo ,String planId) async {
     try {
       showLoadingDialog(context: context, title: 'Subscribing');
       final ApiResponse subscribeAsGhafGoldenApiResponse =
-      await _subscriptionApiController.subscribeAsGhafGolden();
+      await _subscriptionApiController.subscribeAsGhafGolden(cardInfo,planId);
       final ApiResponse profileApiResponse = await _authApiController.profile();
       if (subscribeAsGhafGoldenApiResponse.status == 200 &&
           profileApiResponse.status == 200) {

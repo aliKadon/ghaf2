@@ -93,8 +93,8 @@ class _WelcomeSellerViewState extends State<WelcomeSellerView> {
                   context, Routes.registerRoute,
                   arguments: {
                     'role': 'Seller',
-                    'locationLat': locationData?.latitude,
-                    'locationLong': locationData?.longitude,
+                    'locationLat': locationData?.latitude ?? 24.400661,
+                    'locationLong': locationData?.longitude ?? 54.635448,
                   }
 
                   );
@@ -118,8 +118,12 @@ class _WelcomeSellerViewState extends State<WelcomeSellerView> {
             height: AppSize.s55,
             child: ElevatedButton(
               onPressed: () => Navigator.pushNamed(
-                  context, Routes.registeraition,
-                  arguments: 'IndividualSeller'),
+                  context, Routes.registerRoute,
+                  arguments: {
+                    'role' : 'IndividualSeller',
+                    'locationLat': locationData?.latitude ?? 24.400661,
+                    'locationLong': locationData?.longitude ?? 54.635448,
+                  }),
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorManager.transparent,
                 elevation: 0,

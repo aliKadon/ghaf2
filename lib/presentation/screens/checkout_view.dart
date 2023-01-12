@@ -5,6 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/services/payment_service.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +36,9 @@ class CheckOutView extends StatefulWidget {
 class _CheckOutViewState extends State<CheckOutView> {
   late TextEditingController _paymentMethodTextController;
 
+  late final RegisterViewGetXController _registerViewGetXController =
+  Get.find<RegisterViewGetXController>();
+
   var visibility = false;
   var isSwitchedPayLater = false;
   var isSwitched = false;
@@ -47,6 +52,8 @@ class _CheckOutViewState extends State<CheckOutView> {
   var deleveryName;
   var selectedAddress;
   var isLoading = true;
+
+  var dateTosend = DateTime.now();
 
   var selected;
   int selectedTime = 0;
@@ -596,8 +603,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                                     width: AppSize.s8,
                                                   ),
                                                   Text(
-                                                    addresses[index]
-                                                        .addressName!,
+                                                    addresses[index].phone!,
                                                     style: getRegularStyle(
                                                       color: ColorManager.black,
                                                     ),
@@ -728,6 +734,9 @@ class _CheckOutViewState extends State<CheckOutView> {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
+                                // _registerViewGetXController.selectBirthDate(
+                                //     context: context);
+                                // selectBirthDate(context: context);
                                 showDialog(
                                   context: context,
                                   builder: (context) {
@@ -762,7 +771,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                                   initialDateTime:
                                                       DateTime(2023, 1, 1),
                                                   onDateTimeChanged:
-                                                      (DateTime newDateTime) {
+                                                      (newDateTime) {
                                                     print(
                                                         '======================newDate');
                                                     print(newDateTime);
@@ -772,6 +781,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                                         date = null;
                                                       } else {
                                                         date = newDateTime;
+                                                        dateTosend = newDateTime;
                                                       }
                                                     });
                                                   },
@@ -972,7 +982,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                         print('================================orderID');
                         print(widget.order.orderDetails['id']);
                         print(deleveryMethod);
-                        print(date.toString());
+                        print(Helpers.formatDate(dateTosend));
                         print(myAddress);
                         print(isSwitched);
                         // if (deleveryMethod == 'Pick up' && date == 'null') {
@@ -1003,10 +1013,10 @@ class _CheckOutViewState extends State<CheckOutView> {
                             'orderId': widget.order.orderDetails['id'],
                             'item': widget.order.orderDetails['items'][0]['id'],
                             'deliveryMethodId': deleveryMethod ?? pickUPID,
-                            'date': date.toString() ?? '',
+                            'date': Helpers.formatDate(dateTosend).toString() ?? '',
                             'address': myAddress ?? '',
-                            'reedem': isSwitched.toString(),
-                            'paylater': isSwitchedPayLater.toString()
+                            'reedem': isSwitched,
+                            'paylater': isSwitchedPayLater
                           });
                         }
                         if (_checkData(deleveryName) == false) {
@@ -1077,6 +1087,25 @@ class _CheckOutViewState extends State<CheckOutView> {
       ),
     );
   }
+
+  // select birth date.
+  void selectBirthDate({
+    required BuildContext context,
+  }) async {
+    DateTime? date = await showDatePicker(
+      context: context,
+      // initialDate: birthDate == null
+      //     ? DateTime(DateTime.now().year - 15)
+      //     : DateTime.parse(birthDate!),
+      initialDate: DateTime(DateTime.now().year - 15),
+      firstDate: DateTime(DateTime.now().year - 50),
+      lastDate: DateTime(DateTime.now().year - 15),
+    );
+    if (date == null) return;
+    // birthDate = Helpers.formatDate(date);
+    // birthDateTextEditingController.text = birthDate!;
+  }
+
 // Future<void> makePayment() async {
 //   try {
 //     //STEP 1: Create Payment Intent

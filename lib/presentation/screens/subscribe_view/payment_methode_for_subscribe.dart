@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
+import 'package:provider/provider.dart';
 
+import '../../../app/utils/app_shared_data.dart';
+import '../../../providers/product_provider.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/values_manager.dart';
 
@@ -13,6 +19,9 @@ class PaymentMethodeForSubscribe extends StatefulWidget {
 
 class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe> {
   final _form = GlobalKey<FormState>();
+
+  SubscribeViewGetXController _subscribeViewGetXController =
+  Get.find<SubscribeViewGetXController>();
 
   DateTime dateTime = DateTime.now();
 
@@ -27,6 +36,12 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
     _form.currentState?.save();
   }
 
+  @override
+  void initState() {
+    Provider.of<ProductProvider>(context,listen: false).getPlane();
+    super.initState();
+  }
+
   var isCVV = false;
 
   TextEditingController cardNumberController = TextEditingController();
@@ -37,6 +52,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
 
   @override
   Widget build(BuildContext context) {
+    var planId = Provider.of<ProductProvider>(context).plane;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -226,8 +242,13 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                     child: ElevatedButton(
                       child: const Text("Add card"),
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(Routes.paymentMethodRoute);
+                        saveItem();
+                        _subscribeViewGetXController.subscribeAsGhafGolden(cardInfo,planId[0].id);
+                        // AppSharedData.currentUser!.ghafGold ?? false
+                        //     ? _subscribeViewGetXController.cancelSubscription()
+                        //     : _subscribeViewGetXController.subscribeAsGhafGolden(cardInfo,planId[0].id);
+                        // Navigator.of(context)
+                        //     .pushNamed(Routes.paymentMethodRoute,arguments: cardInfo);
                       },
                     ),
                   ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../app/utils/app_shared_data.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -13,7 +15,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:math' as math; // import this
 
 class PaymentMethodView extends StatefulWidget {
-  const PaymentMethodView({Key? key}) : super(key: key);
+  // const PaymentMethodView({Key? key}) : super(key: key);
+
+  // Map<String,dynamic> cardInfo;
+  // PaymentMethodView(this.cardInfo);
 
   @override
   State<PaymentMethodView> createState() => _PaymentMethodViewState();
@@ -31,7 +36,15 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
   }
 
   @override
+  void initState() {
+    Provider.of<ProductProvider>(context,listen: false).getPlane();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var planId = Provider.of<ProductProvider>(context).plane;
+    var result = ModalRoute.of(context)?.settings.arguments as Map<String,dynamic> ?? {'h'};
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -83,10 +96,11 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: AppSharedData.currentUser!.ghafGold ?? false
-                      ? _subscribeViewGetXController.cancelSubscription
-                      : _subscribeViewGetXController
-                      .subscribeAsGhafGolden,
+                  onPressed: () {
+                    // AppSharedData.currentUser!.ghafGold ?? false
+                    //     ? _subscribeViewGetXController.cancelSubscription()
+                    //     : _subscribeViewGetXController.subscribeAsGhafGolden(result,planId[0].id);
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.done,
                     style: getSemiBoldStyle(

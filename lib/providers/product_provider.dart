@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/domain/model/order.dart';
+import 'package:ghaf_application/domain/model/plan_seller_individual.dart';
 import 'package:ghaf_application/domain/model/redeem_points.dart';
 import 'package:ghaf_application/domain/model/unpaid_order.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,12 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   num deliveryCount = 0;
 
   String repo = '';
+
+  List<PlanSellerIndividual> _plane = [];
+
+  List<PlanSellerIndividual> get plane {
+    return [..._plane];
+  }
 
   List<OrderAllInformation> ordersPay = [];
   List<OrderAllInformation> orderspending = [];
@@ -85,7 +92,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     return [..._unpaidOrder];
   }
 
-  num  allPointsWallet = 0;
+  num allPointsWallet = 0;
 
   // var x = FirebaseMessagingService.instance.getToken();
   Future<void> getProductDiscount(int discountCount) async {
@@ -122,6 +129,28 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     notifyListeners();
   }
 
+  Future<void> customerSubscribe(String cardNumber, String cvv,
+      int expiredMonth, int expiredYear, String PlanId) async {
+    var url =
+        Uri.parse('${Constants.urlBase}/Auth/customer-subscripe-as-ghafgold');
+    try {
+      final response = await http.post(url,
+          headers: headers,
+          body: json.encode({
+            'paymentMethodType': 'card',
+            'cardNumber': cardNumber,
+            'cardExpMonth': expiredMonth,
+            'cardExpCvc': cvv,
+            'cardExpYear': expiredYear,
+            'PlanId': PlanId,
+          }));
+
+      repo = json.decode(response.body)['message'];
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> getProducts() async {
     // // print('================================================');
@@ -346,17 +375,19 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     notifyListeners();
   }
 
+  // Future<void> payForOrder(String orderId, String deliveryId,)
+
   Future<void> addOrderWithoutAddress(
-      String orderId,
-      String deliveryMethodId,
-      String DesiredDeliveryDate,
-      String UseRedeemPoints,
-      String UsePayLater,
-      String CardNumber,
-      String CardExpMonth,
-      String CardExpCvc,
-      String CardExpYear) async {
-    var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
+      {required String orderId,
+      required String deliveryMethodId,
+      required String DesiredDeliveryDate,
+      required bool UseRedeemPoints,
+      required bool UsePayLater,
+      required String CardNumber,
+      required int CardExpMonth,
+      required String CardExpCvc,
+      required int CardExpYear}) async {
+    var url = Uri.parse('${Constants.urlBase}/Orders/pay-for-order');
     // final response =
     // print('========================addOrder');
     // print(orderId);
@@ -366,31 +397,35 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     // print(UseRedeemPoints.toString());
     // print(UsePayLater.toString());
     // print(CardNumber);
-    final response = await http.post(url, headers: {
-      HttpHeaders.authorizationHeader: SharedPrefController().token,
-    }, body: {
-      'OrderId': orderId,
-      'DeliveryMethodId': deliveryMethodId,
-      'DesiredDeliveryDate': DesiredDeliveryDate,
-      // DateTime.parse(DesiredDeliveryDate) == null ?? '',
-      'DeliveryPoint': '',
-      'UseRedeemPoints': UseRedeemPoints,
-      'UsePayLater': UsePayLater,
-      'paymentMethodType': 'card',
-      'CardNumber': CardNumber,
-      'CardExpMonth': CardExpMonth,
-      'CardExpCvc': CardExpCvc,
-      'CardExpYear': CardExpYear,
-    });
-    // print('======================================statusCode');
-    // print(response.statusCode);
+    final response = await http.post(url,
+        headers: headers,
+        body: jsonEncode({
+          "orderId": orderId,
+          "deliveryMethodId": deliveryMethodId,
+          "desiredDeliveryDate": DesiredDeliveryDate,
+          "deliveryPoint": null,
+          "useRedeemPoints": UseRedeemPoints,
+          "usePayLater": UsePayLater,
+          "paymentMethodType": "card",
+          "cardNumber": CardNumber,
+          "cardExpMonth": CardExpMonth,
+          "cardExpCvc": CardExpCvc,
+          "cardExpYear": CardExpYear
+        }));
+    print('======================================statusCode');
+    print(response.statusCode);
+    print(response.body);
   }
 
   Future<void> giveReviewForProduct(String productId, String point) async {
-    var url = Uri.parse('${Constants.urlBase}/product/read-product?prodiId=$productId&points=$point');
-    final response = await http.post(url, headers: {
-      HttpHeaders.authorizationHeader: SharedPrefController().token,
-    },);
+    var url = Uri.parse(
+        '${Constants.urlBase}/product/read-product?prodiId=$productId&points=$point');
+    final response = await http.post(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: SharedPrefController().token,
+      },
+    );
     // print('======================================statusCode');
     // print(response.statusCode);
   }
@@ -399,14 +434,14 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
       String orderId,
       String deliveryMethodId,
       String DesiredDeliveryDate,
-      String address,
-      String UseRedeemPoints,
-      String UsePayLater,
+      Address address,
+      bool UseRedeemPoints,
+      bool UsePayLater,
       String CardNumber,
-      String CardExpMonth,
+      int CardExpMonth,
       String CardExpCvc,
-      String CardExpYear) async {
-    var url = Uri.parse('${Constants.urlBase}/Orders/create-order');
+      int CardExpYear) async {
+    var url = Uri.parse('${Constants.urlBase}/Orders/pay-for-order');
     // final response =
     // print('========================addOrder');
     // print(orderId);
@@ -416,9 +451,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     // print(UseRedeemPoints.toString());
     // print(UsePayLater.toString());
     // print(CardNumber);
-    final response = await http.post(url, headers: {
-      HttpHeaders.authorizationHeader: SharedPrefController().token,
-    }, body: {
+    final response = await http.post(url, headers: headers, body: jsonEncode({
       'OrderId': orderId,
       'DeliveryMethodId': deliveryMethodId,
       'DesiredDeliveryDate': DesiredDeliveryDate,
@@ -431,9 +464,10 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
       'CardExpMonth': CardExpMonth,
       'CardExpCvc': CardExpCvc,
       'CardExpYear': CardExpYear,
-    });
-    // print('======================================statusCode');
-    // print(response.statusCode);
+    }));
+    print('======================================statusCode');
+    print(response.statusCode);
+    print(response.body);
     // try {
     //   final response = await http.post(url, headers: {
     //     HttpHeaders.authorizationHeader: SharedPrefController().token,
@@ -456,6 +490,39 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     //   // // print(response.statusCode);
     //   // print(e.toString());
     // }
+  }
+
+  Future<void> getPlane() async {
+    var url = Uri.parse('${Constants.urlBase}/auth/get-customer-plans');
+    final response = await http.get(url, headers: headers);
+    List plane = jsonDecode(response.body)['data'];
+    List<PlanSellerIndividual> data = [];
+
+    for (int i = 0; i < plane.length; i++) {
+      data.add(PlanSellerIndividual(
+          id: plane[i]['id'],
+          name: plane[i]['name'],
+          description: plane[i]['description'],
+          priceId: plane[i]['priceId'],
+          stripeId: plane[i]['stripeId'],
+          type: plane[i]['type'],
+          freeDays: plane[i]['freeDays'],
+          hide: plane[i]['hide'],
+          priceAmount: plane[i]['priceAmount'],
+          priceCurrency: plane[i]['priceCurrency'],
+          priceRecuencyInterval: plane[i]['priceRecuencyInterval'],
+          setUpCost: plane[i]['setUpCost'],
+          typeName: plane[i]['typeName']));
+    }
+
+    print('=================================plane');
+    print(jsonDecode(response.body));
+
+    _plane = data;
+
+    print('=================================data');
+    print(data);
+    notifyListeners();
   }
 
   Future<void> getRedeemPoints() async {
@@ -559,11 +626,13 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
 
   Future<void> updateInfo(String? firstName, String? lastName, String? phone,
       String? birthdate) async {
-    var url = Uri.parse('${Constants.urlBase}/Auth/update-user-info?firstname=$firstName&lastname=$lastName&phone=$phone&Birthdate=$birthdate');
+    var url = Uri.parse(
+        '${Constants.urlBase}/Auth/update-user-info?firstname=$firstName&lastname=$lastName&phone=$phone&Birthdate=$birthdate');
     try {
-      final response =await http.post(url,
-          headers: headers,
-          );
+      final response = await http.post(
+        url,
+        headers: headers,
+      );
 
       print('============================update');
       print(response.body);
@@ -573,10 +642,16 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     }
   }
 
-  Future<void> changeUserInfo(String? oldPassword, String? newPassword, String? confirmNewPassword,) async {
-    var url = Uri.parse('${Constants.urlBase}oldPassword?oldPassword=$oldPassword&newPassword=$newPassword&confirmNewPassword=$confirmNewPassword');
+  Future<void> changeUserInfo(
+    String? oldPassword,
+    String? newPassword,
+    String? confirmNewPassword,
+  ) async {
+    var url = Uri.parse(
+        '${Constants.urlBase}oldPassword?oldPassword=$oldPassword&newPassword=$newPassword&confirmNewPassword=$confirmNewPassword');
     try {
-      final response =await http.post(url,
+      final response = await http.post(
+        url,
         headers: headers,
       );
 
@@ -591,25 +666,27 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   Future<void> deleteAccount() async {
     var url = Uri.parse('${Constants.urlBase}/auth/GetUserDetails');
 
-      final response =await http.post(url,
-          headers: headers, );
+    final response = await http.post(
+      url,
+      headers: headers,
+    );
 
-      print('============================update');
-      print(response.body);
-      repo = jsonDecode(response.body)['message'];
-
+    print('============================update');
+    print(response.body);
+    repo = jsonDecode(response.body)['message'];
   }
 
   Future<void> clearCart() async {
     var url = Uri.parse('${Constants.urlBase}/Product/empty-basket');
 
-    final response =await http.post(url,
-      headers: headers, );
+    final response = await http.post(
+      url,
+      headers: headers,
+    );
 
     print('============================update');
     print(response.body);
     repo = jsonDecode(response.body)['message'];
-
   }
 
   int getTotalPoints() {

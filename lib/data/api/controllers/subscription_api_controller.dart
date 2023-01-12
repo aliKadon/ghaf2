@@ -7,16 +7,26 @@ class SubscriptionApiController with ApiHelper {
   late final Dio _dio = Dio(BaseOptions(baseUrl: ApiSettings.baseUrl));
 
   // subscribe as ghaf golden.
-  Future<ApiResponse> subscribeAsGhafGolden() async {
+  Future<ApiResponse> subscribeAsGhafGolden(Map<String,dynamic> cardInfo,String planID) async {
     // print('send request : customer-subscripe-as-ghafgold');
+
     Map<String, dynamic> data = {
       "paymentMethodType": "card",
-      "cardNumber": "4242424242424242",
-      "cardExpMonth": 8,
-      "cardExpCvc": "314",
-      "cardExpYear": 2023,
-      "PlanId": "23649D13-7E5F-4962-94BC-08DAE4189B69"
+      "cardNumber": cardInfo['cardNumber'],
+      "cardExpMonth": int.parse(cardInfo['expiredMonth']),
+      "cardExpCvc": cardInfo['cvc'],
+      "cardExpYear": int.parse(cardInfo['expiredYear']),
+      "PlanId": planID
     };
+
+    // Map<String, dynamic> data = {
+    //   "paymentMethodType": "card",
+    //   "cardNumber": "4242424242424242",
+    //   "cardExpMonth": 8,
+    //   "cardExpCvc": "314",
+    //   "cardExpYear": 2023,
+    //   "PlanId": planID
+    // };
     // print(data);
     var response = await _dio.post(
       'Auth/customer-subscripe-as-ghafgold',
@@ -25,9 +35,9 @@ class SubscriptionApiController with ApiHelper {
         headers: headers,
       ),
     );
-    // print('============================================');
-    // print(response.statusCode);
-    // print(response.data);
+    print('============================================');
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(

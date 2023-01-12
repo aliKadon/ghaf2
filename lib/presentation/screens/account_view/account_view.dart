@@ -192,6 +192,7 @@ class _AccountViewState extends State<AccountView> {
                         onTap: () {
                           Navigator.pushNamed(
                               context, Routes.OrdersHistoryRoute);
+                          // _customDialogProgress();
                         },
                         child: accountWidget(
                           context,

@@ -156,7 +156,8 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> {
                           if (AppSharedData.currentUser!.ghafGold == false) {
                             Navigator.of(context).pushNamed(Routes.paymentMethodeForSubscribe);
                           }else {
-                            Navigator.of(context).pushNamed(Routes.paymentMethodRoute);
+                            _subscribeViewGetXController.cancelSubscription();
+                            // Navigator.of(context).pushNamed(Routes.mainRoute);
 
                           }
                         },

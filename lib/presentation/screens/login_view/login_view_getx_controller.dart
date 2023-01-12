@@ -12,6 +12,12 @@ import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
+
 class LoginViewGetXController extends GetxController with Helpers {
   // constructor fields.
   final BuildContext context;
@@ -112,10 +118,18 @@ class LoginViewGetXController extends GetxController with Helpers {
             Constants.roleRegisterSeller) {
           print('==============================sellerStatus');
           print(profileApiResponse);
-          Navigator.pushReplacementNamed(context, Routes.sellerStatus,
-                  arguments: profileApiResponse.message)
-              .then((value) => ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('success'))));
+          if (AppSharedData.currentUser!.active!) {
+            Navigator.of(context).pushReplacementNamed(Routes.submitForm);
+
+          }else if (AppSharedData.currentUser!.active! && AppSharedData.currentUser!.sellerSubmittedForm!) {
+            Navigator.pushReplacementNamed(context, Routes.sellerStatus,
+                arguments: profileApiResponse.message)
+                .then((value) => ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('success'))));
+          }else {
+            _customDialogProgress();
+          }
+
         } else {
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(
@@ -149,5 +163,96 @@ class LoginViewGetXController extends GetxController with Helpers {
       // }
 
     }
+  }
+
+  void _customDialogProgress() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s306,
+              width: AppSize.s306,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'You must verify your account via email',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s24),
+                      ),
+                    ),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Check your email please!',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.red,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+                    SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: AppSize.s110,
+                        height: AppSize.s38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: ColorManager.primaryDark,
+                          borderRadius:
+                          BorderRadius.circular(AppRadius.r8),
+                        ),
+                        child: Text(
+                          'Ok',
+                          textAlign: TextAlign.center,
+                          style:
+                          getMediumStyle(color: ColorManager.white),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+          );
+        });
   }
 }

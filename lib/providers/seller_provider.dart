@@ -35,7 +35,7 @@ class SellerProvider with ChangeNotifier, ApiHelper {
   String repo = '';
 
   Future<void> addPaymentCard(BuildContext context, String cardNumber,
-      String cvv, int expiredMonth, int expiredYear, String PlanId) async {
+  String cvv, int expiredMonth, int expiredYear, String PlanId) async {
     var url = Uri.parse('${Constants.urlBase}/Auth/subscripe-as-individual');
     try {
       final response = await http.post(url,
@@ -255,7 +255,7 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     var url = Uri.parse('${Constants.urlBase}/Auth/get-individual-plans');
     final response = await http.get(url, headers: headers);
 
-    List data = json.decode(response.body)['data'];
+    List data = jsonDecode(response.body)['data'];
 
     List<PlanSellerIndividual> list = [];
     for (int i = 0; i < data.length; i++) {

@@ -85,6 +85,7 @@ class _ProductViewState extends State<ProductView> {
                       fontSize: FontSize.s18,
                     ),
                   ),
+
                   Spacer(),
                 ],
               ),

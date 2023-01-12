@@ -338,7 +338,9 @@ class RouteGenerator {
       case Routes.myWalletRoute:
         return MaterialPageRoute(builder: (_) => const MyWalletView());
       case Routes.paymentMethodRoute:
-        return MaterialPageRoute(builder: (_) => const PaymentMethodView());
+        return MaterialPageRoute(builder: (_) => PaymentMethodView(
+          // settings.arguments as Map<String,dynamic>
+        ));
       case Routes.addOrEditAddressRoute:
         return MaterialPageRoute(
           builder: (_) => Builder(

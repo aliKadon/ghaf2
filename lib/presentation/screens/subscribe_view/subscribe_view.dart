@@ -131,10 +131,11 @@ class _SubscribeViewState extends State<SubscribeView> {
                       width: double.infinity,
                       height: AppSize.s55,
                       child: ElevatedButton(
-                        onPressed: AppSharedData.currentUser!.ghafGold ?? false
-                            ? _subscribeViewGetXController.cancelSubscription
-                            : _subscribeViewGetXController
-                                .subscribeAsGhafGolden,
+                        // onPressed: AppSharedData.currentUser!.ghafGold ?? false
+                        //     ? _subscribeViewGetXController.cancelSubscription
+                        //     : _subscribeViewGetXController
+                        //         .subscribeAsGhafGolden,
+                        onPressed: (){},
                         child: Text(
                           AppSharedData.currentUser!.ghafGold ?? false
                               ? 'Un Subscribe'
