@@ -94,7 +94,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   _cartItem.product!.ghafImage![0].data! ,
                   height: AppSize.s84,
                   width: AppSize.s77,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 )
                 // child: Icon(Icons.add),
               ),
@@ -114,15 +114,17 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   SizedBox(
                     height: AppSize.s6,
                   ),
-                  Text(
-                    _cartItem.product?.description ?? '',
-                    style: getRegularStyle(
-                      color: ColorManager.grey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: AppSize.s8,
-                  ),
+                  // Text(
+                  //   _cartItem.product?.description!.substring(0,20) ?? '',
+                  //
+                  //   style: getRegularStyle(
+                  //
+                  //     color: ColorManager.grey,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: AppSize.s8,
+                  // ),
                   if (_cartItem.product?.productDiscount == null)
                     Row(
                       children: [
@@ -211,7 +213,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
           SizedBox(
             height: AppSize.s17,
           ),
-          Divider(height: 1, color: ColorManager.grey),
+          Divider(height: 2, color: ColorManager.grey),
           SizedBox(
             height: AppSize.s17,
           ),

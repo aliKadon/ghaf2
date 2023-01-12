@@ -5,8 +5,10 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -21,11 +23,10 @@ class OrderTrackingScreen extends StatefulWidget {
 
   @override
   State<OrderTrackingScreen> createState() => _OrderTrackingScreenState();
-
 }
 
 class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
-  Color color1 = Colors.green;
+  Color color1 = ColorManager.primary;
   Color color2 = Colors.green;
   Color color3 = Colors.green;
   Color color4 = Colors.green;
@@ -40,31 +41,31 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   void getColorBackground(String statusName) {
     if (statusName == 'Intialized') {
       setState(() {
-        color1 = Colors.green;
-        color2 = Colors.white;
-        color3 = Colors.white;
-        color4 = Colors.white;
+        color1 = ColorManager.primaryDark;
+        color2 = ColorManager.white;
+        color3 = ColorManager.white;
+        color4 = ColorManager.white;
       });
     } else if (statusName == 'AssignedToEmployee') {
       setState(() {
-        color2 = Colors.green;
-        color1 = Colors.white;
-        color3 = Colors.white;
-        color4 = Colors.white;
+        color2 = ColorManager.primaryDark;
+        color1 = ColorManager.white;
+        color3 = ColorManager.white;
+        color4 = ColorManager.white;
       });
     } else if (statusName == 'ReadyForDriver') {
       setState(() {
-        color3 = Colors.green;
-        color1 = Colors.white;
-        color2 = Colors.white;
-        color4 = Colors.white;
+        color3 = ColorManager.primaryDark;
+        color2 = ColorManager.white;
+        color1 = ColorManager.white;
+        color4 = ColorManager.white;
       });
     } else if (statusName == 'Done') {
       setState(() {
-        color4 = Colors.green;
-        color1 = Colors.white;
-        color2 = Colors.white;
-        color3 = Colors.white;
+        color4 = ColorManager.primaryDark;
+        color2 = ColorManager.white;
+        color3 = ColorManager.white;
+        color1 = ColorManager.white;
       });
     }
   }
@@ -72,31 +73,31 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   void getColorIcon(String statusName) {
     if (statusName == 'Intialized') {
       setState(() {
-        cIcon1 = Colors.white;
-        cIcon2 = Colors.green;
-        cIcon3 = Colors.green;
-        cIcon4 = Colors.green;
+        cIcon1 = ColorManager.white;
+        cIcon2 = ColorManager.primary;
+        cIcon3 = ColorManager.primary;
+        cIcon4 = ColorManager.primary;
       });
     } else if (statusName == 'AssignedToEmployee') {
       setState(() {
-        cIcon2 = Colors.white;
-        cIcon1 = Colors.green;
-        cIcon3 = Colors.green;
-        cIcon4 = Colors.green;
+        cIcon2 = ColorManager.white;
+        cIcon1 = ColorManager.primary;
+        cIcon3 = ColorManager.primary;
+        cIcon4 = ColorManager.primary;
       });
     } else if (statusName == 'ReadyForDriver') {
       setState(() {
-        cIcon3 = Colors.white;
-        cIcon1 = Colors.green;
-        cIcon2 = Colors.green;
-        cIcon4 = Colors.green;
+        cIcon3 = ColorManager.white;
+        cIcon2 = ColorManager.primary;
+        cIcon1 = ColorManager.primary;
+        cIcon4 = ColorManager.primary;
       });
     } else if (statusName == 'Done') {
       setState(() {
-        cIcon4 = Colors.white;
-        cIcon1 = Colors.green;
-        cIcon2 = Colors.green;
-        cIcon3 = Colors.green;
+        cIcon4 = ColorManager.white;
+        cIcon2 = ColorManager.primary;
+        cIcon3 = ColorManager.primary;
+        cIcon1 = ColorManager.primary;
       });
     }
   }
@@ -125,8 +126,17 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   void initState() {
     getLocation();
     getPolyPoints();
+    Provider.of<ProductProvider>(context, listen: false).getDurationGoogleMap(
+        LatOne: 37.33500926,
+        LonOne: -122.03272188,
+        LatTow: 37.33429383,
+        LonTow: -122.06600055,
+    );
     super.initState();
   }
+  //
+  // static LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
+  // static LatLng destination1 = LatLng(37.33429383, -122.06600055);
 
   var isLoading = true;
   Location location = new Location();
@@ -180,8 +190,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   // final distance = data["routes"][0]["legs"][0]["distance"]["text"];
   // final duration = data["routes"][0]["legs"][0]["duration"]["text"];
 
-
-
   List<LatLng> polylineCoordinates = [];
 
   void getPolyPoints() async {
@@ -205,12 +213,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         //         destination1.latitude,
         //     widget.orderinfo['branchAddress']['longitude'] ??
         //         destination1.longitude),
-        PointLatLng(
-                locationData!.latitude!,
-                locationData!.longitude!),
-        PointLatLng(
-                destination1.latitude,
-                destination1.longitude),
+        PointLatLng(locationData!.latitude!, locationData!.longitude!),
+        PointLatLng(destination1.latitude, destination1.longitude),
         // PointLatLng(locationData!.latitude!, locationData!.latitude!),
       );
       if (result.points.isNotEmpty) {
@@ -280,13 +284,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                     Spacer(),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Divider(height: 1, color: ColorManager.greyLight),
-                SizedBox(
-                  height: 10,
-                ),
+                Divider(height: 2, color: ColorManager.greyLight),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.4,
                   width: MediaQuery.of(context).size.width * 1,
@@ -349,6 +347,23 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                             },
                           ),
                         ),
+                ),
+                Text(
+                  "Time Of Your Order Arrival",
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      color: ColorManager.primaryDark,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '${Provider.of<ProductProvider>(context, listen:  false).duration}' ?? '',
+                  style: TextStyle(fontSize: 18.0, color: ColorManager.primary),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Container(
                   // height: MediaQuery.of(context).size.height * 0.4,
@@ -537,7 +552,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 Container(
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed(Routes.reviewProduct,
+                        Navigator.of(context).pushReplacementNamed(
+                            Routes.reviewProduct,
                             arguments: widget.orderinfo);
                       },
                       child: Text('Give Feedback for product')),

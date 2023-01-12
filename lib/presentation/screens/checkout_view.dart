@@ -432,11 +432,6 @@ class _CheckOutViewState extends State<CheckOutView> {
                                           fontSize: FontSize.s10,
                                         ),
                                       ),
-                                      // Image.asset(
-                                      //   IconsAssets.plus2,
-                                      //   height: AppSize.s22,
-                                      //   width: AppSize.s22,
-                                      // ),
                                     ]),
                                     SizedBox(
                                       height: AppSize.s12,

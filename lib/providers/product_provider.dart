@@ -623,6 +623,26 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
       // print(e);
     }
   }
+var distance;
+var duration;
+
+  Future<void> getDurationGoogleMap({
+ required double LatOne,
+ required double LonOne,
+    required double LatTow,
+    required double LonTow,
+}) async {
+    var Url = Uri.parse('https://maps.googleapis.com/maps/api/directions/json?origin=${LatOne},${LonOne}&destination=${LatTow},${LonTow}&key=${Constants.google_key_map}');
+    try {
+      final response = await http.get(Url);
+      final data = json.decode(response.body);
+      distance = data["routes"][0]["legs"][0]["distance"]["text"];
+      duration = data["routes"][0]["legs"][0]["duration"]["text"];
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> updateInfo(String? firstName, String? lastName, String? phone,
       String? birthdate) async {

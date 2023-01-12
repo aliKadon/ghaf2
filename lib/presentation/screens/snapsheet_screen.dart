@@ -258,16 +258,6 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                         saveItem();
                         if (_checkData()) {
                           if (widget.orderinfo['address'] == '') {
-                            if (widget.orderinfo['reedem'] == 'true') {
-                              reedem = true;
-                            } else {
-                              reedem = false;
-                            }
-                            if (widget.orderinfo['paylater'] == 'true') {
-                              paylater = true;
-                            } else {
-                              paylater = false;
-                            }
                             Provider.of<ProductProvider>(context, listen: false)
                                 .addOrderWithoutAddress(
                                     orderId: widget.orderinfo['orderId'],
@@ -297,30 +287,6 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                       content: Text(error.toString()),
                                       backgroundColor: Colors.red,
                                     )));
-                            // Provider.of<ProductProvider>(context, listen: false)
-                            //     .addOrderWithoutAddress(
-                            //     widget.orderinfo['orderId'],
-                            //     widget.orderinfo['deliveryMethodId'],
-                            //     widget.orderinfo['date'],
-                            //     widget.orderinfo['reedem'],
-                            //     widget.orderinfo['paylater'],
-                            //     cardInfo['cardNumber']!,
-                            //     cardInfo['expiredMonth']!,
-                            //     cardInfo['cvc']!,
-                            //     cardInfo['expiredYear']!)
-                            //     .then((value) => ScaffoldMessenger.of(context)
-                            //     .showSnackBar(SnackBar(
-                            //   content: Text('success'),
-                            //   backgroundColor: Colors.green,
-                            // )))
-                            //     .then((value) => Navigator.of(context)
-                            //     .pushNamed(Routes.checkOutConfirmRoute,arguments: widget.orderinfo));
-                            // .catchError((error) =>
-                            // ScaffoldMessenger.of(context)
-                            //     .showSnackBar(SnackBar(
-                            //   content: Text(error.toString()),
-                            //   backgroundColor: Colors.red,
-                            // )));
                             ;
                           } else {
                             print('==================================addrress');
