@@ -56,7 +56,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
                           widget.product.ghafImage![0]['data'],
                           height: AppSize.s211,
                           width: AppSize.s154,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           errorBuilder: (
                             BuildContext context,
                             Object error,
@@ -164,7 +164,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
               children: [
                 if (widget.product.productDiscount == null)
                   Text(
-                    '\$${widget.product.price!.toStringAsFixed(1)}',
+                    '${widget.product.price!.toStringAsFixed(1)} AED',
                     style: TextStyle(
                       fontSize: FontSize.s12,
 
@@ -179,14 +179,14 @@ class _ProductWidget2State extends State<ProductWidget2> {
                 if (widget.product.productDiscount != null) ...[
 
                   Text(
-                    'NEW \$${(widget.product.price!-(widget.product.price! * (widget.product.productDiscount!['discount'] / 100))).toStringAsFixed(1)}',
+                    'NEW ${(widget.product.price!-(widget.product.price! * (widget.product.productDiscount!['discount'] / 100))).toStringAsFixed(1)} AED',
                     style: getSemiBoldStyle(
                       color: ColorManager.red,
                     ),
                   ),
                   SizedBox(width: AppSize.s6,),
                   Text(
-                    '\$${widget.product.price!.toStringAsFixed(1)}',
+                    '${widget.product.price!.toStringAsFixed(1)}',
                     style: TextStyle(
                       fontSize: FontSize.s12,
                       fontFamily: FontConstants.fontFamily,

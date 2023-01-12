@@ -51,8 +51,8 @@ class _ProductView2State extends State<ProductView2> {
   @override
   Widget build(BuildContext context) {
     var cost = widget.product2.branch!['storeDeliveryCost'][2]['cost'];
-    print('===============================const');
-    print(cost);
+    // print('===============================const');
+    // print(cost);
     // getStoreDelevery(widget.product2,cost);
     return Scaffold(
       body: SafeArea(
@@ -177,14 +177,15 @@ class _ProductView2State extends State<ProductView2> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                                      
                                       Text(
-                                        '\$${((widget.product2.price!-(widget.product2.price! * widget.product2.productDiscount!['discount']! / 100)).toStringAsFixed(1))}',
+                                        '${((widget.product2.price!-(widget.product2.price! * widget.product2.productDiscount!['discount']! / 100)).toStringAsFixed(1))} AED',
                                         style: getBoldStyle(
                                             color: ColorManager.red,
                                             fontSize: FontSize.s26),
                                       ),
                                       Text(
-                                        '\$${widget.product2.price!.toStringAsFixed(1)}',
+                                        '${widget.product2.price!.toStringAsFixed(1)}',
                                         style: TextStyle(
                                           fontSize: FontSize.s14,
                                           fontFamily: FontConstants.fontFamily,
@@ -201,7 +202,7 @@ class _ProductView2State extends State<ProductView2> {
                                   children: [
                                     if (widget.product2.productDiscount == null)
                                     Text(
-                                      '\$${widget.product2.price!.toStringAsFixed(1)}',
+                                      '${widget.product2.price!.toStringAsFixed(1)} AED',
                                       style: TextStyle(
                                         fontSize: FontSize.s20,
                                         fontFamily: FontConstants.fontFamily,
@@ -227,7 +228,8 @@ class _ProductView2State extends State<ProductView2> {
                               height: AppSize.s10,
                             ),
                             Text(
-                              widget.product2.description ?? '',
+                              '${widget.product2.description }' ?? '',
+                              maxLines:5 ,
                               style: getRegularStyle(
                                 color: ColorManager.grey,
                               ),
@@ -352,7 +354,7 @@ class _ProductView2State extends State<ProductView2> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'AED $cost deliver',
+                            ' AED $cost deliver',
                             style: getRegularStyle(
                               color: ColorManager.white,
                             ),
