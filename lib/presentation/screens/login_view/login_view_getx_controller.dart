@@ -119,6 +119,7 @@ class LoginViewGetXController extends GetxController with Helpers {
           print('==============================sellerStatus');
           print(profileApiResponse);
           if (AppSharedData.currentUser!.active!) {
+
             Navigator.of(context).pushReplacementNamed(Routes.submitForm);
 
           }else if (AppSharedData.currentUser!.active! && AppSharedData.currentUser!.sellerSubmittedForm!) {
