@@ -141,7 +141,7 @@ class LoginViewGetXController extends GetxController with Helpers {
         }
       } else if(loginApiResponse.status >= 400){
         Navigator.pop(context);
-        _customDialogProgress();
+        _customDialogProgress(loginApiResponse.message ,loginApiResponse.status);
       }
 
       // else {
@@ -172,7 +172,7 @@ class LoginViewGetXController extends GetxController with Helpers {
     }
   }
 
-  void _customDialogProgress() async {
+  void _customDialogProgress(String message,int status) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -213,7 +213,7 @@ class LoginViewGetXController extends GetxController with Helpers {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'You must verify your account via email',
+                        message,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -223,7 +223,8 @@ class LoginViewGetXController extends GetxController with Helpers {
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Container(
+
+                   status == 400 ? Container(
                       alignment: Alignment.center,
                       child: Text(
                         'Check your email please!',
@@ -232,7 +233,7 @@ class LoginViewGetXController extends GetxController with Helpers {
                             color: ColorManager.red,
                             fontSize: FontSize.s16),
                       ),
-                    ),
+                    ) : Container(),
                     SizedBox(
                       height: AppSize.s20,
                     ),

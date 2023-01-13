@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/providers/seller_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../domain/model/models.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -20,8 +23,10 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
   int _currentPageIndex = 0;
   late PageController _pageController;
 
+  bool isLoading = true;
   @override
   void initState() {
+    Provider.of<SellerProvider>(context, listen: false).getSellerPlans().then((value) => isLoading = false);
     super.initState();
     _pageController = PageController();
   }
@@ -31,14 +36,24 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
     _pageController.dispose();
     super.dispose();
   }
-
+ bool Agree = false;
   @override
   Widget build(BuildContext context) {
+    var sellerPlan =  Provider.of<SellerProvider>(context).getSellerPlansData;
     return Scaffold(
-      body: SafeArea(
+      body: isLoading ? Center(
+        child: Container(
+          width: 20.h,
+          height: 20.h,
+          child: CircularProgressIndicator(
+            strokeWidth: 1,
+          ),
+        ),
+      ): SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
           child: ListView(
+            physics: BouncingScrollPhysics(),
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
@@ -170,7 +185,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                 ),
               ),
               Container(
-                height: 700,
+                height: 550,
                 child: PageView(
                   physics: const BouncingScrollPhysics(),
                   controller: _pageController,
@@ -184,7 +199,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier1,
-                          AppLocalizations.of(context)!.aed_50,
+                          '${sellerPlan[0]['priceAmount']} AED',
                           ImageAssets.tier1, [
                         'Update menu and products, add images and tell customers when an item is update using Menu Manager.',
                         'Track orders',
@@ -196,38 +211,41 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                         'Connect with delivery network'
                       ]),
                       _currentPageIndex,
+                        '${sellerPlan[0]['id']}',
+                        '${sellerPlan[3]['id']}',
+                      Agree
                     ),
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier2,
-                          AppLocalizations.of(context)!.aed_50,
+                          '${sellerPlan[1]['priceAmount']} AED',
                           ImageAssets.tier1, [
-                        'Update menu and products, add images and tell customers when an item is update using Menu Manager.',
-                        'Track orders',
+                        'Update menu and products, add images and tell customers when an item is update using Manager',
+                        'Promote your brand in-app and create special offers',
                         'Which dishes or product your customer like, check reviews and keep them coming back for more.',
-                        'Monitor the status of your order delivery and get alerted when its delivered',
-                        'Monthly payment of Dhs 260 + 1 time setup fee (Average set-up fee of 500 Dhs). Price variesbased on POS.)',
+                        'Connect with delivery network',
+                        'Fees: Monthly payment of Dhs 300 + 1 time setup fee (Average set-up fee of 500 Dhs). Price varies based on POS.)',
                         'Otherwise signing an annual plan of Dhs 2,400',
-                        'Choose Photography from a professional photographer. This tier includes 15 items for more images a fee of ## per image',
-                        'Connect with delivery network'
+                        'Choose Photography from a professional photographer. This tier includes 25 items for more images a fee of ## per image'
                       ]),
-                      _currentPageIndex,
+                      _currentPageIndex,'${sellerPlan[1]['id']}',
+                      '${sellerPlan[3]['id']}',Agree
                     ),
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier3,
-                          AppLocalizations.of(context)!.aed_50,
+                          '${sellerPlan[2]['priceAmount']} AED',
                           ImageAssets.tier1, [
-                        'Update menu and products, add images and tell customers when an item is update using Menu Manager.',
-                        'Track orders',
+                        'Update menu and products, add images and tell customers when an item is update using Manager.',
+                        'Promote your brand in-app and create special offers.',
+                        'Adv Banner, getting a place in the Adv Banner this banner (also subject to several conditions of service quality and customer satisfaction)',
                         'Which dishes or product your customer like, check reviews and keep them coming back for more.',
-                        'Monitor the status of your order delivery and get alerted when its delivered',
-                        'Monthly payment of Dhs 260 + 1 time setup fee (Average set-up fee of 500 Dhs). Price variesbased on POS.)',
-                        'Otherwise signing an annual plan of Dhs 2,400',
-                        'Choose Photography from a professional photographer. This tier includes 15 items for more images a fee of ## per image',
-                        'Connect with delivery network'
+                        'Regular email marketing communications and social media advertising',
+                        'Connect with delivery network',
+                        'Monthly payment of Dhs 450 + 1 time setup fee (Average set-up fee of 500 Dhs). Price varies based on POS.)Otherwise signing an annual plan of Dhs 2,400',
                       ]),
-                      _currentPageIndex,
+                      _currentPageIndex,'${sellerPlan[2]['id']}',
+                      '${sellerPlan[3]['id']}',Agree
                     ),
                   ],
                 ),
@@ -246,15 +264,31 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
               SizedBox(
                 height: AppSize.s24,
               ),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!
-                        .i_agree_to_the_terms_of_service,
-                    style: getMediumStyle(
-                        color: ColorManager.grey, fontSize: FontSize.s14),
-                  ),
-                ],
+              GestureDetector(
+                // onTap: () => Navigator.pop(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio(
+                        activeColor: ColorManager.primary,
+                        value: 'Agree',
+                        onChanged: (n) {
+                          setState(() {
+                            Agree = !Agree;
+                            option1 = n!;
+                          });
+                          print('--------------------------------agree');
+                          print(Agree);
+                        },
+                        groupValue: option1),
+                    Text(
+                      AppLocalizations.of(context)!
+                          .i_agree_to_the_terms_of_service,
+                      style: getRegularStyle(
+                          color: ColorManager.grey, fontSize: FontSize.s16),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: AppSize.s20,
@@ -265,9 +299,12 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
       ),
     );
   }
-
+  var option1 = '';
+  var option = '';
+  var plan = '';
+  var Agree1 = false;
   Widget _onBoardingContent(
-      SubscriptionObject? subscriptionObject, int currentPageIndex) {
+      SubscriptionObject? subscriptionObject, int currentPageIndex,String planIdMonthly,String planIdAnnual , bool agree) {
     if (subscriptionObject == null) {
       return Container();
     } else {
@@ -353,6 +390,73 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
             SizedBox(
               height: AppSize.s22,
             ),
+            Row(
+              children: [
+                GestureDetector(
+                  // onTap: () => Navigator.pop(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Radio(
+                          activeColor: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary,
+                          focusColor: Colors.white,
+                          value: 'Monthly',
+                          onChanged: (n) {
+                            setState(() {
+                              Agree1 = true;
+                              plan = planIdMonthly;
+                              option = n!;
+                            });
+                            print(
+                                '${Agree1}--------------------------monthly');
+                            print(option);
+                          },
+                          groupValue: option),
+                      Text(
+                        'monthly',
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            color: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary,
+                            fontSize: FontSize.s16),
+                      ),
+                    ],
+                  ),
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: GestureDetector(
+                    // onTap: () => Navigator.pop(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Radio(
+                            activeColor: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary,
+                            focusColor: Colors.white,
+
+                            value: 'Annual',
+                            onChanged: (n) {
+                              setState(() {
+                                Agree1 = true;
+                                plan = planIdAnnual;
+                                option = n!;
+                              });
+                              print(
+                                  '${Agree1}----------------------------annual');
+                              print(option);
+                            },
+                            groupValue: option),
+                        Text(
+                          'Annual',
+                          style: TextStyle(fontWeight: FontWeight.w500,
+                              color: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary,
+                              fontSize: FontSize.s16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: AppMargin.m16,
@@ -360,7 +464,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
               width: double.infinity,
               height: AppSize.s55,
               child: ElevatedButton(
-                onPressed: () => Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute),
+                onPressed: () => Agree && Agree1 ? Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute , arguments: plan ) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Choose All The Options"),backgroundColor: Colors.red,)),
                 style: ElevatedButton.styleFrom(backgroundColor: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary),
                 child: Text(
                   AppLocalizations.of(context)!.subscribe_now,
@@ -369,6 +473,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                 ),
               ),
             ),
+
           ],
         ),
       );

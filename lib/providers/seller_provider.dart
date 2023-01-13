@@ -287,6 +287,17 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     notifyListeners();
   }
 
+  List getSellerPlansData = [];
+  Future<void> getSellerPlans() async {
+    var url =
+    Uri.parse('${Constants.urlBase}/Auth/get-seller-plans');
+    final response = await http.get(url, headers: headers);
+    getSellerPlansData = json.decode(response.body)['data'];
+    print('getSellerPlansData+++++++++++++++++++++++++++++++++++++++++');
+    print(getSellerPlansData);
+    notifyListeners();
+  }
+
   Future<void> getPlanForSellerIndividual() async {
     var url = Uri.parse('${Constants.urlBase}/Auth/get-individual-plans');
     final response = await http.get(url, headers: headers);
