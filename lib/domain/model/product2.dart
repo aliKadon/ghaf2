@@ -16,6 +16,8 @@ class Product2 {
   bool? visible;
   bool? deleted;
   bool? approved;
+  bool?canPayLater;
+  int?canPayLaterDays;
   String? addedAt;
   List<dynamic>? ghafImage;
   String? productReview;
@@ -43,6 +45,8 @@ class Product2 {
     this.visible,
     this.deleted,
     this.approved,
+    this.canPayLater,
+    this.canPayLaterDays,
     this.addedAt,
     this.ghafImage,
     this.productReview,

@@ -230,17 +230,17 @@ class _AccountViewState extends State<AccountView> {
                           AppLocalizations.of(context)!.pay_later,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Routes.ordersToPay, arguments: 'orderTrack');
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.location,
-                          AppLocalizations.of(context)!.order_track,
-                          // 'Order Track'
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.of(context).pushNamed(Routes.ordersToPay, arguments: 'orderTrack');
+                      //   },
+                      //   child: accountWidget(
+                      //     context,
+                      //     IconsAssets.location,
+                      //     AppLocalizations.of(context)!.order_track,
+                      //     // 'Order Track'
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, Routes.offersRoute);

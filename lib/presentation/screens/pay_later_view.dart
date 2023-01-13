@@ -27,14 +27,14 @@ class _PayLaterViewState extends State<PayLaterView> {
   @override
   void initState() {
     Provider.of<ProductProvider>(context, listen: false)
-        .getUnpaidOrder()
+        .getProducts()
         .then((value) => isLoading = false);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var unpaid = Provider.of<ProductProvider>(context).unpaidOrder;
+    var unpaid = Provider.of<ProductProvider>(context).listPayLater1;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -97,97 +97,104 @@ class _PayLaterViewState extends State<PayLaterView> {
                               //   MaterialPageRoute(
                               //       builder: (builder) => ProductView()),
                               // );
-                              Navigator.of(context).pushNamed(Routes.unpaidItemScreen,arguments: unpaid[index]);
+                              // Navigator.of(context).pushNamed(Routes.unpaidItemScreen,arguments: unpaid[index]);
                             },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Stack(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(AppRadius.r14),
-                                      child: Image.asset(
-                                        ImageAssets.test,
-                                        height: AppSize.s211,
-                                        width: AppSize.s154,
-                                      ),
-                                    ),
-                                    // PositionedDirectional(
-                                    //   end: AppSize.s12,
-                                    //   top: AppSize.s12,
-                                    //   child: CircleAvatar(
-                                    //     radius: AppRadius.r14,
-                                    //     backgroundColor: ColorManager.burgundy,
-                                    //     child: Image.asset(
-                                    //       IconsAssets.heart,
-                                    //       height: AppSize.s16,
-                                    //       width: AppSize.s16,
-                                    //     ),
-                                    //   ),
-                                    // )
-                                  ],
-                                ),
-                                Text(
-                                  'Unpaid',
-                                  style: getSemiBoldStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: AppSize.s4,
-                                ),
-                                Container(
-                                  padding: EdgeInsetsDirectional.only(
-                                      start: AppPadding.p22),
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      'You have ${unpaid[index].items?.length} item unpaid!',
-                                      style: getRegularStyle(
-                                        color: ColorManager.grey,
-                                        fontSize: FontSize.s10,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: AppSize.s8,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.only(
-                                      start: AppPadding.p22),
-                                  child: Row(
+                            child: Card(
+                              elevation: 3,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Stack(
                                     children: [
-                                      Text(
-                                        '${unpaid[index].totalCostForItems} AED',
-                                        style: getSemiBoldStyle(
-                                          color: ColorManager.primaryDark,
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(AppRadius.r14),
+                                        child: Image.asset(
+                                          'assets/images/product_image.png',
+                                          fit: BoxFit.cover,
+                                          height: AppSize.s211,
+                                          width: AppSize.s154,
                                         ),
                                       ),
-                                      Spacer(),
-                                      Image.asset(
-                                        IconsAssets.start,
-                                        height: AppSize.s14,
-                                        width: AppSize.s15,
-                                      ),
-                                      SizedBox(
-                                        width: AppSize.s8,
-                                      ),
-                                      // Text(
-                                      //   '5.0',
-                                      //   style: getRegularStyle(
-                                      //     color: ColorManager.black,
-                                      //     fontSize: FontSize.s12,
+                                      // PositionedDirectional(
+                                      //   end: AppSize.s12,
+                                      //   top: AppSize.s12,
+                                      //   child: CircleAvatar(
+                                      //     radius: AppRadius.r14,
+                                      //     backgroundColor: ColorManager.burgundy,
+                                      //     child: Image.asset(
+                                      //       IconsAssets.heart,
+                                      //       height: AppSize.s16,
+                                      //       width: AppSize.s16,
+                                      //     ),
                                       //   ),
-                                      // ),
-                                      Spacer()
+                                      // )
                                     ],
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    unpaid[index].name!,
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontSize: FontSize.s14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: AppSize.s4,
+                                  ),
+                                  // Container(
+                                  //   padding: EdgeInsetsDirectional.only(
+                                  //       start: AppPadding.p22),
+                                  //   alignment: AlignmentDirectional.topStart,
+                                  //   child: FittedBox(
+                                  //     fit: BoxFit.scaleDown,
+                                  //     child: Text(
+                                  //       'You have ${unpaid.length} item unpaid!',
+                                  //       style: getRegularStyle(
+                                  //         color: ColorManager.grey,
+                                  //         fontSize: FontSize.s10,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  SizedBox(
+                                    height: AppSize.s8,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.only(
+                                        start: AppPadding.p22),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: AppSize.s16,
+                                        ),
+                                        Text(
+                                          '${unpaid[index].price} AED',
+                                          style: getSemiBoldStyle(
+                                            color: ColorManager.primaryDark,
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Image.asset(
+                                          IconsAssets.start,
+                                          height: AppSize.s14,
+                                          width: AppSize.s15,
+                                        ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        // Text(
+                                        //   '5.0',
+                                        //   style: getRegularStyle(
+                                        //     color: ColorManager.black,
+                                        //     fontSize: FontSize.s12,
+                                        //   ),
+                                        // ),
+                                        Spacer()
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         }),

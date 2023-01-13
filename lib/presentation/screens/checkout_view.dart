@@ -904,8 +904,10 @@ class _CheckOutViewState extends State<CheckOutView> {
                               setState(() {
                                 if (isSwitchedPayLater == false) {
                                   isSwitchedPayLater = true;
+                                  isSwitched = false;
                                 } else {
                                   isSwitchedPayLater = false;
+                                  isSwitched = true;
                                 }
                                 if (isSwitchedPayLater) {
                                   setState(() {
@@ -947,8 +949,10 @@ class _CheckOutViewState extends State<CheckOutView> {
                             setState(() {
                               if (isSwitched == false) {
                                 isSwitched = true;
+                                isSwitchedPayLater = false;
                               } else {
                                 isSwitched = false;
+                                isSwitchedPayLater = true;
                               }
                               print(isSwitched);
                             });

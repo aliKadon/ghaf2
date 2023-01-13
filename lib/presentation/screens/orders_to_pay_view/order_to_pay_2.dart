@@ -82,13 +82,37 @@ class _OrderToPay2State extends State<OrderToPay2> {
                     ),
                   ),
                   Spacer(),
-                  Text(
+                  widget.isOrderTrack == 'Pending' ? Text(
+                    'Pending Orders',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
+                    ),
+                  ) : widget.isOrderTrack == 'Completed' ? Text(
+                    'Completed Orders',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
+                    ),
+                  ) : widget.isOrderTrack == 'Delivery' ? Text(
+                    'Delivery Orders',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
+                    ),
+                  ): widget.isOrderTrack == 'In Progress' ?Text(
+                    'In Progress Orders',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
+                    ),
+                  ) :Text(
                     'Orders To Pay',
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
                     ),
-                  ),
+                  ) ,
                   Spacer(),
                 ],
               ),

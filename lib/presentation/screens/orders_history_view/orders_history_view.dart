@@ -121,10 +121,10 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                     'status': '${AppLocalizations.of(context)!.completed}',
                     'count': '${orderPay}',
                   },
-                  {
-                    'status': 'Canceled',
-                    'count': '0',
-                  },
+                  // {
+                  //   'status': 'Canceled',
+                  //   'count': '0',
+                  // },
                   {
                     'status': '${AppLocalizations.of(context)!.delivery}',
                     'count': '${delivery}',

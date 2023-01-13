@@ -30,7 +30,10 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
 
   String repo = '';
 
+  List<Product2> listPayLater1 = [];
+
   List<PlanSellerIndividual> _plane = [];
+
 
   List<PlanSellerIndividual> get plane {
     return [..._plane];
@@ -169,6 +172,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     List product = json.decode(response.body)['data'];
     // // print(productDiscount);
     List<Product2> list = [];
+
+    List<Product2> listPayLater = [];
     for (int i = 0; i < product.length; i++) {
       list.add(Product2(
         id: product[i]['id'],
@@ -180,6 +185,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
         price: product[i]['price'],
         addedAt: product[i]['addedAt'],
         approved: product[i]['approved'],
+        canPayLater: product[i]['canPayLater'],
+        canPayLaterDays: product[i]['canPayLaterDays'],
         category: product[i]['category'],
         characteristics: product[i]['characteristics'],
         deleted: product[i]['deleted'],
@@ -197,7 +204,40 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
         stars: product[i]['stars'],
         visible: product[i]['visible'],
       ));
+      if (product[i]['canPayLater'] == true) {
+        listPayLater.add(Product2(
+          id: product[i]['id'],
+          isoCurrencySymbol: product[i]['isoCurrencySymbol'],
+          branch: product[i]['branch'],
+          name: product[i]['name'],
+          description: product[i]['description'],
+          isFavorite: product[i]['isFavorite'],
+          price: product[i]['price'],
+          addedAt: product[i]['addedAt'],
+          approved: product[i]['approved'],
+          canPayLater: product[i]['canPayLater'],
+          canPayLaterDays: product[i]['canPayLaterDays'],
+          category: product[i]['category'],
+          characteristics: product[i]['characteristics'],
+          deleted: product[i]['deleted'],
+          discountDescription: product[i]['discountDescription'],
+          ghafImage: product[i]['ghafImage'],
+          isInCart: product[i]['isInCart'],
+          offer: product[i]['offer'],
+          offerDescription: product[i]['offerDescription'],
+          productDiscount: product[i]['productDiscount'],
+          productReview: product[i]['productReview'],
+          productType: product[i]['productType'],
+          quantity: product[i]['quantity'],
+          redeemDescription: product[i]['redeemDescription'],
+          redeemPoints: product[i]['redeemPoints'],
+          stars: product[i]['stars'],
+          visible: product[i]['visible'],
+        ));
+
+      }
     }
+    listPayLater1 = listPayLater;
     _product = list;
     notifyListeners();
   }
@@ -233,6 +273,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     num pending = 0;
     num inProgress = 0;
     num delivery = 0;
+
+
 
     List<Order> list = [];
     for (int i = 0; i < orders.length; i++) {
@@ -276,6 +318,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
         delivery++;
       }
     }
+
 
     unPaidCount = unPay;
     paidCount = pay;
