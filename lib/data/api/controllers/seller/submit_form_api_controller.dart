@@ -51,6 +51,11 @@ class SubmitFormApiController with ApiHelper {
           message: response.data['message'],
           status: response.data['status'],
         );
+      }else if(response.data['status'] == 500){
+        return ApiResponse(
+          message: response.data['message'],
+          status: response.data['status'],
+        );
       }
     }
     return failedResponse;

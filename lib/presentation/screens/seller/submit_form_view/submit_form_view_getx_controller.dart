@@ -12,6 +12,12 @@ import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
+
 class SubmitFormViewGetXController extends GetxController with Helpers {
   // notifiable.
   File? _licencePDFFile;
@@ -77,12 +83,16 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
         website: website,
         licencePDF: await dio.MultipartFile.fromFile(licencePDFFile!.path),
       );
+      print('object=======================${apiResponse.status}');
       if (apiResponse.status == 200) {
         // success.
         Navigator.pop(context);
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
-      } else {
+      } else if (apiResponse.status == 500) {
+        Navigator.pop(context);
+        _customDialogProgress(apiResponse.message);
+      } else{
         // failed.
         debugPrint('failed : ${apiResponse.message}');
         Navigator.pop(context);
@@ -108,5 +118,84 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
     if (result != null) {
       licencePDFFile = File(result.files.single.path!);
     }
+  }
+
+  void _customDialogProgress(String message) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s306,
+              width: AppSize.s306,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        message,
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s24),
+                      ),
+                    ),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+                      },
+                      child: Container(
+                        width: AppSize.s110,
+                        height: AppSize.s38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: ColorManager.primaryDark,
+                          borderRadius:
+                          BorderRadius.circular(AppRadius.r8),
+                        ),
+                        child: Text(
+                          'Ok',
+                          textAlign: TextAlign.center,
+                          style:
+                          getMediumStyle(color: ColorManager.white),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+          );
+        });
   }
 }

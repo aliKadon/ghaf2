@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../resources/assets_manager.dart';
@@ -340,6 +342,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
   void _customDialogProgress() async {
     var pro =
         Provider.of<SellerProvider>(context, listen: false).createPaymentLink;
+    var ghaf =Provider.of<ProductProvider>(context, listen: false);
     print('==============================create Link');
     print(pro.toString());
     showDialog(
@@ -347,7 +350,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s410,
+              height: AppSize.s360,
               width: AppSize.s343,
               margin: EdgeInsets.symmetric(horizontal: AppPadding.p16),
               decoration: BoxDecoration(
@@ -422,38 +425,43 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                         ),
                       ],
                     ),
-                    // SizedBox(
-                    //   height: AppSize.s16,
-                    // ),
-                    // GestureDetector(
-                    //   child: Container(
-                    //     width: double.infinity,
-                    //     padding: EdgeInsets.symmetric(
-                    //         vertical: AppPadding.p12, horizontal: AppPadding.p4),
-                    //     alignment: AlignmentDirectional.center,
-                    //     decoration: BoxDecoration(
-                    //       color: ColorManager.greyLight,
-                    //       borderRadius: BorderRadius.circular(AppRadius.r8),
-                    //     ),
-                    //     child: Text(
-                    //       AppLocalizations.of(context)!.preview_link,
-                    //       style: getBoldStyle(
-                    //           color: ColorManager.grey, fontSize: FontSize.s16),
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
-                      height: AppSize.s30,
+                      height: AppSize.s8,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        () async {
+                      onTap: (){
+                        ghaf.getWebpage(
+                            pro);
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                            vertical: AppPadding.p12, horizontal: AppPadding.p4),
+                        alignment: AlignmentDirectional.center,
+                        decoration: BoxDecoration(
+                          color: ColorManager.greyLight,
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)!.preview_link,
+                          style: getBoldStyle(
+                              color: ColorManager.grey, fontSize: FontSize.s16),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: AppSize.s8,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+
                           String message = "Hello from Flutter!";
                           final urlWhatsUP =
-                              "https://wa.me/?text=${_textController.text}";
+                              "https://wa.me/?text=You can buy the product of my store through this link:\n${pro}";
                           await launch(urlWhatsUP);
-                        };
+                          print(urlWhatsUP);
                       },
+
                       child: Row(
                         children: [
                           Image.asset(
@@ -473,9 +481,11 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                         ],
                       ),
                     ),
+
                     SizedBox(
                       height: AppSize.s12,
                     ),
+
                     GestureDetector(
                       onTap: () {
                         _contactEmail(_textController.text);
@@ -524,24 +534,30 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                     // SizedBox(
                     //   height: AppSize.s12,
                     // ),
-                    // Row(
-                    //   children: [
-                    //     Image.asset(
-                    //       IconsAssets.email,
-                    //       height: AppSize.s16,
-                    //       width: AppSize.s16,
-                    //     ),
-                    //     SizedBox(
-                    //       width: AppSize.s8,
-                    //     ),
-                    //     Text(
-                    //       AppLocalizations.of(context)!.show_qr_code,
-                    //       style: getMediumStyle(
-                    //           color: ColorManager.black,
-                    //           fontSize: FontSize.s14),
-                    //     ),
-                    //   ],
-                    // ),
+
+                    InkWell(
+                      onTap: (){
+                        _customDialog(pro);
+                      },
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            IconsAssets.email,
+                            height: AppSize.s16,
+                            width: AppSize.s16,
+                          ),
+                          SizedBox(
+                            width: AppSize.s8,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.show_qr_code,
+                            style: getMediumStyle(
+                                color: ColorManager.black,
+                                fontSize: FontSize.s14),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: AppSize.s12,
                     ),
@@ -550,4 +566,56 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
           );
         });
   }
+
+  void _customDialog(pro) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s410,
+              width: AppSize.s306,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    QrImage(
+                      data: pro,
+                      size: 200.0,
+                    ),
+                    ElevatedButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, child: Text('OK')),
+                  ]),
+            ),
+          );
+        });
+  }
+
 }

@@ -191,7 +191,8 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                                 content: Text(repo,style: TextStyle(color: Colors.red)),
                                 backgroundColor: Colors.green,
                               )))
-                          .then((value) => _customDialogProgress())
+                          .then((value) =>   Navigator.pushReplacementNamed(
+                          context, Routes.registerPaymentLinkSellerRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)
                               .showSnackBar(
                                   SnackBar(content: Text(repo))));
@@ -233,66 +234,66 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
 
   Future<void> _register() async {}
 
-  void _customDialogProgress() async {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: Container(
-              height: AppSize.s214,
-              width: AppSize.s258,
-              decoration: BoxDecoration(
-                color: ColorManager.white,
-                borderRadius: BorderRadius.circular(AppRadius.r8),
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: AppSize.s28,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.progress,
-                      style: getMediumStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s20),
-                    ),
-                    SizedBox(
-                      height: AppSize.s40,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!
-                          .your_account_is_under_approval_process,
-                      style: getMediumStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s12),
-                    ),
-                    SizedBox(
-                      height: AppSize.s40,
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.loginRoute),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p55,
-                          vertical: AppPadding.p8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: ColorManager.primaryDark,
-                          borderRadius: BorderRadius.circular(AppRadius.r8),
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)!.close,
-                          style: getMediumStyle(color: ColorManager.white),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
-                  ]),
-            ),
-          );
-        });
-  }
+  // void _customDialogProgress() async {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return Dialog(
+  //           child: Container(
+  //             height: AppSize.s214,
+  //             width: AppSize.s258,
+  //             decoration: BoxDecoration(
+  //               color: ColorManager.white,
+  //               borderRadius: BorderRadius.circular(AppRadius.r8),
+  //             ),
+  //             child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   SizedBox(
+  //                     height: AppSize.s28,
+  //                   ),
+  //                   Text(
+  //                     AppLocalizations.of(context)!.progress,
+  //                     style: getMediumStyle(
+  //                         color: ColorManager.primaryDark,
+  //                         fontSize: FontSize.s20),
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s40,
+  //                   ),
+  //                   Text(
+  //                     AppLocalizations.of(context)!
+  //                         .your_account_is_under_approval_process,
+  //                     style: getMediumStyle(
+  //                         color: ColorManager.primary, fontSize: FontSize.s12),
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s40,
+  //                   ),
+  //                   GestureDetector(
+  //                     onTap: () =>
+  //                         Navigator.of(context).pushNamed(Routes.loginRoute),
+  //                     child: Container(
+  //                       padding: EdgeInsets.symmetric(
+  //                         horizontal: AppPadding.p55,
+  //                         vertical: AppPadding.p8,
+  //                       ),
+  //                       decoration: BoxDecoration(
+  //                         color: ColorManager.primaryDark,
+  //                         borderRadius: BorderRadius.circular(AppRadius.r8),
+  //                       ),
+  //                       child: Text(
+  //                         AppLocalizations.of(context)!.close,
+  //                         style: getMediumStyle(color: ColorManager.white),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s12,
+  //                   ),
+  //                 ]),
+  //           ),
+  //         );
+  //       });
+  // }
 }

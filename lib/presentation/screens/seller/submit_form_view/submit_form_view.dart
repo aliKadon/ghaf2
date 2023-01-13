@@ -25,7 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SubmitFormView extends StatefulWidget {
 
-  final Map<String,dynamic> locationData;
+  late final Map<String,dynamic> locationData;
   // // const SubmitFormView({Key? key}) : super(key: key);
   SubmitFormView(this.locationData);
 
@@ -114,20 +114,16 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
 
 
   void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+   setState(() {
+     mapController = controller;
+   });
   }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body:
-      // isLoading ? Center(
-      //   child: CircularProgressIndicator(
-      //     strokeWidth: 1,
-      //   ),
-      // ):
-      SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _submitFormViewGetXController.formKey,
@@ -468,7 +464,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     onMapCreated: _onMapCreated,
                     
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
+                      target: LatLng(widget.locationData['locationLat'], widget.locationData['locationLong'],),
                       zoom: 13,
 
                     ),
@@ -488,11 +484,11 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                               markerId: MarkerId('source'),
                               flat: true,
                               position:
-                                  // _submitFormViewGetXController.selectedLatLng!
-                              LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
+                                  _submitFormViewGetXController.selectedLatLng!
+                              // LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
                             )
                           },
-                    onTap: (latLng) async {
+                    onTap: (latLng) {
                       setState(() {
                         print('================================================latLng');
                         print(latLng);

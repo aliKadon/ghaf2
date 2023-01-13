@@ -98,14 +98,11 @@ class LoginViewGetXController extends GetxController with Helpers {
         userName: userName!,
         password: password!,
       );
-      print('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
-      // errorMessageLoginApiResponse = loginApiResponse.message;
 
-      ApiResponse profileApiResponse = await AuthApiController().profile();
-      // errorMessageProfileApiResponse = profileApiResponse.message;
-      if (loginApiResponse.status == 200 && profileApiResponse.status == 200) {
-        print('=======================================role');
-        print(AppSharedData.currentUser!.role);
+      if (loginApiResponse.status == 200 ) {
+        ApiResponse profileApiResponse = await AuthApiController().profile();
+        // print('=======================================role');
+        // print(AppSharedData.currentUser!.role);
         // success.
         Navigator.pop(context);
         if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
@@ -118,17 +115,19 @@ class LoginViewGetXController extends GetxController with Helpers {
             Constants.roleRegisterSeller) {
           print('==============================sellerStatus');
           print(profileApiResponse);
-          if (AppSharedData.currentUser!.active!) {
+          if (AppSharedData.currentUser!.sellerSubmittedForm! == false) {
 
-            Navigator.of(context).pushReplacementNamed(Routes.submitForm);
+            Navigator.of(context).pushReplacementNamed(Routes.submitForm, arguments:{
+              'locationLat':locationData!.latitude?? 24.400661,
+              'locationLong':locationData!.longitude?? 54.635448,
+            } );
 
-          }else if (AppSharedData.currentUser!.active! && AppSharedData.currentUser!.sellerSubmittedForm!) {
+          }else {
+
             Navigator.pushReplacementNamed(context, Routes.sellerStatus,
                 arguments: profileApiResponse.message)
                 .then((value) => ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text('success'))));
-          }else {
-            _customDialogProgress();
           }
 
         } else {
@@ -140,17 +139,24 @@ class LoginViewGetXController extends GetxController with Helpers {
                 context, Routes.paymentLinkSubscriptionSellerRoute);
           }
         }
-      } else {
-        // failed.
+      } else if(loginApiResponse.status >= 400){
         Navigator.pop(context);
-        showSnackBar(context, message: loginApiResponse.message, error: true);
-        showSnackBar(context, message: profileApiResponse.message, error: true);
+        _customDialogProgress();
       }
+
+      // else {
+      //   // failed
+      //   _customDialogProgress();
+      //   // Navigator.pop(context);
+      //   // showSnackBar(context, message: loginApiResponse.message, error: true);
+      //   // showSnackBar(context, message: profileApiResponse.message, error: true);
+      // }
     } catch (error) {
       // error.
-      // Navigator.pop(context);
+      Navigator.pop(context);
       // showSnackBar(context, message: loginApiResponse.message, error: true);
       // showSnackBar(context, message: profileApiResponse.message, error: true);
+
       showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
 
       print(error.toString());

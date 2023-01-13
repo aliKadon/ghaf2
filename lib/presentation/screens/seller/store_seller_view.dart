@@ -44,197 +44,121 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
     // }
   }
 
+  // @override
+  // void initState() {
+  //
+  //   super.initState();
+  // }
   @override
-  void initState() {
-    Provider.of<SellerProvider>(context, listen: false).getUserDetails().then((value) => isLoading = false);
-    super.initState();
+  void didChangeDependencies() {
+    Provider.of<SellerProvider>(context).getUserDetails().then((value) => isLoading = false);
+    super.didChangeDependencies();
   }
 
+  late var userDetails = Provider.of<SellerProvider>(context).userDetails;
   @override
   Widget build(BuildContext context) {
-    var userDetails = Provider.of<SellerProvider>(context).userDetails;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: isLoading ? Center(
+          child: Container(
+            width: 20.h,
+            height: 20.h,
+            child: CircularProgressIndicator(
+              strokeWidth: 1,
+            ),
+          ),
+        ) : SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-            child: isLoading ? Center(
-              child: Container(
-                width: 20.h,
-                height: 20.h,
-                child: CircularProgressIndicator(
-                  strokeWidth: 1,
-                ),
-              ),
-            ) : Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   height: AppSize.s9,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.account,
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s24),
-                    ),
-                  ],
+                Text(
+                  AppLocalizations.of(context)!.account,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s24),
                 ),
                 SizedBox(
-                  height: AppSize.s20,
-                ),
-                Image.asset(
-                  fit: BoxFit.cover,
-                  'assets/images/avatar_person.png',
-                  height: AppSize.s82,
-                  width: AppSize.s82,
-                ),
-                SizedBox(
-                  height: AppSize.s12,
+                  height: AppSize.s50,
                 ),
                 Text(
                   '${userDetails['firstName']} ${userDetails['lastName']}',
                   style: getSemiBoldStyle(
-                      color: ColorManager.black, fontSize: FontSize.s20),
+                      color: ColorManager.primaryDark, fontSize: FontSize.s24),
                 ),
                 SizedBox(
-                  height: AppSize.s40,
+                  height: AppSize.s20,
                 ),
-                Row(
+                Stack(
+                  alignment: Alignment.topRight,
                   children: [
-                    // Image.asset(
-                    //   IconsAssets.wallet1,
-                    //   height: AppSize.s28,
-                    //   width: AppSize.s28,
-                    // ),
-                    Text(
-                      'User Name',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark, fontSize: FontSize.s16),
+                    InkWell(
+                      onTap: () {
+                        // _accountViewGetXController.logout(context: context);
+                        Navigator.of(context).pushNamed(Routes.updateSellerInfo);
+                      },
+                      child: Image.asset(
+                        'assets/icons/editProfile.png',
+                        color: ColorManager.primaryDark,
+                      ),
                     ),
-                    SizedBox(
-                      width: AppSize.s60,
+
+                    Row(
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            fit: BoxFit.cover,
+                            'assets/images/avatar_person.png',
+                            height: AppSize.s154,
+                            width: AppSize.s154,
+                          ),
+                        ),
+                       SizedBox(
+                         width: 15,
+                       ),
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           FittedBox(fit: BoxFit.scaleDown,
+                             child: Text(
+                               userDetails['userName'],
+                               style: getSemiBoldStyle(
+                                   color: ColorManager.primary, fontSize: FontSize.s16),
+                             ),
+                           ),
+                           SizedBox(height: 4,),
+                           FittedBox(fit: BoxFit.scaleDown,
+                             child: Text(
+                               userDetails['email'],
+                               style: getSemiBoldStyle(
+                                   color: ColorManager.primary, fontSize: FontSize.s14),
+                             ),
+                           ),
+                           SizedBox(height: 4,),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child:  Text(
+                              userDetails['telephone'],
+                              style: getSemiBoldStyle(
+                                  color: ColorManager.primary, fontSize: FontSize.s14),
+                            ),
+                          ),
+                         ],
+
+                       ),
+                      ],
                     ),
-                    Text(
-                      userDetails['userName'],
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s16),
-                    ),
-                    // Spacer(),
-                    // Text(
-                    //   '100 AED',
-                    //   style: getSemiBoldStyle(
-                    //       color: ColorManager.greyLight,
-                    //       fontSize: FontSize.s16),
-                    // ),
                   ],
                 ),
 
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: AppPadding.p16),
-                  child: Divider(
-                    color: ColorManager.greyLight,
-                    height: AppSize.s1,
-                  ),
-                ),
-
-                Row(
-                  children: [
-                    // Image.asset(
-                    //   IconsAssets.wallet1,
-                    //   height: AppSize.s28,
-                    //   width: AppSize.s28,
-                    // ),
-                    Text(
-                      'Email',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark, fontSize: FontSize.s16),
-                    ),
-                    SizedBox(
-                      width: AppSize.s60,
-                    ),
-                    Text(
-                      userDetails['email'],
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s16),
-                    ),
-
-                  ],
-                ),
-
                 SizedBox(
-                  height: AppSize.s40,
-                ),
-                Row(
-                  children: [
-                    // Image.asset(
-                    //   IconsAssets.wallet1,
-                    //   height: AppSize.s28,
-                    //   width: AppSize.s28,
-                    // ),
-                    Text(
-                      'Telephone',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark, fontSize: FontSize.s16),
-                    ),
-                    SizedBox(
-                      width: AppSize.s60,
-                    ),
-                    Text(
-                      userDetails['telephone'],
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s16),
-                    ),
-                    // Spacer(),
-                    // Text(
-                    //   '100 AED',
-                    //   style: getSemiBoldStyle(
-                    //       color: ColorManager.greyLight,
-                    //       fontSize: FontSize.s16),
-                    // ),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s40,
-                ),
-                Row(
-                  children: [
-                    // Image.asset(
-                    //   IconsAssets.wallet1,
-                    //   height: AppSize.s28,
-                    //   width: AppSize.s28,
-                    // ),
-                    Text(
-                      'Subscribe',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark, fontSize: FontSize.s16),
-                    ),
-                    SizedBox(
-                      width: AppSize.s60,
-                    ),
-                    userDetails['sellerSubmittedForm'] ? Text(
-                      'Subscribed',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s16),
-                    ) : Text(
-                      'Unsubscribed',
-                      style: getSemiBoldStyle(
-                          color: ColorManager.primary, fontSize: FontSize.s16),
-                    ),
-                    // Spacer(),
-                    // Text(
-                    //   '100 AED',
-                    //   style: getSemiBoldStyle(
-                    //       color: ColorManager.greyLight,
-                    //       fontSize: FontSize.s16),
-                    // ),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s40,
+                    height: AppSize.s73
                 ),
                 GestureDetector(
                     onTap: () {
@@ -262,111 +186,30 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                     AppLocalizations.of(context)!.get_help,
                   ),
                 ),
-
                 SizedBox(
-                  height: AppSize.s40,
+                  height: AppSize.s92
                 ),
-
-
-                Row(
-                  children: [
-
-                    GestureDetector(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (builder) => AboutAppView()),
-                          // );
-                          _accountViewGetXController.logout(context: context);
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.logout, color: ColorManager.primary,size: 25,),
-                            SizedBox(
-                              width: AppSize.s8,
-                            ),
-                            Text(
-                              // AppLocalizations.of(context)!.language,
-                              'Logout',
-                              style: getRegularStyle(
-                                color: ColorManager.red,
-                                fontSize: FontSize.s16,
-                              ),
-                            ),
-                          ],
-                        )),
-
-
-                    Spacer(),
-
-                    InkWell(
-                      onTap: () {
-                        // _accountViewGetXController.logout(context: context);
-                        Navigator.of(context).pushNamed(Routes.updateSellerInfo);
-                      },
-                      child: Row(
-                        children: [
-                          Text('Edit',style: TextStyle(fontSize: AppSize.s16)),
-                          SizedBox(
-                            width: AppSize.s8,
+                GestureDetector(
+                    onTap: () {
+                      _accountViewGetXController.logout(context: context);
+                    },
+                    child: Column(
+                      children: [
+                        Icon(Icons.logout, color: ColorManager.primary,size: 40,),
+                        SizedBox(
+                          height: AppSize.s8,
+                        ),
+                        Text(
+                          // AppLocalizations.of(context)!.language,
+                          'Logout',
+                          style: TextStyle(
+                            color: ColorManager.red,
+                            fontSize: FontSize.s24,
+                            fontWeight: FontWeight.w500
                           ),
-                          Image.asset(
-                            'assets/icons/editProfile.png',
-                            color: ColorManager.primaryDark,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(
-                      width: AppSize.s40,
-                    ),
-                  ],
-                ),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(vertical: AppPadding.p16),
-                //   child: Divider(
-                //     color: ColorManager.greyLight,
-                //     height: AppSize.s1,
-                //   ),
-                // ),
-                // Row(
-                //   children: [
-                //     Image.asset(
-                //       IconsAssets.offers1,
-                //       height: AppSize.s28,
-                //       width: AppSize.s28,
-                //     ),
-                //     SizedBox(
-                //       width: AppSize.s24,
-                //     ),
-                //     Text(
-                //       AppLocalizations.of(context)!.catalog,
-                //       style: getSemiBoldStyle(
-                //           color: ColorManager.primary, fontSize: FontSize.s16),
-                //     ),
-                //     Spacer(),
-                //     Transform(
-                //       transform: Matrix4.rotationY(math.pi),
-                //       child: Image.asset(
-                //         IconsAssets.arrow,
-                //         height: AppSize.s28,
-                //         width: AppSize.s28,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                SizedBox(
-                  height: AppSize.s16,
-                ),
-                Divider(
-                  color: ColorManager.greyLight,
-                  height: AppSize.s1,
-                ),
-                SizedBox(
-                  height: AppSize.s20,
-                ),
+                        ),
+                      ],
+                    )),
               ],
             ),
           ),

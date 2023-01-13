@@ -217,6 +217,42 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     }
   }
 
+  Future<void> createIndividualProductsWithout(
+  {
+    required  String name,
+    required String description,
+    required String productType,
+    required int price,
+}
+    ) async {
+    var url =
+    Uri.parse('${Constants.urlBase}/product/create-individual-products');
+    try {
+      final response = await http.post(url,
+          headers: headers,
+          body: jsonEncode({
+            'name': name,
+            'description': description,
+            'characteristics': '',
+            'productType': productType,
+            'price': price,
+            'images': [],
+          }));
+
+      print('=====================addItemSeller============');
+      print(response.statusCode);
+      print(response.body);
+      print(json.decode(response.body));
+      print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      // print(repo);
+    } catch (e) {
+      // print(e);
+    }
+  }
+
+
   Future<void> readIndividualProducts() async {
     var url =
         Uri.parse('${Constants.urlBase}/product/read-individual-products');
@@ -290,9 +326,9 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     final response = await http.get(url,headers: headers);
 
     var data = jsonDecode(response.body)['data'];
-
-    print('============================userDetails');
-    print(data);
+    //
+    // print('============================userDetails');
+    // print(data);
 
     userDetails = data;
     notifyListeners();

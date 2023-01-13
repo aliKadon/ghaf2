@@ -39,16 +39,20 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
 
   @override
   void initState() {
-    Provider.of<SellerProvider>(context, listen: false)
-        .getUserDetails()
-        .then((value) => isLoading = false);
+
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
     _passwordTextController = TextEditingController();
     _phoneTextController = TextEditingController();
     super.initState();
   }
-
+@override
+  void didChangeDependencies() {
+  Provider.of<SellerProvider>(context)
+      .getUserDetails()
+      .then((value) => isLoading = false);
+    super.didChangeDependencies();
+  }
   @override
   void dispose() {
     _nameTextController.dispose();
@@ -57,18 +61,11 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
     _phoneTextController.dispose();
     super.dispose();
   }
-  final _focusNode = FocusNode();
-  final _focusNode1 = FocusNode();
-
+ late var userInfo = Provider.of<SellerProvider>(context,listen: false).userDetails;
+ late var message = Provider.of<ProductProvider>(context,listen: false).repo;
   @override
   Widget build(BuildContext context) {
-    var userInfo = Provider.of<SellerProvider>(context).userDetails;
-    var message = Provider.of<ProductProvider>(context).repo;
-    _nameTextController.text = userInfo['firstName'] ?? '';
-    _emailTextController.text = userInfo['lastName'] ?? '';
-    _passwordTextController.text = userInfo['telephone'] ?? '';
-    _phoneTextController.text = userInfo['birthDate'] ?? '';
-
+    _phoneTextController.text = userInfo['birthDate'] ;
     return Scaffold(
       body: isLoading
           ? Center(
@@ -85,6 +82,9 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
         child: SafeArea(
           child: Column(
             children: [
+              SizedBox(
+                height: AppSize.s11,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -130,13 +130,13 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
                   Expanded(
                     child: AppTextField(
                       textController: _nameTextController,
-                      hint: 'First Name',
+                      hint: userInfo['firstName'],
                     ),
                   ),
                   Expanded(
                     child: AppTextField(
                       textController: _emailTextController,
-                      hint: 'Last Name',
+                      hint: userInfo['lastName'],
                     ),
                   ),
                 ],
@@ -146,7 +146,7 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
               // ),
               AppTextField(
                 textController: _passwordTextController,
-                hint: 'phone Number',
+                hint: userInfo['telephone'],
                 textInputAction:TextInputAction.go ,
                 onSaved: (value){
                   value ==  _passwordTextController.text;

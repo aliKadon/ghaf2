@@ -23,28 +23,28 @@ class CreatePaymentLinkSellerView extends StatefulWidget {
 class _CreatePaymentLinkSellerViewState
     extends State<CreatePaymentLinkSellerView> with Helpers {
   late TextEditingController _nameTextController;
-  late TextEditingController _emailTextController;
-  late TextEditingController _passwordTextController;
-  late TextEditingController _phoneTextController;
-  late TextEditingController _discTextController;
+  late TextEditingController _productTypeTextController;
+  late TextEditingController _paymentAmountTextController;
+  late TextEditingController _amountTextController;
+  late TextEditingController _descriptionTextController;
 
   @override
   void initState() {
     super.initState();
     _nameTextController = TextEditingController();
-    _emailTextController = TextEditingController();
-    _passwordTextController = TextEditingController();
-    _phoneTextController = TextEditingController();
-    _discTextController = TextEditingController();
+    _productTypeTextController = TextEditingController();
+    _paymentAmountTextController = TextEditingController();
+    _amountTextController = TextEditingController();
+    _descriptionTextController = TextEditingController();
   }
 
   @override
   void dispose() {
     _nameTextController.dispose();
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
-    _phoneTextController.dispose();
-    _discTextController.dispose();
+    _productTypeTextController.dispose();
+    _paymentAmountTextController.dispose();
+    _amountTextController.dispose();
+    _descriptionTextController.dispose();
 
     super.dispose();
   }
@@ -55,7 +55,7 @@ class _CreatePaymentLinkSellerViewState
 
   @override
   Widget build(BuildContext context) {
-    var repo = Provider.of<SellerProvider>(context).repo;
+    var repo = Provider.of<SellerProvider>(context,listen: false).repo;
 
     list?.add('data:image/jpeg;base64,');
     return Scaffold(
@@ -102,32 +102,32 @@ class _CreatePaymentLinkSellerViewState
                 children: [
                   Expanded(
                     child: AppTextField(
-                      textController: _passwordTextController,
+                      textController: _paymentAmountTextController,
                       hint: AppLocalizations.of(context)!.payment_amount,
-                      textInputType: TextInputType.number,
-                      obscureText: true,
+                      textInputType: TextInputType.phone,
+                      // obscureText: true,
                     ),
                   ),
                   Expanded(
                     child: AppTextField(
-                      textController: _emailTextController,
+                      textController: _productTypeTextController,
                       // hint: AppLocalizations.of(context)!.link_expiration_date,
                       hint: 'Product Type',
                       textInputType: TextInputType.text,
-                      obscureText: true,
+                      // obscureText: true,
                     ),
                   ),
                 ],
               ),
               AppTextField(
-                textController: _phoneTextController,
+                textController: _amountTextController,
                 // hint: AppLocalizations.of(context)!.link_expiration_date,
                 hint: 'Amount',
-                textInputType: TextInputType.number,
-                obscureText: true,
+                textInputType: TextInputType.phone,
+                // obscureText: true,
               ),
               AppTextField(
-                textController: _discTextController,
+                textController: _descriptionTextController,
                 hint: AppLocalizations.of(context)!.description,
                 lines: 4,
               ),
@@ -143,20 +143,21 @@ class _CreatePaymentLinkSellerViewState
                 child: ElevatedButton(
                   onPressed: () {
                     showLoadingDialog(context: context, title: 'Loading');
+                    
+                    
                     Provider.of<SellerProvider>(context, listen: false)
-                        .createIndividualProducts(
-                            _nameTextController.text,
-                            _discTextController.text,
-                            'aaa',
-                            _emailTextController.text,
-                            int.parse(_passwordTextController.text),
-                        ['hu'])
+                        .createIndividualProductsWithout(
+                        name: _nameTextController.text,
+                            description: _descriptionTextController.text ,
+                            price: int.parse(_paymentAmountTextController.text),
+                            productType: _productTypeTextController.text,
+                    )
                         .then((value) => ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(repo))))
                         .then((value) => Navigator.of(context).pop())
                         .then((value) => Navigator.of(context).pushNamed(
                             Routes.createPaymentLink2SellerRoute,
-                            arguments: int.parse(_phoneTextController.text)))
+                            arguments: int.parse(_amountTextController.text)))
                         .catchError(((e) => ScaffoldMessenger.of(context)
                             .showSnackBar(
                                 SnackBar(content: Text(repo)))));
@@ -186,9 +187,9 @@ class _CreatePaymentLinkSellerViewState
 
   bool _checkData() {
     if (_nameTextController.text.isNotEmpty &&
-        _emailTextController.text.isNotEmpty &&
-        _passwordTextController.text.isNotEmpty &&
-        _phoneTextController.text.isNotEmpty) {
+        _productTypeTextController.text.isNotEmpty &&
+        _paymentAmountTextController.text.isNotEmpty &&
+        _amountTextController.text.isNotEmpty) {
       return true;
     }
     showSnackBar(context, message: 'Enter Required Data!', error: true);

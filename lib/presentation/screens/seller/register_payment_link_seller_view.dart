@@ -99,7 +99,7 @@ class _RegisterPaymentLinkSellerViewState
                 ImageAssets.logo2,
                 fit: BoxFit.fill,
                 height: AppSize.s92,
-                width: AppSize.s82,
+                width: AppSize.s92,
               ),
               SizedBox(
                 height: AppSize.s32,
@@ -293,6 +293,7 @@ class _RegisterPaymentLinkSellerViewState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Radio(
+                      activeColor: ColorManager.primary,
                         value: 'Agree',
                         onChanged: (n) {
                           setState(() {
