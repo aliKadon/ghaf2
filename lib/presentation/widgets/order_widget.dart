@@ -12,7 +12,7 @@ class OrderWidget extends StatelessWidget {
   final OrderAllInformation order;
   final String isOrderToPay;
 
-  OrderWidget(this.order,this.isOrderToPay);
+  OrderWidget(this.order, this.isOrderToPay);
 
   // OrderWidget(
   //   Key? key,
@@ -21,7 +21,7 @@ class OrderWidget extends StatelessWidget {
   // ) : super(key: key);
 
   // OrderWidget(this.order);
-List a = [];
+  List a = [];
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +37,17 @@ List a = [];
         children: [
           Column(
             children: List.generate(
-              order.orderDetails['items'].length,
+              order.orderDetails['items']!.length,
               (index) => Column(
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/images/product_image.png',fit: BoxFit.cover, height: 70.h,
-                        width: 70.h,),
-
+                      Image.asset(
+                        'assets/images/product_image.png',
+                        fit: BoxFit.cover,
+                        height: 70.h,
+                        width: 70.h,
+                      ),
                       SizedBox(
                         width: 15.w,
                       ),
@@ -172,27 +175,33 @@ List a = [];
               onPressed: () {
                 if (isOrderToPay == 'orderTrack') {
                   Navigator.of(context)
-                      .pushNamed(Routes.orderTrackingScreen, arguments: order.orderDetails);
-                }else {
+                      .pushNamed(Routes.orderTrackingScreen, arguments: order);
+                } else {
                   Navigator.pushNamed(context, Routes.checkOutRoute,
                       arguments: order);
                 }
 
                 print("it is here: ${order.orderDetails['id']}");
               },
-              child: isOrderToPay == 'orderTrack' ? Text(
-                'Track Order',
-                style: getSemiBoldStyle(
-                  color: ColorManager.white,
-                  fontSize: FontSize.s18,
-                ),
-              ) : Text(
-                'Checkout',
-                style: getSemiBoldStyle(
-                  color: ColorManager.white,
-                  fontSize: FontSize.s18,
-                ),
-              ),
+              child: isOrderToPay == 'orderTrack' ||
+                      isOrderToPay == 'In Progress' ||
+                      isOrderToPay == 'Delivery' ||
+                      isOrderToPay == 'Completed' ||
+                      isOrderToPay == 'Pending'
+                  ? Text(
+                      'Track Order',
+                      style: getSemiBoldStyle(
+                        color: ColorManager.white,
+                        fontSize: FontSize.s18,
+                      ),
+                    )
+                  : Text(
+                      'Checkout',
+                      style: getSemiBoldStyle(
+                        color: ColorManager.white,
+                        fontSize: FontSize.s18,
+                      ),
+                    ),
             ),
           ),
         ],

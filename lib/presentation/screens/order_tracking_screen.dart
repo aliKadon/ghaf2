@@ -17,9 +17,9 @@ import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 
 class OrderTrackingScreen extends StatefulWidget {
-  final Map<String, dynamic> orderinfo;
+  final String orderId;
 
-  OrderTrackingScreen(this.orderinfo);
+  OrderTrackingScreen(this.orderId);
 
   @override
   State<OrderTrackingScreen> createState() => _OrderTrackingScreenState();
@@ -124,16 +124,48 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
   @override
   void initState() {
-    getLocation();
-    getPolyPoints();
-    Provider.of<ProductProvider>(context, listen: false).getDurationGoogleMap(
-        LatOne: 37.33500926,
-        LonOne: -122.03272188,
-        LatTow: 37.33429383,
-        LonTow: -122.06600055,
-    );
+    Provider.of<ProductProvider>(context, listen: false)
+        .getOrderById(widget.orderId)
+        .then((value) => getLocation())
+        .then((value) => getPolyPoints(
+            Provider.of<ProductProvider>(context, listen: false)
+                .orderById['deliveryPoint'],
+            Provider.of<ProductProvider>(context, listen: false)
+                .orderById['branch']['branchAddress']))
+        .then((value) => Provider.of<ProductProvider>(context, listen: false)
+                .getDurationGoogleMap(
+              LatOne: double.parse(
+                  Provider.of<ProductProvider>(context, listen: false)
+                      .orderById['deliveryPoint']['altitude']),
+              LonOne: double.parse(
+                  Provider.of<ProductProvider>(context, listen: false)
+                      .orderById['deliveryPoint']['longitude']),
+              LatTow: double.parse(
+                  Provider.of<ProductProvider>(context, listen: false)
+                      .orderById['branch']['branchAddress']['altitude'] ),
+              LonTow: double.parse(
+                  Provider.of<ProductProvider>(context, listen: false)
+                      .orderById['branch']['branchAddress']['longitude']),
+            ))
+        .then((value) => getColorBackground(
+            Provider.of<ProductProvider>(context, listen: false)
+                .orderById['statusName']))
+        .then((value) => getColorIcon(
+            Provider.of<ProductProvider>(context, listen: false)
+                .orderById['statusName']))
+        .then((value) =>
+            getTextSetuaition(Provider.of<ProductProvider>(context, listen: false).orderById['statusName']))
+        .then((value) => isLoading = false);
+
+    // Provider.of<ProductProvider>(context, listen: false).getDurationGoogleMap(
+    //   LatOne: 37.33500926,
+    //   LonOne: -122.03272188,
+    //   LatTow: 37.33429383,
+    //   LonTow: -122.06600055,
+    // );
     super.initState();
   }
+
   //
   // static LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   // static LatLng destination1 = LatLng(37.33429383, -122.06600055);
@@ -169,7 +201,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     }
     print('===========================location');
     print(locationData!.latitude);
-    print(widget.orderinfo);
+    print(widget.orderId);
   }
 
   // LocationData locationData = await location.getLocation();
@@ -192,11 +224,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
   List<LatLng> polylineCoordinates = [];
 
-  void getPolyPoints() async {
+  void getPolyPoints(
+      Map<String, dynamic> source, Map<String, dynamic> dest) async {
     Timer(Duration(seconds: 7), () async {
       print('=========================location');
       print(locationData?.longitude);
-      print(widget.orderinfo['statusName']);
+      print(widget.orderId);
       // setState(() {
       //
       // });
@@ -213,8 +246,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         //         destination1.latitude,
         //     widget.orderinfo['branchAddress']['longitude'] ??
         //         destination1.longitude),
-        PointLatLng(locationData!.latitude!, locationData!.longitude!),
-        PointLatLng(destination1.latitude, destination1.longitude),
+        PointLatLng(double.parse(source['altitude']),
+            double.parse(source['longitude'])),
+        PointLatLng(
+            double.parse(dest['altitude']), double.parse(dest['longitude'])),
         // PointLatLng(locationData!.latitude!, locationData!.latitude!),
       );
       if (result.points.isNotEmpty) {
@@ -226,7 +261,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
         // if(!mounted) return;
         setState(() {
-          isLoading = false;
+          // isLoading = false;
         });
       }
     });
@@ -251,316 +286,345 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    getColorBackground(widget.orderinfo['statusName']);
-    getColorIcon(widget.orderinfo['statusName']);
-    getTextSetuaition(widget.orderinfo['statusName']);
+    var orderById = Provider.of<ProductProvider>(context).orderById;
+    // getColorBackground(orderById['statusName']);
+    // getColorIcon(orderById['statusName']);
+    // getTextSetuaition(orderById['statusName']);
+    print('===================================statusName');
+    print(orderById['statusName']);
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
-                      ),
+          child: isLoading
+              ? Center(
+                  child: Container(
+                    width: 20.h,
+                    height: 20.h,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
                     ),
-                    Spacer(),
-                    Text(
-                      'Tracking Your Order',
-                      style: getSemiBoldStyle(
-                        color: ColorManager.primaryDark,
-                        fontSize: FontSize.s18,
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                Divider(height: 2, color: ColorManager.greyLight),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: isLoading
-                      ? Center(
-                          child: Container(
-                            width: 20.h,
-                            height: 20.h,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1,
-                            ),
-                          ),
-                        )
-                      : Container(
-                          padding: EdgeInsets.all(10),
-                          child: GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                              target: widget.orderinfo['deliveryPoint'] == null
-                                  ? LatLng(locationData!.latitude!,
-                                      locationData!.longitude!)
-                                  : LatLng(
-                                      widget.orderinfo['deliveryPoint']
-                                          ['latitude'],
-                                      widget.orderinfo['deliveryPoint']
-                                          ['longitude']),
-                              zoom: 12.5,
-                            ),
-                            markers: {
-                              Marker(
-                                markerId: MarkerId("source"),
-                                position: LatLng(locationData!.latitude!,
-                                    locationData!.longitude!),
-
-                                // LatLng(
-                                //     widget.orderinfo['deliveryPoint'],
-                                //     widget.orderinfo['deliveryPoint']) ??
-                              ),
-                              Marker(
-                                markerId: MarkerId("destination"),
-                                position:
-                                    widget.orderinfo['branchAddress'] == null
-                                        ? destination1
-                                        : LatLng(
-                                            widget.orderinfo['branchAddress']
-                                                ['latitude'],
-                                            widget.orderinfo['branchAddress']
-                                                ['longitude']),
-                              ),
-                            },
-                            onMapCreated: (mapController) {
-                              _controller.complete(mapController);
-                            },
-                            polylines: {
-                              Polyline(
-                                polylineId: const PolylineId("route"),
-                                points: polylineCoordinates,
-                                color: const Color(0xFF7B61FF),
-                                width: 6,
-                              ),
-                            },
-                          ),
-                        ),
-                ),
-                Text(
-                  "Time Of Your Order Arrival",
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: ColorManager.primaryDark,
-                      fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '${Provider.of<ProductProvider>(context, listen:  false).duration}' ?? '',
-                  style: TextStyle(fontSize: 18.0, color: ColorManager.primary),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  // height: MediaQuery.of(context).size.height * 0.4,
-                  // width: MediaQuery.of(context).size.height * 1,
-                  child: Row(
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: color1,
-                          border: Border.all(
-                            color: Color(0xff125051),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Image.asset(
+                              IconsAssets.arrow,
+                              height: AppSize.s18,
+                              width: AppSize.s10,
+                            ),
                           ),
-                        ),
-                        child: Icon(Icons.done, color: cIcon1, size: 35),
-                      ),
-                      Spacer(),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: color2,
-                          border: Border.all(
-                            color: Color(0xff125051),
+                          Spacer(),
+                          Text(
+                            'Tracking Your Order',
+                            style: getSemiBoldStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s18,
+                            ),
                           ),
-                        ),
-                        child: Icon(Icons.local_print_shop_rounded,
-                            color: cIcon2, size: 35),
+                          Spacer(),
+                        ],
                       ),
-                      Spacer(),
+                      Divider(height: 2, color: ColorManager.greyLight),
                       Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: color3,
-                          border: Border.all(
-                            color: Color(0xff125051),
-                          ),
-                        ),
-                        child: Icon(Icons.drive_eta_rounded,
-                            color: cIcon3, size: 35),
-                      ),
-                      Spacer(),
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: isLoading
+                            ? Center(
+                                child: Container(
+                                  width: 20.h,
+                                  height: 20.h,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                padding: EdgeInsets.all(10),
+                                child: GoogleMap(
+                                  initialCameraPosition: CameraPosition(
+                                    target: orderById['deliveryPoint'] == null
+                                        ? LatLng(locationData!.latitude!,
+                                            locationData!.longitude!)
+                                        : LatLng(
+                                            double.parse(
+                                                orderById['deliveryPoint']
+                                                    ['altitude']),
+                                            double.parse(
+                                                orderById['deliveryPoint']
+                                                    ['longitude'])),
+                                    zoom: 12.5,
+                                  ),
+                                  markers: {
+                                    Marker(
+                                      markerId: MarkerId("source"),
+                                      position:
+                                          orderById['deliveryPoint'] == null
+                                              ? LatLng(locationData!.latitude!,
+                                                  locationData!.longitude!)
+                                              : LatLng(
+                                                  double.parse(
+                                                      orderById['deliveryPoint']
+                                                          ['altitude']),
+                                                  double.parse(
+                                                      orderById['deliveryPoint']
+                                                          ['longitude'])),
 
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: color4,
-                          border: Border.all(
-                            color: Color(0xff125051),
-                          ),
-                        ),
-                        child: Icon(Icons.done_all, color: cIcon4, size: 35),
+                                      // LatLng(
+                                      //     widget.orderinfo['deliveryPoint'],
+                                      //     widget.orderinfo['deliveryPoint']) ??
+                                    ),
+                                    Marker(
+                                      markerId: MarkerId("destination"),
+                                      position:
+                                          orderById['branchAddress'] == null
+                                              ? destination1
+                                              : LatLng(
+                                                  double.parse(
+                                                      orderById['branchAddress']
+                                                          ['altitude']),
+                                                  double.parse(
+                                                      orderById['branchAddress']
+                                                          ['longitude'])),
+                                    ),
+                                  },
+                                  onMapCreated: (mapController) {
+                                    _controller.complete(mapController);
+                                  },
+                                  polylines: {
+                                    Polyline(
+                                      polylineId: const PolylineId("route"),
+                                      points: polylineCoordinates,
+                                      color: const Color(0xFF7B61FF),
+                                      width: 6,
+                                    ),
+                                  },
+                                ),
+                              ),
                       ),
+                      Text(
+                        "Time Of Your Order Arrival",
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: ColorManager.primaryDark,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        '${Provider.of<ProductProvider>(context, listen: false).duration}' ??
+                            '0',
+                        style: TextStyle(
+                            fontSize: 18.0, color: ColorManager.primary),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        // height: MediaQuery.of(context).size.height * 0.4,
+                        // width: MediaQuery.of(context).size.height * 1,
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.r),
+                                color: color1,
+                                border: Border.all(
+                                  color: Color(0xff125051),
+                                ),
+                              ),
+                              child: Icon(Icons.done, color: cIcon1, size: 35),
+                            ),
+                            Spacer(),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.r),
+                                color: color2,
+                                border: Border.all(
+                                  color: Color(0xff125051),
+                                ),
+                              ),
+                              child: Icon(Icons.local_print_shop_rounded,
+                                  color: cIcon2, size: 35),
+                            ),
+                            Spacer(),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.r),
+                                color: color3,
+                                border: Border.all(
+                                  color: Color(0xff125051),
+                                ),
+                              ),
+                              child: Icon(Icons.drive_eta_rounded,
+                                  color: cIcon3, size: 35),
+                            ),
+                            Spacer(),
 
-                      // widget.orderinfo['statusName'] == 'Intialized'
-                      //     ? Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.done,
-                      //             color: Colors.white, size: 35),
-                      //       )
-                      //     : Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.white,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.done,
-                      //             color: Colors.grey, size: 35),
-                      //       ),
-                      // Container(
-                      //   padding: EdgeInsets.all(8),
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(12.r),
-                      //     color: Colors.green,
-                      //     border: Border.all(
-                      //       color: Color(0xff125051),
-                      //     ),
-                      //   ),
-                      //   child: Icon(Icons.done_all,
-                      //       color: Colors.white, size: 35),
-                      // ),
-                      // widget.orderinfo['statusName'] == 'AssignedToEmployee'
-                      //     ? Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.local_print_shop_rounded,
-                      //             color: Colors.white, size: 35),
-                      //       )
-                      //     : Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.local_print_shop_rounded,
-                      //             color: Colors.white, size: 35),
-                      //       ),
-                      // widget.orderinfo['statusName'] == 'ReadyForDriver'
-                      //     ? Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.drive_eta_rounded,
-                      //             color: Colors.white, size: 35),
-                      //       )
-                      //     : Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.drive_eta_rounded,
-                      //             color: Colors.white, size: 35),
-                      //       ),
-                      // widget.orderinfo['statusName'] == 'Done'
-                      //     ? Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.done_all,
-                      //             color: Colors.white, size: 35),
-                      //       )
-                      //     : Container(
-                      //         padding: EdgeInsets.all(8),
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(12.r),
-                      //           color: Colors.green,
-                      //           border: Border.all(
-                      //             color: Color(0xff125051),
-                      //           ),
-                      //         ),
-                      //         child: Icon(Icons.done_all,
-                      //             color: Colors.white, size: 35),
-                      //       ),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.r),
+                                color: color4,
+                                border: Border.all(
+                                  color: Color(0xff125051),
+                                ),
+                              ),
+                              child:
+                                  Icon(Icons.done_all, color: cIcon4, size: 35),
+                            ),
+
+                            // widget.orderinfo['statusName'] == 'Intialized'
+                            //     ? Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.done,
+                            //             color: Colors.white, size: 35),
+                            //       )
+                            //     : Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.white,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.done,
+                            //             color: Colors.grey, size: 35),
+                            //       ),
+                            // Container(
+                            //   padding: EdgeInsets.all(8),
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(12.r),
+                            //     color: Colors.green,
+                            //     border: Border.all(
+                            //       color: Color(0xff125051),
+                            //     ),
+                            //   ),
+                            //   child: Icon(Icons.done_all,
+                            //       color: Colors.white, size: 35),
+                            // ),
+                            // widget.orderinfo['statusName'] == 'AssignedToEmployee'
+                            //     ? Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.local_print_shop_rounded,
+                            //             color: Colors.white, size: 35),
+                            //       )
+                            //     : Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.local_print_shop_rounded,
+                            //             color: Colors.white, size: 35),
+                            //       ),
+                            // widget.orderinfo['statusName'] == 'ReadyForDriver'
+                            //     ? Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.drive_eta_rounded,
+                            //             color: Colors.white, size: 35),
+                            //       )
+                            //     : Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.drive_eta_rounded,
+                            //             color: Colors.white, size: 35),
+                            //       ),
+                            // widget.orderinfo['statusName'] == 'Done'
+                            //     ? Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.done_all,
+                            //             color: Colors.white, size: 35),
+                            //       )
+                            //     : Container(
+                            //         padding: EdgeInsets.all(8),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.r),
+                            //           color: Colors.green,
+                            //           border: Border.all(
+                            //             color: Color(0xff125051),
+                            //           ),
+                            //         ),
+                            //         child: Icon(Icons.done_all,
+                            //             color: Colors.white, size: 35),
+                            //       ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        textSetuaition,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s16,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushReplacementNamed(
+                                  Routes.reviewProduct,
+                                  arguments: widget.orderId);
+                            },
+                            child: Text('Give Feedback for product')),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  textSetuaition,
-                  style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark,
-                    fontSize: FontSize.s16,
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacementNamed(
-                            Routes.reviewProduct,
-                            arguments: widget.orderinfo);
-                      },
-                      child: Text('Give Feedback for product')),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

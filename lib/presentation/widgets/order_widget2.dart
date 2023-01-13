@@ -1,126 +1,213 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../domain/model/unpaid_order.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
+import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 
 class OrderWidget2 extends StatelessWidget {
-  const OrderWidget2({
-    Key? key,
-    required String name,
-    required String amount,
-    required String date,
-    required String orderType,
-    required String orderStatus,
-  })  : _name = name,
-        _amount = amount,
-        _date = date,
-        _orderType = orderType,
-        _orderStatus = orderStatus,
-        super(key: key);
+  final UnpaidOrder order;
+  final String isOrderToPay;
 
-  final String _name;
-  final String _amount;
-  final String _date;
-  final String _orderType;
-  final String _orderStatus;
+  OrderWidget2(this.order, this.isOrderToPay);
+
+  // OrderWidget(
+  //   Key? key,
+  //   this.order,
+  //   this.isOrderToPay,
+  // ) : super(key: key);
+
+  // OrderWidget(this.order);
+  List a = [];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: AppSize.s344,
-      // height: AppSize.s129,
-      margin: EdgeInsets.only(
-          bottom: AppMargin.m12, left: AppMargin.m16, right: AppMargin.m16),
-      padding: EdgeInsets.all(AppPadding.p16),
+      padding: EdgeInsets.all(8.h),
       decoration: BoxDecoration(
-        color: ColorManager.white,
-        border: Border.all(width: AppSize.s0_5, color: ColorManager.red),
-        boxShadow: [
-          BoxShadow(
-            color: ColorManager.red,
-            blurRadius: AppSize.s2,
-            offset: Offset(AppSize.s0, AppSize.s2), // Shadow position
-          ),
-        ],
-        borderRadius: BorderRadius.circular(AppRadius.r10),
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(
+          color: Colors.grey.shade300,
+        ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Column(
+            children: List.generate(
+              order.items!.length,
+              (index) => Column(
+                children: [
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/product_image.png',
+                        fit: BoxFit.cover,
+                        height: 70.h,
+                        width: 70.h,
+                      ),
+                      SizedBox(
+                        width: 15.w,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              order.items![index]['name'] ?? '',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Text(
+                              'X${order.items![index]['quanity']}   ${order.items![index]['price']} ${order.items![index]['isoCurrencySymbol']}',
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Divider(),
           Row(
             children: [
               Text(
-                _name,
-                style: getBoldStyle(
-                  color: ColorManager.black,
-                  fontSize: FontSize.s12,
+                'Total',
+                style: TextStyle(
+                  fontSize: 16.sp,
                 ),
               ),
               Spacer(),
               Text(
-                _amount,
-                style: getRegularStyle(
-                  color: ColorManager.primary,
-                  fontSize: FontSize.s14,
+                '${order.orderCostForCustomer!.toStringAsFixed(1)} ${order.items![0]['isoCurrencySymbol']}',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          SizedBox(height: AppSize.s6),
-          Text(
-            _date,
-            style: getRegularStyle(
-              color: ColorManager.black,
-              fontSize: FontSize.s12,
+          if (order.canPayLaterValue != 0)
+            Row(
+              children: [
+                Text(
+                  'You can pay later',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  '${order.canPayLaterValue!.toStringAsFixed(1)} ${order.items![0]['isoCurrencySymbol']}',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
+          if (order.totalCostForItems! != order.orderCostForCustomer!) ...[
+            SizedBox(
+              height: 5.h,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.info,
+                  color: Theme.of(context).primaryColor,
+                  size: 15.h,
+                ),
+                SizedBox(
+                  width: 5.w,
+                ),
+                Text(
+                  'Dear customer you will get ',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 11.sp,
+                  ),
+                ),
+                Text(
+                  '${(order.totalCostForItems! - order.orderCostForCustomer!).toStringAsFixed(1)} ${order.items![0]['isoCurrencySymbol']}',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11.sp,
+                  ),
+                ),
+                Text(
+                  ' as discount',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 11.sp,
+                  ),
+                ),
+              ],
+            )
+          ],
+          SizedBox(
+            height: 5.h,
           ),
-          SizedBox(height: AppSize.s12),
-          Divider(
-            color: ColorManager.grey,
-            height: AppSize.s1,
-          ),
-          SizedBox(height: AppSize.s10),
-          Row(
-            children: [
-              Text(
-                'نوع الطلب : ',
-                style: getBoldStyle(
-                  color: ColorManager.black,
-                  fontSize: FontSize.s12,
-                ),
-              ),
-              SizedBox(height: AppSize.s4),
-              Text(
-                _orderType,
-                style: getBoldStyle(
-                  color: ColorManager.grey,
-                  fontSize: FontSize.s12,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: AppSize.s6),
-          Row(
-            children: [
-              Text(
-                'حالة الطلب : ',
-                style: getBoldStyle(
-                  color: ColorManager.black,
-                  fontSize: FontSize.s12,
-                ),
-              ),
-              SizedBox(height: AppSize.s4),
-              Text(
-                _orderStatus,
-                style: getBoldStyle(
-                  color: ColorManager.red,
-                  fontSize: FontSize.s12,
-                ),
-              ),
-            ],
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: AppMargin.m16,
+            ),
+            width: double.infinity,
+            height: 45.h,
+            child: ElevatedButton(
+              onPressed: () {
+                if (isOrderToPay == 'orderTrack') {
+                  Navigator.of(context)
+                      .pushNamed(Routes.orderTrackingScreen, arguments: order);
+                } else {
+                  isOrderToPay == 'orderTrack' ||
+                      isOrderToPay == 'In Progress' ||
+                      isOrderToPay == 'Delivery' ||
+                      isOrderToPay == 'Completed' ||
+                      isOrderToPay == 'Pending'
+                      ? Navigator.pushNamed(context, Routes.orderTrackingScreen,
+                      arguments: order.id):Navigator.pushNamed(context, Routes.checkOutRoute,
+                      arguments: order);
+                }
+
+                print("it is here: ${order.id}");
+              },
+              child: isOrderToPay == 'orderTrack' ||
+                      isOrderToPay == 'In Progress' ||
+                      isOrderToPay == 'Delivery' ||
+                      isOrderToPay == 'Completed' ||
+                      isOrderToPay == 'Pending'
+                  ? Text(
+                      'Track Order',
+                      style: getSemiBoldStyle(
+                        color: ColorManager.white,
+                        fontSize: FontSize.s18,
+                      ),
+                    )
+                  : Text(
+                      'Checkout',
+                      style: getSemiBoldStyle(
+                        color: ColorManager.white,
+                        fontSize: FontSize.s18,
+                      ),
+                    ),
+            ),
           ),
         ],
       ),

@@ -1,11 +1,12 @@
+
 class UnpaidOrder {
   final String id;
   final String createDate;
   final String? estimatedDeliveryDate;
   final String? desiredDeliveryDate;
   final String? deliverdAt;
-  final String? deliveryPoint;
-  final String? currentLocation;
+  final Map<String,dynamic>? deliveryPoint;
+  final Map<String,dynamic>? currentLocation;
   final int? status;
   final bool? payed;
   final Map<String, dynamic>? deliveryMethod;

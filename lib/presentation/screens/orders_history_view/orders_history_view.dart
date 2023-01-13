@@ -23,12 +23,13 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
 
   @override
   void initState() {
-    Provider.of<ProductProvider>(context,listen: false).getOrders();
+    Provider.of<ProductProvider>(context,listen: false).getUnpaidOrder();
+    Provider.of<ProductProvider>(context,listen: false).getAllDetailsOrder();
     super.initState();
   }
 
-  num unpaidOrders = 0;
-  num paidOrders = 0;
+  // num unpaidOrders = 0;
+  // num paidOrders = 0;
 
   // Future<void> getUnpaidOrders(List<Order> order) async {
   //   for (int i = 0; i < order.length;i++) {
@@ -43,14 +44,14 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
   @override
   Widget build(BuildContext context) {
     var orderPay = Provider.of<ProductProvider>(context).paidCount;
-    var orderUnPay = Provider.of<ProductProvider>(context).unPaidCount;
+    var orderUnPay = Provider.of<ProductProvider>(context).orderAllInformation.length;
     var pending = Provider.of<ProductProvider>(context).pendingCount;
     var inprogress = Provider.of<ProductProvider>(context).inProgressCount;
     var delivery = Provider.of<ProductProvider>(context).deliveryCount;
-    setState(() {
-      unpaidOrders = orderUnPay;
-      paidOrders = orderPay;
-    });
+    // setState(() {
+    //   unpaidOrders = orderUnPay;
+    //   paidOrders = orderPay;
+    // });
     // getUnpaidOrders(order);
     return Scaffold(
       body: SafeArea(

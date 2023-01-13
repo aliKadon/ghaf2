@@ -280,7 +280,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                     )))
                                 .then((value) => Navigator.of(context)
                                     .pushReplacementNamed(Routes.checkOutConfirmRoute,
-                                        arguments: widget.orderinfo))
+                                        arguments: widget.orderinfo['orderId']))
                                 .catchError((error) =>
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
@@ -311,7 +311,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                     )))
                                 .then((value) => Navigator.of(context)
                                     .pushReplacementNamed(Routes.checkOutConfirmRoute,
-                                        arguments: widget.orderinfo))
+                                        arguments: widget.orderinfo['orderId']))
                                 .catchError((error) =>
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(

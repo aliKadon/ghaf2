@@ -11,9 +11,9 @@ import '../resources/values_manager.dart';
 class CheckOutConfirmView extends StatefulWidget {
   // const CheckOutConfirmView({Key? key}) : super(key: key);
 
-  final Map<String, dynamic> orderinfo;
+  final String orderId;
 
-  CheckOutConfirmView(this.orderinfo);
+  CheckOutConfirmView(this.orderId);
 
   @override
   State<CheckOutConfirmView> createState() => _CheckOutConfirmViewState();
@@ -99,10 +99,10 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                       //       builder: (builder) => OrderTrackingScreen(widget.orderinfo)),
                       // );
                       print('=================================checkout confirm orderInfo');
-                      print(widget.orderinfo['item']);
+                      print(widget.orderId);
                       Navigator.of(context).pushNamed(
                           Routes.orderTrackingScreen,
-                          arguments: widget.orderinfo);
+                          arguments: widget.orderId);
                     },
                     child: Text(
                       AppLocalizations.of(context)!.order_tracking,

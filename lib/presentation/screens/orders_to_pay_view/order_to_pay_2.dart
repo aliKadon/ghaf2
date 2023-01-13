@@ -10,6 +10,7 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../../widgets/order_widget.dart';
+import '../../widgets/order_widget2.dart';
 import '../cart_view/cart_view_getx_controller.dart';
 
 class OrderToPay2 extends StatefulWidget {
@@ -24,11 +25,15 @@ class OrderToPay2 extends StatefulWidget {
 class _OrderToPay2State extends State<OrderToPay2> {
   var listOrder;
   late final CartViewGetXController _cartViewGetXController =
-  Get.put(CartViewGetXController());
+      Get.put(CartViewGetXController());
   var isLoading = true;
 
   @override
   void initState() {
+    Provider.of<ProductProvider>(context, listen: false)
+        .getUnpaidOrder()
+        .then((value) => isLoading = false);
+
     Provider.of<ProductProvider>(context, listen: false)
         .getAllDetailsOrder()
         .then((value) => isLoading = false);
@@ -48,17 +53,14 @@ class _OrderToPay2State extends State<OrderToPay2> {
       listOrder = Provider.of<ProductProvider>(context).ordersdelivery;
     } else if (widget.isOrderTrack == 'In Progress') {
       listOrder = Provider.of<ProductProvider>(context).ordersinProgress;
-    } else if (widget.isOrderTrack == 'unPay') {
-      listOrder = Provider.of<ProductProvider>(context).ordersUnPay;
     } else if (widget.isOrderTrack == 'orderTrack') {
       listOrder = Provider.of<ProductProvider>(context).orderAllInformation;
-    }else {
+    } else {
       listOrder = Provider.of<ProductProvider>(context).orderAllInformation;
     }
 
     return Scaffold(
       body: SafeArea(
-
         child: Padding(
           padding: EdgeInsets.all(AppPadding.p16),
           child: Column(
@@ -69,10 +71,10 @@ class _OrderToPay2State extends State<OrderToPay2> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
-        _cartViewGetXController.init(
-        context: context,
-        );
-        } ,
+                      _cartViewGetXController.init(
+                        context: context,
+                      );
+                    },
                     child: Image.asset(
                       IconsAssets.arrow,
                       height: AppSize.s18,
@@ -95,33 +97,40 @@ class _OrderToPay2State extends State<OrderToPay2> {
               ),
               Divider(height: 1, color: ColorManager.greyLight),
               Expanded(
-                child:  listOrder == null
+                child: listOrder == null
+                    ? Center(
+                        child: Text(
+                          'No orders found',
+                        ),
+                      )
+                    : listOrder.length == 0
                         ? Center(
                             child: Text(
                               'No orders found',
                             ),
                           )
-                        : listOrder.length == 0
-                            ? Center(
-                                child: Text(
-                                  'No orders found',
-                                ),
-                              )
-                            : ListView.separated(
-                                itemCount: listOrder.length,
-                                separatorBuilder: (_, index) => Divider(),
-                                itemBuilder: (context, index) {
-                                  print(
-                                      '+++++++++++++++++++++++++++++++================');
-                                  print(listOrder[index]);
-                                  return OrderWidget(
-                                    // order: _ordersToPayViewGetXController
-                                    //     .orders[index],
-                                    listOrder![index],
-                                    widget.isOrderTrack,
-                                  );
-                                },
-                              ),
+                        : ListView.separated(
+                            itemCount: listOrder.length,
+                            separatorBuilder: (_, index) => Divider(),
+                            itemBuilder: (context, index) {
+                              print(
+                                  '+++++++++++++++++++++++++++++++================');
+                              print(listOrder[index]);
+                              return widget.isOrderTrack == 'Pending' ||
+                                      widget.isOrderTrack == 'Completed' ||
+                                      widget.isOrderTrack == 'Delivery' ||
+                                      widget.isOrderTrack == 'In Progress' ||
+                                      widget.isOrderTrack == 'orderTrack'
+                                  ? OrderWidget2(
+                                      // order: _ordersToPayViewGetXController
+                                      //     .orders[index],
+                                      listOrder![index],
+                                      widget.isOrderTrack,
+                                    )
+                                  : OrderWidget(
+                                      listOrder![index], widget.isOrderTrack);
+                            },
+                          ),
               ),
             ],
           ),

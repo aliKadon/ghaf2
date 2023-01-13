@@ -210,7 +210,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PaymentMethodeForSubscribe());
       case Routes.orderTrackingScreen:
         return MaterialPageRoute(builder: (_) => OrderTrackingScreen(
-            settings.arguments as Map<String,dynamic>
+            settings.arguments as String
         ));
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
@@ -291,7 +291,7 @@ class RouteGenerator {
                 CheckOutView(settings.arguments as OrderAllInformation));
       case Routes.checkOutConfirmRoute:
         return MaterialPageRoute(builder: (_) => CheckOutConfirmView(
-            settings.arguments as Map<String,dynamic>
+            settings.arguments as String
         ));
       case Routes.orderInformationRoute:
         return MaterialPageRoute(builder: (_) => const OrderInformationView());
