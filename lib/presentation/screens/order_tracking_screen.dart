@@ -136,44 +136,23 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
   @override
   void initState() {
+    // getPolyPoints(double.parse(Provider
+    //     .of<ProductProvider>(context, listen: false)
+    //     .orderById['deliveryPoint']['altitude']),
+    //     double.parse(Provider
+    //         .of<ProductProvider>(context, listen: false)
+    //         .orderById['deliveryPoint']['longitude'] ), double.parse(Provider
+    //         .of<ProductProvider>(context, listen: false)
+    //         .orderById['branch']['branchAddress']['altitude']), double.parse(Provider
+    //         .of<ProductProvider>(context, listen: false)
+    //         .orderById['branch']['branchAddress']['altitude']));
     Provider.of<ProductProvider>(context, listen: false)
         .getOrderById(widget.orderId)
         .then((value) => getLocation())
         .then((value) =>
-        getPolyPoints(double.parse(Provider
+        getPolyPoints(Provider
             .of<ProductProvider>(context, listen: false)
-            .orderById['deliveryPoint']['altitude']),
-            double.parse(Provider
-                .of<ProductProvider>(context, listen: false)
-                .orderById['deliveryPoint']['longitude'] ?? locationData!.longitude!), double.parse(Provider
-                .of<ProductProvider>(context, listen: false)
-                .orderById['branch']['branchAddress']['altitude']), double.parse(Provider
-                .of<ProductProvider>(context, listen: false)
-                .orderById['branch']['branchAddress']['altitude'])))
-        .then((value) =>
-        Provider.of<ProductProvider>(context, listen: false)
-            .getDurationGoogleMap(
-          LatOne: double.parse(
-              Provider
-                  .of<ProductProvider>(context, listen: false)
-                  .orderById['deliveryPoint']['altitude'] ??
-                  locationData!.latitude),
-          LonOne: double.parse(
-              Provider
-                  .of<ProductProvider>(context, listen: false)
-                  .orderById['deliveryPoint']['longitude'] ??
-                  locationData!.longitude),
-          LatTow: double.parse(
-              Provider
-                  .of<ProductProvider>(context, listen: false)
-                  .orderById['branch']['branchAddress']['altitude'] ??
-                  locationData!.latitude),
-          LonTow: double.parse(
-              Provider
-                  .of<ProductProvider>(context, listen: false)
-                  .orderById['branch']['branchAddress']['longitude'] ??
-                  locationData!.longitude),
-        ))
+            .orderById))
         .then((value) =>
         getColorBackground(
             Provider
@@ -187,8 +166,26 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         .then((value) =>
         getTextSetuaition(Provider
             .of<ProductProvider>(context, listen: false)
-            .orderById['statusName']))
-        .then((value) => isLoading = false);
+            .orderById['statusName'])).then((value) =>
+        Provider.of<ProductProvider>(context, listen: false)
+            .getDurationGoogleMap(
+          LatOne: double.parse(
+              Provider
+                  .of<ProductProvider>(context, listen: false)
+                  .orderById['deliveryPoint']['altitude'] ),
+          LonOne: double.parse(
+              Provider
+                  .of<ProductProvider>(context, listen: false)
+                  .orderById['deliveryPoint']['longitude'] ),
+          LatTow: double.parse(
+              Provider
+                  .of<ProductProvider>(context, listen: false)
+                  .orderById['branch']['branchAddress']['altitude']),
+          LonTow: double.parse(
+              Provider
+                  .of<ProductProvider>(context, listen: false)
+                  .orderById['branch']['branchAddress']['longitude']),
+        ));
 
     // Provider.of<ProductProvider>(context, listen: false).getDurationGoogleMap(
     //   LatOne: 37.33500926,
@@ -198,6 +195,53 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     // );
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   Provider.of<ProductProvider>(context, listen: false)
+  //       .getOrderById(widget.orderId)
+  //       .then((value) => getLocation())
+  //       .then((value) =>
+  //       Provider.of<ProductProvider>(context, listen: false)
+  //           .getDurationGoogleMap(
+  //         LatOne: double.parse(
+  //             Provider
+  //                 .of<ProductProvider>(context, listen: false)
+  //                 .orderById['deliveryPoint']['altitude'] ??
+  //                 locationData!.latitude),
+  //         LonOne: double.parse(
+  //             Provider
+  //                 .of<ProductProvider>(context, listen: false)
+  //                 .orderById['deliveryPoint']['longitude'] ??
+  //                 locationData!.longitude),
+  //         LatTow: double.parse(
+  //             Provider
+  //                 .of<ProductProvider>(context, listen: false)
+  //                 .orderById['branch']['branchAddress']['altitude'] ??
+  //                 locationData!.latitude),
+  //         LonTow: double.parse(
+  //             Provider
+  //                 .of<ProductProvider>(context, listen: false)
+  //                 .orderById['branch']['branchAddress']['longitude'] ??
+  //                 locationData!.longitude),
+  //       ))
+  //       .then((value) =>
+  //       getColorBackground(
+  //           Provider
+  //               .of<ProductProvider>(context, listen: false)
+  //               .orderById['statusName']))
+  //       .then((value) =>
+  //       getColorIcon(
+  //           Provider
+  //               .of<ProductProvider>(context, listen: false)
+  //               .orderById['statusName']))
+  //       .then((value) =>
+  //       getTextSetuaition(Provider
+  //           .of<ProductProvider>(context, listen: false)
+  //           .orderById['statusName']))
+  //       .then((value) => isLoading = false);
+  //   super.didChangeDependencies();
+  // }
 
   //
   // static LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
@@ -255,58 +299,123 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   // final distance = data["routes"][0]["legs"][0]["distance"]["text"];
   // final duration = data["routes"][0]["legs"][0]["duration"]["text"];
 
-  List<LatLng> polylineCoordinates = [];
 
-  void getPolyPoints(double sourceLat, double sourceLong, double destLat,
-      double destLong) async {
-    Timer(Duration(seconds: 5), () async {
-      print('=========================location');
-      print(locationData?.longitude);
-      print(widget.orderId);
-      // setState(() {
-      //
-      // });
-      PolylinePoints polylinePoints = PolylinePoints();
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        Constants.google_key_map, // Your Google Map Key
+
+
+
+
+  // List<LatLng> polylineCoordinates = [];
+  //
+  // void getPolyPoints(Map<String,dynamic> source) async {
+  //   // Timer(Duration(seconds: 7), () async {
+  //     print('=========================location1');
+  //     print(source['deliveryPoint']['altitude']);
+  //     print(source['branch']['branchAddress']['altitude']);
+  //     // setState(() {
+  //     //
+  //     // });
+  //     PolylinePoints polylinePoints = PolylinePoints();
+  //     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //       Constants.google_key_map, // Your Google Map Key
+  //       // PointLatLng(
+  //       //     widget.orderinfo['deliveryPoint']['latitude'] ??
+  //       //         locationData!.latitude!,
+  //       //     widget.orderinfo['deliveryPoint']['longitude'] ??
+  //       //         locationData!.longitude!),
+  //       // PointLatLng(
+  //       //     widget.orderinfo['branchAddress']['latitude'] ??
+  //       //         destination1.latitude,
+  //       //     widget.orderinfo['branchAddress']['longitude'] ??
+  //       //         destination1.longitude),
+  //       PointLatLng(double.parse(source['deliveryPoint']['altitude']),
+  //           double.parse(source['deliveryPoint']['longitude'])),
+  //       PointLatLng(
+  //           double.parse(source['branch']['branchAddress']['altitude']), double.parse(source['branch']['branchAddress']['altitude'])),
+  //       // PointLatLng(locationData!.latitude!, locationData!.latitude!),
+  //     );
+  //     if (result.points.isNotEmpty) {
+  //       result.points.forEach(
+  //             (PointLatLng point) => polylineCoordinates.add(
+  //           LatLng(point.latitude, point.longitude),
+  //         ),
+  //       );
+  //       setState(() {});
+  //     }
+  //   // },
+  //   // );
+  // }
+
+  late var lat = Provider
+      .of<ProductProvider>(context, listen: false)
+      .orderById['deliveryPoint']['altitude'];
+
+
+  List<LatLng> polylineCoordinates = [];
+  void getPolyPoints(Map<String,dynamic> source) async {
+    print('=========================location1');
+        // print(source['deliveryPoint']['altitude']);
+        // print(source['branch']['branchAddress']['altitude']);
+    var sourcelat;
+    var sourcLong ;
+    var destLat ;
+    var destLong;
+
+    if (source['deliveryPoint'] == null || source['branch']['branchAddress']['altitude']==null){
+       // sourcelat =  24.242978478140152;
+      sourcelat = locationData!.latitude!;
+       // sourcLong =  54.710762053728104;
+      sourcLong = locationData!.longitude;
+       // destLat =  24.942449826993236;
+      destLat = locationData!.latitude;
+      // destLong = 55.08180757318326;
+      destLong = locationData!.longitude;
+    }else {
+      sourcelat = double.parse(source['deliveryPoint']['altitude']);
+      sourcLong = double.parse(source['deliveryPoint']['longitude']);
+      destLat = double.parse(source['branch']['branchAddress']['altitude']);
+      destLong = double.parse(source['branch']['branchAddress']['longitude']);
+    }
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        Constants.google_key_map,  // Your Google Map Key
+      // PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+      // PointLatLng(destination.latitude, destination.longitude),
+
+        // PointLatLng(24.242978478140152,
+        //     54.710762053728104),
         // PointLatLng(
-        //     widget.orderinfo['deliveryPoint']['latitude'] ??
-        //         locationData!.latitude!,
-        //     widget.orderinfo['deliveryPoint']['longitude'] ??
-        //         locationData!.longitude!),
-        // PointLatLng(
-        //     widget.orderinfo['branchAddress']['latitude'] ??
-        //         destination1.latitude,
-        //     widget.orderinfo['branchAddress']['longitude'] ??
-        //         destination1.longitude),
-        PointLatLng(sourceLat,
-            sourceLong),
+        //     24.942449826993236, 55.08180757318326)
+
+        PointLatLng(sourcelat,
+            sourcLong),
         PointLatLng(
-            destLat, destLong),
-        // PointLatLng(locationData!.latitude!, locationData!.latitude!),
-      );
-      if (result.points.isNotEmpty) {
-        result.points.forEach(
-              (PointLatLng point) =>
+            destLat, destLong)
+    );
+
+    print('=================================points');
+    print(result.points);
+    if (result.points.isNotEmpty) {
+      result.points.forEach(
+            (PointLatLng point) {
               polylineCoordinates.add(
                 LatLng(point.latitude, point.longitude),
-              ),
-        );
-
-        // if(!mounted) return;
-        // setState(() {
-        //   // isLoading = false;
-        // });
-      }
-    });
-  }
-
-  void getOrderLocationToreview(LocationData currentLocation,
-      LocationData distanation1) {
-    if (distanation1 == locationData) {
-      Navigator.of(context).pushNamed(Routes.checkOutConfirmRoute);
+              );
+              print('==============================point');
+              print(point.latitude);
+            }
+      );
+      setState(() {
+        isLoading = false;
+      });
     }
   }
+
+  // void getOrderLocationToreview(LocationData currentLocation,
+  //     LocationData distanation1) {
+  //   if (distanation1 == locationData) {
+  //     Navigator.of(context).pushNamed(Routes.checkOutConfirmRoute);
+  //   }
+  // }
 
   // Future Time () async{
   //   final directions = await GoogleMapDirections(apiKey: 'YOUR_API_KEY').directionsWithLocation(
@@ -320,6 +429,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     var orderById = Provider
         .of<ProductProvider>(context)
         .orderById;
@@ -393,8 +503,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                     child: GoogleMap(
                       initialCameraPosition: CameraPosition(
                         target: orderById['deliveryPoint'] == null
-                            ? LatLng(locationData!.latitude!,
-                            locationData!.longitude!)
+                            // ? LatLng(24.242978478140152,
+                            // 54.710762053728104)
+                          ?LatLng(locationData!.latitude!, locationData!.longitude!)
                             : LatLng(
                             double.parse(
                                 orderById['deliveryPoint']
@@ -409,8 +520,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                           markerId: MarkerId("source"),
                           position:
                           orderById['deliveryPoint'] == null
-                              ? LatLng(locationData!.latitude!,
-                              locationData!.longitude!)
+                              ? LatLng(locationData!.latitude!, locationData!.longitude!)
                               : LatLng(
                               double.parse(
                                   orderById['deliveryPoint']
@@ -426,14 +536,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                         Marker(
                           markerId: MarkerId("destination"),
                           position:
-                          orderById['branchAddress'] == null
-                              ? destination1
+                          orderById['branch'] == null
+                              ? LatLng(locationData!.latitude!, locationData!.longitude!)
                               : LatLng(
                               double.parse(
-                                  orderById['branchAddress']
+                                  orderById['branch']['branchAddress']
                                   ['altitude']),
                               double.parse(
-                                  orderById['branchAddress']
+                                  orderById['branch']['branchAddress']
                                   ['longitude'])),
                         ),
                       },
@@ -445,8 +555,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                           polylineId: const PolylineId("route"),
                           points: polylineCoordinates,
                           color: const Color(0xFF7B61FF),
-                          width: 6,
+                          width: 5,
                         ),
+
                       },
                     ),
                   ),
@@ -462,10 +573,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                   height: 10,
                 ),
                 Text(
-                  '${Provider
+                  Provider
                       .of<ProductProvider>(context, listen: false)
-                      .duration}' ??
-                      '0',
+                      .duration ?? 'I can not calculate the Time!',
                   style: TextStyle(
                       fontSize: 18.0, color: ColorManager.primary),
                 ),

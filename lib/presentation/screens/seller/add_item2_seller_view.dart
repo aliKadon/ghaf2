@@ -206,21 +206,21 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
               ),
               AppTextField(
                 textController: _passwordTextController,
-                hint: 'Description',
+                hint: AppLocalizations.of(context)!.description,
               ),
               SizedBox(
                 height: AppSize.s16,
               ),
               AppTextField(
                 textController: _phoneTextController,
-                hint: 'characteristics',
+                hint: AppLocalizations.of(context)!.characteristics,
               ),
               SizedBox(
                 height: AppSize.s16,
               ),
               AppTextField(
                 textController: _discTextController,
-                hint: 'productType',
+                hint: AppLocalizations.of(context)!.productType,
               ),
               SizedBox(
                 height: AppSize.s16,
@@ -245,7 +245,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
         _phoneTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: 'Enter Required Data!', error: true);
+    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
     return false;
   }
 

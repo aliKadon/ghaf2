@@ -199,16 +199,16 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier1,
-                          '${sellerPlan[0]['priceAmount']} AED',
+                          '${sellerPlan[0]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
                           ImageAssets.tier1, [
-                        'Update menu and products, add images and tell customers when an item is update using Menu Manager.',
-                        'Track orders',
-                        'Which dishes or product your customer like, check reviews and keep them coming back for more.',
-                        'Monitor the status of your order delivery and get alerted when its delivered',
-                        'Monthly payment of Dhs 260 + 1 time setup fee (Average set-up fee of 500 Dhs). Price variesbased on POS.)',
-                        'Otherwise signing an annual plan of Dhs 2,400',
-                        'Choose Photography from a professional photographer. This tier includes 15 items for more images a fee of ## per image',
-                        'Connect with delivery network'
+                        '${AppLocalizations.of(context)!.update_menu}',
+                        '${AppLocalizations.of(context)!.track_order}',
+                        '${AppLocalizations.of(context)!.which}',
+                        '${AppLocalizations.of(context)!.monitor}',
+                        '${AppLocalizations.of(context)!.monthly_payment}',
+                        '${AppLocalizations.of(context)!.otherwise}',
+                        '${AppLocalizations.of(context)!.photography}',
+                        '${AppLocalizations.of(context)!.connect}'
                       ]),
                       _currentPageIndex,
                         '${sellerPlan[0]['id']}',
@@ -218,15 +218,15 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier2,
-                          '${sellerPlan[1]['priceAmount']} AED',
+                          '${sellerPlan[1]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
                           ImageAssets.tier1, [
-                        'Update menu and products, add images and tell customers when an item is update using Manager',
-                        'Promote your brand in-app and create special offers',
-                        'Which dishes or product your customer like, check reviews and keep them coming back for more.',
-                        'Connect with delivery network',
-                        'Fees: Monthly payment of Dhs 300 + 1 time setup fee (Average set-up fee of 500 Dhs). Price varies based on POS.)',
-                        'Otherwise signing an annual plan of Dhs 2,400',
-                        'Choose Photography from a professional photographer. This tier includes 25 items for more images a fee of ## per image'
+                        '${AppLocalizations.of(context)!.update_menu}',
+                        '${AppLocalizations.of(context)!.promote}',
+                        '${AppLocalizations.of(context)!.which}',
+                        '${AppLocalizations.of(context)!.connect}',
+                        '${AppLocalizations.of(context)!.fees}',
+                        '${AppLocalizations.of(context)!.otherwise}',
+                        '${AppLocalizations.of(context)!.photography2}'
                       ]),
                       _currentPageIndex,'${sellerPlan[1]['id']}',
                       '${sellerPlan[3]['id']}',Agree
@@ -234,15 +234,15 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier3,
-                          '${sellerPlan[2]['priceAmount']} AED',
+                          '${sellerPlan[2]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
                           ImageAssets.tier1, [
-                        'Update menu and products, add images and tell customers when an item is update using Manager.',
-                        'Promote your brand in-app and create special offers.',
-                        'Adv Banner, getting a place in the Adv Banner this banner (also subject to several conditions of service quality and customer satisfaction)',
-                        'Which dishes or product your customer like, check reviews and keep them coming back for more.',
-                        'Regular email marketing communications and social media advertising',
-                        'Connect with delivery network',
-                        'Monthly payment of Dhs 450 + 1 time setup fee (Average set-up fee of 500 Dhs). Price varies based on POS.)Otherwise signing an annual plan of Dhs 2,400',
+                        '${AppLocalizations.of(context)!.update_menu}',
+                        '${AppLocalizations.of(context)!.promote}',
+                        '${AppLocalizations.of(context)!.banner}',
+                        '${AppLocalizations.of(context)!.which}',
+                        '${AppLocalizations.of(context)!.regular_email}',
+                        '${AppLocalizations.of(context)!.connect}',
+                        '${AppLocalizations.of(context)!.monthly_payment2}',
                       ]),
                       _currentPageIndex,'${sellerPlan[2]['id']}',
                       '${sellerPlan[3]['id']}',Agree
@@ -413,7 +413,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                           },
                           groupValue: option),
                       Text(
-                        'monthly',
+                        AppLocalizations.of(context)!.monthly,
                         style: TextStyle(fontWeight: FontWeight.w500,
                             color: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary,
                             fontSize: FontSize.s16),
@@ -445,7 +445,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                             },
                             groupValue: option),
                         Text(
-                          'Annual',
+                          AppLocalizations.of(context)!.annual,
                           style: TextStyle(fontWeight: FontWeight.w500,
                               color: currentPageIndex==1? ColorManager.primaryDark:ColorManager.primary,
                               fontSize: FontSize.s16),

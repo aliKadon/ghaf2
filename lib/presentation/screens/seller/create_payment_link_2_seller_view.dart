@@ -134,7 +134,7 @@ class _CreatePaymentLink2SellerViewState
               child: Row(
                 children: [
                   Text(
-                    '${readProduct[0].price.toString()} AED',
+                    '${readProduct[0].price.toString()} ${AppLocalizations.of(context)!.aed}',
                     style: getSemiBoldStyle(
                         color: ColorManager.primary, fontSize: FontSize.s16),
                   ),

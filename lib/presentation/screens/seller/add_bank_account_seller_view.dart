@@ -97,12 +97,12 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
               ),
               AppTextField(
                 textController: _passwordTextController,
-                hint: 'name Holder',
+                hint: AppLocalizations.of(context)!.name,
                 textInputType: TextInputType.name,
               ),
               AppTextField(
                 textController: _phoneTextController,
-                hint: 'Bank Name',
+                hint: AppLocalizations.of(context)!.bank_name,
                 textInputType: TextInputType.name,
               ),
               SizedBox(
@@ -166,7 +166,7 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
         _phoneTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: 'Enter Required Data!', error: true);
+    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
     return false;
   }
 

@@ -130,7 +130,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                 ),
                 Center(
                   child: Text(
-                    'Please Select un Item For each Link!!',
+                    AppLocalizations.of(context)!.select_one_item,
                     style: getMediumStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s18),
@@ -329,7 +329,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                         //     .then((value) => _customDialogProgress());
                         // _customDialogProgress();
                       },
-                      child: Text('Create Link')),
+                      child: Text(AppLocalizations.of(context)!.create_link)),
                 )
               ],
             ),

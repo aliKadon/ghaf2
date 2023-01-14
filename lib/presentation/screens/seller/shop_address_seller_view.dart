@@ -166,7 +166,7 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
         _boDTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: 'Enter Required Data!', error: true);
+    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
     return false;
   }
 

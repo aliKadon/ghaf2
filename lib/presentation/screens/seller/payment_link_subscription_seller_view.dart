@@ -87,7 +87,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                       children: [
                         Spacer(),
                         isLoading ? Container() : Text(
-                          '${plane[0].priceAmount} AED' ,
+                          '${plane[0].priceAmount} ${AppLocalizations.of(context)!.aed}' ,
                           textAlign: TextAlign.center,
                           style: getMediumStyle(
                               color: ColorManager.white,
@@ -119,8 +119,8 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                           ),
                           Expanded(
                             child: Text(
-                              'In Montly plan You have to Pay ${plane[0].priceAmount} ${plane[0].priceCurrency} Every Month'
-                                  'and Have ${plane[0].freeDays} Free Days',
+                              '${AppLocalizations.of(context)!.monthly_plane} ${plane[0].priceAmount} ${plane[0].priceCurrency} ${AppLocalizations.of(context)!.every_month}'
+                                  '${AppLocalizations.of(context)!.and_have} ${plane[0].freeDays} ${AppLocalizations.of(context)!.free_days}',
                               textAlign: TextAlign.start,
                               style: getMediumStyle(
                                   color: ColorManager.white,
@@ -151,8 +151,8 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                           ),
                           Expanded(
                             child: Text(
-                              'In Annual plan You have to Pay ${plane[1].priceAmount} ${plane[1].priceCurrency} Every Month'
-                                  'and Have ${plane[1].freeDays} Free Days',
+                              '${AppLocalizations.of(context)!.annual_plane} ${plane[1].priceAmount} ${plane[1].priceCurrency} ${AppLocalizations.of(context)!.every_month}'
+                                  '${AppLocalizations.of(context)!.and_have} ${plane[1].freeDays} ${AppLocalizations.of(context)!.free_days}',
                               textAlign: TextAlign.start,
                               style: getMediumStyle(
                                   color: ColorManager.white,
@@ -198,7 +198,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                                         },
                                         groupValue: option),
                                     Text(
-                                      'monthly',
+                                      AppLocalizations.of(context)!.monthly,
                                       style: getRegularStyle(
                                           color: ColorManager.grey,
                                           fontSize: FontSize.s16),
@@ -228,7 +228,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                                           },
                                           groupValue: option),
                                       Text(
-                                        'Annual',
+                                        AppLocalizations.of(context)!.annual,
                                         style: getRegularStyle(
                                             color: ColorManager.grey,
                                             fontSize: FontSize.s16),

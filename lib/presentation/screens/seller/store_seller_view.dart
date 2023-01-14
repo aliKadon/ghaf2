@@ -201,7 +201,7 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                         ),
                         Text(
                           // AppLocalizations.of(context)!.language,
-                          'Logout',
+                          AppLocalizations.of(context)!.logout,
                           style: TextStyle(
                             color: ColorManager.red,
                             fontSize: FontSize.s24,

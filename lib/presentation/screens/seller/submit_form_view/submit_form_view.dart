@@ -264,7 +264,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       right: AppMargin.m16,
                       left: AppMargin.m16),
                   child: DropdownButtonFormField<bool>(
-                    items: ['Yes', 'No']
+                    items: [AppLocalizations.of(context)!.yes, AppLocalizations.of(context)!.no]
                         .map(
                           (e) => DropdownMenuItem<bool>(
                             child: Text(
@@ -273,7 +273,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                                 color: ColorManager.hintTextFiled,
                               ),
                             ),
-                            value: e == 'Yes',
+                            value: e == AppLocalizations.of(context)!.yes,
                           ),
                         )
                         .toList(),
@@ -369,7 +369,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     icon: Icon(Icons.keyboard_arrow_down),
                     validator: (value) {
                       if (value == null)
-                        return 'Number of branches is required';
+                        return AppLocalizations.of(context)!.number_of_branches;
                       return null;
                     },
                   ),
@@ -397,7 +397,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                               child: AppTextField(
                                 onTap:
                                     _submitFormViewGetXController.pickPdfFile,
-                                hint: 'Upload PDF',
+                                hint: AppLocalizations.of(context)!.upload_pdf,
                               ),
                             ),
                             InkWell(
@@ -431,7 +431,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                               width: 16.w,
                             ),
                             Text(
-                              'Pdf file attached successfully',
+                              AppLocalizations.of(context)!.pdf_attach_success,
                               style: TextStyle(
                                 color: Colors.green,
                               ),
@@ -443,10 +443,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   ),
                 ),
                 AppTextField(
-                  hint: 'Shop Address',
+                  hint: AppLocalizations.of(context)!.shop_address,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Shop Address is required';
+                      return AppLocalizations.of(context)!.shop_address_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -484,8 +484,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                               markerId: MarkerId('source'),
                               flat: true,
                               position:
-                                  _submitFormViewGetXController.selectedLatLng!
-                              // LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448),
+                                  _submitFormViewGetXController.selectedLatLng ?? LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448)
+
                             )
                           },
                     onTap: (latLng) {
@@ -509,7 +509,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   child: ElevatedButton(
                     onPressed: _submitFormViewGetXController.submitForm,
                     child: Text(
-                      'Submit',
+                      AppLocalizations.of(context)!.submit_form,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),

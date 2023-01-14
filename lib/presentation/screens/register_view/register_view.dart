@@ -172,7 +172,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   },
                 ),
                 AppTextField(
-                  hint: 'Confirm Password',
+                  hint: AppLocalizations.of(context)!.confirm_password,
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (value) {

@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:480529468788:android:d19304964290f02c22b021",
+        "mobilesdk_app_id": "1:480529468788:android:3b3a6c0c05def97d22b021",
         "android_client_info": {
           "package_name": "com.ghaf.application.ghaf_application"
         }
       },
       "oauth_client": [
         {
-          "client_id": "480529468788-qauemn49jjkbghe6kat8uehghislr9s0.apps.googleusercontent.com",
+          "client_id": "480529468788-tfq6kdsn4nqg8pbgv7atktirt0nfd9e9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ghaf.application.ghaf_application",
-            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+            "certificate_hash": "ecc3ecad7712d6cc68e6867c201cacdf76b78dd5"
           }
         },
         {

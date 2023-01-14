@@ -210,7 +210,7 @@ class _ProductViewState extends State<ProductView> {
                                   children: [
                                     if (_product.productDiscount == null)
                                       Text(
-                                        '${_product.price!.toStringAsFixed(1)} AED',
+                                        '${_product.price!.toStringAsFixed(1)} ${AppLocalizations.of(context)!.aed}',
                                         style: TextStyle(
                                           fontSize: FontSize.s20,
                                           fontFamily: FontConstants.fontFamily,

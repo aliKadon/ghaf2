@@ -291,8 +291,10 @@ class _LoginViewState extends State<LoginView> with Helpers {
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
+                Navigator.of(context).pushReplacementNamed(Routes.registerRoute,arguments: {
                   'role' : Constants.roleRegisterCustomer,
+                  'locationLat': 24.400661,
+                  'locationLong':54.635448,
                 });
                 // Perform some action
                 // Navigator.pop(context);
@@ -301,8 +303,10 @@ class _LoginViewState extends State<LoginView> with Helpers {
             ),
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
+                Navigator.of(context).pushReplacementNamed(Routes.registerRoute,arguments: {
                   'role' : Constants.roleRegisterSeller,
+                  'locationLat': 24.400661,
+                  'locationLong':54.635448,
                 });
                 // Perform some action
                 // Navigator.pop(context);
@@ -318,6 +322,8 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 SharedPrefController().setgoogleEmail(googleEmail: _currentUser?.email ?? 'Enter Email');
                 Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
                   'role' : Constants.roleRegisterIndividual,
+                  'locationLat': 24.400661,
+                  'locationLong':54.635448,
                 });
                 // Perform some action
                 // Navigator.pop(context);

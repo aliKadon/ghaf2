@@ -95,7 +95,7 @@ class _CreatePaymentLinkSellerViewState
               AppTextField(
                 textController: _nameTextController,
                 // hint: AppLocalizations.of(context)!.customer_name,
-                hint: 'Product Name',
+                hint: AppLocalizations.of(context)!.name_of_product,
                 textInputType: TextInputType.name,
               ),
               Row(
@@ -112,7 +112,7 @@ class _CreatePaymentLinkSellerViewState
                     child: AppTextField(
                       textController: _productTypeTextController,
                       // hint: AppLocalizations.of(context)!.link_expiration_date,
-                      hint: 'Product Type',
+                      hint: AppLocalizations.of(context)!.productType,
                       textInputType: TextInputType.text,
                       // obscureText: true,
                     ),
@@ -122,7 +122,7 @@ class _CreatePaymentLinkSellerViewState
               AppTextField(
                 textController: _amountTextController,
                 // hint: AppLocalizations.of(context)!.link_expiration_date,
-                hint: 'Amount',
+                hint: AppLocalizations.of(context)!.amount,
                 textInputType: TextInputType.phone,
                 // obscureText: true,
               ),
@@ -192,7 +192,7 @@ class _CreatePaymentLinkSellerViewState
         _amountTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: 'Enter Required Data!', error: true);
+    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
     return false;
   }
 

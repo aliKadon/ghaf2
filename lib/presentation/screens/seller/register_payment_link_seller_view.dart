@@ -365,7 +365,7 @@ class _RegisterPaymentLinkSellerViewState
         Agree) {
       return true;
     }
-    showSnackBar(context, message: 'Enter Required Data!', error: true);
+    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
     return false;
   }
 

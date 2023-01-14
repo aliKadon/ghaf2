@@ -85,11 +85,11 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
               ),
               AppTextField(
                 textController: _nameTextController,
-                hint: 'Card number',
+                hint: AppLocalizations.of(context)!.number_card,
               ),
               AppTextField(
                 textController: _emailTextController,
-                hint: 'CVV',
+                hint: AppLocalizations.of(context)!.cvv,
                 textInputType: TextInputType.emailAddress,
               ),
               Row(
@@ -97,7 +97,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                   Expanded(
                     child: AppTextField(
                       textController: _passwordTextController,
-                      hint: 'Expired Month',
+                      hint: AppLocalizations.of(context)!.expired_month,
                       textInputType: TextInputType.visiblePassword,
                       obscureText: true,
                     ),
@@ -105,7 +105,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                   Expanded(
                     child: AppTextField(
                       textController: _phoneTextController,
-                      hint: 'Expired Year',
+                      hint: AppLocalizations.of(context)!.expired_year,
                       textInputType: TextInputType.visiblePassword,
                       obscureText: true,
                     ),
@@ -228,7 +228,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
         _phoneTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: 'Enter Required Data!', error: true);
+    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
     return false;
   }
 

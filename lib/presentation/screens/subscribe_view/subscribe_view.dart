@@ -138,7 +138,7 @@ class _SubscribeViewState extends State<SubscribeView> {
                         onPressed: (){},
                         child: Text(
                           AppSharedData.currentUser!.ghafGold ?? false
-                              ? 'Un Subscribe'
+                              ? AppLocalizations.of(context)!.unSubscribe
                               : AppLocalizations.of(context)!.subscribe_now,
                           style: getSemiBoldStyle(
                             color: ColorManager.white,
