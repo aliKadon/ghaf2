@@ -23,19 +23,25 @@ class RateUsViewGetXController extends GetxController with Helpers {
 
   // review app.
   void reviewApp() async {
+    print(description);
+    print(rate);
+    // if (!formKey.currentState!.validate()) return;
+    // formKey.currentState!.save();
+
     try {
-      if (!formKey.currentState!.validate()) return;
-      formKey.currentState!.save();
       showLoadingDialog(context: context, title: 'Sending');
       final ApiResponse apiResponse = await _appApiController.reviewApp(
         description: description!,
         rate: rate,
       );
+      print(apiResponse.status);
       if (apiResponse.status == 200) {
         // success.
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pop(context);
         Navigator.pop(context);
+        print('==============================review');
+        print(apiResponse.message);
       } else {
         // failed.
         Navigator.pop(context);
@@ -45,6 +51,8 @@ class RateUsViewGetXController extends GetxController with Helpers {
       // error.
       Navigator.pop(context);
       debugPrint(error.toString());
+      print(error.toString());
+
       showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }

@@ -24,9 +24,9 @@ class AppApiController with ApiHelper {
         headers: headers,
       ),
     );
-    // print('============================================');
-    // print(response.statusCode);
-    // print(response.data);
+    print('============================================review');
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(

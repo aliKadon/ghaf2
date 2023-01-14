@@ -101,6 +101,7 @@ class _RateUsViewState extends State<RateUsView> {
                   unratedColor: Colors.grey.shade300,
                   onRatingUpdate: (value) {
                     _rateUsViewGetXController.rate = value.toInt();
+                    print(_rateUsViewGetXController.rate);
                   },
                 ),
                 SizedBox(
@@ -234,7 +235,10 @@ class _RateUsViewState extends State<RateUsView> {
                   width: double.infinity,
                   height: AppSize.s55,
                   child: ElevatedButton(
-                    onPressed: _rateUsViewGetXController.reviewApp,
+                    onPressed: () {
+                      print(_rateUsViewGetXController.description);
+                      _rateUsViewGetXController.reviewApp();
+                    },
                     child: Text(
                       'Send A Note',
                       style: getSemiBoldStyle(
