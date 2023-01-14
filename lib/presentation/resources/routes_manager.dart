@@ -34,6 +34,7 @@ import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
+import 'package:ghaf_application/presentation/screens/rate_seller.dart';
 import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/update_info_seller.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
@@ -79,6 +80,7 @@ import '../../domain/model/available_delevey_method.dart';
 import '../../domain/model/unpaid_order.dart';
 import '../screens/login_view/login_view.dart';
 import '../screens/onboarding_view.dart';
+import '../screens/rate_delivery.dart';
 import '../screens/register_view/register_view.dart';
 import '../screens/registration_screen.dart';
 import '../screens/review_product.dart';
@@ -174,6 +176,8 @@ class Routes {
   static const String language = '/language';
   static const String sellerStatus = '/sellerStatus';
   static const String verifiedEmail = '/verifiedEmail';
+  static const String rateDelivery = '/rateDelivery';
+  static const String rateSeller = '/rateSeller';
 }
 
 class RouteGenerator {
@@ -191,6 +195,14 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => ReviewProduct(
                 settings.arguments as Map<String,dynamic>));
+
+      case Routes.rateDelivery:
+        return MaterialPageRoute(
+            builder: (_) => RateDelivery());
+
+      case Routes.rateSeller:
+        return MaterialPageRoute(
+            builder: (_) => RateSeller());
 
       case Routes.verifiedEmail:
         return MaterialPageRoute(

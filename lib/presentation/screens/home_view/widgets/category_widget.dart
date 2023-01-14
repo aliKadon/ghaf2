@@ -24,7 +24,10 @@ class CategoryWidget extends StatelessWidget {
         if(category.name == 'Restuarants'){
           _customDialogProgress(context);
 
-        }else {
+        }else if(category.name == 'Supermarkets'){
+          _customDialogSuperMarkets(context);
+
+        } else {
           Navigator.pushNamed(
             context,
             Routes.products,
@@ -37,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
 
 
         print("===========================================");
-        print(category);
+        print(category.name);
 
 
       },
@@ -107,7 +110,7 @@ class CategoryWidget extends StatelessWidget {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s326,
+              height: AppSize.s258,
               width: AppSize.s360,
               padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
               decoration: BoxDecoration(
@@ -196,7 +199,7 @@ class CategoryWidget extends StatelessWidget {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s326,
+              height: AppSize.s258,
               width: AppSize.s360,
               padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
               decoration: BoxDecoration(
@@ -283,7 +286,7 @@ class CategoryWidget extends StatelessWidget {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s326,
+              height: AppSize.s258,
               width: AppSize.s360,
               padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
               decoration: BoxDecoration(
@@ -348,6 +351,106 @@ class CategoryWidget extends StatelessWidget {
                           },
                         );
                       },
+                      child: Container(
+                        width: AppSize.s110,
+                        height: AppSize.s38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: ColorManager.primaryDark,
+                          borderRadius:
+                          BorderRadius.circular(AppRadius.r8),
+                        ),
+                        child: Text(
+                          'Ok',
+                          textAlign: TextAlign.center,
+                          style:
+                          getMediumStyle(color: ColorManager.white),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+          );
+        });
+  }
+
+  void _customDialogSuperMarkets(context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s326,
+              width: AppSize.s360,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Supermarkets',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s24),
+                      ),
+                    ),
+
+                    // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
+                    // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text('We deliver grocery at your door step',style: TextStyle(fontSize: AppSize.s18),),
+                    ),
+                    Text('Order from the best of snack',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for lunch ',style: TextStyle(fontSize: AppSize.s14),),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+
+                    SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Navigator.pop(context);
+                        Navigator.pushReplacementNamed(
+                          context,
+                          Routes.products,
+                          arguments: {
+                            'id' : category.id,
+                            'name' : category.name
+                          },
+                        );
+                      },
+
                       child: Container(
                         width: AppSize.s110,
                         height: AppSize.s38,

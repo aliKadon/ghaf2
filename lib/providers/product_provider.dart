@@ -928,11 +928,14 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     print(response.body);
     repo = jsonDecode(response.body)['message'];
   }
-
+  String messageReviewStore ='';
   Future<void> postReviewStore(String storeId,String opinion,int points) async {
     var url = Uri.parse('${Constants.urlBase}/auth/create-store-review?storeId=$storeId&opinion=$opinion&points=$points');
     try {
       final response = await http.post(url,headers: headers,);
+      // print(response);
+      messageReviewStore = jsonDecode(response.body)['message'];
+      print(messageReviewStore);
     }catch(e) {
       print(e);
     }

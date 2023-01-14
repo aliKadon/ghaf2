@@ -770,11 +770,13 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 Container(
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacementNamed(
-                            Routes.reviewProduct,
-                            arguments: widget.orderId);
+
+                        _customDialogFeedBack(context);
+                        // Navigator.of(context).pushReplacementNamed(
+                        //     Routes.reviewProduct,
+                        //     arguments: widget.orderId);
                       },
-                      child: Text('Give Feedback for product')),
+                      child: Text('Feedback')),
                 ),
               ],
             ),
@@ -782,5 +784,139 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         ),
       ),
     );
+  }
+
+  void _customDialogFeedBack(context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s280,
+              width: AppSize.s360,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Feedback',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s24),
+                      ),
+                    ),
+
+                    // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
+                    // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text('Tell us about your experience',style: TextStyle(fontSize: AppSize.s18),),
+                    ),
+
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+
+                    // SizedBox(
+                    //   height: AppSize.s20,
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.rateSeller
+                            );
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              'With Seller',
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context,
+                                Routes.rateDelivery
+                            );
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              'With delivery',
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                     SizedBox(
+                       height: 10,
+                     ),
+                    Container(
+                      width: 100,
+                      child: ElevatedButton(
+                          onPressed: () {
+
+                           Navigator.pop(context);
+                          },
+                          child: Text('OK')),
+                    ),
+                  ]),
+            ),
+          );
+        });
   }
 }

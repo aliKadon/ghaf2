@@ -107,48 +107,6 @@ class _ProductViewState extends State<ProductView> {
                           height: 350.h,
                           fit: BoxFit.fill,
                         ),
-                  // PositionedDirectional(
-                  //   top: 10,
-                  //   start: 20,
-                  //   child: Container(
-                  //     height: AppSize.s31,
-                  //     width: AppSize.s125,
-                  //     decoration: BoxDecoration(
-                  //       color: ColorManager.white,
-                  //       borderRadius: BorderRadius.circular(AppRadius.r4),
-                  //     ),
-                  //     child: Row(
-                  //       children: [
-                  //         SizedBox(
-                  //           width: AppSize.s9,
-                  //         ),
-                  //         Image.asset(
-                  //           IconsAssets.clock,
-                  //           height: AppSize.s20,
-                  //           width: AppSize.s18,
-                  //         ),
-                  //         SizedBox(
-                  //           width: AppSize.s10,
-                  //         ),
-                  //         Text(
-                  //           '20 - 40',
-                  //           style: getRegularStyle(
-                  //             color: ColorManager.grey,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           width: AppSize.s7,
-                  //         ),
-                  //         Text(
-                  //           AppLocalizations.of(context)!.min,
-                  //           style: getRegularStyle(
-                  //             color: ColorManager.grey,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                   Positioned(
                     bottom: 0,
                     right: 0,
