@@ -376,13 +376,8 @@ class _AccountViewState extends State<AccountView> {
                           )),
                       GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (builder) => AboutAppView()),
-                            // );
-                            Navigator.of(context)
-                                .pushNamed(Routes.inviteScreen);
+                            _customDialogProgress(context);
+
                           },
                           child: accountWidget(
                             context,
@@ -567,14 +562,133 @@ class _AccountViewState extends State<AccountView> {
   //   );
   // }
 
-  void _customDialogProgress() async {
+  // void _customDialogProgress() async {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return Dialog(
+  //           child: Container(
+  //             height: AppSize.s258,
+  //             width: AppSize.s258,
+  //             padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+  //             decoration: BoxDecoration(
+  //               color: ColorManager.white,
+  //               borderRadius: BorderRadius.circular(AppRadius.r8),
+  //             ),
+  //             child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   SizedBox(
+  //                     height: AppSize.s28,
+  //                   ),
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                       Image.asset(
+  //                         ImageAssets.logo2,
+  //                         height: AppSize.s40,
+  //                         width: AppSize.s40,
+  //                       ),
+  //                       SizedBox(
+  //                         width: AppSize.s20,
+  //                       ),
+  //                       Text(
+  //                         AppLocalizations.of(context)!.ghaf,
+  //                         style: getMediumStyle(
+  //                             color: ColorManager.primary,
+  //                             fontSize: FontSize.s20),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s40,
+  //                   ),
+  //                   Container(
+  //                     alignment: Alignment.center,
+  //                     child: Text(
+  //                       AppLocalizations.of(context)!
+  //                           .are_you_sure_cancel_your_subscription,
+  //                       textAlign: TextAlign.center,
+  //                       style: getMediumStyle(
+  //                           color: ColorManager.primaryDark,
+  //                           fontSize: FontSize.s20),
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s20,
+  //                   ),
+  //                   Row(
+  //                     children: [
+  //                       Expanded(
+  //                         child: GestureDetector(
+  //                           onTap: () => Navigator.pop(context),
+  //                           child: Container(
+  //                             width: AppSize.s110,
+  //                             height: AppSize.s38,
+  //                             alignment: Alignment.center,
+  //                             decoration: BoxDecoration(
+  //                               color: ColorManager.primaryDark,
+  //                               borderRadius:
+  //                                   BorderRadius.circular(AppRadius.r8),
+  //                             ),
+  //                             child: Text(
+  //                               AppLocalizations.of(context)!.yes,
+  //                               textAlign: TextAlign.center,
+  //                               style:
+  //                                   getMediumStyle(color: ColorManager.white),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                       SizedBox(
+  //                         width: AppSize.s6,
+  //                       ),
+  //                       Expanded(
+  //                         child: GestureDetector(
+  //                           onTap: () => Navigator.pop(context),
+  //                           child: Container(
+  //                             width: AppSize.s110,
+  //                             height: AppSize.s38,
+  //                             alignment: Alignment.center,
+  //                             decoration: BoxDecoration(
+  //                               color: ColorManager.white,
+  //                               borderRadius:
+  //                                   BorderRadius.circular(AppRadius.r8),
+  //                               border: Border.all(
+  //                                   color: ColorManager.primaryDark,
+  //                                   width: AppSize.s1),
+  //                             ),
+  //                             child: Text(
+  //                               AppLocalizations.of(context)!.no,
+  //                               textAlign: TextAlign.center,
+  //                               style: getMediumStyle(
+  //                                   color: ColorManager.primaryDark),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //
+  //
+  //                     ],
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s12,
+  //                   ),
+  //                 ]),
+  //           ),
+  //         );
+  //       });
+  // }
+
+
+  void _customDialogProgress(context) async {
     showDialog(
         context: context,
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s258,
-              width: AppSize.s258,
+              height: AppSize.s280,
+              width: AppSize.s360,
               padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
               decoration: BoxDecoration(
                 color: ColorManager.white,
@@ -591,93 +705,67 @@ class _AccountViewState extends State<AccountView> {
                       children: [
                         Image.asset(
                           ImageAssets.logo2,
-                          height: AppSize.s40,
-                          width: AppSize.s40,
-                        ),
-                        SizedBox(
-                          width: AppSize.s20,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
                         ),
                         Text(
-                          AppLocalizations.of(context)!.ghaf,
+                          'Ghaf',
                           style: getMediumStyle(
                               color: ColorManager.primary,
                               fontSize: FontSize.s20),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: AppSize.s40,
-                    ),
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        AppLocalizations.of(context)!
-                            .are_you_sure_cancel_your_subscription,
+                        'Invite Friends',
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
-                            fontSize: FontSize.s20),
+                            fontSize: FontSize.s24),
                       ),
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 22),
+                      child: Text('Invite your friends \n and earn points',style: TextStyle(fontSize: AppSize.s24),),
+                    ),
+                    // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
+                    // Text('Order food to be delivered\n\tor schedule delivery time',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for lunch ',style: TextStyle(fontSize: AppSize.s14),),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+
                     SizedBox(
                       height: AppSize.s20,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: Container(
-                              width: AppSize.s110,
-                              height: AppSize.s38,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: ColorManager.primaryDark,
-                                borderRadius:
-                                    BorderRadius.circular(AppRadius.r8),
-                              ),
-                              child: Text(
-                                AppLocalizations.of(context)!.yes,
-                                textAlign: TextAlign.center,
-                                style:
-                                    getMediumStyle(color: ColorManager.white),
-                              ),
-                            ),
-                          ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.of(context)
+                            .pushNamed(Routes.inviteScreen);
+                      },
+                      child: Container(
+                        width: AppSize.s110,
+                        height: AppSize.s38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: ColorManager.primaryDark,
+                          borderRadius:
+                          BorderRadius.circular(AppRadius.r8),
                         ),
-                        SizedBox(
-                          width: AppSize.s6,
+                        child: Text(
+                          'Ok',
+                          textAlign: TextAlign.center,
+                          style:
+                          getMediumStyle(color: ColorManager.white),
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: Container(
-                              width: AppSize.s110,
-                              height: AppSize.s38,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: ColorManager.white,
-                                borderRadius:
-                                    BorderRadius.circular(AppRadius.r8),
-                                border: Border.all(
-                                    color: ColorManager.primaryDark,
-                                    width: AppSize.s1),
-                              ),
-                              child: Text(
-                                AppLocalizations.of(context)!.no,
-                                textAlign: TextAlign.center,
-                                style: getMediumStyle(
-                                    color: ColorManager.primaryDark),
-                              ),
-                            ),
-                          ),
-                        ),
-
-
-                      ],
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
+                      ),
                     ),
                   ]),
             ),

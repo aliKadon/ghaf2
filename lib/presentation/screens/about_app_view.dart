@@ -13,6 +13,7 @@ import '../../app/preferences/shared_pref_controller.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
+import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 
@@ -75,11 +76,8 @@ class _AboutAppViewState extends State<AboutAppView> {
                         aboutApp(context, AppLocalizations.of(context)!.faqs)),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => SharaYourOpinionView()),
-                      );
+                      Navigator.of(context)
+                          .pushNamed(Routes.rateUs);
                     },
                     child: aboutApp(context,
                         AppLocalizations.of(context)!.share_your_opinion)),

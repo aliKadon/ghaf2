@@ -79,7 +79,7 @@ class _RateUsViewState extends State<RateUsView> {
                   height: 15.h,
                 ),
                 Text(
-                  'How do you see us?',
+                  'Rate Ghaf application  Services',
                   style: getRegularStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
@@ -109,7 +109,7 @@ class _RateUsViewState extends State<RateUsView> {
                 Row(
                   children: [
                     Text(
-                      'Do you have notes to tell us?',
+                      'Tell us what can we improve ?',
                       style: getRegularStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s14,
@@ -120,23 +120,112 @@ class _RateUsViewState extends State<RateUsView> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Form(
-                  key: _rateUsViewGetXController.formKey,
-                  child: AppTextField(
-                    hint: '',
-                    lines: 8,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Description is required';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) =>
-                        _rateUsViewGetXController.description = value,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          _rateUsViewGetXController.description = review1;
+                        });
+                        print(_rateUsViewGetXController.description);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        // color: ColorManager.primaryDark,
+                        width: AppSize.s130,
+                        height: AppSize.s43,
+                        child: Center(
+                          child: Text(
+                            review1,
+                            style: getSemiBoldStyle(
+                                color: ColorManager.white, fontSize: FontSize.s16),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 6,),
+                    InkWell(
+                      onTap: (){
+                        setState(() {
+                          _rateUsViewGetXController.description = review2;
+                        });
+                        print(_rateUsViewGetXController.description);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        // color: ColorManager.primaryDark,
+                        width: AppSize.s173,
+                        height: AppSize.s43,
+                        child: Center(
+                          child: Text(
+                            review2,
+                            style: getSemiBoldStyle(
+                                color: ColorManager.white, fontSize: FontSize.s16),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height:5,),
+                InkWell(
+                  onTap: (){
+                    setState(() {
+                      _rateUsViewGetXController.description = review3;
+                    });
+                    print(_rateUsViewGetXController.description);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                    // color: ColorManager.primaryDark,
+                    width: AppSize.s130,
+                    height: AppSize.s43,
+                    child: Center(
+                      child: Text(
+                        review3,
+                        style: getSemiBoldStyle(
+                            color: ColorManager.white, fontSize: FontSize.s16),
+                      ),
+                    ),
                   ),
                 ),
+                SizedBox(height: 10,),
+
+                Container(
+
+                  height: AppSize.s123,
+                  child: TextFormField(
+
+                    enabled: false,
+                    decoration: InputDecoration(border     : OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                          
+                    ),contentPadding: EdgeInsets.only(bottom: 80,left: 7),
+                    label: Text('${_rateUsViewGetXController.description}'),
+                      labelStyle: TextStyle(fontSize: AppSize.s26),
+
+                    ),
+
+                  ),
+                ),
+                // AppTextField(
+                //   hint: '${_rateUsViewGetXController.description}',
+                //   lines: 6,
+                //
+                //   // validator: (value) {
+                //   //   if (value == null || value.isEmpty) {
+                //   //     return 'Description is required';
+                //   //   }
+                //   //   return null;
+                //   // },
+                //   //
+                //   // onSaved: (value) =>
+                //   //     _rateUsViewGetXController.description = value,
+                // ),
                 SizedBox(
-                  height: 15.h,
+                  height: 1.h,
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(
@@ -153,6 +242,7 @@ class _RateUsViewState extends State<RateUsView> {
                     ),
                   ),
                 ),
+
               ],
             ),
           ),
@@ -160,4 +250,8 @@ class _RateUsViewState extends State<RateUsView> {
       ),
     );
   }
+  String review1 = 'Look and feel';
+  String review2 = 'Easy to navigate';
+  String review3 = 'Easy to use';
+  // String review4 = 'Bad.';
 }

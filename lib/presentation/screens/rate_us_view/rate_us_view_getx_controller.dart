@@ -13,7 +13,7 @@ class RateUsViewGetXController extends GetxController with Helpers {
   final BuildContext context;
 
   // fields.
-  String? description;
+  String? description = "";
   int rate = 1;
 
   // constructor.
@@ -29,7 +29,7 @@ class RateUsViewGetXController extends GetxController with Helpers {
       showLoadingDialog(context: context, title: 'Sending');
       final ApiResponse apiResponse = await _appApiController.reviewApp(
         description: description!,
-        rate: rate!,
+        rate: rate,
       );
       if (apiResponse.status == 200) {
         // success.
