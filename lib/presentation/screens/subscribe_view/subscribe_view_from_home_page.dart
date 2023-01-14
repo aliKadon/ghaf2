@@ -163,7 +163,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> {
                         },
                         child: Text(
                           AppSharedData.currentUser!.ghafGold ?? false
-                              ? 'Un Subscribe'
+                              ? AppLocalizations.of(context)!.unSubscribe
                               : AppLocalizations.of(context)!.subscribe_now,
                           style: getSemiBoldStyle(
                             color: ColorManager.white,

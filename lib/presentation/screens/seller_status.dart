@@ -85,7 +85,7 @@ class _SellerStatusState extends State<SellerStatus> {
                     sellerStatus['submittedFormStatusBool'] == 0 &&  sellerStatus['active'] == "Account is not active, you have to subscribe" ?  ElevatedButton(
                         onPressed: () => Navigator.of(context)
                             .pushReplacementNamed(Routes.subscriptionSellerRoute),
-                        child: Text('Go Back To Pay For Subscribe')) : Container(),
+                        child: Text('Go To Pay For Subscribe')) : Container(),
                     ElevatedButton(
                         onPressed: () => Navigator.of(context)
                             .pushReplacementNamed(Routes.loginRoute),

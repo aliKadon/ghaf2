@@ -168,7 +168,7 @@ class _PayLaterViewState extends State<PayLaterView> {
                                           width: AppSize.s16,
                                         ),
                                         Text(
-                                          '${unpaid[index].price} AED',
+                                          '${unpaid[index].price} ${AppLocalizations.of(context)!.aed}',
                                           style: getSemiBoldStyle(
                                             color: ColorManager.primaryDark,
                                           ),

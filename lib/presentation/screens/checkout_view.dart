@@ -154,7 +154,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                       ),
                       Spacer(),
                       Text(
-                        '(Choose one)',
+                        AppLocalizations.of(context)!.choose_route,
                         style: getSemiBoldStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s10,
@@ -189,7 +189,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                   title: 'Great!',
 
                                   message:
-                                      'You Choose the ${widget.order.availableDeliveryMethod[index]['methodName']}!',
+                                      '${AppLocalizations.of(context)!.you_choose} ${widget.order.availableDeliveryMethod[index]['methodName']}!',
 
                                   /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                   contentType: ContentType.success,
@@ -294,7 +294,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                     height: AppSize.s22,
                   ),
                   Text(
-                    'Order Summary',
+                    AppLocalizations.of(context)!.order_summary,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s16,
@@ -321,7 +321,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                         Row(
                           children: [
                             Text(
-                              'TOTAL ',
+                              AppLocalizations.of(context)!.total,
                               style: getSemiBoldStyle(
                                 color: ColorManager.primaryDark,
                                 fontSize: FontSize.s16,
@@ -329,7 +329,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                             ),
                             Spacer(),
                             Text(
-                              '${widget.order.orderDetails['totalCostForItems'].toString()} AED',
+                              '${widget.order.orderDetails['totalCostForItems'].toString()} ${AppLocalizations.of(context)!.aed}',
                               style: getSemiBoldStyle(
                                 color: ColorManager.primaryDark,
                                 fontSize: FontSize.s16,
@@ -342,7 +342,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                           child: Row(
                             children: [
                               Text(
-                                'You can pay later ',
+                                AppLocalizations.of(context)!.you_can_pay_later,
                                 style: getSemiBoldStyle(
                                   color: ColorManager.primaryDark,
                                   fontSize: FontSize.s16,
@@ -350,7 +350,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                               ),
                               Spacer(),
                               Text(
-                                '${widget.order.orderDetails['canPayLaterValue'].toString()} AED',
+                                '${widget.order.orderDetails['canPayLaterValue'].toString()} ${AppLocalizations.of(context)!.aed}',
                                 style: getSemiBoldStyle(
                                   color: ColorManager.primaryDark,
                                   fontSize: FontSize.s16,
@@ -426,7 +426,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                       ),
                                       Spacer(),
                                       Text(
-                                        '(Choose one)',
+                                        AppLocalizations.of(context)!.choose_route,
                                         style: getSemiBoldStyle(
                                           color: ColorManager.primaryDark,
                                           fontSize: FontSize.s10,
@@ -718,7 +718,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                               ),
                               child: Text(
                                 date == null
-                                    ? 'pick a date'
+                                    ? AppLocalizations.of(context)!.pick_date
                                     : date.toString().substring(0, 10),
                                 style: getSemiBoldStyle(
                                   color: ColorManager.primaryDark,
@@ -891,7 +891,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                       child: Row(
                         children: [
                           Text(
-                            'Pay later',
+                            AppLocalizations.of(context)!.pay_later,
                             style: getSemiBoldStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s16,
@@ -936,7 +936,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                     child: Row(
                       children: [
                         Text(
-                          'Use Your Redeem Points',
+                          AppLocalizations.of(context)!.use_reedem,
                           style: getSemiBoldStyle(
                             color: ColorManager.primaryDark,
                             fontSize: FontSize.s16,
@@ -1022,7 +1022,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(SnackBar(
-                              content: Text('Fill all data'),
+                              content: Text(AppLocalizations.of(context)!.enter_required_data),
                               backgroundColor: Colors.red,
                             ));
                           // final snackBar = SnackBar(
@@ -1054,7 +1054,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                         // );
                       },
                       child: Text(
-                        'Pay ${payLater.toString()} AED',
+                        '${AppLocalizations.of(context)!.pay} ${payLater.toString()} ${AppLocalizations.of(context)!.aed} ',
                         style: getSemiBoldStyle(
                             color: ColorManager.white, fontSize: FontSize.s18),
                       ),

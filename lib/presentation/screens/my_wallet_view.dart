@@ -142,7 +142,7 @@ class _MyWalletViewState extends State<MyWalletView> {
                             borderRadius: BorderRadius.circular(AppRadius.r8))),
                     child: Text(
                       // AppLocalizations.of(context)!.add_balance,
-                      'Your Balance',
+                        AppLocalizations.of(context)!.your_balance,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
@@ -164,12 +164,12 @@ class _MyWalletViewState extends State<MyWalletView> {
                     : completeOrder == null
                         ? Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Center(child: Text('no order founf')),
+                          child: Center(child: Text(AppLocalizations.of(context)!.no_order_found)),
                         )
                         : completeOrder.length == 0
                             ? Padding(
                               padding: const EdgeInsets.all(100.0),
-                              child: Center(child: Text('no order founf')),
+                              child: Center(child: Text(AppLocalizations.of(context)!.no_order_found)),
                             )
                             : ListView.separated(
                                 shrinkWrap: true,
@@ -183,7 +183,7 @@ class _MyWalletViewState extends State<MyWalletView> {
                                     // order: _ordersToPayViewGetXController
                                     //     .orders[index],
                                     completeOrder[index],
-                                    'Completed',
+                                    AppLocalizations.of(context)!.completed,
                                   );
                                   // : OrderWidget(
                                   // listOrder![index], widget.isOrderTrack);

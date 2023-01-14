@@ -119,14 +119,14 @@ class _RewardsViewState extends State<RewardsView> {
                         ),
                       ),
                       Text(
-                        'All Points You Have',
+                        AppLocalizations.of(context)!.all_points_you_have,
                         style: getRegularStyle(
                           color: ColorManager.grey,
                           fontSize: FontSize.s14,
                         ),
                       ),
                       Text(
-                        ' Congrats',
+                        AppLocalizations.of(context)!.congrats,
                         style: getRegularStyle(
                           color: ColorManager.grey,
                           fontSize: FontSize.s14,
@@ -237,7 +237,7 @@ class _RewardsViewState extends State<RewardsView> {
                             ],
                           ),
                           Text(
-                            'Congrats',
+                            AppLocalizations.of(context)!.congrats,
                             style: getSemiBoldStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s14,
