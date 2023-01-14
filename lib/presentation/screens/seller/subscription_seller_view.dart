@@ -282,12 +282,30 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                           print(Agree);
                         },
                         groupValue: option1),
-                    Text(
-                      AppLocalizations.of(context)!
-                          .i_agree_to_the_terms_of_service,
-                      style: getRegularStyle(
-                          color: ColorManager.grey, fontSize: FontSize.s16),
-                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'I Agree To The ',
+                          style: getRegularStyle(
+                              color: ColorManager.grey, fontSize: FontSize.s16),
+                        ),
+                        InkWell(
+                          onTap: (){
+
+                            Navigator.of(context).pushNamed(Routes.termsOfUseRoute);
+                          },
+                          child: Text.rich( //underline partially
+                            TextSpan(
+                                style: TextStyle(fontSize: FontSize.s16 , color: Colors.blue), //global text style
+                                children: [
+                                  TextSpan(text:"Terms Of Service", style: TextStyle(
+                                      decoration:TextDecoration.underline
+                                  )), //partial text style
+                                ]
+                            ),
+                          ),
+                        ),
+                      ],),
                   ],
                 ),
               ),
