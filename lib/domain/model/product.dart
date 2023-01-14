@@ -59,6 +59,7 @@ class Product extends GetxController with Helpers {
     this.isFavorite,
     this.isInCart,
     this.category,
+    this.storeStars
   });
 
   String? id;
@@ -86,6 +87,7 @@ class Product extends GetxController with Helpers {
   bool? isFavorite;
   bool? isInCart;
   Category? category;
+  int? storeStars;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
@@ -122,6 +124,7 @@ class Product extends GetxController with Helpers {
         category: json["category"] == null
             ? null
             : Category.fromJson(json["category"]),
+    storeStars: json["storeStars"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

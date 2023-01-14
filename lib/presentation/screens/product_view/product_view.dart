@@ -186,7 +186,7 @@ class _ProductViewState extends State<ProductView> {
                             ),
                             buildRating(
                                 Text(
-                                  "${_product.stars}",
+                                  "${_product.storeStars}",
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 _product),
@@ -343,7 +343,7 @@ class _ProductViewState extends State<ProductView> {
   Widget buildRating(Widget ifYouNeedRate, Product _product) => Row(
         children: [
           RatingBar.builder(
-              initialRating: _product.stars!.toDouble(),
+              initialRating: _product.storeStars!.toDouble(),
               minRating: 1,
               itemSize: 20,
               updateOnDrag: false,

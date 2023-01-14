@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefController().initPref();
   await dotenv.load(fileName: "assets/.env");
-  Stripe.publishableKey = 'pk_test_51MLP4SIQef6xe4xwQy3UczJ4PIOWi91gE0m5QrAtqkBaSHO0WbeVLXMuIc9DaqPqpJ4UgFnYU2o62M2NShZ3nYi700RsRhild8';
+  // Stripe.publishableKey = 'pk_test_51MLP4SIQef6xe4xwQy3UczJ4PIOWi91gE0m5QrAtqkBaSHO0WbeVLXMuIc9DaqPqpJ4UgFnYU2o62M2NShZ3nYi700RsRhild8';
   
 
   // Stripe.publishableKey = 'pk_test_51MLP4SIQef6xe4xwQy3UczJ4PIOWi91gE0m5QrAtqkBaSHO0WbeVLXMuIc9DaqPqpJ4UgFnYU2o62M2NShZ3nYi700RsRhild8';

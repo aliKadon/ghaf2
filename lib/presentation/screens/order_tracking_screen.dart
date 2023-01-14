@@ -430,14 +430,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   @override
   Widget build(BuildContext context) {
 
-    var orderById = Provider
+    var orderById1 = Provider
         .of<ProductProvider>(context)
         .orderById;
     // getColorBackground(orderById['statusName']);
     // getColorIcon(orderById['statusName']);
     // getTextSetuaition(orderById['statusName']);
     print('===================================statusName');
-    print(orderById['statusName']);
+    print(orderById1['statusName']);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -502,16 +502,16 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                     padding: EdgeInsets.all(10),
                     child: GoogleMap(
                       initialCameraPosition: CameraPosition(
-                        target: orderById['deliveryPoint'] == null
+                        target: orderById1['deliveryPoint'] == null
                             // ? LatLng(24.242978478140152,
                             // 54.710762053728104)
                           ?LatLng(locationData!.latitude!, locationData!.longitude!)
                             : LatLng(
                             double.parse(
-                                orderById['deliveryPoint']
+                                orderById1['deliveryPoint']
                                 ['altitude']),
                             double.parse(
-                                orderById['deliveryPoint']
+                                orderById1['deliveryPoint']
                                 ['longitude'])),
                         zoom: 12.5,
                       ),
@@ -519,14 +519,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                         Marker(
                           markerId: MarkerId("source"),
                           position:
-                          orderById['deliveryPoint'] == null
+                          orderById1['deliveryPoint'] == null
                               ? LatLng(locationData!.latitude!, locationData!.longitude!)
                               : LatLng(
                               double.parse(
-                                  orderById['deliveryPoint']
+                                  orderById1['deliveryPoint']
                                   ['altitude']),
                               double.parse(
-                                  orderById['deliveryPoint']
+                                  orderById1['deliveryPoint']
                                   ['longitude'])),
 
                           // LatLng(
@@ -536,14 +536,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                         Marker(
                           markerId: MarkerId("destination"),
                           position:
-                          orderById['branch'] == null
+                          orderById1['branch'] == null
                               ? LatLng(locationData!.latitude!, locationData!.longitude!)
                               : LatLng(
                               double.parse(
-                                  orderById['branch']['branchAddress']
+                                  orderById1['branch']['branchAddress']
                                   ['altitude']),
                               double.parse(
-                                  orderById['branch']['branchAddress']
+                                  orderById1['branch']['branchAddress']
                                   ['longitude'])),
                         ),
                       },
@@ -767,17 +767,17 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 SizedBox(
                   height: 30,
                 ),
-                Container(
+                orderById1['statusName'] == 'Done' ? Container(
                   child: ElevatedButton(
                       onPressed: () {
 
-                        _customDialogFeedBack(context);
+                        _customDialogFeedBack(context,orderById1);
                         // Navigator.of(context).pushReplacementNamed(
                         //     Routes.reviewProduct,
                         //     arguments: widget.orderId);
                       },
                       child: Text('Feedback')),
-                ),
+                ) : Container(),
               ],
             ),
           ),
@@ -786,7 +786,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     );
   }
 
-  void _customDialogFeedBack(context) async {
+  void _customDialogFeedBack(context,Map<String,dynamic> orderById1) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -883,7 +883,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                             );
                           },
 
-                          child: Container(
+                          child: orderById1['driverId'] == null ? Container() : Container(
                             width: AppSize.s110,
                             height: AppSize.s38,
                             alignment: Alignment.center,

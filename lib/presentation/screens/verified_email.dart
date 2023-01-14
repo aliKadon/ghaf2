@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/values_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerifiedEmail extends StatefulWidget {
   const VerifiedEmail({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _VerifiedEmailState extends State<VerifiedEmail> {
           children: [
 
             Text(
-              'You must verify your account via email Check your email please!',
+              AppLocalizations.of(context)!.must_verify,
               style: TextStyle(
                 fontSize: 30,
                 color: Colors.red,
@@ -37,7 +38,7 @@ class _VerifiedEmailState extends State<VerifiedEmail> {
             ElevatedButton(
               onPressed: _customDialogProgress,
                 // onPressed: (){Navigator.of(context).pushReplacementNamed(Routes.loginRoute);},
-                child: Text('Back To Login')),
+                child: Text(AppLocalizations.of(context)!.back_login)),
           ],
         ),
       ),
@@ -109,7 +110,7 @@ class _VerifiedEmailState extends State<VerifiedEmail> {
                                 BorderRadius.circular(AppRadius.r8),
                               ),
                               child: Text(
-                                'yes',
+                                AppLocalizations.of(context)!.yes,
                                 textAlign: TextAlign.center,
                                 ),
                               ),
@@ -136,7 +137,7 @@ class _VerifiedEmailState extends State<VerifiedEmail> {
                                     width: AppSize.s1),
                               ),
                               child: Text(
-                                'no',
+                                AppLocalizations.of(context)!.no,
                                 textAlign: TextAlign.center,
 
                               ),

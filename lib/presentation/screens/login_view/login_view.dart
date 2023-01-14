@@ -19,7 +19,7 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email'],clientId: '453527024227-n7pneahs3s6dd1ucjjpjfidem5sv3hnf.apps.googleusercontent.com');
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);

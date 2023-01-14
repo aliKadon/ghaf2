@@ -302,7 +302,7 @@ class _RateSellerState extends State<RateSeller> {
                     onPressed: () {
                       // print(_rateUsViewGetXController.description);
                       // _rateUsViewGetXController.reviewApp();
-
+                      Navigator.of(context).pop();
                       Provider.of<ProductProvider>(context, listen: false).postReviewStore('${provider[0].items![0]['storeId']}', opinion, points) .then((value) => ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text('Thank You!\nYour review has been submitted successfully'),backgroundColor: Colors.green),));
                       print('-----------------------------------------------------------');

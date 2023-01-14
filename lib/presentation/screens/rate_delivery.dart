@@ -229,10 +229,11 @@ class _RateDeliveryState extends State<RateDelivery> {
                   height: AppSize.s55,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Provider.of<ProductProvider>(context, listen: false).postReviewStore('${provider[0].items![0]['storeId']}', opinion, points) .then((value) => ScaffoldMessenger.of(context)
-                      //     .showSnackBar(SnackBar(content: Text('Thank You!\nYour review has been submitted successfully'),backgroundColor: Colors.green),));
-                      // print('-----------------------------------------------------------');
-                      // print('id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
+                      Navigator.of(context).pop();
+                      Provider.of<ProductProvider>(context, listen: false).postReviewStore('${provider[0].items![0]['storeId']}', opinion, points) .then((value) => ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text('Thank You!\nYour review has been submitted successfully'),backgroundColor: Colors.green),));
+                      print('-----------------------------------------------------------');
+                      print('id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
                     },
                     child: Text(
                       'Send A Note',

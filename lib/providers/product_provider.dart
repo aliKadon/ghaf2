@@ -34,7 +34,6 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
 
   List<PlanSellerIndividual> _plane = [];
 
-
   List<PlanSellerIndividual> get plane {
     return [..._plane];
   }
@@ -83,7 +82,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     return [..._product];
   }
 
-  Map<String,dynamic> orderById = {};
+  Map<String, dynamic> orderById = {};
 
   var redeemsPoints;
 
@@ -176,36 +175,6 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     List<Product2> listPayLater = [];
     for (int i = 0; i < product.length; i++) {
       list.add(Product2(
-        id: product[i]['id'],
-        isoCurrencySymbol: product[i]['isoCurrencySymbol'],
-        branch: product[i]['branch'],
-        name: product[i]['name'],
-        description: product[i]['description'],
-        isFavorite: product[i]['isFavorite'],
-        price: product[i]['price'],
-        addedAt: product[i]['addedAt'],
-        approved: product[i]['approved'],
-        canPayLater: product[i]['canPayLater'],
-        canPayLaterDays: product[i]['canPayLaterDays'],
-        category: product[i]['category'],
-        characteristics: product[i]['characteristics'],
-        deleted: product[i]['deleted'],
-        discountDescription: product[i]['discountDescription'],
-        ghafImage: product[i]['ghafImage'],
-        isInCart: product[i]['isInCart'],
-        offer: product[i]['offer'],
-        offerDescription: product[i]['offerDescription'],
-        productDiscount: product[i]['productDiscount'],
-        productReview: product[i]['productReview'],
-        productType: product[i]['productType'],
-        quantity: product[i]['quantity'],
-        redeemDescription: product[i]['redeemDescription'],
-        redeemPoints: product[i]['redeemPoints'],
-        stars: product[i]['stars'],
-        visible: product[i]['visible'],
-      ));
-      if (product[i]['canPayLater'] == true) {
-        listPayLater.add(Product2(
           id: product[i]['id'],
           isoCurrencySymbol: product[i]['isoCurrencySymbol'],
           branch: product[i]['branch'],
@@ -233,8 +202,37 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
           redeemPoints: product[i]['redeemPoints'],
           stars: product[i]['stars'],
           visible: product[i]['visible'],
-        ));
-
+          storeStars: product[i]['storeStars'] ?? 0));
+      if (product[i]['canPayLater'] == true) {
+        listPayLater.add(Product2(
+            id: product[i]['id'],
+            isoCurrencySymbol: product[i]['isoCurrencySymbol'],
+            branch: product[i]['branch'],
+            name: product[i]['name'],
+            description: product[i]['description'],
+            isFavorite: product[i]['isFavorite'],
+            price: product[i]['price'],
+            addedAt: product[i]['addedAt'],
+            approved: product[i]['approved'],
+            canPayLater: product[i]['canPayLater'],
+            canPayLaterDays: product[i]['canPayLaterDays'],
+            category: product[i]['category'],
+            characteristics: product[i]['characteristics'],
+            deleted: product[i]['deleted'],
+            discountDescription: product[i]['discountDescription'],
+            ghafImage: product[i]['ghafImage'],
+            isInCart: product[i]['isInCart'],
+            offer: product[i]['offer'],
+            offerDescription: product[i]['offerDescription'],
+            productDiscount: product[i]['productDiscount'],
+            productReview: product[i]['productReview'],
+            productType: product[i]['productType'],
+            quantity: product[i]['quantity'],
+            redeemDescription: product[i]['redeemDescription'],
+            redeemPoints: product[i]['redeemPoints'],
+            stars: product[i]['stars'],
+            visible: product[i]['visible'],
+            storeStars: product[i]['storeStars'] ?? 0));
       }
     }
     listPayLater1 = listPayLater;
@@ -242,19 +240,17 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     notifyListeners();
   }
 
-
   Future<void> getOrderById(String id) async {
     var url = Uri.parse("${Constants.urlBase}/orders/get-order-by-id?id=$id");
-    final response =await http.get(url,headers: headers);
+    final response = await http.get(url, headers: headers);
 
-    Map<String,dynamic> data = jsonDecode(response.body)['data'];
+    Map<String, dynamic> data = jsonDecode(response.body)['data'];
 
     print('=====================================orderById');
     print(data);
 
     orderById = data;
     notifyListeners();
-
   }
 
   Future<void> getOrders() async {
@@ -273,8 +269,6 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     num pending = 0;
     num inProgress = 0;
     num delivery = 0;
-
-
 
     List<Order> list = [];
     for (int i = 0; i < orders.length; i++) {
@@ -318,7 +312,6 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
         delivery++;
       }
     }
-
 
     unPaidCount = unPay;
     paidCount = pay;
@@ -639,171 +632,171 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     for (int i = 0; i < unpaid.length; i++) {
       list.add(
         UnpaidOrder(
-          unpaid[i]['id'],
-          unpaid[i]['createDate'],
-          unpaid[i]['estimatedDeliveryDate'],
-          unpaid[i]['desiredDeliveryDate'],
-          unpaid[i]['deliverdAt'],
-          unpaid[i]['deliveryPoint'],
-          unpaid[i]['currentLocation'],
-          unpaid[i]['status'],
-          unpaid[i]['payed'],
-          unpaid[i]['deliveryMethod'],
-          unpaid[i]['deleveryCost'],
-          (unpaid[i]['orderCostForCustomer']).toDouble(),
-          unpaid[i]['totalCostForItems'],
-          unpaid[i]['statusName'],
-          unpaid[i]['customer'],
-          unpaid[i]['items'],
-          unpaid[i]['userCredentialsId'],
-          unpaid[i]['branch'],
-          unpaid[i]['canPayLaterValue'],
-          unpaid[i]['redeemPointsForProducts'],
-          unpaid[i]['redeemPointsForBill'],
-          unpaid[i]['redeemPointsFactor'],
-        ),
+            unpaid[i]['id'],
+            unpaid[i]['createDate'],
+            unpaid[i]['estimatedDeliveryDate'],
+            unpaid[i]['desiredDeliveryDate'],
+            unpaid[i]['deliverdAt'],
+            unpaid[i]['deliveryPoint'],
+            unpaid[i]['currentLocation'],
+            unpaid[i]['status'],
+            unpaid[i]['payed'],
+            unpaid[i]['deliveryMethod'],
+            unpaid[i]['deleveryCost'],
+            (unpaid[i]['orderCostForCustomer']).toDouble(),
+            unpaid[i]['totalCostForItems'],
+            unpaid[i]['statusName'],
+            unpaid[i]['customer'],
+            unpaid[i]['items'],
+            unpaid[i]['userCredentialsId'],
+            unpaid[i]['branch'],
+            unpaid[i]['canPayLaterValue'],
+            unpaid[i]['redeemPointsForProducts'],
+            unpaid[i]['redeemPointsForBill'],
+            unpaid[i]['redeemPointsFactor'],
+            unpaid[i]['driverId']),
       );
       if (unpaid[i]['statusName'] == 'Paid') {
         pay++;
         listPay.add(
           UnpaidOrder(
-            unpaid[i]['id'],
-            unpaid[i]['createDate'],
-            unpaid[i]['estimatedDeliveryDate'],
-            unpaid[i]['desiredDeliveryDate'],
-            unpaid[i]['deliverdAt'],
-            unpaid[i]['deliveryPoint'],
-            unpaid[i]['currentLocation'],
-            unpaid[i]['status'],
-            unpaid[i]['payed'],
-            unpaid[i]['deliveryMethod'],
-            unpaid[i]['deleveryCost'],
-            (unpaid[i]['orderCostForCustomer']).toDouble(),
-            unpaid[i]['totalCostForItems'],
-            unpaid[i]['statusName'],
-            unpaid[i]['customer'],
-            unpaid[i]['items'],
-            unpaid[i]['userCredentialsId'],
-            unpaid[i]['branch'],
-            unpaid[i]['canPayLaterValue'],
-            unpaid[i]['redeemPointsForProducts'],
-            unpaid[i]['redeemPointsForBill'],
-            unpaid[i]['redeemPointsFactor'],
-          ),
+              unpaid[i]['id'],
+              unpaid[i]['createDate'],
+              unpaid[i]['estimatedDeliveryDate'],
+              unpaid[i]['desiredDeliveryDate'],
+              unpaid[i]['deliverdAt'],
+              unpaid[i]['deliveryPoint'],
+              unpaid[i]['currentLocation'],
+              unpaid[i]['status'],
+              unpaid[i]['payed'],
+              unpaid[i]['deliveryMethod'],
+              unpaid[i]['deleveryCost'],
+              (unpaid[i]['orderCostForCustomer']).toDouble(),
+              unpaid[i]['totalCostForItems'],
+              unpaid[i]['statusName'],
+              unpaid[i]['customer'],
+              unpaid[i]['items'],
+              unpaid[i]['userCredentialsId'],
+              unpaid[i]['branch'],
+              unpaid[i]['canPayLaterValue'],
+              unpaid[i]['redeemPointsForProducts'],
+              unpaid[i]['redeemPointsForBill'],
+              unpaid[i]['redeemPointsFactor'],
+              unpaid[i]['driverId']),
         );
       } else if (unpaid[i]['statusName'] == 'UnPaid') {
         unPay++;
         listUnPay.add(
           UnpaidOrder(
-            unpaid[i]['id'],
-            unpaid[i]['createDate'],
-            unpaid[i]['estimatedDeliveryDate'],
-            unpaid[i]['desiredDeliveryDate'],
-            unpaid[i]['deliverdAt'],
-            unpaid[i]['deliveryPoint'],
-            unpaid[i]['currentLocation'],
-            unpaid[i]['status'],
-            unpaid[i]['payed'],
-            unpaid[i]['deliveryMethod'],
-            unpaid[i]['deleveryCost'],
-            (unpaid[i]['orderCostForCustomer']).toDouble(),
-            unpaid[i]['totalCostForItems'],
-            unpaid[i]['statusName'],
-            unpaid[i]['customer'],
-            unpaid[i]['items'],
-            unpaid[i]['userCredentialsId'],
-            unpaid[i]['branch'],
-            unpaid[i]['canPayLaterValue'],
-            unpaid[i]['redeemPointsForProducts'],
-            unpaid[i]['redeemPointsForBill'],
-            unpaid[i]['redeemPointsFactor'],
-          ),
+              unpaid[i]['id'],
+              unpaid[i]['createDate'],
+              unpaid[i]['estimatedDeliveryDate'],
+              unpaid[i]['desiredDeliveryDate'],
+              unpaid[i]['deliverdAt'],
+              unpaid[i]['deliveryPoint'],
+              unpaid[i]['currentLocation'],
+              unpaid[i]['status'],
+              unpaid[i]['payed'],
+              unpaid[i]['deliveryMethod'],
+              unpaid[i]['deleveryCost'],
+              (unpaid[i]['orderCostForCustomer']).toDouble(),
+              unpaid[i]['totalCostForItems'],
+              unpaid[i]['statusName'],
+              unpaid[i]['customer'],
+              unpaid[i]['items'],
+              unpaid[i]['userCredentialsId'],
+              unpaid[i]['branch'],
+              unpaid[i]['canPayLaterValue'],
+              unpaid[i]['redeemPointsForProducts'],
+              unpaid[i]['redeemPointsForBill'],
+              unpaid[i]['redeemPointsFactor'],
+              unpaid[i]['driverId']),
         );
       } else if (unpaid[i]['statusName'] == 'Intialized' ||
           unpaid[i]['statusName'] == 'NotAssignedToEmployee') {
         pending++;
         listPending.add(
           UnpaidOrder(
-            unpaid[i]['id'],
-            unpaid[i]['createDate'],
-            unpaid[i]['estimatedDeliveryDate'],
-            unpaid[i]['desiredDeliveryDate'],
-            unpaid[i]['deliverdAt'],
-            unpaid[i]['deliveryPoint'],
-            unpaid[i]['currentLocation'],
-            unpaid[i]['status'],
-            unpaid[i]['payed'],
-            unpaid[i]['deliveryMethod'],
-            unpaid[i]['deleveryCost'],
-            (unpaid[i]['orderCostForCustomer']).toDouble(),
-            unpaid[i]['totalCostForItems'],
-            unpaid[i]['statusName'],
-            unpaid[i]['customer'],
-            unpaid[i]['items'],
-            unpaid[i]['userCredentialsId'],
-            unpaid[i]['branch'],
-            unpaid[i]['canPayLaterValue'],
-            unpaid[i]['redeemPointsForProducts'],
-            unpaid[i]['redeemPointsForBill'],
-            unpaid[i]['redeemPointsFactor'],
-          ),
+              unpaid[i]['id'],
+              unpaid[i]['createDate'],
+              unpaid[i]['estimatedDeliveryDate'],
+              unpaid[i]['desiredDeliveryDate'],
+              unpaid[i]['deliverdAt'],
+              unpaid[i]['deliveryPoint'],
+              unpaid[i]['currentLocation'],
+              unpaid[i]['status'],
+              unpaid[i]['payed'],
+              unpaid[i]['deliveryMethod'],
+              unpaid[i]['deleveryCost'],
+              (unpaid[i]['orderCostForCustomer']).toDouble(),
+              unpaid[i]['totalCostForItems'],
+              unpaid[i]['statusName'],
+              unpaid[i]['customer'],
+              unpaid[i]['items'],
+              unpaid[i]['userCredentialsId'],
+              unpaid[i]['branch'],
+              unpaid[i]['canPayLaterValue'],
+              unpaid[i]['redeemPointsForProducts'],
+              unpaid[i]['redeemPointsForBill'],
+              unpaid[i]['redeemPointsFactor'],
+              unpaid[i]['driverId']),
         );
       } else if (unpaid[i]['statusName'] == 'AssignedToEmployee') {
         inProgress++;
         listInProgress.add(
           UnpaidOrder(
-            unpaid[i]['id'],
-            unpaid[i]['createDate'],
-            unpaid[i]['estimatedDeliveryDate'],
-            unpaid[i]['desiredDeliveryDate'],
-            unpaid[i]['deliverdAt'],
-            unpaid[i]['deliveryPoint'],
-            unpaid[i]['currentLocation'],
-            unpaid[i]['status'],
-            unpaid[i]['payed'],
-            unpaid[i]['deliveryMethod'],
-            unpaid[i]['deleveryCost'],
-            (unpaid[i]['orderCostForCustomer']).toDouble(),
-            unpaid[i]['totalCostForItems'],
-            unpaid[i]['statusName'],
-            unpaid[i]['customer'],
-            unpaid[i]['items'],
-            unpaid[i]['userCredentialsId'],
-            unpaid[i]['branch'],
-            unpaid[i]['canPayLaterValue'],
-            unpaid[i]['redeemPointsForProducts'],
-            unpaid[i]['redeemPointsForBill'],
-            unpaid[i]['redeemPointsFactor'],
-          ),
+              unpaid[i]['id'],
+              unpaid[i]['createDate'],
+              unpaid[i]['estimatedDeliveryDate'],
+              unpaid[i]['desiredDeliveryDate'],
+              unpaid[i]['deliverdAt'],
+              unpaid[i]['deliveryPoint'],
+              unpaid[i]['currentLocation'],
+              unpaid[i]['status'],
+              unpaid[i]['payed'],
+              unpaid[i]['deliveryMethod'],
+              unpaid[i]['deleveryCost'],
+              (unpaid[i]['orderCostForCustomer']).toDouble(),
+              unpaid[i]['totalCostForItems'],
+              unpaid[i]['statusName'],
+              unpaid[i]['customer'],
+              unpaid[i]['items'],
+              unpaid[i]['userCredentialsId'],
+              unpaid[i]['branch'],
+              unpaid[i]['canPayLaterValue'],
+              unpaid[i]['redeemPointsForProducts'],
+              unpaid[i]['redeemPointsForBill'],
+              unpaid[i]['redeemPointsFactor'],
+              unpaid[i]['driverId']),
         );
       } else if (unpaid[i]['statusName'] == 'AssignedToDriver' ||
           unpaid[i]['statusName'] == 'ReadyForDriver') {
         delivery++;
         listDelivery.add(
           UnpaidOrder(
-            unpaid[i]['id'],
-            unpaid[i]['createDate'],
-            unpaid[i]['estimatedDeliveryDate'],
-            unpaid[i]['desiredDeliveryDate'],
-            unpaid[i]['deliverdAt'],
-            unpaid[i]['deliveryPoint'],
-            unpaid[i]['currentLocation'],
-            unpaid[i]['status'],
-            unpaid[i]['payed'],
-            unpaid[i]['deliveryMethod'],
-            unpaid[i]['deleveryCost'],
-            (unpaid[i]['orderCostForCustomer']).toDouble(),
-            unpaid[i]['totalCostForItems'],
-            unpaid[i]['statusName'],
-            unpaid[i]['customer'],
-            unpaid[i]['items'],
-            unpaid[i]['userCredentialsId'],
-            unpaid[i]['branch'],
-            unpaid[i]['canPayLaterValue'],
-            unpaid[i]['redeemPointsForProducts'],
-            unpaid[i]['redeemPointsForBill'],
-            unpaid[i]['redeemPointsFactor'],
-          ),
+              unpaid[i]['id'],
+              unpaid[i]['createDate'],
+              unpaid[i]['estimatedDeliveryDate'],
+              unpaid[i]['desiredDeliveryDate'],
+              unpaid[i]['deliverdAt'],
+              unpaid[i]['deliveryPoint'],
+              unpaid[i]['currentLocation'],
+              unpaid[i]['status'],
+              unpaid[i]['payed'],
+              unpaid[i]['deliveryMethod'],
+              unpaid[i]['deleveryCost'],
+              (unpaid[i]['orderCostForCustomer']).toDouble(),
+              unpaid[i]['totalCostForItems'],
+              unpaid[i]['statusName'],
+              unpaid[i]['customer'],
+              unpaid[i]['items'],
+              unpaid[i]['userCredentialsId'],
+              unpaid[i]['branch'],
+              unpaid[i]['canPayLaterValue'],
+              unpaid[i]['redeemPointsForProducts'],
+              unpaid[i]['redeemPointsForBill'],
+              unpaid[i]['redeemPointsFactor'],
+              unpaid[i]['driverId']),
         );
       }
     }
@@ -928,24 +921,40 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     print(response.body);
     repo = jsonDecode(response.body)['message'];
   }
-  String messageReviewStore ='';
-  Future<void> postReviewStore(String storeId,String opinion,int points) async {
-    var url = Uri.parse('${Constants.urlBase}/auth/create-store-review?storeId=$storeId&opinion=$opinion&points=$points');
+
+  String messageReviewStore = '';
+
+  Future<void> postReviewStore(
+      String storeId, String opinion, int points) async {
+    var url = Uri.parse(
+        '${Constants.urlBase}/auth/create-store-review?storeId=$storeId&opinion=$opinion&points=$points');
     try {
-      final response = await http.post(url,headers: headers,);
+      final response = await http.post(
+        url,
+        headers: headers,
+      );
       // print(response);
       messageReviewStore = jsonDecode(response.body)['message'];
       print(messageReviewStore);
-    }catch(e) {
+      print('===================================store');
+      print(response.body);
+    } catch (e) {
       print(e);
     }
   }
 
-  Future<void> postReviewEmployee(String storeId,String opinion,int points) async {
-    var url = Uri.parse('${Constants.urlBase}/Employee/create-review?storeId=$storeId&opinion=$opinion&points=$points');
+  Future<void> postReviewEmployee(
+      String storeId, String opinion, int points) async {
+    var url = Uri.parse(
+        '${Constants.urlBase}/Employee/create-review?storeId=$storeId&opinion=$opinion&points=$points');
     try {
-      final response = await http.post(url,headers: headers,);
-    }catch(e) {
+      final response = await http.post(
+        url,
+        headers: headers,
+      );
+      print('===================================employee');
+      print(response.body);
+    } catch (e) {
       print(e);
     }
   }

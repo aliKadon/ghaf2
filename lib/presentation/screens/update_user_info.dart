@@ -5,6 +5,7 @@ import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../data/api/controllers/auth_api_controller.dart';
 import '../resources/assets_manager.dart';
@@ -100,7 +101,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                         ),
                         Spacer(),
                         Text(
-                          'Edit Profile',
+                          AppLocalizations.of(context)!.edit_profile,
                           style: getSemiBoldStyle(
                             color: ColorManager.primaryDark,
                             fontSize: FontSize.s18,
@@ -242,7 +243,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                                                         AppRadius.r8),
                                               ),
                                               child: Text(
-                                                'yes',
+                                                AppLocalizations.of(context)!.yes,
                                                 textAlign: TextAlign.center,
                                                 style: getMediumStyle(
                                                     color: ColorManager.white),
@@ -305,7 +306,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                                     backgroundColor: Colors.red,
                                   )));
                         },
-                        child: Text('Update')),
+                        child: Text(AppLocalizations.of(context)!.update)),
 
                     SizedBox(height: AppSize.s30),
                     ElevatedButton(
@@ -324,7 +325,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                                   .showSnackBar(
                                       SnackBar(content: Text(e.toString()),backgroundColor: Colors.red,)));
                         },
-                        child: Text('Delete Account'),),
+                        child: Text(AppLocalizations.of(context)!.delete_account),),
                   ],
                 ),
               ),

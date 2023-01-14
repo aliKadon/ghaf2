@@ -207,7 +207,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                   deleveryName = widget
                                           .order.availableDeliveryMethod[index]
                                       ['methodName'];
-                                  visibility = false;
+                                  visibility = true;
                                   deleveryMethod = widget.order
                                       .availableDeliveryMethod[index]['id'];
                                 });
