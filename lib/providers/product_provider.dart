@@ -915,14 +915,14 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   }
 
   Future<void> deleteAccount() async {
-    var url = Uri.parse('${Constants.urlBase}/auth/GetUserDetails');
+    var url = Uri.parse('${Constants.urlBase}/Auth/delete-user-account');
 
     final response = await http.post(
       url,
       headers: headers,
     );
 
-    print('============================update');
+    print('============================delete-user-account');
     print(response.body);
     repo = jsonDecode(response.body)['message'];
   }

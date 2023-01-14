@@ -63,9 +63,9 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
   Widget build(BuildContext context) {
     var userInfo = Provider.of<SellerProvider>(context).userDetails;
     var message = Provider.of<ProductProvider>(context).repo;
-    _nameTextController.text = userInfo['firstName'] ?? '';
-    _emailTextController.text = userInfo['lastName'] ?? '';
-    _passwordTextController.text = userInfo['telephone'] ?? '';
+    // _nameTextController.text = userInfo['firstName'] ?? '';
+    // _emailTextController.text = userInfo['lastName'] ?? '';
+    // _passwordTextController.text = userInfo['telephone'] ?? '';
     _phoneTextController.text = userInfo['birthDate'] ?? '';
 
     return Scaffold(
@@ -129,20 +129,20 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                         Expanded(
                           child: AppTextField(
                             textController: _nameTextController,
-                            hint: 'First Name',
+                            hint: userInfo['firstName'],
                           ),
                         ),
                         Expanded(
                           child: AppTextField(
                             textController: _emailTextController,
-                            hint: 'Last Name',
+                            hint: userInfo['lastName'],
                           ),
                         ),
                       ],
                     ),
                     AppTextField(
                       textController: _passwordTextController,
-                      hint: 'phone Number',
+                      hint: userInfo['telephone'],
                     ),
 
                     Row(

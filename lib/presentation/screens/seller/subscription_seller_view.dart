@@ -37,6 +37,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
     super.dispose();
   }
  bool Agree = false;
+ bool monthly = true;
   @override
   Widget build(BuildContext context) {
     var sellerPlan =  Provider.of<SellerProvider>(context).getSellerPlansData;
@@ -199,7 +200,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier1,
-                          '${sellerPlan[0]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
+                  monthly?'${sellerPlan[0]['priceAmount']} ${AppLocalizations.of(context)!.aed}' :'${sellerPlan[3]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
                           ImageAssets.tier1, [
                         '${AppLocalizations.of(context)!.update_menu}',
                         '${AppLocalizations.of(context)!.track_order}',
@@ -218,7 +219,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier2,
-                          '${sellerPlan[1]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
+                          monthly?'${sellerPlan[1]['priceAmount']} ${AppLocalizations.of(context)!.aed}' :'${sellerPlan[3]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
                           ImageAssets.tier1, [
                         '${AppLocalizations.of(context)!.update_menu}',
                         '${AppLocalizations.of(context)!.promote}',
@@ -234,7 +235,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     _onBoardingContent(
                       SubscriptionObject(
                           AppLocalizations.of(context)!.tier3,
-                          '${sellerPlan[2]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
+                          monthly?'${sellerPlan[2]['priceAmount']} ${AppLocalizations.of(context)!.aed}' :'${sellerPlan[3]['priceAmount']} ${AppLocalizations.of(context)!.aed}',
                           ImageAssets.tier1, [
                         '${AppLocalizations.of(context)!.update_menu}',
                         '${AppLocalizations.of(context)!.promote}',
@@ -403,6 +404,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                           value: 'Monthly',
                           onChanged: (n) {
                             setState(() {
+                              monthly =true;
                               Agree1 = true;
                               plan = planIdMonthly;
                               option = n!;
@@ -435,6 +437,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                             value: 'Annual',
                             onChanged: (n) {
                               setState(() {
+                                monthly =false;
                                 Agree1 = true;
                                 plan = planIdAnnual;
                                 option = n!;
