@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
+import 'package:ghaf_application/presentation/widgets/product2_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -92,11 +94,11 @@ class _PayLaterViewState extends State<PayLaterView> {
                           index1 = index;
                           return GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (builder) => ProductView()),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ProductView2(unpaid[index])),
+                              );
                               // Navigator.of(context).pushNamed(Routes.unpaidItemScreen,arguments: unpaid[index]);
                             },
                             child: Card(

@@ -37,9 +37,9 @@ class _RewardsViewState extends State<RewardsView> {
 
   @override
   Widget build(BuildContext context) {
-    var redeem = Provider
-        .of<ProductProvider>(context)
-        .redeemsPoints;
+    // var redeem = Provider
+    //     .of<ProductProvider>(context)
+    //     .redeemsPoints;
 
     var allRedeemPoint = Provider.of<ProductProvider>(context).redeemsPoints;
     print('=======================rewards');
@@ -63,7 +63,7 @@ class _RewardsViewState extends State<RewardsView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      allRedeemPoint = 0;
+                      // allRedeemPoint = 0;
                       Navigator.pop(context);
                     },
                     child: Image.asset(
@@ -199,7 +199,7 @@ class _RewardsViewState extends State<RewardsView> {
                     padding: EdgeInsets.symmetric(
                         horizontal: AppPadding.p8, vertical: AppPadding.p4),
                     shrinkWrap: true,
-                    itemCount: redeem.length,
+                    itemCount: allRedeemPoint['list'].length,
                     physics: const BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: Constants.crossAxisCount,
@@ -254,6 +254,7 @@ class _RewardsViewState extends State<RewardsView> {
                                 FittedBox(
 
                                   child: Text(
+
                                     allRedeemPoint['list'][index]['storeName'],
                                     style: getRegularStyle(
                                       color: ColorManager.grey,

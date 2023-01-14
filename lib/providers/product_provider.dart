@@ -606,10 +606,12 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     //   allRedeemPoints = allRedeemPoints + redeem[i]['points'];
     // }
     print('===========================redeemsPoints');
-    print(redeemsPoints);
+
     redeemsPoints = redeem;
-    // print('=====================redeem');
-    // print(_redeemsPoints);
+    print(redeemsPoints.length);
+    print('=====================redeem');
+    print(redeemsPoints);
+    print(redeem);
     notifyListeners();
   }
 
@@ -925,6 +927,24 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     print('============================delete-user-account');
     print(response.body);
     repo = jsonDecode(response.body)['message'];
+  }
+
+  Future<void> postReviewStore(String storeId,String opinion,int points) async {
+    var url = Uri.parse('${Constants.urlBase}/auth/create-store-review?storeId=$storeId&opinion=$opinion&points=$points');
+    try {
+      final response = await http.post(url,headers: headers,);
+    }catch(e) {
+      print(e);
+    }
+  }
+
+  Future<void> postReviewEmployee(String storeId,String opinion,int points) async {
+    var url = Uri.parse('${Constants.urlBase}/Employee/create-review?storeId=$storeId&opinion=$opinion&points=$points');
+    try {
+      final response = await http.post(url,headers: headers,);
+    }catch(e) {
+      print(e);
+    }
   }
 
   Future<void> clearCart() async {
