@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -83,31 +85,31 @@ class _OrderToPay2State extends State<OrderToPay2> {
                   ),
                   Spacer(),
                   widget.isOrderTrack == 'Pending' ? Text(
-                    'Pending Orders',
+                    AppLocalizations.of(context)!.pending_order,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
                     ),
                   ) : widget.isOrderTrack == 'Completed' ? Text(
-                    'Completed Orders',
+                    AppLocalizations.of(context)!.completed_order,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
                     ),
                   ) : widget.isOrderTrack == 'Delivery' ? Text(
-                    'Delivery Orders',
+                    AppLocalizations.of(context)!.delivery_Orders,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
                     ),
                   ): widget.isOrderTrack == 'In Progress' ?Text(
-                    'In Progress Orders',
+                    AppLocalizations.of(context)!.in_Progress_Orders,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
                     ),
                   ) :Text(
-                    'Orders To Pay',
+                    AppLocalizations.of(context)!.orders_to_pay,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -124,13 +126,13 @@ class _OrderToPay2State extends State<OrderToPay2> {
                 child: listOrder == null
                     ? Center(
                         child: Text(
-                          'No orders found',
+                          AppLocalizations.of(context)!.no_order_found,
                         ),
                       )
                     : listOrder.length == 0
                         ? Center(
                             child: Text(
-                              'No orders found',
+                              AppLocalizations.of(context)!.no_order_found,
                             ),
                           )
                         : ListView.separated(

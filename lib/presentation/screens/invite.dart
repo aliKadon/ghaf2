@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -52,7 +54,7 @@ class _InviteState extends State<Invite> {
                   ),
                   Spacer(),
                   Text(
-                    'Invite',
+                    AppLocalizations.of(context)!.invite,
                     style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s24),
@@ -76,7 +78,7 @@ class _InviteState extends State<Invite> {
                 height: AppSize.s31,
               ),
               Text(
-                'Your Invite Code',
+                AppLocalizations.of(context)!.invite_code,
                 style: getSemiBoldStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s30),
@@ -120,7 +122,7 @@ class _InviteState extends State<Invite> {
                       isLoading = false;
                       refCode = referral;
                     });
-                  }, child: Text('Generate',style: getSemiBoldStyle(
+                  }, child: Text(AppLocalizations.of(context)!.generate,style: getSemiBoldStyle(
                       color: Colors.white,
                       fontSize: FontSize.s26),),),
 
@@ -134,7 +136,7 @@ class _InviteState extends State<Invite> {
                         ),
                       );
                     });
-                  }, child: Text('copy',style: getSemiBoldStyle(
+                  }, child: Text(AppLocalizations.of(context)!.copy,style: getSemiBoldStyle(
                       color: Colors.white,
                       fontSize: FontSize.s26),),),
                 ],

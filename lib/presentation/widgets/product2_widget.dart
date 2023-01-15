@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../app/constants.dart';
 import '../../domain/model/product2.dart';
@@ -165,7 +167,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
                 children: [
                   if (widget.product.productDiscount == null)
                     Text(
-                      '${widget.product.price!.toStringAsFixed(1)} AED',
+                      '${widget.product.price!.toStringAsFixed(1)} ${AppLocalizations.of(context)!.aed}',
                       style: TextStyle(
                         fontSize: FontSize.s12,
 
@@ -180,7 +182,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
                   if (widget.product.productDiscount != null) ...[
 
                     Text(
-                      'NEW ${(widget.product.price!-(widget.product.price! * (widget.product.productDiscount!['discount'] / 100))).toStringAsFixed(1)} AED',
+                      '${AppLocalizations.of(context)!.new1} ${(widget.product.price!-(widget.product.price! * (widget.product.productDiscount!['discount'] / 100))).toStringAsFixed(1)}  ${AppLocalizations.of(context)!.aed}',
                       style: getSemiBoldStyle(
                         color: ColorManager.red,
                       ),

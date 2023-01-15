@@ -68,6 +68,40 @@ class SellerProvider with ChangeNotifier, ApiHelper {
     }
   }
 
+  Future<void> addPaymentCardSeller(BuildContext context, String cardNumber,
+      String cvv, int expiredMonth, int expiredYear, String PlanId) async {
+    var url = Uri.parse('${Constants.urlBase}/Auth/pay-for-subscribtion-as-seller');
+    try {
+      final response = await http.post(url,
+          headers: headers,
+          body: json.encode({
+            'paymentMethodType': 'card',
+            'cardNumber': cardNumber,
+            'cardExpMonth': expiredMonth,
+            'cardExpCvc': cvv,
+            'cardExpYear': expiredYear,
+            'PlanId': PlanId,
+          }));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          response.body.toString(),
+        ),
+      ));
+      repo = json.decode(response.body)['message'];
+      notifyListeners();
+      // print('=====================addPaymentCard============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print(json.decode(response.body)['message']);
+      // print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      notifyListeners();
+      // print(repo);
+    } catch (e) {
+      // print(e);
+    }
+  }
+
   Future<void> submitIndividualForm(
       BuildContext context,
       String shopName,

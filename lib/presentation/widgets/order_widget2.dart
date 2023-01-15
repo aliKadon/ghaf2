@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../domain/model/unpaid_order.dart';
 import '../resources/color_manager.dart';
@@ -88,7 +90,7 @@ class OrderWidget2 extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Total',
+                AppLocalizations.of(context)!.total,
                 style: TextStyle(
                   fontSize: 16.sp,
                 ),
@@ -107,7 +109,7 @@ class OrderWidget2 extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'You can pay later',
+                  AppLocalizations.of(context)!.can_pay_later,
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),
@@ -137,7 +139,7 @@ class OrderWidget2 extends StatelessWidget {
                   width: 5.w,
                 ),
                 Text(
-                  'Dear customer you will get ',
+                  AppLocalizations.of(context)!.dear_customer,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 11.sp,
@@ -152,7 +154,7 @@ class OrderWidget2 extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' as discount',
+                  AppLocalizations.of(context)!.as_discount,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 11.sp,
@@ -194,14 +196,14 @@ class OrderWidget2 extends StatelessWidget {
                       isOrderToPay == 'Completed' ||
                       isOrderToPay == 'Pending'
                   ? Text(
-                      'Track Order',
+                      AppLocalizations.of(context)!.track_order,
                       style: getSemiBoldStyle(
                         color: ColorManager.white,
                         fontSize: FontSize.s18,
                       ),
                     )
                   : Text(
-                      'Checkout',
+                AppLocalizations.of(context)!.checkout,
                       style: getSemiBoldStyle(
                         color: ColorManager.white,
                         fontSize: FontSize.s18,

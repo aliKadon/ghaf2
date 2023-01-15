@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../providers/seller_provider.dart';
 import '../resources/assets_manager.dart';
@@ -120,7 +122,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 Text(
                   // AppLocalizations.of(context)!.getting_started,
-                  'getting started',
+                  AppLocalizations.of(context)!.getting_Started,
                   style: getSemiBoldStyle(
                       color: ColorManager.primaryDark, fontSize: FontSize.s24),
                 ),
@@ -141,10 +143,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Expanded(
                       child: AppTextField(
                         textController: _nameTextController,
-                        hint: 'First Name',
+                        hint: AppLocalizations.of(context)!.first_name,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return 'First name is required';
+                            return AppLocalizations.of(context)!.first_name_is_required;
                           return null;
                         },
                         onSaved: (value) {
@@ -166,10 +168,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Expanded(
                       child: AppTextField(
                         textController: _lastnameController,
-                        hint: 'Last Name',
+                        hint: AppLocalizations.of(context)!.last_name,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return 'Last name is required';
+                            return AppLocalizations.of(context)!.last_name_is_required;
                           return null;
                         },
                         onSaved: (value) {
@@ -193,10 +195,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 AppTextField(
                   // hint: AppLocalizations.of(context)!.user_name,
                   textController: _userNameController,
-                  hint: 'UserName',
+                  hint: AppLocalizations.of(context)!.user_name,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Username is required';
+                      return AppLocalizations.of(context)!.userName_or_Email_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -216,12 +218,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 AppTextField(
                   // hint: AppLocalizations.of(context)!.hint_email_phone,
-                  hint: 'Email',
+                  hint: AppLocalizations.of(context)!.hint_email_phone,
                   textController: _emailTextController,
                   textInputType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Email is required';
+                      return AppLocalizations.of(context)!.email_address_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -241,13 +243,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 AppTextField(
                   // hint: AppLocalizations.of(context)!.hint_password,
-                  hint: 'PassWord',
+                  hint: AppLocalizations.of(context)!.hint_password,
                   textController: _passwordTextController,
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Password is required';
+                      return AppLocalizations.of(context)!.password_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -266,13 +268,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                 ),
                 AppTextField(
-                  hint: 'Confirm Password',
+                  hint: AppLocalizations.of(context)!.confirm_password,
                   textController: _confirmPasswordController,
                   textInputType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Confirm password is required';
+                      return AppLocalizations.of(context)!.confirmed_password_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -304,7 +306,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     decoration: InputDecoration(
                       // hintText: AppLocalizations.of(context)!.phone_number,
-                      hintText: 'phone Number',
+                      hintText: AppLocalizations.of(context)!.phone_number,
                       hintStyle: getMediumStyle(
                         color: ColorManager.hintTextFiled,
                       ),
@@ -356,7 +358,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     controller: _phoneTextController,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return 'Phone number is required';
+                        return AppLocalizations.of(context)!.phone_number_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -382,7 +384,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   visible: true,
                   child: AppTextField(
                     // hint: AppLocalizations.of(context)!.referral_code,
-                    hint: 'Referral Code (Optional)',
+                    hint: AppLocalizations.of(context)!.referral_code,
                     textController: _referralCodeTextController,
                     onSaved: (value) {
                       // _registerViewGetXController.referralCode = value;
@@ -407,12 +409,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     _selectDate();
                   },
                   // hint: AppLocalizations.of(context)!.date_of_birth,
-                  hint: 'Date Of Birth',
+                  hint: AppLocalizations.of(context)!.date_of_birth,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.datetime,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return 'Date of birth is required';
+                      return AppLocalizations.of(context)!.date_of_barth_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -464,7 +466,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     },
                     child: Text(
                       // AppLocalizations.of(context)!.sign_up,
-                      'Sign Up',
+                      AppLocalizations.of(context)!.sign_up,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
@@ -479,8 +481,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        // AppLocalizations.of(context)!.i_already_have_account,
-                        'I Already Have An Account',
+                        AppLocalizations.of(context)!.i_already_have_account,
+                        // 'I Already Have An Account',
                         style: getRegularStyle(
                             color: ColorManager.grey, fontSize: FontSize.s16),
                       ),
@@ -489,7 +491,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       Text(
                         // AppLocalizations.of(context)!.login,
-                        'Login',
+                        AppLocalizations.of(context)!.login,
                         style: getExtraBoldStyle(
                             color: ColorManager.primary,
                             fontSize: FontSize.s16),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../domain/model/unpaid_order.dart';
 import '../resources/assets_manager.dart';
@@ -50,7 +52,7 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                   ),
                   Spacer(),
                   Text(
-                    'Your Items',
+                    AppLocalizations.of(context)!.your_items,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -82,7 +84,7 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            'Item name : ${widget.unpaidOrder.items![index]['name']}',
+                            '${AppLocalizations.of(context)!.item_name} : ${widget.unpaidOrder.items![index]['name']}',
                             style: getSemiBoldStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s18,
@@ -94,7 +96,7 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                             FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
-                                'Quantity ${widget.unpaidOrder.items![index]['quanity']}',
+                                '${AppLocalizations.of(context)!.quantity} ${widget.unpaidOrder.items![index]['quanity']}',
                                 style: getSemiBoldStyle(
                                   color: ColorManager.primaryDark,
                                   fontSize: FontSize.s18,
@@ -105,7 +107,7 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                             FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
-                                'Price ${widget.unpaidOrder.items![index]['price']} AED',
+                                '${AppLocalizations.of(context)!.price} ${widget.unpaidOrder.items![index]['price']} ${AppLocalizations.of(context)!.aed}',
                                 style: getSemiBoldStyle(
                                   color: ColorManager.primaryDark,
                                   fontSize: FontSize.s18,
@@ -145,7 +147,7 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                     // );
                   },
                   child: Text(
-                    'Pay ${widget.unpaidOrder.totalCostForItems} AED',
+                    '${AppLocalizations.of(context)!.pay} ${widget.unpaidOrder.totalCostForItems} ${AppLocalizations.of(context)!.aed}',
                     style: getSemiBoldStyle(
                         color: ColorManager.white, fontSize: FontSize.s18),
                   ),

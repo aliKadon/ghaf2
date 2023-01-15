@@ -4,6 +4,8 @@ import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../app/utils/helpers.dart';
 import '../resources/values_manager.dart';
@@ -53,7 +55,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
       return true;
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Enter Required Data!'),
+      content: Text(AppLocalizations.of(context)!.enter_required_data),
       backgroundColor: Colors.red,
     ));
     return false;
@@ -142,7 +144,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(19),
                           ],
-                          decoration: InputDecoration(hintText: "Card number"),
+                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.number_card),
                           onSaved: (value) {
                             cardInfo = {
                               'cardNumber': value!,
@@ -165,7 +167,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: TextFormField(
-                            decoration: const InputDecoration(hintText: "CVV"),
+                            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.cvv),
                             onChanged: (_) {
                               setState(() {
                                 isCVV = true;
@@ -192,7 +194,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                   LengthLimitingTextInputFormatter(4),
                                 ],
                                 decoration:
-                                    const InputDecoration(hintText: "MONTH"),
+                                     InputDecoration(hintText: AppLocalizations.of(context)!.month),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -217,7 +219,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                   LengthLimitingTextInputFormatter(5),
                                 ],
                                 decoration:
-                                    const InputDecoration(hintText: "YEAR"),
+                                     InputDecoration(hintText: AppLocalizations.of(context)!.year),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -244,7 +246,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: ElevatedButton(
-                      child: const Text("Add card"),
+                      child:  Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
                         // showLoadingDialog(context: context, title: 'Logging In');
 

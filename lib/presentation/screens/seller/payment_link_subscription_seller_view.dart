@@ -335,7 +335,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                 Row(
                   children: [
                     Text(
-                      'I Agree To The ',
+                      AppLocalizations.of(context)!.i_agree_to,
                       style: getRegularStyle(
                           color: ColorManager.grey, fontSize: FontSize.s16),
                     ),
@@ -348,7 +348,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                           TextSpan(
                               style: TextStyle(fontSize: FontSize.s16 , color: Colors.blue), //global text style
                               children: [
-                                TextSpan(text:"Terms Of Service", style: TextStyle(
+                                TextSpan(text:AppLocalizations.of(context)!.terms_of, style: TextStyle(
                                     decoration:TextDecoration.underline
                                 )), //partial text style
                               ]

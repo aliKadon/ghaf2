@@ -112,7 +112,7 @@ class _RewardsViewState extends State<RewardsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${allRedeemPoint['total']} point',
+                        '${allRedeemPoint['total']} ${AppLocalizations.of(context)!.point}',
                         style: getBoldStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s18,

@@ -10,6 +10,8 @@ import 'package:ghaf_application/presentation/screens/register_view/register_vie
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/services/payment_service.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../domain/model/available_delevey_method.dart';
 import '../resources/assets_manager.dart';

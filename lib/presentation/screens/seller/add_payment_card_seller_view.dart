@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
 
   @override
   void initState() {
+    Provider.of<SellerProvider>(context,listen: false).getUserDetails();
     super.initState();
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
@@ -52,9 +54,12 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     var repo = Provider.of<SellerProvider>(context).repo;
+    var userInfo = Provider.of<SellerProvider>(context).userDetails;
     print('============================repo');
     print(repo);
     return Scaffold(
@@ -174,12 +179,12 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                 ),
                 width: double.infinity,
                 height: AppSize.s55,
-                child: ElevatedButton(
+                child: userInfo['role'] == 'Seller' ? ElevatedButton(
                   onPressed: () {
                     _checkData();
                     if (_checkData()) {
                       Provider.of<SellerProvider>(context, listen: false)
-                          .addPaymentCard(
+                          .addPaymentCardSeller(
                               context,
                               _nameTextController.text,
                               _emailTextController.text,
@@ -192,10 +197,39 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                                 backgroundColor: Colors.green,
                               )))
                           .then((value) =>   Navigator.pushReplacementNamed(
-                          context, Routes.registerPaymentLinkSellerRoute))
+                          context, Routes.loginRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)
                               .showSnackBar(
                                   SnackBar(content: Text(repo))));
+                    }
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.create_store,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.white, fontSize: FontSize.s18),
+                  ),
+                ) : ElevatedButton(
+                  onPressed: () {
+                    _checkData();
+                    if (_checkData()) {
+                      Provider.of<SellerProvider>(context, listen: false)
+                          .addPaymentCard(
+                          context,
+                          _nameTextController.text,
+                          _emailTextController.text,
+                          int.parse(_passwordTextController.text),
+                          int.parse(_phoneTextController.text),
+                          widget.planeId)
+                          .then((value) => ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(
+                        content: Text(repo,style: TextStyle(color: Colors.red)),
+                        backgroundColor: Colors.green,
+                      )))
+                          .then((value) =>   Navigator.pushReplacementNamed(
+                          context, Routes.registerPaymentLinkSellerRoute))
+                          .catchError((e) => ScaffoldMessenger.of(context)
+                          .showSnackBar(
+                          SnackBar(content: Text(repo))));
                     }
                   },
                   child: Text(

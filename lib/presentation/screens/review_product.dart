@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../app/constants.dart';
 import '../resources/assets_manager.dart';
@@ -49,7 +51,7 @@ class _ReviewProductState extends State<ReviewProduct> {
                     ),
                     Spacer(),
                     Text(
-                      'Share Your Opinion',
+                      AppLocalizations.of(context)!.share_opinion,
                       style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s18,
@@ -73,7 +75,7 @@ class _ReviewProductState extends State<ReviewProduct> {
                   height: 15.h,
                 ),
                 Text(
-                  'How do you see this Product?',
+                  AppLocalizations.of(context)!.how_do_see_product,
                   style: getRegularStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
@@ -129,7 +131,7 @@ class _ReviewProductState extends State<ReviewProduct> {
                           .giveReviewForProduct(widget.orderinfo['item'], rate.toString())
                           .then((value) => ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text('Thank You'),
+                                content: Text(AppLocalizations.of(context)!.thank_you),
                                 backgroundColor: Colors.green,
                               )))
                           .then((value) =>
@@ -141,7 +143,7 @@ class _ReviewProductState extends State<ReviewProduct> {
                               )));
                     },
                     child: Text(
-                      'Send Your Review',
+                      AppLocalizations.of(context)!.send_your_review,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),

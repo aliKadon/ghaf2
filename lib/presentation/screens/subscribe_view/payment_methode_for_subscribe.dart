@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../../app/utils/app_shared_data.dart';
 import '../../../providers/product_provider.dart';
@@ -138,7 +140,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(19),
                           ],
-                          decoration: InputDecoration(hintText: "Card number"),
+                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.number_card),
                           onSaved: (value) {
                             cardInfo = {
                               'cardNumber': value!,
@@ -161,7 +163,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: TextFormField(
-                            decoration: const InputDecoration(hintText: "CVV"),
+                            decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.cvv),
                             onChanged: (_) {
                               setState(() {
                                 isCVV = true;
@@ -188,7 +190,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                                   LengthLimitingTextInputFormatter(4),
                                 ],
                                 decoration:
-                                const InputDecoration(hintText: "MONTH"),
+                                 InputDecoration(hintText: AppLocalizations.of(context)!.month),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = true;
@@ -213,7 +215,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                                   LengthLimitingTextInputFormatter(5),
                                 ],
                                 decoration:
-                                const InputDecoration(hintText: "YEAR"),
+                                 InputDecoration(hintText: AppLocalizations.of(context)!.year),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = true;
@@ -240,7 +242,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: ElevatedButton(
-                      child: const Text("Add card"),
+                      child:  Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
                         saveItem();
                         _subscribeViewGetXController.subscribeAsGhafGolden(cardInfo,planId[0].id);

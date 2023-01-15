@@ -12,6 +12,8 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../providers/product_provider.dart';
 
@@ -55,7 +57,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                     ),
                     Spacer(),
                     Text(
-                      'Share Your Opinion',
+                      AppLocalizations.of(context)!.share_opinion,
                       style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s18,
@@ -81,7 +83,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                 //   height: 15.h,
                 // ),
                 Text(
-                  'Rate your delivery experience',
+                  AppLocalizations.of(context)!.rate_delevery,
                   style: getRegularStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
@@ -116,7 +118,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                 Row(
                   children: [
                     Text(
-                      'Tell us about your Delivery experience ?',
+                      AppLocalizations.of(context)!.tell_delevery,
                       style: getRegularStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s14,
@@ -231,12 +233,12 @@ class _RateDeliveryState extends State<RateDelivery> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       Provider.of<ProductProvider>(context, listen: false).postReviewStore('${provider[0].items![0]['storeId']}', opinion, points) .then((value) => ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Thank You!\nYour review has been submitted successfully'),backgroundColor: Colors.green),));
+                          .showSnackBar(SnackBar(content: Text('${AppLocalizations.of(context)!.thank_you}\n${AppLocalizations.of(context)!.your_review_successfully}'),backgroundColor: Colors.green),));
                       print('-----------------------------------------------------------');
                       print('id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
                     },
                     child: Text(
-                      'Send A Note',
+                      AppLocalizations.of(context)!.send_note,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
@@ -250,8 +252,8 @@ class _RateDeliveryState extends State<RateDelivery> {
       ),
     );
   }
-  String review1 = 'Delivered Securely';
-  String review2 = 'Delivered on Time';
-  String review3 = 'Follows drop off instructions';
+  late String review1 = AppLocalizations.of(context)!.delivered_Securely;
+  late String review2 = AppLocalizations.of(context)!.delivered_on_Time;
+   late String review3 = AppLocalizations.of(context)!.follows_drop;
   // String review4 = 'Bad.';
 }

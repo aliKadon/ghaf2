@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../../providers/product_provider.dart';
 import '../../../providers/seller_provider.dart';
@@ -101,7 +103,7 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
                   ),
                   Spacer(),
                   Text(
-                    'Edit Profile',
+                    AppLocalizations.of(context)!.edit_profile,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -256,7 +258,7 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
                                               AppRadius.r8),
                                         ),
                                         child: Text(
-                                          'yes',
+                                          AppLocalizations.of(context)!.yes,
                                           textAlign: TextAlign.center,
                                           style: getMediumStyle(
                                               color: ColorManager.white),
@@ -316,7 +318,7 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
                       backgroundColor: Colors.red,
                     )));
                   },
-                  child: Text('Update')),
+                  child: Text(AppLocalizations.of(context)!.update)),
 
               SizedBox(height: AppSize.s30),
               ElevatedButton(
@@ -335,7 +337,7 @@ class _UpdateInfoSellerState extends State<UpdateInfoSeller> {
                       .showSnackBar(
                       SnackBar(content: Text(e.toString()),backgroundColor: Colors.red,)));
                 },
-                child: Text('Delete Account'),),
+                child: Text(AppLocalizations.of(context)!.delete_account),),
             ],
           ),
         ),

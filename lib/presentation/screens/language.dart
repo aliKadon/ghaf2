@@ -4,6 +4,8 @@ import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../providers/language_provider.dart';
 import '../resources/assets_manager.dart';
@@ -54,7 +56,7 @@ class _LanguageState extends State<Language> {
 
                 Spacer(),
                 Text(
-                  'Language',
+                  AppLocalizations.of(context)!.language,
                   style: getSemiBoldStyle(
                       color: ColorManager.primaryDark, fontSize: FontSize.s24),
                 ),
@@ -69,7 +71,7 @@ class _LanguageState extends State<Language> {
             ),
             Center(
               child: Text(
-                'Select Your Language',
+                AppLocalizations.of(context)!.select_language,
                 style: getSemiBoldStyle(
                     color: ColorManager.primary, fontSize: FontSize.s24),
               ),
@@ -87,14 +89,14 @@ class _LanguageState extends State<Language> {
                   SharedPrefController().changeLanguage(language: 'ar');
                   print(SharedPrefController().lang1);
                   Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-                }, child: Text('Arabic')),
+                }, child: Text(AppLocalizations.of(context)!.arabic)),
                 Spacer(),
                 ElevatedButton(onPressed: (){
                   curLocale.setLocale( Locale('en'));
                   print(SharedPrefController().lang1);
                   SharedPrefController().changeLanguage(language: 'en');
                   Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-                }, child: Text('English')),
+                }, child: Text(AppLocalizations.of(context)!.english)),
                 SizedBox(
                   width: AppSize.s60,
                 ),

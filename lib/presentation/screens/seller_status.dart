@@ -4,6 +4,8 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -82,14 +84,14 @@ class _SellerStatusState extends State<SellerStatus> {
                     ), SizedBox(
                       height: AppSize.s30,
                     ),
-                    sellerStatus['submittedFormStatusBool'] == 0 &&  sellerStatus['active'] == "Account is not active, you have to subscribe" ?  ElevatedButton(
+                    sellerStatus['submittedFormStatusBool'] == 1 && sellerStatus['active'] == 'Account is active' ? Container() :sellerStatus['submittedFormStatusBool'] == 1  ? ElevatedButton(
                         onPressed: () => Navigator.of(context)
                             .pushReplacementNamed(Routes.subscriptionSellerRoute),
-                        child: Text('Go To Pay For Subscribe')) : Container(),
+                        child: Text(AppLocalizations.of(context)!.go_to_subscribe))   : Container(),
                     ElevatedButton(
                         onPressed: () => Navigator.of(context)
                             .pushReplacementNamed(Routes.loginRoute),
-                        child: Text('Go Back To Login')),
+                        child: Text(AppLocalizations.of(context)!.go_to_login)),
                     SizedBox(
                       height: FontSize.s30,
                     ),

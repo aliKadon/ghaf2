@@ -13,6 +13,8 @@ import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../domain/model/product2.dart';
 
@@ -131,7 +133,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     ),
                     child: Center(
                       child: Text(
-                        'Buy ${widget.minProductCountForGift} get ${widget.giftCount} free',
+                        '${AppLocalizations.of(context)!.buy} ${widget.minProductCountForGift} ${AppLocalizations.of(context)!.get} ${widget.giftCount} ${AppLocalizations.of(context)!.free}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14.sp,
@@ -199,7 +201,7 @@ class _ProductWidgetState extends State<ProductWidget> {
               children: [
                 if (_product.productDiscount == null)
                 Text(
-                  '${_product.price!.toStringAsFixed(1)} AED',
+                  '${_product.price!.toStringAsFixed(1)} ${AppLocalizations.of(context)!.aed}',
                   style: TextStyle(
                     fontSize: FontSize.s12,
 
@@ -214,7 +216,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 if (_product.productDiscount != null) ...[
 
                   Text(
-                    'NEW ${(_product.price!-(_product.price! * (_product.productDiscount!.discount! / 100))).toStringAsFixed(1)} AED',
+                    '${AppLocalizations.of(context)!.new1} ${(_product.price!-(_product.price! * (_product.productDiscount!.discount! / 100))).toStringAsFixed(1)} ${AppLocalizations.of(context)!.aed}',
                     style: getSemiBoldStyle(
                       color: ColorManager.red,
                     ),
