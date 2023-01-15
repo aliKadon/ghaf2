@@ -59,7 +59,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
                             widget.product.ghafImage![0]['data'],
                             height: AppSize.s211,
                             width: AppSize.s154,
-                            fit: BoxFit.fill,
+                            // fit: BoxFit.fill,
                             errorBuilder: (
                               BuildContext context,
                               Object error,
@@ -73,37 +73,36 @@ class _ProductWidget2State extends State<ProductWidget2> {
                           ),
                   ),
                 ),
-                // if (widget.minProductCountForGift != null)
-                PositionedDirectional(
-                  start: 0,
-                  end: 0,
-                  top: -55,
-                  child: Image.asset(
-                    '${Constants.imagesPath}gift.png',
-                  ),
-                ),
-                // if (widget.minProductCountForGift != null)
-                PositionedDirectional(
-                  start: 0,
-                  end: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(14.r)),
-                    ),
-                    // child: Center(
-                    //   child: Text(
-                    //     'Buy ${widget.minProductCountForGift} get ${widget.giftCount} free',
-                    //     style: TextStyle(
-                    //       color: Colors.white,
-                    //       fontSize: 14.sp,
-                    //     ),
-                    //   ),
-                  ),
-                ),
+                // For Gift
+                // PositionedDirectional(
+                //   start: 0,
+                //   end: 0,
+                //   top: -55,
+                //   child: Image.asset(
+                //     '${Constants.imagesPath}gift.png',
+                //   ),
+                // ),
+                // PositionedDirectional(
+                //   start: 0,
+                //   end: 0,
+                //   bottom: 0,
+                //   child: Container(
+                //     padding: EdgeInsets.symmetric(vertical: 8.h),
+                //     decoration: BoxDecoration(
+                //       color: Colors.red,
+                //       borderRadius:
+                //           BorderRadius.vertical(bottom: Radius.circular(14.r)),
+                //     ),
+                //     // child: Center(
+                //     //   child: Text(
+                //     //     'Buy ${widget.minProductCountForGift} get ${widget.giftCount} free',
+                //     //     style: TextStyle(
+                //     //       color: Colors.white,
+                //     //       fontSize: 14.sp,
+                //     //     ),
+                //     //   ),
+                //   ),
+                // ),
 
                 // PositionedDirectional(
                 //   end: AppSize.s12,

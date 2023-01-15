@@ -134,12 +134,13 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                             _phoneTextController.text,
                             _discTextController.text,
                             int.parse(_emailTextController.text),
-                            listImage )
-                            .then((value) => ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(
-                          content: Text(repo),
-                          backgroundColor: Colors.green,
-                        ))).then((value) => Navigator.of(context).pop())
+                            listImage ,context)
+                        //     .then((value) => ScaffoldMessenger.of(context)
+                        //     .showSnackBar(SnackBar(
+                        //   content: Text(repo),
+                        //   backgroundColor: Colors.green,
+                        // )))
+                            .then((value) => Navigator.of(context).pop())
                             .then((value) => Navigator.of(context)
                             .pushNamed(Routes.addItemSellerRoute,arguments: isShow2)
                             .catchError((e) => ScaffoldMessenger.of(context)

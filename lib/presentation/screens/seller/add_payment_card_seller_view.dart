@@ -5,7 +5,8 @@ import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:ghaf_application/app/constants.dart';
+import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
@@ -77,7 +78,15 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                     color: ColorManager.primaryDark, fontSize: FontSize.s24),
               ),
               SizedBox(
-                height: AppSize.s55,
+                height: AppSize.s9,
+              ),
+              Image.asset(
+                ImageAssets.logo2,
+                height: AppSize.s192,
+                width: AppSize.s192,
+              ),
+              SizedBox(
+                height: AppSize.s9,
               ),
               Text(
                 AppLocalizations.of(context)!
@@ -86,7 +95,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                     color: ColorManager.primaryDark, fontSize: FontSize.s20),
               ),
               SizedBox(
-                height: AppSize.s82,
+                height: AppSize.s30,
               ),
               AppTextField(
                 textController: _nameTextController,
@@ -171,77 +180,93 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
               //   ],
               // ),
               SizedBox(
-                height: AppSize.s92,
+                height: AppSize.s9,
               ),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: AppMargin.m16,
-                ),
-                width: double.infinity,
-                height: AppSize.s55,
-                child: userInfo['role'] == 'Seller' ? ElevatedButton(
-                  onPressed: () {
-                    _checkData();
-                    if (_checkData()) {
-                      Provider.of<SellerProvider>(context, listen: false)
-                          .addPaymentCardSeller(
-                              context,
-                              _nameTextController.text,
-                              _emailTextController.text,
-                              int.parse(_passwordTextController.text),
-                              int.parse(_phoneTextController.text),
-                              widget.planeId)
-                          .then((value) => ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(repo,style: TextStyle(color: Colors.red)),
-                                backgroundColor: Colors.green,
-                              )))
-                          .then((value) =>   Navigator.pushReplacementNamed(
-                          context, Routes.loginRoute))
-                          .catchError((e) => ScaffoldMessenger.of(context)
-                              .showSnackBar(
-                                  SnackBar(content: Text(repo))));
-                    }
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.create_store,
-                    style: getSemiBoldStyle(
-                        color: ColorManager.white, fontSize: FontSize.s18),
+              // Container(
+              //   margin: EdgeInsets.symmetric(
+              //     horizontal: AppMargin.m16,
+              //   ),
+              //   width: double.infinity,
+              //   height: AppSize.s55,
+              //   child:
+              // ),
+              //
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+
+                      onPressed: (){
+
+                        _customDialogCancel(context);
+                      }, child: Text(AppLocalizations.of(context)!.cancel)),
+                  SizedBox(width: 5,),
+                  userInfo['role'] == 'Seller' ? ElevatedButton(
+                    onPressed: () {
+                      _checkData();
+                      if (_checkData()) {
+                        Provider.of<SellerProvider>(context, listen: false)
+                            .addPaymentCardSeller(
+                            context,
+                            _nameTextController.text,
+                            _emailTextController.text,
+                            int.parse(_passwordTextController.text),
+                            int.parse(_phoneTextController.text),
+                            widget.planeId)
+                        //     .then((value) => ScaffoldMessenger.of(context)
+                        //     .showSnackBar(SnackBar(
+                        //   content: Text(repo,style: TextStyle(color: Colors.white)),
+                        //   backgroundColor: Colors.green,
+                        // )))
+                            .then((value) =>   Navigator.pushReplacementNamed(
+                            context, Routes.loginRoute))
+                            .catchError((e) => ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                            SnackBar(content: Text(repo,style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,)));
+                      }
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.create_store,
+                      style: getSemiBoldStyle(
+                          color: ColorManager.white, fontSize: FontSize.s18),
+                    ),
+                  ) : ElevatedButton(
+                    onPressed: () {
+                      _checkData();
+                      if (_checkData()) {
+                        Provider.of<SellerProvider>(context, listen: false)
+                            .addPaymentCard(
+                            context,
+                            _nameTextController.text,
+                            _emailTextController.text,
+                            int.parse(_passwordTextController.text),
+                            int.parse(_phoneTextController.text),
+                            widget.planeId)
+                        //     .then((value) => ScaffoldMessenger.of(context)
+                        //     .showSnackBar(SnackBar(
+                        //   content: Text(repo,style: TextStyle(color: Colors.white)),
+                        //   backgroundColor: Colors.green,
+                        // )))
+                            .then((value) =>   Navigator.pushReplacementNamed(
+                            context, Routes.registerPaymentLinkSellerRoute))
+                            .catchError((e) => ScaffoldMessenger.of(context)
+                            .showSnackBar(
+                            SnackBar(content: Text(repo,style: TextStyle(color: Colors.white)),backgroundColor: Colors.red,)));
+                      }
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.create_store,
+                      style: getSemiBoldStyle(
+                          color: ColorManager.white, fontSize: FontSize.s18),
+                    ),
                   ),
-                ) : ElevatedButton(
-                  onPressed: () {
-                    _checkData();
-                    if (_checkData()) {
-                      Provider.of<SellerProvider>(context, listen: false)
-                          .addPaymentCard(
-                          context,
-                          _nameTextController.text,
-                          _emailTextController.text,
-                          int.parse(_passwordTextController.text),
-                          int.parse(_phoneTextController.text),
-                          widget.planeId)
-                          .then((value) => ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(
-                        content: Text(repo,style: TextStyle(color: Colors.red)),
-                        backgroundColor: Colors.green,
-                      )))
-                          .then((value) =>   Navigator.pushReplacementNamed(
-                          context, Routes.registerPaymentLinkSellerRoute))
-                          .catchError((e) => ScaffoldMessenger.of(context)
-                          .showSnackBar(
-                          SnackBar(content: Text(repo))));
-                    }
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.create_store,
-                    style: getSemiBoldStyle(
-                        color: ColorManager.white, fontSize: FontSize.s18),
-                  ),
-                ),
+                ],
               ),
               SizedBox(
                 height: AppSize.s16,
               ),
+
             ],
           ),
         ),
@@ -268,6 +293,129 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
 
   Future<void> _register() async {}
 
+  void _customDialogCancel(context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s280,
+              width: AppSize.s360,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Subscription Seller',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s24),
+                      ),
+                    ),
+
+                    // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
+                    // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(10.0),
+                    //   child: Text('We deliver grocery at your door step',style: TextStyle(fontSize: AppSize.s18),),
+                    // ),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+                    Text('Are you sure to cancel the payment?',style: TextStyle(fontSize: AppSize.s20),),
+                    // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for lunch ',style: TextStyle(fontSize: AppSize.s14),),
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+
+                    // SizedBox(
+                    //   height: AppSize.s20,
+                    // ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.yes,
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: AppSize.s10,),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.no,
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+            ),
+          );
+        });
+  }
   // void _customDialogProgress() async {
   //   showDialog(
   //       context: context,

@@ -21,11 +21,13 @@ import '../../domain/model/product2.dart';
 class ProductWidget extends StatefulWidget {
   final String tag;
   final int? minProductCountForGift;
+  final String? categoryName;
   final int? giftCount;
 
   const ProductWidget({
     Key? key,
     required this.tag,
+    this.categoryName,
     this.minProductCountForGift,
     this.giftCount,
   }) : super(key: key);
@@ -96,7 +98,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     _product.ghafImage![0].data!,
                           height: AppSize.s211,
                           width: AppSize.s154,
-                          fit: BoxFit.fill,
+                          // fit: BoxFit.fill,
                           errorBuilder: (
                             BuildContext context,
                             Object error,
@@ -110,7 +112,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                         ),
                 ),
               ),
-              if (widget.minProductCountForGift != null)
+              // if (widget.categoryName == 'Gifts and More' || widget.minProductCountForGift ==null)
+              //   PositionedDirectional(
+              //     start: 0,
+              //     end: 0,
+              //     top: 100,
+              //     child: Image.asset(
+              //       '${Constants.imagesPath}gift.png',
+              //     ),
+              //   ),
+              if ( widget.minProductCountForGift !=null)
                 PositionedDirectional(
                   start: 0,
                   end: 0,
@@ -119,7 +130,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     '${Constants.imagesPath}gift.png',
                   ),
                 ),
-              if (widget.minProductCountForGift != null)
+              if ( widget.minProductCountForGift !=null)
                 PositionedDirectional(
                   start: 0,
                   end: 0,

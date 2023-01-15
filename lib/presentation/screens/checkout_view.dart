@@ -65,14 +65,14 @@ class _CheckOutViewState extends State<CheckOutView> {
 
   bool _checkData(String methodName) {
     print(methodName);
-    if (methodName == 'Pick up') {
-      if (date != null) return true;
+    if (methodName == 'Pick up' || methodName == 'Car window') {
+      if (date != null || myAddress != null) return true;
     } else {
       if (myAddress != null) return true;
     }
     return false;
   }
-
+  //
   @override
   void initState() {
     // Provider.of<ProductProvider>(context,listen: false).getAllDetailsOrder();
@@ -1041,7 +1041,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                           //   ),
                           // );
                         }
-
+                        print('orderaddrs ----------------------${widget.order.orderDetails['deliveryPoint']}');
                         // if (deleveryMethod != 'Pick up' && addresses == null) {
                         //
                         // }else {

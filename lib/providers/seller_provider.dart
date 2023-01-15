@@ -50,12 +50,18 @@ class SellerProvider with ChangeNotifier, ApiHelper {
           }));
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-          response.body.toString(),
+          jsonDecode(response.body)['message'],
         ),
+        backgroundColor: Colors.green,
       ));
-      repo = json.decode(response.body)['message'];
-      notifyListeners();
-      // print('=====================addPaymentCard============');
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text(
+      //     response.body.toString(),
+      //   ),
+      // ));
+      // repo = json.decode(response.body)['message'];
+      // notifyListeners();
+      // // print('=====================addPaymentCard============');
       // print(response.statusCode);
       // print(response.body);
       // print(json.decode(response.body)['message']);
@@ -84,11 +90,12 @@ class SellerProvider with ChangeNotifier, ApiHelper {
           }));
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
-          response.body.toString(),
+          jsonDecode(response.body)['message'],
         ),
+        backgroundColor: Colors.green,
       ));
-      repo = json.decode(response.body)['message'];
-      notifyListeners();
+      // repo = json.decode(response.body)['message'];
+      // notifyListeners();
       // print('=====================addPaymentCard============');
       // print(response.statusCode);
       // print(response.body);
@@ -160,11 +167,12 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'accountHolder': name,
             'bankName': bankName,
           }));
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      //   content: Text(
-      //     response.body.toString(),
-      //   ),
-      // ));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          jsonDecode(response.body)['message'],
+        ),
+        backgroundColor: Colors.green,
+      ));
       // print('=====================bank============');
       // print(response.statusCode);
       // print(response.body);
@@ -187,7 +195,7 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       String lastName,
       String referralcode,
       String telephone,
-      String birthDate) async {
+      String birthDate,BuildContext context) async {
     var url = Uri.parse('${Constants.urlBase}/Auth/register');
     try {
       final response = await http.post(url,
@@ -204,7 +212,12 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'telephone': telephone,
             'birthDate': birthDate,
           }));
-
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          jsonDecode(response.body)['message'],
+        ),
+        backgroundColor: Colors.green,
+      ));
       // print('=====================register============');
       // print(response.statusCode);
       // print(response.body);
@@ -223,7 +236,7 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       String? characteristics,
       String productType,
       int price,
-      List<String>? image) async {
+      List<String>? image,BuildContext context) async {
     var url =
         Uri.parse('${Constants.urlBase}/product/create-individual-products');
     try {
@@ -237,12 +250,17 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'price': price,
             'images': image,
           }));
-
-      print('=====================addItemSeller============');
-      print(response.statusCode);
-      print(response.body);
-      print(json.decode(response.body));
-      print('=====================================repo');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          jsonDecode(response.body)['message'],
+        ),
+        backgroundColor: Colors.green,
+      ));
+      // print('=====================addItemSeller============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print(json.decode(response.body));
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
       // print(repo);
@@ -273,11 +291,11 @@ class SellerProvider with ChangeNotifier, ApiHelper {
             'images': [],
           }));
 
-      print('=====================addItemSeller============');
-      print(response.statusCode);
-      print(response.body);
-      print(json.decode(response.body));
-      print('=====================================repo');
+      // print('=====================addItemSeller============');
+      // print(response.statusCode);
+      // print(response.body);
+      // print(json.decode(response.body));
+      // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
       notifyListeners();
       // print(repo);

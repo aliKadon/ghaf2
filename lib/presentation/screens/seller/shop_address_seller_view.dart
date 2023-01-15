@@ -122,11 +122,11 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
                               _emailTextController.text,
                               _boDTextController.text,
                               _passwordTextController.text)
-                          .then((value) => ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(repo),
-                                backgroundColor: Colors.green,
-                              )))
+                          // .then((value) => ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //       content: Text(repo),
+                          //       backgroundColor: Colors.green,
+                          //     )))
                           .then((value) => Navigator.of(context)
                               .pushNamed(Routes.addBankAccountSellerRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)

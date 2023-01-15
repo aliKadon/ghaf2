@@ -86,9 +86,9 @@ class _ProductView2State extends State<ProductView2> {
                 ],
               ),
             ),
-            SizedBox(
-              height: AppSize.s12,
-            ),
+            // SizedBox(
+            //   height: AppSize.s12,
+            // ),
             Expanded(
               child: Stack(
                 children: [
@@ -97,8 +97,8 @@ class _ProductView2State extends State<ProductView2> {
                       : Image.network(
                     widget.product2.ghafImage?[0]['data'],
                     width: double.infinity,
-                    height: 350.h,
-                    fit: BoxFit.fill,
+                    height: 400.h,
+                    // fit: BoxFit.fill,
                   ),
                   // PositionedDirectional(
                   //   top: 10,
@@ -151,10 +151,11 @@ class _ProductView2State extends State<ProductView2> {
                       height: AppSize.s326,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(AppRadius.r39),
-                          topRight: Radius.circular(AppRadius.r39),
+                          topLeft: Radius.circular(60),
+                          topRight: Radius.circular(60),
+
                         ),
-                        color: ColorManager.white,
+                        color: ColorManager.whiteLight,
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -344,7 +345,7 @@ class _ProductView2State extends State<ProductView2> {
                           BoxShadow(
                             color: ColorManager.primaryDark,
                             spreadRadius: 2,
-                            blurRadius: AppSize.s20,
+                            blurRadius: AppSize.s10,
                             offset: Offset(
                                 AppSize.s2, AppSize.s2), // Shadow position
                           ),

@@ -96,6 +96,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             return ProductWidget(
                               tag:
                                   '${_productsScreenGetXController.products[index].id}products',
+                              categoryName: widget.category['name'].toString(),
                             );
                           },
                         );

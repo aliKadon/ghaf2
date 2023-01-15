@@ -937,7 +937,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                         Row(
                           children: [
                             Text(
-                              orderById1['deliveryPoint']['addressName'],
+                              orderById1['deliveryPoint']['addressName'] ?? 'done',
                               style: getSemiBoldStyle(
                                 color: ColorManager
                                     .primaryDark,
@@ -969,7 +969,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                             width: AppSize.s8,
                           ),
                           Text(
-                            orderById1['deliveryPoint']['addressName'],
+                            orderById1['deliveryPoint']['addressName'] ?? 'done',
                             style: getRegularStyle(
                               color: ColorManager.black,
                             ),

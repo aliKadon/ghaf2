@@ -154,10 +154,10 @@
   "password_is_required" : "Password is Required",
   "register_with_google" : "Register with google",
   "choose_route" : "Choose Route",
-  "register_as_customer" : "register as customer",
-  "register_as_seller" : "register as seller",
-  "register_as_seller_individual" : "register as seller (individual)",
-  "no_offer_found" : "no offer found",
+  "register_as_customer" : "Register as customer",
+  "register_as_seller" : "Register as seller",
+  "register_as_seller_individual" : "Register as seller (individual)",
+  "no_offer_found" : "No offer found",
 
 
 
@@ -430,5 +430,7 @@
   "email_address_is_required": "Email address is required",
   "pay_later_notify": "Pay later ",
   "pay_later_description": "You will be notified of the subsequent payment for the purchased products periodically",
-  "last_text": "saleh"
+  "last_text": "saleh",
+  "are_you_sure": "Are you sure about your information ?",
+  "are_you_sure_subscribe": "Are you sure to subscribe?"
 }

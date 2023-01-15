@@ -333,7 +333,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, Routes.loginRoute),
+                  onTap: () => Navigator.pushReplacementNamed(context, Routes.loginRoute),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

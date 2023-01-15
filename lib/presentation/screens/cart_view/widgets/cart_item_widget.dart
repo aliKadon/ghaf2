@@ -94,7 +94,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   _cartItem.product!.ghafImage![0].data! ,
                   height: AppSize.s84,
                   width: AppSize.s77,
-                  fit: BoxFit.fill,
+                  // fit: BoxFit.fill,
                 )
                 // child: Icon(Icons.add),
               ),

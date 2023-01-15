@@ -104,8 +104,8 @@ class _ProductViewState extends State<ProductView> {
                       : Image.network(
                           _product.ghafImage?[0].data ?? '',
                           width: double.infinity,
-                          height: 350.h,
-                          fit: BoxFit.fill,
+                    height: 400.h,
+                          // fit: BoxFit.cover,
                         ),
                   Positioned(
                     bottom: 0,
@@ -116,10 +116,10 @@ class _ProductViewState extends State<ProductView> {
                       height: AppSize.s326,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(AppRadius.r39),
-                          topRight: Radius.circular(AppRadius.r39),
+                          topLeft: Radius.circular(60),
+                          topRight: Radius.circular(60),
                         ),
-                        color: ColorManager.white,
+                        color: ColorManager.whiteLight,
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(

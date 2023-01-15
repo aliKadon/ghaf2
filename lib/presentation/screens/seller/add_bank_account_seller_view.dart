@@ -125,11 +125,11 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
                               _emailTextController.text,
                               _passwordTextController.text,
                               _phoneTextController.text)
-                          .then((value) => ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(repo),
-                                backgroundColor: Colors.green,
-                              )))
+                          // .then((value) => ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //       content: Text(repo),
+                          //       backgroundColor: Colors.green,
+                          //     )))
                           .then((value) => Navigator.of(context).pushNamed(
                               Routes.mainSellerRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)

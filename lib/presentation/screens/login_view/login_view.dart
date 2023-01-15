@@ -254,8 +254,14 @@ class _LoginViewState extends State<LoginView> with Helpers {
                       color: ColorManager.grey, fontSize: FontSize.s16),
                 ),
                 GestureDetector(
-                  onTap: () =>
-                      Navigator.pushNamed(context, Routes.registerRoute),
+                  onTap: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute,arguments:
+          {
+            'role': 'Customer',
+            'locationLat': 24.400661,
+            'locationLong': 54.635448,
+          }
+
+          ),
                   child: Text(
                     AppLocalizations.of(context)!.create_account,
                     style: getExtraBoldStyle(

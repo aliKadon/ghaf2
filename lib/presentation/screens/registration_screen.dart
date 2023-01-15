@@ -451,15 +451,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               _lastnameController.text,
                               _referralCodeTextController.text,
                               _phoneTextController.text,
-                              _selectedDate.toString())
+                              _selectedDate.toString(),context)
                           .then((value) =>
                               repo = Provider.of<SellerProvider>(context,listen: false).repo)
-                          .then((value) => ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(
-                                    repo),
-                                backgroundColor: Colors.green,
-                              )))
+                          // .then((value) => ScaffoldMessenger.of(context)
+                          //         .showSnackBar(SnackBar(
+                          //       content: Text(
+                          //           repo),
+                          //       backgroundColor: Colors.green,
+                          //     )))
                           .then((value) => Navigator.of(context)
                               .pushNamed(Routes.loginRoute))
                           .catchError((e) => print(e.toString()));

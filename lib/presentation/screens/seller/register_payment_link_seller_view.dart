@@ -287,29 +287,48 @@ class _RegisterPaymentLinkSellerViewState
               //   textInputType: TextInputType.visiblePassword,
               //   obscureText: true,
               // ),
+
               GestureDetector(
                 // onTap: () => Navigator.pop(context),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Radio(
-                      activeColor: ColorManager.primary,
+                        activeColor: ColorManager.primary,
                         value: 'Agree',
                         onChanged: (n) {
                           setState(() {
-                            Agree = !Agree;
+                            Agree = true;
                             option = n!;
                           });
                           print('--------------------------------agree');
                           print(Agree);
                         },
                         groupValue: option),
-                    Text(
-                      AppLocalizations.of(context)!
-                          .i_agree_to_the_terms_of_service,
-                      style: getRegularStyle(
-                          color: ColorManager.grey, fontSize: FontSize.s16),
-                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'I Agree To The ',
+                          style: getRegularStyle(
+                              color: ColorManager.grey, fontSize: FontSize.s16),
+                        ),
+                        InkWell(
+                          onTap: (){
+
+                            Navigator.of(context).pushNamed(Routes.termsOfUseRoute);
+                          },
+                          child: Text.rich( //underline partially
+                            TextSpan(
+                                style: TextStyle(fontSize: FontSize.s16 , color: Colors.blue), //global text style
+                                children: [
+                                  TextSpan(text:"Terms Of Service", style: TextStyle(
+                                      decoration:TextDecoration.underline
+                                  )), //partial text style
+                                ]
+                            ),
+                          ),
+                        ),
+                      ],),
                   ],
                 ),
               ),
@@ -322,7 +341,7 @@ class _RegisterPaymentLinkSellerViewState
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_checkData()) {
+                     if (_checkData()) {
                       Navigator.of(context)
                           .pushNamed(Routes.shopAddressSellerRoute, arguments: {
                         'storeName': _nameTextController.text,

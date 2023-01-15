@@ -98,15 +98,21 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                 Stack(
                   alignment: Alignment.topRight,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        // _accountViewGetXController.logout(context: context);
-                        Navigator.of(context).pushNamed(Routes.updateSellerInfo);
-                      },
-                      child: Image.asset(
-                        'assets/icons/editProfile.png',
-                        color: ColorManager.primaryDark,
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // _accountViewGetXController.logout(context: context);
+                            Navigator.of(context).pushNamed(Routes.updateSellerInfo);
+                          },
+                          child: Image.asset(
+                            'assets/icons/editProfile.png',
+                            color: ColorManager.primaryDark,
+                          ),
+                        ),
+                      ],
                     ),
 
                     Row(
@@ -133,14 +139,6 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                              ),
                            ),
                            SizedBox(height: 4,),
-                           FittedBox(fit: BoxFit.scaleDown,
-                             child: Text(
-                               userDetails['email'],
-                               style: getSemiBoldStyle(
-                                   color: ColorManager.primary, fontSize: FontSize.s14),
-                             ),
-                           ),
-                           SizedBox(height: 4,),
                           FittedBox(
                             fit: BoxFit.scaleDown,
                             child:  Text(
@@ -156,7 +154,19 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                     ),
                   ],
                 ),
-
+                SizedBox(height: 12,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(fit: BoxFit.scaleDown,
+                      child: Text(
+                        userDetails['email'],
+                        style: getSemiBoldStyle(
+                            color: ColorManager.primary, fontSize: FontSize.s16),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                     height: AppSize.s73
                 ),
@@ -186,8 +196,33 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                     AppLocalizations.of(context)!.get_help,
                   ),
                 ),
+                GestureDetector(
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (builder) => AboutAppView()),
+                      // );
+                      Navigator.of(context)
+                          .pushNamed(Routes.languageStore);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.language, color: ColorManager.primary),
+                        SizedBox(
+                          width: AppSize.s8,
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.language,
+                          style: getRegularStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s16,
+                          ),
+                        ),
+                      ],
+                    )),
                 SizedBox(
-                  height: AppSize.s92
+                  height: AppSize.s50
                 ),
                 GestureDetector(
                     onTap: () {

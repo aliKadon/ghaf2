@@ -78,6 +78,7 @@ import 'package:location/location.dart';
 
 import '../../domain/model/available_delevey_method.dart';
 import '../../domain/model/unpaid_order.dart';
+import '../screens/language_store.dart';
 import '../screens/login_view/login_view.dart';
 import '../screens/onboarding_view.dart';
 import '../screens/rate_delivery.dart';
@@ -174,6 +175,7 @@ class Routes {
 
   static const String storeSellerView = '/storeSellerView';
   static const String language = '/language';
+  static const String languageStore = '/languageStore';
   static const String sellerStatus = '/sellerStatus';
   static const String verifiedEmail = '/verifiedEmail';
   static const String rateDelivery = '/rateDelivery';
@@ -283,6 +285,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.language:
         return MaterialPageRoute(builder: (_) => Language());
+      case Routes.languageStore:
+        return MaterialPageRoute(builder: (_) => LanguageStore());
       case Routes.subCategoriesRoute:
         return MaterialPageRoute(builder: (_) => const SubCategoriesView());
       case Routes.productRoute:
