@@ -21,7 +21,7 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(category.name == 'Restuarants'){
+        if(category.name == 'Restaurants'){
           _customDialogProgress(context);
 
         }else if(category.name == 'Supermarkets'){
