@@ -394,6 +394,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       // destLat =  24.942449826993236;
       destLat = locationData!.latitude!;
       // destLong = 55.08180757318326;
+
       destLong = locationData!.longitude!;
     } else {
       sourcelat = double.parse(source['deliveryPoint']['altitude']);
