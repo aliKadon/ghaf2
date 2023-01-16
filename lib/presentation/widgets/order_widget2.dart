@@ -105,7 +105,7 @@ class _OrderWidget2State extends State<OrderWidget2> {
               ),
               Spacer(),
               Text(
-                '${widget.order.orderCostForCustomer!.toStringAsFixed(1)} ${widget.order.items![0]['isoCurrencySymbol']}',
+                '${widget.order.totalCostForItems!.toStringAsFixed(1)} ${widget.order.items![0]['isoCurrencySymbol']}',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -204,7 +204,7 @@ class _OrderWidget2State extends State<OrderWidget2> {
               child: widget.isOrderToPay == 'orderTrack' ||
                       widget.isOrderToPay == 'In Progress' ||
                       widget.isOrderToPay == 'Delivery' ||
-                      widget.isOrderToPay == 'Completed' ||
+
                       widget.isOrderToPay == 'Pending'
                   ? Text(
                       AppLocalizations.of(context)!.track_order,
@@ -213,7 +213,13 @@ class _OrderWidget2State extends State<OrderWidget2> {
                         fontSize: FontSize.s18,
                       ),
                     )
-                  : Text(
+                  :widget.isOrderToPay == 'Completed' ? Text(
+                AppLocalizations.of(context)!.review,
+                style: getSemiBoldStyle(
+                  color: ColorManager.white,
+                  fontSize: FontSize.s18,
+                ),
+              ) : Text(
                 AppLocalizations.of(context)!.checkout,
                       style: getSemiBoldStyle(
                         color: ColorManager.white,

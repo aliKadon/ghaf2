@@ -7,6 +7,7 @@ import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view_getx_controller.dart';
@@ -31,14 +32,45 @@ class _RateSellerState extends State<RateSeller> {
 
   @override
   void initState() {
-    Provider.of<ProductProvider>(context,listen: false).getOrders();
+    Provider.of<ProductProvider>(context, listen: false).getOrders();
     super.initState();
   }
-  int points = 1 ;
-  String opinion = '' ;
+
+  String? review1;
+  String? review2;
+  String? review3;
+  String? review4;
+  String? review5;
+  String? review6;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  int points = 1;
+
+  String opinion = '';
+
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<ProductProvider>(context).orders;
+    // review1 = AppLocalizations.of(context)!.fast_reliable;
+    // review2 = AppLocalizations.of(context)!.wider;
+    // review3 = AppLocalizations.of(context)!.easy_replacment;
+    // review4 = AppLocalizations.of(context)!.hygiene_rating;
+    // review5 = AppLocalizations.of(context)!.right_order;
+    // review6 = AppLocalizations.of(context)!.for_shops_easy;
+
+    review1 = 'sada';
+    review2 = 'fafds';
+    review3 = 'sdasd';
+    review4 = 'asdasd';
+    review5 = 'adasda';
+    review6 = 'asdasd';
+
+    var provider = Provider
+        .of<ProductProvider>(context)
+        .orders;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -102,13 +134,14 @@ class _RateSellerState extends State<RateSeller> {
                   itemCount: 5,
                   glow: false,
                   itemPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  itemBuilder: (context, _) => SvgPicture.asset(
-                    '${Constants.vectorsPath}star.svg',
-                  ),
+                  itemBuilder: (context, _) =>
+                      SvgPicture.asset(
+                        '${Constants.vectorsPath}star.svg',
+                      ),
                   unratedColor: Colors.grey.shade300,
 
                   onRatingUpdate: (value) {
-                     points = value.toInt();
+                    points = value.toInt();
                   },
                 ),
                 SizedBox(
@@ -133,117 +166,126 @@ class _RateSellerState extends State<RateSeller> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          opinion = review1;
+                          opinion = review1!;
                         });
-
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
                         // color: ColorManager.primaryDark,
                         width: AppSize.s222,
                         height: AppSize.s43,
                         child: Center(
                           child: Text(
-                            review1,
+                            review1!,
                             style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s14),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(width: 6,),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          opinion = review4;
+                          opinion = review4!;
                         });
-
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
                         // color: ColorManager.primaryDark,
                         width: AppSize.s123,
                         height: AppSize.s43,
                         child: Center(
                           child: Text(
-                            review4,
+                            review4!,
                             style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s14),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height:5,),
+                SizedBox(height: 5,),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      opinion = review6;
+                      opinion = review6!;
                     });
-
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.grey),
                     // color: ColorManager.primaryDark,
                     width: AppSize.s280,
                     height: AppSize.s43,
                     child: Center(
                       child: Text(
-                        review6,
+                        review6!,
                         style: getSemiBoldStyle(
                             color: ColorManager.white, fontSize: 12),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height:5,),
+                SizedBox(height: 5,),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          opinion = review3;
+                          opinion = review3!;
                         });
-
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
                         // color: ColorManager.primaryDark,
                         width: AppSize.s154,
                         height: AppSize.s43,
                         child: Center(
                           child: Text(
-                            review3,
+                            review3!,
                             style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s14),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(width: 6,),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          opinion = review2;
+                          opinion = review2!;
                         });
-
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
                         // color: ColorManager.primaryDark,
                         width: AppSize.s192,
                         height: AppSize.s43,
                         child: Center(
                           child: Text(
-                            review2,
+                            review2!,
                             style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s14),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14),
                           ),
                         ),
                       ),
@@ -251,22 +293,23 @@ class _RateSellerState extends State<RateSeller> {
 
                   ],
                 ),
-                SizedBox(height:5,),
+                SizedBox(height: 5,),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      opinion = review5;
+                      opinion = review5!;
                     });
-
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.grey),
                     // color: ColorManager.primaryDark,
                     width: AppSize.s326,
                     height: AppSize.s43,
                     child: Center(
                       child: Text(
-                        review5,
+                        review5!,
                         style: getSemiBoldStyle(
                             color: ColorManager.white, fontSize: 12),
                       ),
@@ -279,12 +322,12 @@ class _RateSellerState extends State<RateSeller> {
                   height: AppSize.s73,
                   child: TextFormField(
                     enabled: false,
-                    decoration: InputDecoration(border     : OutlineInputBorder(
+                    decoration: InputDecoration(border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                      contentPadding: EdgeInsets.only(bottom: 50,left: 7),
-                    // label: Text('${_rateUsViewGetXController.description}'),
-                    label: Text(opinion),
+                      contentPadding: EdgeInsets.only(bottom: 50, left: 7),
+                      // label: Text('${_rateUsViewGetXController.description}'),
+                      label: Text(opinion),
                       labelStyle: TextStyle(fontSize: AppSize.s20),
 
                     ),
@@ -304,11 +347,23 @@ class _RateSellerState extends State<RateSeller> {
                     onPressed: () {
                       // print(_rateUsViewGetXController.description);
                       // _rateUsViewGetXController.reviewApp();
-                      Navigator.of(context).pop();
-                      Provider.of<ProductProvider>(context, listen: false).postReviewStore('${provider[0].items![0]['storeId']}', opinion, points) .then((value) => ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('${AppLocalizations.of(context)!.thank_you}\n${AppLocalizations.of(context)!.your_review_successfully}'),backgroundColor: Colors.green),));
-                      print('-----------------------------------------------------------');
-                      print('id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
+
+                      Provider.of<ProductProvider>(context, listen: false)
+                          .postReviewStore('${provider[0]
+                          .items![0]['storeId']}', opinion, points).then((
+                          value) =>
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(
+                              '${AppLocalizations.of(context)!
+                                  .thank_you}\n${AppLocalizations.of(context)!
+                                  .your_review_successfully}'),
+                              backgroundColor: Colors.green),)).then((value) =>
+                          Navigator.of(context).pushReplacementNamed(Routes
+                              .mainRoute));
+                      print(
+                          '-----------------------------------------------------------');
+                      print('id : ${provider[0]
+                          .items![0]['storeId']} , opinion:  $opinion, points: $points');
                     },
                     child: Text(
                       AppLocalizations.of(context)!.send_a_note,
@@ -324,13 +379,7 @@ class _RateSellerState extends State<RateSeller> {
         ),
       ),
     );
-
   }
-  late String review1 = AppLocalizations.of(context)!.fast_reliable;
-  late String review2 = AppLocalizations.of(context)!.wider;
-  late String review3 = AppLocalizations.of(context)!.easy_replacment;
-  late String review4 = AppLocalizations.of(context)!.hygiene_rating;
-  late String review5 = AppLocalizations.of(context)!.right_order;
-  late String review6 = AppLocalizations.of(context)!.for_shops_easy;
-  // String review4 = 'Bad.';
+
+// String review4 = 'Bad.';
 }

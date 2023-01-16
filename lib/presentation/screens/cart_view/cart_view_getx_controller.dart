@@ -31,6 +31,7 @@ class CartViewGetXController extends GetxController with Helpers {
   num subTotal = 0;
   num discount = 0;
   num total = 0;
+  num subTotal2 = 0;
 
   // init.
   void init({
@@ -58,13 +59,21 @@ class CartViewGetXController extends GetxController with Helpers {
     subTotal = 0;
     discount = 0;
     total = 0;
+    subTotal2 = 0;
     for (CartItem cartItem in cartItems) {
       subTotal += (cartItem.product?.productDiscount == null
               ? cartItem.product?.price ?? 0
-              : cartItem.product?.productDiscount?.discount ?? 0) *
+              : ((cartItem.product!.price!))) *
+          cartItem.productCount!;
+      subTotal2 += (cartItem.product?.productDiscount == null
+          ? cartItem.product?.price ?? 0
+          : ((cartItem.product!.price!-(cartItem.product!.price! * cartItem.product!.productDiscount!.discount! / 100)))) *
           cartItem.productCount!;
     }
-    total = subTotal - discount;
+    discount = subTotal - subTotal2;
+    total = subTotal2;
+
+
     notifyBell();
   }
 

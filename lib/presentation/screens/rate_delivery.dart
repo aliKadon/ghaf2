@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 import '../../providers/product_provider.dart';
+import '../resources/routes_manager.dart';
 
 class RateDelivery extends StatefulWidget {
   const RateDelivery({Key? key}) : super(key: key);
@@ -25,15 +22,16 @@ class RateDelivery extends StatefulWidget {
 }
 
 class _RateDeliveryState extends State<RateDelivery> {
-
-
   @override
   void initState() {
-    Provider.of<ProductProvider>(context,listen: false).getOrders();
+    Provider.of<ProductProvider>(context, listen: false).getOrders();
     super.initState();
   }
-  int points = 1 ;
-  String opinion = '' ;
+
+  int points = 1;
+
+  String opinion = '';
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ProductProvider>(context).orders;
@@ -109,7 +107,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                   //   print(_rateUsViewGetXController.rate);
                   // },
                   onRatingUpdate: (value) {
-                     points = value.toInt();
+                    points = value.toInt();
                   },
                 ),
                 SizedBox(
@@ -134,14 +132,15 @@ class _RateDeliveryState extends State<RateDelivery> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          opinion =review1;
+                          opinion = review1;
                         });
-
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
                         // color: ColorManager.primaryDark,
                         width: AppSize.s184,
                         height: AppSize.s43,
@@ -149,21 +148,25 @@ class _RateDeliveryState extends State<RateDelivery> {
                           child: Text(
                             review1,
                             style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s16),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s16),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 6,),
+                    SizedBox(
+                      width: 6,
+                    ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          opinion =review2;
+                          opinion = review2;
                         });
-
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
                         // color: ColorManager.primaryDark,
                         width: AppSize.s173,
                         height: AppSize.s43,
@@ -171,23 +174,27 @@ class _RateDeliveryState extends State<RateDelivery> {
                           child: Text(
                             review2,
                             style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s16),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s16),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height:5,),
+                SizedBox(
+                  height: 5,
+                ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
-                      opinion =review3;
+                      opinion = review3;
                     });
-
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.grey),
                     // color: ColorManager.primaryDark,
                     width: AppSize.s281,
                     height: AppSize.s50,
@@ -200,24 +207,23 @@ class _RateDeliveryState extends State<RateDelivery> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
 
                 Container(
-
                   height: AppSize.s123,
                   child: TextFormField(
-
                     enabled: false,
-                    decoration: InputDecoration(border     : OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                          
-                    ),contentPadding: EdgeInsets.only(bottom: 80,left: 7),
-                    // label: Text('${_rateUsViewGetXController.description}'),
-                    label: Text(opinion),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      contentPadding: EdgeInsets.only(bottom: 80, left: 7),
+                      // label: Text('${_rateUsViewGetXController.description}'),
+                      label: Text(opinion),
                       labelStyle: TextStyle(fontSize: AppSize.s20),
-
                     ),
-
                   ),
                 ),
                 SizedBox(
@@ -231,11 +237,24 @@ class _RateDeliveryState extends State<RateDelivery> {
                   height: AppSize.s55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
-                      Provider.of<ProductProvider>(context, listen: false).postReviewStore('${provider[0].items![0]['storeId']}', opinion, points) .then((value) => ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('${AppLocalizations.of(context)!.thank_you}\n${AppLocalizations.of(context)!.your_review_successfully}'),backgroundColor: Colors.green),));
-                      print('-----------------------------------------------------------');
-                      print('id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
+                      // Navigator.of(context).pop();
+                      Provider.of<ProductProvider>(context, listen: false)
+                          .postReviewStore(
+                              '${provider[0].items![0]['storeId']}',
+                              opinion,
+                              points)
+                          .then((value) =>
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        '${AppLocalizations.of(context)!.thank_you}\n${AppLocalizations.of(context)!.your_review_successfully}'),
+                                    backgroundColor: Colors.green),
+                              )).then((value) => Navigator.of(context).pushReplacementNamed(Routes
+                          .mainRoute));
+                      print(
+                          '-----------------------------------------------------------');
+                      print(
+                          'id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
                     },
                     child: Text(
                       AppLocalizations.of(context)!.send_note,
@@ -244,7 +263,6 @@ class _RateDeliveryState extends State<RateDelivery> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -252,8 +270,9 @@ class _RateDeliveryState extends State<RateDelivery> {
       ),
     );
   }
+
   late String review1 = AppLocalizations.of(context)!.delivered_Securely;
   late String review2 = AppLocalizations.of(context)!.delivered_on_Time;
-   late String review3 = AppLocalizations.of(context)!.follows_drop;
-  // String review4 = 'Bad.';
+  late String review3 = AppLocalizations.of(context)!.follows_drop;
+// String review4 = 'Bad.';
 }

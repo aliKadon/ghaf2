@@ -98,12 +98,13 @@ class _CartViewState extends State<CartView> {
                                   child: ListView.builder(
                                     itemCount: controller.cartItems.length,
                                     itemBuilder: (context, index) {
+                                      final CartItem _cartItem = Get.put<CartItem>(
+                                          _cartViewGetXController
+                                              .cartItems[index],
+                                          tag: index.toString());
                                       return Builder(
                                         builder: (context) {
-                                          Get.put<CartItem>(
-                                              _cartViewGetXController
-                                                  .cartItems[index],
-                                              tag: index.toString());
+
                                           return CartItemWidget(
                                             index: index,
                                           );

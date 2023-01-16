@@ -141,7 +141,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     Row(
                       children: [
                         Text(
-                          'discount: ${_cartItem.product?.productDiscount!.discount} AED',
+                          '${((_cartItem.product!.price!-(_cartItem.product!.price! * _cartItem.product!.productDiscount!.discount! / 100)).toStringAsFixed(1))} AED',
                           style: getRegularStyle(
                             color: ColorManager.primary,
                             fontSize: FontSize.s16,

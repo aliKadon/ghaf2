@@ -3,9 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
-import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
-import 'package:ghaf_application/presentation/widgets/product2_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -97,7 +95,8 @@ class _PayLaterViewState extends State<PayLaterView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (builder) => ProductView2(unpaid[index])),
+                                    builder: (builder) =>
+                                        ProductView2(unpaid[index])),
                               );
                               // Navigator.of(context).pushNamed(Routes.unpaidItemScreen,arguments: unpaid[index]);
                             },
@@ -108,16 +107,29 @@ class _PayLaterViewState extends State<PayLaterView> {
                                 children: [
                                   Stack(
                                     children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(AppRadius.r14),
-                                        child: Image.asset(
-                                          'assets/images/product_image.png',
-                                          fit: BoxFit.cover,
-                                          height: AppSize.s211,
-                                          width: AppSize.s154,
-                                        ),
-                                      ),
+                                      unpaid.isEmpty
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppRadius.r14),
+                                              child: Image.asset(
+                                                'assets/images/product_image.png',
+                                                fit: BoxFit.cover,
+                                                height: AppSize.s211,
+                                                width: AppSize.s154,
+                                              ))
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppRadius.r14),
+                                              child: Image.network(
+                                                unpaid[index].ghafImage![0]
+                                                    ['data'],
+                                                height: AppSize.s211,
+                                                width: AppSize.s154,
+                                                fit: BoxFit.scaleDown,
+                                              ),
+                                            )
                                       // PositionedDirectional(
                                       //   end: AppSize.s12,
                                       //   top: AppSize.s12,
