@@ -21,6 +21,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../resources/routes_manager.dart';
+
 
 
 class SubmitFormView extends StatefulWidget {
@@ -145,7 +147,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   ImageAssets.logo2,
                   fit: BoxFit.fill,
                   height: AppSize.s92,
-                  width: AppSize.s82,
+                  width: AppSize.s92,
                 ),
                 SizedBox(
                   height: AppSize.s32,
@@ -518,11 +520,144 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                 SizedBox(
                   height: AppSize.s16,
                 ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 110,
+                  ),
+                  child: ElevatedButton(onPressed: (){
+                    _customDialogSubscriptionExit(context);
+
+                  }, child: Text(AppLocalizations.of(context)!.cancel)),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _customDialogSubscriptionExit(context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s280,
+              width: AppSize.s360,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Submit As Seller',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+
+                    // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
+                    // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(10.0),
+                    //   child: Text('We deliver grocery at your door step',style: TextStyle(fontSize: AppSize.s18),),
+                    // ),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+                    Text('Are you sure to cancel the process?',style: TextStyle(fontSize: AppSize.s20),),
+                    // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for lunch ',style: TextStyle(fontSize: AppSize.s14),),
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+
+                    // SizedBox(
+                    //   height: AppSize.s20,
+                    // ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushReplacementNamed(Routes.loginRoute,);
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.yes,
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: AppSize.s10,),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.no,
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+            ),
+          );
+        });
   }
 }

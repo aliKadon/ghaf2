@@ -5,6 +5,7 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 import '../resources/color_manager.dart';
@@ -93,7 +94,16 @@ class _SellerStatusState extends State<SellerStatus> {
                             .pushReplacementNamed(Routes.loginRoute),
                         child: Text(AppLocalizations.of(context)!.go_to_login)),
                     SizedBox(
-                      height: FontSize.s30,
+                      height: FontSize.s8,
+                    ),
+                    Container(
+                      child: ElevatedButton(
+                        onPressed: (){
+                          dashboard(url:'https://www.web.ghafgate.com', );
+
+                        },
+                        child: Text('Go To Dashboard'),
+                      ),
                     ),
                   ],
                 ),
@@ -101,4 +111,16 @@ class _SellerStatusState extends State<SellerStatus> {
       ),
     );
   }
+
+
+  dashboard({required String url}) async {
+
+
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 }

@@ -146,7 +146,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   void initState() {
     print('=====================================test');
     print((widget.orderId['order']['branch']['branchAddress']));
-    var doubleSourceLat;
+   var doubleSourceLat;
     var doubleSourceLong;
     var doubleDestLat;
     var doubleDestLong;
@@ -1197,7 +1197,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s280,
+              height: AppSize.s326,
               width: AppSize.s360,
               padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
               decoration: BoxDecoration(
