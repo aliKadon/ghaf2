@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -20,8 +22,16 @@ class CheckOutConfirmView extends StatefulWidget {
 }
 
 class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
+
+  @override
+  void initState() {
+    Provider.of<ProductProvider>(context,listen: false).getOrderById(widget.orderId);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var order =Provider.of<ProductProvider>(context,listen: false).orderById;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -102,7 +112,10 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                       print(widget.orderId);
                       Navigator.of(context).pushNamed(
                           Routes.orderTrackingScreen,
-                          arguments: widget.orderId);
+                          arguments: {
+                            'orderId': widget.orderId,
+                            'order' : order
+                          });
                     },
                     child: Text(
                       AppLocalizations.of(context)!.order_tracking,

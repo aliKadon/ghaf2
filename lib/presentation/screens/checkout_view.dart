@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,7 @@ class _CheckOutViewState extends State<CheckOutView> {
 
   var selected;
   int selectedTime = 0;
-  var pickUPID = 'a81c89e4-89e3-4cd9-7701-08dae6cfbd9a';
+  var pickUPID = '4f0db097-378f-4efa-bc17-08daf719ffd5';
 
   final paymentController = Get.put(PaymentController());
 
@@ -201,28 +203,36 @@ class _CheckOutViewState extends State<CheckOutView> {
                               ScaffoldMessenger.of(context)
                                 ..hideCurrentSnackBar()
                                 ..showSnackBar(snackBar);
+                              setState(() {
+                                deleveryName = widget
+                                    .order.availableDeliveryMethod[index]
+                                ['methodName'];
+                                visibility = true;
+                                deleveryMethod = widget.order
+                                    .availableDeliveryMethod[index]['id'];
+                              });
 
-                              if (widget.order.availableDeliveryMethod[index]
-                                      ['methodName'] ==
-                                  'Pick up') {
-                                setState(() {
-                                  deleveryName = widget
-                                          .order.availableDeliveryMethod[index]
-                                      ['methodName'];
-                                  visibility = true;
-                                  deleveryMethod = widget.order
-                                      .availableDeliveryMethod[index]['id'];
-                                });
-                              } else {
-                                setState(() {
-                                  deleveryName = widget
-                                          .order.availableDeliveryMethod[index]
-                                      ['methodName'];
-                                  visibility = true;
-                                  deleveryMethod = widget.order
-                                      .availableDeliveryMethod[index]['id'];
-                                });
-                              }
+                              // if (widget.order.availableDeliveryMethod[index]
+                              //         ['methodName'] ==
+                              //     'Pick up') {
+                              //   setState(() {
+                              //     deleveryName = widget
+                              //             .order.availableDeliveryMethod[index]
+                              //         ['methodName'];
+                              //     visibility = true;
+                              //     deleveryMethod = widget.order
+                              //         .availableDeliveryMethod[index]['id'];
+                              //   });
+                              // } else {
+                              //   setState(() {
+                              //     deleveryName = widget
+                              //             .order.availableDeliveryMethod[index]
+                              //         ['methodName'];
+                              //     visibility = true;
+                              //     deleveryMethod = widget.order
+                              //         .availableDeliveryMethod[index]['id'];
+                              //   });
+                              // }
                             },
                             child: Padding(
                               padding: EdgeInsetsDirectional.only(
@@ -1013,7 +1023,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                 widget.order.orderDetails['statusName'],
                             'orderId': widget.order.orderDetails['id'],
                             'item': widget.order.orderDetails['items'][0]['id'],
-                            'deliveryMethodId': deleveryMethod ?? pickUPID,
+                            'deliveryMethodId': deleveryMethod,
                             'date': Helpers.formatDate(dateTosend).toString() ?? '',
                             'address': myAddress ?? '',
                             'reedem': isSwitched,
@@ -1041,7 +1051,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                           //   ),
                           // );
                         }
-                        print('orderaddrs ----------------------${widget.order.orderDetails['deliveryPoint']}');
+                        print('orderaddrs ----------------------${myAddress.id}');
                         // if (deleveryMethod != 'Pick up' && addresses == null) {
                         //
                         // }else {

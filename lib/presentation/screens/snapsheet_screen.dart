@@ -259,68 +259,69 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                         );
                         saveItem();
                         if (_checkData()) {
-                          if (widget.orderinfo['address'] == '') {
-                            Provider.of<ProductProvider>(context, listen: false)
-                                .addOrderWithoutAddress(
-                                    orderId: widget.orderinfo['orderId'],
-                                    deliveryMethodId:
-                                        widget.orderinfo['deliveryMethodId'],
-                                    DesiredDeliveryDate:
-                                        widget.orderinfo['date'],
-                                    UseRedeemPoints: widget.orderinfo['reedem'],
-                                    UsePayLater: widget.orderinfo['paylater'],
-                                    CardNumber: cardInfo['cardNumber']!,
-                                    CardExpMonth:
-                                        int.parse(cardInfo['expiredMonth']!),
-                                    CardExpCvc: cardInfo['cvc']!,
-                                    CardExpYear:
-                                        int.parse(cardInfo['expiredYear']!))
-                                .then((value) => ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text('success'),
-                                      backgroundColor: Colors.green,
-                                    )))
-                                .then((value) => Navigator.of(context)
-                                    .pushReplacementNamed(Routes.checkOutConfirmRoute,
-                                        arguments: widget.orderinfo['orderId']))
-                                .catchError((error) =>
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(error.toString()),
-                                      backgroundColor: Colors.red,
-                                    )));
-                            ;
-                          } else {
-                            print('==================================addrress');
-                            print(widget.orderinfo['address']);
-                            Provider.of<ProductProvider>(context, listen: false)
-                                .addOrder(
-                                  widget.orderinfo['orderId'],
-                                  widget.orderinfo['deliveryMethodId'],
-                                  widget.orderinfo['date'],
-                                  widget.orderinfo['address'],
-                                  widget.orderinfo['reedem'],
-                                  widget.orderinfo['paylater'],
-                                  cardInfo['cardNumber']!,
-                                  int.parse(cardInfo['expiredMonth']!),
-                                  cardInfo['cvc']!,
-                                  int.parse(cardInfo['expiredYear']!),
-                                )
-                                .then((value) => ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text('success'),
-                                      backgroundColor: Colors.green,
-                                    )))
-                                .then((value) => Navigator.of(context)
-                                    .pushReplacementNamed(Routes.checkOutConfirmRoute,
-                                        arguments: widget.orderinfo['orderId']))
-                                .catchError((error) =>
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(error.toString()),
-                                      backgroundColor: Colors.red,
-                                    )));
-                          }
+                          Provider.of<ProductProvider>(context, listen: false)
+                              .addOrder(
+                            widget.orderinfo['orderId'],
+                            widget.orderinfo['deliveryMethodId'],
+                            widget.orderinfo['date'],
+                            widget.orderinfo['address'],
+                            widget.orderinfo['reedem'],
+                            widget.orderinfo['paylater'],
+                            cardInfo['cardNumber']!,
+                            int.parse(cardInfo['expiredMonth']!),
+                            cardInfo['cvc']!,
+                            int.parse(cardInfo['expiredYear']!),
+                          )
+                              .then((value) => ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(
+                            content: Text('success'),
+                            backgroundColor: Colors.green,
+                          )))
+                              .then((value) => Navigator.of(context)
+                              .pushReplacementNamed(Routes.checkOutConfirmRoute,
+                              arguments: widget.orderinfo['orderId']))
+                              .catchError((error) =>
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(error.toString()),
+                                backgroundColor: Colors.red,
+                              )));
+                          // if (widget.orderinfo['address'] == '') {
+                          //   Provider.of<ProductProvider>(context, listen: false)
+                          //       .addOrderWithoutAddress(
+                          //           orderId: widget.orderinfo['orderId'],
+                          //           deliveryMethodId:
+                          //               widget.orderinfo['address'],
+                          //           DesiredDeliveryDate:
+                          //               widget.orderinfo['date'],
+                          //           UseRedeemPoints: widget.orderinfo['reedem'],
+                          //           UsePayLater: widget.orderinfo['paylater'],
+                          //           CardNumber: cardInfo['cardNumber']!,
+                          //           CardExpMonth:
+                          //               int.parse(cardInfo['expiredMonth']!),
+                          //           CardExpCvc: cardInfo['cvc']!,
+                          //           CardExpYear:
+                          //               int.parse(cardInfo['expiredYear']!))
+                          //       .then((value) => ScaffoldMessenger.of(context)
+                          //               .showSnackBar(SnackBar(
+                          //             content: Text('success'),
+                          //             backgroundColor: Colors.green,
+                          //           )))
+                          //       .then((value) => Navigator.of(context)
+                          //           .pushReplacementNamed(Routes.checkOutConfirmRoute,
+                          //               arguments: widget.orderinfo['orderId']))
+                          //       .catchError((error) =>
+                          //           ScaffoldMessenger.of(context)
+                          //               .showSnackBar(SnackBar(
+                          //             content: Text(error.toString()),
+                          //             backgroundColor: Colors.red,
+                          //           )));
+                          //   ;
+                          // } else {
+                          //   print('==================================addrress');
+                          //   print(widget.orderinfo['address']);
+                          //
+                          // }
                         }
                       },
                     ),
@@ -330,6 +331,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
             ),
           ),
         ),
+
 
         // child: SingleChildScrollView(
         // child: Column(

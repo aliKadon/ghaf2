@@ -1,32 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 
 import '../../domain/model/unpaid_order.dart';
+import '../../providers/product_provider.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 
-class OrderWidget2 extends StatelessWidget {
+class OrderWidget2 extends StatefulWidget {
   final UnpaidOrder order;
   final String isOrderToPay;
 
   OrderWidget2(this.order, this.isOrderToPay);
 
-  // OrderWidget(
-  //   Key? key,
-  //   this.order,
-  //   this.isOrderToPay,
-  // ) : super(key: key);
+  @override
+  State<OrderWidget2> createState() => _OrderWidget2State();
+}
 
-  // OrderWidget(this.order);
+class _OrderWidget2State extends State<OrderWidget2> {
+  // OrderWidget(
   List a = [];
 
   @override
+  void initState() {
+    Provider.of<ProductProvider>(context,listen: false).getOrderById(widget.order.id);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var orderById = Provider.of<ProductProvider>(context,listen: false).orderById;
     return Container(
       padding: EdgeInsets.all(8.h),
       decoration: BoxDecoration(
@@ -39,7 +47,7 @@ class OrderWidget2 extends StatelessWidget {
         children: [
           Column(
             children: List.generate(
-              order.items!.length,
+              widget.order.items!.length,
               (index) => Column(
                 children: [
                   Row(
@@ -58,7 +66,7 @@ class OrderWidget2 extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              order.items![index]['name'] ?? '',
+                              widget.order.items![index]['name'] ?? '',
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
@@ -68,7 +76,7 @@ class OrderWidget2 extends StatelessWidget {
                               height: 5.h,
                             ),
                             Text(
-                              'X${order.items![index]['quanity']}   ${order.items![index]['price']} ${order.items![index]['isoCurrencySymbol']}',
+                              'X${widget.order.items![index]['quanity']}   ${widget.order.items![index]['price']} ${widget.order.items![index]['isoCurrencySymbol']}',
                               style: TextStyle(
                                 fontSize: 13.sp,
                                 color: Theme.of(context).primaryColor,
@@ -97,7 +105,7 @@ class OrderWidget2 extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '${order.orderCostForCustomer!.toStringAsFixed(1)} ${order.items![0]['isoCurrencySymbol']}',
+                '${widget.order.orderCostForCustomer!.toStringAsFixed(1)} ${widget.order.items![0]['isoCurrencySymbol']}',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -105,7 +113,7 @@ class OrderWidget2 extends StatelessWidget {
               ),
             ],
           ),
-          if (order.canPayLaterValue != 0)
+          if (widget.order.canPayLaterValue != 0)
             Row(
               children: [
                 Text(
@@ -116,7 +124,7 @@ class OrderWidget2 extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  '${order.canPayLaterValue!.toStringAsFixed(1)} ${order.items![0]['isoCurrencySymbol']}',
+                  '${widget.order.canPayLaterValue!.toStringAsFixed(1)} ${widget.order.items![0]['isoCurrencySymbol']}',
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
@@ -124,7 +132,7 @@ class OrderWidget2 extends StatelessWidget {
                 ),
               ],
             ),
-          if (order.totalCostForItems! != order.orderCostForCustomer!) ...[
+          if (widget.order.totalCostForItems! != widget.order.orderCostForCustomer!) ...[
             SizedBox(
               height: 5.h,
             ),
@@ -146,7 +154,7 @@ class OrderWidget2 extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${(order.totalCostForItems! - order.orderCostForCustomer!).toStringAsFixed(1)} ${order.items![0]['isoCurrencySymbol']}',
+                  '${(widget.order.totalCostForItems! - widget.order.orderCostForCustomer!).toStringAsFixed(1)} ${widget.order.items![0]['isoCurrencySymbol']}',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
@@ -174,27 +182,30 @@ class OrderWidget2 extends StatelessWidget {
             height: 45.h,
             child: ElevatedButton(
               onPressed: () {
-                if (isOrderToPay == 'orderTrack') {
+                if (widget.isOrderToPay == 'orderTrack') {
                   Navigator.of(context)
-                      .pushNamed(Routes.orderTrackingScreen, arguments: order);
+                      .pushNamed(Routes.orderTrackingScreen, arguments: widget.order);
                 } else {
-                  isOrderToPay == 'orderTrack' ||
-                      isOrderToPay == 'In Progress' ||
-                      isOrderToPay == 'Delivery' ||
-                      isOrderToPay == 'Completed' ||
-                      isOrderToPay == 'Pending'
+                  widget.isOrderToPay == 'orderTrack' ||
+                      widget.isOrderToPay == 'In Progress' ||
+                      widget.isOrderToPay == 'Delivery' ||
+                      widget.isOrderToPay == 'Completed' ||
+                      widget.isOrderToPay == 'Pending'
                       ? Navigator.pushNamed(context, Routes.orderTrackingScreen,
-                      arguments: order.id):Navigator.pushNamed(context, Routes.checkOutRoute,
-                      arguments: order);
+                      arguments: {
+                        'orderId': widget.order.id,
+                        'order': orderById
+                      }):Navigator.pushNamed(context, Routes.checkOutRoute,
+                      arguments: widget.order);
                 }
 
-                print("it is here: ${order.id}");
+                print("it is here: ${widget.order.id}");
               },
-              child: isOrderToPay == 'orderTrack' ||
-                      isOrderToPay == 'In Progress' ||
-                      isOrderToPay == 'Delivery' ||
-                      isOrderToPay == 'Completed' ||
-                      isOrderToPay == 'Pending'
+              child: widget.isOrderToPay == 'orderTrack' ||
+                      widget.isOrderToPay == 'In Progress' ||
+                      widget.isOrderToPay == 'Delivery' ||
+                      widget.isOrderToPay == 'Completed' ||
+                      widget.isOrderToPay == 'Pending'
                   ? Text(
                       AppLocalizations.of(context)!.track_order,
                       style: getSemiBoldStyle(

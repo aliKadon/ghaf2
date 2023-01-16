@@ -656,7 +656,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
             unpaid[i]['redeemPointsFactor'],
             unpaid[i]['driverId']),
       );
-      if (unpaid[i]['statusName'] == 'Paid') {
+      if (unpaid[i]['statusName'] == 'Done') {
         pay++;
         listPay.add(
           UnpaidOrder(
@@ -713,7 +713,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
               unpaid[i]['driverId']),
         );
       } else if (unpaid[i]['statusName'] == 'Intialized' ||
-          unpaid[i]['statusName'] == 'NotAssignedToEmployee') {
+          unpaid[i]['statusName'] == 'NotAssignedToEmployee' || unpaid[i]['statusName'] == 'Paid') {
         pending++;
         listPending.add(
           UnpaidOrder(
@@ -770,7 +770,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
               unpaid[i]['driverId']),
         );
       } else if (unpaid[i]['statusName'] == 'AssignedToDriver' ||
-          unpaid[i]['statusName'] == 'ReadyForDriver') {
+          unpaid[i]['statusName'] == 'ReadyForDriver' || unpaid[i]['statusName'] =='OnWay') {
         delivery++;
         listDelivery.add(
           UnpaidOrder(

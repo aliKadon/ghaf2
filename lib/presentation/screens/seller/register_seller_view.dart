@@ -319,7 +319,7 @@ class _RegisterSellerViewState extends State<RegisterSellerView> with Helpers {
                     //   padding: const EdgeInsets.all(10.0),
                     //   child: Text('We deliver grocery at your door step',style: TextStyle(fontSize: AppSize.s18),),
                     // ),
-                    Text(AppLocalizations.of(context)!.are_you_sure,style: TextStyle(fontSize: AppSize.s18),),
+                    Text('are you sure',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),

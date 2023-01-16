@@ -224,7 +224,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PaymentMethodeForSubscribe());
       case Routes.orderTrackingScreen:
         return MaterialPageRoute(builder: (_) => OrderTrackingScreen(
-            settings.arguments as String
+            settings.arguments as Map<String,dynamic>
         ));
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
