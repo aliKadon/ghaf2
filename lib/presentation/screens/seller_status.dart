@@ -96,7 +96,7 @@ class _SellerStatusState extends State<SellerStatus> {
                     SizedBox(
                       height: FontSize.s8,
                     ),
-                    Container(
+                    sellerStatus['submittedFormStatusBool'] == 1 && sellerStatus['active'] == 'Account is active' ? Container(
                       child: ElevatedButton(
                         onPressed: (){
                           dashboard(url:'https://www.web.ghafgate.com', );
@@ -104,7 +104,7 @@ class _SellerStatusState extends State<SellerStatus> {
                         },
                         child: Text('Go To Dashboard'),
                       ),
-                    ),
+                    ) : Container(),
                   ],
                 ),
               ),
