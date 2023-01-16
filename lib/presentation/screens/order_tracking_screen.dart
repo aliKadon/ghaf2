@@ -1132,7 +1132,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                                     onPressed: () async {
                                       await whatsapp(
                                           phone: widget.orderId['branch']
-                                              ['branchAddress']['phone']);
+                                               ['branchAddress']['phone']);
+                                      // whatsapp(phone: '00971559075423423');
                                     },
                                     child: Container(
                                       width: 65,
@@ -1322,7 +1323,16 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   }
 
   whatsapp({required String phone}) async {
-    final url = "whatsapp://send?phone=$phone";
+    final url;
+
+    if(phone.length >= 12){
+       url = "whatsapp://send?phone=$phone";
+    }else if(phone.length == 8) {
+
+       url = "whatsapp://send?phone=00971${phone.substring(1)}";
+    }else {
+      url = "whatsapp://send?phone=00971${phone}";
+    }
 
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));

@@ -371,7 +371,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
+                            _accountViewGetXController.logout(context: context);
                           },
 
                           child: Container(
