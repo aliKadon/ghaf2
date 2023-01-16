@@ -344,6 +344,7 @@ class _RateSellerState extends State<RateSeller> {
                   width: double.infinity,
                   height: AppSize.s55,
                   child: ElevatedButton(
+
                     onPressed: () {
                       // print(_rateUsViewGetXController.description);
                       // _rateUsViewGetXController.reviewApp();
