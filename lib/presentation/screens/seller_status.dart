@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
@@ -11,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
+import 'account_view/account_view_getx_controller.dart';
 
 class SellerStatus extends StatefulWidget {
   final String message;
@@ -23,6 +26,8 @@ class SellerStatus extends StatefulWidget {
 
 class _SellerStatusState extends State<SellerStatus> {
   var isLoading = true;
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
 
   @override
   void initState() {
@@ -90,8 +95,7 @@ class _SellerStatusState extends State<SellerStatus> {
                             .pushReplacementNamed(Routes.subscriptionSellerRoute),
                         child: Text(AppLocalizations.of(context)!.go_to_subscribe))   : Container(),
                     ElevatedButton(
-                        onPressed: () => Navigator.of(context)
-                            .pushReplacementNamed(Routes.loginRoute),
+                        onPressed: () => _accountViewGetXController.logout(context: context),
                         child: Text(AppLocalizations.of(context)!.go_to_login)),
                     SizedBox(
                       height: FontSize.s8,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
@@ -12,6 +14,7 @@ import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../account_view/account_view_getx_controller.dart';
 
 class AddPaymentCardSellerView extends StatefulWidget {
   // const AddPaymentCardSellerView({Key? key}) : super(key: key);
@@ -30,6 +33,8 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
   var annual = false;
   var option = '';
   var subscribeResponse;
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
 
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
@@ -219,8 +224,8 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                         //   content: Text(repo,style: TextStyle(color: Colors.white)),
                         //   backgroundColor: Colors.green,
                         // )))
-                            .then((value) =>   Navigator.pushReplacementNamed(
-                            context, Routes.loginRoute))
+                            .then((value) =>   _accountViewGetXController.logout(context: context)
+                        )
                             .catchError((e) => ScaffoldMessenger.of(context)
                             .showSnackBar(
                             SnackBar(content: Text(repo,style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,)));
@@ -231,7 +236,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
-                  ) : ElevatedButton(
+                  ) :  userInfo['role'] == 'IndividualSeller'? ElevatedButton(
                     onPressed: () {
                       _checkData();
                       if (_checkData()) {
@@ -260,7 +265,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
-                  ),
+                  ) : Container(),
                 ],
               ),
               SizedBox(
@@ -366,7 +371,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                            Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
                           },
 
                           child: Container(

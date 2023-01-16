@@ -22,6 +22,7 @@ import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../resources/routes_manager.dart';
+import '../../account_view/account_view_getx_controller.dart';
 
 
 
@@ -40,7 +41,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
   late final SubmitFormViewGetXController _submitFormViewGetXController =
       Get.find<SubmitFormViewGetXController>();
 
-
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
   // Location location = new Location();
   // bool? _serviceEnabled;
   // PermissionStatus? _permissionGranted;
@@ -579,7 +581,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
-                            fontSize: FontSize.s16),
+                            fontSize: FontSize.s20),
                       ),
                     ),
 
@@ -610,7 +612,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushReplacementNamed(Routes.loginRoute,);
+                            _accountViewGetXController.logout(context: context);
                           },
 
                           child: Container(

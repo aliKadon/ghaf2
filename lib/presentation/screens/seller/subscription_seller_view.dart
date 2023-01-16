@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +13,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/constants_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/values_manager.dart';
+import '../account_view/account_view_getx_controller.dart';
 
 class SubscriptionSellerView extends StatefulWidget {
   const SubscriptionSellerView({Key? key}) : super(key: key);
@@ -22,7 +25,8 @@ class SubscriptionSellerView extends StatefulWidget {
 class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
   int _currentPageIndex = 0;
   late PageController _pageController;
-
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
   bool isLoading = true;
   @override
   void initState() {
@@ -263,7 +267,19 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                 ],
               ),
               SizedBox(
-                height: AppSize.s24,
+                height: AppSize.s10,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 110,
+                ),
+                child: ElevatedButton(onPressed: (){
+                  _customDialogSubscriptionExit(context);
+
+                }, child: Text(AppLocalizations.of(context)!.cancel)),
+              ),
+              SizedBox(
+                height: AppSize.s10,
               ),
               GestureDetector(
                 // onTap: () => Navigator.pop(context),
@@ -603,6 +619,129 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                         GestureDetector(
                           onTap: () {
                              Navigator.of(context).pushReplacementNamed(Routes.addPaymentCardSelleRoute , arguments: plan );
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.yes,
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: AppSize.s10,),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+
+                          child: Container(
+                            width: AppSize.s110,
+                            height: AppSize.s38,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryDark,
+                              borderRadius:
+                              BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.no,
+                              textAlign: TextAlign.center,
+                              style:
+                              getMediumStyle(color: ColorManager.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+            ),
+          );
+        });
+  }
+  void _customDialogSubscriptionExit(context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s280,
+              width: AppSize.s360,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo2,
+                          height: AppSize.s60,
+                          width: AppSize.s60,
+                        ),
+                        Text(
+                          'Ghaf',
+                          style: getMediumStyle(
+                              color: ColorManager.primary,
+                              fontSize: FontSize.s20),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Subscription As Seller',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s16),
+                      ),
+                    ),
+
+                    // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
+                    // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(10.0),
+                    //   child: Text('We deliver grocery at your door step',style: TextStyle(fontSize: AppSize.s18),),
+                    // ),
+                    SizedBox(
+                      height: AppSize.s10,
+                    ),
+                    Text('Are you sure to cancel the process?',style: TextStyle(fontSize: AppSize.s20),),
+                    // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
+                    // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
+                    // Text('What do you like for lunch ',style: TextStyle(fontSize: AppSize.s14),),
+                    SizedBox(
+                      height: AppSize.s28,
+                    ),
+
+                    // SizedBox(
+                    //   height: AppSize.s20,
+                    // ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _accountViewGetXController.logout(context: context);
                           },
 
                           child: Container(

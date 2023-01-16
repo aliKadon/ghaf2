@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +12,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../account_view/account_view_getx_controller.dart';
 
 class PaymentLinkSubscriptionSellerView extends StatefulWidget {
   const PaymentLinkSubscriptionSellerView({Key? key}) : super(key: key);
@@ -19,7 +22,8 @@ class PaymentLinkSubscriptionSellerView extends StatefulWidget {
 }
 
 class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscriptionSellerView> {
-
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
   var option = '';
   var planId ='';
   var isLoading = true;
@@ -559,7 +563,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushReplacementNamed(Routes.loginRoute,);
+                            _accountViewGetXController.logout(context: context);
                           },
 
                           child: Container(

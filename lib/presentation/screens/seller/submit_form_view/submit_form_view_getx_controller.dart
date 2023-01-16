@@ -17,6 +17,7 @@ import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
+import '../../account_view/account_view_getx_controller.dart';
 
 class SubmitFormViewGetXController extends GetxController with Helpers {
   // notifiable.
@@ -24,6 +25,8 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
 
   File? get licencePDFFile => _licencePDFFile;
 
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
   set licencePDFFile(File? value) {
     _licencePDFFile = value;
     update(['licencePDFFile']);
@@ -174,7 +177,7 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+                        _accountViewGetXController.logout(context: context);
                       },
                       child: Container(
                         width: AppSize.s110,
