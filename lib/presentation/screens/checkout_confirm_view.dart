@@ -43,14 +43,14 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   // onTap: () => Navigator.pop(context),
+                    //   child: Image.asset(
+                    //     IconsAssets.arrow,
+                    //     height: AppSize.s18,
+                    //     width: AppSize.s10,
+                    //   ),
+                    // ),
                     Spacer(),
                     Text(
                       AppLocalizations.of(context)!.checkout,
@@ -110,13 +110,14 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                       // );
                       print('=================================checkout confirm orderInfo');
                       print(widget.orderId);
-                      Navigator.of(context).pushNamed(
+                      Navigator.of(context).pushReplacementNamed(
                           Routes.orderTrackingScreen,
                           arguments: {
                             'orderId': widget.orderId,
                             'order' : order
                           });
                     },
+
                     child: Text(
                       AppLocalizations.of(context)!.order_tracking,
                       style: getSemiBoldStyle(

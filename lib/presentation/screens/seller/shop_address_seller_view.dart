@@ -128,7 +128,7 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
                           //       backgroundColor: Colors.green,
                           //     )))
                           .then((value) => Navigator.of(context)
-                              .pushNamed(Routes.addBankAccountSellerRoute))
+                              .pushReplacementNamed(Routes.addBankAccountSellerRoute))
                           .catchError((e) => ScaffoldMessenger.of(context)
                               .showSnackBar(
                                   SnackBar(content: Text(repo))));

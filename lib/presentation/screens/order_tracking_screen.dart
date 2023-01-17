@@ -503,7 +503,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: () => Navigator.pop(context),
+                              onTap: () => Navigator.pushReplacementNamed(context,Routes.OrdersHistoryRoute),
                               child: Image.asset(
                                 IconsAssets.arrow,
                                 height: AppSize.s18,

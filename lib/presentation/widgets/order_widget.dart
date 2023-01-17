@@ -177,9 +177,9 @@ class OrderWidget extends StatelessWidget {
               onPressed: () {
                 if (isOrderToPay == 'orderTrack') {
                   Navigator.of(context)
-                      .pushNamed(Routes.orderTrackingScreen, arguments: order);
+                      .pushReplacementNamed(Routes.orderTrackingScreen, arguments: order);
                 } else {
-                  Navigator.pushNamed(context, Routes.checkOutRoute,
+                  Navigator.pushReplacementNamed(context, Routes.checkOutRoute,
                       arguments: order);
                 }
 

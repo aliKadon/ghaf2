@@ -184,18 +184,18 @@ class _OrderWidget2State extends State<OrderWidget2> {
               onPressed: () {
                 if (widget.isOrderToPay == 'orderTrack') {
                   Navigator.of(context)
-                      .pushNamed(Routes.orderTrackingScreen, arguments: widget.order);
+                      .pushReplacementNamed(Routes.orderTrackingScreen, arguments: widget.order);
                 } else {
                   widget.isOrderToPay == 'orderTrack' ||
                       widget.isOrderToPay == 'In Progress' ||
                       widget.isOrderToPay == 'Delivery' ||
                       widget.isOrderToPay == 'Completed' ||
                       widget.isOrderToPay == 'Pending'
-                      ? Navigator.pushNamed(context, Routes.orderTrackingScreen,
+                      ? Navigator.pushReplacementNamed(context, Routes.orderTrackingScreen,
                       arguments: {
                         'orderId': widget.order.id,
                         'order': orderById
-                      }):Navigator.pushNamed(context, Routes.checkOutRoute,
+                      }):Navigator.pushReplacementNamed(context, Routes.checkOutRoute,
                       arguments: widget.order);
                 }
 

@@ -1125,7 +1125,7 @@ class _CheckOutViewState extends State<CheckOutView> {
 
                               if (_checkData(deleveryName)) {
                                 Navigator.of(context)
-                                    .pushNamed(Routes.snapsheet, arguments: {
+                                    .pushReplacementNamed(Routes.snapsheet, arguments: {
                                   'branchAddress': widget.order
                                       .orderDetails['branch']['branchAddress'],
                                   'deliveryPoint': widget

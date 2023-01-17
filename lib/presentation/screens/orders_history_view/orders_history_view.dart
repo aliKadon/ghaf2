@@ -146,37 +146,37 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'unPay');
+                            Navigator.pushReplacementNamed(context, Routes.ordersToPay,arguments: 'unPay');
                           }else if (e['status'] == AppLocalizations.of(context)!.unpaid) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'unPay');
+                            Navigator.pushReplacementNamed(context, Routes.ordersToPay,arguments: 'unPay');
                           } else if (e['status'] == AppLocalizations.of(context)!.pending) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Pending');
+                            Navigator.pushReplacementNamed(context, Routes.ordersToPay,arguments: 'Pending');
                           } else if (e['status'] == AppLocalizations.of(context)!.completed) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Completed');
+                            Navigator.pushReplacementNamed(context, Routes.ordersToPay,arguments: 'Completed');
                           } else if (e['status'] == AppLocalizations.of(context)!.delivery) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'Delivery');
+                            Navigator.pushReplacementNamed(context, Routes.ordersToPay,arguments: 'Delivery');
                           }else if (e['status'] == AppLocalizations.of(context)!.in_progress) {
                             setState(() {
                               // unpaidOrders = 0;
                               // paidOrders = 0;
                             });
-                            Navigator.pushNamed(context, Routes.ordersToPay,arguments: 'In Progress');
+                            Navigator.pushReplacementNamed(context, Routes.ordersToPay,arguments: 'In Progress');
                           }
                         },
                         child: Card(

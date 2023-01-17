@@ -439,7 +439,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute,arguments: planId);
+                            Navigator.of(context).pushReplacementNamed(Routes.addPaymentCardSelleRoute,arguments: planId);
                           },
 
                           child: Container(

@@ -308,7 +308,7 @@ class _RegisterPaymentLinkSellerViewState
                     Row(
                       children: [
                         Text(
-                          'I Agree To The ',
+                          '${AppLocalizations.of(context)!.i_agree_to} ',
                           style: getRegularStyle(
                               color: ColorManager.grey, fontSize: FontSize.s16),
                         ),
@@ -343,7 +343,7 @@ class _RegisterPaymentLinkSellerViewState
                   onPressed: () {
                      if (_checkData()) {
                       Navigator.of(context)
-                          .pushNamed(Routes.shopAddressSellerRoute, arguments: {
+                          .pushReplacementNamed(Routes.shopAddressSellerRoute, arguments: {
                         'storeName': _nameTextController.text,
                         'email': _emailTextController.text,
                         'phoneNumber': _phoneTextController.text,
