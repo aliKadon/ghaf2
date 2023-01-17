@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class FilterSheetWidget extends StatefulWidget {
   const FilterSheetWidget({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             Row(
               children: [
                 Text(
-                  'Filter',
+                  AppLocalizations.of(context)!.filter,
                   style: TextStyle(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.w500,
@@ -69,7 +71,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             Row(
               children: [
                 Text(
-                  'Sort By',
+                  AppLocalizations.of(context)!.sort_by,
                   style: TextStyle(
                     fontSize: 18.sp,
                     color: Colors.black,
@@ -118,7 +120,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                        ),
                        child: Center(
                          child: Text(
-                           'Discount',
+                           AppLocalizations.of(context)!.discount,
                            style: TextStyle(
                              color: colorText1,
                              fontSize: 16.sp,
@@ -166,7 +168,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                        ),
                        child: Center(
                          child: Text(
-                           'Price',
+                           AppLocalizations.of(context)!.price,
                            style: TextStyle(
                              color: colorText2,
                              fontSize: 16.sp,
@@ -184,7 +186,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             Row(
               children: [
                 Text(
-                  'Price Range',
+                  AppLocalizations.of(context)!.range,
                   style: TextStyle(
                     fontSize: 18.sp,
                     color: Colors.black,
@@ -231,7 +233,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                       ),
                       child: Center(
                         child: Text(
-                          'Apply Filter',
+                          AppLocalizations.of(context)!.apply_filter,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
@@ -259,7 +261,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                       ),
                       child: Center(
                         child: Text(
-                          'Clear',
+                          AppLocalizations.of(context)!.clear,
                           style: TextStyle(
                             color: Color(0xff125051),
                             fontSize: 16.sp,

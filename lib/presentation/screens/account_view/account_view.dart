@@ -342,7 +342,7 @@ class _AccountViewState extends State<AccountView> {
                         },
                         child: accountWidget(
                           context,
-                          'star',
+                          '${AppLocalizations.of(context)!.star}',
                           // 'Rate Us',
                           AppLocalizations.of(context)!.rate_us,
                           isVector: true,
@@ -439,7 +439,7 @@ class _AccountViewState extends State<AccountView> {
                               ),
                               Text(
                                 // AppLocalizations.of(context)!.language,
-                                'Logout',
+                                '${AppLocalizations.of(context)!.logout}',
                                 style: getRegularStyle(
                                   color: ColorManager.red,
                                   fontSize: FontSize.s20,
@@ -719,7 +719,7 @@ class _AccountViewState extends State<AccountView> {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Invite Friends',
+                        '${AppLocalizations.of(context)!.invite_friend}',
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -729,7 +729,7 @@ class _AccountViewState extends State<AccountView> {
 
                     Padding(
                       padding: const EdgeInsets.only(left: 22),
-                      child: Text('Invite your friends \n and earn points',style: TextStyle(fontSize: AppSize.s24),),
+                      child: Text('${AppLocalizations.of(context)!.invite_your_friend} \n ${AppLocalizations.of(context)!.and_earn_points}',style: TextStyle(fontSize: AppSize.s24),),
                     ),
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
                     // Text('Order food to be delivered\n\tor schedule delivery time',style: TextStyle(fontSize: AppSize.s18),),

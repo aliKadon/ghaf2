@@ -336,7 +336,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Subscription Seller',
+                        AppLocalizations.of(context)!.subscribe_seller,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -353,7 +353,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('Are you sure to cancel the payment?',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.are_you_sure_payment}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),

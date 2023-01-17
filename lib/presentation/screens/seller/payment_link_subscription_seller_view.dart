@@ -404,7 +404,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Subscription As Individual Seller',
+                        '${AppLocalizations.of(context)!.submit_as_seller}',
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -421,7 +421,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('Are you sure to subscribe?',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.are_you_sure_subscribe}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
@@ -528,7 +528,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Subscription As Individual Seller',
+                        '${AppLocalizations.of(context)!.subscribe_as_seller}',
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -545,7 +545,7 @@ class _PaymentLinkSubscriptionSellerViewState extends State<PaymentLinkSubscript
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('Are you sure to cancel the process?',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.are_you_cancel_process}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),

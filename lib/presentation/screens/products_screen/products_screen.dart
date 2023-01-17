@@ -8,6 +8,8 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
@@ -73,7 +75,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               : _productsScreenGetXController.products.isEmpty
                   ? Center(
                       child: Text(
-                        'No products found',
+                        AppLocalizations.of(context)!.no_product_found,
                       ),
                     )
                   : GridView.builder(

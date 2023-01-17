@@ -106,7 +106,7 @@ class _SellerStatusState extends State<SellerStatus> {
                           dashboard(url:'https://www.web.ghafgate.com', );
 
                         },
-                        child: Text('Go To Dashboard'),
+                        child: Text('${AppLocalizations.of(context)!.go_to_dashboard}'),
                       ),
                     ) : Container(),
                   ],

@@ -9,6 +9,8 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/cart_view/cart_view_getx_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CartItemWidget extends StatefulWidget {
   final int index;
@@ -129,7 +131,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     Row(
                       children: [
                         Text(
-                          'no discount',
+                          AppLocalizations.of(context)!.no_discount,
                           style: getRegularStyle(
                             color: ColorManager.primary,
                             fontSize: FontSize.s16,
@@ -151,7 +153,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           width: 5.w,
                         ),
                         Text(
-                          '${_cartItem.product?.price} AED',
+                          '${_cartItem.product?.price} ${AppLocalizations.of(context)!.aed}',
                           style: TextStyle(
                             color: Colors.red,
                             fontSize: 12.sp,

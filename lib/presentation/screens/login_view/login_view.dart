@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -8,9 +7,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:location/location.dart';
 
-import '../../../services/firebase_messaging_service.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -18,8 +15,10 @@ import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-
-final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email'],clientId: '453527024227-n7pneahs3s6dd1ucjjpjfidem5sv3hnf.apps.googleusercontent.com');
+final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email'],
+    clientId:
+        '453527024227-n7pneahs3s6dd1ucjjpjfidem5sv3hnf.apps.googleusercontent.com');
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -31,10 +30,9 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with Helpers {
   // controller.
   late final LoginViewGetXController _loginViewGetXController =
-  Get.find<LoginViewGetXController>();
+      Get.find<LoginViewGetXController>();
 
   GoogleSignInAccount? _currentUser;
-
 
   @override
   void initState() {
@@ -44,9 +42,6 @@ class _LoginViewState extends State<LoginView> with Helpers {
     });
     super.initState();
   }
-
-
-
 
   // dispose.
   @override
@@ -91,7 +86,8 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   hint: AppLocalizations.of(context)!.userName_or_email,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!.userName_or_Email_is_required;
+                      return AppLocalizations.of(context)!
+                          .userName_or_Email_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -158,7 +154,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                               height: AppSize.s1)),
                       Padding(
                         padding:
-                        EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                            EdgeInsets.symmetric(horizontal: AppPadding.p24),
                         child: Text(
                           AppLocalizations.of(context)!.or,
                           style: getSemiBoldStyle(
@@ -189,8 +185,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      signinWithGoogle().then((value) =>
-                          _showDialog());
+                      signinWithGoogle().then((value) => _showDialog());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -232,9 +227,8 @@ class _LoginViewState extends State<LoginView> with Helpers {
                         width: AppSize.s1,
                       ),
                       GestureDetector(
-                        onTap: () =>
-                            Navigator.pushNamed(
-                                context, Routes.welcomeSellerRoute),
+                        onTap: () => Navigator.pushNamed(
+                            context, Routes.welcomeSellerRoute),
                         child: Text(
                           AppLocalizations.of(context)!.seller,
                           style: getExtraBoldStyle(
@@ -254,14 +248,13 @@ class _LoginViewState extends State<LoginView> with Helpers {
                       color: ColorManager.grey, fontSize: FontSize.s16),
                 ),
                 GestureDetector(
-                  onTap: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute,arguments:
-          {
-            'role': 'Customer',
-            'locationLat': 24.400661,
-            'locationLong': 54.635448,
-          }
-
-          ),
+                  onTap: () => Navigator.pushReplacementNamed(
+                      context, Routes.registerRoute,
+                      arguments: {
+                        'role': 'Customer',
+                        'locationLat': 24.400661,
+                        'locationLong': 54.635448,
+                      }),
                   child: Text(
                     AppLocalizations.of(context)!.create_account,
                     style: getExtraBoldStyle(
@@ -297,10 +290,11 @@ class _LoginViewState extends State<LoginView> with Helpers {
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Routes.registerRoute,arguments: {
-                  'role' : Constants.roleRegisterCustomer,
+                Navigator.of(context)
+                    .pushReplacementNamed(Routes.registerRoute, arguments: {
+                  'role': Constants.roleRegisterCustomer,
                   'locationLat': 24.400661,
-                  'locationLong':54.635448,
+                  'locationLong': 54.635448,
                 });
                 // Perform some action
                 // Navigator.pop(context);
@@ -309,10 +303,11 @@ class _LoginViewState extends State<LoginView> with Helpers {
             ),
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Routes.registerRoute,arguments: {
-                  'role' : Constants.roleRegisterSeller,
+                Navigator.of(context)
+                    .pushReplacementNamed(Routes.registerRoute, arguments: {
+                  'role': Constants.roleRegisterSeller,
                   'locationLat': 24.400661,
-                  'locationLong':54.635448,
+                  'locationLong': 54.635448,
                 });
                 // Perform some action
                 // Navigator.pop(context);
@@ -324,17 +319,21 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 print('==========================google UserName');
                 print(_currentUser?.displayName);
                 print(_currentUser?.email);
-                SharedPrefController().setgoogleUserName(googleUserName: _currentUser?.displayName ?? 'User Name');
-                SharedPrefController().setgoogleEmail(googleEmail: _currentUser?.email ?? 'Enter Email');
-                Navigator.of(context).pushNamed(Routes.registerRoute,arguments: {
-                  'role' : Constants.roleRegisterIndividual,
+                SharedPrefController().setgoogleUserName(
+                    googleUserName: _currentUser?.displayName ?? 'User Name');
+                SharedPrefController().setgoogleEmail(
+                    googleEmail: _currentUser?.email ?? 'Enter Email');
+                Navigator.of(context)
+                    .pushNamed(Routes.registerRoute, arguments: {
+                  'role': Constants.roleRegisterIndividual,
                   'locationLat': 24.400661,
-                  'locationLong':54.635448,
+                  'locationLong': 54.635448,
                 });
                 // Perform some action
                 // Navigator.pop(context);
               },
-              child: Text(AppLocalizations.of(context)!.register_as_seller_individual),
+              child: Text(
+                  AppLocalizations.of(context)!.register_as_seller_individual),
             ),
           ],
         );

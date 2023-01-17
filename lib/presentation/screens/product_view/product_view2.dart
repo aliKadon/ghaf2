@@ -7,6 +7,8 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:ghaf_application/domain/model/product2.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
@@ -203,7 +205,7 @@ class _ProductView2State extends State<ProductView2> {
                                   children: [
                                     if (widget.product2.productDiscount == null)
                                     Text(
-                                      '${widget.product2.price!.toStringAsFixed(1)} AED',
+                                      '${widget.product2.price!.toStringAsFixed(1)} ${AppLocalizations.of(context)!.aed}',
                                       style: TextStyle(
                                         fontSize: FontSize.s20,
                                         fontFamily: FontConstants.fontFamily,
@@ -316,8 +318,8 @@ class _ProductView2State extends State<ProductView2> {
                                             ),
                                             Text(
                                               isAdded
-                                                  ? 'Remove from cart'
-                                                  : 'Add to Cart',
+                                                  ? AppLocalizations.of(context)!.remove_from_cart
+                                                  : AppLocalizations.of(context)!.add_to_cart,
                                               style: getRegularStyle(
                                                   color: ColorManager.white,
                                                   fontSize: FontSize.s14),
@@ -355,7 +357,7 @@ class _ProductView2State extends State<ProductView2> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            ' AED $cost deliver',
+                            ' ${AppLocalizations.of(context)!.aed} $cost ${AppLocalizations.of(context)!.deliver}',
                             style: getRegularStyle(
                               color: ColorManager.white,
                             ),

@@ -54,19 +54,19 @@ class _RateSellerState extends State<RateSeller> {
 
   @override
   Widget build(BuildContext context) {
-    // review1 = AppLocalizations.of(context)!.fast_reliable;
-    // review2 = AppLocalizations.of(context)!.wider;
-    // review3 = AppLocalizations.of(context)!.easy_replacment;
-    // review4 = AppLocalizations.of(context)!.hygiene_rating;
-    // review5 = AppLocalizations.of(context)!.right_order;
-    // review6 = AppLocalizations.of(context)!.for_shops_easy;
+    review1 = AppLocalizations.of(context)!.fast_reliable;
+    review2 = AppLocalizations.of(context)!.wider;
+    review3 = AppLocalizations.of(context)!.easy_replacment;
+    review4 = AppLocalizations.of(context)!.hygiene_rating;
+    review5 = AppLocalizations.of(context)!.right_order;
+    review6 = AppLocalizations.of(context)!.for_shops_easy;
 
-    review1 = 'sada';
-    review2 = 'fafds';
-    review3 = 'sdasd';
-    review4 = 'asdasd';
-    review5 = 'adasda';
-    review6 = 'asdasd';
+    // review1 = 'sada';
+    // review2 = 'fafds';
+    // review3 = 'sdasd';
+    // review4 = 'asdasd';
+    // review5 = 'adasda';
+    // review6 = 'asdasd';
 
     var provider = Provider
         .of<ProductProvider>(context)

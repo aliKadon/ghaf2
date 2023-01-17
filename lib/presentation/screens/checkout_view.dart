@@ -406,7 +406,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                 ? Column(
                                     children: [
                                       Text(
-                                        'You can not make order without address',
+                                        AppLocalizations.of(context)!.you_can_not_oder_without_address,
                                         style: getSemiBoldStyle(
                                           color: ColorManager.red,
                                           fontSize: FontSize.s16,
@@ -418,7 +418,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                                               Navigator.pushReplacementNamed(context,
                                                   Routes.addressesRoute);
                                             },
-                                            child: Text('Add Address')),
+                                            child: Text('${AppLocalizations.of(context)!.add_address}')),
                                       ),
                                     ],
                                   )

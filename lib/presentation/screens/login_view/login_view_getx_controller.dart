@@ -11,6 +11,8 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -227,7 +229,7 @@ class LoginViewGetXController extends GetxController with Helpers {
                    status == 400 ? Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Check your email please!',
+                        AppLocalizations.of(context)!.check_your_email,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.red,

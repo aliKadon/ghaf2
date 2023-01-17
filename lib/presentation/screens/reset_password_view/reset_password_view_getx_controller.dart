@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ResetPasswordViewGetXController extends GetxController with Helpers {
   // constructor fields.
@@ -30,7 +32,7 @@ class ResetPasswordViewGetXController extends GetxController with Helpers {
       formKey.currentState!.save();
       if (code == null) {
         showSnackBar(context,
-            message: 'Enter verification code please', error: true);
+            message: AppLocalizations.of(context)!.enter_varfy, error: true);
         return;
       }
       showLoadingDialog(context: context, title: 'Resetting');

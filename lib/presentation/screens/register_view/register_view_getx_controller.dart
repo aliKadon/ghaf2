@@ -7,6 +7,7 @@ import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/user.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -129,7 +130,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'You must verify your account via email',
+                        AppLocalizations.of(context)!.must_verify,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -142,7 +143,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Check your email please!',
+                        AppLocalizations.of(context)!.check_your_email,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.red,

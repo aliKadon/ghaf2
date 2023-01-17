@@ -826,7 +826,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                                   ),
                                   Spacer(),
                                   Text(
-                                    'Branch Name',
+                                    '${AppLocalizations.of(context)!.branch_name}',
                                     style: getSemiBoldStyle(
                                       color: ColorManager.primaryDark,
                                       fontSize: FontSize.s16,

@@ -381,7 +381,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(
-                    'The branches can be added later aftere gistration is complete',
+                    AppLocalizations.of(context)!.branch_can_added,
                     style: TextStyle(
                       fontSize: 12.sp,
                     ),
@@ -577,7 +577,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Submit As Seller',
+                        AppLocalizations.of(context)!.submit_as_seller,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -594,7 +594,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('Are you sure to cancel the process?',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.are_you_sur_process}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),

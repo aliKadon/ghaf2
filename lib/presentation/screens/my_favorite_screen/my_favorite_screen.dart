@@ -6,6 +6,7 @@ import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyFavoriteScreen extends StatefulWidget {
   const MyFavoriteScreen({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Favorite'),
+        title: Text('${AppLocalizations.of(context)!.my_favorite}'),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
@@ -56,7 +57,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
               : _myFavoriteScreenGetXController.products.isEmpty
                   ? Center(
                       child: Text(
-                        'No products found',
+                        AppLocalizations.of(context)!.no_product_found,
                       ),
                     )
                   : GridView.builder(

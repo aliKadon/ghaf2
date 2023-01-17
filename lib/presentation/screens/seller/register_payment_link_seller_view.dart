@@ -321,7 +321,7 @@ class _RegisterPaymentLinkSellerViewState
                             TextSpan(
                                 style: TextStyle(fontSize: FontSize.s16 , color: Colors.blue), //global text style
                                 children: [
-                                  TextSpan(text:"Terms Of Service", style: TextStyle(
+                                  TextSpan(text:"${AppLocalizations.of(context)!.terms_of_services}", style: TextStyle(
                                       decoration:TextDecoration.underline
                                   )), //partial text style
                                 ]
@@ -355,7 +355,7 @@ class _RegisterPaymentLinkSellerViewState
                   },
                   child: Text(
                     // AppLocalizations.of(context)!.sign_up,
-                    'Next',
+                    '${AppLocalizations.of(context)!.next}',
                     style: getSemiBoldStyle(
                         color: ColorManager.white, fontSize: FontSize.s18),
                   ),

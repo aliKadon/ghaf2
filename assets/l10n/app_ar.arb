@@ -46,7 +46,23 @@
   "use_reedem" : "استخدم نقاط الاسترداد الخاصة بك",
   "go_to_pay_" : "اذهب للدفع مقابل الاشتراك",
   "delete_account" : "جذف الحساب",
-  "must_verify" : "يجب عليك التحقق من حسابك عبر البريد الإلكتروني تحقق من بريدك الإلكتروني من فضلك!",
+  "must_verify" : "يجب عليك التحقق من حسابك عبر البريد الإلكتروني ",
+  "enter_varfy" : "أدخل رمز التحقق من فضلك",
+  "branch_can_added" : "يمكن إضافة الفروع لاحقًا بعد اكتمال التسجيل",
+  "submit_as_seller" : "أرسل كبائع",
+  "are_you_sur_process" : "هل أنت متأكد من إلغاء العملية ؟",
+  "subscribe_seller" : "اشتراك البائع",
+  "are_you_sure_payment" : "هل أنت متأكد من إلغاء عملية الدفع ؟",
+  "subscribe_as_seller" : "الاشتراك كبائع فردي",
+  "are_you_cancel_process" : "هل أنت متأكد من إلغاء العملية ؟",
+  "terms_of_services" : "بنود الخدمة",
+  "subscribe_as_normal_seller" : "الاشتراك كبائع",
+  "you_can_not_oder_without_address" : "لا يمكنك القيام بطلبية بدون اضافة عنوان",
+  "branch_name" : "اسم الفرع",
+  "go_to_dashboard" : "اذهب إلى لوحة القيادة",
+
+
+
   "back_login" : "العودة إلى صفحة الدخول",
   "update" : "تحديث",
   "edit_profile" : "تعديل الملف الشخصي",
@@ -106,6 +122,44 @@
 
   "as_discount" : "كخصم",
   "review" : "مراجعة الطلب",
+  "unsubscribed" : "غير مشترك",
+  "subscribed" : "مشترك",
+  "star" : "نجمة",
+  "invite_your_friend" : "قم بدعوة صديقك",
+  "and_earn_money" : "و اكسب النقاط",
+  "edit" : "تعديل",
+  "delete": "حذف",
+  "no_discount" : "لا خصم",
+  "no_gift_found" : "لا يوجد هدايا",
+  "filter" : "الفلترة",
+  "sort_by" : "مرتبة حسب",
+  "range" : "المجال",
+  "apply_filter" : "طبق الفلترة",
+  "clear" : "مسح",
+  "restaurants" : "مطاعم",
+  "supermarkets" : "متاجر",
+  "food_near_you" : "طعام لذيذ بالقرب منك",
+  "favorite_food" : "طعامك المفضل عند عتبة منزلك",
+  "order_food" : "طلب توصيل الطعام أو تحديد وقت التسليم",
+  "we_deliver" : "نحن نوصل البقالة عند عتبة بابك",
+  "order_from" : "اطلب من أفضل الوجبات الخفيفة",
+  "check_your_email" : "تحقق من بريدك الإلكتروني من فضلك!",
+  "my_favorite" : "مفضلتي",
+  "deliver" : "توصيل",
+  "products" : "المنتجات",
+  "rate_ghaf" : "قيم خدمات تطبيق Ghaf",
+  "tell_us" : "أخبرنا ما الذي يمكننا تحسينه ؟",
+  "look_feel" : "المظهر و الإحساس",
+  "easy_navigate" : "سهل التنقل",
+  "easy_use" : "سهل الاستخدام",
+  "check_email" : "تحقق من بريدك الإلكتروني من فضلك!",
+
+
+
+
+
+
+
 
 
   "tell_delevery" : "أخبرنا عن تجربة التوصيل الخاصة بك ؟",

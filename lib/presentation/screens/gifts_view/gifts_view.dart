@@ -6,6 +6,9 @@ import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/screens/gifts_view/gifts_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+
 
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -51,7 +54,7 @@ class _GiftsViewState extends State<GiftsView> {
                   ),
                   Spacer(),
                   Text(
-                    'Gifts',
+                    AppLocalizations.of(context)!.gifts,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -76,7 +79,7 @@ class _GiftsViewState extends State<GiftsView> {
                       : _giftsViewGetXController.gifts.isEmpty
                           ? Center(
                               child: Text(
-                                'No gifts found',
+                                AppLocalizations.of(context)!.no_gift_found,
                               ),
                             )
                           : GridView.builder(

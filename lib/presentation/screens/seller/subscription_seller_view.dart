@@ -314,7 +314,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                             TextSpan(
                                 style: TextStyle(fontSize: FontSize.s16 , color: Colors.blue), //global text style
                                 children: [
-                                  TextSpan(text:"Terms Of Service", style: TextStyle(
+                                  TextSpan(text:"${AppLocalizations.of(context)!.terms_of_services}", style: TextStyle(
                                       decoration:TextDecoration.underline
                                   )), //partial text style
                                 ]
@@ -583,7 +583,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Subscription As Seller',
+                        '${AppLocalizations.of(context)!.subscribe_as_normal_seller}',
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -600,7 +600,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('Are you sure to subscribe?',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.are_you_sure_subscribe}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
@@ -706,7 +706,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Subscription As Seller',
+                        '${AppLocalizations.of(context)!.subscribe_as_normal_seller}',
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -723,7 +723,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('Are you sure to cancel the process?',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.are_you_cancel_process}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),

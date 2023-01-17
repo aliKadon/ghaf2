@@ -6,6 +6,8 @@ import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_
 import 'package:ghaf_application/presentation/widgets/order_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -66,7 +68,7 @@ class _OrdersToPayViewState extends State<OrdersToPayView> {
                   ),
                   Spacer(),
                   Text(
-                    'Orders To Pay',
+                    AppLocalizations.of(context)!.orders_to_pay,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -91,7 +93,7 @@ class _OrdersToPayViewState extends State<OrdersToPayView> {
                       : _ordersToPayViewGetXController.orders.isEmpty
                           ? Center(
                               child: Text(
-                                'No orders found',
+                                AppLocalizations.of(context)!.no_order_found,
                               ),
                             ): Container(),
                           // : ListView.separated(

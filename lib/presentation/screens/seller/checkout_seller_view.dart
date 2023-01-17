@@ -47,7 +47,7 @@ class CheckoutSellerView extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      '316.55 AED',
+                      '316.55 ${AppLocalizations.of(context)!.aed}',
                       style: getMediumStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s20),
@@ -67,7 +67,7 @@ class CheckoutSellerView extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      '316.55 AED',
+                      '316.55 ${AppLocalizations.of(context)!.aed}',
                       style: getMediumStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s20),
@@ -87,7 +87,7 @@ class CheckoutSellerView extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      '316.55 AED',
+                      '316.55 ${AppLocalizations.of(context)!.aed}',
                       style: getMediumStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s20),
@@ -107,7 +107,7 @@ class CheckoutSellerView extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      '316.55 AED',
+                      '316.55 ${AppLocalizations.of(context)!.aed}',
                       style: getMediumStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s20),

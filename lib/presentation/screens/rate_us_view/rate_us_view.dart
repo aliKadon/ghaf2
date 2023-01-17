@@ -11,6 +11,8 @@ import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class RateUsView extends StatefulWidget {
   const RateUsView({Key? key}) : super(key: key);
@@ -53,7 +55,7 @@ class _RateUsViewState extends State<RateUsView> {
                     ),
                     Spacer(),
                     Text(
-                      'Share Your Opinion',
+                      AppLocalizations.of(context)!.share_your_opinion,
                       style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s18,
@@ -79,7 +81,7 @@ class _RateUsViewState extends State<RateUsView> {
                   height: 15.h,
                 ),
                 Text(
-                  'Rate Ghaf application  Services',
+                  AppLocalizations.of(context)!.rate_ghaf,
                   style: getRegularStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
@@ -110,7 +112,7 @@ class _RateUsViewState extends State<RateUsView> {
                 Row(
                   children: [
                     Text(
-                      'Tell us what can we improve ?',
+                      AppLocalizations.of(context)!.tell_us,
                       style: getRegularStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s14,
@@ -240,7 +242,7 @@ class _RateUsViewState extends State<RateUsView> {
                       _rateUsViewGetXController.reviewApp();
                     },
                     child: Text(
-                      'Send A Note',
+                      AppLocalizations.of(context)!.send_note,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
@@ -254,8 +256,8 @@ class _RateUsViewState extends State<RateUsView> {
       ),
     );
   }
-  String review1 = 'Look and feel';
-  String review2 = 'Easy to navigate';
-  String review3 = 'Easy to use';
+  late String review1 = AppLocalizations.of(context)!.look_feel;
+  late String review2 = AppLocalizations.of(context)!.easy_navigate;
+  late String review3 = AppLocalizations.of(context)!.easy_use;
   // String review4 = 'Bad.';
 }

@@ -8,6 +8,8 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CategoryWidget extends StatelessWidget {
   final Category category;
@@ -21,10 +23,10 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(category.name == 'Restaurants'){
+        if(category.name == 'Restaurants and Cafe'){
           _customDialogProgress(context);
 
-        }else if(category.name == 'Supermarkets'){
+        }else if(category.name == AppLocalizations.of(context)!.supermarkets){
           _customDialogSuperMarkets(context);
 
         } else {
@@ -142,7 +144,7 @@ class CategoryWidget extends StatelessWidget {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Restaurants',
+                        AppLocalizations.of(context)!.restaurants,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -150,7 +152,7 @@ class CategoryWidget extends StatelessWidget {
                       ),
                     ),
 
-                    Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
+                    Text('${AppLocalizations.of(context)!.food_near_you}',style: TextStyle(fontSize: AppSize.s24),),
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
                     // Text('Order food to be delivered\n\tor schedule delivery time',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
@@ -231,7 +233,7 @@ class CategoryWidget extends StatelessWidget {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Restaurants',
+                        AppLocalizations.of(context)!.restaurants,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -240,7 +242,7 @@ class CategoryWidget extends StatelessWidget {
                     ),
 
                     // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
-                    Text('Your favorites food delivered at your doorstep',style: TextStyle(fontSize: AppSize.s20),),
+                    Text('${AppLocalizations.of(context)!.favorite_food}',style: TextStyle(fontSize: AppSize.s20),),
                     // Text('Order food to be delivered\n\tor schedule delivery time',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
@@ -318,7 +320,7 @@ class CategoryWidget extends StatelessWidget {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Restaurants',
+                        AppLocalizations.of(context)!.restaurants,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -328,7 +330,7 @@ class CategoryWidget extends StatelessWidget {
 
                     // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
-                    Text('Order food to be delivered or schedule delivery time',style: TextStyle(fontSize: AppSize.s18),),
+                    Text('${AppLocalizations.of(context)!.order_food}',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
@@ -412,7 +414,7 @@ class CategoryWidget extends StatelessWidget {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Supermarkets',
+                        AppLocalizations.of(context)!.supermarkets,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
                             color: ColorManager.primaryDark,
@@ -424,9 +426,9 @@ class CategoryWidget extends StatelessWidget {
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Text('We deliver grocery at your door step',style: TextStyle(fontSize: AppSize.s18),),
+                      child: Text('${AppLocalizations.of(context)!.we_deliver}',style: TextStyle(fontSize: AppSize.s18),),
                     ),
-                    Text('Order from the best of snack',style: TextStyle(fontSize: AppSize.s18),),
+                    Text('${AppLocalizations.of(context)!.order_from}',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),

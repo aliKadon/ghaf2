@@ -170,7 +170,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                               fontSize: FontSize.s18),
                         ),
                         subtitle: Text(
-                          '${provider[index].price.toString()} AED ',
+                          '${provider[index].price.toString()} ${AppLocalizations.of(context)!.aed} ',
                           style: getRegularStyle(
                               color: ColorManager.greyLight,
                               fontSize: FontSize.s16),

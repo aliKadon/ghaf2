@@ -6,6 +6,8 @@ import 'package:ghaf_application/presentation/screens/products_screen/products_s
 import 'package:ghaf_application/presentation/widgets/product2_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../../app/constants.dart';
 import '../../resources/values_manager.dart';
@@ -46,7 +48,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
     var product = Provider.of<ProductProvider>(context).product;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text(AppLocalizations.of(context)!.products),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
@@ -61,7 +63,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
             : product.isEmpty
                 ? Center(
                     child: Text(
-                      'No products found',
+                      AppLocalizations.of(context)!.no_product_found,
                     ),
                   )
                 : GridView.builder(

@@ -7,6 +7,8 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class AddressWidget extends StatelessWidget {
   final Address address;
@@ -138,7 +140,7 @@ class AddressWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Edit',
+                        AppLocalizations.of(context)!.edit,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14.sp,
@@ -167,7 +169,7 @@ class AddressWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Delete',
+                        AppLocalizations.of(context)!.delete,
                         style: TextStyle(
                           color: Color(0xff125051),
                           fontSize: 14.sp,
