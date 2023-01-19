@@ -66,7 +66,11 @@ class LoginViewGetXController extends GetxController with Helpers {
     prefs.setDouble('longitude', locationData!.longitude!);
 
     SharedPrefController().setLocationLat(locationLat: locationData!.latitude!);
-    SharedPrefController().setLocationLat(locationLat: locationData!.longitude!);
+    SharedPrefController().setLocationLong(locationLong: locationData!.longitude!);
+
+    print('===================================myLocation');
+    print(SharedPrefController().locationLong.toString());
+    print(SharedPrefController().locationLat.toString());
 
 
     if (locationData!.latitude != null) {

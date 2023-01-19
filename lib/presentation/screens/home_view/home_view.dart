@@ -20,7 +20,6 @@ import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
-import '../../../providers/language_provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -38,6 +37,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     _homeViewGetXController.init(context: context);
+
+
     // localLanguage();
     super.initState();
   }
@@ -63,7 +64,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void didChangeDependencies() {
-    Provider.of<ProductProvider>(context,listen: false).getProductDiscount(15);
+    Provider.of<ProductProvider>(context, listen: false).getProductDiscount(15);
+    Provider.of<ProductProvider>(context).getProducts();
     super.didChangeDependencies();
   }
 
@@ -76,9 +78,12 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-
     var isArabic = SharedPrefController().lang1;
     var prodDiscount = Provider.of<ProductProvider>(context).productDiscount;
+    var product = Provider.of<ProductProvider>(context, listen: false).product;
+    var storeid = Provider.of<ProductProvider>(context, listen: false).storeId;
+    var storeName =
+        Provider.of<ProductProvider>(context, listen: false).storeName;
     // print('============================================ALI');
     // print(prodDiscount);
     return ChangeNotifierProvider.value(
@@ -255,17 +260,19 @@ class _HomeViewState extends State<HomeView> {
                                 child: Stack(
                                   children: [
                                     //image main
-                                    isArabic == 'en' ? Image.asset(
-                                      ImageAssets.main,
-                                      height: AppSize.s148,
-                                      width: AppSize.s360,
-                                      fit: BoxFit.fill,
-                                    ) : Image.asset(
-                                      ImageAssets.main2,
-                                      height: AppSize.s148,
-                                      width: AppSize.s360,
-                                      fit: BoxFit.fill,
-                                    ) ,
+                                    isArabic == 'en'
+                                        ? Image.asset(
+                                            ImageAssets.main,
+                                            height: AppSize.s148,
+                                            width: AppSize.s360,
+                                            fit: BoxFit.fill,
+                                          )
+                                        : Image.asset(
+                                            ImageAssets.main2,
+                                            height: AppSize.s148,
+                                            width: AppSize.s360,
+                                            fit: BoxFit.fill,
+                                          ),
                                     PositionedDirectional(
                                       top: AppSize.s30,
                                       start: AppSize.s30,
@@ -338,19 +345,147 @@ class _HomeViewState extends State<HomeView> {
                                       } else {
                                         return Center(
                                           child: Text(
-                                            AppLocalizations.of(context)!.no_categories_found,
+                                            AppLocalizations.of(context)!
+                                                .no_categories_found,
                                           ),
                                         );
                                       }
                                     },
                                   ),
+                                ),
                               ),
+                              SizedBox(
+                                height: AppSize.s24,
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: AppSize.s24,
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .stores,
+                                    style: getMediumStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontSize: FontSize.s18,
+                                    ),
+                                  ),
+                                  Spacer()
+                                ],
+                              ),
+                              SizedBox(
+                                height: AppSize.s24,
+                              ),
+                              Container(
+                                height: AppSize.s85,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: AppPadding.p16),
+                                  child: storeName.isEmpty ? Center(
+                                    child: Container(
+                                      width: 20.h,
+                                      height: 20.h,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 1,
+                                      ),
+                                    ),
+                                  ) : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: storeName.length,
+                                    itemBuilder: (context, index) {
+                                      return storeName.length == 0 ? Center(
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .no_stores_found,
+                                        ),
+                                      ): GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              Routes.products,
+                                              arguments: storeid[index]);
+                                        },
+                                        child: Container(
+                                          width: AppSize.s92,
+                                          padding: EdgeInsetsDirectional.only(
+                                            end: AppSize.s8,
+                                          ),
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.2,
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  height: AppSize.s60,
+                                                  width: AppSize.s60,
+                                                  padding: EdgeInsets.all(
+                                                      AppPadding.p12),
+                                                  decoration: BoxDecoration(
+                                                    color: ColorManager.white,
+                                                    border: Border.all(
+                                                        width: AppSize.s0_5,
+                                                        color: ColorManager
+                                                            .greyLight),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: ColorManager
+                                                            .greyLight,
+                                                        blurRadius: AppSize.s4,
+                                                        offset: Offset(
+                                                            AppSize.s0,
+                                                            AppSize
+                                                                .s4), // Shadow position
+                                                      ),
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            AppRadius.r4),
+                                                  ),
+                                                  child: Image.asset(
+                                                    // base64Decode(category.categoryImage ?? ''),
+                                                    'assets/images/logo1.png',
+                                                    width: AppSize.s60,
+                                                    height: AppSize.s60,
+                                                    fit: BoxFit.fill,
+                                                  ),
+
+                                                  // Image.asset(
+                                                  //   IconsAssets.cart,
+                                                  //   height: AppSize.s36,
+                                                  //   width: AppSize.s36,
+                                                  // ),
+                                                ),
+                                                SizedBox(
+                                                  height: AppSize.s6,
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    storeName[index] ?? '',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: getMediumStyle(
+                                                      color:
+                                                          ColorManager.primary,
+                                                      fontSize: FontSize.s12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                   ),
                   SizedBox(
-                    height: AppSize.s4,
+                    height: AppSize.s24,
                   ),
                   // Most Popular
                   Padding(
@@ -367,7 +502,8 @@ class _HomeViewState extends State<HomeView> {
                         Spacer(),
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.allProductScreen);
+                            Navigator.pushNamed(
+                                context, Routes.allProductScreen);
                           },
                           child: Text(
                             AppLocalizations.of(context)!.more,
@@ -381,59 +517,55 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   GetBuilder<HomeViewGetXController>(
-                          id: 'products',
-                          builder: (controller) => controller.isProductsLoading
-                              ? Center(
-                                  child: Container(
-                                    width: 20.h,
-                                    height: 20.h,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 1,
-                                    ),
-                                  ),
-                                )
-                              : _homeViewGetXController.products.isEmpty
-                                  ? Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.no_product_found,
-                                      ),
-                                    )
-                                  : GridView.builder(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: AppPadding.p8,
-                                          vertical: AppPadding.p4),
-                                      shrinkWrap: true,
-                                      itemCount: _homeViewGetXController
-                                          .products.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
-                                            Constants.crossAxisCount,
-                                        mainAxisExtent:
-                                            Constants.mainAxisExtent,
-                                        mainAxisSpacing:
-                                            Constants.mainAxisSpacing,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return Builder(
-                                          builder: (context) {
-                                            Get.put<Product>(
-                                              _homeViewGetXController
-                                                  .products[index],
-                                              tag:
-                                                  '${_homeViewGetXController.products[index].id}home',
-                                            );
-                                            return ProductWidget(
-                                              tag:
-                                                  '${_homeViewGetXController.products[index].id}home',
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                        ),
+                    id: 'products',
+                    builder: (controller) => controller.isProductsLoading
+                        ? Center(
+                            child: Container(
+                              width: 20.h,
+                              height: 20.h,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          )
+                        : _homeViewGetXController.products.isEmpty
+                            ? Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .no_product_found,
+                                ),
+                              )
+                            : GridView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppPadding.p8,
+                                    vertical: AppPadding.p4),
+                                shrinkWrap: true,
+                                itemCount:
+                                    _homeViewGetXController.products.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: Constants.crossAxisCount,
+                                  mainAxisExtent: Constants.mainAxisExtent,
+                                  mainAxisSpacing: Constants.mainAxisSpacing,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return Builder(
+                                    builder: (context) {
+                                      Get.put<Product>(
+                                        _homeViewGetXController.products[index],
+                                        tag:
+                                            '${_homeViewGetXController.products[index].id}home',
+                                      );
+                                      return ProductWidget(
+                                        tag:
+                                            '${_homeViewGetXController.products[index].id}home',
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                  ),
                 ],
               ),
             ),

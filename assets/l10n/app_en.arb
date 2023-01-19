@@ -53,6 +53,10 @@
   "enter_varfy" : "Enter verification code please",
   "branch_can_added" : "The branches can be added later after registration is complete",
   "submit_as_seller" : "Submit As Seller",
+  "all_stores" : "All Stores",
+  "no_stores_found" : "No Stores Found",
+  "stores" : "Stores",
+
 
   "must_verify" : "You must verify your account via email ",
   "check_email" : "Check your email please!",

@@ -32,7 +32,7 @@ class CategoryWidget extends StatelessWidget {
         } else {
           Navigator.pushNamed(
             context,
-            Routes.products,
+            Routes.storeByCategoryScreen,
             arguments: {
               'id' : category.id,
               'name' : category.name
@@ -346,7 +346,7 @@ class CategoryWidget extends StatelessWidget {
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,
-                          Routes.products,
+                          Routes.storeByCategoryScreen,
                           arguments: {
                             'id' : category.id,
                             'name' : category.name
@@ -445,7 +445,7 @@ class CategoryWidget extends StatelessWidget {
                         // Navigator.pop(context);
                         Navigator.pushReplacementNamed(
                           context,
-                          Routes.products,
+                          Routes.storeByCategoryScreen,
                           arguments: {
                             'id' : category.id,
                             'name' : category.name

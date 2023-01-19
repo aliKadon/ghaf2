@@ -13,7 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final Map<String,dynamic> category;
+  final String category;
   // final String categoryName;
 
   const ProductsScreen({
@@ -40,7 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     _productsScreenGetXController.init(
       context: context,
-      categoryId: widget.category['id'].toString(),
+      categoryId: widget.category,
     );
 
     super.initState();
@@ -58,7 +58,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category['name'].toString()),
+        title: Text(AppLocalizations.of(context)!.products),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
@@ -98,7 +98,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             return ProductWidget(
                               tag:
                                   '${_productsScreenGetXController.products[index].id}products',
-                              categoryName: widget.category['name'].toString(),
+                              // categoryName: widget.category['name'].toString(),
                             );
                           },
                         );

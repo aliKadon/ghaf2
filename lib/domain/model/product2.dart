@@ -29,6 +29,7 @@ class Product2 {
   String? discountDescription;
   String? redeemDescription;
   num? stars;
+  num? reviewCount;
   bool? isFavorite;
   bool? isInCart;
   Map<String,dynamic>? category;
@@ -59,6 +60,7 @@ class Product2 {
     this.discountDescription,
     this.redeemDescription,
     this.stars,
+    this.reviewCount,
     this.isFavorite,
     this.isInCart,
     this.category,

@@ -66,6 +66,7 @@ import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view
 import 'package:ghaf_application/presentation/screens/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
 import 'package:ghaf_application/presentation/screens/snapsheet_screen.dart';
+import 'package:ghaf_application/presentation/screens/store_by_category_screen.dart';
 import 'package:ghaf_application/presentation/screens/sub_categories_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view.dart';
@@ -137,6 +138,7 @@ class Routes {
   static const String updateUserInfo = "/updateUserInfo";
   static const String updateSellerInfo = "/updateSellerInfo";
   static const String accountView = "/accountView";
+  static const String storeByCategoryScreen = "/storeByCategoryScreen";
 
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
@@ -225,6 +227,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const WelcomeView());
 
       //new
+      case Routes.storeByCategoryScreen:
+        return MaterialPageRoute(builder: (_) =>  StoreByCategryScreen(
+          settings.arguments as Map<String,dynamic>
+        ));
       case Routes.unpaidItemScreen:
         return MaterialPageRoute(
             builder: (_) =>
@@ -373,13 +379,13 @@ class RouteGenerator {
           ),
         );
       case Routes.products:
-        return MaterialPageRoute(
-          builder: (_) => ProductsScreen(
-            // categoryId: settings.arguments as String,
-            // categoryName: settings.arguments as String,
-            category: settings.arguments as Map<String, dynamic>,
-          ),
-        );
+      return MaterialPageRoute(
+        builder: (_) => ProductsScreen(
+          // categoryId: settings.arguments as String,
+          // categoryName: settings.arguments as String,
+          category: settings.arguments as String,
+        ),
+      );
       case Routes.myFavorite:
         return MaterialPageRoute(builder: (_) => MyFavoriteScreen());
       case Routes.rateUs:

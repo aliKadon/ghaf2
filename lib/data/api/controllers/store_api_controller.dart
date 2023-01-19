@@ -45,7 +45,7 @@ class StoreApiController with ApiHelper {
   }) async {
     // // print('send request : getProducts');
     Map<String, dynamic> queryParameters = {
-      'cid': cid,
+      'sid': cid,
       'filter':
           "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };

@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
-import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
+import 'package:ghaf_application/providers/category_provider.dart';
 import 'package:ghaf_application/providers/language_provider.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
@@ -44,7 +44,10 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider.value(
           value: LocaleProvider(),
-        )
+        ),
+        ChangeNotifierProvider.value(
+          value: CategoryProvider(),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -52,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           final provider = Provider.of<LocaleProvider>(context);
           print(provider.locale);
-          
+
           var isArabic = SharedPrefController().lang1;
           // print('isArabic : $isArabic');
 

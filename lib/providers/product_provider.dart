@@ -48,6 +48,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   List<UnpaidOrder> ordersUnPay = [];
 
   var referralCode = '';
+  List<String> storeName = [];
+  List<String> storeId = [];
 
   var productById = {};
 
@@ -178,6 +180,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     List<Product2> list = [];
 
     List<Product2> listPayLater = [];
+    List<String> store = [];
+    List<String> storeID = [];
     for (int i = 0; i < product.length; i++) {
       list.add(Product2(
           id: product[i]['id'],
@@ -208,6 +212,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
           stars: product[i]['stars'],
           visible: product[i]['visible'],
           storeStars: product[i]['storeStars'] ?? 0));
+      
+      
       if (product[i]['canPayLater'] == true) {
         listPayLater.add(Product2(
             id: product[i]['id'],
@@ -239,9 +245,13 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
             visible: product[i]['visible'],
             storeStars: product[i]['storeStars'] ?? 0));
       }
+      store.add(product[i]['branch']['storeName']);
+      storeID.add(product[i]['branch']['storeId']);
     }
     listPayLater1 = listPayLater;
     _product = list;
+    storeName = store.toSet().toList();
+    storeId = storeID.toSet().toList();
     notifyListeners();
   }
 
