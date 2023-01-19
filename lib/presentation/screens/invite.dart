@@ -60,22 +60,22 @@ class _InviteState extends State<Invite> {
                   Spacer(),
                 ],
               ),
-              SizedBox(
-                height: AppSize.s31,
-              ),
+              // SizedBox(
+              //   height: AppSize.s12,
+              // ),
               Image.asset(
-                'assets/images/Invite.png',
-                fit: BoxFit.fill,
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 0.7,
+                'assets/images/invite.png',
+                // fit: BoxFit.fill,
+                height: 225,
+                width: 225,
               ),
               SizedBox(
-                height: AppSize.s31,
+                height: AppSize.s1,
               ),
               Text(
                 'Give 25% Off Get 25% Off',
                 style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                    color: ColorManager.primaryDark, fontSize: FontSize.s20),
               ),
               Text(
                 'For Every Friend Who Places Their First Order',
@@ -83,10 +83,10 @@ class _InviteState extends State<Invite> {
                     color: ColorManager.primaryDark, fontSize: FontSize.s14),
               ),
               SizedBox(
-                height: AppSize.s31,
+                height: AppSize.s12,
               ),
               Padding(
-                padding: EdgeInsets.all(7),
+                padding: EdgeInsets.all(1),
                 child: Row(
                   children: [
                     Column(
@@ -94,13 +94,16 @@ class _InviteState extends State<Invite> {
                         Container(
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Colors.black12,
-                            border: Border.all(
-                              color: Color(0xff125051),
-                            ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color(0xff7FA5A4).withOpacity(0.2),
+                            // border: Border.all(
+                            //   color: Color(0xff7FA5A4),
+                            // ),
                           ),
-                          child: Image.asset('assets/images/icons1.png',width: 40,height: 40),
+                          child: Image.asset('assets/images/icons1.png',width: 38,height: 38),
+                        ),
+                        SizedBox(
+                          height: AppSize.s8,
                         ),
                         Text(
                           'Invite Friend \n',
@@ -119,19 +122,19 @@ class _InviteState extends State<Invite> {
                       children: [
                         DottedLine(
                           direction: Axis.horizontal,
-                          lineLength: MediaQuery.of(context).size.width * 0.12,
+                          lineLength: MediaQuery.of(context).size.width * 0.14,
                           lineThickness: 2.0,
-                          dashLength: 4.0,
+                          dashLength: 2.0,
                           dashColor: Colors.black,
                           // dashGradient: [Colors.red, Colors.blue],
                           dashRadius: 0.0,
-                          dashGapLength: 4.0,
+                          dashGapLength: 2.0,
                           dashGapColor: Colors.transparent,
                           dashGapGradient: [Colors.white, Colors.white],
                           dashGapRadius: 0.0,
                         ),
                         SizedBox(
-                          height: AppSize.s20,
+                          height: AppSize.s55,
                         ),
                       ],
                     ),
@@ -140,16 +143,19 @@ class _InviteState extends State<Invite> {
                         Container(
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Colors.black12,
-                            border: Border.all(
-                              color: Color(0xff125051),
-                            ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color(0xff7FA5A4).withOpacity(0.2),
+                            // border: Border.all(
+                            //   color: Color(0xff7FA5A4),
+                            // ),
                           ),
-                          child: Image.asset('assets/images/icons2.png',width: 40,height: 40),
+                          child: Image.asset('assets/images/icons2.png',width: 38,height:38),
+                        ),
+                        SizedBox(
+                          height: AppSize.s8,
                         ),
                         Text(
-                          'Friend Come \n   Onboard',
+                          'Friend Come \n    Onboard',
                           style: getSemiBoldStyle(
                               color: ColorManager.primary,
                               fontSize: FontSize.s14),
@@ -160,19 +166,19 @@ class _InviteState extends State<Invite> {
                       children: [
                         DottedLine(
                           direction: Axis.horizontal,
-                          lineLength: MediaQuery.of(context).size.width * 0.12,
+                          lineLength: MediaQuery.of(context).size.width * 0.14,
                           lineThickness: 2.0,
-                          dashLength: 4.0,
+                          dashLength: 2.0,
                           dashColor: Colors.black,
                           // dashGradient: [Colors.red, Colors.blue],
                           dashRadius: 0.0,
-                          dashGapLength: 4.0,
+                          dashGapLength: 2.0,
                           dashGapColor: Colors.transparent,
                           dashGapGradient: [Colors.white, Colors.white],
                           dashGapRadius: 0.0,
                         ),
                         SizedBox(
-                          height: AppSize.s20,
+                          height: AppSize.s55,
                         ),
                       ],
                     ),
@@ -181,13 +187,16 @@ class _InviteState extends State<Invite> {
                         Container(
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            color: Colors.black12,
-                            border: Border.all(
-                              color: Color(0xff125051),
-                            ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: Color(0xff7FA5A4).withOpacity(0.2),
+                            // border: Border.all(
+                            //   color: Color(0xff7FA5A4),
+                            // ),
                           ),
-                          child: Image.asset('assets/images/icons3.png',width: 40,height: 40),
+                          child: Image.asset('assets/images/icons3.png',width: 38,height: 38),
+                        ),
+                        SizedBox(
+                          height: AppSize.s8,
                         ),
                         Text(
                           'Get Rewards \n',
@@ -206,21 +215,21 @@ class _InviteState extends State<Invite> {
               Text(
                 AppLocalizations.of(context)!.invite_code,
                 style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s26),
+                    color: ColorManager.primaryDark, fontSize: FontSize.s18),
               ),
-              SizedBox(
-                height: AppSize.s20,
-              ),
+              // SizedBox(
+              //   height: AppSize.s20,
+              // ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.24,
+                height: MediaQuery.of(context).size.height * 0.14,
                 width: MediaQuery.of(context).size.width * 0.7,
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
-                  color: Colors.black12,
-                  border: Border.all(
-                    color: Color(0xff125051),
-                  ),
+                  borderRadius: BorderRadius.circular(30),
+                  color: Color(0xff7FA5A4).withOpacity(0.2),
+                  // border: Border.all(
+                  //   color: Color(0xff7FA5A4),
+                  // ),
                 ),
                 child: isLoading
                     ? Center(

@@ -1293,6 +1293,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                           onTap: () {
                             Navigator.pushNamed(context, Routes.rateDelivery);
                           },
+                          // orderById1['deliveryMethod'] ['deliveryMethodId']== 'd124aacf-9498-45b8-bba0-08daf685a244' || orderById1['deliveryMethod'] ['deliveryMethodId']== '4c07cfd7-5ef9-4379-bba1-08daf685a244'
                           child: orderById1['driverId'] == null
                               ? Container()
                               : Container(
