@@ -1,18 +1,20 @@
+import 'package:ghaf_application/domain/model/store_delivery_cost.dart';
+
 class Branch {
-  Branch({
-    this.id,
-    this.branchName,
-    this.branchAddress,
-    this.telephone,
-    this.email,
-    this.details,
-    this.branchNumber,
-    this.is24Hours,
-    this.hidden,
-    this.storeId,
-    this.branchTimes,
-    this.storeName,
-  });
+  Branch(
+      {this.id,
+      this.branchName,
+      this.branchAddress,
+      this.telephone,
+      this.email,
+      this.details,
+      this.branchNumber,
+      this.is24Hours,
+      this.hidden,
+      this.storeId,
+      this.branchTimes,
+      this.storeName,
+      this.storeDeliveryCost});
 
   String? id;
   String? branchName;
@@ -26,6 +28,7 @@ class Branch {
   String? storeId;
   String? branchTimes;
   String? storeName;
+  List<StoreDeliveryCost>? storeDeliveryCost;
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
         id: json["id"],
@@ -40,6 +43,8 @@ class Branch {
         storeId: json["storeId"],
         branchTimes: json["branchTimes"],
         storeName: json["storeName"],
+        // storeDeliveryCost: List<StoreDeliveryCost>.from(
+        //     json["storeDeliveryCost"].map((x) => StoreDeliveryCost.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,5 +60,6 @@ class Branch {
         "storeId": storeId,
         "branchTimes": branchTimes,
         "storeName": storeName,
+        // "storeDeliveryCost": List<dynamic>.from(storeDeliveryCost!.map((x) => x.toJson()))
       };
 }

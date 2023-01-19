@@ -28,6 +28,9 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   num inProgressCount = 0;
   num deliveryCount = 0;
 
+  int statusCode = 0;
+  String statusPayment = '';
+
   String repo = '';
 
   List<Product2> listPayLater1 = [];
@@ -45,6 +48,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   List<UnpaidOrder> ordersUnPay = [];
 
   var referralCode = '';
+
+  var productById = {};
 
   List<ProductDiscount> _productDiscount = [];
 
@@ -430,6 +435,28 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
 
   // Future<void> payForOrder(String orderId, String deliveryId,)
 
+  Future<void> getProductById(String id) async{
+    var url = Uri.parse('${Constants.urlBase}/product/get-product-by-id?prodId=$id');
+    final response = await http.get(url, headers: headers);
+    var data = json.decode(response.body)['data'];
+    List<Address> list = [];
+    // for (int i = 0; i < addresses.length; i++) {
+    //   list.add(
+    //     Address(
+    //       id: addresses[i]['id'],
+    //       addressName: addresses[i]['addressName'],
+    //       altitude: addresses[i]['altitude'],
+    //       longitude: addresses[i]['longitude'],
+    //       phone: addresses[i]['phone'],
+    //     ),
+    //   );
+    // }
+    print('====================================productByid');
+    print(data);
+    productById = data;
+    notifyListeners();
+  }
+
   Future<void> addOrderWithoutAddress(
       {required String orderId,
       required String deliveryMethodId,
@@ -520,9 +547,31 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
           'CardExpCvc': CardExpCvc,
           'CardExpYear': CardExpYear,
         }));
+    statusCode = jsonDecode((response.body))['status'];
+    if (jsonDecode(response.body)['status'] == 500) {
+      var data = jsonDecode((response.body))['data'];
+      var s = data.indexOf(':');
+      var l = data.indexOf('.',s+ '.'.length);
+      var g = data.substring(s+1,l);
+      statusPayment = g;
+    }else if (jsonDecode(response.body)['status'] == 400) {
+      statusPayment = jsonDecode((response.body))['message'];
+    }else {
+      statusPayment = jsonDecode((response.body))['data'];
+    }
+
+
     print('======================================statusCode');
     print(response.statusCode);
     print(response.body);
+    print('=====================================myStatusCode');
+    print(statusCode);
+    print('======================================dataPayment');
+    print(statusPayment);
+
+
+
+
     // try {
     //   final response = await http.post(url, headers: {
     //     HttpHeaders.authorizationHeader: SharedPrefController().token,

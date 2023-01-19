@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
-import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/user.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -19,11 +18,11 @@ class RegisterViewGetXController extends GetxController with Helpers {
   // constructor fields.
   final BuildContext context;
   String role;
-  double latitude=24.400661;
-  double longitude= 54.635448;
+  double latitude = 24.400661;
+  double longitude = 54.635448;
+
   // constructor.
-  RegisterViewGetXController(
-      {
+  RegisterViewGetXController({
     required this.context,
     required this.role,
     required this.latitude,
@@ -86,9 +85,11 @@ class RegisterViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
     }
   }
+
   void _customDialogProgress() async {
     showDialog(
         context: context,
@@ -146,8 +147,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
                         AppLocalizations.of(context)!.check_your_email,
                         textAlign: TextAlign.center,
                         style: getMediumStyle(
-                            color: ColorManager.red,
-                            fontSize: FontSize.s16),
+                            color: ColorManager.red, fontSize: FontSize.s16),
                       ),
                     ),
                     SizedBox(
@@ -155,7 +155,8 @@ class RegisterViewGetXController extends GetxController with Helpers {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
+                        Navigator.of(context)
+                            .pushReplacementNamed(Routes.loginRoute);
                       },
                       child: Container(
                         width: AppSize.s110,
@@ -163,14 +164,12 @@ class RegisterViewGetXController extends GetxController with Helpers {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: ColorManager.primaryDark,
-                          borderRadius:
-                          BorderRadius.circular(AppRadius.r8),
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
                         ),
                         child: Text(
                           'Ok',
                           textAlign: TextAlign.center,
-                          style:
-                          getMediumStyle(color: ColorManager.white),
+                          style: getMediumStyle(color: ColorManager.white),
                         ),
                       ),
                     ),
@@ -179,6 +178,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
           );
         });
   }
+
   // select birth date.
   void selectBirthDate({
     required BuildContext context,

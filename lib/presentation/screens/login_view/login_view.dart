@@ -15,13 +15,14 @@ import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email'],
-    clientId:
-        '453527024227-n7pneahs3s6dd1ucjjpjfidem5sv3hnf.apps.googleusercontent.com');
+// scopes: ['email'],
+// clientId:
+// '453527024227-n7pneahs3s6dd1ucjjpjfidem5sv3hnf.apps.googleusercontent.com'
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -37,9 +38,9 @@ class _LoginViewState extends State<LoginView> with Helpers {
   @override
   void initState() {
     _loginViewGetXController.getLocation();
-    _googleSignIn.onCurrentUserChanged.listen((event) {
-      _currentUser = event;
-    });
+    // _googleSignIn.onCurrentUserChanged.listen((event) {
+    //   _currentUser = event;
+    // });
     super.initState();
   }
 
@@ -49,6 +50,9 @@ class _LoginViewState extends State<LoginView> with Helpers {
     Get.delete<LoginViewGetXController>();
     super.dispose();
   }
+
+  String userName = "User Name";
+  String? email = "Your Email";
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +278,12 @@ class _LoginViewState extends State<LoginView> with Helpers {
 
   Future<void> signinWithGoogle() async {
     try {
-      await _googleSignIn.signIn();
+      await widget._googleSignIn.signIn().then((value) {
+        userName = value!.displayName!;
+        email = value.email;
+        print(email);
+        print(userName);
+      });
     } catch (e) {
       print('================================googleSignIn');
       print(e.toString());
@@ -290,12 +299,17 @@ class _LoginViewState extends State<LoginView> with Helpers {
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(Routes.registerRoute, arguments: {
-                  'role': Constants.roleRegisterCustomer,
-                  'locationLat': 24.400661,
-                  'locationLong': 54.635448,
-                });
+                SharedPrefController()
+                    .setgoogleUserName(googleUserName: userName ?? 'User Name');
+                SharedPrefController()
+                    .setgoogleEmail(googleEmail: email ?? 'Enter Email')
+                    .then((value) => Navigator.of(context).pushReplacementNamed(
+                            Routes.registerRoute,
+                            arguments: {
+                              'role': Constants.roleRegisterCustomer,
+                              'locationLat': 24.400661,
+                              'locationLong': 54.635448,
+                            }));
                 // Perform some action
                 // Navigator.pop(context);
               },
@@ -303,12 +317,17 @@ class _LoginViewState extends State<LoginView> with Helpers {
             ),
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(Routes.registerRoute, arguments: {
-                  'role': Constants.roleRegisterSeller,
-                  'locationLat': 24.400661,
-                  'locationLong': 54.635448,
-                });
+                SharedPrefController()
+                    .setgoogleUserName(googleUserName: userName ?? 'User Name');
+                SharedPrefController()
+                    .setgoogleEmail(googleEmail: email ?? 'Enter Email')
+                    .then((value) => Navigator.of(context).pushReplacementNamed(
+                            Routes.registerRoute,
+                            arguments: {
+                              'role': Constants.roleRegisterSeller,
+                              'locationLat': 24.400661,
+                              'locationLong': 54.635448,
+                            }));
                 // Perform some action
                 // Navigator.pop(context);
               },
@@ -317,18 +336,18 @@ class _LoginViewState extends State<LoginView> with Helpers {
             SimpleDialogOption(
               onPressed: () {
                 print('==========================google UserName');
-                print(_currentUser?.displayName);
-                print(_currentUser?.email);
-                SharedPrefController().setgoogleUserName(
-                    googleUserName: _currentUser?.displayName ?? 'User Name');
-                SharedPrefController().setgoogleEmail(
-                    googleEmail: _currentUser?.email ?? 'Enter Email');
-                Navigator.of(context)
-                    .pushNamed(Routes.registerRoute, arguments: {
-                  'role': Constants.roleRegisterIndividual,
-                  'locationLat': 24.400661,
-                  'locationLong': 54.635448,
-                });
+                print(userName);
+                print(email);
+                SharedPrefController()
+                    .setgoogleUserName(googleUserName: userName ?? 'User Name');
+                SharedPrefController()
+                    .setgoogleEmail(googleEmail: email ?? 'Enter Email')
+                    .then((value) => Navigator.of(context)
+                            .pushNamed(Routes.registerRoute, arguments: {
+                          'role': Constants.roleRegisterIndividual,
+                          'locationLat': 24.400661,
+                          'locationLong': 54.635448,
+                        }));
                 // Perform some action
                 // Navigator.pop(context);
               },

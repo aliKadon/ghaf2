@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:http/http.dart' as http;
@@ -18,7 +19,7 @@ class AuthApiController with ApiHelper {
     Uri uri = Uri.parse(ApiSettings.register);
     var response =
         await http.post(uri, headers: headers, body: jsonEncode(user.toJson()));
-    print('============================================');
+    print('============================================11');
     print(response.statusCode);
     print(response.body);
     print(user.toJson());
@@ -33,6 +34,23 @@ class AuthApiController with ApiHelper {
         message: jsonResponse['message'],
         status: jsonResponse['status'],
       );
+    }
+    if (response.statusCode == 400) {
+      var jsonResponse = jsonDecode(response.body);
+      print('=============================400');
+      print(jsonResponse['errors']['Password']);
+      if (jsonResponse['errors']['Password'] == null) {
+        return ApiResponse(
+          message: jsonResponse['errors']['ConfirmPassword'][0],
+          status: jsonResponse['status'],
+        );
+      }else {
+        return ApiResponse(
+          message: jsonResponse['errors']['Password'][0],
+          status: jsonResponse['status'],
+        );
+      }
+
     }
     return failedResponse;
   }

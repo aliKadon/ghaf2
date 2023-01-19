@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 import '../../app/utils/helpers.dart';
 import '../resources/values_manager.dart';
@@ -144,7 +143,9 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(19),
                           ],
-                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.number_card),
+                          decoration: InputDecoration(
+                              hintText:
+                                  AppLocalizations.of(context)!.number_card),
                           onSaved: (value) {
                             cardInfo = {
                               'cardNumber': value!,
@@ -167,7 +168,8 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: TextFormField(
-                            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.cvv),
+                            decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.cvv),
                             onChanged: (_) {
                               setState(() {
                                 isCVV = true;
@@ -193,8 +195,9 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                   // Limit the input
                                   LengthLimitingTextInputFormatter(4),
                                 ],
-                                decoration:
-                                     InputDecoration(hintText: AppLocalizations.of(context)!.month),
+                                decoration: InputDecoration(
+                                    hintText:
+                                        AppLocalizations.of(context)!.month),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -218,8 +221,9 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                   FilteringTextInputFormatter.digitsOnly,
                                   LengthLimitingTextInputFormatter(5),
                                 ],
-                                decoration:
-                                     InputDecoration(hintText: AppLocalizations.of(context)!.year),
+                                decoration: InputDecoration(
+                                    hintText:
+                                        AppLocalizations.of(context)!.year),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -246,7 +250,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: ElevatedButton(
-                      child:  Text(AppLocalizations.of(context)!.add_card),
+                      child: Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
                         // showLoadingDialog(context: context, title: 'Logging In');
 
@@ -272,20 +276,39 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                             cardInfo['cvc']!,
                             int.parse(cardInfo['expiredYear']!),
                           )
-                              .then((value) => ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(
-                            content: Text('success'),
-                            backgroundColor: Colors.green,
-                          )))
-                              .then((value) => Navigator.of(context)
-                              .pushReplacementNamed(Routes.checkOutConfirmRoute,
-                              arguments: widget.orderinfo['orderId']))
-                              .catchError((error) =>
+                              .then((value) {
+                            if (Provider.of<ProductProvider>(context,
+                                        listen: false)
+                                    .statusCode !=
+                                200) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text(error.toString()),
+                                content: Text(Provider.of<ProductProvider>(
+                                        context,
+                                        listen: false)
+                                    .statusPayment),
                                 backgroundColor: Colors.red,
-                              )));
+                              ));
+                            } else if (Provider.of<ProductProvider>(context,
+                                        listen: false)
+                                    .statusCode ==
+                                200) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Success'),
+                                backgroundColor: Colors.green,
+                              ));
+                              Navigator.of(context)
+                                  .pushReplacementNamed(
+                                      Routes.checkOutConfirmRoute,
+                                      arguments: widget.orderinfo['orderId']);
+                            }
+                          }).catchError((error) => ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(error.toString()),
+                                    backgroundColor: Colors.red,
+                                  )));
+
                           // if (widget.orderinfo['address'] == '') {
                           //   Provider.of<ProductProvider>(context, listen: false)
                           //       .addOrderWithoutAddress(
@@ -331,7 +354,6 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
             ),
           ),
         ),
-
 
         // child: SingleChildScrollView(
         // child: Column(

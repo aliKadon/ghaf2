@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "480529468788-tfq6kdsn4nqg8pbgv7atktirt0nfd9e9.apps.googleusercontent.com",
+          "client_id": "480529468788-sa68ealja83n6spc9s2r5hnmmlc0loi6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ghaf.application.ghaf_application",
-            "certificate_hash": "ecc3ecad7712d6cc68e6867c201cacdf76b78dd5"
+            "certificate_hash": "7ef57852b792f26abb10d11ea596b2e1d73917ac"
           }
         },
         {

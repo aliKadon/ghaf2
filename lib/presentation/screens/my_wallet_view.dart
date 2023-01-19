@@ -7,10 +7,8 @@ import 'package:provider/provider.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
-import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
-import '../widgets/order_widget2.dart';
 
 class MyWalletView extends StatefulWidget {
   const MyWalletView({Key? key}) : super(key: key);
@@ -143,11 +141,24 @@ class _MyWalletViewState extends State<MyWalletView> {
                             borderRadius: BorderRadius.circular(AppRadius.r8))),
                     child: Text(
                       // AppLocalizations.of(context)!.add_balance,
-                        AppLocalizations.of(context)!.your_balance,
+                      AppLocalizations.of(context)!.your_balance,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: AppSize.s15,
+                ),
+                Text(
+                  'Recent Transactions',
+                  style: getSemiBoldStyle(
+                    color: ColorManager.primaryDark,
+                    fontSize: FontSize.s18,
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s15,
                 ),
                 // SizedBox(
                 //   height: AppSize.s27,
@@ -164,27 +175,58 @@ class _MyWalletViewState extends State<MyWalletView> {
                       )
                     : completeOrder == null
                         ? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(child: Text(AppLocalizations.of(context)!.no_order_found)),
-                        )
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                                child: Text(AppLocalizations.of(context)!
+                                    .no_order_found)),
+                          )
                         : completeOrder.length == 0
                             ? Padding(
-                              padding: const EdgeInsets.all(100.0),
-                              child: Center(child: Text(AppLocalizations.of(context)!.no_order_found)),
-                            )
+                                padding: const EdgeInsets.all(100.0),
+                                child: Center(
+                                    child: Text(AppLocalizations.of(context)!
+                                        .no_order_found)),
+                              )
                             : ListView.separated(
                                 shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
                                 itemCount: completeOrder.length,
                                 separatorBuilder: (_, index) => Divider(),
                                 itemBuilder: (context, index) {
                                   print(
                                       '+++++++++++++++++++++++++++++++================');
                                   print(completeOrder[index]);
-                                  return OrderWidget2(
-                                    // order: _ordersToPayViewGetXController
-                                    //     .orders[index],
-                                    completeOrder[index],
-                                    AppLocalizations.of(context)!.completed,
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
+                                    child: Card(
+                                      elevation: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Image.asset(
+                                              'assets/images/product_image.png',),
+                                          title: Text(
+                                            completeOrder[index].items![0]
+                                                ['name'],
+
+                                            style: getSemiBoldStyle(
+                                              color: ColorManager.primary,
+                                              fontSize: FontSize.s18,
+                                            ),
+                                          ),
+                                          subtitle: Text(completeOrder[index].deliverdAt?.substring(0,10) ?? '000'),
+                                          trailing: Text(
+                                            '${completeOrder[index].items![0]['price']} ${completeOrder[index].items![0]['isoCurrencySymbol']}',
+                                            style: getSemiBoldStyle(
+                                              color: ColorManager.primaryDark,
+                                              fontSize: FontSize.s18,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   );
                                   // : OrderWidget(
                                   // listOrder![index], widget.isOrderTrack);
@@ -214,6 +256,4 @@ class _MyWalletViewState extends State<MyWalletView> {
       ),
     );
   }
-
-
 }

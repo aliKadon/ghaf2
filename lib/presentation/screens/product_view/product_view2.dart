@@ -182,7 +182,7 @@ class _ProductView2State extends State<ProductView2> {
                                     children: [
                                       
                                       Text(
-                                        '${((widget.product2.price!-(widget.product2.price! * widget.product2.productDiscount!['discount']! / 100)).toStringAsFixed(1))} AED',
+                                        '${((widget.product2.price!-(widget.product2.price! * widget.product2.productDiscount!['discount']! / 100)).toStringAsFixed(1))} ${AppLocalizations.of(context)!.aed}',
                                         style: getBoldStyle(
                                             color: ColorManager.red,
                                             fontSize: FontSize.s26),

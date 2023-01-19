@@ -197,6 +197,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     //   LatTow: 37.33429383,
     //   LonTow: -122.06600055,
     // );
+
+    print('===================================from init');
+    print(widget.orderId['order']['deliveryPoint']['altitude']);
+    print(widget.orderId['order']['branch']['branchAddress']['altitude']);
     super.initState();
   }
 
@@ -406,6 +410,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       // destLat = 24.242978478140152;
       // destLong = 54.710762053728104;
     }
+
+    print('=================================from getPolyPoints');
+    print(sourcelat);
+    print(destLat);
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         Constants.google_key_map, // Your Google Map Key

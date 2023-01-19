@@ -342,7 +342,7 @@ class _AccountViewState extends State<AccountView> {
                         },
                         child: accountWidget(
                           context,
-                          '${AppLocalizations.of(context)!.star}',
+                          'star',
                           // 'Rate Us',
                           AppLocalizations.of(context)!.rate_us,
                           isVector: true,
