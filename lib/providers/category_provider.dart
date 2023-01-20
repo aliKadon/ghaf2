@@ -63,11 +63,14 @@ class CategoryProvider extends ChangeNotifier with ApiHelper {
         branch: data[i]['branch'],
         canPayLater: data[i]['canPayLater'],
         canPayLaterDays: data[i]['canPayLaterDays'],
-        reviewCount: data[i]['reviewCount']
+        reviewCount: data[i]['reviewCount'],
+        storeReviewCount: data[i]['storeReviewCount'],
       ));
       storeName.add(data[i]['branch']['storeName']);
       storeID.add(data[i]['branch']['storeId']);
     }
+    print('=====================================category');
+    print(data);
     _storeByCategory = list;
     store = storeName.toSet().toList();
     storeId = storeID;
@@ -113,11 +116,14 @@ class CategoryProvider extends ChangeNotifier with ApiHelper {
           branch: data[i]['branch'],
           canPayLater: data[i]['canPayLater'],
           canPayLaterDays: data[i]['canPayLaterDays'],
-          reviewCount: data[i]['reviewCount']
+          reviewCount: data[i]['reviewCount'],
+        storeReviewCount: data[i]['storeReviewCount'],
       ));
       storeName.add(data[i]['branch']['storeName']);
 
     }
+    print('======================================store');
+    print(data);
     _productByStore = list;
     notifyListeners();
 

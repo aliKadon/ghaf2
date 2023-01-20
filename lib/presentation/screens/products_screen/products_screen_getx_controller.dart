@@ -33,14 +33,15 @@ class ProductsScreenGetXController extends GetxController with Helpers {
 
   // get products.
   void getProducts() async {
-    try {
-      products = await _storeApiController.getProducts(
-        cid: categoryId,
-      );
-      isProductsLoading = false;
-    } catch (error) {
-      // error.
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
-    }
+    products = await _storeApiController.getProducts(
+      cid: categoryId,
+    );
+    isProductsLoading = false;
+    // try {
+    //
+    // } catch (error) {
+    //   // error.
+    //   showSnackBar(context, message: error.toString(), error: true);
+    // }
   }
 }

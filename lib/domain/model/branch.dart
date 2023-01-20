@@ -18,7 +18,7 @@ class Branch {
 
   String? id;
   String? branchName;
-  String? branchAddress;
+  Map<String,dynamic>? branchAddress;
   String? telephone;
   String? email;
   String? details;

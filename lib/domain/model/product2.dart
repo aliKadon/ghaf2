@@ -34,6 +34,7 @@ class Product2 {
   bool? isInCart;
   Map<String,dynamic>? category;
   int? storeStars;
+  int? storeReviewCount;
 
   Product2({
     this.id,
@@ -64,6 +65,7 @@ class Product2 {
     this.isFavorite,
     this.isInCart,
     this.category,
-    this.storeStars
+    this.storeStars,
+    this.storeReviewCount,
   });
 }
