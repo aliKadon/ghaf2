@@ -336,9 +336,10 @@ class _HomeViewState extends State<HomeView> {
                                           itemCount:
                                               controller.categories.length,
                                           itemBuilder: (context, index) {
-                                            return CategoryWidget(
+                                            return product.isEmpty ? Container() : CategoryWidget(
                                               category:
                                                   controller.categories[index],
+                                              // product: product[index],
                                             );
                                           },
                                         );
@@ -403,7 +404,10 @@ class _HomeViewState extends State<HomeView> {
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
                                               Routes.products,
-                                              arguments: storeid[index]);
+                                              arguments: {
+                                                'storeId': storeid[index],
+                                                'categoryId': ''
+                                              });
                                         },
                                         child: Container(
                                           width: AppSize.s92,

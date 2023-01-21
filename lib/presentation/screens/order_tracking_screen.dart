@@ -511,7 +511,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: () => Navigator.pushReplacementNamed(context,Routes.OrdersHistoryRoute),
+                              onTap: () => Navigator.pushReplacementNamed(
+                                  context, Routes.OrdersHistoryRoute),
                               child: Image.asset(
                                 IconsAssets.arrow,
                                 height: AppSize.s18,
@@ -624,7 +625,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                         ),
                         Text(
                           Provider.of<ProductProvider>(context, listen: false)
-                                  .duration ??
+                                  .duration.toString() ??
                               AppLocalizations.of(context)!.calculate_time,
                           style: TextStyle(
                               fontSize: 18.0, color: ColorManager.primary),
@@ -1269,7 +1270,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, Routes.rateSeller);
+                            Navigator.pushReplacementNamed(
+                                context, Routes.rateSeller);
                           },
                           child: Container(
                             width: AppSize.s110,
@@ -1293,25 +1295,30 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                           onTap: () {
                             Navigator.pushNamed(context, Routes.rateDelivery);
                           },
-                          // orderById1['deliveryMethod'] ['deliveryMethodId']== 'd124aacf-9498-45b8-bba0-08daf685a244' || orderById1['deliveryMethod'] ['deliveryMethodId']== '4c07cfd7-5ef9-4379-bba1-08daf685a244'
-                          child: orderById1['driverId'] == null
+                          child: orderById1['deliveryMethod']['methodName'] ==
+                                      'Pick up' ||
+                                  orderById1['deliveryMethod']['methodName'] ==
+                                      'Car window'
                               ? Container()
-                              : Container(
-                                  width: AppSize.s110,
-                                  height: AppSize.s38,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: ColorManager.primaryDark,
-                                    borderRadius:
-                                        BorderRadius.circular(AppRadius.r8),
-                                  ),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.with_driver,
-                                    textAlign: TextAlign.center,
-                                    style: getMediumStyle(
-                                        color: ColorManager.white),
-                                  ),
-                                ),
+                              : orderById1['driverId'] == null
+                                  ? Container()
+                                  : Container(
+                                      width: AppSize.s110,
+                                      height: AppSize.s38,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: ColorManager.primaryDark,
+                                        borderRadius:
+                                            BorderRadius.circular(AppRadius.r8),
+                                      ),
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .with_driver,
+                                        textAlign: TextAlign.center,
+                                        style: getMediumStyle(
+                                            color: ColorManager.white),
+                                      ),
+                                    ),
                         ),
                       ],
                     ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/domain/model/category.dart';
+import 'package:ghaf_application/domain/model/product2.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
@@ -13,10 +14,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryWidget extends StatelessWidget {
   final Category category;
+  // final Product2 product;
 
   const CategoryWidget({
     Key? key,
     required this.category,
+    // required this.product,
   }) : super(key: key);
 
   @override
@@ -35,7 +38,9 @@ class CategoryWidget extends StatelessWidget {
             Routes.storeByCategoryScreen,
             arguments: {
               'id' : category.id,
-              'name' : category.name
+              'name' : category.name,
+              // 'lat' : product.branch!['branchAddress']['altitude'],
+              // 'long' : product.branch!['branchAddress']['longitude']
             },
           );
         }
@@ -349,7 +354,9 @@ class CategoryWidget extends StatelessWidget {
                           Routes.storeByCategoryScreen,
                           arguments: {
                             'id' : category.id,
-                            'name' : category.name
+                            'name' : category.name,
+                            // 'lat' : product.branch!['branchAddress']['altitude'],
+                            // 'long' : product.branch!['branchAddress']['longitude']
                           },
                         );
                       },
@@ -448,10 +455,13 @@ class CategoryWidget extends StatelessWidget {
                           Routes.storeByCategoryScreen,
                           arguments: {
                             'id' : category.id,
-                            'name' : category.name
+                            'name' : category.name,
+                            // 'lat' : product.branch!['branchAddress']['altitude'],
+                            // 'long' : product.branch!['branchAddress']['longitude']
                           },
                         );
                       },
+
 
                       child: Container(
                         width: AppSize.s110,

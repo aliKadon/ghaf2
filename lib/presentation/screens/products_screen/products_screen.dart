@@ -13,7 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final String category;
+  final Map<String,dynamic> category;
   // final String categoryName;
 
   const ProductsScreen({
@@ -40,8 +40,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     _productsScreenGetXController.init(
       context: context,
-      categoryId: widget.category,
+      categoryId: widget.category['categoryId'],
+      storeId: widget.category['storeId'],
+
     );
+    print('===========================id');
+    print(widget.category['categoryId']);
+    print(widget.category['storeId']);
 
     super.initState();
   }

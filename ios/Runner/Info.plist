@@ -16,6 +16,10 @@
 	<string>Ghaf</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	    <key>NSLocationAlwaysUsageDescription</key>
+        <string>Needed to access location</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Needed to access location</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
@@ -47,5 +51,6 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
 </dict>
 </plist>

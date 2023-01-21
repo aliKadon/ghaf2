@@ -129,9 +129,13 @@ class _CategoriesViewState extends State<CategoriesView> {
                                                 Navigator.pushNamed(
                                                   context,
                                                   Routes.products,
-                                                  arguments:
-                                                      products1[index].category,
+                                                  arguments: {
+                                                    'storeId': 'null',
+                                                    'categoryId' : category.id,
+                                                  },
                                                 );
+                                                print('===========================my category');
+                                                print(category.name);
                                               },
                                               child: Text(
                                                 // 'More',

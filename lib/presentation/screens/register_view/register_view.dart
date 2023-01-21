@@ -7,6 +7,9 @@ import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -26,6 +29,9 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
   late final RegisterViewGetXController _registerViewGetXController =
       Get.find<RegisterViewGetXController>();
 
+  late TextEditingController _nameTextController;
+  late TextEditingController _emailTextController;
+
   var userName = '';
 
   // late SharedPreferences _sharedPreferences;
@@ -34,6 +40,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
   @override
   void initState() {
     // SharedPrefController._internal();
+    _nameTextController = TextEditingController();
+    _emailTextController = TextEditingController();
 
     super.initState();
   }
@@ -46,11 +54,18 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
   @override
   void dispose() {
     Get.delete<RegisterViewGetXController>();
+    _nameTextController.dispose();
+    _emailTextController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (SharedPrefController().emailGoogle.isNotEmpty && SharedPrefController().userNameGoogle.isNotEmpty) {
+      _nameTextController.text = SharedPrefController().userNameGoogle;
+      _emailTextController.text = SharedPrefController().emailGoogle;
+    }
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -110,14 +125,17 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   ],
                 ),
                  AppTextField(
-                        // hint: AppLocalizations.of(context)!.user_name,
-                        hint: SharedPrefController().userNameGoogle,
+                   textController: _nameTextController,
+                        hint: AppLocalizations.of(context)!.user_name,
+                        // hint: SharedPrefController().userNameGoogle,
                         validator: (value) {
                           if (value == null || value.isEmpty)
                             return AppLocalizations.of(context)!.userName_or_Email_is_required;
                           return null;
                         },
                         onSaved: (value) {
+                          print('=========================my value');
+                          print(value);
                           if( value == null) {
                             _registerViewGetXController.userName = SharedPrefController().emailGoogle;
                           }else {
@@ -141,7 +159,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     //     },
                     //   ),
                 AppTextField(
-                  hint: SharedPrefController().emailGoogle,
+                  textController: _emailTextController,
+                  hint: AppLocalizations.of(context)!.email_address,
                   textInputType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty)

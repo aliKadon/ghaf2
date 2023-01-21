@@ -383,7 +383,7 @@ class RouteGenerator {
         builder: (_) => ProductsScreen(
           // categoryId: settings.arguments as String,
           // categoryName: settings.arguments as String,
-          category: settings.arguments as String,
+          category: settings.arguments as Map<String,dynamic>,
         ),
       );
       case Routes.myFavorite:

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:geocoding/geocoding.dart';
+// import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
@@ -79,6 +82,8 @@ class LoginViewGetXController extends GetxController with Helpers {
     print('===========================location');
     print(locationData!.latitude);
   }
+
+
 
   // fields.
   String? userName;

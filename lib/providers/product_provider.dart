@@ -7,6 +7,7 @@ import 'package:ghaf_application/domain/model/plan_seller_individual.dart';
 import 'package:ghaf_application/domain/model/redeem_points.dart';
 import 'package:ghaf_application/domain/model/unpaid_order.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../app/constants.dart';
@@ -907,8 +908,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     }
   }
 
-  var distance;
-  var duration;
+  var distance = '0';
+  var duration = '0';
 
   Future<void> getDurationGoogleMap({
     required double LatOne,
@@ -923,9 +924,19 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
       final data = json.decode(response.body);
       distance = data["routes"][0]["legs"][0]["distance"]["text"];
       duration = data["routes"][0]["legs"][0]["duration"]["text"];
+
+      print('===========================================provider duration');
+      // DateFormat format = DateFormat('dd-MM-yyyy HH:mm');
+      // var s = format.parse(duration);
+      print(duration);
+      print(distance);
       notifyListeners();
+
+
+
     } catch (e) {
-      print(e);
+       print(e);
+
     }
   }
 
