@@ -98,10 +98,10 @@ class SharedPrefController {
       _sharedPreferences.getBool(PrefKeys.loggedIn.name) ?? false;
 
   String get userNameGoogle =>
-      _sharedPreferences.getString(PrefKeys.googleUserName.toString()) ?? 'user Name';
+      _sharedPreferences.getString(PrefKeys.googleUserName.toString()) ?? '';
 
   String get emailGoogle =>
-      _sharedPreferences.getString(PrefKeys.googleEmail.toString()) ?? 'Email';
+      _sharedPreferences.getString(PrefKeys.googleEmail.toString()) ?? '';
 
   String get lang1 {
     return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'en';

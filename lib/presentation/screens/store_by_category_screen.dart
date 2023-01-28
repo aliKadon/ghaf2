@@ -75,6 +75,7 @@ class _StoreByCategryScreenState extends State<StoreByCategryScreen> {
   Future<void> getNearestDurations(List<Product2> product2) async{
     List<dynamic> list = [];
     for (int i = 0; i < product2.length; i++) {
+      // notes : Replace the latOne and longOne with current Location
       await Provider.of<ProductProvider>(context,listen: false).getDurationGoogleMap(
           LatOne: 24.600661,
           LonOne: 54.935448,
