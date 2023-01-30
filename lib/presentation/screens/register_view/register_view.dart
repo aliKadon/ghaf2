@@ -34,22 +34,13 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
 
   var userName = '';
 
-  // late SharedPreferences _sharedPreferences;
-  // static SharedPrefController? _instance;
-
   @override
   void initState() {
-    // SharedPrefController._internal();
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
 
     super.initState();
   }
-
-  // Future<void> initPref() async {
-  //   _sharedPreferences = await SharedPreferences.getInstance();
-  // }
-
   // dispose.
   @override
   void dispose() {
@@ -146,18 +137,6 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
 
                         },
                       ),
-                    // : AppTextField(
-                    //     hint: AppLocalizations.of(context)!.user_name,
-                    //     // hint: userName,
-                    //     validator: (value) {
-                    //       if (value == null || value.isEmpty)
-                    //         return 'Username is required';
-                    //       return null;
-                    //     },
-                    //     onSaved: (value) {
-                    //       _registerViewGetXController.userName = value;
-                    //     },
-                    //   ),
                 AppTextField(
                   textController: _emailTextController,
                   hint: AppLocalizations.of(context)!.email_address,

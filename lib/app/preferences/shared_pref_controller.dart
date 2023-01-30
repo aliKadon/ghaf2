@@ -25,6 +25,7 @@ enum PrefKeys {
   locationLong,
   googleUserName,
   googleEmail,
+  enableNotification,
 }
 
 class SharedPrefController {
@@ -116,6 +117,9 @@ class SharedPrefController {
     return _sharedPreferences.getDouble(PrefKeys.locationLong.toString()) ?? 54.635448;
   }
 
+  bool get enableNotifications =>
+      _sharedPreferences.getBool(PrefKeys.enableNotification.toString()) ?? true;
+
 
 
   Future<void> setUserName(String userName) async {
@@ -134,6 +138,11 @@ class SharedPrefController {
 
   Future<void> setEmail(String email) async {
     await _sharedPreferences.setString(PrefKeys.userName.name, '${email}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
+  Future<void> setEnableNotification(bool enable) async {
+      await _sharedPreferences.setBool(PrefKeys.enableNotification.toString(), enable);
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 

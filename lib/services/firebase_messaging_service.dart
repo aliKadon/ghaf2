@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 
 import 'local_notifications_service.dart';
 
@@ -46,13 +47,18 @@ class FirebaseMessagingService {
       print(message.notification?.body);
       RemoteNotification? notification = message.notification;
       if (notification != null) {
-        _localNotificationsService?.showNotification(
-          notification.title,
-          notification.body,
-          payload: jsonEncode(
-            message.toMap(),
-          ),
-        );
+        print('=====================================enableNotifications');
+        print(SharedPrefController().enableNotifications);
+        if (SharedPrefController().enableNotifications) {
+          _localNotificationsService?.showNotification(
+            notification.title,
+            notification.body,
+            payload: jsonEncode(
+              message.toMap(),
+            ),
+          );
+        }
+
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
