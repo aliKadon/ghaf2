@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
+import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class FilterSheetWidget extends StatefulWidget {
   const FilterSheetWidget({Key? key}) : super(key: key);
@@ -32,6 +33,19 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
     Get.delete<FilterSheetWidgetGetXController>();
     super.dispose();
   }
+
+  List<String> flitterType = [
+    'Price',
+    'New arrival',
+    'Free delivery',
+    'Pick up order',
+    'Deliver to car window',
+    'Fast Delivery',
+    'recommended'
+  ];
+
+  var isSelected = false;
+  var selected = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -82,106 +96,126 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             SizedBox(
               height: 5.h,
             ),
-             Row(
-               children: [
-                 Spacer(),
-                 GetBuilder<FilterSheetWidgetGetXController>(
-                   id: 'filterBYDiscount',
-                   builder:(controller) => GestureDetector(
-                     onTap: () {
-                       onPressDiscount = 'productDiscount.discount';
-                       controller.filterBy1 = onPressDiscount;
-                       setState(() {
-                         if (color1 == Color(0xff125051)) {
-                           color1 = Colors.white;
-                           color2 = Color(0xff125051);
-                           colorText2 = Colors.white;
-                           colorText1 = Color(0xff125051);
-                           onPressDiscount = '';
-                         }else if (color1 == Colors.white) {
-                           color1 = Color(0xff125051);
-                           colorText1 = Colors.white;
-                           color2 = Colors.white;
-                           colorText2 = Color(0xff125051);
-                           onPressDiscount = 'productDiscount.discount';
-                         }
-                       });
-
-                     },
-                     child: Container(
-                       padding: EdgeInsets.symmetric(
-                           vertical: 16.h, horizontal: 16.w),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(12.r),
-                         color: color1,
-                         border: Border.all(
-                           color: Color(0xff125051),
-                         ),
-                       ),
-                       child: Center(
-                         child: Text(
-                           AppLocalizations.of(context)!.discount,
-                           style: TextStyle(
-                             color: colorText1,
-                             fontSize: 16.sp,
-                           ),
-                         ),
-                       ),
-                     ),
-                   ),
-                 ),
-
-                 Spacer(),
-
-                 GetBuilder<FilterSheetWidgetGetXController>(
-                   id: 'filterBYPrice',
-                   builder:(controller) => GestureDetector(
-                     onTap: () {
-                       onPressDiscount = 'price';
-                       controller.filterBy1 = onPressDiscount;
-                       setState(() {
-                         if (color2 == Color(0xff125051)) {
-                           color2 = Colors.white;
-                           colorText2 = Color(0xff125051);
-                           color1 = Color(0xff125051);
-                           colorText1 = Colors.white;
-                           onPressDiscount = '';
-                         }else if (color2 == Colors.white) {
-                           color2 = Color(0xff125051);
-                           colorText2 = Colors.white;
-                           onPressDiscount = 'price';
-                           color1 = Colors.white;
-                           colorText1 = Color(0xff125051);
-                         }
-                       });
-
-                     },
-                     child: Container(
-                       padding: EdgeInsets.symmetric(
-                           vertical: 16.h, horizontal: 16.w),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(12.r),
-                         color: color2,
-                         border: Border.all(
-                           color: Color(0xff125051),
-                         ),
-                       ),
-                       child: Center(
-                         child: Text(
-                           AppLocalizations.of(context)!.price,
-                           style: TextStyle(
-                             color: colorText2,
-                             fontSize: 16.sp,
-                           ),
-                         ),
-                       ),
-                     ),
-                   ),
-                 ),
-                 Spacer(),
-               ],
-             ),
-
+            Container(
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisExtent: 50,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  shrinkWrap: true,
+                  itemCount: flitterType.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selected = index;
+                            print(selected);
+                          });
+                        },
+                        child: selected == index ? containerFilterSelected(flitterType[index]) : containerFilter(flitterType[index]));
+                  },
+                )),
+            // Row(
+            //   children: [
+            //     Spacer(),
+            //     GetBuilder<FilterSheetWidgetGetXController>(
+            //       id: 'filterBYDiscount',
+            //       builder:(controller) => GestureDetector(
+            //         onTap: () {
+            //           onPressDiscount = 'productDiscount.discount';
+            //           controller.filterBy1 = onPressDiscount;
+            //           setState(() {
+            //             if (color1 == Color(0xff125051)) {
+            //               color1 = Colors.white;
+            //               color2 = Color(0xff125051);
+            //               colorText2 = Colors.white;
+            //               colorText1 = Color(0xff125051);
+            //               onPressDiscount = '';
+            //             }else if (color1 == Colors.white) {
+            //               color1 = Color(0xff125051);
+            //               colorText1 = Colors.white;
+            //               color2 = Colors.white;
+            //               colorText2 = Color(0xff125051);
+            //               onPressDiscount = 'productDiscount.discount';
+            //             }
+            //           });
+            //
+            //         },
+            //         child: Container(
+            //           padding: EdgeInsets.symmetric(
+            //               vertical: 16.h, horizontal: 16.w),
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(12.r),
+            //             color: color1,
+            //             border: Border.all(
+            //               color: Color(0xff125051),
+            //             ),
+            //           ),
+            //           child: Center(
+            //             child: Text(
+            //               AppLocalizations.of(context)!.discount,
+            //               style: TextStyle(
+            //                 color: colorText1,
+            //                 fontSize: 16.sp,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //
+            //     Spacer(),
+            //
+            //     GetBuilder<FilterSheetWidgetGetXController>(
+            //       id: 'filterBYPrice',
+            //       builder:(controller) => GestureDetector(
+            //         onTap: () {
+            //           onPressDiscount = 'price';
+            //           controller.filterBy1 = onPressDiscount;
+            //           setState(() {
+            //             if (color2 == Color(0xff125051)) {
+            //               color2 = Colors.white;
+            //               colorText2 = Color(0xff125051);
+            //               color1 = Color(0xff125051);
+            //               colorText1 = Colors.white;
+            //               onPressDiscount = '';
+            //             }else if (color2 == Colors.white) {
+            //               color2 = Color(0xff125051);
+            //               colorText2 = Colors.white;
+            //               onPressDiscount = 'price';
+            //               color1 = Colors.white;
+            //               colorText1 = Color(0xff125051);
+            //             }
+            //           });
+            //
+            //         },
+            //         child: Container(
+            //           padding: EdgeInsets.symmetric(
+            //               vertical: 16.h, horizontal: 16.w),
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(12.r),
+            //             color: color2,
+            //             border: Border.all(
+            //               color: Color(0xff125051),
+            //             ),
+            //           ),
+            //           child: Center(
+            //             child: Text(
+            //               AppLocalizations.of(context)!.price,
+            //               style: TextStyle(
+            //                 color: colorText2,
+            //                 fontSize: 16.sp,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Spacer(),
+            //   ],
+            // ),
 
             Row(
               children: [
@@ -197,21 +231,29 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             SizedBox(
               height: 5.h,
             ),
-            GetBuilder<FilterSheetWidgetGetXController>(
-              id: 'price',
-              builder: (controller) => RangeSlider(
-                min: 0,
-                max: 500,
-                activeColor: Color(0xff125051),
-                values: controller.rangeValues,
-                onChanged: _filterSheetWidgetGetXController.onSliderChanged,
-                labels: RangeLabels(
-                  controller.rangeValues.start.toInt().toString(),
-                  controller.rangeValues.end.toInt().toString(),
-                ),
-                divisions: 100,
+            Container(
+              child: Row(
+                children: [
+                  Expanded(child: AppTextField(hint: AppLocalizations.of(context)!.min_price)),
+                  Expanded(child: AppTextField(hint: AppLocalizations.of(context)!.max_price))
+                ],
               ),
             ),
+            // GetBuilder<FilterSheetWidgetGetXController>(
+            //   id: 'price',
+            //   builder: (controller) => RangeSlider(
+            //     min: 0,
+            //     max: 500,
+            //     activeColor: Color(0xff125051),
+            //     values: controller.rangeValues,
+            //     onChanged: _filterSheetWidgetGetXController.onSliderChanged,
+            //     labels: RangeLabels(
+            //       controller.rangeValues.start.toInt().toString(),
+            //       controller.rangeValues.end.toInt().toString(),
+            //     ),
+            //     divisions: 100,
+            //   ),
+            // ),
             SizedBox(
               height: 15.h,
             ),
@@ -275,6 +317,37 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget containerFilter(String filterType) {
+    return
+       Container(
+            decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: ColorManager.primaryDark)),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(filterType,
+                  style: TextStyle(
+                      color: ColorManager.primaryDark, fontWeight: FontWeight.bold)),
+            ),
+          );
+  }
+
+  Widget containerFilterSelected(String filterType) {
+    return Container(
+      decoration: BoxDecoration(
+          color: ColorManager.primaryDark,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: ColorManager.primaryDark)),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Text(filterType,
+            style: TextStyle(
+                color: ColorManager.white, fontWeight: FontWeight.bold)),
       ),
     );
   }

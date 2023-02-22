@@ -66,7 +66,7 @@ import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view
 import 'package:ghaf_application/presentation/screens/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
 import 'package:ghaf_application/presentation/screens/snapsheet_screen.dart';
-import 'package:ghaf_application/presentation/screens/store_by_category_screen.dart';
+import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category_screen.dart';
 import 'package:ghaf_application/presentation/screens/sub_categories_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view.dart';

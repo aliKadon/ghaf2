@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/presentation/resources/assets_manager.dart';
+import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyFavoriteScreen extends StatefulWidget {
   const MyFavoriteScreen({Key? key}) : super(key: key);
@@ -40,7 +42,8 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppLocalizations.of(context)!.my_favorite}'),
+        title: Text('${AppLocalizations.of(context)!.my_favorite}',
+            style: TextStyle(color: ColorManager.primaryDark)),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
@@ -55,10 +58,59 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                   ),
                 )
               : _myFavoriteScreenGetXController.products.isEmpty
-                  ? Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.no_product_found,
-                      ),
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          height: AppSize.s110,
+                        ),
+                        Center(
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                ImageAssets.tt,
+                                height: AppSize.s192,
+                                width: AppSize.s192,
+                              ),
+                              Image.asset(
+                                ImageAssets.heartFavorite,
+                                height: AppSize.s192,
+                                width: AppSize.s192,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.add_to_your_favorite,
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25),
+                        ),
+                        SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        Text(AppLocalizations.of(context)!.save_the_restaurant,
+                            style: TextStyle(
+                                color: ColorManager.greyLight, fontSize: 12)),
+                        SizedBox(
+                          height: AppSize.s110,
+                        ),
+                        Container(
+                          height: AppSize.s50,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  side:  BorderSide(color: ColorManager.primary),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),backgroundColor: MaterialStatePropertyAll(Colors.white)),
+                              onPressed: () {},
+                              child: Text(
+                                  AppLocalizations.of(context)!.find_restaurant,style: TextStyle(color: ColorManager.primary),)),
+                        )
+                      ],
                     )
                   : GridView.builder(
                       padding: EdgeInsets.symmetric(

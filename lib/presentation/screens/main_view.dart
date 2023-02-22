@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view.dart';
+import 'package:ghaf_application/presentation/screens/cart_view/cart_screen.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class _MainViewState extends State<MainView> {
       BnScreen(
           widget: CategoriesView(),
           title: AppLocalizations.of(context)!.categories),
-      BnScreen(widget: CartView(), title: AppLocalizations.of(context)!.cart),
+      BnScreen(widget: CartScreen(), title: AppLocalizations.of(context)!.cart),
       BnScreen(
           widget: AccountView(), title: AppLocalizations.of(context)!.account),
     ];

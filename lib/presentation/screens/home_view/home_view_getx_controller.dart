@@ -138,6 +138,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     }
   }
 
+
   // on filter button tapped.
   void onFilterButtonTapped() {
     showModalBottomSheet(

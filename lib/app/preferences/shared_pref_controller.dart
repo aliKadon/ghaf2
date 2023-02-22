@@ -186,9 +186,7 @@ class SharedPrefController {
   Future<bool> changeLanguage({required String language}) async {
     return  _sharedPreferences.setString(PrefKeys.language.toString(), language);
   }
-  Future<bool> changeLanguage1({required bool language}) async {
-    return  _sharedPreferences.setBool(key, language);
-  }
+
 
   Future<bool> removeValue({required String key}) async {
     if (_sharedPreferences.containsKey(key)) {

@@ -1,25 +1,24 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:ghaf_application/app/constants.dart';
-import 'package:ghaf_application/app/utils/app_shared_data.dart';
-import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/home_view/widgets/category_widget.dart';
-import 'package:ghaf_application/presentation/widgets/product_widget.dart';
+import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
+import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category.dart';
+import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
+import 'home_view_getx_controller.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -37,7 +36,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     _homeViewGetXController.init(context: context);
-
 
     // localLanguage();
     super.initState();
@@ -97,23 +95,23 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        IconsAssets.location,
-                        height: AppSize.s20,
-                        width: AppSize.s14,
-                      ),
-                      SizedBox(
-                        width: AppSize.s17,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.shipping,
-                        style: getRegularStyle(color: ColorManager.primaryDark),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Image.asset(
+                  //       IconsAssets.location,
+                  //       height: AppSize.s20,
+                  //       width: AppSize.s14,
+                  //     ),
+                  //     SizedBox(
+                  //       width: AppSize.s17,
+                  //     ),
+                  //     Text(
+                  //       AppLocalizations.of(context)!.shipping,
+                  //       style: getRegularStyle(color: ColorManager.primaryDark),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: AppSize.s5,
                   ),
@@ -121,17 +119,17 @@ class _HomeViewState extends State<HomeView> {
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
                     child: Row(
                       children: [
-                        InkWell(
-                          onTap: _homeViewGetXController.onGhafIconTapped,
-                          child: SvgPicture.asset(
-                            '${Constants.vectorsPath}ghaf.svg',
-                            width: 40.h,
-                            height: 40.h,
-                            color: AppSharedData.currentUser!.ghafGold ?? false
-                                ? Theme.of(context).primaryColor
-                                : null,
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: _homeViewGetXController.onGhafIconTapped,
+                        //   child: SvgPicture.asset(
+                        //     '${Constants.vectorsPath}ghaf.svg',
+                        //     width: 40.h,
+                        //     height: 40.h,
+                        //     color: AppSharedData.currentUser!.ghafGold ?? false
+                        //         ? Theme.of(context).primaryColor
+                        //         : null,
+                        //   ),
+                        // ),
                         SizedBox(
                           width: 5.w,
                         ),
@@ -143,26 +141,62 @@ class _HomeViewState extends State<HomeView> {
                               style: getRegularStyle(
                                   color: ColorManager.blackLight),
                             ),
-                            Text(
-                              '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
-                              style: getBoldStyle(
-                                color: ColorManager.blackLight,
-                                fontSize: FontSize.s12,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Image.asset(
+                                //   IconsAssets.location,
+                                //   height: AppSize.s20,
+                                //   width: AppSize.s14,
+                                // ),
+                                // SizedBox(
+                                //   width: AppSize.s17,
+                                // ),
+                                Text(
+                                  AppLocalizations.of(context)!.shipping,
+                                  style: getRegularStyle(
+                                      color: ColorManager.primaryDark),
+                                ),
+                              ],
                             ),
+                            // Text(
+                            //   '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
+                            //   style: getBoldStyle(
+                            //     color: ColorManager.blackLight,
+                            //     fontSize: FontSize.s12,
+                            //   ),
+                            // ),
                           ],
                         ),
                         Spacer(),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, Routes.myFavorite);
-                          },
-                          child: Image.asset(
-                            IconsAssets.heart,
-                            height: AppSize.s20,
-                            width: AppSize.s20,
-                            color: Theme.of(context).primaryColor,
-                          ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              ImageAssets.homePoints,
+                              height: 20,
+                              width: 20,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.03,
+                            ),
+                            Text('21 points',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15)),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.03,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routes.myFavorite);
+                              },
+                              child: Image.asset(
+                                IconsAssets.heart,
+                                height: AppSize.s20,
+                                width: AppSize.s20,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           width: 15.w,
@@ -184,46 +218,75 @@ class _HomeViewState extends State<HomeView> {
                       // SizedBox(width: AppPadding.p12,),
                       Expanded(
                         child: Container(
-                          width: AppSize.s280,
-                          margin: EdgeInsets.only(
-                              bottom: AppMargin.m16,
-                              right: AppMargin.m16,
-                              left: AppMargin.m16),
-                          child: TextField(
-                            textInputAction: TextInputAction.search,
-                            textAlign: TextAlign.start,
-                            style: getMediumStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s14,
+                            width: AppSize.s280,
+                            margin: EdgeInsets.only(
+                                bottom: AppMargin.m16,
+                                right: AppMargin.m16,
+                                left: AppMargin.m16),
+                            child: Container(
+                                padding: EdgeInsets.all(13),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: ColorManager.primaryDark)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => SearchScreen(),
+                                    ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.search),
+                                      SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.03),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .search_flower,
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                            // TextField(
+                            //   textInputAction: TextInputAction.search,
+                            //   textAlign: TextAlign.start,
+                            //   style: getMediumStyle(
+                            //     color: ColorManager.black,
+                            //     fontSize: FontSize.s14,
+                            //   ),
+                            //   onChanged: _homeViewGetXController.onSearch,
+                            //   decoration: InputDecoration(
+                            //     prefixIcon: Padding(
+                            //       padding: EdgeInsets.symmetric(
+                            //           horizontal: AppPadding.p12),
+                            //       child: Image.asset(
+                            //         IconsAssets.search,
+                            //         width: AppSize.s16,
+                            //         height: AppSize.s16,
+                            //       ),
+                            //     ),
+                            //     contentPadding: EdgeInsets.symmetric(
+                            //         horizontal: AppPadding.p16,
+                            //         vertical: AppPadding.p16),
+                            //     hintText:
+                            //         AppLocalizations.of(context)!.search_flower,
+                            //     hintStyle: getMediumStyle(
+                            //       color: ColorManager.hintTextFiled,
+                            //     ),
+                            //     enabledBorder: buildOutlineInputBorder(
+                            //       color: ColorManager.grey,
+                            //     ),
+                            //     focusedBorder: buildOutlineInputBorder(
+                            //       color: ColorManager.grey,
+                            //     ),
+                            //   ),
+                            // ),
+
                             ),
-                            onChanged: _homeViewGetXController.onSearch,
-                            decoration: InputDecoration(
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: AppPadding.p12),
-                                child: Image.asset(
-                                  IconsAssets.search,
-                                  width: AppSize.s16,
-                                  height: AppSize.s16,
-                                ),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: AppPadding.p16,
-                                  vertical: AppPadding.p16),
-                              hintText:
-                                  AppLocalizations.of(context)!.search_flower,
-                              hintStyle: getMediumStyle(
-                                color: ColorManager.hintTextFiled,
-                              ),
-                              enabledBorder: buildOutlineInputBorder(
-                                color: ColorManager.grey,
-                              ),
-                              focusedBorder: buildOutlineInputBorder(
-                                color: ColorManager.grey,
-                              ),
-                            ),
-                          ),
-                        ),
                       ),
                       InkWell(
                         onTap: _homeViewGetXController.onFilterButtonTapped,
@@ -259,23 +322,46 @@ class _HomeViewState extends State<HomeView> {
                                 alignment: Alignment.center,
                                 child: Stack(
                                   children: [
-                                    //image main
+                                    Image.asset(
+                                      ImageAssets.main4,
+                                      height: AppSize.s148,
+                                      width: AppSize.s360,
+                                      fit: BoxFit.fill,
+                                    ),
                                     isArabic == 'en'
-                                        ? Image.asset(
-                                            ImageAssets.main,
-                                            height: AppSize.s148,
-                                            width: AppSize.s360,
-                                            fit: BoxFit.fill,
-                                          )
-                                        : Image.asset(
-                                            ImageAssets.main2,
-                                            height: AppSize.s148,
-                                            width: AppSize.s360,
-                                            fit: BoxFit.fill,
-                                          ),
+                                        ? Positioned(
+                                            left: 220,
+                                            top: 37,
+                                            child: Image.asset(
+                                              ImageAssets.imageInMain4,
+                                              height: 120,
+                                              width: 120,
+                                            ))
+                                        : Positioned(
+                                            right: 220,
+                                            top: 37,
+                                            child: Image.asset(
+                                              ImageAssets.imageInMain4,
+                                              height: 120,
+                                              width: 120,
+                                            )),
+                                    //image main
+                                    // isArabic == 'en'
+                                    //     ? Image.asset(
+                                    //         ImageAssets.main4,
+                                    //         height: AppSize.s148,
+                                    //         width: AppSize.s360,
+                                    //         fit: BoxFit.fill,
+                                    //       )
+                                    //     : Image.asset(
+                                    //         ImageAssets.main4,
+                                    //         height: AppSize.s148,
+                                    //         width: AppSize.s360,
+                                    //         fit: BoxFit.fill,
+                                    //       ),
                                     PositionedDirectional(
-                                      top: AppSize.s30,
-                                      start: AppSize.s30,
+                                      top: AppSize.s24,
+                                      start: 10,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -283,23 +369,46 @@ class _HomeViewState extends State<HomeView> {
                                           // Text for image up
                                           Text(
                                             AppLocalizations.of(context)!
-                                                .stay_home_we_deliver,
+                                                .upgrade_your_shopping_experience,
                                             style: TextStyle(
                                                 height: 1,
-                                                fontSize: FontSize.s30,
+                                                fontSize: FontSize.s20,
                                                 fontFamily:
                                                     FontConstants.fontFamily,
-                                                color: ColorManager.white,
+                                                color: ColorManager.primaryDark,
                                                 fontWeight:
                                                     FontWeightManager.medium),
                                           ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.01),
                                           Text(
                                             AppLocalizations.of(context)!
-                                                .any_where_any_time,
+                                                .easy_and_comfortable,
                                             style: getMediumStyle(
-                                                color: ColorManager.white,
-                                                fontSize: FontSize.s12),
+                                                color: ColorManager.primaryDark,
+                                                fontSize: FontSize.s16),
                                           ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.02),
+                                          ElevatedButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStatePropertyAll(
+                                                          ColorManager
+                                                              .primaryDark)),
+                                              onPressed: _homeViewGetXController
+                                                  .onGhafIconTapped,
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .subscribe_to_ghaf_gold,
+                                                style: TextStyle(fontSize: 15),
+                                              ))
                                         ],
                                       ),
                                     ),
@@ -310,7 +419,7 @@ class _HomeViewState extends State<HomeView> {
                                 height: AppSize.s24,
                               ),
                               Container(
-                                height: AppSize.s85,
+                                height: AppSize.s210,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: AppPadding.p16),
@@ -318,39 +427,48 @@ class _HomeViewState extends State<HomeView> {
                                     id: 'categories',
                                     builder:
                                         (HomeViewGetXController controller) {
-                                      if (controller.isCategoryLoading) {
-                                        return Center(
-                                          child: Container(
-                                            width: 20.h,
-                                            height: 20.h,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 1,
+                                      return GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 3,
+                                                childAspectRatio: 0.4,
+                                                crossAxisSpacing: 20,
+                                                mainAxisExtent: 130),
+                                        physics: BouncingScrollPhysics(),
+                                        itemCount: 4,
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (context) =>
+                                                    StoreByCategory(),
+                                              ));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Image.asset(
+                                                        ImageAssets.grocery,
+                                                        fit: BoxFit.scaleDown),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Groceries',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13),
+                                                )
+                                              ],
                                             ),
-                                          ),
-                                        );
-                                      } else if (controller
-                                          .categories.isNotEmpty) {
-                                        return ListView.builder(
-                                          physics: BouncingScrollPhysics(),
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount:
-                                              controller.categories.length,
-                                          itemBuilder: (context, index) {
-                                            return product.isEmpty ? Container() : CategoryWidget(
-                                              category:
-                                                  controller.categories[index],
-                                              // product: product[index],
-                                            );
-                                          },
-                                        );
-                                      } else {
-                                        return Center(
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .no_categories_found,
-                                          ),
-                                        );
-                                      }
+                                          );
+                                        },
+                                      );
                                     },
                                   ),
                                 ),
@@ -364,8 +482,7 @@ class _HomeViewState extends State<HomeView> {
                                     width: AppSize.s24,
                                   ),
                                   Text(
-                                    AppLocalizations.of(context)!
-                                        .stores,
+                                    AppLocalizations.of(context)!.shortcut,
                                     style: getMediumStyle(
                                       color: ColorManager.primaryDark,
                                       fontSize: FontSize.s18,
@@ -378,36 +495,24 @@ class _HomeViewState extends State<HomeView> {
                                 height: AppSize.s24,
                               ),
                               Container(
-                                height: AppSize.s85,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.13,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: AppPadding.p16),
-                                  child: storeName.isEmpty ? Center(
-                                    child: Container(
-                                      width: 20.h,
-                                      height: 20.h,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 1,
-                                      ),
-                                    ),
-                                  ) : ListView.builder(
+                                  child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
-                                    itemCount: storeName.length,
+                                    itemCount: 2,
                                     itemBuilder: (context, index) {
-                                      return storeName.length == 0 ? Center(
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .no_stores_found,
-                                        ),
-                                      ): GestureDetector(
+                                      return GestureDetector(
                                         onTap: () {
-                                          Navigator.of(context).pushNamed(
-                                              Routes.products,
-                                              arguments: {
-                                                'storeId': storeid[index],
-                                                'categoryId': ''
-                                              });
+                                          // Navigator.of(context).pushNamed(
+                                          //     Routes.products,
+                                          //     arguments: {
+                                          //       'storeId': storeid[index],
+                                          //       'categoryId': ''
+                                          //     });
                                         },
                                         child: Container(
                                           width: AppSize.s92,
@@ -422,8 +527,11 @@ class _HomeViewState extends State<HomeView> {
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  height: AppSize.s60,
-                                                  width: AppSize.s60,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.12,
+                                                  width: AppSize.s92,
                                                   padding: EdgeInsets.all(
                                                       AppPadding.p12),
                                                   decoration: BoxDecoration(
@@ -447,12 +555,32 @@ class _HomeViewState extends State<HomeView> {
                                                         BorderRadius.circular(
                                                             AppRadius.r4),
                                                   ),
-                                                  child: Image.asset(
-                                                    // base64Decode(category.categoryImage ?? ''),
-                                                    'assets/images/logo1.png',
-                                                    width: AppSize.s60,
-                                                    height: AppSize.s60,
-                                                    fit: BoxFit.fill,
+                                                  child: Column(
+                                                    children: [
+                                                      Image.asset(
+                                                        // base64Decode(category.categoryImage ?? ''),
+                                                        ImageAssets.trending,
+                                                        width: AppSize.s30,
+                                                        height: AppSize.s40,
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                      SizedBox(
+                                                        height: AppSize.s12,
+                                                      ),
+                                                      Flexible(
+                                                        child: Text(
+                                                          'Trending',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: getMediumStyle(
+                                                            color: ColorManager
+                                                                .primaryDark,
+                                                            fontSize:
+                                                                FontSize.s12,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
 
                                                   // Image.asset(
@@ -460,21 +588,6 @@ class _HomeViewState extends State<HomeView> {
                                                   //   height: AppSize.s36,
                                                   //   width: AppSize.s36,
                                                   // ),
-                                                ),
-                                                SizedBox(
-                                                  height: AppSize.s6,
-                                                ),
-                                                Flexible(
-                                                  child: Text(
-                                                    storeName[index] ?? '',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: getMediumStyle(
-                                                      color:
-                                                          ColorManager.primary,
-                                                      fontSize: FontSize.s12,
-                                                    ),
-                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -520,56 +633,362 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                   ),
-                  GetBuilder<HomeViewGetXController>(
-                    id: 'products',
-                    builder: (controller) => controller.isProductsLoading
-                        ? Center(
-                            child: Container(
-                              width: 20.h,
-                              height: 20.h,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1,
-                              ),
-                            ),
-                          )
-                        : _homeViewGetXController.products.isEmpty
-                            ? Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .no_product_found,
-                                ),
-                              )
-                            : GridView.builder(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: AppPadding.p8,
-                                    vertical: AppPadding.p4),
-                                shrinkWrap: true,
-                                itemCount:
-                                    _homeViewGetXController.products.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: Constants.crossAxisCount,
-                                  mainAxisExtent: Constants.mainAxisExtent,
-                                  mainAxisSpacing: Constants.mainAxisSpacing,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return Builder(
-                                    builder: (context) {
-                                      Get.put<Product>(
-                                        _homeViewGetXController.products[index],
-                                        tag:
-                                            '${_homeViewGetXController.products[index].id}home',
-                                      );
-                                      return ProductWidget(
-                                        tag:
-                                            '${_homeViewGetXController.products[index].id}home',
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: GetBuilder<HomeViewGetXController>(
+                      id: 'products',
+                      builder: (controller) => ListView.builder(
+                        padding: EdgeInsets.all(8),
+
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 2,
+                        physics: const BouncingScrollPhysics(),
+                        // gridDelegate:
+                        //     SliverGridDelegateWithFixedCrossAxisCount(
+                        //   crossAxisCount: Constants.crossAxisCount,
+                        //   mainAxisExtent: Constants.mainAxisExtent,
+                        //   mainAxisSpacing: Constants.mainAxisSpacing,
+                        // ),
+                        itemBuilder: (context, index) {
+                          return Builder(
+                            builder: (context) {
+                              // Get.put<Product>(
+                              //   _homeViewGetXController.products[index],
+                              //   tag:
+                              //       '${_homeViewGetXController.products[index].id}home',
+                              // );
+                              return MostPopularProductWidget();
+                            },
+                          );
+                        },
+                      ),
+                    ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                    child: Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.previous_order,
+                          style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s18,
+                          ),
+                        ),
+                        Spacer(),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.allProductScreen);
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.more,
+                            style: getMediumStyle(
+                              color: ColorManager.greyLight,
+                              fontSize: FontSize.s16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(8),
+
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      physics: const BouncingScrollPhysics(),
+                      // gridDelegate:
+                      //     SliverGridDelegateWithFixedCrossAxisCount(
+                      //   crossAxisCount: Constants.crossAxisCount,
+                      //   mainAxisExtent: Constants.mainAxisExtent,
+                      //   mainAxisSpacing: Constants.mainAxisSpacing,
+                      // ),
+                      itemBuilder: (context, index) {
+                        return Builder(
+                          builder: (context) {
+                            // Get.put<Product>(
+                            //   _homeViewGetXController.products[index],
+                            //   tag:
+                            //       '${_homeViewGetXController.products[index].id}home',
+                            // );
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.11,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.27,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image:
+                                                AssetImage(ImageAssets.brStore),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 14,
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('baskin robbins',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          color: ColorManager.primaryDark)),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.timer,
+                                        color: ColorManager.grey,
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text('20 min',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: ColorManager.primaryDark)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.23,
+                    decoration: BoxDecoration(
+                        color: ColorManager.primary,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Stack(
+                      children: [
+                        isArabic == 'en'
+                            ? Image.asset(ImageAssets.blueRectangle)
+                            : Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(math.pi),
+                                child: Image.asset(
+                                  ImageAssets.blueRectangle,
+                                ),
+                              ),
+                        Positioned(
+                            top: 20,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Image.asset(
+                                ImageAssets.brIcon,
+                                height: 40,
+                                width: 40,
+                              ),
+                            )),
+                        Positioned(
+                            top: 70,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'your favorite cake',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                            )),
+                        Positioned(
+                            top: 140,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                'only with Ghaf gold ',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s24,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                    child: Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.popular_cafe_nearby,
+                          style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s18,
+                          ),
+                        ),
+                        Spacer(),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.allProductScreen);
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.more,
+                            style: getMediumStyle(
+                              color: ColorManager.greyLight,
+                              fontSize: FontSize.s16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(8),
+
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      physics: const BouncingScrollPhysics(),
+                      // gridDelegate:
+                      //     SliverGridDelegateWithFixedCrossAxisCount(
+                      //   crossAxisCount: Constants.crossAxisCount,
+                      //   mainAxisExtent: Constants.mainAxisExtent,
+                      //   mainAxisSpacing: Constants.mainAxisSpacing,
+                      // ),
+                      itemBuilder: (context, index) {
+                        return Builder(
+                          builder: (context) {
+                            // Get.put<Product>(
+                            //   _homeViewGetXController.products[index],
+                            //   tag:
+                            //       '${_homeViewGetXController.products[index].id}home',
+                            // );
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.11,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.27,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image:
+                                                AssetImage(ImageAssets.brIcon),
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 14,
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('baskin robbins',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          color: ColorManager.primaryDark)),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.timer,
+                                        color: ColorManager.grey,
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text('20 min',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: ColorManager.primaryDark)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Card(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: isArabic == 'en'
+                              ? Image.asset(
+                                  ImageAssets.save,
+                                  height: 150,
+                                  width: 150,
+                                )
+                              : Transform(
+                                  alignment: Alignment.center,
+                                  transform: Matrix4.rotationY(math.pi),
+                                  child: Image.asset(
+                                    ImageAssets.save,
+                                    height: 150,
+                                    width: 150,
+                                  ),
+                                ),
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              'Save up to AED 30',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.01,
+                            ),
+                            Text(
+                              'limit time offer on resturants to try',
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

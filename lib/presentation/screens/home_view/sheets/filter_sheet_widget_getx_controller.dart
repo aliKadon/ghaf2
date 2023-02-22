@@ -24,6 +24,7 @@ class FilterSheetWidgetGetXController extends GetxController with Helpers {
     update(['filterBYPrice']);
   }
 
+
   // constructor fields.
   final BuildContext context;
   num? minPrice;

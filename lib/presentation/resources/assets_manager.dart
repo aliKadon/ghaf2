@@ -44,6 +44,19 @@ class ImageAssets {
   static const String visa = "$imagePath/visa.png";
   static const String store = "$imagePath/store.png";
   static const String photoGallery = "$imagePath/photo_gallery.png";
+  static const String homePoints = "$imagePath/point_home.png";
+  static const String main4 = "$imagePath/main4.png";
+  static const String imageInMain4 = "$imagePath/image_in_main4.png";
+  static const String grocery = "$imagePath/grocery.png";
+  static const String trending = "$imagePath/trending.png";
+  static const String pizza = "$imagePath/pizza.png";
+  static const String brStore = "$imagePath/BR.png";
+  static const String blueRectangle = "$imagePath/blue_rectangle.png";
+  static const String brIcon = "$imagePath/BR2.png";
+  static const String save = "$imagePath/save.png";
+  static const String carDelivery = "$imagePath/car_delivary.png";
+  static const String tt = "$imagePath/tt.png";
+  static const String heartFavorite = "$imagePath/heart_favorite.png";
 }
 
 class IconsAssets {
