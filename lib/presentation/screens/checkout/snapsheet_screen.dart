@@ -6,13 +6,10 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/utils/helpers.dart';
-import '../resources/values_manager.dart';
+import '../../../app/utils/helpers.dart';
+import '../../resources/values_manager.dart';
 
 class SnapsheetScreen extends StatefulWidget with Helpers {
-  final Map<String, dynamic> orderinfo;
-
-  SnapsheetScreen(this.orderinfo);
 
   @override
   State<SnapsheetScreen> createState() => _SnapsheetScreenState();
@@ -254,98 +251,63 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                       onPressed: () {
                         // showLoadingDialog(context: context, title: 'Logging In');
 
-                        print('=========================checkout');
-                        print(
-                          widget.orderinfo['orderId'],
-                        );
-                        print(
-                          widget.orderinfo['paylater'],
-                        );
-                        saveItem();
-                        if (_checkData()) {
-                          Provider.of<ProductProvider>(context, listen: false)
-                              .addOrder(
-                            widget.orderinfo['orderId'],
-                            widget.orderinfo['deliveryMethodId'],
-                            widget.orderinfo['date'],
-                            widget.orderinfo['address'],
-                            widget.orderinfo['reedem'],
-                            widget.orderinfo['paylater'],
-                            cardInfo['cardNumber']!,
-                            int.parse(cardInfo['expiredMonth']!),
-                            cardInfo['cvc']!,
-                            int.parse(cardInfo['expiredYear']!),
-                          )
-                              .then((value) {
-                            if (Provider.of<ProductProvider>(context,
-                                        listen: false)
-                                    .statusCode !=
-                                200) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(Provider.of<ProductProvider>(
-                                        context,
-                                        listen: false)
-                                    .statusPayment),
-                                backgroundColor: Colors.red,
-                              ));
-                            } else if (Provider.of<ProductProvider>(context,
-                                        listen: false)
-                                    .statusCode ==
-                                200) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('Success'),
-                                backgroundColor: Colors.green,
-                              ));
-                              Navigator.of(context)
-                                  .pushReplacementNamed(
-                                      Routes.checkOutConfirmRoute,
-                                      arguments: widget.orderinfo['orderId']);
-                            }
-                          }).catchError((error) => ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(error.toString()),
-                                    backgroundColor: Colors.red,
-                                  )));
+                        // print('=========================checkout');
+                        // print(
+                        //   widget.orderinfo['orderId'],
+                        // );
+                        // print(
+                        //   widget.orderinfo['paylater'],
+                        // );
+                        // saveItem();
+                        // if (_checkData()) {
+                        //   Provider.of<ProductProvider>(context, listen: false)
+                        //       .addOrder(
+                        //     widget.orderinfo['orderId'],
+                        //     widget.orderinfo['deliveryMethodId'],
+                        //     widget.orderinfo['date'],
+                        //     widget.orderinfo['address'],
+                        //     widget.orderinfo['reedem'],
+                        //     widget.orderinfo['paylater'],
+                        //     cardInfo['cardNumber']!,
+                        //     int.parse(cardInfo['expiredMonth']!),
+                        //     cardInfo['cvc']!,
+                        //     int.parse(cardInfo['expiredYear']!),
+                        //   )
+                        //       .then((value) {
+                        //     if (Provider.of<ProductProvider>(context,
+                        //                 listen: false)
+                        //             .statusCode !=
+                        //         200) {
+                        //       ScaffoldMessenger.of(context)
+                        //           .showSnackBar(SnackBar(
+                        //         content: Text(Provider.of<ProductProvider>(
+                        //                 context,
+                        //                 listen: false)
+                        //             .statusPayment),
+                        //         backgroundColor: Colors.red,
+                        //       ));
+                        //     } else if (Provider.of<ProductProvider>(context,
+                        //                 listen: false)
+                        //             .statusCode ==
+                        //         200) {
+                        //       ScaffoldMessenger.of(context)
+                        //           .showSnackBar(SnackBar(
+                        //         content: Text('Success'),
+                        //         backgroundColor: Colors.green,
+                        //       ));
+                        //       Navigator.of(context)
+                        //           .pushReplacementNamed(
+                        //               Routes.checkOutConfirmRoute,
+                        //               arguments: widget.orderinfo['orderId']);
+                        //     }
+                        //   }).catchError((error) => ScaffoldMessenger.of(context)
+                        //               .showSnackBar(SnackBar(
+                        //             content: Text(error.toString()),
+                        //             backgroundColor: Colors.red,
+                        //           )));
 
-                          // if (widget.orderinfo['address'] == '') {
-                          //   Provider.of<ProductProvider>(context, listen: false)
-                          //       .addOrderWithoutAddress(
-                          //           orderId: widget.orderinfo['orderId'],
-                          //           deliveryMethodId:
-                          //               widget.orderinfo['address'],
-                          //           DesiredDeliveryDate:
-                          //               widget.orderinfo['date'],
-                          //           UseRedeemPoints: widget.orderinfo['reedem'],
-                          //           UsePayLater: widget.orderinfo['paylater'],
-                          //           CardNumber: cardInfo['cardNumber']!,
-                          //           CardExpMonth:
-                          //               int.parse(cardInfo['expiredMonth']!),
-                          //           CardExpCvc: cardInfo['cvc']!,
-                          //           CardExpYear:
-                          //               int.parse(cardInfo['expiredYear']!))
-                          //       .then((value) => ScaffoldMessenger.of(context)
-                          //               .showSnackBar(SnackBar(
-                          //             content: Text('success'),
-                          //             backgroundColor: Colors.green,
-                          //           )))
-                          //       .then((value) => Navigator.of(context)
-                          //           .pushReplacementNamed(Routes.checkOutConfirmRoute,
-                          //               arguments: widget.orderinfo['orderId']))
-                          //       .catchError((error) =>
-                          //           ScaffoldMessenger.of(context)
-                          //               .showSnackBar(SnackBar(
-                          //             content: Text(error.toString()),
-                          //             backgroundColor: Colors.red,
-                          //           )));
-                          //   ;
-                          // } else {
-                          //   print('==================================addrress');
-                          //   print(widget.orderinfo['address']);
-                          //
-                          // }
-                        }
+
+                        // }
                       },
                     ),
                   ),

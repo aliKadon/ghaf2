@@ -10,8 +10,8 @@ import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/a
 import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view.dart';
 import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/all_restaurant_view.dart';
-import 'package:ghaf_application/presentation/screens/checkout_confirm_view.dart';
-import 'package:ghaf_application/presentation/screens/checkout_view.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_confirm_view.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:ghaf_application/presentation/screens/coupons_view.dart';
 import 'package:ghaf_application/presentation/screens/faq_view.dart';
 import 'package:ghaf_application/presentation/screens/forget_password_view/forget_password_view.dart';
@@ -65,7 +65,7 @@ import 'package:ghaf_application/presentation/screens/seller/update_info_seller.
 import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
-import 'package:ghaf_application/presentation/screens/snapsheet_screen.dart';
+import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.dart';
 import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category_screen.dart';
 import 'package:ghaf_application/presentation/screens/sub_categories_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
@@ -190,7 +190,7 @@ class RouteGenerator {
       case Routes.snapsheet:
         return MaterialPageRoute(
             builder: (_) =>
-                SnapsheetScreen(settings.arguments as Map<String, dynamic>));
+                SnapsheetScreen());
 
       case Routes.reviewProduct:
         return MaterialPageRoute(
@@ -307,10 +307,10 @@ class RouteGenerator {
       case Routes.checkOutRoute:
         return MaterialPageRoute(
             builder: (_) =>
-                CheckOutView(settings.arguments as OrderAllInformation));
+                CheckOutView());
       case Routes.checkOutConfirmRoute:
         return MaterialPageRoute(
-            builder: (_) => CheckOutConfirmView(settings.arguments as String));
+            builder: (_) => CheckOutConfirmView());
       case Routes.orderInformationRoute:
         return MaterialPageRoute(builder: (_) => const OrderInformationView());
       case Routes.allRestaurantRoute:

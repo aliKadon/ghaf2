@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:ghaf_application/presentation/widgets/cart_widget.dart';
 
 import '../../resources/color_manager.dart';
@@ -137,7 +138,9 @@ class _CartScreenState extends State<CartScreen> {
               padding: EdgeInsets.all(AppSize.s16),
               child: ElevatedButton(
                   style: ButtonStyle(shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)))),
-                  onPressed: (){}, child: Text('Place Order')),
+                  onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckOutView(),));
+                  }, child: Text('Place Order')),
             )
           ],
         ),
