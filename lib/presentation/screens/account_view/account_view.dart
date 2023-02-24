@@ -10,7 +10,7 @@ import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
-import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
+import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/rewards_view.dart';

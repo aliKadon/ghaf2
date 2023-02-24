@@ -29,7 +29,7 @@ import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_view.dart';
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';
-import 'package:ghaf_application/presentation/screens/order_tracking_screen.dart';
+import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
@@ -219,8 +219,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PaymentMethodeForSubscribe());
       case Routes.orderTrackingScreen:
         return MaterialPageRoute(
-            builder: (_) => OrderTrackingScreen(
-                settings.arguments as Map<String, dynamic>));
+            builder: (_) => OrderTrackingScreen());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.welcomeRoute:

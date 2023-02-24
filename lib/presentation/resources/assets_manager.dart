@@ -57,6 +57,9 @@ class ImageAssets {
   static const String carDelivery = "$imagePath/car_delivary.png";
   static const String tt = "$imagePath/tt.png";
   static const String heartFavorite = "$imagePath/heart_favorite.png";
+  static const String image1 = "$imagePath/image_1.png";
+  static const String x = "$imagePath/x.png";
+  static const String vector = "$imagePath/Vector.png";
 }
 
 class IconsAssets {

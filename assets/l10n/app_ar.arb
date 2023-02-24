@@ -322,6 +322,9 @@
   "any_where_any_time": "في أي مكان... في أي وقت!!",
   "most_popular": "الأكثر استخدام",
   "more": "أكثر",
+  "cancelling_order" : "طلب الإلغاء",
+  "are_you_sure_cancel" : "هل أنت متأكد من إلغاء الطلب",
+
   "min": "أقل",
   "add_to_cart": "أضف الى السلة",
   "my_cart": "سلتي",

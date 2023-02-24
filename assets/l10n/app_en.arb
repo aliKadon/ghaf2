@@ -279,6 +279,8 @@
   "it_takes": "It takes",
   "minutes": "Minutes",
   "order_success": "Order success",
+  "are_you_sure_cancel" : "are you sure to cancel the order",
+  "canceling_order" : "Canceling order",
   "payment_has_been_made": "We may send you a product replacement request; please have your device at reach",
   "order_tracking": "Order Tracking",
   "back_to_home": "Back To Home",
