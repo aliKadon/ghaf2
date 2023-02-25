@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-import '../../app/constants.dart';
-import '../resources/assets_manager.dart';
-import '../resources/color_manager.dart';
-import '../resources/font_manager.dart';
-import '../resources/styles_manager.dart';
-import '../resources/values_manager.dart';
-import '../widgets/app_text_field.dart';
+import '../../../app/constants.dart';
+import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
+import '../../widgets/app_text_field.dart';
 
 class ReviewProduct extends StatefulWidget {
   final Map<String, dynamic> orderinfo;

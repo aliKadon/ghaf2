@@ -3,7 +3,7 @@ import 'dart:math' as math; // import this
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/screens/faq_view.dart';
-import 'package:ghaf_application/presentation/screens/share_opinion_view.dart';
+import 'package:ghaf_application/presentation/screens/rate_and_reviews/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 import 'package:ghaf_application/providers/product_provider.dart';

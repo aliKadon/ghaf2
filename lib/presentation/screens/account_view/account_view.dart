@@ -4,15 +4,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
-import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
-import 'package:ghaf_application/presentation/screens/orders_to_pay_view/orders_to_pay_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile.dart';
+import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_shop/rate_shop.dart';
 import 'package:ghaf_application/presentation/screens/rewards_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,7 +22,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
-import '../checkout/checkout_view.dart';
+import '../rate_and_reviews/rate_delivery/rate_delivery.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -31,6 +32,8 @@ class AccountView extends StatefulWidget {
 }
 
 class _AccountViewState extends State<AccountView> {
+  var language = SharedPrefController().lang1;
+
   // controller.
   late final AccountViewGetXController _accountViewGetXController =
       Get.put(AccountViewGetXController());
@@ -87,55 +90,173 @@ class _AccountViewState extends State<AccountView> {
                 SizedBox(
                   height: AppSize.s12,
                 ),
-                Row(
-                  children: [
-                    ClipOval(
-                      // borderRadius: BorderRadius.circular(AppRadius.r14),
-                      child: Image.asset(
-                        fit: BoxFit.cover,
-                        'assets/images/avatar_person.png',
-                        height: AppSize.s82,
-                        width: AppSize.s82,
-                      ),
-                    ),
-                    SizedBox(
-                      width: AppSize.s17,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
-                            style: getSemiBoldStyle(
-                              color: ColorManager.primaryDark,
-                              fontSize: FontSize.s18,
+                Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  child: language == 'en'
+                      ? Stack(
+                          children: [
+                            ClipPath(
+                              // clipBehavior: Clip.antiAliasWithSaveLayer,
+                              clipper: ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(500)))),
+                              child: Container(
+                                // width: double.infinity,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                color: ColorManager.primary,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: AppSize.s2,
-                          ),
-                          Text(
-                            AppSharedData.currentUser!.email ?? '',
-                            style: getRegularStyle(
-                              color: ColorManager.primaryDark,
-                              fontSize: FontSize.s12,
+                            Positioned(
+                              left: AppSize.s210,
+                              top: AppSize.s24,
+                              child: ClipOval(
+                                // borderRadius: BorderRadius.circular(AppRadius.r14),
+                                child: Image.asset(
+                                  ImageAssets.profile,
+                                  fit: BoxFit.cover,
+                                  height: AppSize.s82,
+                                  width: AppSize.s82,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // _accountViewGetXController.logout(context: context);
-                        Navigator.of(context).pushNamed(Routes.updateUserInfo);
-                      },
-                      child: Image.asset(
-                        'assets/icons/editProfile.png',
-                        color: ColorManager.primaryDark,
-                      ),
-                    ),
-                  ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: AppSize.s20,
+                                  ),
+                                  Text(
+                                    '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.white,
+                                      fontSize: FontSize.s14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: AppSize.s10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .view_edit_profile,
+                                        style: getRegularStyle(
+                                          color: ColorManager.white,
+                                          fontSize: FontSize.s12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // _accountViewGetXController.logout(context: context);
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => Profile(),
+                                          ));
+                                        },
+                                        child: Image.asset(
+                                          ImageAssets.editProfile,
+                                          width: AppSize.s20,
+                                          height: AppSize.s20,
+                                          color: ColorManager.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      : Stack(
+                          children: [
+                            ClipPath(
+                              // clipBehavior: Clip.antiAliasWithSaveLayer,
+                              clipper: ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(500)))),
+                              child: Container(
+                                // width: double.infinity,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                color: ColorManager.primary,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
+                              ),
+                            ),
+                            Positioned(
+                              right: AppSize.s210,
+                              top: AppSize.s24,
+                              child: ClipOval(
+                                // borderRadius: BorderRadius.circular(AppRadius.r14),
+                                child: Image.asset(
+                                  ImageAssets.profile,
+                                  fit: BoxFit.cover,
+                                  height: AppSize.s82,
+                                  width: AppSize.s82,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: AppSize.s20,
+                                  ),
+                                  Text(
+                                    '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.white,
+                                      fontSize: FontSize.s14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: AppSize.s10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .view_edit_profile,
+                                        style: getRegularStyle(
+                                          color: ColorManager.white,
+                                          fontSize: FontSize.s12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // _accountViewGetXController.logout(context: context);
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => Profile(),
+                                          ));
+                                        },
+                                        child: Image.asset(
+                                          ImageAssets.editProfile,
+                                          width: AppSize.s20,
+                                          height: AppSize.s20,
+                                          color: ColorManager.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                 ),
                 SizedBox(
                   height: AppSize.s28,
@@ -321,8 +442,11 @@ class _AccountViewState extends State<AccountView> {
                                 builder: (builder) => NotificationView()),
                           );
                         },
-                        child: accountWidget(context, IconsAssets.notifications,
-                            AppLocalizations.of(context)!.notifications,),
+                        child: accountWidget(
+                          context,
+                          IconsAssets.notifications,
+                          AppLocalizations.of(context)!.notifications,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -339,6 +463,9 @@ class _AccountViewState extends State<AccountView> {
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, Routes.rateUs);
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => RateDelivery(),
+                          // ));
                         },
                         child: accountWidget(
                           context,
@@ -377,7 +504,6 @@ class _AccountViewState extends State<AccountView> {
                       GestureDetector(
                           onTap: () {
                             _customDialogProgress(context);
-
                           },
                           child: accountWidget(
                             context,
@@ -412,16 +538,15 @@ class _AccountViewState extends State<AccountView> {
                       SizedBox(
                         height: AppSize.s14,
                       ),
-
                     ],
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 1,
-                  height: MediaQuery.of(context).size.height *0.2,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   child: Center(
                     child: Container(
-                      padding: EdgeInsets.only(top: 30 ),
+                      padding: EdgeInsets.only(top: 30),
                       child: GestureDetector(
                           onTap: () {
                             // Navigator.push(
@@ -433,7 +558,11 @@ class _AccountViewState extends State<AccountView> {
                           },
                           child: Column(
                             children: [
-                              Icon(Icons.logout, color: ColorManager.primary,size: 35,),
+                              Icon(
+                                Icons.logout,
+                                color: ColorManager.primary,
+                                size: 35,
+                              ),
                               SizedBox(
                                 width: AppSize.s8,
                               ),
@@ -680,7 +809,6 @@ class _AccountViewState extends State<AccountView> {
   //       });
   // }
 
-
   void _customDialogProgress(context) async {
     showDialog(
         context: context,
@@ -729,7 +857,10 @@ class _AccountViewState extends State<AccountView> {
 
                     Padding(
                       padding: const EdgeInsets.only(left: 22),
-                      child: Text('${AppLocalizations.of(context)!.invite_your_friend} \n ${AppLocalizations.of(context)!.and_earn_points}',style: TextStyle(fontSize: AppSize.s24),),
+                      child: Text(
+                        '${AppLocalizations.of(context)!.invite_your_friend} \n ${AppLocalizations.of(context)!.and_earn_points}',
+                        style: TextStyle(fontSize: AppSize.s24),
+                      ),
                     ),
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
                     // Text('Order food to be delivered\n\tor schedule delivery time',style: TextStyle(fontSize: AppSize.s18),),
@@ -747,8 +878,7 @@ class _AccountViewState extends State<AccountView> {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.of(context)
-                            .pushNamed(Routes.inviteScreen);
+                        Navigator.of(context).pushNamed(Routes.inviteScreen);
                       },
                       child: Container(
                         width: AppSize.s110,
@@ -756,14 +886,12 @@ class _AccountViewState extends State<AccountView> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: ColorManager.primaryDark,
-                          borderRadius:
-                          BorderRadius.circular(AppRadius.r8),
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
                         ),
                         child: Text(
                           'Ok',
                           textAlign: TextAlign.center,
-                          style:
-                          getMediumStyle(color: ColorManager.white),
+                          style: getMediumStyle(color: ColorManager.white),
                         ),
                       ),
                     ),

@@ -60,6 +60,11 @@ class ImageAssets {
   static const String image1 = "$imagePath/image_1.png";
   static const String x = "$imagePath/x.png";
   static const String vector = "$imagePath/Vector.png";
+  static const String profile = "$imagePath/profile.png";
+  static const String editProfile = "$imagePath/edit_profile.png";
+  static const String rateUs = "$imagePath/rate_us.png";
+  static const String rateShop = "$imagePath/rate_shop.png";
+  static const String rateDelivery = "$imagePath/rate_delivary.png";
 }
 
 class IconsAssets {

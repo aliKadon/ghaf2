@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,10 +10,7 @@ import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/presentation/screens/rate_us_view/rate_us_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_us_view/rate_us_view_getx_controller.dart';
 
 class RateUsView extends StatefulWidget {
   const RateUsView({Key? key}) : super(key: key);
@@ -22,6 +20,10 @@ class RateUsView extends StatefulWidget {
 }
 
 class _RateUsViewState extends State<RateUsView> {
+  var selected = -1;
+
+  var isChecked = false;
+
   // controller.
   late final RateUsViewGetXController _rateUsViewGetXController =
       Get.find<RateUsViewGetXController>();
@@ -35,6 +37,10 @@ class _RateUsViewState extends State<RateUsView> {
 
   @override
   Widget build(BuildContext context) {
+    String review1 = AppLocalizations.of(context)!.look_feel;
+    String review2 = AppLocalizations.of(context)!.easy_navigate;
+    String review3 = AppLocalizations.of(context)!.easy_use;
+    List notesReview = [review1, review2, review3];
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -74,15 +80,16 @@ class _RateUsViewState extends State<RateUsView> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Image.asset(
-                    '${Constants.imagesPath}rate.png',
+                    ImageAssets.rateUs,
+                    height: AppSize.s258,
                   ),
                 ),
                 SizedBox(
                   height: 15.h,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.rate_ghaf,
-                  style: getRegularStyle(
+                  AppLocalizations.of(context)!.how_do_you_see_us,
+                  style: getBoldStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
                   ),
@@ -112,8 +119,9 @@ class _RateUsViewState extends State<RateUsView> {
                 Row(
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.tell_us,
-                      style: getRegularStyle(
+                      AppLocalizations.of(context)!
+                          .do_you_have_notes_to_tell_us,
+                      style: getBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s14,
                       ),
@@ -123,94 +131,40 @@ class _RateUsViewState extends State<RateUsView> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        setState(() {
-                          _rateUsViewGetXController.description = review1;
-                        });
-                        print(_rateUsViewGetXController.description);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
-                        // color: ColorManager.primaryDark,
-                        width: AppSize.s130,
-                        height: AppSize.s43,
-                        child: Center(
-                          child: Text(
-                            review1,
-                            style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s16),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 6,),
-                    InkWell(
-                      onTap: (){
-                        setState(() {
-                          _rateUsViewGetXController.description = review2;
-                        });
-                        print(_rateUsViewGetXController.description);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
-                        // color: ColorManager.primaryDark,
-                        width: AppSize.s173,
-                        height: AppSize.s43,
-                        child: Center(
-                          child: Text(
-                            review2,
-                            style: getSemiBoldStyle(
-                                color: ColorManager.white, fontSize: FontSize.s16),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height:5,),
-                InkWell(
-                  onTap: (){
-                    setState(() {
-                      _rateUsViewGetXController.description = review3;
-                    });
-                    print(_rateUsViewGetXController.description);
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: notesReview.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selected = index;
+                            print(selected);
+                          });
+                        },
+                        child: selected == index
+                            ? notes(context, notesReview[index], index, true)
+                            : notes(context, notesReview[index], index, false));
                   },
-                  child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
-                    // color: ColorManager.primaryDark,
-                    width: AppSize.s130,
-                    height: AppSize.s43,
-                    child: Center(
-                      child: Text(
-                        review3,
-                        style: getSemiBoldStyle(
-                            color: ColorManager.white, fontSize: FontSize.s16),
-                      ),
-                    ),
-                  ),
                 ),
-                SizedBox(height: 10,),
+
+                SizedBox(
+                  height: 10,
+                ),
 
                 Container(
-
                   height: AppSize.s123,
                   child: TextFormField(
-
                     enabled: false,
-                    decoration: InputDecoration(border     : OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                          
-                    ),contentPadding: EdgeInsets.only(bottom: 80,left: 7),
-                    label: Text('${_rateUsViewGetXController.description}'),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      contentPadding: EdgeInsets.only(bottom: 80, left: 7),
+                      label: Text('${_rateUsViewGetXController.description}'),
                       labelStyle: TextStyle(fontSize: AppSize.s26),
-
                     ),
-
                   ),
                 ),
                 // AppTextField(
@@ -237,6 +191,9 @@ class _RateUsViewState extends State<RateUsView> {
                   width: double.infinity,
                   height: AppSize.s55,
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(ColorManager.primaryDark)),
                     onPressed: () {
                       print(_rateUsViewGetXController.description);
                       _rateUsViewGetXController.reviewApp();
@@ -248,7 +205,6 @@ class _RateUsViewState extends State<RateUsView> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -256,8 +212,50 @@ class _RateUsViewState extends State<RateUsView> {
       ),
     );
   }
-  late String review1 = AppLocalizations.of(context)!.look_feel;
-  late String review2 = AppLocalizations.of(context)!.easy_navigate;
-  late String review3 = AppLocalizations.of(context)!.easy_use;
-  // String review4 = 'Bad.';
+
+  Widget notes(BuildContext context, String text, int index, bool check) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {
+            setState(() {
+              selected = index;
+              _rateUsViewGetXController.description = text;
+            });
+            print(_rateUsViewGetXController.description);
+          },
+          child: Row(
+            children: [
+              Checkbox(
+                  value: check,
+                  onChanged: (_) {
+                    setState(() {
+                      print(selected);
+                    });
+                  }),
+              Container(
+                // decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey),
+                // // color: ColorManager.primaryDark,
+                // width: AppSize.s130,
+                // height: AppSize.s43,
+                child: Center(
+                  child: Text(
+                    text,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+      ],
+    );
+  }
+
+// String review4 = 'Bad.';
 }

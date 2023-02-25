@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/add_or_edit_address_view_getx_controller.dart';
@@ -31,6 +32,32 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
 
 
   Completer<GoogleMapController> _controller = Completer();
+  TextEditingController _addressTextController = TextEditingController();
+  TextEditingController _nameAddressTextController = TextEditingController();
+  TextEditingController _phoneNumberTextController = TextEditingController();
+  TextEditingController _streetTextController = TextEditingController();
+  TextEditingController _buildingTextController = TextEditingController();
+
+
+  late Placemark place;
+
+  // #############################################
+  //get all information from latitude and longitude
+  // #############################################
+  Future<void> GetAddressFromLatLong(LatLng latLng) async {
+    List<Placemark> placemarks =
+    await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    print('======================================my address');
+    print(placemarks);
+    place = placemarks[0];
+    _addressTextController.text =
+    '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    print('================myaddress');
+    print(_addressTextController.text);
+  }
+
+  // ##############################################
+  // ##############################################
 
   static final CameraPosition _kGoogle = const CameraPosition(
     target: LatLng(24.400661, 54.635448),
@@ -79,7 +106,23 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
   @override
   void dispose() {
     Get.delete<AddOrEditAddressViewGetXController>();
+    _addressTextController.dispose();
+    _nameAddressTextController.dispose();
+    _phoneNumberTextController.dispose();
+    _streetTextController.dispose();
+    _buildingTextController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // ############################################
+    //get all information from latitude and longitude
+    // #############################################
+    GetAddressFromLatLong(LatLng(20.42796133580664, 75.885749655962));
+    // ##############################################
+    // ##############################################
+    super.initState();
   }
 
   @override
@@ -153,8 +196,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                     onTap: (latLng) async {
                       setState(() {
                         _addAddressViewGetXController.selectedLatLng = latLng;
-
-
+                        GetAddressFromLatLong(latLng);
                         print('=============================');
                         print(latLng);
                       });
@@ -225,38 +267,108 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                       fontSize: FontSize.s16),
                                 ),
                                 SizedBox(
-                                  height: AppSize.s6,
+                                  height: 6,
                                 ),
                                 AppTextField(
-                                  initialValue:
-                                      _addAddressViewGetXController.addressName,
+                                  textController:
+                                  _addressTextController,
+                                  hint:
+                                  AppLocalizations.of(context)!
+                                      .address,
+                                  textInputType:
+                                  TextInputType.phone,
+                                  onSaved: (value) {},
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.isEmpty) {
+                                      return AppLocalizations.of(
+                                          context)!
+                                          .address_name_required;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                AppTextField(
+                                  // initialValue:
+                                  // _addAddressViewGetXController.addressName,
                                   // hint: 'Address name',
-                                  hint: AppLocalizations.of(context)!.name_address,
-                                  onSaved: (value) =>
-                                      _addAddressViewGetXController
-                                          .addressName = value,
+                                  textController:
+                                  _nameAddressTextController,
+                                  hint:
+                                  AppLocalizations.of(context)!
+                                      .name_address,
+                                  onSaved: (value) {},
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
+                                    if (value == null ||
+                                        value.isEmpty) {
                                       // return 'Address name is required';
-                                      return AppLocalizations.of(context)!.address_name_required;
+                                      return AppLocalizations.of(
+                                          context)!
+                                          .address_name_required;
                                     }
                                     return null;
                                   },
                                 ),
                                 AppTextField(
-                                  initialValue:
-                                      _addAddressViewGetXController.phoneNumber,
-                                  hint: AppLocalizations.of(context)!.phone_number,
-                                  textInputType: TextInputType.phone,
-                                  onSaved: (value) =>
-                                      _addAddressViewGetXController
-                                          .phoneNumber = value,
+                                  textController:
+                                  _phoneNumberTextController,
+                                  hint:
+                                  AppLocalizations.of(context)!
+                                      .phone_number,
+                                  textInputType:
+                                  TextInputType.phone,
+                                  onSaved: (value) {},
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return AppLocalizations.of(context)!.phone_number_is_required;
+                                    if (value == null ||
+                                        value.isEmpty) {
+                                      return AppLocalizations.of(
+                                          context)!
+                                          .phone_number_is_required;
                                     }
                                     return null;
                                   },
+                                ),
+                                AppTextField(
+                                  // initialValue:
+                                  // _addAddressViewGetXController.addressName,
+                                  // hint: 'Address name',
+                                  textController:
+                                  _streetTextController,
+                                  hint:
+                                  AppLocalizations.of(context)!
+                                      .street_address,
+                                  onSaved: (value) {},
+                                  // validator: (value) {
+                                  //   if (value == null ||
+                                  //       value.isEmpty) {
+                                  //     // return 'Address name is required';
+                                  //     return AppLocalizations.of(
+                                  //         context)!
+                                  //         .address_name_required;
+                                  //   }
+                                  //   return null;
+                                  // },
+                                ),
+                                AppTextField(
+                                  // initialValue:
+                                  // _addAddressViewGetXController.addressName,
+                                  // hint: 'Address name',
+                                  textController:
+                                  _buildingTextController,
+                                  hint:
+                                  AppLocalizations.of(context)!
+                                      .building_address,
+                                  onSaved: (value) {},
+                                  // validator: (value) {
+                                  //   if (value == null ||
+                                  //       value.isEmpty) {
+                                  //     // return 'Address name is required';
+                                  //     return AppLocalizations.of(
+                                  //         context)!
+                                  //         .address_name_required;
+                                  //   }
+                                  //   return null;
+                                  // },
                                 ),
                                 Container(
                                   margin: EdgeInsets.symmetric(

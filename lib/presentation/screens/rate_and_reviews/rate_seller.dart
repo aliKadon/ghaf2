@@ -1,31 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
+import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/product_view/product_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:provider/provider.dart';
 
-import '../../providers/product_provider.dart';
-import '../resources/routes_manager.dart';
+import '../../../domain/model/product.dart';
+import '../../../domain/model/product2.dart';
 
-class RateDelivery extends StatefulWidget {
-  const RateDelivery({Key? key}) : super(key: key);
+class RateSeller extends StatefulWidget {
+  const RateSeller({Key? key}) : super(key: key);
 
   @override
-  State<RateDelivery> createState() => _RateDeliveryState();
+  State<RateSeller> createState() => _RateSellerState();
 }
 
-class _RateDeliveryState extends State<RateDelivery> {
+class _RateSellerState extends State<RateSeller> {
+
   @override
   void initState() {
     Provider.of<ProductProvider>(context, listen: false).getOrders();
     super.initState();
+  }
+
+  String? review1;
+  String? review2;
+  String? review3;
+  String? review4;
+  String? review5;
+  String? review6;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   int points = 1;
@@ -34,7 +53,23 @@ class _RateDeliveryState extends State<RateDelivery> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<ProductProvider>(context).orders;
+    review1 = AppLocalizations.of(context)!.fast_reliable;
+    review2 = AppLocalizations.of(context)!.wider;
+    review3 = AppLocalizations.of(context)!.easy_replacment;
+    review4 = AppLocalizations.of(context)!.hygiene_rating;
+    review5 = AppLocalizations.of(context)!.right_order;
+    review6 = AppLocalizations.of(context)!.for_shops_easy;
+
+    // review1 = 'sada';
+    // review2 = 'fafds';
+    // review3 = 'sdasd';
+    // review4 = 'asdasd';
+    // review5 = 'adasda';
+    // review6 = 'asdasd';
+
+    var provider = Provider
+        .of<ProductProvider>(context)
+        .orders;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -68,20 +103,20 @@ class _RateDeliveryState extends State<RateDelivery> {
                   height: AppSize.s12,
                 ),
                 Divider(height: 1, color: ColorManager.greyLight),
-                SizedBox(
-                  height: AppSize.s12,
-                ),
+                // SizedBox(
+                //   height: AppSize.s12,
+                // ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  padding: EdgeInsets.symmetric(horizontal: 60.w),
                   child: Image.asset(
-                    '${Constants.imagesPath}rateDelivery.png',
+                    '${Constants.imagesPath}rateStore.png',
                   ),
                 ),
                 // SizedBox(
                 //   height: 15.h,
                 // ),
                 Text(
-                  AppLocalizations.of(context)!.rate_delevery,
+                  AppLocalizations.of(context)!.rate_shop,
                   style: getRegularStyle(
                     color: ColorManager.primaryDark,
                     fontSize: FontSize.s18,
@@ -98,14 +133,12 @@ class _RateDeliveryState extends State<RateDelivery> {
                   itemCount: 5,
                   glow: false,
                   itemPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  itemBuilder: (context, _) => SvgPicture.asset(
-                    '${Constants.vectorsPath}star.svg',
-                  ),
+                  itemBuilder: (context, _) =>
+                      SvgPicture.asset(
+                        '${Constants.vectorsPath}star.svg',
+                      ),
                   unratedColor: Colors.grey.shade300,
-                  // onRatingUpdate: (value) {
-                  //   _rateUsViewGetXController.rate = value.toInt();
-                  //   print(_rateUsViewGetXController.rate);
-                  // },
+
                   onRatingUpdate: (value) {
                     points = value.toInt();
                   },
@@ -116,7 +149,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                 Row(
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.tell_delevery,
+                      AppLocalizations.of(context)!.tell_us_order,
                       style: getRegularStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s14,
@@ -134,7 +167,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          opinion = review1;
+                          opinion = review1!;
                         });
                       },
                       child: Container(
@@ -142,25 +175,23 @@ class _RateDeliveryState extends State<RateDelivery> {
                             borderRadius: BorderRadius.circular(25),
                             color: Colors.grey),
                         // color: ColorManager.primaryDark,
-                        width: AppSize.s184,
+                        width: AppSize.s222,
                         height: AppSize.s43,
                         child: Center(
                           child: Text(
-                            review1,
+                            review1!,
                             style: getSemiBoldStyle(
                                 color: ColorManager.white,
-                                fontSize: FontSize.s16),
+                                fontSize: FontSize.s14),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 6,
-                    ),
+                    SizedBox(width: 6,),
                     InkWell(
                       onTap: () {
                         setState(() {
-                          opinion = review2;
+                          opinion = review4!;
                         });
                       },
                       child: Container(
@@ -168,27 +199,25 @@ class _RateDeliveryState extends State<RateDelivery> {
                             borderRadius: BorderRadius.circular(25),
                             color: Colors.grey),
                         // color: ColorManager.primaryDark,
-                        width: AppSize.s173,
+                        width: AppSize.s123,
                         height: AppSize.s43,
                         child: Center(
                           child: Text(
-                            review2,
+                            review4!,
                             style: getSemiBoldStyle(
                                 color: ColorManager.white,
-                                fontSize: FontSize.s16),
+                                fontSize: FontSize.s14),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 5,),
                 InkWell(
                   onTap: () {
                     setState(() {
-                      opinion = review3;
+                      opinion = review6!;
                     });
                   },
                   child: Container(
@@ -196,38 +225,116 @@ class _RateDeliveryState extends State<RateDelivery> {
                         borderRadius: BorderRadius.circular(25),
                         color: Colors.grey),
                     // color: ColorManager.primaryDark,
-                    width: AppSize.s281,
-                    height: AppSize.s50,
+                    width: AppSize.s280,
+                    height: AppSize.s43,
                     child: Center(
                       child: Text(
-                        review3,
+                        review6!,
                         style: getSemiBoldStyle(
-                            color: ColorManager.white, fontSize: FontSize.s16),
+                            color: ColorManager.white, fontSize: 12),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
+                SizedBox(height: 5,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          opinion = review3!;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
+                        // color: ColorManager.primaryDark,
+                        width: AppSize.s154,
+                        height: AppSize.s43,
+                        child: Center(
+                          child: Text(
+                            review3!,
+                            style: getSemiBoldStyle(
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 6,),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          opinion = review2!;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.grey),
+                        // color: ColorManager.primaryDark,
+                        width: AppSize.s192,
+                        height: AppSize.s43,
+                        child: Center(
+                          child: Text(
+                            review2!,
+                            style: getSemiBoldStyle(
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
                 ),
+                SizedBox(height: 5,),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      opinion = review5!;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.grey),
+                    // color: ColorManager.primaryDark,
+                    width: AppSize.s326,
+                    height: AppSize.s43,
+                    child: Center(
+                      child: Text(
+                        review5!,
+                        style: getSemiBoldStyle(
+                            color: ColorManager.white, fontSize: 12),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10,),
 
                 Container(
-                  height: AppSize.s123,
+                  height: AppSize.s73,
                   child: TextFormField(
                     enabled: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      contentPadding: EdgeInsets.only(bottom: 80, left: 7),
+                    decoration: InputDecoration(border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                      contentPadding: EdgeInsets.only(bottom: 50, left: 7),
                       // label: Text('${_rateUsViewGetXController.description}'),
                       label: Text(opinion),
                       labelStyle: TextStyle(fontSize: AppSize.s20),
+
                     ),
+
                   ),
                 ),
                 SizedBox(
-                  height: 1.h,
+                  height: 12.h,
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(
@@ -236,33 +343,36 @@ class _RateDeliveryState extends State<RateDelivery> {
                   width: double.infinity,
                   height: AppSize.s55,
                   child: ElevatedButton(
+
                     onPressed: () {
-                      // Navigator.of(context).pop();
+                      // print(_rateUsViewGetXController.description);
+                      // _rateUsViewGetXController.reviewApp();
+
                       Provider.of<ProductProvider>(context, listen: false)
-                          .postReviewStore(
-                              '${provider[0].items![0]['storeId']}',
-                              opinion,
-                              points)
-                          .then((value) =>
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        '${AppLocalizations.of(context)!.thank_you}\n${AppLocalizations.of(context)!.your_review_successfully}'),
-                                    backgroundColor: Colors.green),
-                              )).then((value) => Navigator.of(context).pushReplacementNamed(Routes
-                          .mainRoute));
+                          .postReviewStore('${provider[0]
+                          .items![0]['storeId']}', opinion, points).then((
+                          value) =>
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(
+                              '${AppLocalizations.of(context)!
+                                  .thank_you}\n${AppLocalizations.of(context)!
+                                  .your_review_successfully}'),
+                              backgroundColor: Colors.green),)).then((value) =>
+                          Navigator.of(context).pushReplacementNamed(Routes
+                              .mainRoute));
                       print(
                           '-----------------------------------------------------------');
-                      print(
-                          'id : ${provider[0].items![0]['storeId']} , opinion:  $opinion, points: $points');
+                      print('id : ${provider[0]
+                          .items![0]['storeId']} , opinion:  $opinion, points: $points');
                     },
                     child: Text(
-                      AppLocalizations.of(context)!.send_note,
+                      AppLocalizations.of(context)!.send_a_note,
                       style: getSemiBoldStyle(
                           color: ColorManager.white, fontSize: FontSize.s18),
                     ),
                   ),
                 ),
+
               ],
             ),
           ),
@@ -271,8 +381,5 @@ class _RateDeliveryState extends State<RateDelivery> {
     );
   }
 
-  late String review1 = AppLocalizations.of(context)!.delivered_Securely;
-  late String review2 = AppLocalizations.of(context)!.delivered_on_Time;
-  late String review3 = AppLocalizations.of(context)!.follows_drop;
 // String review4 = 'Bad.';
 }

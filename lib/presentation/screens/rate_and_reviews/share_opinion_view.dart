@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-import '../resources/assets_manager.dart';
-import '../resources/color_manager.dart';
-import '../resources/font_manager.dart';
-import '../resources/routes_manager.dart';
-import '../resources/styles_manager.dart';
-import '../resources/values_manager.dart';
+import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SharaYourOpinionView extends StatefulWidget {
@@ -147,7 +147,7 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
                 child: ElevatedButton(
                   onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute),
                   child: Text(
-                    AppLocalizations.of(context)!.send_a_note,
+                    AppLocalizations.of(context)!.send_note,
                     style: getSemiBoldStyle(
                         color: ColorManager.white, fontSize: FontSize.s18),
                   ),
