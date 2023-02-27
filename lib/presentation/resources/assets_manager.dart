@@ -65,6 +65,13 @@ class ImageAssets {
   static const String rateUs = "$imagePath/rate_us.png";
   static const String rateShop = "$imagePath/rate_shop.png";
   static const String rateDelivery = "$imagePath/rate_delivary.png";
+  static const String imageStoreView = "$imagePath/image_store_view.png";
+  static const String coffeeHouse = "$imagePath/coffee_house.png";
+  static const String subscribe = "$imagePath/subscribe.png";
+  static const String subscribe1 = "$imagePath/subscribe1.png";
+  static const String subscribe2 = "$imagePath/subscribe2.png";
+  static const String subscribe3 = "$imagePath/subscribe3.png";
+  static const String subscribe4 = "$imagePath/subscribe4.png";
 }
 
 class IconsAssets {

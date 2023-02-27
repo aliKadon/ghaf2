@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/values_manager.dart';
+import '../screens/product_view/product_view_new.dart';
 
-class MostPopularProductWidget extends StatelessWidget {
+class OnsaleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,6 +33,15 @@ class MostPopularProductWidget extends StatelessWidget {
                           image: DecorationImage(
                             image: AssetImage(ImageAssets.pizza),
                             fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: GridTile(
+                            footer: GridTileBar(
+                                backgroundColor: ColorManager.primaryDark,
+                                title: Center(child: Text('Save 12 AED'))),
+                            child: Container(),
                           ),
                         ),
                       ),

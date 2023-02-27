@@ -18,6 +18,7 @@ import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
+import '../../widgets/shortcuts_widget.dart';
 import 'home_view_getx_controller.dart';
 
 class HomeView extends StatefulWidget {
@@ -505,95 +506,7 @@ class _HomeViewState extends State<HomeView> {
                                     shrinkWrap: true,
                                     itemCount: 2,
                                     itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          // Navigator.of(context).pushNamed(
-                                          //     Routes.products,
-                                          //     arguments: {
-                                          //       'storeId': storeid[index],
-                                          //       'categoryId': ''
-                                          //     });
-                                        },
-                                        child: Container(
-                                          width: AppSize.s92,
-                                          padding: EdgeInsetsDirectional.only(
-                                            end: AppSize.s8,
-                                          ),
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.2,
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.12,
-                                                  width: AppSize.s92,
-                                                  padding: EdgeInsets.all(
-                                                      AppPadding.p12),
-                                                  decoration: BoxDecoration(
-                                                    color: ColorManager.white,
-                                                    border: Border.all(
-                                                        width: AppSize.s0_5,
-                                                        color: ColorManager
-                                                            .greyLight),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: ColorManager
-                                                            .greyLight,
-                                                        blurRadius: AppSize.s4,
-                                                        offset: Offset(
-                                                            AppSize.s0,
-                                                            AppSize
-                                                                .s4), // Shadow position
-                                                      ),
-                                                    ],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            AppRadius.r4),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      Image.asset(
-                                                        // base64Decode(category.categoryImage ?? ''),
-                                                        ImageAssets.trending,
-                                                        width: AppSize.s30,
-                                                        height: AppSize.s40,
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                      SizedBox(
-                                                        height: AppSize.s12,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          'Trending',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: getMediumStyle(
-                                                            color: ColorManager
-                                                                .primaryDark,
-                                                            fontSize:
-                                                                FontSize.s12,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-
-                                                  // Image.asset(
-                                                  //   IconsAssets.cart,
-                                                  //   height: AppSize.s36,
-                                                  //   width: AppSize.s36,
-                                                  // ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
+                                      return ShortcutsWidget(imageUrl: ImageAssets.trending,text: 'Trending',);
                                     },
                                   ),
                                 ),
