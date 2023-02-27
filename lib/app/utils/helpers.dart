@@ -273,6 +273,7 @@ mixin Helpers {
                         ],
                       ),
                     ),
+
                     Container(
                       height: AppSize.s82,
                       width: double.infinity,
