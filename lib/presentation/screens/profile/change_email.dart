@@ -82,26 +82,29 @@ class _ChangeEmailState extends State<ChangeEmail> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.p8,
               ),
-              child: TextFormField(
-                controller: _changeEmail,
-                cursorColor: ColorManager.primary,
-                decoration: InputDecoration(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                child: TextFormField(
+                  controller: _changeEmail,
+                  cursorColor: ColorManager.primary,
+                  decoration: InputDecoration(
 
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
 
+                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    label: Text('Edit email',
-                      style: TextStyle(color: ColorManager.greyLight),)),
+                      label: Text('Edit email',
+                        style: TextStyle(color: ColorManager.greyLight),)),
 
-                validator: (value) {
-                  if (value == null || value.isEmpty)
-                    return 'Email must is not empty';
-                  return null;
-                },
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Email must is not empty';
+                    return null;
+                  },
+                ),
               ),
             ),
 
