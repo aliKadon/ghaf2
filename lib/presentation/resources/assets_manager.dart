@@ -72,6 +72,14 @@ class ImageAssets {
   static const String subscribe2 = "$imagePath/subscribe2.png";
   static const String subscribe3 = "$imagePath/subscribe3.png";
   static const String subscribe4 = "$imagePath/subscribe4.png";
+  static const String sorted = "$imagePath/sorted.png";
+  static const String preOrder = "$imagePath/pre_order.png";
+  static const String unChecked = "$imagePath/unchecked.png";
+  static const String checked = "$imagePath/checked.png";
+  static const String emptyCard = "$imagePath/empty_card.png";
+  static const String tomorrowTimer = "$imagePath/tomorrow_timer.png";
+  static const String deliveryFee = "$imagePath/delivery_fee.png";
+  static const String serviceFee = "$imagePath/service_fee.png";
 }
 
 class IconsAssets {

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/widgets/dialogs/loading_dialog_widget.dart';
@@ -11,6 +12,9 @@ import '../../presentation/resources/color_manager.dart';
 import '../../presentation/resources/styles_manager.dart';
 
 mixin Helpers {
+  String dropdownValue = 'Today';
+  String dropdownValue1 = '11:00';
+
   void showSnackBar(BuildContext context,
       {required String message, bool error = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -224,7 +228,10 @@ mixin Helpers {
                                     fontSize: FontSize.s18),
                               ),
                               Spacer(),
-                              Icon(Icons.radio_button_checked,color: ColorManager.primary,),
+                              Icon(
+                                Icons.radio_button_checked,
+                                color: ColorManager.primary,
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -262,7 +269,10 @@ mixin Helpers {
                                     fontSize: FontSize.s18),
                               ),
                               Spacer(),
-                              Icon(Icons.radio_button_off,color: ColorManager.primary,),
+                              Icon(
+                                Icons.radio_button_off,
+                                color: ColorManager.primary,
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -273,18 +283,522 @@ mixin Helpers {
                         ],
                       ),
                     ),
-
                     Container(
                       height: AppSize.s82,
                       width: double.infinity,
                       padding: EdgeInsets.all(12),
                       child: ElevatedButton(
-                          onPressed: () {
-
-                          },
+                          onPressed: () {},
                           child: Text(AppLocalizations.of(context)!.continue1)),
                     ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 
+  Future showSortBySheet(BuildContext context) => showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.5, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Image.asset(
+                            ImageAssets.x,
+                            height: AppSize.s18,
+                            width: AppSize.s18,
+                            color: ColorManager.greyLight,
+                          ),
+                        ),
+                        SizedBox(
+                          width: AppSize.s10,
+                        ),
+                        Text(AppLocalizations.of(context)!.sort_by,
+                            style: TextStyle(
+                                fontSize: FontSize.s24,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.black)),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(AppLocalizations.of(context)!.recommended,
+                                style: TextStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSize.s18)),
+                            // SizedBox(width: AppSize.s30,),
+                            Spacer(),
+                            Image.asset(
+                              ImageAssets.unChecked,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: ColorManager.greyLight,
+                        ),
+                        Row(
+                          children: [
+                            Text(AppLocalizations.of(context)!.fastest_delivery,
+                                style: TextStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSize.s18)),
+                            // SizedBox(width: AppSize.s30,),
+                            Spacer(),
+                            Image.asset(
+                              ImageAssets.unChecked,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: ColorManager.greyLight,
+                        ),
+                        Row(
+                          children: [
+                            Text(AppLocalizations.of(context)!.rating,
+                                style: TextStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSize.s18)),
+                            // SizedBox(width: AppSize.s30,),
+                            Spacer(),
+                            Image.asset(
+                              ImageAssets.checked,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Container(
+                          height: AppSize.s82,
+                          width: double.infinity,
+                          padding: EdgeInsets.all(12),
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text(AppLocalizations.of(context)!.apply)),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Future showArrivalTimeSheet(BuildContext context) => showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.5, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Text(AppLocalizations.of(context)!.arrival_time,
+                            style: TextStyle(
+                                fontSize: FontSize.s20,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.primaryDark)),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.access_time,
+                                  color: ColorManager.primary,
+                                ),
+                                SizedBox(
+                                  width: AppSize.s10,
+                                ),
+                                Text(AppLocalizations.of(context)!.today,
+                                    style: TextStyle(
+                                        color: ColorManager.grey,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s18)),
+                                // SizedBox(width: AppSize.s30,),
+                                Spacer(),
+                                Icon(
+                                  Icons.radio_button_checked,
+                                  color: ColorManager.primary,
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  ImageAssets.tomorrowTimer,
+                                  height: AppSize.s20,
+                                  width: AppSize.s20,
+                                ),
+                                SizedBox(
+                                  width: AppSize.s10,
+                                ),
+                                Text(
+                                    AppLocalizations.of(context)!
+                                        .fastest_delivery,
+                                    style: TextStyle(
+                                        color: ColorManager.grey,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s18)),
+                                // SizedBox(width: AppSize.s30,),
+                                Spacer(),
+                                Icon(
+                                  Icons.radio_button_off,
+                                  color: ColorManager.greyLight,
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Row(
+                              children: [
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: ColorManager.greyLight)),
+                                  padding: EdgeInsets.all(5),
+                                  child: DropdownButton<String>(
+                                    // Step 3.
+                                    value: dropdownValue,
+                                    // Step 4.
+                                    items: <String>[
+                                      'Today',
+                                      'sunday',
+                                      'monday',
+                                      'friday'
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                              color: ColorManager.primaryDark,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: AppSize.s12),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    // Step 5.
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: ColorManager.greyLight)),
+                                  padding: EdgeInsets.all(5),
+                                  child: DropdownButton<String>(
+                                    // Step 3.
+                                    value: dropdownValue1,
+                                    // Step 4.
+                                    items: <String>[
+                                      '11:00',
+                                      '12:00',
+                                      '1:00',
+                                      '2:00'
+                                    ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                              color: ColorManager.primaryDark,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: AppSize.s12),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    // Step 5.
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValue1 = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(AppLocalizations.of(context)!.frequency,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: FontSize.s14)),
+                                // SizedBox(width: AppSize.s30,),
+                              ],
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Row(
+                              children: [
+                                Icon(Icons.radio_button_off),
+                                SizedBox(
+                                  width: AppSize.s8,
+                                ),
+                                Text(AppLocalizations.of(context)!.one_time),
+                                Spacer(),
+                                Icon(Icons.radio_button_off),
+                                SizedBox(
+                                  width: AppSize.s8,
+                                ),
+                                Text(AppLocalizations.of(context)!.weekly),
+                                Spacer(),
+                                Icon(Icons.radio_button_off),
+                                SizedBox(
+                                  width: AppSize.s8,
+                                ),
+                                Text(AppLocalizations.of(context)!.monthly),
+                                Spacer(),
+                              ],
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Container(
+                              height: AppSize.s82,
+                              width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                      AppLocalizations.of(context)!.confirm)),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+  Future showFeesExplainSheet(BuildContext context) => showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.7, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(AppLocalizations.of(context)!.our_fees_explained,
+                        style: TextStyle(
+                            fontSize: FontSize.s20,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.primaryDark)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(
+                              ImageAssets.deliveryFee,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
+                            ),
+                            SizedBox(
+                              width: AppSize.s24,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(AppLocalizations.of(context)!.delivery_fee,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s18)),
+                                Container(
+                                  width: AppSize.s258,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .delivery_fee_text,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: FontSize.s14)),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              ImageAssets.serviceFee,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
+                            ),
+                            SizedBox(
+                              width: AppSize.s24,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(AppLocalizations.of(context)!.service_fee,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s18)),
+                                Container(
+                                  width: AppSize.s258,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .service_fee_text,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: FontSize.s14)),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Row(
+                          children: [
+                            Spacer(),
+                            Container(
+                              height: AppSize.s82,
+                              // width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.white),
+
+                                      shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                  color:
+                                                      ColorManager.primary),borderRadius: BorderRadius.circular(10)),)),
+                                  onPressed: () {},
+                                  child: Text(AppLocalizations.of(context)!
+                                      .read_about_fee,style: TextStyle(color: ColorManager.primary),)),
+                            ),
+                            Spacer(),
+                            Container(
+                              height: AppSize.s82,
+                              // width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                      AppLocalizations.of(context)!.got_it)),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

@@ -321,6 +321,8 @@
   "billed_every_year" : "billed every 12 months",
   "yearly_plan" : "12 month plan",
   "categories_by_store" : "Categories by store",
+
+
   "street_address": "building name/ street name",
   "building_address": "vila/apartment number",
   "canceling_order" : "Canceling order",

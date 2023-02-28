@@ -23,7 +23,7 @@ class CheckOutView extends StatefulWidget {
   State<CheckOutView> createState() => _CheckOutViewState();
 }
 
-class _CheckOutViewState extends State<CheckOutView> {
+class _CheckOutViewState extends State<CheckOutView> with Helpers {
   late TextEditingController _paymentMethodTextController;
 
   late final RegisterViewGetXController _registerViewGetXController =
@@ -1143,7 +1143,10 @@ class _CheckOutViewState extends State<CheckOutView> {
                         height: AppSize.s55,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckOutConfirmView(),));
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (context) => CheckOutConfirmView(),
+                            // ));
+                            showArrivalTimeSheet(context);
                             print('================================orderID');
 
                             print(deleveryMethod);
@@ -1225,7 +1228,9 @@ class _CheckOutViewState extends State<CheckOutView> {
                                         borderRadius: BorderRadius.circular(10),
                                         side: BorderSide(
                                             color: ColorManager.primaryDark)))),
-                            onPressed: () {},
+                            onPressed: () {
+                              showFeesExplainSheet(context);
+                            },
                             child: Text(
                               AppLocalizations.of(context)!.add_item,
                               style: TextStyle(color: ColorManager.primaryDark),
