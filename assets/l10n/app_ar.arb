@@ -351,6 +351,8 @@
   "minimum_order" : "الحد الأدنى للطلب",
   "recommended_for_you" : "الموصى بها لك",
   "on_sale" : "متوفر للبيع",
+  "categories_by_store" : "الفئات حسب المتجر",
+
   "order_like_pro" : "اطلب مثل المحترفين ",
   "the_ultimate_shopping": "وجهة التسوق النهائية",
   "monthly_subscribe_text" : "خطة عضوية الاشتراك الشهري التي يدفعها العميل للحصول على:",

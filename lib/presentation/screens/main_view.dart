@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view.dart';
 import 'package:ghaf_application/presentation/screens/cart_view/cart_screen.dart';
+import 'package:ghaf_application/presentation/screens/categories_view/categories_view_new.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class _MainViewState extends State<MainView> {
     return <BnScreen>[
       BnScreen(widget: HomeView(), title: AppLocalizations.of(context)!.home),
       BnScreen(
-          widget: CategoriesView(),
+          widget: CategoriesViewNew(),
           title: AppLocalizations.of(context)!.categories),
       BnScreen(widget: CartScreen(), title: AppLocalizations.of(context)!.cart),
       BnScreen(
