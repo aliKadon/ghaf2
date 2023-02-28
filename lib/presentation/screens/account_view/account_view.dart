@@ -299,16 +299,16 @@ class _AccountViewState extends State<AccountView> {
                             // subscribe,
                             subTitle: subscribe),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.addressesRoute);
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.location1,
-                          AppLocalizations.of(context)!.address,
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.pushNamed(context, Routes.addressesRoute);
+                      //   },
+                      //   child: accountWidget(
+                      //     context,
+                      //     IconsAssets.location1,
+                      //     AppLocalizations.of(context)!.address,
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
@@ -374,14 +374,26 @@ class _AccountViewState extends State<AccountView> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.gifts);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => NotificationView()),
+                          );
                         },
                         child: accountWidget(
                           context,
-                          '',
-                          // 'Gifts',
-                          AppLocalizations.of(context)!.gifts,
-                          iconName: CupertinoIcons.gift,
+                          IconsAssets.notifications,
+                          AppLocalizations.of(context)!.notifications,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.pushNamed(context, Routes.gifts);
+                        },
+                        child:   accountWidget(
+                          context,
+                          IconsAssets.vouchers,
+                          AppLocalizations.of(context)!.vouchers,
                         ),
                       ),
                       // GestureDetector(
@@ -392,11 +404,7 @@ class _AccountViewState extends State<AccountView> {
                       //           builder: (builder) => CouponsView()),
                       //     );
                       //   },
-                      //   child: accountWidget(
-                      //     context,
-                      //     IconsAssets.coupons,
-                      //     AppLocalizations.of(context)!.coupons,
-                      //   ),
+
                       // ),
                     ],
                   ),
@@ -436,20 +444,6 @@ class _AccountViewState extends State<AccountView> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => NotificationView()),
-                          );
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.notifications,
-                          AppLocalizations.of(context)!.notifications,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
                           // info@ghafgate.com
                           //send from email
                           _contactEmail();
@@ -460,34 +454,34 @@ class _AccountViewState extends State<AccountView> {
                           AppLocalizations.of(context)!.get_help,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.rateUs);
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => RateDelivery(),
-                          // ));
-                        },
-                        child: accountWidget(
-                          context,
-                          'star',
-                          // 'Rate Us',
-                          AppLocalizations.of(context)!.rate_us,
-                          isVector: true,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.forgetPasswordRoute);
-                        },
-                        child: accountWidget(
-                          context,
-                          '',
-                          // 'Forgot Password',
-                          AppLocalizations.of(context)!.forget_password,
-                          iconName: CupertinoIcons.lock_fill,
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     // Navigator.pushNamed(context, Routes.rateUs);
+                      //     // Navigator.of(context).push(MaterialPageRoute(
+                      //     //   builder: (context) => RateDelivery(),
+                      //     // ));
+                      //   },
+                      //   child: accountWidget(
+                      //     context,
+                      //     'star',
+                      //     // 'Rate Us',
+                      //     AppLocalizations.of(context)!.rate_us,
+                      //     isVector: true,
+                      //   ),
+                      // ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.pushNamed(
+                      //         context, Routes.forgetPasswordRoute);
+                      //   },
+                      //   child: accountWidget(
+                      //     context,
+                      //     '',
+                      //     // 'Forgot Password',
+                      //     AppLocalizations.of(context)!.forget_password,
+                      //     iconName: CupertinoIcons.lock_fill,
+                      //   ),
+                      // ),
                       GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -512,73 +506,87 @@ class _AccountViewState extends State<AccountView> {
                           )),
                       GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (builder) => AboutAppView()),
-                            // );
-                            Navigator.of(context)
-                                .pushReplacementNamed(Routes.language);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => AboutAppView()),
+                            );
                           },
-                          child: Row(
-                            children: [
-                              Icon(Icons.language, color: ColorManager.primary),
-                              SizedBox(
-                                width: AppSize.s8,
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.language,
-                                style: getRegularStyle(
-                                  color: ColorManager.primaryDark,
-                                  fontSize: FontSize.s16,
-                                ),
-                              ),
-                            ],
+                          child: accountWidget(
+                            context,
+                            IconsAssets.sell,
+                            AppLocalizations.of(context)!.sell_with_us,
                           )),
+                      // GestureDetector(
+                      //     onTap: () {
+                      //       // Navigator.push(
+                      //       //   context,
+                      //       //   MaterialPageRoute(
+                      //       //       builder: (builder) => AboutAppView()),
+                      //       // );
+                      //       // Navigator.of(context)
+                      //       //     .pushReplacementNamed(Routes.language);
+                      //     },
+                      //     child: Row(
+                      //       children: [
+                      //         Icon(Icons.language, color: ColorManager.primary),
+                      //         SizedBox(
+                      //           width: AppSize.s8,
+                      //         ),
+                      //         Text(
+                      //           AppLocalizations.of(context)!.language,
+                      //           style: getRegularStyle(
+                      //             color: ColorManager.primaryDark,
+                      //             fontSize: FontSize.s16,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     )),
                       SizedBox(
                         height: AppSize.s14,
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 30),
-                      child: GestureDetector(
-                          onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (builder) => AboutAppView()),
-                            // );
-                            _accountViewGetXController.logout(context: context);
-                          },
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.logout,
-                                color: ColorManager.primary,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                width: AppSize.s8,
-                              ),
-                              Text(
-                                // AppLocalizations.of(context)!.language,
-                                '${AppLocalizations.of(context)!.logout}',
-                                style: getRegularStyle(
-                                  color: ColorManager.red,
-                                  fontSize: FontSize.s20,
-                                ),
-                              ),
-                            ],
-                          )),
-                    ),
-                  ),
-                ),
+
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 1,
+                //   height: MediaQuery.of(context).size.height * 0.2,
+                //   child: Center(
+                //     child: Container(
+                //       padding: EdgeInsets.only(top: 30),
+                //       child: GestureDetector(
+                //           onTap: () {
+                //             // Navigator.push(
+                //             //   context,
+                //             //   MaterialPageRoute(
+                //             //       builder: (builder) => AboutAppView()),
+                //             // );
+                //             _accountViewGetXController.logout(context: context);
+                //           },
+                //           child: Column(
+                //             children: [
+                //               Icon(
+                //                 Icons.logout,
+                //                 color: ColorManager.primary,
+                //                 size: 35,
+                //               ),
+                //               SizedBox(
+                //                 width: AppSize.s8,
+                //               ),
+                //               Text(
+                //                 // AppLocalizations.of(context)!.language,
+                //                 '${AppLocalizations.of(context)!.logout}',
+                //                 style: getRegularStyle(
+                //                   color: ColorManager.red,
+                //                   fontSize: FontSize.s20,
+                //                 ),
+                //               ),
+                //             ],
+                //           )),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

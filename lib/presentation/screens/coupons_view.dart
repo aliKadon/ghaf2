@@ -39,7 +39,7 @@ class _CouponsViewState extends State<CouponsView> {
                   ),
                   Spacer(),
                   Text(
-                    AppLocalizations.of(context)!.coupons,
+                    AppLocalizations.of(context)!.vouchers,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,

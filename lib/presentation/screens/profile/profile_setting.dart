@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../account_view/account_view_getx_controller.dart';
 
 class ProfileSetting extends StatefulWidget {
   @override
@@ -20,7 +24,8 @@ class _ProfileSettingState extends State<ProfileSetting> {
   late TextEditingController _phoneTextController;
 
   var language = SharedPrefController().lang1;
-
+  late final AccountViewGetXController _accountViewGetXController =
+  Get.put(AccountViewGetXController());
   @override
   void initState() {
     _firstNameTextController = TextEditingController();
@@ -69,6 +74,18 @@ class _ProfileSettingState extends State<ProfileSetting> {
                     ),
                   ),
                   Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      _accountViewGetXController.logout(context: context);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.logout,
+                      style: getSemiBoldStyle(
+                        color: ColorManager.grey,
+                        fontSize: FontSize.s12,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -88,6 +105,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
               ),
               child: TextFormField(
                 controller: _firstNameTextController,
+                cursorColor: ColorManager.primary,
                 decoration: InputDecoration(
                     label: Text(AppLocalizations.of(context)!.first_name,
                       style: TextStyle(color: ColorManager.greyLight),)),
@@ -108,7 +126,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.p16,
               ),
-              child: TextFormField(
+              child: TextFormField( cursorColor: ColorManager.primary,
                 validator: (value) {
                   if (value == null || value.isEmpty)
                     return AppLocalizations.of(context)!
@@ -130,7 +148,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.p16,
               ),
-              child: TextFormField(
+              child: TextFormField( cursorColor: ColorManager.primary,
                 controller: _phoneTextController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
@@ -203,12 +221,17 @@ class _ProfileSettingState extends State<ProfileSetting> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(AppLocalizations.of(context)!.saved_address,style: TextStyle(fontSize: FontSize.s18)),
-                  Spacer(),
-                  language == 'en' ? Image.asset(IconsAssets.arrow2,height: AppSize.s18,color: ColorManager.primary,) : Image.asset(IconsAssets.arrow,height: AppSize.s18,color: ColorManager.primary,),
-                ],
+              child: InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, Routes.addressesRoute);
+                },
+                child: Row(
+                  children: [
+                    Text(AppLocalizations.of(context)!.saved_address,style: TextStyle(fontSize: FontSize.s18)),
+                    Spacer(),
+                    language == 'en' ? Image.asset(IconsAssets.arrow2,height: AppSize.s18,color: ColorManager.primary,) : Image.asset(IconsAssets.arrow,height: AppSize.s18,color: ColorManager.primary,),
+                  ],
+                ),
               ),
             ),
             SizedBox(

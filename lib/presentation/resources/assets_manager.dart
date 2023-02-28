@@ -77,6 +77,7 @@ class ImageAssets {
 class IconsAssets {
   static const String home = "$iconPath/home.png";
   static const String home1 = "$iconPath/home1.png";
+  static const String sell = "$iconPath/sell.png";
   static const String categories = "$iconPath/categories.png";
   static const String categories1 = "$iconPath/categories1.png";
   static const String cart = "$iconPath/cart.png";
@@ -93,7 +94,7 @@ class IconsAssets {
 
   static const String clock = "$iconPath/clock.png";
   static const String clock1 = "$iconPath/clock1.png";
-  static const String coupons = "$iconPath/coupons.png";
+  static const String vouchers = "$iconPath/coupons.png";
   static const String filter = "$iconPath/filter.png";
   static const String heart = "$iconPath/heart.png";
   static const String heart1 = "$iconPath/heart1.png";

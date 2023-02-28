@@ -111,12 +111,33 @@ class _RewardsViewState extends State<RewardsView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${allRedeemPoint['total']} ${AppLocalizations.of(context)!.point}',
-                        style: getBoldStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s18,
-                        ),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${allRedeemPoint['total']} ${AppLocalizations.of(context)!.point}',
+                            style: getBoldStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s18,
+                            ),
+                          ),
+                          SizedBox(
+                            width: AppSize.s123,
+                          ),
+                          InkWell(
+                            onTap: (){
+
+
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.how_it_work,
+                              style: getBoldStyle(
+                                color: ColorManager.primary,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Text(
                         AppLocalizations.of(context)!.all_points_you_have,
@@ -139,57 +160,54 @@ class _RewardsViewState extends State<RewardsView> {
               SizedBox(
                 height: AppSize.s24,
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(
-              //       vertical: AppPadding.p8, horizontal: AppPadding.p8),
-              //   decoration: BoxDecoration(
-              //     color: ColorManager.whiteLight,
-              //     borderRadius: BorderRadius.circular(AppRadius.r8),
-              //   ),
-              //   child: Row(
-              //     children: [
-              //       Text(
-              //         '90 points spent',
-              //         style: getMediumStyle(
-              //           color: ColorManager.primaryDark,
-              //           fontSize: FontSize.s16,
-              //         ),
-              //       ),
-              //       Spacer(),
-              //       Text(
-              //         AppLocalizations.of(context)!.browse_history,
-              //         style: getRegularStyle(
-              //           color: ColorManager.grey,
-              //           fontSize: FontSize.s14,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              SizedBox(
-                height: AppSize.s24,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: AppPadding.p8, horizontal: AppPadding.p8),
+                decoration: BoxDecoration(
+                  color: ColorManager.whiteLight,
+                  borderRadius: BorderRadius.circular(AppRadius.r8),
+                ),
                 child: Row(
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.free_delivery_bonus,
+                      '90 ${ AppLocalizations.of(context)!.points_spent2}',
                       style: getMediumStyle(
                         color: ColorManager.primaryDark,
-                        fontSize: FontSize.s18,
+                        fontSize: FontSize.s16,
                       ),
                     ),
                     Spacer(),
-                    // Text(
-                    //   AppLocalizations.of(context)!.more,
-                    //   style: getMediumStyle(
-                    //     color: ColorManager.greyLight,
-                    //     fontSize: FontSize.s16,
-                    //   ),
-                    // ),
+                    Text(
+                      AppLocalizations.of(context)!.browse_history,
+                      style: getRegularStyle(
+                        color: ColorManager.grey,
+                        fontSize: FontSize.s14,
+                      ),
+                    ),
                   ],
                 ),
+              ),
+              SizedBox(
+                height: AppSize.s24,
+              ),
+              Row(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.free_delivery_bonus,
+                    style: getMediumStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    AppLocalizations.of(context)!.more,
+                    style: getMediumStyle(
+                      color: ColorManager.greyLight,
+                      fontSize: FontSize.s16,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: AppSize.s8,
@@ -291,6 +309,25 @@ class _RewardsViewState extends State<RewardsView> {
               ),
               SizedBox(
                 height: AppSize.s22,
+              ),
+              Row(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.offers,
+                    style: getMediumStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    AppLocalizations.of(context)!.more,
+                    style: getMediumStyle(
+                      color: ColorManager.greyLight,
+                      fontSize: FontSize.s16,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

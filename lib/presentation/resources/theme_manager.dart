@@ -73,13 +73,13 @@ ThemeData getApplicationTheme() {
         labelStyle:
             getMediumStyle(color: ColorManager.grey, fontSize: FontSize.s14),
         errorStyle: getRegularStyle(color: ColorManager.red),
-
         // enabled border style
         enabledBorder:
         OutlineInputBorder(
             borderSide:
-                BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
+                BorderSide(color: Colors.grey, ),
             borderRadius: BorderRadius.all(Radius.circular(AppRadius.r8))),
+
 
         // focused border style
         focusedBorder: OutlineInputBorder(

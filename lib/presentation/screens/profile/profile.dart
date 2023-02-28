@@ -2,20 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/presentation/screens/notification_view.dart';
+import 'package:ghaf_application/presentation/screens/profile/change_email.dart';
+import 'package:ghaf_application/presentation/screens/profile/password_setting.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app/constants.dart';
+import '../../../providers/language_provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
+import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   var language = SharedPrefController().lang1;
 
+  Locale? local;
+ late final curLocale = Provider.of<LocaleProvider>(context, listen: false);
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -85,6 +99,10 @@ class Profile extends StatelessWidget {
                         AppLocalizations.of(context)!.account_info),
                   ),
                   GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ChangeEmail(),));
+                    },
                     child: accountWidget(
                         context,
                         language == 'en'
@@ -93,6 +111,10 @@ class Profile extends StatelessWidget {
                         AppLocalizations.of(context)!.change_email),
                   ),
                   GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PasswordSetting(),));
+                    },
                     child: accountWidget(
                         context,
                         language == 'en'
@@ -123,6 +145,10 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => NotificationView(),));
+                    },
                     child: accountWidget(
                         context,
                         language == 'en'
@@ -153,6 +179,9 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
+                    onTap:(){
+                      _customDialogLanguage(context);
+                    },
                     child: accountWidget(
                         context,
                         language == 'en'
@@ -220,5 +249,85 @@ class Profile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _customDialogLanguage(context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              height: AppSize.s146,
+              width: AppSize.s360,
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AppSize.s12,
+                    ),
+                  Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        AppLocalizations.of(context)!.language,
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s24),
+                      ),
+                    ),
+                    SizedBox(
+                      height: AppSize.s12,
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        curLocale.setLocale( Locale('en'));
+                        print(SharedPrefController().lang1);
+                        SharedPrefController().changeLanguage(language: 'en');
+                        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+                      },
+                      child: Row(
+                        children: [
+                          Text(AppLocalizations.of(context)!.english,
+                        style: getMediumStyle(
+                        color: ColorManager.black,
+                        fontSize: FontSize.s16),
+                          ),
+                          Spacer(),
+                          SharedPrefController().lang1 == 'en'?   Icon(Icons.check,color: ColorManager.primary,):Container(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: AppSize.s12,
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        curLocale.setLocale(Locale('ar'));
+                        SharedPrefController().changeLanguage(language: 'ar');
+                        print(SharedPrefController().lang1);
+                        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+                      },
+                      child: Row(
+                        children: [
+                          Text(AppLocalizations.of(context)!.arabic,
+                            style: getMediumStyle(
+                                color: ColorManager.black,
+                                fontSize: FontSize.s16),
+                          ),
+                          Spacer(),
+                          SharedPrefController().lang1 == 'ar'?   Icon(Icons.check,color: ColorManager.primary,):Container(),
+                        ],
+                      ),
+                    ),
+
+                  ]),
+            ),
+          );
+        });
   }
 }
