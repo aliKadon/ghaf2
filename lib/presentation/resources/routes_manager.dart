@@ -32,7 +32,7 @@ import 'package:ghaf_application/presentation/screens/order_information_view.dar
 import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
-import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
+import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/all_products_screen.dart';

@@ -7,10 +7,10 @@ import 'package:ghaf_application/presentation/screens/product_view/product_view2
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/constants.dart';
-import '../resources/color_manager.dart';
-import '../resources/styles_manager.dart';
-import '../resources/values_manager.dart';
+import '../../../app/constants.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
 
 class PayLaterView extends StatefulWidget {
   const PayLaterView({Key? key}) : super(key: key);

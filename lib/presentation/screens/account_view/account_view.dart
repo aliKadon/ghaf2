@@ -12,9 +12,10 @@ import 'package:ghaf_application/presentation/screens/account_view/account_view_
 import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
-import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
+import 'package:ghaf_application/presentation/screens/orders/orders_screen.dart';
+import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view.dart';
+import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_new.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile.dart';
-import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_shop/rate_shop.dart';
 import 'package:ghaf_application/presentation/screens/rewards_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,7 +24,6 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
-import '../rate_and_reviews/rate_delivery/rate_delivery.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -312,9 +312,12 @@ class _AccountViewState extends State<AccountView> {
                       // ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.OrdersHistoryRoute);
+                          // Navigator.pushNamed(
+                          //     context, Routes.OrdersHistoryRoute);
                           // _customDialogProgress();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => OrdersScreen(),
+                          ));
                         },
                         child: accountWidget(
                           context,
@@ -343,7 +346,7 @@ class _AccountViewState extends State<AccountView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => PayLaterView()),
+                                builder: (builder) => PayLaterViewNew()),
                           );
                         },
                         child: accountWidget(
@@ -391,7 +394,7 @@ class _AccountViewState extends State<AccountView> {
                         onTap: () {
                           // Navigator.pushNamed(context, Routes.gifts);
                         },
-                        child:   accountWidget(
+                        child: accountWidget(
                           context,
                           IconsAssets.vouchers,
                           AppLocalizations.of(context)!.vouchers,

@@ -81,6 +81,9 @@ class ImageAssets {
   static const String tomorrowTimer = "$imagePath/tomorrow_timer.png";
   static const String deliveryFee = "$imagePath/delivery_fee.png";
   static const String serviceFee = "$imagePath/service_fee.png";
+  static const String groceryOrder = "$imagePath/grocery_order.png";
+  static const String albaik = "$imagePath/albaik.png";
+  static const String emptyBasket = "$imagePath/empty_basket.png";
 }
 
 class IconsAssets {

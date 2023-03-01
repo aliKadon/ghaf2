@@ -128,7 +128,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                   width: AppSize.s6,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.71,
+                  width: MediaQuery.of(context).size.width * 0.68,
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
@@ -172,14 +172,18 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
             ],
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.57,
             decoration: BoxDecoration(color: ColorManager.greyLight),
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
               itemCount: 5,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return StoreWidget();
+                return InkWell(
+                  onTap: () {
+                    showStoreClosedPreOrderSheet(context);
+                  },
+                    child: StoreWidget());
               },
             ),
           )
