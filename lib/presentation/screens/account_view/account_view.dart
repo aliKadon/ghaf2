@@ -9,6 +9,7 @@ import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later_view.dart';
@@ -327,7 +328,7 @@ class _AccountViewState extends State<AccountView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => MyWalletView()),
+                                builder: (builder) => MyWalletNew()),
                           );
                         },
                         child: accountWidget(

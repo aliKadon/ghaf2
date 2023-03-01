@@ -8,6 +8,7 @@ class ColorManager {
   static Color white = const Color(0xffffffff);
   static Color whiteLight = const Color(0xffF5F5F5);
   static Color grey = const Color(0xff7FA5A4);           // 2
+  static Color grey2 = const Color(0xffc6e1e0);             // 2
   static Color greyLight = const Color(0xffD9D9D9);      // bg
   static Color navyBlue = const Color(0xff335669);       // 4
   static Color navyBlueDark = const Color(0xff0B2536);   // 5

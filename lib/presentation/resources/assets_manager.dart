@@ -6,6 +6,7 @@ class ImageAssets {
   static const String logo2 = "$imagePath/logo2.png";
   static const String logo3 = "$imagePath/logo4.png";
   static const String logo4 = "$imagePath/logo4.png";
+  static const String logo_wallet = "$iconPath/logo_wallet.png";
   static const String bgSplash = "$imagePath/bg_splash.png";
   static const String bgSplash1 = "$imagePath/bg_splash1.png";
   static const String onboardingImg1 = "$imagePath/onboarding_img1.png";
@@ -151,4 +152,7 @@ class IconsAssets {
   static const String offers1 = "$iconPath/offers1.png";
   static const String share = "$iconPath/share.png";
   static const String start1 = "$iconPath/start1.png";
+  static const String top_up = "$iconPath/top_up.png";
+  static const String add_credit = "$iconPath/add_credit.png";
+  static const String manage = "$iconPath/manage.png";
 }
