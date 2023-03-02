@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/my_wallet/add_credit_screen.dart';
+import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +12,10 @@ import '../../../app/utils/helpers.dart';
 import '../../resources/values_manager.dart';
 
 class SnapsheetScreen extends StatefulWidget with Helpers {
+
+  String? lastScreen;
+
+  SnapsheetScreen({this.lastScreen});
 
   @override
   State<SnapsheetScreen> createState() => _SnapsheetScreenState();
@@ -65,7 +71,10 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
-              height: MediaQuery.of(context).size.height * 1,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 1,
               child: Column(
                 children: [
                   SizedBox(
@@ -82,7 +91,8 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                           cvvCode: cardInfo['cvc']!,
                           showBackView: isCVV,
                           onCreditCardWidgetChange:
-                              (CreditCardBrand) {}, //true when you want to show cvv(back) view
+                              (
+                              CreditCardBrand) {}, //true when you want to show cvv(back) view
                         ),
                         // CreditCardForm(
                         //   formKey: _form,
@@ -142,7 +152,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                           ],
                           decoration: InputDecoration(
                               hintText:
-                                  AppLocalizations.of(context)!.number_card),
+                              AppLocalizations.of(context)!.number_card),
                           onSaved: (value) {
                             cardInfo = {
                               'cardNumber': value!,
@@ -194,7 +204,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                 ],
                                 decoration: InputDecoration(
                                     hintText:
-                                        AppLocalizations.of(context)!.month),
+                                    AppLocalizations.of(context)!.month),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -220,7 +230,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                 ],
                                 decoration: InputDecoration(
                                     hintText:
-                                        AppLocalizations.of(context)!.year),
+                                    AppLocalizations.of(context)!.year),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -249,6 +259,25 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                     child: ElevatedButton(
                       child: Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
+                        if (widget.lastScreen != null &&
+                            widget.lastScreen == 'topUp') {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => TopUpScreen(screenName: 'topUp'),));
+                        }
+
+                        if (widget.lastScreen != null &&
+                            widget.lastScreen == 'addCredit') {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => AddCreditScreen(),));
+                        }
+                        if (widget.lastScreen != null &&
+                            widget.lastScreen == 'manage') {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => TopUpScreen(screenName: 'manage'),));
+                        }
                         // showLoadingDialog(context: context, title: 'Logging In');
 
                         // print('=========================checkout');

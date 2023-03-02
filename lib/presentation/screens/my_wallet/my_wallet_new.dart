@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/transaction.dart';
 
 import '../../resources/assets_manager.dart';
@@ -42,7 +44,10 @@ class _MyWalletNewState extends State<MyWalletNew> {
                         child: GestureDetector(
                           onTap: () {
 
-                            Navigator.pop(context);
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) => MainView(),
+                            ));
                           },
                           child: Image.asset(
                             IconsAssets.arrow,

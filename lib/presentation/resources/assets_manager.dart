@@ -84,6 +84,9 @@ class ImageAssets {
   static const String groceryOrder = "$imagePath/grocery_order.png";
   static const String albaik = "$imagePath/albaik.png";
   static const String emptyBasket = "$imagePath/empty_basket.png";
+  static const String topUP = "$imagePath/top_up.png";
+  static const String errorTopUP = "$imagePath/error_top_up.png";
+  static const String correctSign = "$imagePath/correct_sign.png";
 }
 
 class IconsAssets {
