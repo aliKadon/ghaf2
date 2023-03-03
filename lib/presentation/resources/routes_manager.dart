@@ -41,7 +41,7 @@ import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_sell
 import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/rewards_view.dart';
+import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_bank_account_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';

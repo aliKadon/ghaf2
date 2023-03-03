@@ -278,7 +278,14 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                               MaterialPageRoute(
                                 builder: (context) => TopUpScreen(screenName: 'manage'),));
                         }
-                        // showLoadingDialog(context: context, title: 'Logging In');
+                        if (widget.lastScreen != null &&
+                            widget.lastScreen == 'payLater') {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => TopUpScreen(screenName: 'payLater'),));
+                        }
+                        // show
+                        // LoadingDialog(context: context, title: 'Logging In');
 
                         // print('=========================checkout');
                         // print(

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
+import 'package:ghaf_application/presentation/screens/pay_later/pay_later_product_view.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/values_manager.dart';
 
-class MostPopularProductWidget extends StatelessWidget {
+class PayLaterProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductViewNew(),
+          builder: (context) => PayLaterProductView(),
         ));
       },
       child: Padding(

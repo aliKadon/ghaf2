@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
+import 'package:ghaf_application/presentation/widgets/pay_later_producte_widget.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -34,7 +36,9 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => MainView(),
+                  )),
                   child: Image.asset(
                     IconsAssets.arrow,
                     height: AppSize.s18,
@@ -138,7 +142,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisExtent: 300),
               itemBuilder: (context, index) {
-                return MostPopularProductWidget();
+                return PayLaterProductWidget();
               },
             ),
           )

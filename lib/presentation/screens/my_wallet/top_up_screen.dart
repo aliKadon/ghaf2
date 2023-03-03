@@ -4,6 +4,7 @@ import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.
 import 'package:ghaf_application/presentation/screens/my_wallet/edit_payment_method_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/enter_amount.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/transaction.dart';
+import 'package:ghaf_application/presentation/screens/pay_later/pay_later_product_view.dart';
 import 'package:ghaf_application/presentation/widgets/top_up_widget.dart';
 
 import '../../resources/assets_manager.dart';
@@ -61,55 +62,88 @@ class TopUpScreen extends StatelessWidget {
                       Spacer(),
                     ],
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(AppSize.s6),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => TransactionScreen(),
-                            ));
-                          },
-                          child: Image.asset(
-                            IconsAssets.arrow,
-                            height: AppSize.s18,
-                            width: AppSize.s10,
-                            color: ColorManager.primaryDark,
+                : screenName == 'payLater'
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(AppSize.s6),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => PayLaterProductView(),
+                                ));
+                              },
+                              child: Image.asset(
+                                IconsAssets.arrow,
+                                height: AppSize.s18,
+                                width: AppSize.s10,
+                                color: ColorManager.primaryDark,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        AppLocalizations.of(context)!.manage_payment,
-                        style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s18,
-                        ),
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EditPaymentMethodScreen(),
-                          ));
-                        },
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(left: 14.0, right: 14.0),
-                          child: Text(
-                            AppLocalizations.of(context)!.edit,
-                            style: TextStyle(
-                                color: ColorManager.greyLight,
-                                fontSize: FontSize.s16,
-                                fontWeight: FontWeight.w600),
+                          Spacer(),
+                          Text(
+                            AppLocalizations.of(context)!.payment_method,
+                            style: getSemiBoldStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s18,
+                            ),
                           ),
-                        ),
+                          Spacer(),
+
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(AppSize.s6),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => TransactionScreen(),
+                                ));
+                              },
+                              child: Image.asset(
+                                IconsAssets.arrow,
+                                height: AppSize.s18,
+                                width: AppSize.s10,
+                                color: ColorManager.primaryDark,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            AppLocalizations.of(context)!.manage_payment,
+                            style: getSemiBoldStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s18,
+                            ),
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EditPaymentMethodScreen(),
+                              ));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 14.0, right: 14.0),
+                              child: Text(
+                                AppLocalizations.of(context)!.edit,
+                                style: TextStyle(
+                                    color: ColorManager.greyLight,
+                                    fontSize: FontSize.s16,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
             SizedBox(
               height: AppSize.s16,
             ),
@@ -160,9 +194,16 @@ class TopUpScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => EnterAmount(),
-                                ));
+                                if (screenName == 'payLater') {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => PayLaterProductView(),
+                                  ));
+                                }else {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => EnterAmount(),
+                                  ));
+                                }
+
                               },
                               child: TopUpWidget());
                         },
@@ -175,7 +216,12 @@ class TopUpScreen extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => SnapsheetScreen(lastScreen: 'topUp'),
                   ));
-                } else {
+                } else if (screenName == 'payLater') {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SnapsheetScreen(lastScreen: 'payLater'),
+                  ));
+                }
+                else {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => SnapsheetScreen(lastScreen: 'manage'),
                   ));

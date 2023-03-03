@@ -5,13 +5,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/constants.dart';
-import '../../providers/product_provider.dart';
-import '../resources/assets_manager.dart';
-import '../resources/color_manager.dart';
-import '../resources/font_manager.dart';
-import '../resources/styles_manager.dart';
-import '../resources/values_manager.dart';
+import '../../../app/constants.dart';
+import '../../../providers/product_provider.dart';
+import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
+import '../../resources/font_manager.dart';
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
 
 
 class RewardsView extends StatefulWidget {

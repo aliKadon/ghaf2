@@ -87,6 +87,13 @@ class ImageAssets {
   static const String topUP = "$imagePath/top_up.png";
   static const String errorTopUP = "$imagePath/error_top_up.png";
   static const String correctSign = "$imagePath/correct_sign.png";
+  static const String gift = "$imagePath/gift1.png";
+  static const String gift2 = "$imagePath/gift2.png";
+  static const String ghafHelp = "$imagePath/ghaf_help.png";
+  static const String earnPoints2 = "$imagePath/earn_points_2.png";
+  static const String star1 = "$imagePath/star1.png";
+  static const String voucher = "$imagePath/vouchers.png";
+  static const String percent = "$imagePath/percent.png";
 }
 
 class IconsAssets {

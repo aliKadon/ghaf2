@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/values_manager.dart';
+import '../screens/product_view/product_view_new.dart';
 
-class MostPopularProductWidget extends StatelessWidget {
+class FreeDeliveryProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -49,6 +50,36 @@ class MostPopularProductWidget extends StatelessWidget {
                               width: AppSize.s24,
                             )),
                       ),
+                      PositionedDirectional(
+                        bottom: 0,
+                        end: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: AppSize.s30,
+                            // width: AppSize.s60,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.all(5),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.delivery_dining,
+                                  color: ColorManager.primaryDark,
+                                ),
+                                SizedBox(width: AppSize.s10),
+                                Text(
+                                  AppLocalizations.of(context)!.free_delivery,
+                                  style: TextStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(

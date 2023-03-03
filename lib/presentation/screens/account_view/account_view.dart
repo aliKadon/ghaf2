@@ -17,7 +17,9 @@ import 'package:ghaf_application/presentation/screens/orders/orders_screen.dart'
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_new.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile.dart';
-import 'package:ghaf_application/presentation/screens/rewards_view.dart';
+import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
+import 'package:ghaf_application/presentation/screens/rewards/rewards_view_new.dart';
+import 'package:ghaf_application/presentation/screens/vouchers/vouchers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../resources/assets_manager.dart';
@@ -304,7 +306,7 @@ class _AccountViewState extends State<AccountView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => RewardsView()),
+                                builder: (builder) => RewardsViewNew()),
                           );
                           // Navigator.of(context).push(MaterialPageRoute(
                           //   builder: (context) => CancellingOrderScreen(),));
@@ -415,6 +417,8 @@ class _AccountViewState extends State<AccountView> {
                       GestureDetector(
                         onTap: () {
                           // Navigator.pushNamed(context, Routes.gifts);
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Vouchers(),));
                         },
                         child: accountWidget(
                           context,
