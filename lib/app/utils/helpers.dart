@@ -4,12 +4,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_confirm_view.dart';
 import 'package:ghaf_application/presentation/widgets/dialogs/loading_dialog_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:redirect_icon/redirect_icon.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
+import 'package:social_media_flutter/widgets/icons.dart';
 
 import '../../presentation/resources/color_manager.dart';
 import '../../presentation/resources/styles_manager.dart';
+import '../../presentation/screens/checkout/cancelling_order_screen.dart';
 
 mixin Helpers {
   String dropdownValue = 'Today';
@@ -112,6 +116,10 @@ mixin Helpers {
                                       .height * 0.06,
                                   child: ElevatedButton(
                                     onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CancellingOrderScreen(),));
                                       // Navigator.of(context).pushReplacement(MaterialPageRoute(
                                       //   builder: (context) => LoginScreen(),
                                       // ));
@@ -180,6 +188,7 @@ mixin Helpers {
                   ),
             ),
       );
+
 
   Future showSubscribeSheet(BuildContext context) =>
       showSlidingBottomSheet(
@@ -760,7 +769,12 @@ mixin Helpers {
                                       width: double.infinity,
                                       padding: EdgeInsets.all(12),
                                       child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CheckOutConfirmView(),));
+                                          },
                                           child: Text(
                                               AppLocalizations.of(context)!
                                                   .confirm)),
@@ -1001,7 +1015,8 @@ mixin Helpers {
                             ),
                             Column(
                               children: [
-                                Text(AppLocalizations.of(context)!.store_currently_closed,
+                                Text(AppLocalizations.of(context)!
+                                    .store_currently_closed,
                                     style: TextStyle(
                                         fontSize: FontSize.s20,
                                         fontWeight: FontWeight.w600,
@@ -1013,9 +1028,13 @@ mixin Helpers {
                                       .height * 0.024,
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width *1,
+                                  width: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 1,
                                   child: Center(
-                                    child: Text(AppLocalizations.of(context)!.do_not_worry,
+                                    child: Text(AppLocalizations.of(context)!
+                                        .do_not_worry,
                                         style: TextStyle(
                                             fontSize: FontSize.s14,
                                             fontWeight: FontWeight.w600,
@@ -1045,7 +1064,8 @@ mixin Helpers {
                                                 RoundedRectangleBorder(
                                                     side: BorderSide(
                                                         color:
-                                                        ColorManager.primaryDark),
+                                                        ColorManager
+                                                            .primaryDark),
                                                     borderRadius: BorderRadius
                                                         .circular(10)),)),
                                           onPressed: () {},
@@ -1053,7 +1073,8 @@ mixin Helpers {
                                             AppLocalizations.of(context)!
                                                 .back,
                                             style: TextStyle(
-                                                color: ColorManager.primaryDark),)),
+                                                color: ColorManager
+                                                    .primaryDark),)),
                                     ),
                                     Spacer(),
                                     Container(
@@ -1080,6 +1101,78 @@ mixin Helpers {
                           ],
                         ),
                       ),
+                    ),
+                  ),
+            ),
+      );
+
+  Future showInviteSheet(BuildContext context) =>
+      showSlidingBottomSheet(
+        context,
+        builder: (context) =>
+            SlidingSheetDialog(
+              snapSpec: SnapSpec(
+                snappings: [0.6, 0.7],
+              ),
+              builder: (context, state) =>
+                  Material(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: [
+                              RedirectSocialIcon(
+                                url: "https://www.instagram.com/",
+                                icon: SocialIconsFlutter.instagram,
+                                radius: 25,
+                                size: 30,
+                                iconColor: Colors.white,
+                                circleAvatarColor: Colors.pink,
+                              ),
+                              SizedBox(width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.05,),
+
+                              RedirectSocialIcon(
+                                url: "fb://facewebmodal/f?href=https://www.facebook.com/al.mamun.me12",
+                                icon: SocialIconsFlutter.facebook,
+                                radius: 25,
+                                size: 30,
+                                iconColor: Colors.white,
+                                circleAvatarColor: Colors.blue,
+                              ),
+                              SizedBox(width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.05,),
+                              RedirectSocialIcon(
+                                url: "https://www.twitter.com/",
+                                icon: SocialIconsFlutter.twitter,
+                                radius: 25,
+                                size: 30,
+                                iconColor: Colors.white,
+                                circleAvatarColor: Colors.blue,
+                              ),
+                              SizedBox(width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.05,),
+                              RedirectSocialIcon(
+                                url: "https://wa.me/?text=YourTextHere",
+                                icon: Icons.whatsapp,
+
+                                radius: 25,
+                                size: 30,
+                                iconColor: Colors.white,
+                                circleAvatarColor: Colors.green,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: AppSize.s60,)
+                      ],
                     ),
                   ),
             ),

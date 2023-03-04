@@ -13,6 +13,8 @@ import 'package:ghaf_application/presentation/screens/checkout/cancelling_order_
 import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
+import 'package:ghaf_application/presentation/screens/notifications/notifications_screen_new.dart';
+import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
 import 'package:ghaf_application/presentation/screens/orders/orders_screen.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_new.dart';
@@ -392,7 +394,8 @@ class _AccountViewState extends State<AccountView> {
                       // ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.offersRoute);
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => OffersScreenNew(),));
                         },
                         child: accountWidget(
                           context,
@@ -405,7 +408,7 @@ class _AccountViewState extends State<AccountView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => NotificationView()),
+                                builder: (builder) => NotificationsScreenNew()),
                           );
                         },
                         child: accountWidget(
@@ -527,7 +530,7 @@ class _AccountViewState extends State<AccountView> {
                           )),
                       GestureDetector(
                           onTap: () {
-                            _customDialogProgress(context);
+                            Navigator.of(context).pushNamed(Routes.inviteScreen);
                           },
                           child: accountWidget(
                             context,

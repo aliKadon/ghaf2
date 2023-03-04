@@ -94,6 +94,7 @@ class ImageAssets {
   static const String star1 = "$imagePath/star1.png";
   static const String voucher = "$imagePath/vouchers.png";
   static const String percent = "$imagePath/percent.png";
+  static const String notificationImage = "$imagePath/notification.png";
 }
 
 class IconsAssets {

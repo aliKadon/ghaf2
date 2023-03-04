@@ -2,9 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -17,7 +15,7 @@ class Invite extends StatefulWidget {
   State<Invite> createState() => _InviteState();
 }
 
-class _InviteState extends State<Invite> {
+class _InviteState extends State<Invite> with Helpers {
   var isLoading = false;
   var refCode = '';
 
@@ -52,7 +50,7 @@ class _InviteState extends State<Invite> {
                   ),
                   Spacer(),
                   Text(
-                    AppLocalizations.of(context)!.invite,
+                    AppLocalizations.of(context)!.invite1,
                     style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s24),
@@ -69,19 +67,19 @@ class _InviteState extends State<Invite> {
                 height: 225,
                 width: 225,
               ),
-              SizedBox(
-                height: AppSize.s1,
-              ),
-              Text(
-                'Give 25% Off Get 25% Off',
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s20),
-              ),
-              Text(
-                'For Every Friend Who Places Their First Order',
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s14),
-              ),
+              // SizedBox(
+              //   height: AppSize.s1,
+              // ),
+              // Text(
+              //   'Give 25% Off Get 25% Off',
+              //   style: getSemiBoldStyle(
+              //       color: ColorManager.primaryDark, fontSize: FontSize.s20),
+              // ),
+              // Text(
+              //   'For Every Friend Who Places Their First Order',
+              //   style: getSemiBoldStyle(
+              //       color: ColorManager.primaryDark, fontSize: FontSize.s14),
+              // ),
               SizedBox(
                 height: AppSize.s12,
               ),
@@ -100,13 +98,14 @@ class _InviteState extends State<Invite> {
                             //   color: Color(0xff7FA5A4),
                             // ),
                           ),
-                          child: Image.asset('assets/images/icons1.png',width: 38,height: 38),
+                          child: Image.asset('assets/images/icons1.png',
+                              width: 38, height: 38),
                         ),
                         SizedBox(
                           height: AppSize.s8,
                         ),
                         Text(
-                          'Invite Friend \n',
+                          AppLocalizations.of(context)!.send_invite,
                           style: getSemiBoldStyle(
                               color: ColorManager.primary,
                               fontSize: FontSize.s14),
@@ -149,16 +148,22 @@ class _InviteState extends State<Invite> {
                             //   color: Color(0xff7FA5A4),
                             // ),
                           ),
-                          child: Image.asset('assets/images/icons2.png',width: 38,height:38),
+                          child: Image.asset('assets/images/icons2.png',
+                              width: 38, height: 38),
                         ),
                         SizedBox(
                           height: AppSize.s8,
                         ),
-                        Text(
-                          'Friend Come \n    Onboard',
-                          style: getSemiBoldStyle(
-                              color: ColorManager.primary,
-                              fontSize: FontSize.s14),
+                        Container(
+                          width: AppSize.s110,
+                          child: Text(
+                            AppLocalizations.of(context)!
+                                .family_friend_download_ghaf,
+                            textAlign: TextAlign.center,
+                            style: getSemiBoldStyle(
+                                color: ColorManager.primary,
+                                fontSize: FontSize.s14),
+                          ),
                         )
                       ],
                     ),
@@ -193,16 +198,21 @@ class _InviteState extends State<Invite> {
                             //   color: Color(0xff7FA5A4),
                             // ),
                           ),
-                          child: Image.asset('assets/images/icons3.png',width: 38,height: 38),
+                          child: Image.asset('assets/images/icons3.png',
+                              width: 38, height: 38),
                         ),
                         SizedBox(
                           height: AppSize.s8,
                         ),
-                        Text(
-                          'Get Rewards \n',
-                          style: getSemiBoldStyle(
-                              color: ColorManager.primary,
-                              fontSize: FontSize.s14),
+                        Container(
+                          width: AppSize.s92,
+                          child: Text(
+                            AppLocalizations.of(context)!.place_the_first_order,
+                            textAlign: TextAlign.center,
+                            style: getSemiBoldStyle(
+                                color: ColorManager.primary,
+                                fontSize: FontSize.s14),
+                          ),
                         )
                       ],
                     ),
@@ -210,86 +220,41 @@ class _InviteState extends State<Invite> {
                 ),
               ),
               SizedBox(
-                height: AppSize.s20,
+                height: AppSize.s60,
+              ),
+              Container(
+                width: AppSize.s222,
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .invite_family_and_friends_to_earn_reward_points,
+                  textAlign: TextAlign.center,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark, fontSize: FontSize.s18),
+                ),
+              ),
+              SizedBox(
+                height: AppSize.s60,
               ),
               Text(
-                AppLocalizations.of(context)!.invite_code,
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s18),
+                AppLocalizations.of(context)!.terms_and_conditions,
+                textAlign: TextAlign.center,
+                style: getMediumStyle(
+                    color: ColorManager.primary, fontSize: FontSize.s18),
               ),
-              // SizedBox(
-              //   height: AppSize.s20,
-              // ),
+              SizedBox(
+                height: AppSize.s60,
+              ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.14,
-                width: MediaQuery.of(context).size.width * 0.7,
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Color(0xff7FA5A4).withOpacity(0.2),
-                  // border: Border.all(
-                  //   color: Color(0xff7FA5A4),
-                  // ),
-                ),
-                child: isLoading
-                    ? Center(
-                        child: Container(
-                          width: 20.h,
-                          height: 20.h,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1,
-                          ),
-                        ),
-                      )
-                    : Center(
-                        child: Text(
-                          refCode,
-                          style: getSemiBoldStyle(
-                              color: Colors.deepOrangeAccent,
-                              fontSize: FontSize.s26),
-                        ),
-                      ),
-              ),
-              Column(
-                children: [
-                  ElevatedButton(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: AppSize.s44,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(ColorManager.primaryDark)),
                     onPressed: () {
-                      setState(() {
-                        isLoading = true;
-                        Provider.of<ProductProvider>(context, listen: false)
-                            .getReferralCode()
-                            .then((value) => isLoading = false);
-                        var referral =
-                            Provider.of<ProductProvider>(context, listen: false)
-                                .referralCode;
-                        isLoading = false;
-                        refCode = referral;
-                      });
+                      showInviteSheet(context);
                     },
-                    child: Text(
-                      AppLocalizations.of(context)!.generate,
-                      style: getSemiBoldStyle(
-                          color: Colors.white, fontSize: FontSize.s20),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        Clipboard.setData(ClipboardData(text: refCode));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Copied"),
-                          ),
-                        );
-                      });
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.copy,
-                      style: getSemiBoldStyle(
-                          color: Colors.white, fontSize: FontSize.s20),
-                    ),
-                  ),
-                ],
+                    child: Text(AppLocalizations.of(context)!.invite)),
               )
             ],
           ),
