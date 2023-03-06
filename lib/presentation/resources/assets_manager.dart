@@ -9,6 +9,8 @@ class ImageAssets {
   static const String logo_wallet = "$iconPath/logo_wallet.png";
   static const String bgSplash = "$imagePath/bg_splash.png";
   static const String bgSplash1 = "$imagePath/bg_splash1.png";
+  static const String bgSplashScreen = "$imagePath/splashscreen.gif";
+  static const String bgSplashtap = "$imagePath/splashtap.gif";
   static const String onboardingImg1 = "$imagePath/onboarding_img1.png";
   static const String onboardingImg2 = "$imagePath/onboarding_img2.png";
   static const String onboardingImg3 = "$imagePath/onboarding_img3.png";

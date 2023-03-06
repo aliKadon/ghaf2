@@ -30,7 +30,7 @@ class _SplashViewState extends State<SplashView> {
   Timer? _timer;
 
   _startDelay() {
-    _timer = Timer(const Duration(seconds: AppConstants.splashDelay), _goNext);
+    _timer = Timer(const Duration(seconds: 15), _goNext);
   }
 
   // LocationData? locationData;
@@ -110,27 +110,26 @@ class _SplashViewState extends State<SplashView> {
         alignment: Alignment.center,
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: ExactAssetImage(ImageAssets.bgSplash), fit: BoxFit.cover),
+              image: ExactAssetImage(ImageAssets.bgSplashtap), fit: BoxFit.cover),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              ImageAssets.logo1,
-              width: AppSize.s206,
-              height: AppSize.s222,
+              ImageAssets.bgSplashScreen,
+
             ),
-            SizedBox(
-              height: AppSize.s62,
-            ),
-            Text(
-              '    ${AppLocalizations.of(context)!.click_and_get}',
-              style: getSemiBoldStyle(
-                color: ColorManager.primaryDark,
-                fontSize: FontSize.s26,
-              ),
-            ),
+            // SizedBox(
+            //   height: AppSize.s62,
+            // ),
+            // Text(
+            //   '    ${AppLocalizations.of(context)!.click_and_get}',
+            //   style: getSemiBoldStyle(
+            //     color: ColorManager.primaryDark,
+            //     fontSize: FontSize.s26,
+            //   ),
+            // ),
           ],
         ),
       ),

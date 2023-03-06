@@ -1161,7 +1161,7 @@ mixin Helpers {
                                   .width * 0.05,),
                               RedirectSocialIcon(
                                 url: "https://wa.me/?text=YourTextHere",
-                                icon: Icons.whatsapp,
+                                icon: Icons.whatshot,
 
                                 radius: 25,
                                 size: 30,
