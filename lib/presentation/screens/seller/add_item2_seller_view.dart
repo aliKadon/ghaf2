@@ -67,7 +67,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
 
   var isShow2 = true;
 
-  Future pickImage() async {
+  Future pickImage1() async {
     try {
       final image1 = await ImagePicker().pickImage(source: ImageSource.gallery);
       print('====================================image');
@@ -168,7 +168,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
                   child: ElevatedButton(
-                    onPressed: () => pickImage(),
+                    onPressed: () => pickImage1(),
                     child: Text(
                       AppLocalizations.of(context)!.add_photo,
                       style: getMediumStyle(

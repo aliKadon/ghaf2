@@ -10,6 +10,7 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/cancelling_order_screen.dart';
+import 'package:ghaf_application/presentation/screens/get_help/get_help_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
@@ -479,7 +480,9 @@ class _AccountViewState extends State<AccountView> {
                         onTap: () {
                           // info@ghafgate.com
                           //send from email
-                          _contactEmail();
+                          // _contactEmail();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => GetHelpScreen(),));
                         },
                         child: accountWidget(
                           context,
@@ -530,7 +533,8 @@ class _AccountViewState extends State<AccountView> {
                           )),
                       GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(Routes.inviteScreen);
+                            Navigator.of(context).pushNamed(Routes
+                                .inviteScreen);
                           },
                           child: accountWidget(
                             context,

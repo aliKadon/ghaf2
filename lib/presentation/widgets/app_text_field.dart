@@ -13,6 +13,7 @@ class AppTextField extends StatelessWidget {
     TextEditingController? textController,
     required String hint,
     int? lines = 1,
+    this.icon,
     TextInputType textInputType = TextInputType.text,
     bool obscureText = false,
     TextInputAction textInputAction = TextInputAction.next,
@@ -39,6 +40,7 @@ class AppTextField extends StatelessWidget {
   final int? _lines;
   final TextInputType _textInputType;
   final bool _obscureText;
+  final Widget? icon;
   final TextInputAction _textInputAction;
   final void Function(String value)? _onSubmitted;
   final String? Function(String? value)? _validator;
@@ -71,6 +73,7 @@ class AppTextField extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(
               horizontal: AppPadding.p16, vertical: AppPadding.p16),
           hintText: _hint,
+          icon: icon,
           hintStyle: getMediumStyle(
             color: ColorManager.hintTextFiled,
           ),
