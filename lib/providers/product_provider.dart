@@ -14,6 +14,7 @@ import '../app/constants.dart';
 import '../app/preferences/shared_pref_controller.dart';
 import '../data/api/api_helper.dart';
 import '../domain/model/address.dart';
+import '../domain/model/api_response.dart';
 import '../domain/model/available_delevey_method.dart';
 import '../domain/model/delivery_method.dart';
 import '../domain/model/product2.dart';
@@ -106,6 +107,37 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
 
   num allPointsWallet = 0;
 
+  String message = '';
+
+
+  Future<ApiResponse> addOrRemoveFromCard({
+    required String productId,
+  }) async {
+    // print('send request : add-remove-to-basket');
+    Map<String, dynamic> queryParameters = {
+      'id': productId,
+    };
+    var url =
+    Uri.parse('${Constants.urlBase}/Product/add-remove-to-basket?Id=$productId');
+    // print(queryParameters);
+    var response = await http.post(url,
+        headers: headers,);
+    var jsonResponse = jsonDecode(response.body);
+    print('============================================');
+    print(response.statusCode);
+    print(jsonResponse);
+    if (response.statusCode == 200) {
+      if (jsonResponse['status'] == 200) {
+        message = jsonResponse['message'];
+        return ApiResponse(
+          message: jsonResponse['message'],
+          status: jsonResponse['status'],
+        );
+      }
+    }
+    return failedResponse;
+  }
+
   // var x = FirebaseMessagingService.instance.getToken();
   Future<void> getProductDiscount(int discountCount) async {
     // print('================================================');
@@ -120,7 +152,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     );
     // // print('=============================HIII');
     // // print(response.statusCode);
-    List productDiscount = json.decode(response.body)['data'];
+    List productDiscount = jsonDecode(response.body)['data'];
     // // print(productDiscount);
     List<ProductDiscount> prDs = [];
     for (int i = 0; i < productDiscount.length; i++) {
@@ -169,13 +201,10 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     var y = SharedPrefController().token;
     // // print(y);
     final response = await http.get(
-      Uri.parse("${Constants.urlBase}/product/read-product"),
-      headers: {
-        HttpHeaders.authorizationHeader: y,
-      },
+      Uri.parse("${Constants.urlBase}/Product/read-product/"),
+      headers: headers
     );
-    // // print('=============================HIII');
-    // // print(response.statusCode);
+
     List product = json.decode(response.body)['data'];
     // // print(productDiscount);
     List<Product2> list = [];
@@ -203,6 +232,14 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
           ghafImage: product[i]['ghafImage'],
           isInCart: product[i]['isInCart'],
           offer: product[i]['offer'],
+          discountValueForGoldenUsers: product[i]['discountValueForGoldenUsers'],
+          discountValueForAllUsers: product[i]['discountValueForAllUsers'],
+          productImages: product[i]['productImages'],
+          onlyOnGhaf: product[i]['onlyOnGhaf'],
+          subscriptionHide: product[i]['subscriptionHide'],
+          reviewCount: product[i]['reviewCount'],
+          storeReviewCount: product[i]['storeReviewCount'],
+          timeToPrepareMinutes: product[i]['timeToPrepareMinutes'],
           offerDescription: product[i]['offerDescription'],
           productDiscount: product[i]['productDiscount'],
           productReview: product[i]['productReview'],
@@ -215,44 +252,46 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
           storeStars: product[i]['storeStars'] ?? 0));
       
       
-      if (product[i]['canPayLater'] == true) {
-        listPayLater.add(Product2(
-            id: product[i]['id'],
-            isoCurrencySymbol: product[i]['isoCurrencySymbol'],
-            branch: product[i]['branch'],
-            name: product[i]['name'],
-            description: product[i]['description'],
-            isFavorite: product[i]['isFavorite'],
-            price: product[i]['price'],
-            addedAt: product[i]['addedAt'],
-            approved: product[i]['approved'],
-            canPayLater: product[i]['canPayLater'],
-            canPayLaterDays: product[i]['canPayLaterDays'],
-            category: product[i]['category'],
-            characteristics: product[i]['characteristics'],
-            deleted: product[i]['deleted'],
-            discountDescription: product[i]['discountDescription'],
-            ghafImage: product[i]['ghafImage'],
-            isInCart: product[i]['isInCart'],
-            offer: product[i]['offer'],
-            offerDescription: product[i]['offerDescription'],
-            productDiscount: product[i]['productDiscount'],
-            productReview: product[i]['productReview'],
-            productType: product[i]['productType'],
-            quantity: product[i]['quantity'],
-            redeemDescription: product[i]['redeemDescription'],
-            redeemPoints: product[i]['redeemPoints'],
-            stars: product[i]['stars'],
-            visible: product[i]['visible'],
-            storeStars: product[i]['storeStars'] ?? 0));
-      }
-      store.add(product[i]['branch']['storeName']);
-      storeID.add(product[i]['branch']['storeId']);
+      // if (product[i]['canPayLater'] == true) {
+      //   listPayLater.add(Product2(
+      //       id: product[i]['id'],
+      //       isoCurrencySymbol: product[i]['isoCurrencySymbol'],
+      //       branch: product[i]['branch'],
+      //       name: product[i]['name'],
+      //       description: product[i]['description'],
+      //       isFavorite: product[i]['isFavorite'],
+      //       price: product[i]['price'],
+      //       addedAt: product[i]['addedAt'],
+      //       approved: product[i]['approved'],
+      //       canPayLater: product[i]['canPayLater'],
+      //       canPayLaterDays: product[i]['canPayLaterDays'],
+      //       category: product[i]['category'],
+      //       characteristics: product[i]['characteristics'],
+      //       deleted: product[i]['deleted'],
+      //       discountDescription: product[i]['discountDescription'],
+      //       ghafImage: product[i]['ghafImage'],
+      //       isInCart: product[i]['isInCart'],
+      //       offer: product[i]['offer'],
+      //       offerDescription: product[i]['offerDescription'],
+      //       productDiscount: product[i]['productDiscount'],
+      //       productReview: product[i]['productReview'],
+      //       productType: product[i]['productType'],
+      //       quantity: product[i]['quantity'],
+      //       redeemDescription: product[i]['redeemDescription'],
+      //       redeemPoints: product[i]['redeemPoints'],
+      //       stars: product[i]['stars'],
+      //       visible: product[i]['visible'],
+      //       storeStars: product[i]['storeStars'] ?? 0));
+      // }
+      // store.add(product[i]['branch']['branchName']);
+      // storeID.add(product[i]['branch']['id']);
     }
-    listPayLater1 = listPayLater;
+    // listPayLater1 = listPayLater;
     _product = list;
-    storeName = store.toSet().toList();
-    storeId = storeID.toSet().toList();
+    // storeName = store.toSet().toList();
+    // storeId = storeID.toSet().toList();
+    // print('================================products');
+    // print(list);
     notifyListeners();
   }
 
@@ -447,7 +486,7 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
   // Future<void> payForOrder(String orderId, String deliveryId,)
 
   Future<void> getProductById(String id) async{
-    var url = Uri.parse('${Constants.urlBase}/product/get-product-by-id?prodId=$id');
+    var url = Uri.parse('${Constants.urlBase}/Product/get-product-by-id?prodId=$id');
     final response = await http.get(url, headers: headers);
     var data = json.decode(response.body)['data'];
     List<Address> list = [];
@@ -462,8 +501,8 @@ class ProductProvider extends ChangeNotifier with ApiHelper {
     //     ),
     //   );
     // }
-    print('====================================productByid');
-    print(data);
+    // print('====================================productByid');
+    // print(data);
     productById = data;
     notifyListeners();
   }

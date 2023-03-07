@@ -6,6 +6,8 @@ import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/checkout_confirm_view.dart';
+import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
+import 'package:ghaf_application/presentation/screens/register_view/register_view.dart';
 import 'package:ghaf_application/presentation/widgets/dialogs/loading_dialog_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:redirect_icon/redirect_icon.dart';
@@ -1066,4 +1068,100 @@ mixin Helpers {
           ),
         ),
       );
+
+  Future showSignInSheet(BuildContext context) => showSlidingBottomSheet(
+    context,
+    builder: (context) => SlidingSheetDialog(
+      snapSpec: SnapSpec(
+        snappings: [0.4, 0.7],
+      ),
+      builder: (context, state) => Material(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.024,
+                ),
+                Text(AppLocalizations.of(context)!.register_now,
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                        color: ColorManager.primary)),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.024,
+                ),
+                Text(AppLocalizations.of(context)!.you_must_register_or_log_in,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: ColorManager.primaryDark)),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.024,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => LoginView(),
+                      ));
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            ColorManager.primaryDark),
+                        shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)))),
+                    child: Text(
+                      AppLocalizations.of(context)!.login,
+                      // 'Login',
+                      style: getSemiBoldStyle(
+                          color: ColorManager.white, fontSize: 18),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => RegisterView(),
+                      ));
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStatePropertyAll(Colors.white),
+                        shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color: ColorManager.primaryDark),
+                                borderRadius: BorderRadius.circular(10)))),
+                    child: Text(
+                      AppLocalizations.of(context)!.sign_up,
+                      // 'Login',
+                      style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark, fontSize: 18),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 150,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }

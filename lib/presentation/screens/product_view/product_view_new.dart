@@ -1,22 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
+import 'package:ghaf_application/presentation/screens/product_view/product_view_getx_controller.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../../app/utils/app_shared_data.dart';
+import '../../../app/utils/helpers.dart';
+import '../../../domain/model/product.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
+class ProductViewNew extends StatefulWidget {
+  final String idProduct;
 
-class ProductViewNew extends StatelessWidget {
+  ProductViewNew({required this.idProduct});
+
+  @override
+  State<ProductViewNew> createState() => _ProductViewNewState();
+}
+
+class _ProductViewNewState extends State<ProductViewNew> with Helpers {
+  var isLoading = true;
+
+  late final ProductViewGetXController _productViewGetXController =
+  Get.put(ProductViewGetXController());
+
+  late final Product _product = Get.find<Product>(tag: 'isInCart');
+
+  @override
+  void initState() {
+    _productViewGetXController.init(
+      context: context,
+    );
+    Get.put(Product());
+    super.initState();
+  }
+
+  // dispose.
+  @override
+  void dispose() {
+    Get.delete<ProductViewGetXController>();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<ProductProvider>(context)
+        .getProductById(widget.idProduct)
+        .then((value) => isLoading = false);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var productById =
+        Provider
+            .of<ProductProvider>(context, listen: false)
+            .productById;
+    var provider = Provider.of<ProductProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: isLoading
+          ? Center(
+        child: Container(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(
+            strokeWidth: 1,
+          ),
+        ),
+      )
+          : SafeArea(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Column(
@@ -32,15 +94,17 @@ class ProductViewNew extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 12),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: Image.asset(
                           IconsAssets.arrow,
-                          height:
-                          MediaQuery.of(context).size.height *
-                              0.03,
-                          width: MediaQuery.of(context).size.width *
-                              0.03,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.03,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.03,
                         ),
                       ),
                     ),
@@ -59,12 +123,24 @@ class ProductViewNew extends StatelessWidget {
                   height: AppSize.s12,
                 ),
                 Divider(height: 1, color: ColorManager.greyLight),
-
                 Container(
-                  height: MediaQuery.of(context).size.height *0.9,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.9,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 1,
                   child: Stack(
                     children: [
-                      Image.asset(ImageAssets.pizza),
+                      Image.network(productById["productImages"][0],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.4),
                       Positioned(
                         left: 0,
                         right: 0,
@@ -77,43 +153,56 @@ class ProductViewNew extends StatelessWidget {
                             BorderRadiusDirectional.circular(50),
                             color: Colors.white,
                           ),
-                          height:
-                          MediaQuery.of(context).size.height * 1,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 1,
                           child: ListView(
                             shrinkWrap: true,
                             children: [
                               Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(
+                                    height: AppSize.s30,
+                                  ),
                                   Row(
                                     children: [
                                       Container(
-                                        width : MediaQuery.of(context).size.width * 0.7,
+                                        width: MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width *
+                                            0.7,
                                         child: Text(
-                                          'Lorem Ipsum is simply dummy',
+                                          productById["name"],
                                           overflow: TextOverflow.clip,
-
                                           style: getSemiBoldStyle(
                                             color: ColorManager.primaryDark,
                                             fontSize: FontSize.s22,
                                           ),
                                         ),
                                       ),
-                                        Text(
-                                          '100 ${AppLocalizations.of(context)!.aed}',
+                                      Container(
+                                        width: AppSize.s75,
+                                        child: Text(
+                                          '${productById["price"]} ${AppLocalizations
+                                              .of(context)!.aed}',
+                                          overflow: TextOverflow.clip,
                                           style: getSemiBoldStyle(
                                             color: ColorManager.primary,
-                                            fontSize: FontSize.s20,
+                                            fontSize: FontSize.s16,
                                           ),
                                         ),
-
+                                      ),
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       RatingBar.builder(
-                                          initialRating: 4,
+                                          initialRating: double.parse(
+                                              productById["stars"]
+                                                  .toString()),
                                           minRating: 1,
                                           itemSize: 20,
                                           updateOnDrag: false,
@@ -127,15 +216,15 @@ class ProductViewNew extends StatelessWidget {
                                           onRatingUpdate: (rating) {
                                             print(rating);
                                           }),
-
                                       SizedBox(
-                                        width: MediaQuery.of(context)
+                                        width: MediaQuery
+                                            .of(context)
                                             .size
                                             .width *
                                             0.02,
                                       ),
                                       Text(
-                                        '(100 reviews)',
+                                        '(${productById["reviewCount"]} reviews)',
                                         style: getSemiBoldStyle(
                                           color: ColorManager.greyLight,
                                           fontSize: FontSize.s10,
@@ -144,20 +233,24 @@ class ProductViewNew extends StatelessWidget {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: MediaQuery.of(context)
+                                    height:
+                                    MediaQuery
+                                        .of(context)
                                         .size
                                         .height *
                                         0.02,
                                   ),
                                   Text(
-                                    'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
+                                    productById["description"],
                                     style: getSemiBoldStyle(
                                       color: ColorManager.black,
                                       fontSize: FontSize.s14,
                                     ),
                                   ),
                                   SizedBox(
-                                    height: MediaQuery.of(context)
+                                    height:
+                                    MediaQuery
+                                        .of(context)
                                         .size
                                         .height *
                                         0.5,
@@ -171,22 +264,56 @@ class ProductViewNew extends StatelessWidget {
                       Positioned(
                         left: 20,
                         top: 20,
-                        child: GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Padding(
-                            padding:
-                            EdgeInsets.symmetric(horizontal: 12),
-                            child: Container(
-                              height: AppSize.s46,
-                              width: AppSize.s110,
-                              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.timer,color: ColorManager.primaryDark),
-                                  Text('20 - 40 min')
-                                ],
-                              ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Container(
+                            height: AppSize.s46,
+                            width: AppSize.s110,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              children: [
+                                Icon(Icons.timer,
+                                    color: ColorManager.primaryDark),
+                                Text(productById["timeToPrepareMinutes"] ??
+                                    '20 - 40 min')
+                              ],
                             ),
+                          ),
+                        ),
+                      ),
+                      PositionedDirectional(
+                        bottom: 390,
+                        end: 30,
+                        child: Container(
+                          height: AppSize.s30,
+                          width: AppSize.s130,
+                          decoration: BoxDecoration(
+                            color: ColorManager.primaryDark,
+                            borderRadius: BorderRadius.circular(AppRadius.r4),
+                            boxShadow: [
+                              BoxShadow(
+                                color: ColorManager.primaryDark,
+                                spreadRadius: 2,
+                                blurRadius: AppSize.s20,
+                                offset: Offset(AppSize.s2,
+                                    AppSize.s2), // Shadow position
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${AppLocalizations.of(context)!
+                                    .aed} ${(productById["branch"]["storeDeliveryCost"] ??
+                                    0)} deliver',
+                                style: getRegularStyle(
+                                  color: ColorManager.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -202,34 +329,68 @@ class ProductViewNew extends StatelessWidget {
                                   topLeft: Radius.circular(50)),
                               color: Colors.white,
                             ),
-                            height: MediaQuery.of(context).size.height *
-                                0.1,
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height * 0.1,
                             width: 50,
                             child: Row(
                               children: [
-
                                 Spacer(),
-                                ElevatedButton(
+                                productById["isInCart"] == false ? ElevatedButton(
                                   onPressed: () {
-                                    // if (AppSharedData.currentUser == null ) {
-                                    //   showSheet(context);
-                                    // }else {
-                                    //   cubit.addOrRemoveToCart(
-                                    //       id: widget.id,
-                                    //       context: context);
-                                    // }
-
-                                  },
+                                    if (AppSharedData.currentUser == null) {
+                                      showSignInSheet(context);
+                                    } else {
+                                      Provider
+                                          .of<ProductProvider>(context,listen: false)
+                                          .addOrRemoveFromCard(
+                                          productId: widget.idProduct)
+                                          .then((value) =>
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  provider.message),backgroundColor: Colors.green,)));
+                                      }
+                                      },
                                   style: ButtonStyle(
                                       shape: MaterialStatePropertyAll(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                              BorderRadius
-                                                  .circular(
+                                              BorderRadius.circular(
                                                   10)))),
                                   child: Text(
-                                    AppLocalizations.of(context)!
-                                        .add_to_cart,
+                                    AppLocalizations.of(context)!.add_to_cart,
+                                    // 'Login',
+                                    style: getSemiBoldStyle(
+                                        color: ColorManager.white,
+                                        fontSize: FontSize.s18),
+                                  ),
+                                ) : ElevatedButton(
+                                  onPressed: () {
+                                    if (AppSharedData.currentUser == null) {
+                                      showSignInSheet(context);
+                                    } else {
+                                      Provider
+                                          .of<ProductProvider>(context,listen: false)
+                                          .addOrRemoveFromCard(
+                                          productId: widget.idProduct)
+                                          .then((value) =>
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                                provider.message),backgroundColor: Colors.green,)));
+                                    }
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(ColorManager.red),
+                                      shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  10)))),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.remove_from_cart,
                                     // 'Login',
                                     style: getSemiBoldStyle(
                                         color: ColorManager.white,

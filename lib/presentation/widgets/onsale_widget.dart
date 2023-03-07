@@ -11,7 +11,7 @@ class OnsaleWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductViewNew(),
+          builder: (context) => ProductViewNew(idProduct: ''),
         ));
       },
       child: Padding(

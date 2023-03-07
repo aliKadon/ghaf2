@@ -449,7 +449,8 @@
   "balance": "Balance",
   "recent_transactions": "Recent Transactions",
   "name_address": "Name Address",
-  "shipping": "Shipping to your address",
+  "address1" : "address",
+  "shipping": "Shipping to your",
   "userName_or_email": "UserName or Email",
   "something_went_wrong": "Something went wrong",
   "register_create_account": "Register to create an account",
@@ -608,6 +609,11 @@
   "get_help_reporting_issue2" : "Order confirmed but did not receive tracking",
   "get_help_reporting_issue3" : "Other issue",
   "get_help_reporting_issue4" : "please specify",
+
+  "sell_with_us_text" : "Take your business to the next level by starting to sell on Ghaf, the leading mobile  application for online selling",
+
+  "register_now" : "Register now",
+  "you_must_register_or_log_in" : "You must Register or login!",
 
   "yes": "yes",
   "no": "no",

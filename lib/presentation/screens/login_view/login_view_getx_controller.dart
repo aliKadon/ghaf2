@@ -39,49 +39,10 @@ class LoginViewGetXController extends GetxController with Helpers {
   // late final errorMessageLoginApiResponse;
   // late final errorMessageProfileApiResponse;
 
-  Location location = new Location();
-  bool? _serviceEnabled;
-  PermissionStatus? _permissionGranted;
-  LocationData? locationData;
+
 
   var isLoading = true;
 
-  void getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled!) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled!) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    locationData = await location.getLocation();
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setDouble('latitude', locationData!.latitude!);
-    prefs.setDouble('longitude', locationData!.longitude!);
-
-    SharedPrefController().setLocationLat(locationLat: locationData!.latitude!);
-    SharedPrefController().setLocationLong(locationLong: locationData!.longitude!);
-
-    print('===================================myLocation');
-    print(SharedPrefController().locationLong.toString());
-    print(SharedPrefController().locationLat.toString());
-
-
-    if (locationData!.latitude != null) {
-      isLoading = false;
-    }
-    print('===========================location');
-    print(locationData!.latitude);
-  }
 
 
 
@@ -128,10 +89,6 @@ class LoginViewGetXController extends GetxController with Helpers {
           print(profileApiResponse);
           if (AppSharedData.currentUser!.sellerSubmittedForm! == false) {
 
-            Navigator.of(context).pushReplacementNamed(Routes.submitForm, arguments:{
-              'locationLat':locationData!.latitude?? 24.400661,
-              'locationLong':locationData!.longitude?? 54.635448,
-            } );
 
           }else {
 

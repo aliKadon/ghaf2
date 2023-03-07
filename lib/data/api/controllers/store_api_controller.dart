@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/domain/model/category.dart';
@@ -11,7 +12,7 @@ import '../api_helper.dart';
 import '../api_settings.dart';
 
 class StoreApiController with ApiHelper {
-  late final Dio _dio = Dio(BaseOptions(baseUrl: ApiSettings.baseUrl));
+  late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
   Future<List<Category>> getCategories() async {
     Uri uri = Uri.parse(ApiSettings.category);
@@ -51,15 +52,15 @@ class StoreApiController with ApiHelper {
     };
     // // print(queryParameters);
     final Response response = await _dio.get(
-      'Product/read-product',
-      queryParameters: queryParameters,
+      '/Product/read-product/',
+      // queryParameters: queryParameters,
       options: Options(
         headers: headers,
       ),
     );
-    // // print('============================================PRODUCT');
-    // // print(response.statusCode);
-    // // print(response.data);
+    print('============================================PRODUCT');
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<Product>.from(
@@ -181,7 +182,7 @@ class StoreApiController with ApiHelper {
     };
     // print(queryParameters);
     var response = await _dio.post(
-      'Product/add-remove-to-basket',
+      '/Product/add-remove-to-basket',
       queryParameters: queryParameters,
       options: Options(
         headers: headers,

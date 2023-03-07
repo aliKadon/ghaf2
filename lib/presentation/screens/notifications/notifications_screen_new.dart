@@ -153,7 +153,13 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                     shrinkWrap: true,
                     itemCount: 5,
                     itemBuilder: (context, index) {
-                      return MostPopularProductWidget();
+                      return MostPopularProductWidget(
+                        image: '',
+                        stars: 0,
+                        price: 0,
+                        name: '',
+                        idProduct: '',
+                      );
                     },
                   )
                 : ListView.builder(

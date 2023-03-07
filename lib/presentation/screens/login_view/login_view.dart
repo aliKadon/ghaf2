@@ -33,11 +33,13 @@ class _LoginViewState extends State<LoginView> with Helpers {
   late final LoginViewGetXController _loginViewGetXController =
       Get.find<LoginViewGetXController>();
 
+
   GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
-    _loginViewGetXController.getLocation();
+    Get.put(LoginViewGetXController(context: context));
+
     // _googleSignIn.onCurrentUserChanged.listen((event) {
     //   _currentUser = event;
     // });

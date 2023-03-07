@@ -10,15 +10,19 @@ class Product2 {
   String? description;
   String? characteristics;
   String? productType;
+  String? timeToPrepareMinutes;
   num? price;
   String? isoCurrencySymbol;
   int? quantity;
   bool? visible;
+  bool? subscriptionHide;
   bool? deleted;
   bool? approved;
+  bool? onlyOnGhaf;
   bool?canPayLater;
   int?canPayLaterDays;
   String? addedAt;
+  List<dynamic>? productImages;
   List<dynamic>? ghafImage;
   String? productReview;
   Map<String,dynamic>? productDiscount;
@@ -27,6 +31,8 @@ class Product2 {
   Map<String,dynamic>? branch;
   String? offerDescription;
   String? discountDescription;
+  String? discountValueForAllUsers;
+  String? discountValueForGoldenUsers;
   String? redeemDescription;
   num? stars;
   num? reviewCount;
@@ -42,16 +48,22 @@ class Product2 {
     this.description,
     this.characteristics,
     this.productType,
+    this.timeToPrepareMinutes,
     this.price,
     this.isoCurrencySymbol,
     this.quantity,
     this.visible,
+    this.subscriptionHide,
     this.deleted,
     this.approved,
+    this.onlyOnGhaf,
     this.canPayLater,
     this.canPayLaterDays,
+    this.productImages,
     this.addedAt,
     this.ghafImage,
+    this.discountValueForAllUsers,
+    this.discountValueForGoldenUsers,
     this.productReview,
     this.productDiscount,
     this.offer,

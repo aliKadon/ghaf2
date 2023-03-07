@@ -215,7 +215,7 @@ class RewardsViewNew extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return MostPopularProductWidget();
+                    return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',);
                   },),
               ),
             ],

@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
 import 'package:ghaf_application/presentation/screens/store_view/onsale_view.dart';
 import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/shortcuts_widget.dart';
+import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
 
-class StoreView extends StatelessWidget {
+class StoreView extends StatefulWidget {
+
+
+  @override
+  State<StoreView> createState() => _StoreViewState();
+}
+
+class _StoreViewState extends State<StoreView> {
+
+  @override
+  void initState() {
+    // Provider.of<ProductProvider>(context,listen: false).getProducts();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,7 +270,7 @@ class StoreView extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return MostPopularProductWidget();
+                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',);
                 },
               ),
             ),
@@ -288,7 +306,7 @@ class StoreView extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return MostPopularProductWidget();
+                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',);
                 },
               ),
             )

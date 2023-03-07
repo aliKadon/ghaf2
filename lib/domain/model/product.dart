@@ -33,34 +33,39 @@ class Product extends GetxController with Helpers {
   // vars.
   late final StoreApiController _storeApiController = StoreApiController();
 
-  Product({
-    this.id,
-    this.name,
-    this.description,
-    this.characteristics,
-    this.productType,
-    this.price,
-    this.isoCurrencySymbol,
-    this.quantity,
-    this.visible,
-    this.deleted,
-    this.approved,
-    this.addedAt,
-    this.ghafImage,
-    this.productReview,
-    this.productDiscount,
-    this.offer,
-    this.redeemPoints,
-    this.branch,
-    this.offerDescription,
-    this.discountDescription,
-    this.redeemDescription,
-    this.stars,
-    this.isFavorite,
-    this.isInCart,
-    this.category,
-    this.storeStars
-  });
+  Product(
+      {this.id,
+      this.name,
+      this.description,
+      this.characteristics,
+      this.productType,
+      this.price,
+      this.isoCurrencySymbol,
+      this.quantity,
+      this.visible,
+      this.deleted,
+      this.approved,
+      this.addedAt,
+      this.ghafImage,
+      this.productReview,
+      this.productDiscount,
+      this.offer,
+      this.redeemPoints,
+      this.branch,
+      this.timeToPrepareMinutes,
+      this.offerDescription,
+      this.discountDescription,
+      this.redeemDescription,
+      this.subscriptionHide,
+      this.onlyOnGhaf,
+      this.discountValueForAllUsers,
+      this.discountValueForGoldenUsers,
+      this.stars,
+      this.productImages,
+      this.isFavorite,
+      this.isInCart,
+      this.category,
+      this.storeStars});
 
   String? id;
   String? name;
@@ -68,10 +73,14 @@ class Product extends GetxController with Helpers {
   String? characteristics;
   String? productType;
   num? price;
+  bool? subscriptionHide;
+
   String? isoCurrencySymbol;
   int? quantity;
   bool? visible;
   bool? deleted;
+  bool? onlyOnGhaf;
+
   bool? approved;
   DateTime? addedAt;
   List<GhafImage>? ghafImage;
@@ -79,11 +88,16 @@ class Product extends GetxController with Helpers {
   ProductDiscount? productDiscount;
   Offer? offer;
   ProductDiscount? redeemPoints;
+  String? timeToPrepareMinutes;
   Branch? branch;
   String? offerDescription;
+  String? discountValueForAllUsers;
+  String? discountValueForGoldenUsers;
   String? discountDescription;
   String? redeemDescription;
   num? stars;
+  List<dynamic>? productImages;
+
   bool? isFavorite;
   bool? isInCart;
   Category? category;
@@ -99,7 +113,11 @@ class Product extends GetxController with Helpers {
         isoCurrencySymbol: json["isoCurrencySymbol"],
         quantity: json["quantity"],
         visible: json["visible"],
+        subscriptionHide: json["subscriptionHide"],
         deleted: json["deleted"],
+        productImages: json["productImages"],
+        discountValueForAllUsers: json["discountValueForAllUsers"],
+        discountValueForGoldenUsers: json["discountValueForGoldenUsers"],
         approved: json["approved"],
         addedAt: DateTime.parse(json["addedAt"]),
         ghafImage: json["ghafImage"] == null
@@ -121,10 +139,12 @@ class Product extends GetxController with Helpers {
         stars: json["stars"],
         isFavorite: json["isFavourite"] ?? false,
         isInCart: json["isInCart"] ?? false,
+        timeToPrepareMinutes: json["timeToPrepareMinutes"],
+        onlyOnGhaf: json["onlyOnGhaf"],
         category: json["category"] == null
             ? null
             : Category.fromJson(json["category"]),
-    storeStars: json["storeStars"] ?? 0,
+        storeStars: json["storeStars"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

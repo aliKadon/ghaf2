@@ -151,14 +151,14 @@ class AuthApiController with ApiHelper {
     // // print('send request : getUserDetails');
     // // print(headers);
     var response = await _dio.get(
-      'Auth/getUserDetails',
+      '/Auth/get-user-details',
       options: Options(
         headers: headers,
       ),
     );
-    // // print('============================================');
-    // // print(response.statusCode);
-    // // print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         User user = User.fromJson(response.data['data']);

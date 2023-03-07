@@ -36,6 +36,14 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
 
   @override
   void initState() {
+    Get.put(
+      RegisterViewGetXController(
+        context: context,
+        role: '',
+        latitude: 454.7,
+        longitude: 878.3,
+      ),
+    );
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
 

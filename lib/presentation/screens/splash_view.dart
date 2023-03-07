@@ -9,6 +9,7 @@ import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:ghaf_application/services/local_notifications_service.dart';
 import 'package:location/location.dart';
@@ -41,35 +42,37 @@ class _SplashViewState extends State<SplashView> {
     await LocalNotificationsService.instance.init();
     //
     SharedPrefController().getUser();
-    if (AppSharedData.currentUser != null) {
-      if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
-        Navigator.pushReplacementNamed(context, Routes.mainRoute);
-      } else if (AppSharedData.currentUser!.role ==
-              Constants.roleRegisterIndividual &&
-          AppSharedData.currentUser!.active == true) {
-        Navigator.pushReplacementNamed(context, Routes.mainSellerRoute);
-      } else if (AppSharedData.currentUser!.role ==
-            Constants.roleRegisterIndividual &&
-        AppSharedData.currentUser!.active == false) {
-      Navigator.pushReplacementNamed(
-          context, Routes.paymentLinkSubscriptionSellerRoute);
-    } else if (AppSharedData.currentUser!.role ==
-            Constants.roleRegisterSeller &&
-        AppSharedData.currentUser!.sellerSubmittedForm == false) {
-      Navigator.pushReplacementNamed(context, Routes.submitForm, arguments: {
-        'locationLat': 24.400661,
-        'locationLong': 54.635448,
-      });
-    } else if (AppSharedData.currentUser!.role ==
-          Constants.roleRegisterSeller &&
-          AppSharedData.currentUser!.sellerSubmittedForm == true && AppSharedData.currentUser!.active == true ){
-        Navigator.pushReplacementNamed(context, Routes.sellerStatus,arguments: 'Seller');
-
-    } else if (AppSharedData.currentUser!.role ==
-          Constants.roleRegisterSeller &&
-          AppSharedData.currentUser!.sellerSubmittedForm == true && AppSharedData.currentUser!.active == false){
-        Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
-      } }else
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => MainView(),));
+    // if (AppSharedData.currentUser != null) {
+    //   if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
+    //     Navigator.pushReplacementNamed(context, Routes.mainRoute);
+    //   } else if (AppSharedData.currentUser!.role ==
+    //           Constants.roleRegisterIndividual &&
+    //       AppSharedData.currentUser!.active == true) {
+    //     Navigator.pushReplacementNamed(context, Routes.mainSellerRoute);
+    //   } else if (AppSharedData.currentUser!.role ==
+    //         Constants.roleRegisterIndividual &&
+    //     AppSharedData.currentUser!.active == false) {
+    //   Navigator.pushReplacementNamed(
+    //       context, Routes.paymentLinkSubscriptionSellerRoute);
+    // } else if (AppSharedData.currentUser!.role ==
+    //         Constants.roleRegisterSeller &&
+    //     AppSharedData.currentUser!.sellerSubmittedForm == false) {
+    //   Navigator.pushReplacementNamed(context, Routes.submitForm, arguments: {
+    //     'locationLat': 24.400661,
+    //     'locationLong': 54.635448,
+    //   });
+    // } else if (AppSharedData.currentUser!.role ==
+    //       Constants.roleRegisterSeller &&
+    //       AppSharedData.currentUser!.sellerSubmittedForm == true && AppSharedData.currentUser!.active == true ){
+    //     Navigator.pushReplacementNamed(context, Routes.sellerStatus,arguments: 'Seller');
+    //
+    // } else if (AppSharedData.currentUser!.role ==
+    //       Constants.roleRegisterSeller &&
+    //       AppSharedData.currentUser!.sellerSubmittedForm == true && AppSharedData.currentUser!.active == false){
+    //     Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
+    //   } }else
     //   else if (AppSharedData.currentUser!.sellerSubmittedForm!)
     //     Navigator.pushReplacementNamed(context, Routes.subscriptionSellerRoute);
     //   else
@@ -79,12 +82,12 @@ class _SplashViewState extends State<SplashView> {
     //     });
     // } else
     //
-    {
-      if (SharedPrefController().getDisplayOnBoarding())
-        Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
-      else
-        Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
-    }
+    // {
+    //   if (SharedPrefController().getDisplayOnBoarding())
+    //     Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+    //   else
+    //     Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
+    // }
   }
 
   @override
@@ -110,7 +113,8 @@ class _SplashViewState extends State<SplashView> {
         alignment: Alignment.center,
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: ExactAssetImage(ImageAssets.bgSplashtap), fit: BoxFit.cover),
+              image: ExactAssetImage(ImageAssets.bgSplashtap),
+              fit: BoxFit.cover),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

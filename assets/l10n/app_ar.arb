@@ -439,6 +439,7 @@
   "payment_method": "طريقة الدفع",
   "hint_payment_method": "اختر طريقة الدفع",
   "total": "الكلي",
+  "address1" : "منزلك",
   "address": "العنوان",
   "it_takes": "It takes",
   "minutes": "دقائق",
@@ -493,7 +494,7 @@
   "you_can_modify_and_turn_off_individual": "يمكنك تعديل وإيقاف الإشعارات\n الفردية في أي وقت من إعدادات جهازك.",
   "pay_later_notify": "الدفع اللاحق ",
   "pay_later_description" : "سوف يتم تنبيهك بالدفع اللاحق الخاص بالمنتجات التي تم شراؤها بشكل دوري",
-  "shipping" : "اطلب إلى منزلك",
+  "shipping" : "اطلب إلى ",
   "userName_or_email" : "اسم المستخدم أو الإيميل",
   "order_status": "حالة الطلب",
   "receive_status_alerts_about": "تلقي تنبيهات الحالة حول نشاط الطلب الأخير الخاص بك.",
@@ -667,6 +668,10 @@
   "get_help_reporting_issue2" : "تم تأكيد الأمر لكنه لم يتلق التتبع",
   "get_help_reporting_issue3" : "مشكلة أخرى",
   "get_help_reporting_issue4" : "يرجى توضيح",
+
+  "sell_with_us_text" : "انقل عملك إلى المستوى التالي من خلال البدء في البيع على Ghaf، تطبيق الهاتف المحمول الرائد للبيع عبر الإنترنت",
+  "register_now" : "سجل الان",
+  "you_must_register_or_log_in" : "يجب عليك التسجيل أو تسجيل الدخول!",
 
   "are_you_sure_cancel_your_subscription": "هل أنت متأكد من إلغاء اشتراكك؟",
   "yes": "نعم",

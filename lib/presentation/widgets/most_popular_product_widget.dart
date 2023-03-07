@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
 
@@ -6,12 +9,25 @@ import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 
 class MostPopularProductWidget extends StatelessWidget {
+  final String image;
+  final String name;
+  final num price;
+  final num stars;
+  final String idProduct;
+
+  MostPopularProductWidget(
+      {required this.image,
+      required this.name,
+      required this.stars,
+      required this.price,
+      required this.idProduct});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductViewNew(),
+          builder: (context) => ProductViewNew(idProduct: idProduct,),
         ));
       },
       child: Padding(
@@ -31,7 +47,7 @@ class MostPopularProductWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                            image: AssetImage(ImageAssets.pizza),
+                            image: NetworkImage(image),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -56,14 +72,14 @@ class MostPopularProductWidget extends StatelessWidget {
                   )
                 ],
               ),
-              Text('Pizza',
+              Text(name,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
                 children: [
-                  Text('22.5 AED',
+                  Text('${price.toDouble()} ${AppLocalizations.of(context)!.aed}',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -78,7 +94,7 @@ class MostPopularProductWidget extends StatelessWidget {
                   SizedBox(
                     width: 8,
                   ),
-                  Text('4.0',
+                  Text(stars.toString(),
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

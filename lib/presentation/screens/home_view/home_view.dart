@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
@@ -15,10 +17,13 @@ import 'package:ghaf_application/presentation/screens/search/search_screen.dart'
 import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category.dart';
 import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../widgets/shortcuts_widget.dart';
+import '../login_view/login_view_getx_controller.dart';
 import 'home_view_getx_controller.dart';
 
 class HomeView extends StatefulWidget {
@@ -29,6 +34,40 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  var isLoading = true;
+  var language = SharedPrefController().lang1;
+
+  late Position position;
+  String address = '';
+  String city = 'address';
+
+  // #############################################
+  //get all information from latitude and longitude
+  // #############################################
+  Future<void> GetAddressFromLatLong(LatLng latLng) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    print('======================================my address');
+    print(placemarks[0]);
+    Placemark place = placemarks[0];
+    city = (place.locality).toString();
+    address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+  }
+
+
+  // ##############################################
+  // ##############################################
+  final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
+
+  Future<Position> getLocation() async {
+    position = await _geolocatorPlatform.getCurrentPosition();
+    print('===================my position');
+    print(
+      position.toString(),
+    );
+    return position;
+  }
+
   // controller.
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
@@ -36,8 +75,22 @@ class _HomeViewState extends State<HomeView> {
   // init state.
   @override
   void initState() {
+    Get.put(LoginViewGetXController(context: context));
     _homeViewGetXController.init(context: context);
+    _homeViewGetXController.determinePosition().then((value) => getLocation()
+        .then((value) => GetAddressFromLatLong(
+            LatLng(position.latitude, position.longitude))));
 
+    // ############################################
+    //get all information from latitude and longitude
+    // #############################################
+    // GetAddressFromLatLong(LatLng(myLocationLat, myLocationLong));
+    // ##############################################
+    // ##############################################
+
+    // Provider.of<ProductProvider>(context, listen: false)
+    //     .getProducts()
+    //     .then((value) => isLoading = false);
     // localLanguage();
     super.initState();
   }
@@ -63,8 +116,11 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void didChangeDependencies() {
-    Provider.of<ProductProvider>(context, listen: false).getProductDiscount(15);
-    Provider.of<ProductProvider>(context).getProducts();
+    // Provider.of<ProductProvider>(context, listen: false).getProductDiscount(15);
+    // Provider.of<ProductProvider>(context).getProducts();
+    Provider.of<ProductProvider>(context)
+        .getProducts()
+        .then((value) => isLoading = false);
     super.didChangeDependencies();
   }
 
@@ -75,16 +131,27 @@ class _HomeViewState extends State<HomeView> {
     super.dispose();
   }
 
+  // isLoading ? Center(
+  // child: Container(
+  // width: 20,
+  // height: 20,
+  // child: CircularProgressIndicator(
+  // strokeWidth: 1,
+  // ),
+  // ),
+  // )
+  //     :
+
   @override
   Widget build(BuildContext context) {
     var isArabic = SharedPrefController().lang1;
-    var prodDiscount = Provider.of<ProductProvider>(context).productDiscount;
+    // var prodDiscount = Provider.of<ProductProvider>(context).productDiscount;
     var product = Provider.of<ProductProvider>(context, listen: false).product;
-    var storeid = Provider.of<ProductProvider>(context, listen: false).storeId;
-    var storeName =
-        Provider.of<ProductProvider>(context, listen: false).storeName;
+    // var storeid = Provider.of<ProductProvider>(context, listen: false).storeId;
+    // var storeName =
+    //     Provider.of<ProductProvider>(context, listen: false).storeName;
     // print('============================================ALI');
-    // print(prodDiscount);
+    // print(product);
     return ChangeNotifierProvider.value(
       value: ProductProvider(),
       child: Scaffold(
@@ -137,10 +204,44 @@ class _HomeViewState extends State<HomeView> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              AppLocalizations.of(context)!.hello_welcome,
-                              style: getRegularStyle(
-                                  color: ColorManager.blackLight),
+                            Row(
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.hello_welcome,
+                                  style: getRegularStyle(
+                                      color: ColorManager.blackLight),
+                                ),
+                                SizedBox(width: AppSize.s82,),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      ImageAssets.homePoints,
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.03,
+                                    ),
+                                    Text('21 points',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold, fontSize: 15)),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.03,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, Routes.myFavorite);
+                                      },
+                                      child: Image.asset(
+                                        IconsAssets.heart,
+                                        height: AppSize.s20,
+                                        width: AppSize.s20,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -154,7 +255,7 @@ class _HomeViewState extends State<HomeView> {
                                 //   width: AppSize.s17,
                                 // ),
                                 Text(
-                                  AppLocalizations.of(context)!.shipping,
+                                  '${AppLocalizations.of(context)!.shipping} $city',
                                   style: getRegularStyle(
                                       color: ColorManager.primaryDark),
                                 ),
@@ -169,44 +270,6 @@ class _HomeViewState extends State<HomeView> {
                             // ),
                           ],
                         ),
-                        Spacer(),
-                        Row(
-                          children: [
-                            Image.asset(
-                              ImageAssets.homePoints,
-                              height: 20,
-                              width: 20,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.03,
-                            ),
-                            Text('21 points',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15)),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.03,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, Routes.myFavorite);
-                              },
-                              child: Image.asset(
-                                IconsAssets.heart,
-                                height: AppSize.s20,
-                                width: AppSize.s20,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 15.w,
-                        ),
-                        // Image.asset(
-                        //   ImageAssets.person,
-                        //   height: AppSize.s40,
-                        //   width: AppSize.s40,
-                        // ),
                       ],
                     ),
                   ),
@@ -398,6 +461,7 @@ class _HomeViewState extends State<HomeView> {
                                                       .height *
                                                   0.02),
                                           ElevatedButton(
+                                              // onPressed: () {},
                                               style: ButtonStyle(
                                                   backgroundColor:
                                                       MaterialStatePropertyAll(
@@ -506,7 +570,10 @@ class _HomeViewState extends State<HomeView> {
                                     shrinkWrap: true,
                                     itemCount: 2,
                                     itemBuilder: (context, index) {
-                                      return ShortcutsWidget(imageUrl: ImageAssets.trending,text: 'Trending',);
+                                      return ShortcutsWidget(
+                                        imageUrl: ImageAssets.trending,
+                                        text: 'Trending',
+                                      );
                                     },
                                   ),
                                 ),
@@ -555,7 +622,7 @@ class _HomeViewState extends State<HomeView> {
 
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 2,
+                        itemCount: _homeViewGetXController.products.length,
                         physics: const BouncingScrollPhysics(),
                         // gridDelegate:
                         //     SliverGridDelegateWithFixedCrossAxisCount(
@@ -571,7 +638,18 @@ class _HomeViewState extends State<HomeView> {
                               //   tag:
                               //       '${_homeViewGetXController.products[index].id}home',
                               // );
-                              return MostPopularProductWidget();
+                              return MostPopularProductWidget(
+                                image: _homeViewGetXController
+                                    .products[index].productImages![0],
+                                name: _homeViewGetXController
+                                    .products[index].name!,
+                                price: _homeViewGetXController
+                                    .products[index].price!,
+                                stars: _homeViewGetXController
+                                    .products[index].stars!,
+                                idProduct:
+                                    _homeViewGetXController.products[index].id!,
+                              );
                             },
                           );
                         },

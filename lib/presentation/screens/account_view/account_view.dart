@@ -22,6 +22,7 @@ import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_n
 import 'package:ghaf_application/presentation/screens/profile/profile.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_view_new.dart';
+import 'package:ghaf_application/presentation/screens/sell_with_us/sell_with_us_screen.dart';
 import 'package:ghaf_application/presentation/screens/vouchers/vouchers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -546,7 +547,7 @@ class _AccountViewState extends State<AccountView> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (builder) => AboutAppView()),
+                                  builder: (builder) => SellWithUsScreen()),
                             );
                           },
                           child: accountWidget(
