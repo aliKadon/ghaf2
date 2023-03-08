@@ -10,22 +10,36 @@ class CartItem extends GetxController with Helpers {
 
   // increment.
   void increment({
+    required String idProduct,
+    required num productCount,
     required BuildContext context,
     bool sendRequest = true,
   }) {
-    productCount = productCount! + 1;
+    productCount = productCount + 1;
     update(['productCount']);
-    if (sendRequest) _ChangeCartItemCountRequest(context: context, type: 1);
+    if (sendRequest)
+      _ChangeCartItemCountRequest(
+          context: context,
+          type: 1,
+          productCount: productCount,
+          idProduct: idProduct);
   }
 
   // decrement.
   void decrement({
+    required String idProduct,
+    required num productCount,
     required BuildContext context,
     bool sendRequest = true,
   }) {
     productCount = productCount! - 1;
     update(['productCount']);
-    if (sendRequest) _ChangeCartItemCountRequest(context: context, type: 2);
+    if (sendRequest)
+      _ChangeCartItemCountRequest(
+          context: context,
+          type: 2,
+          productCount: productCount,
+          idProduct: idProduct);
   }
 
   // vars.
@@ -41,7 +55,7 @@ class CartItem extends GetxController with Helpers {
   String? id;
   String? userId;
   Product? product;
-  int? productCount;
+  num? productCount;
 
   factory CartItem.fromJson(Map<String, dynamic> json) => CartItem(
         id: json["id"],
@@ -60,14 +74,16 @@ class CartItem extends GetxController with Helpers {
 
   // change cart item count request.
   void _ChangeCartItemCountRequest({
+    required String idProduct,
     required BuildContext context,
+    required num productCount,
     required int type,
   }) async {
     try {
       final ApiResponse apiResponse =
           await _storeApiController.changeCartItemCount(
-        cartItemId: id!,
-        count: productCount!,
+        cartItemId: idProduct,
+        count: productCount,
       );
       if (apiResponse.status == 200) {
         // success.
@@ -75,17 +91,33 @@ class CartItem extends GetxController with Helpers {
         // failed.
         showSnackBar(context, message: apiResponse.message, error: true);
         if (type == 1)
-          decrement(context: context, sendRequest: false);
+          decrement(
+              context: context,
+              sendRequest: false,
+              productCount: 0,
+              idProduct: idProduct);
         else
-          increment(context: context, sendRequest: false);
+          increment(
+              context: context,
+              sendRequest: false,
+              productCount: 0,
+              idProduct: idProduct);
       }
     } catch (error) {
       // error.
       showSnackBar(context, message: error.toString(), error: true);
       if (type == 1)
-        decrement(context: context, sendRequest: false);
+        decrement(
+            context: context,
+            sendRequest: false,
+            productCount: 0,
+            idProduct: idProduct);
       else
-        increment(context: context, sendRequest: false);
+        increment(
+            context: context,
+            sendRequest: false,
+            productCount: 0,
+            idProduct: idProduct);
     }
   }
 

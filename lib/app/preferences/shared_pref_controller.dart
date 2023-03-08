@@ -141,6 +141,11 @@ class SharedPrefController {
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 
+  Future<void> setTelephone(String telephone) async {
+    await _sharedPreferences.setString(PrefKeys.telephone.name, '${telephone}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
   Future<void> setEnableNotification(bool enable) async {
       await _sharedPreferences.setBool(PrefKeys.enableNotification.toString(), enable);
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);

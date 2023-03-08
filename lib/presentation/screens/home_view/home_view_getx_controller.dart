@@ -59,8 +59,9 @@ class HomeViewGetXController extends GetxController with Helpers {
     required BuildContext context,
   }) {
     this.context = context;
-    getCategories();
+    // getCategories();
     getProducts();
+
   }
 
   Future<Position> determinePosition() async {

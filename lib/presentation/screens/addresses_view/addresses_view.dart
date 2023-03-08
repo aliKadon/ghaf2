@@ -35,57 +35,7 @@ class _AddressesViewState extends State<AddressesView> {
     Get.delete<AddressesViewGetXController>();
     super.dispose();
   }
-
-
-  Location location = new Location();
-  bool? _serviceEnabled;
-  PermissionStatus? _permissionGranted;
-  LocationData? locationData;
-
-
-
-  var isLoading = true;
-
-  void getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled!) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled!) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    locationData = await location.getLocation();
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setDouble('latitude', locationData!.latitude!);
-    prefs.setDouble('longitude', locationData!.longitude!);
-
-    if (locationData!.latitude != null) {
-      isLoading = false;
-
-    }
-    print('===========================location');
-    print(locationData!.latitude);
-  }
-
-  @override
-  void initState() {
-    getLocation();
-    super.initState();
-  }
-
-
-
-
-
+  
   @override
   Widget build(BuildContext context) {
 

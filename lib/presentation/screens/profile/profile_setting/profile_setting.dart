@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 
-import '../../../app/preferences/shared_pref_controller.dart';
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/routes_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
-import '../account_view/account_view_getx_controller.dart';
+import '../../../../app/preferences/shared_pref_controller.dart';
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/routes_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
+import '../../account_view/account_view_getx_controller.dart';
 
 class ProfileSetting extends StatefulWidget {
   @override
@@ -18,6 +20,10 @@ class ProfileSetting extends StatefulWidget {
 }
 
 class _ProfileSettingState extends State<ProfileSetting> {
+  // controller.
+  late final ProfileSettingGetxController _profileSettingGetxController =
+      Get.put(ProfileSettingGetxController());
+
   late TextEditingController _firstNameTextController;
 
   late TextEditingController _lastNameTextController;
@@ -25,7 +31,8 @@ class _ProfileSettingState extends State<ProfileSetting> {
 
   var language = SharedPrefController().lang1;
   late final AccountViewGetXController _accountViewGetXController =
-  Get.put(AccountViewGetXController());
+      Get.put(AccountViewGetXController());
+
   @override
   void initState() {
     _firstNameTextController = TextEditingController();
@@ -44,6 +51,12 @@ class _ProfileSettingState extends State<ProfileSetting> {
 
   @override
   Widget build(BuildContext context) {
+    if (AppSharedData.currentUser != null) {
+      _firstNameTextController.text = AppSharedData.currentUser!.firstName!;
+      _lastNameTextController.text = AppSharedData.currentUser!.lastName!;
+      _phoneTextController.text = AppSharedData.currentUser!.telephone!;
+    }
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(8),
@@ -107,12 +120,13 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 controller: _firstNameTextController,
                 cursorColor: ColorManager.primary,
                 decoration: InputDecoration(
-                    label: Text(AppLocalizations.of(context)!.first_name,
-                      style: TextStyle(color: ColorManager.greyLight),)),
+                    label: Text(
+                  AppLocalizations.of(context)!.first_name,
+                  style: TextStyle(color: ColorManager.greyLight),
+                )),
                 validator: (value) {
                   if (value == null || value.isEmpty)
-                    return AppLocalizations.of(context)!
-                        .first_name_is_required;
+                    return AppLocalizations.of(context)!.first_name_is_required;
                   return null;
                 },
               ),
@@ -126,11 +140,11 @@ class _ProfileSettingState extends State<ProfileSetting> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.p16,
               ),
-              child: TextFormField( cursorColor: ColorManager.primary,
+              child: TextFormField(
+                cursorColor: ColorManager.primary,
                 validator: (value) {
                   if (value == null || value.isEmpty)
-                    return AppLocalizations.of(context)!
-                        .last_name_is_required;
+                    return AppLocalizations.of(context)!.last_name_is_required;
                   return null;
                 },
                 controller: _lastNameTextController,
@@ -148,7 +162,8 @@ class _ProfileSettingState extends State<ProfileSetting> {
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.p16,
               ),
-              child: TextFormField( cursorColor: ColorManager.primary,
+              child: TextFormField(
+                cursorColor: ColorManager.primary,
                 controller: _phoneTextController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
@@ -222,14 +237,25 @@ class _ProfileSettingState extends State<ProfileSetting> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, Routes.addressesRoute);
                 },
                 child: Row(
                   children: [
-                    Text(AppLocalizations.of(context)!.saved_address,style: TextStyle(fontSize: FontSize.s18)),
+                    Text(AppLocalizations.of(context)!.saved_address,
+                        style: TextStyle(fontSize: FontSize.s18)),
                     Spacer(),
-                    language == 'en' ? Image.asset(IconsAssets.arrow2,height: AppSize.s18,color: ColorManager.primary,) : Image.asset(IconsAssets.arrow,height: AppSize.s18,color: ColorManager.primary,),
+                    language == 'en'
+                        ? Image.asset(
+                            IconsAssets.arrow2,
+                            height: AppSize.s18,
+                            color: ColorManager.primary,
+                          )
+                        : Image.asset(
+                            IconsAssets.arrow,
+                            height: AppSize.s18,
+                            color: ColorManager.primary,
+                          ),
                   ],
                 ),
               ),
@@ -241,7 +267,15 @@ class _ProfileSettingState extends State<ProfileSetting> {
               width: double.infinity,
               height: AppSize.s65,
               padding: EdgeInsets.all(8),
-              child: ElevatedButton(onPressed: (){}, child: Text(AppLocalizations.of(context)!.save)),
+              child: ElevatedButton(
+                  onPressed: () {
+                    _profileSettingGetxController.editUserDetails(
+                        context: context,
+                        firstName: _firstNameTextController.text,
+                        lastName: _lastNameTextController.text,
+                        telephone: _phoneTextController.text);
+                  },
+                  child: Text(AppLocalizations.of(context)!.save)),
             )
           ],
         ),

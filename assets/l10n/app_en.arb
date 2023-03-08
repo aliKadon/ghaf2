@@ -489,6 +489,8 @@
   "add_payment_card": "add payment card",
   "to_complete_the_store_registration": "To complete the store registration",
   "name": "Name",
+
+  "place_order" : "Place order",
   "number_card": "number card",
   "cvv": "cvv",
   "expiry_date": "Expiry date",

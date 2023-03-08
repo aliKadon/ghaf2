@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../../domain/model/cart_item.dart';
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
-import '../screens/cart_view/cart_view_getx_controller.dart';
 
-class CartWidget extends StatefulWidget {
+class CartWidgetNew extends StatefulWidget {
   final int index;
   final String image;
   final String name;
@@ -17,42 +14,26 @@ class CartWidget extends StatefulWidget {
   final String isoCurrencySymbol;
   final num productCount;
 
-  CartWidget(
+  CartWidgetNew(
       {required this.index,
-      required this.isoCurrencySymbol,
-      required this.price,
-      required this.name,
-      required this.idProduct,
-      required this.image,
-      required this.productCount});
-
+        required this.isoCurrencySymbol,
+        required this.price,
+        required this.name,
+        required this.idProduct,
+        required this.image,
+        required this.productCount});
 
   @override
-  State<CartWidget> createState() => _CartWidgetState();
+  State<CartWidgetNew> createState() => _CartWidgetNewState();
 }
 
-class _CartWidgetState extends State<CartWidget> {
-
-
-  // late final CartViewGetXController _cartViewGetXController =
-  //     Get.put(CartViewGetXController());
-
-  late final CartItem _cartItem = Get.put(CartItem());
-  @override
-  void initState() {
-    // _cartViewGetXController.init(
-    //   context: context,
-    // );
-    super.initState();
-  }
+class _CartWidgetNewState extends State<CartWidgetNew> {
 
   var selected = 0;
-
   var count = 1;
-
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return  Column(
       children: [
         Row(
           children: [
@@ -78,15 +59,12 @@ class _CartWidgetState extends State<CartWidget> {
                       fontWeight: FontWeight.w600,
                       fontSize: 15),
                 ),
-                GetBuilder<CartItem>(
-                  id: 'productCount',
-                  builder: (controller) => Text(
-                    'item ${widget.productCount}',
-                    style: TextStyle(
-                        color: ColorManager.greyLight,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15),
-                  ),
+                Text(
+                  'item ${widget.productCount}',
+                  style: TextStyle(
+                      color: ColorManager.greyLight,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15),
                 ),
                 SizedBox(height: 20),
                 Text(

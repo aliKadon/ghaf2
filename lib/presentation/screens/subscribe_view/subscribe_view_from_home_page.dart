@@ -5,11 +5,12 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 
 import '../../resources/color_manager.dart';
 
-class SubscribeViewFromHomePage extends StatefulWidget  {
+class SubscribeViewFromHomePage extends StatefulWidget {
   const SubscribeViewFromHomePage({Key? key}) : super(key: key);
 
   @override
@@ -17,10 +18,11 @@ class SubscribeViewFromHomePage extends StatefulWidget  {
       _SubscribeViewFromHomePageState();
 }
 
-class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> with Helpers{
+class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
+    with Helpers {
   // controller.
   SubscribeViewGetXController _subscribeViewGetXController =
-      Get.find<SubscribeViewGetXController>();
+  Get.find<SubscribeViewGetXController>();
 
   // dispose.
   @override
@@ -40,12 +42,15 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> w
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.3,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(colors: [
-                      ColorManager.primaryDark,
-                      ColorManager.greyLight
-                    ])),
+                          ColorManager.primaryDark,
+                          ColorManager.greyLight
+                        ])),
                   ),
                   PositionedDirectional(
                     start: 0,
@@ -69,7 +74,9 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> w
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => MainView(),));
                             },
                             child: Container(
                                 decoration: BoxDecoration(
@@ -151,7 +158,10 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> w
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_1,
                         style: TextStyle(
@@ -177,7 +187,10 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> w
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_2,
                         style: TextStyle(
@@ -203,7 +216,10 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> w
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_3,
                         style: TextStyle(
@@ -229,7 +245,10 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage> w
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_4,
                         style: TextStyle(

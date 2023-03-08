@@ -24,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../widgets/shortcuts_widget.dart';
 import '../login_view/login_view_getx_controller.dart';
+import '../profile/profile_setting/profile_setting_getx_controller.dart';
 import 'home_view_getx_controller.dart';
 
 class HomeView extends StatefulWidget {
@@ -34,6 +35,10 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+
+  // controller.
+
+
   var isLoading = true;
   var language = SharedPrefController().lang1;
 
@@ -71,49 +76,20 @@ class _HomeViewState extends State<HomeView> {
   // controller.
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
+  late final ProfileSettingGetxController _profileSettingGetxController =
+  Get.put(ProfileSettingGetxController());
 
   // init state.
   @override
   void initState() {
     Get.put(LoginViewGetXController(context: context));
+    _profileSettingGetxController.getUserDetails(context);
     _homeViewGetXController.init(context: context);
     _homeViewGetXController.determinePosition().then((value) => getLocation()
         .then((value) => GetAddressFromLatLong(
             LatLng(position.latitude, position.longitude))));
-
-    // ############################################
-    //get all information from latitude and longitude
-    // #############################################
-    // GetAddressFromLatLong(LatLng(myLocationLat, myLocationLong));
-    // ##############################################
-    // ##############################################
-
-    // Provider.of<ProductProvider>(context, listen: false)
-    //     .getProducts()
-    //     .then((value) => isLoading = false);
-    // localLanguage();
     super.initState();
   }
-
-  // bool isArabic = false;
-
-  // Future<bool> localLanguage() async{
-  //   var language = Provider.of<LocaleProvider>(context, listen: false).locale;
-  //   print('language $language');
-  //   if(language.toString() == 'en') {
-  //     isArabic = false;
-  //     print(isArabic);
-  //     return await true;
-  //
-  //
-  //   }else {
-  //     isArabic = true;
-  //
-  //     print(isArabic);
-  //     return await false;
-  //   }
-  // }
-
   @override
   void didChangeDependencies() {
     // Provider.of<ProductProvider>(context, listen: false).getProductDiscount(15);
@@ -255,7 +231,7 @@ class _HomeViewState extends State<HomeView> {
                                 //   width: AppSize.s17,
                                 // ),
                                 Text(
-                                  '${AppLocalizations.of(context)!.shipping} $city',
+                                  '${AppLocalizations.of(context)!.shipping} ksk',
                                   style: getRegularStyle(
                                       color: ColorManager.primaryDark),
                                 ),

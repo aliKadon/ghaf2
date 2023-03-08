@@ -53,23 +53,24 @@ class LoginViewGetXController extends GetxController with Helpers {
 
   // login.
   void login() async {
-    // if (!formKey.currentState!.validate()) return;
-    // formKey.currentState!.save();
-    // showLoadingDialog(context: context, title: 'Logging In');
-    // final ApiResponse loginApiResponse = await _authApiController.login(
-    //   userName: userName!,
-    //   password: password!,
-    // );
-    // ApiResponse profileApiResponse = await AuthApiController().profile();
+    if (!formKey.currentState!.validate()) return;
+    formKey.currentState!.save();
+    showLoadingDialog(context: context, title: 'Logging In');
+    final ApiResponse loginApiResponse = await _authApiController.login(
+      userName: userName!,
+      password: password!,
+    );
+    ApiResponse profileApiResponse = await AuthApiController().profile();
 
     try {
-      if (!formKey.currentState!.validate()) return;
-      formKey.currentState!.save();
-      showLoadingDialog(context: context, title: 'Logging In');
-      final ApiResponse loginApiResponse = await _authApiController.login(
-        userName: userName!,
-        password: password!,
-      );
+      // if (!formKey.currentState!.validate()) return;
+      // formKey.currentState!.save();
+      // showLoadingDialog(context: context, title: 'Logging In');
+      // final ApiResponse loginApiResponse = await _authApiController.login(
+      //   userName: userName!,
+      //   password: password!,
+      // );
+
 
       if (loginApiResponse.status == 200 ) {
         ApiResponse profileApiResponse = await AuthApiController().profile();
@@ -81,7 +82,7 @@ class LoginViewGetXController extends GetxController with Helpers {
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(context, Routes.mainRoute);
           } else {
-            Navigator.pushReplacementNamed(context, Routes.subscribeRoute);
+            Navigator.pushReplacementNamed(context, Routes.subscribeFromHomePage);
           }
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterSeller) {
@@ -104,7 +105,7 @@ class LoginViewGetXController extends GetxController with Helpers {
                 context, Routes.registerPaymentLinkSellerRoute);
           } else {
             Navigator.pushReplacementNamed(
-                context, Routes.paymentLinkSubscriptionSellerRoute);
+                context, Routes.mainRoute);
           }
         }
       } else if(loginApiResponse.status >= 400){
@@ -122,8 +123,8 @@ class LoginViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      // showSnackBar(context, message: loginApiResponse.message, error: true);
-      // showSnackBar(context, message: profileApiResponse.message, error: true);
+      showSnackBar(context, message: loginApiResponse.message, error: true);
+      showSnackBar(context, message: profileApiResponse.message, error: true);
 
       showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
 

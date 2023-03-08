@@ -9,18 +9,13 @@ import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/checkout/cancelling_order_screen.dart';
 import 'package:ghaf_application/presentation/screens/get_help/get_help_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
-import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
-import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/notifications/notifications_screen_new.dart';
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
 import 'package:ghaf_application/presentation/screens/orders/orders_screen.dart';
-import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_new.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile.dart';
-import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_view_new.dart';
 import 'package:ghaf_application/presentation/screens/sell_with_us/sell_with_us_screen.dart';
 import 'package:ghaf_application/presentation/screens/vouchers/vouchers.dart';
@@ -31,6 +26,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../profile/profile_setting/profile_setting_getx_controller.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -41,20 +37,26 @@ class AccountView extends StatefulWidget {
 
 class _AccountViewState extends State<AccountView> {
   var language = SharedPrefController().lang1;
+  // // controller.
+  // late final ProfileSettingGetxController _profileSettingGetxController =
+  // Get.put(ProfileSettingGetxController());
 
   // controller.
   late final AccountViewGetXController _accountViewGetXController =
-  Get.put(AccountViewGetXController());
+      Get.put(AccountViewGetXController());
 
   var subscribe = '';
 
   @override
   void initState() {
     super.initState();
-    if (AppSharedData.currentUser!.ghafGold == false) {
+    if (AppSharedData.currentUser == null) {
+      subscribe = '';
+    }
+    if (AppSharedData.currentUser?.ghafGold == false) {
       subscribe = 'Unsubscribed';
     }
-    if (AppSharedData.currentUser!.ghafGold == true) {
+    if (AppSharedData.currentUser?.ghafGold == true) {
       subscribe = 'Subscribed';
     }
   }
@@ -99,191 +101,172 @@ class _AccountViewState extends State<AccountView> {
                   height: AppSize.s12,
                 ),
                 Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 1,
+                  width: MediaQuery.of(context).size.width * 1,
                   child: language == 'en'
                       ? Stack(
-                    children: [
-                      ClipPath(
-                        // clipBehavior: Clip.antiAliasWithSaveLayer,
-                        clipper: ShapeBorderClipper(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(500)))),
-                        child: Container(
-                          // width: double.infinity,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.6,
-                          color: ColorManager.primary,
-                          height:
-                          MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.15,
-                        ),
-                      ),
-                      Positioned(
-                        left: AppSize.s210,
-                        top: AppSize.s24,
-                        child: ClipOval(
-                          // borderRadius: BorderRadius.circular(AppRadius.r14),
-                          child: Image.asset(
-                            ImageAssets.profile,
-                            fit: BoxFit.cover,
-                            height: AppSize.s82,
-                            width: AppSize.s82,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: AppSize.s20,
-                            ),
-                            Text(
-                              '${AppSharedData.currentUser!
-                                  .firstName} ${AppSharedData.currentUser!
-                                  .lastName}',
-                              style: getSemiBoldStyle(
-                                color: ColorManager.white,
-                                fontSize: FontSize.s14,
+                            ClipPath(
+                              // clipBehavior: Clip.antiAliasWithSaveLayer,
+                              clipper: ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(500)))),
+                              child: Container(
+                                // width: double.infinity,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                color: ColorManager.primary,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
                               ),
                             ),
-                            SizedBox(
-                              height: AppSize.s10,
+                            Positioned(
+                              left: AppSize.s210,
+                              top: AppSize.s24,
+                              child: ClipOval(
+                                // borderRadius: BorderRadius.circular(AppRadius.r14),
+                                child: Image.asset(
+                                  ImageAssets.profile,
+                                  fit: BoxFit.cover,
+                                  height: AppSize.s82,
+                                  width: AppSize.s82,
+                                ),
+                              ),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .view_edit_profile,
-                                  style: getRegularStyle(
-                                    color: ColorManager.white,
-                                    fontSize: FontSize.s12,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: AppSize.s10,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    // _accountViewGetXController.logout(context: context);
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => Profile(),
-                                    ));
-                                  },
-                                  child: Image.asset(
-                                    ImageAssets.editProfile,
-                                    width: AppSize.s20,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
                                     height: AppSize.s20,
-                                    color: ColorManager.white,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    '${AppSharedData.currentUser?.firstName ?? AppLocalizations.of(context)!.hello_welcome} ${AppSharedData.currentUser?.lastName ?? ''}',
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.white,
+                                      fontSize: FontSize.s14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: AppSize.s10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .view_edit_profile,
+                                        style: getRegularStyle(
+                                          color: ColorManager.white,
+                                          fontSize: FontSize.s12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // _accountViewGetXController.logout(context: context);
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => Profile(),
+                                          ));
+                                        },
+                                        child: Image.asset(
+                                          ImageAssets.editProfile,
+                                          width: AppSize.s20,
+                                          height: AppSize.s20,
+                                          color: ColorManager.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
-                        ),
-                      ),
-                    ],
-                  )
+                        )
                       : Stack(
-                    children: [
-                      ClipPath(
-                        // clipBehavior: Clip.antiAliasWithSaveLayer,
-                        clipper: ShapeBorderClipper(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(500)))),
-                        child: Container(
-                          // width: double.infinity,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.6,
-                          color: ColorManager.primary,
-                          height:
-                          MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.15,
-                        ),
-                      ),
-                      Positioned(
-                        right: AppSize.s210,
-                        top: AppSize.s24,
-                        child: ClipOval(
-                          // borderRadius: BorderRadius.circular(AppRadius.r14),
-                          child: Image.asset(
-                            ImageAssets.profile,
-                            fit: BoxFit.cover,
-                            height: AppSize.s82,
-                            width: AppSize.s82,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: AppSize.s20,
-                            ),
-                            Text(
-                              '${AppSharedData.currentUser!
-                                  .firstName} ${AppSharedData.currentUser!
-                                  .lastName}',
-                              style: getSemiBoldStyle(
-                                color: ColorManager.white,
-                                fontSize: FontSize.s14,
+                            ClipPath(
+                              // clipBehavior: Clip.antiAliasWithSaveLayer,
+                              clipper: ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(500)))),
+                              child: Container(
+                                // width: double.infinity,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                color: ColorManager.primary,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
                               ),
                             ),
-                            SizedBox(
-                              height: AppSize.s10,
+                            Positioned(
+                              right: AppSize.s210,
+                              top: AppSize.s24,
+                              child: ClipOval(
+                                // borderRadius: BorderRadius.circular(AppRadius.r14),
+                                child: Image.asset(
+                                  ImageAssets.profile,
+                                  fit: BoxFit.cover,
+                                  height: AppSize.s82,
+                                  width: AppSize.s82,
+                                ),
+                              ),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .view_edit_profile,
-                                  style: getRegularStyle(
-                                    color: ColorManager.white,
-                                    fontSize: FontSize.s12,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: AppSize.s10,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    // _accountViewGetXController.logout(context: context);
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => Profile(),
-                                    ));
-                                  },
-                                  child: Image.asset(
-                                    ImageAssets.editProfile,
-                                    width: AppSize.s20,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
                                     height: AppSize.s20,
-                                    color: ColorManager.white,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    '${AppSharedData.currentUser?.firstName ?? AppLocalizations.of(context)!.hello_welcome} ${AppSharedData.currentUser?.lastName ?? ''}',
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.white,
+                                      fontSize: FontSize.s14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: AppSize.s10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .view_edit_profile,
+                                        style: getRegularStyle(
+                                          color: ColorManager.white,
+                                          fontSize: FontSize.s12,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // _accountViewGetXController.logout(context: context);
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => Profile(),
+                                          ));
+                                        },
+                                        child: Image.asset(
+                                          ImageAssets.editProfile,
+                                          width: AppSize.s20,
+                                          height: AppSize.s20,
+                                          color: ColorManager.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
                 SizedBox(
                   height: AppSize.s28,
@@ -299,7 +282,7 @@ class _AccountViewState extends State<AccountView> {
                         color: ColorManager.grey,
                         blurRadius: AppSize.s2,
                         offset:
-                        Offset(AppSize.s0, AppSize.s2), // Shadow position
+                            Offset(AppSize.s0, AppSize.s2), // Shadow position
                       ),
                     ],
                   ),
@@ -397,7 +380,8 @@ class _AccountViewState extends State<AccountView> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OffersScreenNew(),));
+                            builder: (context) => OffersScreenNew(),
+                          ));
                         },
                         child: accountWidget(
                           context,
@@ -423,7 +407,8 @@ class _AccountViewState extends State<AccountView> {
                         onTap: () {
                           // Navigator.pushNamed(context, Routes.gifts);
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Vouchers(),));
+                            builder: (context) => Vouchers(),
+                          ));
                         },
                         child: accountWidget(
                           context,
@@ -471,7 +456,7 @@ class _AccountViewState extends State<AccountView> {
                         color: ColorManager.grey,
                         blurRadius: AppSize.s2,
                         offset:
-                        Offset(AppSize.s0, AppSize.s2), // Shadow position
+                            Offset(AppSize.s0, AppSize.s2), // Shadow position
                       ),
                     ],
                   ),
@@ -483,7 +468,8 @@ class _AccountViewState extends State<AccountView> {
                           //send from email
                           // _contactEmail();
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => GetHelpScreen(),));
+                            builder: (context) => GetHelpScreen(),
+                          ));
                         },
                         child: accountWidget(
                           context,
@@ -534,8 +520,8 @@ class _AccountViewState extends State<AccountView> {
                           )),
                       GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(Routes
-                                .inviteScreen);
+                            Navigator.of(context)
+                                .pushNamed(Routes.inviteScreen);
                           },
                           child: accountWidget(
                             context,
@@ -633,34 +619,35 @@ class _AccountViewState extends State<AccountView> {
     );
   }
 
-  Padding accountWidget(BuildContext context,
-      String icon,
-      String title, {
-        String? subTitle,
-        bool isVector = false,
-        IconData? iconName,
-      }) {
+  Padding accountWidget(
+    BuildContext context,
+    String icon,
+    String title, {
+    String? subTitle,
+    bool isVector = false,
+    IconData? iconName,
+  }) {
     return Padding(
       padding: EdgeInsets.only(bottom: AppPadding.p22),
       child: Row(
         children: [
           iconName == null
               ? isVector
-              ? SvgPicture.asset(
-            '${Constants.vectorsPath}$icon.svg',
-            width: AppSize.s24,
-            height: AppSize.s24,
-            color: ColorManager.primary,
-          )
-              : Image.asset(
-            icon,
-            height: AppSize.s24,
-            width: AppSize.s24,
-          )
+                  ? SvgPicture.asset(
+                      '${Constants.vectorsPath}$icon.svg',
+                      width: AppSize.s24,
+                      height: AppSize.s24,
+                      color: ColorManager.primary,
+                    )
+                  : Image.asset(
+                      icon,
+                      height: AppSize.s24,
+                      width: AppSize.s24,
+                    )
               : Icon(
-            iconName,
-            color: ColorManager.primary,
-          ),
+                  iconName,
+                  color: ColorManager.primary,
+                ),
           SizedBox(
             width: AppSize.s8,
           ),
@@ -903,9 +890,7 @@ class _AccountViewState extends State<AccountView> {
                     Padding(
                       padding: const EdgeInsets.only(left: 22),
                       child: Text(
-                        '${AppLocalizations.of(context)!
-                            .invite_your_friend} \n ${AppLocalizations.of(
-                            context)!.and_earn_points}',
+                        '${AppLocalizations.of(context)!.invite_your_friend} \n ${AppLocalizations.of(context)!.and_earn_points}',
                         style: TextStyle(fontSize: AppSize.s24),
                       ),
                     ),

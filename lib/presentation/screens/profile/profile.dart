@@ -5,7 +5,7 @@ import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/change_email.dart';
 import 'package:ghaf_application/presentation/screens/profile/password_setting.dart';
-import 'package:ghaf_application/presentation/screens/profile/profile_setting.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/constants.dart';
@@ -16,6 +16,7 @@ import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../main_view.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -44,7 +45,12 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                          builder: (context) => MainView()));
+                    },
                     child: Image.asset(
                       IconsAssets.arrow,
                       height: AppSize.s18,

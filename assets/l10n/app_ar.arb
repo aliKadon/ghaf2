@@ -441,6 +441,9 @@
   "total": "الكلي",
   "address1" : "منزلك",
   "address": "العنوان",
+
+  "place_order" : "ارسال االطلب",
+
   "it_takes": "It takes",
   "minutes": "دقائق",
   "order_success": "نجحت طلبيتك",

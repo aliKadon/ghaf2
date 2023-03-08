@@ -5,6 +5,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 
 
 class ResetPasswordViewGetXController extends GetxController with Helpers {
@@ -45,9 +46,8 @@ class ResetPasswordViewGetXController extends GetxController with Helpers {
         // success.
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginView(),));
       } else {
         // failed.
         Navigator.pop(context);
@@ -56,7 +56,8 @@ class ResetPasswordViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(
+          context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

@@ -168,9 +168,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               Column(children: [
                 InkWell(
                   onTap: () {
-                    _cartItem.increment(
-                      context: context,
-                    );
+                    // _cartItem.increment(
+                    //   context: context,
+                    // );
                     _cartViewGetXController.calculateBell();
                   },
                   child: Image.asset(
@@ -197,9 +197,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           index: widget.index);
                       _cartItem.toggleAddToCartRequest();
                     } else {
-                      _cartItem.decrement(
-                        context: context,
-                      );
+                      // _cartItem.decrement(
+                      //   context: context,
+                      // );
                       _cartViewGetXController.calculateBell();
                     }
                   },

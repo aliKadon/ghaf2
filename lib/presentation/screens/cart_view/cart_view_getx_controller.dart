@@ -13,7 +13,7 @@ import '../../../providers/product_provider.dart';
 class CartViewGetXController extends GetxController with Helpers {
   // notifiable.
   void notifyMyCart() {
-    update(['myCart']);
+    update(['cart']);
   }
 
   void notifyBell() {
@@ -22,6 +22,8 @@ class CartViewGetXController extends GetxController with Helpers {
 
   // flags.
   bool isMyCartLoading = true;
+
+  var isLoading = true;
 
   // vars.
   late BuildContext context;
@@ -66,15 +68,28 @@ class CartViewGetXController extends GetxController with Helpers {
               : ((cartItem.product!.price!))) *
           cartItem.productCount!;
       subTotal2 += (cartItem.product?.productDiscount == null
-          ? cartItem.product?.price ?? 0
-          : ((cartItem.product!.price!-(cartItem.product!.price! * cartItem.product!.productDiscount!.discount! / 100)))) *
+              ? cartItem.product?.price ?? 0
+              : ((cartItem.product!.price! -
+                  (cartItem.product!.price! *
+                      cartItem.product!.productDiscount!.discount! /
+                      100)))) *
           cartItem.productCount!;
     }
     discount = subTotal - subTotal2;
     total = subTotal2;
 
-
     notifyBell();
+  }
+
+  void emptyBasket(BuildContext context) async {
+    try {
+      await _storeApiController.emptyBasket(context);
+      cartItems = [];
+      notifyMyCart();
+    } catch (error) {
+      // error.
+      showSnackBar(context, message: error.toString(), error: true);
+    }
   }
 
   // remove cart item.
@@ -97,8 +112,8 @@ class CartViewGetXController extends GetxController with Helpers {
         showSnackBar(context, message: apiResponse.message, error: false);
         notifyBell();
         notifyMyCart();
-        Provider.of<ProductProvider>(context,listen: false).clearCart();
-        Navigator.pushNamed(context, Routes.ordersToPay,arguments: '');
+        Provider.of<ProductProvider>(context, listen: false).clearCart();
+        Navigator.pushNamed(context, Routes.ordersToPay, arguments: '');
       } else {
         // failed.
         Navigator.pop(context);
@@ -107,7 +122,8 @@ class CartViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }

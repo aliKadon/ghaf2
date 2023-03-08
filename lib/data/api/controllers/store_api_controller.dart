@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/domain/model/category.dart';
@@ -11,7 +13,7 @@ import 'package:http/http.dart' as http;
 import '../api_helper.dart';
 import '../api_settings.dart';
 
-class StoreApiController with ApiHelper {
+class StoreApiController with ApiHelper, Helpers {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
   Future<List<Category>> getCategories() async {
@@ -202,10 +204,38 @@ class StoreApiController with ApiHelper {
     return failedResponse;
   }
 
+  Future<ApiResponse> emptyBasket(BuildContext context) async {
+    // print('send request : add-remove-to-basket');
+    // Map<String, dynamic> queryParameters = {
+    //   'id': productId,
+    // };
+    // print(queryParameters);
+    var response = await _dio.post(
+      '/Product/empty-basket',
+      // queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+    );
+    print('============================================');
+    print(response.statusCode);
+    print(response.data);
+    if (response.statusCode == 200) {
+      if (response.data['status'] == 200) {
+        showSnackBar(context, message: response.data['message']);
+        return ApiResponse(
+          message: response.data['message'],
+          status: response.data['status'],
+        );
+      }
+    }
+    return failedResponse;
+  }
+
   Future<List<CartItem>> getMyCart() async {
     // print('send request : get-my-basket');
     var response = await _dio.get(
-      'Product/get-my-basket',
+      '/Product/get-my-basket',
       options: Options(
         headers: headers,
       ),
@@ -225,7 +255,7 @@ class StoreApiController with ApiHelper {
   // change cart item count.
   Future<ApiResponse> changeCartItemCount({
     required String cartItemId,
-    required int count,
+    required num count,
   }) async {
     // print('send request : add-remove-to-basket');
     Map<String, dynamic> queryParameters = {
@@ -234,15 +264,15 @@ class StoreApiController with ApiHelper {
     };
     // print(queryParameters);
     var response = await _dio.post(
-      'Product/change-basket-item-count',
+      '/Product/change-basket-item-count',
       queryParameters: queryParameters,
       options: Options(
         headers: headers,
       ),
     );
-    // print('============================================');
-    // // print(response.statusCode);
-    // print(response.data);
+    print('============================================');
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return ApiResponse(

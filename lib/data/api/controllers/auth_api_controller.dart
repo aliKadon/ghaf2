@@ -95,7 +95,7 @@ class AuthApiController with ApiHelper {
     };
     // // print(queryParameters);
     var response = await _dio.post(
-      'Auth/forgot-password',
+      '/Auth/forgot-password',
       queryParameters: queryParameters,
       options: Options(
         headers: headers,
@@ -129,7 +129,7 @@ class AuthApiController with ApiHelper {
     };
     // // print(data);
     var response = await _dio.post(
-      '/reset-password',
+      '/Auth/reset-password',
       data: data,
       options: Options(
         headers: headers,
