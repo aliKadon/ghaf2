@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
@@ -11,12 +12,41 @@ import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../../domain/model/nearby_stores.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
+
+  String address = '';
+  var city = 'address'.obs;
+
+  // #############################################
+  //get all information from latitude and longitude
+  // #############################################
+  Future<void> GetAddressFromLatLong(LatLng latLng) async {
+    List<Placemark> placemarks =
+    await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    print('======================================my address');
+    print(placemarks[0]);
+    Placemark place = placemarks[0];
+    city.value = (place.locality)!;
+    print('=====================city');
+    print(city);
+    address =
+    '${place.street}, ${place.subLocality}, ${place.locality}, ${place
+        .postalCode}, ${place.country}';
+  }
+
+  // ##############################################
+  // ##############################################
+
+
   // notifiable.
   bool _isCategoriesLoading = true;
   bool _isProductsLoading = true;
   bool _isSearching = false;
+  bool _isNearbyStoresLoading = true;
 
   bool get isCategoryLoading => _isCategoriesLoading;
 
@@ -44,6 +74,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   late final StoreApiController _storeApiController = StoreApiController();
   List<Category> categories = [];
   List<Product> products = [];
+  List<NearbyStores> nearbyStores = [];
   String search = '';
 
   // filter.
@@ -61,7 +92,6 @@ class HomeViewGetXController extends GetxController with Helpers {
     this.context = context;
     // getCategories();
     getProducts();
-
   }
 
   Future<Position> determinePosition() async {
@@ -110,7 +140,8 @@ class HomeViewGetXController extends GetxController with Helpers {
       isCategoryLoading = false;
     } catch (error) {
       // error.
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(
+          context, message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 
@@ -134,11 +165,29 @@ class HomeViewGetXController extends GetxController with Helpers {
       // error.
       debugPrint(error.response?.data);
       debugPrint(error.toString());
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(
+          context, message: 'An Error Occurred, Please Try again', error: true);
     } catch (error) {
       // error.
       debugPrint(error.toString());
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(
+          context, message: 'An Error Occurred, Please Try again', error: true);
+    }
+  }
+
+  void getNearbyStores({
+    required BuildContext context,
+    required String lat,
+    required String long,
+    String? distance
+  }) async {
+    try {
+      nearbyStores =
+      await _storeApiController.getNearbyStores(lat: lat, long: long,distance: distance);
+      _isNearbyStoresLoading = false;
+      update(['nearbyStores']);
+    }catch(error) {
+      showSnackBar(context, message: error.toString(),error: true);
     }
   }
 
@@ -188,20 +237,21 @@ class HomeViewGetXController extends GetxController with Helpers {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
       ),
-      builder: (_) => Builder(
-        builder: (context) {
-          Get.put<FilterSheetWidgetGetXController>(
-            FilterSheetWidgetGetXController(
-              context: context,
-              onFilter: filter,
-              minPrice: minPrice,
-              maxPrice: maxPrice,
-              filterBy: filterBy,
-            ),
-          );
-          return FilterSheetWidget();
-        },
-      ),
+      builder: (_) =>
+          Builder(
+            builder: (context) {
+              Get.put<FilterSheetWidgetGetXController>(
+                FilterSheetWidgetGetXController(
+                  context: context,
+                  onFilter: filter,
+                  minPrice: minPrice,
+                  maxPrice: maxPrice,
+                  filterBy: filterBy,
+                ),
+              );
+              return FilterSheetWidget();
+            },
+          ),
     );
   }
 

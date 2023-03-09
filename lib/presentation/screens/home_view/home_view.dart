@@ -3,10 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
@@ -15,11 +15,10 @@ import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
 import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category.dart';
-import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
+import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../widgets/shortcuts_widget.dart';
@@ -35,33 +34,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   // controller.
-
 
   var isLoading = true;
   var language = SharedPrefController().lang1;
 
   late Position position;
-  String address = '';
-  String city = 'address';
 
-  // #############################################
-  //get all information from latitude and longitude
-  // #############################################
-  Future<void> GetAddressFromLatLong(LatLng latLng) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
-    print('======================================my address');
-    print(placemarks[0]);
-    Placemark place = placemarks[0];
-    city = (place.locality).toString();
-    address = '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
-  }
-
-
-  // ##############################################
-  // ##############################################
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
   Future<Position> getLocation() async {
@@ -77,27 +56,23 @@ class _HomeViewState extends State<HomeView> {
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
   late final ProfileSettingGetxController _profileSettingGetxController =
-  Get.put(ProfileSettingGetxController());
+      Get.put(ProfileSettingGetxController());
 
   // init state.
   @override
   void initState() {
+    Get.put(Product());
     Get.put(LoginViewGetXController(context: context));
     _profileSettingGetxController.getUserDetails(context);
     _homeViewGetXController.init(context: context);
     _homeViewGetXController.determinePosition().then((value) => getLocation()
-        .then((value) => GetAddressFromLatLong(
-            LatLng(position.latitude, position.longitude))));
+        .then((value) => _homeViewGetXController.GetAddressFromLatLong(
+                LatLng(position.latitude, position.longitude))
+            .then((value) => _homeViewGetXController.getNearbyStores(
+                context: context,
+                lat: position.latitude.toString(),
+                long: position.longitude.toString()))));
     super.initState();
-  }
-  @override
-  void didChangeDependencies() {
-    // Provider.of<ProductProvider>(context, listen: false).getProductDiscount(15);
-    // Provider.of<ProductProvider>(context).getProducts();
-    Provider.of<ProductProvider>(context)
-        .getProducts()
-        .then((value) => isLoading = false);
-    super.didChangeDependencies();
   }
 
   // dispose.
@@ -187,7 +162,9 @@ class _HomeViewState extends State<HomeView> {
                                   style: getRegularStyle(
                                       color: ColorManager.blackLight),
                                 ),
-                                SizedBox(width: AppSize.s82,),
+                                SizedBox(
+                                  width: AppSize.s82,
+                                ),
                                 Row(
                                   children: [
                                     Image.asset(
@@ -196,17 +173,21 @@ class _HomeViewState extends State<HomeView> {
                                       width: 20,
                                     ),
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width * 0.03,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.03,
                                     ),
                                     Text('21 points',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold, fontSize: 15)),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15)),
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width * 0.03,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.03,
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.pushNamed(context, Routes.myFavorite);
+                                        Navigator.pushNamed(
+                                            context, Routes.myFavorite);
                                       },
                                       child: Image.asset(
                                         IconsAssets.heart,
@@ -222,28 +203,15 @@ class _HomeViewState extends State<HomeView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // Image.asset(
-                                //   IconsAssets.location,
-                                //   height: AppSize.s20,
-                                //   width: AppSize.s14,
-                                // ),
-                                // SizedBox(
-                                //   width: AppSize.s17,
-                                // ),
-                                Text(
-                                  '${AppLocalizations.of(context)!.shipping} ksk',
-                                  style: getRegularStyle(
-                                      color: ColorManager.primaryDark),
+                                Obx(
+                                  () => Text(
+                                    '${AppLocalizations.of(context)!.shipping} ${_homeViewGetXController.city}',
+                                    style: getRegularStyle(
+                                        color: ColorManager.primaryDark),
+                                  ),
                                 ),
                               ],
                             ),
-                            // Text(
-                            //   '${AppSharedData.currentUser!.firstName} ${AppSharedData.currentUser!.lastName}',
-                            //   style: getBoldStyle(
-                            //     color: ColorManager.blackLight,
-                            //     fontSize: FontSize.s12,
-                            //   ),
-                            // ),
                           ],
                         ),
                       ],
@@ -290,43 +258,7 @@ class _HomeViewState extends State<HomeView> {
                                       ),
                                     ],
                                   ),
-                                ))
-                            // TextField(
-                            //   textInputAction: TextInputAction.search,
-                            //   textAlign: TextAlign.start,
-                            //   style: getMediumStyle(
-                            //     color: ColorManager.black,
-                            //     fontSize: FontSize.s14,
-                            //   ),
-                            //   onChanged: _homeViewGetXController.onSearch,
-                            //   decoration: InputDecoration(
-                            //     prefixIcon: Padding(
-                            //       padding: EdgeInsets.symmetric(
-                            //           horizontal: AppPadding.p12),
-                            //       child: Image.asset(
-                            //         IconsAssets.search,
-                            //         width: AppSize.s16,
-                            //         height: AppSize.s16,
-                            //       ),
-                            //     ),
-                            //     contentPadding: EdgeInsets.symmetric(
-                            //         horizontal: AppPadding.p16,
-                            //         vertical: AppPadding.p16),
-                            //     hintText:
-                            //         AppLocalizations.of(context)!.search_flower,
-                            //     hintStyle: getMediumStyle(
-                            //       color: ColorManager.hintTextFiled,
-                            //     ),
-                            //     enabledBorder: buildOutlineInputBorder(
-                            //       color: ColorManager.grey,
-                            //     ),
-                            //     focusedBorder: buildOutlineInputBorder(
-                            //       color: ColorManager.grey,
-                            //     ),
-                            //   ),
-                            // ),
-
-                            ),
+                                ))),
                       ),
                       InkWell(
                         onTap: _homeViewGetXController.onFilterButtonTapped,
@@ -385,20 +317,6 @@ class _HomeViewState extends State<HomeView> {
                                               height: 120,
                                               width: 120,
                                             )),
-                                    //image main
-                                    // isArabic == 'en'
-                                    //     ? Image.asset(
-                                    //         ImageAssets.main4,
-                                    //         height: AppSize.s148,
-                                    //         width: AppSize.s360,
-                                    //         fit: BoxFit.fill,
-                                    //       )
-                                    //     : Image.asset(
-                                    //         ImageAssets.main4,
-                                    //         height: AppSize.s148,
-                                    //         width: AppSize.s360,
-                                    //         fit: BoxFit.fill,
-                                    //       ),
                                     PositionedDirectional(
                                       top: AppSize.s24,
                                       start: 10,
@@ -590,44 +508,42 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.43,
                     child: GetBuilder<HomeViewGetXController>(
                       id: 'products',
                       builder: (controller) => ListView.builder(
-                        padding: EdgeInsets.all(8),
-
                         shrinkWrap: true,
+                        padding: EdgeInsets.all(12),
                         scrollDirection: Axis.horizontal,
                         itemCount: _homeViewGetXController.products.length,
-                        physics: const BouncingScrollPhysics(),
-                        // gridDelegate:
-                        //     SliverGridDelegateWithFixedCrossAxisCount(
-                        //   crossAxisCount: Constants.crossAxisCount,
-                        //   mainAxisExtent: Constants.mainAxisExtent,
-                        //   mainAxisSpacing: Constants.mainAxisSpacing,
-                        // ),
                         itemBuilder: (context, index) {
-                          return Builder(
-                            builder: (context) {
-                              // Get.put<Product>(
-                              //   _homeViewGetXController.products[index],
-                              //   tag:
-                              //       '${_homeViewGetXController.products[index].id}home',
-                              // );
-                              return MostPopularProductWidget(
-                                image: _homeViewGetXController
-                                    .products[index].productImages![0],
-                                name: _homeViewGetXController
-                                    .products[index].name!,
-                                price: _homeViewGetXController
-                                    .products[index].price!,
-                                stars: _homeViewGetXController
-                                    .products[index].stars!,
-                                idProduct:
-                                    _homeViewGetXController.products[index].id!,
-                              );
-                            },
-                          );
+                          return _homeViewGetXController.products.length == 0
+                              ? Container()
+                              : GetBuilder<Product>(
+                                  id: 'isFavorite',
+                                  builder: (controller) => ProductItemNew(
+                                    index: index,
+                                    image: _homeViewGetXController
+                                            .products[index]
+                                            .productImages?[0] ??
+                                        '',
+                                    name: _homeViewGetXController
+                                            .products[index].name ??
+                                        '',
+                                    price: _homeViewGetXController
+                                            .products[index].price ??
+                                        0,
+                                    stars: _homeViewGetXController
+                                            .products[index].stars ??
+                                        0,
+                                    idProduct: _homeViewGetXController
+                                            .products[index].id ??
+                                        '',
+                                    isFavorite: _homeViewGetXController
+                                            .products[index].isFavorite ??
+                                        false,
+                                  ),
+                                );
                         },
                       ),
                     ),
@@ -830,89 +746,127 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    child: ListView.builder(
-                      padding: EdgeInsets.all(8),
+                  GetBuilder<HomeViewGetXController>(
+                    id: 'nearbyStores',
+                    builder: (controller) => Container(
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      child: ListView.builder(
+                        padding: EdgeInsets.all(8),
 
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      physics: const BouncingScrollPhysics(),
-                      // gridDelegate:
-                      //     SliverGridDelegateWithFixedCrossAxisCount(
-                      //   crossAxisCount: Constants.crossAxisCount,
-                      //   mainAxisExtent: Constants.mainAxisExtent,
-                      //   mainAxisSpacing: Constants.mainAxisSpacing,
-                      // ),
-                      itemBuilder: (context, index) {
-                        return Builder(
-                          builder: (context) {
-                            // Get.put<Product>(
-                            //   _homeViewGetXController.products[index],
-                            //   tag:
-                            //       '${_homeViewGetXController.products[index].id}home',
-                            // );
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.11,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.27,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image:
-                                                AssetImage(ImageAssets.brIcon),
-                                            fit: BoxFit.scaleDown,
-                                          ),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _homeViewGetXController.nearbyStores.length,
+                        physics: const BouncingScrollPhysics(),
+                        // gridDelegate:
+                        //     SliverGridDelegateWithFixedCrossAxisCount(
+                        //   crossAxisCount: Constants.crossAxisCount,
+                        //   mainAxisExtent: Constants.mainAxisExtent,
+                        //   mainAxisSpacing: Constants.mainAxisSpacing,
+                        // ),
+                        itemBuilder: (context, index) {
+                          return Builder(
+                            builder: (context) {
+                              // Get.put<Product>(
+                              //   _homeViewGetXController.products[index],
+                              //   tag:
+                              //       '${_homeViewGetXController.products[index].id}home',
+                              // );
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        _homeViewGetXController
+                                                        .nearbyStores[index]
+                                                        .branchLogoImage ==
+                                                    null ||
+                                                _homeViewGetXController
+                                                        .nearbyStores[index]
+                                                        .branchLogoImage ==
+                                                    ''
+                                            ? Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.11,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.27,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  image: DecorationImage(
+                                                    image: AssetImage(
+                                                        ImageAssets
+                                                            .coffeeHouse),
+                                                    fit: BoxFit.scaleDown,
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.11,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.27,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        _homeViewGetXController
+                                                            .nearbyStores[index]
+                                                            .branchLogoImage!),
+                                                    fit: BoxFit.scaleDown,
+                                                  ),
+                                                ),
+                                              ),
+                                        SizedBox(
+                                          width: 14,
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                        _homeViewGetXController
+                                            .nearbyStores[index].branchName!,
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorManager.primaryDark)),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.timer,
+                                          color: ColorManager.grey,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 14,
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text('baskin robbins',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          color: ColorManager.primaryDark)),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.timer,
-                                        color: ColorManager.grey,
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text('20 min',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              color: ColorManager.primaryDark)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text('20 min',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color:
+                                                    ColorManager.primaryDark)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Card(

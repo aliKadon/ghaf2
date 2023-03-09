@@ -159,6 +159,8 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                         price: 0,
                         name: '',
                         idProduct: '',
+                        isFavorite: false,
+                        index: 0,
                       );
                     },
                   )

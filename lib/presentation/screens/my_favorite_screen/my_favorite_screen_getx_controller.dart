@@ -12,6 +12,7 @@ class MyFavoriteScreenGetXController extends GetxController with Helpers {
 
   set isMyFavoriteLoading(bool value) {
     _isMyFavoriteLoading = value;
+    getMyFavorite();
     update(['myFavorite']);
   }
 
@@ -26,13 +27,16 @@ class MyFavoriteScreenGetXController extends GetxController with Helpers {
   }) {
     this.context = context;
     getMyFavorite();
+    update(['myFavorite']);
   }
 
   // get my favorite.
   void getMyFavorite() async {
     try {
       products = await _storeApiController.getMyFavorite();
+
       isMyFavoriteLoading = false;
+
     } catch (error) {
       // error.
       showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);

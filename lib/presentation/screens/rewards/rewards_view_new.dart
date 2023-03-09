@@ -20,10 +20,7 @@ class RewardsViewNew extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SizedBox(height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.05),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -87,8 +84,8 @@ class RewardsViewNew extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    HowItWorkRewardsScreen(),));
+                                builder: (context) => HowItWorkRewardsScreen(),
+                              ));
                             },
                             child: Text(
                               AppLocalizations.of(context)!.how_it_works,
@@ -101,10 +98,7 @@ class RewardsViewNew extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.67,
+                        width: MediaQuery.of(context).size.width * 0.67,
                         child: Text(
                           AppLocalizations.of(context)!.the_more_you_order,
                           overflow: TextOverflow.clip,
@@ -170,19 +164,16 @@ class RewardsViewNew extends StatelessWidget {
                 ],
               ),
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: ListView.builder(
                   itemCount: 4,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return FreeDeliveryProductWidget();
-                  },),
+                  },
+                ),
               ),
-
               SizedBox(
                 height: AppSize.s30,
               ),
@@ -206,17 +197,23 @@ class RewardsViewNew extends StatelessWidget {
                 ],
               ),
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: ListView.builder(
                   itemCount: 4,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',);
-                  },),
+                    return MostPopularProductWidget(
+                      image: '',
+                      stars: 0,
+                      price: 0,
+                      name: '',
+                      idProduct: '',
+                      isFavorite: false,
+                      index: 0,
+                    );
+                  },
+                ),
               ),
             ],
           ),

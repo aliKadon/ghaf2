@@ -158,7 +158,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 top: AppSize.s12,
                 child: InkWell(
                   onTap: () {
-                    _product.toggleIsFavorite(context: context);
+                    _product.toggleIsFavorite(context: context,id: '');
                   },
                   child: GetBuilder<Product>(
                     id: 'isFavorite',

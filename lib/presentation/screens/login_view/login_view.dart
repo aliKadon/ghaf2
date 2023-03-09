@@ -31,14 +31,13 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with Helpers {
   // controller.
   late final LoginViewGetXController _loginViewGetXController =
-      Get.find<LoginViewGetXController>();
+      Get.put<LoginViewGetXController>(LoginViewGetXController(context: context));
 
 
   GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
-    Get.put(LoginViewGetXController(context: context));
 
     // _googleSignIn.onCurrentUserChanged.listen((event) {
     //   _currentUser = event;

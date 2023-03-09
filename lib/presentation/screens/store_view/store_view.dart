@@ -270,7 +270,7 @@ class _StoreViewState extends State<StoreView> {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',);
+                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',isFavorite: false,index: 0,);
                 },
               ),
             ),
@@ -306,7 +306,7 @@ class _StoreViewState extends State<StoreView> {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',);
+                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',isFavorite: false,index: 0,);
                 },
               ),
             )

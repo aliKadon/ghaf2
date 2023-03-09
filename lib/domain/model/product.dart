@@ -10,14 +10,23 @@ import 'package:ghaf_application/domain/model/offer.dart';
 import 'package:ghaf_application/domain/model/product_discount.dart';
 
 class Product extends GetxController with Helpers {
+
+  // var isFavorite1 = true;
+
   // notifiable.
   void toggleIsFavorite({
+    required String id,
+    // required bool isFavorite,
     required BuildContext context,
     bool sendRequest = true,
   }) {
-    isFavorite = !isFavorite!;
+    if (sendRequest) _toggleFavoriteRequest(context: context,id: id);
+
+    // isFavorite = !isFavorite!;
     update(['isFavorite']);
-    if (sendRequest) _toggleFavoriteRequest(context: context);
+
+
+
   }
 
   // notifiable.
@@ -177,23 +186,24 @@ class Product extends GetxController with Helpers {
 
   // toggle favorite request.
   void _toggleFavoriteRequest({
+    required String id,
     required BuildContext context,
   }) async {
     try {
       final ApiResponse apiResponse =
-          await _storeApiController.toggleFavorite(productId: id!);
+          await _storeApiController.toggleFavorite(productId: id);
       if (apiResponse.status == 200) {
         // success.
         showSnackBar(context, message: apiResponse.message, error: false);
       } else {
         // failed.
         showSnackBar(context, message: apiResponse.message, error: true);
-        toggleIsFavorite(context: context, sendRequest: false);
+        toggleIsFavorite(context: context, sendRequest: false,id: id);
       }
     } catch (error) {
       // error.
       showSnackBar(context, message: error.toString(), error: true);
-      toggleIsFavorite(context: context, sendRequest: false);
+      toggleIsFavorite(context: context, sendRequest: false,id: id);
     }
   }
 

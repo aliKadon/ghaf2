@@ -7,6 +7,8 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/domain/model/category.dart';
+import 'package:ghaf_application/domain/model/nearby_stores.dart';
+import 'package:ghaf_application/domain/model/popular_search.dart';
 import 'package:ghaf_application/domain/model/product.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,6 +41,69 @@ class StoreApiController with ApiHelper, Helpers {
     return [];
   }
 
+  Future<List<String>> getRecentSearches() async {
+    final Response response = await _dio.get(
+      '/Product/get-old-search?pageIndex=1&pageRows=7',
+      options: Options(
+        headers: headers,
+      ),
+    );
+    // print('============================================RECENT SEARCHES');
+    // print(response.statusCode);
+    // print(response.data);
+    if (response.statusCode == 200) {
+      if (response.data['status'] == 200) {
+        return List<String>.from(response.data["data"]);
+      }
+    }
+    return [];
+  }
+
+  Future<List<NearbyStores>> getNearbyStores(
+      {required String lat, required String long, String? distance}) async {
+    Map<String, dynamic> queryParameters = {
+      'distance': distance,
+      'lat': lat,
+      'lng': long
+    };
+    final Response response = await _dio.get(
+      '/NearBy/get-nearby-stores',
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+    );
+    // print('============================================POPULAR SEARCHES');
+    // print(response.statusCode);
+    // print(response.data);
+    if (response.statusCode == 200) {
+      if (response.data['status'] == 200) {
+        return List<NearbyStores>.from(
+            response.data["data"].map((x) => NearbyStores.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
+  Future<List<PopularSearch>> getPopularSearches() async {
+    final Response response = await _dio.get(
+      '/Product/get-popular-search',
+      options: Options(
+        headers: headers,
+      ),
+    );
+    // print('============================================POPULAR SEARCHES');
+    // print(response.statusCode);
+    // print(response.data);
+    if (response.statusCode == 200) {
+      if (response.data['status'] == 200) {
+        return List<PopularSearch>.from(
+            response.data["data"].map((x) => PopularSearch.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
   Future<List<Product>> getProducts({
     String? sid,
     String search = '',
@@ -55,14 +120,14 @@ class StoreApiController with ApiHelper, Helpers {
     // // print(queryParameters);
     final Response response = await _dio.get(
       '/Product/read-product/',
-      // queryParameters: queryParameters,
+      queryParameters: queryParameters,
       options: Options(
         headers: headers,
       ),
     );
-    print('============================================PRODUCT');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================PRODUCT');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<Product>.from(
@@ -83,7 +148,7 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'cid': cid,
       'filter':
-      "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
     // // print(queryParameters);
     final Response response = await _dio.get(
@@ -129,7 +194,8 @@ class StoreApiController with ApiHelper, Helpers {
   Future<ApiResponse> toggleFavorite({
     required String productId,
   }) async {
-    Uri uri = Uri.parse('${ApiSettings.addOrRemoveFromFavorite}?id=$productId');
+    Uri uri = Uri.parse(
+        '${Constants.baseUrl}/Product/add-remove-to-favorite?id=$productId');
     var response = await http.post(
       uri,
       headers: headers,
@@ -153,7 +219,7 @@ class StoreApiController with ApiHelper, Helpers {
   }
 
   Future<List<Product>> getMyFavorite() async {
-    Uri uri = Uri.parse('${ApiSettings.getMyFavorite}');
+    Uri uri = Uri.parse('${Constants.baseUrl}/Product/get-my-favorite');
     var response = await http.get(
       uri,
       headers: headers,
@@ -240,9 +306,9 @@ class StoreApiController with ApiHelper, Helpers {
         headers: headers,
       ),
     );
-    // print('============================================');
-    // print(response.statusCode);
-    // print(response.data);
+    print('============================================');
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<CartItem>.from(

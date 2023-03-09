@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
-import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
-import 'package:ghaf_application/presentation/widgets/cart_widget.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -24,8 +21,6 @@ class _CartScreenState extends State<CartScreen> {
   late final CartViewGetXController _cartViewGetXController =
       Get.put(CartViewGetXController());
 
-
-
   var a = 1;
 
   @override
@@ -35,7 +30,6 @@ class _CartScreenState extends State<CartScreen> {
     );
     super.initState();
   }
-
 
   // dispose.
   @override
@@ -48,9 +42,19 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<CartViewGetXController>(
-        id:'cart',
-        builder:(controller) => SafeArea(
-          child: _cartViewGetXController.cartItems.length == 0
+        id: 'cart',
+        builder: (controller) => SafeArea(
+          child: _cartViewGetXController.isMyCartLoading
+              ? Center(
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
+                  ),
+                )
+              : _cartViewGetXController.cartItems.length == 0
                   ? Column(
                       children: [
                         SizedBox(
@@ -89,7 +93,8 @@ class _CartScreenState extends State<CartScreen> {
                                       fontSize: FontSize.s14),
                                 ),
                                 Text(
-                                  AppLocalizations.of(context)!.ghaf_application,
+                                  AppLocalizations.of(context)!
+                                      .ghaf_application,
                                   style: TextStyle(
                                       color: ColorManager.primary,
                                       fontSize: FontSize.s14,
@@ -119,8 +124,8 @@ class _CartScreenState extends State<CartScreen> {
                           padding: EdgeInsets.all(4),
                           child: ElevatedButton(
                               onPressed: () {},
-                              child: Text(
-                                  AppLocalizations.of(context)!.getting_started)),
+                              child: Text(AppLocalizations.of(context)!
+                                  .getting_started)),
                         )
                       ],
                     )
@@ -155,29 +160,28 @@ class _CartScreenState extends State<CartScreen> {
                         Container(
                           height: MediaQuery.of(context).size.height * 0.45,
                           child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: _cartViewGetXController.cartItems.length,
-                              itemBuilder: (context, index) {
-                                return CartWidgetNew(
-                                  index: index,
-                                  name: _cartViewGetXController
-                                      .cartItems[index].product!.name!,
-                                  price: _cartViewGetXController
-                                      .cartItems[index].product!.price!,
-                                  image: _cartViewGetXController.cartItems[index]
-                                      .product!.productImages![0],
-                                  isoCurrencySymbol: _cartViewGetXController
-                                      .cartItems[index]
-                                      .product!
-                                      .isoCurrencySymbol!,
-                                  productCount: _cartViewGetXController
-                                      .cartItems[index].productCount!,
-                                  idProduct: _cartViewGetXController
-                                      .cartItems[index].product!.id!,
-                                );
-                              },
-                            ),
-
+                            shrinkWrap: true,
+                            itemCount: _cartViewGetXController.cartItems.length,
+                            itemBuilder: (context, index) {
+                              return CartWidgetNew(
+                                index: index,
+                                name: _cartViewGetXController
+                                    .cartItems[index].product!.name!,
+                                price: _cartViewGetXController
+                                    .cartItems[index].product!.price!,
+                                image: _cartViewGetXController.cartItems[index]
+                                    .product!.productImages![0],
+                                isoCurrencySymbol: _cartViewGetXController
+                                    .cartItems[index]
+                                    .product!
+                                    .isoCurrencySymbol!,
+                                productCount: _cartViewGetXController
+                                    .cartItems[index].productCount!,
+                                idProduct: _cartViewGetXController
+                                    .cartItems[index].product!.id!,
+                              );
+                            },
+                          ),
                         ),
                         Divider(
                           thickness: 1,
@@ -272,9 +276,9 @@ class _CartScreenState extends State<CartScreen> {
                                               BorderRadius.circular(15)))),
                               onPressed: () {
                                 _cartViewGetXController.emptyBasket(context);
-
                               },
-                              child: Text(AppLocalizations.of(context)!.place_order)),
+                              child: Text(
+                                  AppLocalizations.of(context)!.place_order)),
                         )
                       ],
                     ),

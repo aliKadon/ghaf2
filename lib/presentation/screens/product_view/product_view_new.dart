@@ -33,14 +33,13 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
   late final ProductViewGetXController _productViewGetXController =
   Get.put(ProductViewGetXController());
 
-  late final Product _product = Get.find<Product>(tag: 'isInCart');
+  late final Product _product = Get.put<Product>(Product());
 
   @override
   void initState() {
     _productViewGetXController.init(
       context: context,
     );
-    Get.put(Product());
     super.initState();
   }
 

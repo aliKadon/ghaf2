@@ -8,7 +8,10 @@ import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen_getx_controller.dart';
+import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/product_widget.dart';
+
+import '../home_view/home_view_getx_controller.dart';
 
 class MyFavoriteScreen extends StatefulWidget {
   const MyFavoriteScreen({Key? key}) : super(key: key);
@@ -21,6 +24,8 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
   // controller.
   late final MyFavoriteScreenGetXController _myFavoriteScreenGetXController =
       Get.put(MyFavoriteScreenGetXController());
+  HomeViewGetXController _homeViewGetXController =
+  Get.put<HomeViewGetXController>(HomeViewGetXController());
 
   // init state.
   @override
@@ -118,20 +123,26 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                       itemCount:
                           _myFavoriteScreenGetXController.products.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+
                         crossAxisCount: Constants.crossAxisCount,
-                        mainAxisExtent: Constants.mainAxisExtent,
+                        mainAxisExtent: 350,
                         mainAxisSpacing: Constants.mainAxisSpacing,
                       ),
                       itemBuilder: (context, index) {
                         return Builder(builder: (context) {
-                          Get.put<Product>(
-                            _myFavoriteScreenGetXController.products[index],
-                            tag:
-                                '${_myFavoriteScreenGetXController.products[index].id}myFavorite',
-                          );
-                          return ProductWidget(
-                            tag:
-                                '${_myFavoriteScreenGetXController.products[index].id}myFavorite',
+                          return MostPopularProductWidget(
+                              image: _homeViewGetXController
+                                  .products[index].productImages![0],
+                              name: _homeViewGetXController
+                                  .products[index].name!,
+                              price: _homeViewGetXController
+                                  .products[index].price!,
+                              stars: _homeViewGetXController
+                                  .products[index].stars!,
+                              index: index,
+                              idProduct:
+                              _homeViewGetXController.products[index].id!,
+                              isFavorite: _homeViewGetXController.products[index].isFavorite!,
                           );
                         });
                       },

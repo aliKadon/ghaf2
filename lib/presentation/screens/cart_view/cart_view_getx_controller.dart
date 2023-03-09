@@ -13,6 +13,7 @@ import '../../../providers/product_provider.dart';
 class CartViewGetXController extends GetxController with Helpers {
   // notifiable.
   void notifyMyCart() {
+    // cartItems = [];
     update(['cart']);
   }
 
@@ -85,6 +86,7 @@ class CartViewGetXController extends GetxController with Helpers {
     try {
       await _storeApiController.emptyBasket(context);
       cartItems = [];
+      // isMyCartLoading = true;
       notifyMyCart();
     } catch (error) {
       // error.
