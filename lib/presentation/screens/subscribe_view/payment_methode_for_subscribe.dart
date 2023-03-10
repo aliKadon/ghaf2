@@ -245,7 +245,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                       child:  Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
                         saveItem();
-                        _subscribeViewGetXController.subscribeAsGhafGolden(cardInfo,planId[0].id);
+                        // _subscribeViewGetXController.subscribeAsGhafGolden(cardInfo,planId[0].id);
                         // AppSharedData.currentUser!.ghafGold ?? false
                         //     ? _subscribeViewGetXController.cancelSubscription()
                         //     : _subscribeViewGetXController.subscribeAsGhafGolden(cardInfo,planId[0].id);

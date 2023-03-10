@@ -74,8 +74,6 @@ class _ProductItemNewState extends State<ProductItemNew> {
                       GetBuilder<Product>(
                         id: 'isFavorite',
                         builder: (controller) {
-                          print('=================is favorite');
-                          print(_product.isFavorite);
                           return InkWell(
                             onTap: () {
                               _product.toggleIsFavorite(

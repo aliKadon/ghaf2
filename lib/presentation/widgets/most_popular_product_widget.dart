@@ -10,7 +10,7 @@ import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../screens/home_view/home_view_getx_controller.dart';
 
-class MostPopularProductWidget extends StatelessWidget {
+class MostPopularProductWidget extends StatefulWidget {
   final String image;
   final String name;
   final num price;
@@ -18,19 +18,28 @@ class MostPopularProductWidget extends StatelessWidget {
   final int index;
   final String idProduct;
   final bool isFavorite;
+  final List controller;
 
   MostPopularProductWidget(
       {required this.image,
       required this.name,
       required this.stars,
-        required this.index,
+      required this.index,
       required this.price,
       required this.isFavorite,
+      required this.controller,
       required this.idProduct});
 
+  @override
+  State<MostPopularProductWidget> createState() =>
+      _MostPopularProductWidgetState();
+}
+
+class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
   late final Product _product = Get.put<Product>(Product());
+
   HomeViewGetXController _homeViewGetXController =
-  Get.find<HomeViewGetXController>();
+      Get.find<HomeViewGetXController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +47,7 @@ class MostPopularProductWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ProductViewNew(
-            idProduct: idProduct,
+            idProduct: widget.idProduct,
           ),
         ));
       },
@@ -53,13 +62,23 @@ class MostPopularProductWidget extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      Container(
+                      widget.image == '' ? Container(
                         height: MediaQuery.of(context).size.height * 0.29,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                            image: NetworkImage(image),
+                            image: AssetImage(ImageAssets.pizza),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ) : Container(
+                        height: MediaQuery.of(context).size.height * 0.29,
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.image),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -69,7 +88,7 @@ class MostPopularProductWidget extends StatelessWidget {
                         builder: (controller) => InkWell(
                           onTap: () {
                             _product.toggleIsFavorite(
-                                context: context, id: idProduct);
+                                context: context, id: widget.idProduct);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -78,7 +97,7 @@ class MostPopularProductWidget extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(100),
                                   color: Colors.black54),
                               padding: EdgeInsets.all(8),
-                              child: _homeViewGetXController.products[index].isFavorite!
+                              child: widget.controller[widget.index].isFavorite!
                                   ? Image.asset(
                                       IconsAssets.heart1,
                                       height: AppSize.s24,
@@ -101,7 +120,7 @@ class MostPopularProductWidget extends StatelessWidget {
                   )
                 ],
               ),
-              Text(name,
+              Text(widget.name,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -111,7 +130,7 @@ class MostPopularProductWidget extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.2,
                     child: Text(
-                        '${price.toDouble()} ${AppLocalizations.of(context)!.aed}',
+                        '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
                         overflow: TextOverflow.clip,
                         style: TextStyle(
                             fontSize: 14,
@@ -128,7 +147,7 @@ class MostPopularProductWidget extends StatelessWidget {
                   SizedBox(
                     width: 8,
                   ),
-                  Text(stars.toString(),
+                  Text(widget.stars.toString(),
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

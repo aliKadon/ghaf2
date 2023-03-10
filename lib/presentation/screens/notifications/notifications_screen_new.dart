@@ -161,6 +161,7 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                         idProduct: '',
                         isFavorite: false,
                         index: 0,
+                        controller: [],
                       );
                     },
                   )

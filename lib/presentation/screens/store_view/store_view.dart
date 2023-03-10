@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
-import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
-import 'package:ghaf_application/presentation/screens/store_view/onsale_view.dart';
 import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/shortcuts_widget.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
 
 class StoreView extends StatefulWidget {
-
-
   @override
   State<StoreView> createState() => _StoreViewState();
 }
 
 class _StoreViewState extends State<StoreView> {
-
   @override
   void initState() {
     // Provider.of<ProductProvider>(context,listen: false).getProducts();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +224,7 @@ class _StoreViewState extends State<StoreView> {
                 itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: ShortcutsWidget(
                       imageUrl: ImageAssets.trending,
                       text: 'Trending',
@@ -270,7 +261,16 @@ class _StoreViewState extends State<StoreView> {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',isFavorite: false,index: 0,);
+                  return MostPopularProductWidget(
+                    image: '',
+                    stars: 0,
+                    price: 0,
+                    name: '',
+                    idProduct: '',
+                    isFavorite: false,
+                    index: 0,
+                    controller: [],
+                  );
                 },
               ),
             ),
@@ -306,7 +306,16 @@ class _StoreViewState extends State<StoreView> {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return MostPopularProductWidget(image: '',stars: 0,price: 0,name: '',idProduct: '',isFavorite: false,index: 0,);
+                  return MostPopularProductWidget(
+                    image: '',
+                    stars: 0,
+                    price: 0,
+                    name: '',
+                    idProduct: '',
+                    isFavorite: false,
+                    index: 0,
+                    controller: [],
+                  );
                 },
               ),
             )

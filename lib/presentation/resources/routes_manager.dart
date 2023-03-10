@@ -347,7 +347,7 @@ class RouteGenerator {
           builder: (_) => Builder(
             builder: (context) {
               Get.put<OffersScreenGetXController>(
-                  OffersScreenGetXController(context: context));
+                  OffersScreenGetXController());
               return const OffersView();
             },
           ),

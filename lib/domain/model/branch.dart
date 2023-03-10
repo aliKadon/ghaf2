@@ -26,7 +26,7 @@ class Branch {
   bool? is24Hours;
   bool? hidden;
   String? storeId;
-  String? branchTimes;
+  List<dynamic>? branchTimes;
   String? storeName;
   List<StoreDeliveryCost>? storeDeliveryCost;
 

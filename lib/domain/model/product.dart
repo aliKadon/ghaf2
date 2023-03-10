@@ -9,9 +9,13 @@ import 'package:ghaf_application/domain/model/ghaf_image.dart';
 import 'package:ghaf_application/domain/model/offer.dart';
 import 'package:ghaf_application/domain/model/product_discount.dart';
 
+import '../../presentation/screens/home_view/home_view_getx_controller.dart';
+
 class Product extends GetxController with Helpers {
 
   // var isFavorite1 = true;
+  HomeViewGetXController _homeViewGetXController =
+  Get.put<HomeViewGetXController>(HomeViewGetXController());
 
   // notifiable.
   void toggleIsFavorite({
@@ -22,6 +26,7 @@ class Product extends GetxController with Helpers {
   }) {
     if (sendRequest) _toggleFavoriteRequest(context: context,id: id);
 
+    _homeViewGetXController.getProducts();
     // isFavorite = !isFavorite!;
     update(['isFavorite']);
 

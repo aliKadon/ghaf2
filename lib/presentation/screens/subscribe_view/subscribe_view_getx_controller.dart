@@ -6,11 +6,14 @@ import 'package:ghaf_application/data/api/controllers/subscription_api_controlle
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 
+import '../../../domain/model/subscription_plan.dart';
+
 class SubscribeViewGetXController extends GetxController with Helpers {
   // vars.
   late final SubscriptionApiController _subscriptionApiController =
   SubscriptionApiController();
   late final AuthApiController _authApiController = AuthApiController();
+  List<SubscriptionPlan> subscriptionPlan = [];
 
   // constructor fields.
   final BuildContext context;
@@ -49,12 +52,20 @@ class SubscribeViewGetXController extends GetxController with Helpers {
     }
   }
 
+  void getSubscriptionPlan() async {
+    try {
+      subscriptionPlan = await _subscriptionApiController.getSubscriptionPlan();
+    }catch(error) {
+      showSnackBar(context, message: error.toString(),error: true);
+    }
+  }
+
   // subscribe as ghaf golden.
-  void subscribeAsGhafGolden(Map<String,dynamic> cardInfo ,String planId) async {
+  void subscribeAsGhafGolden({required String paymentMethodId ,required String planId}) async {
     try {
       showLoadingDialog(context: context, title: 'Subscribing');
       final ApiResponse subscribeAsGhafGoldenApiResponse =
-      await _subscriptionApiController.subscribeAsGhafGolden(cardInfo,planId);
+      await _subscriptionApiController.subscribeAsGhafGolden(paymentMethodId: paymentMethodId, planId: planId);
       final ApiResponse profileApiResponse = await _authApiController.profile();
       if (subscribeAsGhafGoldenApiResponse.status == 200 &&
           profileApiResponse.status == 200) {

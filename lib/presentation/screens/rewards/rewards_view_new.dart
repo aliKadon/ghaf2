@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/widgets/free_delivery_product_widget.dart';
 
+import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../../widgets/most_popular_product_widget.dart';
+import '../offers_view/offers_screen_getx_controller.dart';
 import 'how_it_work_rewards_screen.dart';
 
-class RewardsViewNew extends StatelessWidget {
+class RewardsViewNew extends StatefulWidget {
+  @override
+  State<RewardsViewNew> createState() => _RewardsViewNewState();
+}
+
+class _RewardsViewNewState extends State<RewardsViewNew> {
+  late final OffersScreenGetXController _offersScreenGetXController =
+      Get.put<OffersScreenGetXController>(OffersScreenGetXController());
+
+  @override
+  void initState() {
+    _offersScreenGetXController.getOffers(context: context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,23 +214,33 @@ class RewardsViewNew extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: ListView.builder(
-                  itemCount: 4,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return MostPopularProductWidget(
-                      image: '',
-                      stars: 0,
-                      price: 0,
-                      name: '',
-                      idProduct: '',
-                      isFavorite: false,
-                      index: 0,
-                    );
-                  },
+              GetBuilder<OffersScreenGetXController>(
+                id: 'isOffersLoading',
+                builder: (controller) =>  _offersScreenGetXController.isOffersLoading ? Container() : Container(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: ListView.builder(
+                    itemCount: _offersScreenGetXController.offers.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return MostPopularProductWidget(
+                        image: _offersScreenGetXController
+                                    .offers[index].productImages!.length !=
+                                0
+                            ? _offersScreenGetXController
+                                .offers[index].productImages![0]
+                            : '',
+                        stars: _offersScreenGetXController.offers[index].stars!,
+                        price: _offersScreenGetXController.offers[index].price!,
+                        name: _offersScreenGetXController.offers[index].name!,
+                        idProduct: _offersScreenGetXController.offers[index].id!,
+                        isFavorite:
+                            _offersScreenGetXController.offers[index].isFavorite!,
+                        index: index,
+                        controller: _offersScreenGetXController.offers,
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

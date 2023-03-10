@@ -19,29 +19,32 @@ class OffersScreenGetXController extends GetxController with Helpers {
   late final StoreApiController _storeApiController = StoreApiController();
   List<Product> offers = [];
 
-  // constructor fields.
-  final BuildContext context;
-
-  // constructor.
-  OffersScreenGetXController({
-    required this.context,
-  });
+  // // constructor fields.
+  // final BuildContext context;
+  //
+  // // constructor.
+  // OffersScreenGetXController({
+  //   required this.context,
+  // });
 
   // init.
-  @override
-  void onInit() {
-    getOffers();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   getOffers();
+  //   super.onInit();
+  // }
 
   // get offers.
-  void getOffers() async {
+  void getOffers({required BuildContext context}) async {
+
+    // offers = await _storeApiController.getOffers();
+    // isOffersLoading = false;
     try {
       offers = await _storeApiController.getOffers();
       isOffersLoading = false;
     } catch (error) {
       // error.
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context, message: error.toString(), error: true);
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 
@@ -22,7 +23,16 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
     with Helpers {
   // controller.
   SubscribeViewGetXController _subscribeViewGetXController =
-  Get.find<SubscribeViewGetXController>();
+      Get.find<SubscribeViewGetXController>();
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.put(CheckOutGetxController());
+
+  @override
+  void initState() {
+    _subscribeViewGetXController.getSubscriptionPlan();
+    _checkOutGetxController.getPaymentMethod(context: context);
+    super.initState();
+  }
 
   // dispose.
   @override
@@ -42,15 +52,12 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(colors: [
-                          ColorManager.primaryDark,
-                          ColorManager.greyLight
-                        ])),
+                      ColorManager.primaryDark,
+                      ColorManager.greyLight
+                    ])),
                   ),
                   PositionedDirectional(
                     start: 0,
@@ -62,21 +69,22 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                       height: AppSize.s154,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: PositionedDirectional(
-                      start: 0,
-                      end: 200,
-                      top: 0,
-                      // bottom: 0,
+                  PositionedDirectional(
+                    start: 0,
+                    end: 200,
+                    top: 0,
+                    // bottom: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => MainView(),));
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (context) => MainView(),
+                              ));
                             },
                             child: Container(
                                 decoration: BoxDecoration(
@@ -158,10 +166,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_1,
                         style: TextStyle(
@@ -187,10 +192,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_2,
                         style: TextStyle(
@@ -216,10 +218,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_3,
                         style: TextStyle(
@@ -245,10 +244,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                     width: AppSize.s35,
                   ),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                         AppLocalizations.of(context)!.subscribe_benefits_4,
                         style: TextStyle(
@@ -300,7 +296,13 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                 padding: EdgeInsets.all(12),
                 child: ElevatedButton(
                     onPressed: () {
-                      showSubscribeSheet(context);
+                      showSubscribeSheet(
+                          context: context,
+                          subscriptionPlan:
+                              _subscribeViewGetXController.subscriptionPlan,
+                          paymentMethod:
+                              _checkOutGetxController.paymentMethod[0],
+                      paymentMethodId: _checkOutGetxController.paymentMethod);
                     },
                     child: Text(AppLocalizations.of(context)!.continue1)),
               )

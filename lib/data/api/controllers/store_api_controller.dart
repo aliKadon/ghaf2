@@ -171,21 +171,27 @@ class StoreApiController with ApiHelper, Helpers {
   }
 
   // get offers.
-  Future<List<Product>> getOffers() async {
+  Future<List<Product>> getOffers({String? sid,String? bid,String? cid,}) async {
     // print('send request : read-discount');
+    Map<String, dynamic> queryParameters = {
+      'sid': cid,
+      'bid': bid,
+      'cid': cid
+    };
     final Response response = await _dio.get(
-      'GiftAndReward/read-discount',
+      '/Product/read-offers',
+      queryParameters: queryParameters,
       options: Options(
         headers: headers,
       ),
     );
-    // print('============================================');
-    // print(response.statusCode);
-    // print(response.data);
+    print('============================================');
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<Product>.from(
-            response.data["data"].map((x) => Product.fromJson(x['products'])));
+            response.data["data"].map((x) => Product.fromJson(x)));
       }
     }
     return [];

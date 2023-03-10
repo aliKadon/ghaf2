@@ -143,6 +143,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                               idProduct:
                               _homeViewGetXController.products[index].id!,
                               isFavorite: _homeViewGetXController.products[index].isFavorite!,
+                             controller: _homeViewGetXController.products,
                           );
                         });
                       },

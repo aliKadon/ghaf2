@@ -3,8 +3,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/screens/search/search_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
+import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -257,28 +259,31 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                       ? Container()
                       : Divider(color: ColorManager.greyLight, thickness: 4),
                 ),
-                GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisExtent: 350,
-                      crossAxisSpacing: 0),
-                  itemCount: _homeViewGetXController.products.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: MostPopularProductWidget(
-                          image: _homeViewGetXController
-                              .products[index].productImages![0],
-                          name: _homeViewGetXController.products[index].name!,
-                          stars: _homeViewGetXController.products[index].stars!,
-                          price: _homeViewGetXController.products[index].price!,
-                          idProduct:
-                              _homeViewGetXController.products[index].id!,
-                      isFavorite: _homeViewGetXController.products[index].isFavorite!,
-                      index: index),
-                    );
-                  },
+                GetBuilder<HomeViewGetXController>(
+                  id: 'products',
+                  builder: (controller) =>  GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisExtent: 350,
+                        crossAxisSpacing: 0),
+                    itemCount: _homeViewGetXController.products.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ProductItemNew(
+                            image: _homeViewGetXController
+                                .products[index].productImages![0],
+                            name: _homeViewGetXController.products[index].name!,
+                            stars: _homeViewGetXController.products[index].stars!,
+                            price: _homeViewGetXController.products[index].price!,
+                            idProduct:
+                                _homeViewGetXController.products[index].id!,
+                        isFavorite: _homeViewGetXController.products[index].isFavorite!,
+                        index: index),
+                      );
+                    },
+                  ),
                 )
               ],
             ),

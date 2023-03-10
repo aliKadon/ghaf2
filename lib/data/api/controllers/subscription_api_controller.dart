@@ -1,22 +1,24 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/data/api/api_helper.dart';
 import 'package:ghaf_application/data/api/api_settings.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/domain/model/subscription_plan.dart';
+import 'package:http/http.dart' as http;
 
 class SubscriptionApiController with ApiHelper {
   late final Dio _dio = Dio(BaseOptions(baseUrl: ApiSettings.baseUrl));
 
   // subscribe as ghaf golden.
-  Future<ApiResponse> subscribeAsGhafGolden(Map<String,dynamic> cardInfo,String planID) async {
+  Future<ApiResponse> subscribeAsGhafGolden(
+  {required String planId,required String paymentMethodId}) async {
     // print('send request : customer-subscripe-as-ghafgold');
 
     Map<String, dynamic> data = {
-      "paymentMethodType": "card",
-      "cardNumber": cardInfo['cardNumber'],
-      "cardExpMonth": int.parse(cardInfo['expiredMonth']),
-      "cardExpCvc": cardInfo['cvc'],
-      "cardExpYear": int.parse(cardInfo['expiredYear']),
-      "PlanId": planID
+      "PlanId": planId,
+      "PaymentMethodId": paymentMethodId,
     };
 
     // Map<String, dynamic> data = {
@@ -29,7 +31,7 @@ class SubscriptionApiController with ApiHelper {
     // };
     // print(data);
     var response = await _dio.post(
-      'Auth/customer-subscripe-as-ghafgold',
+      '/Auth/customer-subscripe-as-ghafgold',
       data: data,
       options: Options(
         headers: headers,
@@ -47,6 +49,18 @@ class SubscriptionApiController with ApiHelper {
       }
     }
     return failedResponse;
+  }
+
+  Future<List<SubscriptionPlan>> getSubscriptionPlan() async {
+    var url = Uri.parse('${Constants.baseUrl}/Auth/get-customer-plans');
+    var response = await http.get(url, headers: headers);
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      if (jsonData['status'] == 200) {
+        return List<SubscriptionPlan>.from(jsonData['data'].map((x) => SubscriptionPlan.fromJson(x)));
+      }
+    }
+    return [];
   }
 
   // subscribe as free.
