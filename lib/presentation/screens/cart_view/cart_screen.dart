@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 
 import '../../resources/color_manager.dart';
@@ -158,31 +159,37 @@ class _CartScreenState extends State<CartScreen> {
                           height: AppSize.s12,
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.45,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _cartViewGetXController.cartItems.length,
-                            itemBuilder: (context, index) {
-                              return CartWidgetNew(
-                                index: index,
-                                name: _cartViewGetXController
-                                    .cartItems[index].product!.name!,
-                                price: _cartViewGetXController
-                                    .cartItems[index].product!.price!,
-                                image: _cartViewGetXController.cartItems[index]
-                                    .product!.productImages![0],
-                                isoCurrencySymbol: _cartViewGetXController
-                                    .cartItems[index]
-                                    .product!
-                                    .isoCurrencySymbol!,
-                                productCount: _cartViewGetXController
-                                    .cartItems[index].productCount!,
-                                idProduct: _cartViewGetXController
-                                    .cartItems[index].product!.id!,
-                              );
-                            },
-                          ),
-                        ),
+                              height: MediaQuery.of(context).size.height * 0.45,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: _cartViewGetXController.cartItems.length,
+                                itemBuilder: (context, index) {
+                                  print('================cart screen');
+                                  print(_cartViewGetXController
+                                      .cartItems[index].productCount);
+                                  return CartWidgetNew(
+                                    cartItemId: _cartViewGetXController
+                                        .cartItems[index].id!,
+                                    index: index,
+                                    name: _cartViewGetXController
+                                        .cartItems[index].product!.name!,
+                                    price: _cartViewGetXController
+                                        .cartItems[index].product!.price!,
+                                    image: _cartViewGetXController.cartItems[index]
+                                        .product!.productImages![0],
+                                    isoCurrencySymbol: _cartViewGetXController
+                                        .cartItems[index]
+                                        .product!
+                                        .isoCurrencySymbol!,
+                                    productCount: _cartViewGetXController
+                                        .cartItems[index].productCount!,
+                                    idProduct: _cartViewGetXController
+                                        .cartItems[index].product!.id!,
+                                  );
+                                },
+                              ),
+                            ),
+
                         Divider(
                           thickness: 1,
                           color: ColorManager.greyLight,
@@ -202,65 +209,74 @@ class _CartScreenState extends State<CartScreen> {
                               SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.subtotal,
-                                    style: TextStyle(
-                                        color: ColorManager.greyLight,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    '${_cartViewGetXController.subTotal} ${AppLocalizations.of(context)!.aed}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13),
-                                  ),
-                                ],
+                              GetBuilder<CartViewGetXController>(
+                                id: 'cart',
+                                builder: (controller) =>  Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!.subtotal,
+                                              style: TextStyle(
+                                                  color: ColorManager.greyLight,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15),
+                                            ),
+                                            Spacer(),
+                                            Text(
+                                              '${controller.subTotal} ${AppLocalizations.of(context)!.aed}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 13),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!.discount,
+                                              style: TextStyle(
+                                                  color: ColorManager.greyLight,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15),
+                                            ),
+                                            Spacer(),
+                                            Text(
+                                              '${controller.discount} ${AppLocalizations.of(context)!.aed}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 13),
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(
+                                          thickness: 1,
+                                          color: ColorManager.greyLight,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!.total,
+                                              style: TextStyle(
+                                                  color: ColorManager.primaryDark,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 15),
+                                            ),
+                                            Spacer(),
+                                            Text(
+                                              '${controller.total} ${AppLocalizations.of(context)!.aed}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 13,
+                                                  color: ColorManager.primaryDark),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.discount,
-                                    style: TextStyle(
-                                        color: ColorManager.greyLight,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    '${_cartViewGetXController.discount} ${AppLocalizations.of(context)!.aed}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13),
-                                  ),
-                                ],
-                              ),
-                              Divider(
-                                thickness: 1,
-                                color: ColorManager.greyLight,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.total,
-                                    style: TextStyle(
-                                        color: ColorManager.primaryDark,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    '${_cartViewGetXController.total} ${AppLocalizations.of(context)!.aed}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        color: ColorManager.primaryDark),
-                                  ),
-                                ],
-                              ),
+
+
                             ],
                           ),
                         ),

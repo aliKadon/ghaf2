@@ -24,7 +24,7 @@ class LocalNotificationsService {
   // local notifications init.
   Future<void> _initLocalNotifications() async {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('logo2');
     var initializationSettingsIOS = DarwinInitializationSettings(
         onDidReceiveLocalNotification: _onDidReceiveLocalNotification);
     var initializationSettings = InitializationSettings(
@@ -107,6 +107,7 @@ class LocalNotificationsService {
         android: AndroidNotificationDetails(
           'ghafId',
           'ghaf',
+
           enableVibration: true,
           importance: Importance.high,
           priority: Priority.high,

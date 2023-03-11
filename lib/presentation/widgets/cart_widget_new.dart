@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../domain/model/cart_item.dart';
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
+import '../screens/cart_view/cart_view_getx_controller.dart';
 
 class CartWidgetNew extends StatefulWidget {
   final int index;
@@ -13,27 +15,40 @@ class CartWidgetNew extends StatefulWidget {
   final num price;
   final String isoCurrencySymbol;
   final num productCount;
+  final String cartItemId;
 
   CartWidgetNew(
       {required this.index,
-        required this.isoCurrencySymbol,
-        required this.price,
-        required this.name,
-        required this.idProduct,
-        required this.image,
-        required this.productCount});
+      required this.isoCurrencySymbol,
+      required this.price,
+      required this.name,
+      required this.idProduct,
+      required this.image,
+      required this.cartItemId,
+      required this.productCount});
 
   @override
   State<CartWidgetNew> createState() => _CartWidgetNewState();
 }
 
 class _CartWidgetNewState extends State<CartWidgetNew> {
+  //controller
+  late final CartItem _cartItem = Get.put<CartItem>(CartItem());
+  late final CartViewGetXController _cartViewGetXController =
+      Get.put(CartViewGetXController());
 
   var selected = 0;
-  var count = 1;
+  num count = 0;
+
+  @override
+  void initState() {
+    count = widget.productCount;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         Row(
           children: [
@@ -60,7 +75,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                       fontSize: 15),
                 ),
                 Text(
-                  'item ${widget.productCount}',
+                  'item ${count}',
                   style: TextStyle(
                       color: ColorManager.greyLight,
                       fontWeight: FontWeight.w400,
@@ -83,14 +98,21 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                 children: [
                   GestureDetector(
                       onTap: () {
+                        setState(() {
+                          selected = widget.index;
+                          count++;
+                          // count = widget.productCount;
+                        });
+                        _cartItem.increment(
+                            idProduct: widget.cartItemId,
+                            productCount1: count,
+                            context: context);
+                        _cartViewGetXController.calculateBell();
+
                         // _cartItem.increment(
                         //     context: context,
                         //     productCount: count,
                         //     idProduct: widget.idProduct);
-                        setState(() {
-                          selected = widget.index;
-                          count++;
-                        });
                       },
                       child: Icon(
                         Icons.add_circle_outline,
@@ -102,7 +124,13 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         setState(() {
                           selected = widget.index;
                           count--;
+                          // count = widget.productCount;
                         });
+                        _cartItem.decrement(
+                            idProduct: widget.cartItemId,
+                            productCount: count,
+                            context: context);
+                        _cartViewGetXController.calculateBell();
                       },
                       child: Icon(
                         Icons.remove_circle_outline,

@@ -24,14 +24,19 @@ class Product extends GetxController with Helpers {
     required BuildContext context,
     bool sendRequest = true,
   }) {
+
     if (sendRequest) _toggleFavoriteRequest(context: context,id: id);
 
-    _homeViewGetXController.getProducts();
+     _homeViewGetXController.getProducts();
+    //
     // isFavorite = !isFavorite!;
+
     update(['isFavorite']);
 
+  }
 
-
+  void init () {
+    // _homeViewGetXController.getProducts();
   }
 
   // notifiable.

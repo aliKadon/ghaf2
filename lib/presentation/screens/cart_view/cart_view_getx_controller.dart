@@ -14,6 +14,7 @@ class CartViewGetXController extends GetxController with Helpers {
   // notifiable.
   void notifyMyCart() {
     // cartItems = [];
+    notifyBell();
     update(['cart']);
   }
 
@@ -78,7 +79,8 @@ class CartViewGetXController extends GetxController with Helpers {
     }
     discount = subTotal - subTotal2;
     total = subTotal2;
-
+    print('you in');
+    notifyMyCart();
     notifyBell();
   }
 
@@ -114,8 +116,8 @@ class CartViewGetXController extends GetxController with Helpers {
         showSnackBar(context, message: apiResponse.message, error: false);
         notifyBell();
         notifyMyCart();
-        Provider.of<ProductProvider>(context, listen: false).clearCart();
-        Navigator.pushNamed(context, Routes.ordersToPay, arguments: '');
+        // Provider.of<ProductProvider>(context, listen: false).clearCart();
+        // Navigator.pushNamed(context, Routes.ordersToPay, arguments: '');
       } else {
         // failed.
         Navigator.pop(context);

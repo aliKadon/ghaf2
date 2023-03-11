@@ -11,7 +11,7 @@ class OrdersApiController with ApiHelper {
   Future<ApiResponse> createOrder() async {
     print('send request : create');
     var response = await _dio.post(
-      'Orders/create',
+      '/Orders/create-order',
       options: Options(
         headers: headers,
       ),

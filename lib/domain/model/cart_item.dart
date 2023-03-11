@@ -8,20 +8,28 @@ import 'package:ghaf_application/domain/model/product.dart';
 class CartItem extends GetxController with Helpers {
   // notifiable.
 
+  int count = 1;
+
   // increment.
   void increment({
     required String idProduct,
-    required num productCount,
+    required num productCount1,
     required BuildContext context,
     bool sendRequest = true,
   }) {
-    productCount = productCount + 1;
+    print('=================product count');
+    print(productCount);
+    count = (productCount1).toInt();
+    productCount = count;
+    productCount1 = productCount1! + 1;
+
+
     update(['productCount']);
     if (sendRequest)
       _ChangeCartItemCountRequest(
           context: context,
           type: 1,
-          productCount: productCount,
+          productCount: count!,
           idProduct: idProduct);
   }
 
@@ -32,13 +40,17 @@ class CartItem extends GetxController with Helpers {
     required BuildContext context,
     bool sendRequest = true,
   }) {
-    productCount = productCount! - 1;
+    print('=================product count');
+    print(productCount);
+    count = (productCount).toInt();
+    productCount = productCount - 1;
+
     update(['productCount']);
     if (sendRequest)
       _ChangeCartItemCountRequest(
           context: context,
           type: 2,
-          productCount: productCount,
+          productCount: count,
           idProduct: idProduct);
   }
 
@@ -79,33 +91,17 @@ class CartItem extends GetxController with Helpers {
     required num productCount,
     required int type,
   }) async {
-    try {
-      final ApiResponse apiResponse =
-          await _storeApiController.changeCartItemCount(
-        cartItemId: idProduct,
-        count: productCount,
-      );
-      if (apiResponse.status == 200) {
-        // success.
-      } else {
-        // failed.
-        showSnackBar(context, message: apiResponse.message, error: true);
-        if (type == 1)
-          decrement(
-              context: context,
-              sendRequest: false,
-              productCount: 0,
-              idProduct: idProduct);
-        else
-          increment(
-              context: context,
-              sendRequest: false,
-              productCount: 0,
-              idProduct: idProduct);
-      }
-    } catch (error) {
-      // error.
-      showSnackBar(context, message: error.toString(), error: true);
+    final ApiResponse apiResponse =
+    await _storeApiController.changeCartItemCount(
+      cartItemId: idProduct,
+      count: productCount,
+    );
+    if (apiResponse.status == 200) {
+      // success.
+      showSnackBar(context, message: apiResponse.message);
+    } else {
+      // failed.
+      showSnackBar(context, message: apiResponse.message, error: true);
       if (type == 1)
         decrement(
             context: context,
@@ -116,9 +112,49 @@ class CartItem extends GetxController with Helpers {
         increment(
             context: context,
             sendRequest: false,
-            productCount: 0,
+            productCount1: 0,
             idProduct: idProduct);
     }
+    // try {
+    //   final ApiResponse apiResponse =
+    //       await _storeApiController.changeCartItemCount(
+    //     cartItemId: idProduct,
+    //     count: productCount,
+    //   );
+    //   if (apiResponse.status == 200) {
+    //     // success.
+    //   } else {
+    //     // failed.
+    //     showSnackBar(context, message: apiResponse.message, error: true);
+    //     if (type == 1)
+    //       decrement(
+    //           context: context,
+    //           sendRequest: false,
+    //           productCount: 0,
+    //           idProduct: idProduct);
+    //     else
+    //       increment(
+    //           context: context,
+    //           sendRequest: false,
+    //           productCount: 0,
+    //           idProduct: idProduct);
+    //   }
+    // } catch (error) {
+    //   // error.
+    //   showSnackBar(context, message: error.toString(), error: true);
+    //   if (type == 1)
+    //     decrement(
+    //         context: context,
+    //         sendRequest: false,
+    //         productCount: 0,
+    //         idProduct: idProduct);
+    //   else
+    //     increment(
+    //         context: context,
+    //         sendRequest: false,
+    //         productCount: 0,
+    //         idProduct: idProduct);
+    // }
   }
 
   // toggle add to cart request.

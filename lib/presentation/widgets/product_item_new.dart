@@ -35,7 +35,7 @@ class ProductItemNew extends StatefulWidget {
 }
 
 class _ProductItemNewState extends State<ProductItemNew> {
-  late final Product _product = Get.find<Product>();
+  late final Product _product = Get.put<Product>(Product());
   HomeViewGetXController _homeViewGetXController =
   Get.find<HomeViewGetXController>();
 
@@ -71,12 +71,10 @@ class _ProductItemNewState extends State<ProductItemNew> {
                           ),
                         ),
                       ),
-                      GetBuilder<Product>(
-                        id: 'isFavorite',
-                        builder: (controller) {
-                          return InkWell(
+                      InkWell(
+
                             onTap: () {
-                              _product.toggleIsFavorite(
+                               _product.toggleIsFavorite(
                                   context: context, id: widget.idProduct);
                             },
                             child: Padding(
@@ -86,8 +84,7 @@ class _ProductItemNewState extends State<ProductItemNew> {
                                     borderRadius: BorderRadius.circular(100),
                                     color: Colors.black54),
                                 padding: EdgeInsets.all(8),
-                                child: _homeViewGetXController.products[widget.index].isFavorite!
-                                    ? Image.asset(
+                                child: _homeViewGetXController.products[widget.index].isFavorite! ?Image.asset(
                                   IconsAssets.heart1,
                                   height: AppSize.s24,
                                   width: AppSize.s24,
@@ -100,9 +97,8 @@ class _ProductItemNewState extends State<ProductItemNew> {
                                 ),
                               ),
                             ),
-                          );
-                        }
-                      ),
+                          ),
+
                     ],
                   ),
                   SizedBox(

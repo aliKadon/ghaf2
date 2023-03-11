@@ -115,7 +115,8 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'sid': sid,
       'filter':
-          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+      "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
+          0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
     // // print(queryParameters);
     final Response response = await _dio.get(
@@ -148,7 +149,8 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'cid': cid,
       'filter':
-          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+      "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
+          0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
     // // print(queryParameters);
     final Response response = await _dio.get(
@@ -171,7 +173,8 @@ class StoreApiController with ApiHelper, Helpers {
   }
 
   // get offers.
-  Future<List<Product>> getOffers({String? sid,String? bid,String? cid,}) async {
+  Future<List<Product>> getOffers(
+      {String? sid, String? bid, String? cid,}) async {
     // print('send request : read-discount');
     Map<String, dynamic> queryParameters = {
       'sid': cid,
@@ -329,27 +332,34 @@ class StoreApiController with ApiHelper, Helpers {
     required String cartItemId,
     required num count,
   }) async {
+    var url = Uri.parse('${Constants
+        .baseUrl}/Product/change-basket-item-count?id=$cartItemId&count=$count');
     // print('send request : add-remove-to-basket');
     Map<String, dynamic> queryParameters = {
-      'id': cartItemId,
-      'count': count,
+      'id': '03aa23d5-8f38-4628-f8ee-08db21ee7c75',
+      'count': 2,
     };
     // print(queryParameters);
-    var response = await _dio.post(
-      '/Product/change-basket-item-count',
-      queryParameters: queryParameters,
-      options: Options(
-        headers: headers,
-      ),
-    );
+    // var response = await _dio.post(
+    //   '/Product/change-basket-item-count',
+    //   queryParameters: queryParameters,
+    //   options: Options(
+    //     headers: headers,
+    //   ),
+    // );
+    var response = await http.post(url,headers: headers,);
     print('============================================');
     print(response.statusCode);
-    print(response.data);
+    print(response.body);
+    var jsondata = jsonDecode(response.body);
+    print('============================================');
+    print(response.statusCode);
+    print(jsondata['data']);
     if (response.statusCode == 200) {
-      if (response.data['status'] == 200) {
+      if (jsondata['status'] == 200) {
         return ApiResponse(
-          message: response.data['message'],
-          status: response.data['status'],
+          message: jsondata['message'],
+          status: jsondata['status'],
         );
       }
     }

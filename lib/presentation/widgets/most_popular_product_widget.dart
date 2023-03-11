@@ -36,7 +36,7 @@ class MostPopularProductWidget extends StatefulWidget {
 }
 
 class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
-  late final Product _product = Get.put<Product>(Product());
+  late final Product _product = Get.find<Product>();
 
   HomeViewGetXController _homeViewGetXController =
       Get.find<HomeViewGetXController>();
@@ -88,7 +88,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
                         builder: (controller) => InkWell(
                           onTap: () {
                             _product.toggleIsFavorite(
-                                context: context, id: widget.idProduct);
+                                context: context, id: widget.idProduct,);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

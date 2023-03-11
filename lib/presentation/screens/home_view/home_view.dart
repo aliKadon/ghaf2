@@ -55,21 +55,22 @@ class _HomeViewState extends State<HomeView> {
   // controller.
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
+  late final Product _product = Get.put(Product());
   late final ProfileSettingGetxController _profileSettingGetxController =
       Get.put(ProfileSettingGetxController());
 
   // init state.
   @override
   void initState() {
-    Get.put(Product());
+    _homeViewGetXController.init(context: context);
+
+    // Get.put(Product());
     Get.put(LoginViewGetXController(context: context));
     _profileSettingGetxController.getUserDetails(context);
-    _homeViewGetXController.init(context: context);
     _homeViewGetXController.determinePosition().then((value) => getLocation()
         .then((value) => _homeViewGetXController.GetAddressFromLatLong(
                 LatLng(position.latitude, position.longitude))
             .then((value) => _homeViewGetXController.getNearbyStores(
-                context: context,
                 lat: position.latitude.toString(),
                 long: position.longitude.toString()))));
     super.initState();
@@ -507,46 +508,41 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.43,
-                    child: GetBuilder<HomeViewGetXController>(
-                      id: 'products',
-                      builder: (controller) => ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(12),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _homeViewGetXController.products.length,
-                        itemBuilder: (context, index) {
-                          return _homeViewGetXController.products.length == 0
-                              ? Container()
-                              : GetBuilder<Product>(
-                                  id: 'isFavorite',
-                                  builder: (controller) => ProductItemNew(
-                                    index: index,
-                                    image: _homeViewGetXController
-                                            .products[index]
-                                            .productImages?[0] ??
-                                        '',
-                                    name: _homeViewGetXController
-                                            .products[index].name ??
-                                        '',
-                                    price: _homeViewGetXController
-                                            .products[index].price ??
-                                        0,
-                                    stars: _homeViewGetXController
-                                            .products[index].stars ??
-                                        0,
-                                    idProduct: _homeViewGetXController
-                                            .products[index].id ??
-                                        '',
-                                    isFavorite: _homeViewGetXController
-                                            .products[index].isFavorite ??
-                                        false,
-                                  ),
-                                );
-                        },
+                  GetBuilder<HomeViewGetXController>(
+                    id: 'products',
+                    builder:(controller) => Container(
+                          height: MediaQuery.of(context).size.height * 0.43,
+                          child: ListView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.all(12),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _homeViewGetXController.products.length,
+                          itemBuilder: (context, index) {
+                            return ProductItemNew(
+                              index: 0,
+                              image: _homeViewGetXController
+                                  .products[index]
+                                  .productImages?[index] ??
+                                  '',
+                              name: _homeViewGetXController
+                                  .products[index].name ??
+                                  '',
+                              price: _homeViewGetXController
+                                  .products[index].price ??
+                                  0,
+                              stars: _homeViewGetXController
+                                  .products[index].stars ??
+                                  0,
+                              idProduct: _homeViewGetXController
+                                  .products[index].id ??
+                                  '',
+                              isFavorite: _homeViewGetXController
+                                  .products[index].isFavorite ??
+                                  false,
+                            );
+                          },
                       ),
-                    ),
+                        ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),

@@ -40,25 +40,32 @@ class FirebaseMessagingService {
     FirebaseMessaging.instance.subscribeToTopic('ghaf');
     FirebaseMessaging.onMessage.listen((message) {
       // on message.
+      print('======================================i');
       print('on message');
       print(message.notification.toString());
       print(message.data.toString());
       print(message.notification?.title);
       print(message.notification?.body);
+      print(message);
       RemoteNotification? notification = message.notification;
       if (notification != null) {
         print('=====================================enableNotifications');
         print(SharedPrefController().enableNotifications);
-        if (SharedPrefController().enableNotifications) {
-          _localNotificationsService?.showNotification(
-            notification.title,
-            notification.body,
-            payload: jsonEncode(
-              message.toMap(),
-            ),
-          );
-        }
-
+        print('======================noti');
+        print(notification);
+        print(jsonEncode(
+          message.toMap(),
+        ));
+        // Map<String,dynamic> x = jsonEncode(message.toMap()) as Map<String, dynamic>;
+        // print(x);
+        _localNotificationsService?.showNotification(
+          notification.title,
+          notification.body,
+          payload: jsonEncode(
+            message.toMap(),
+          ),
+        );
+        if (SharedPrefController().enableNotifications) {}
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {

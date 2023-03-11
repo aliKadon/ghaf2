@@ -176,7 +176,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   }
 
   void getNearbyStores({
-    required BuildContext context,
+    // required BuildContext context,
     required String lat,
     required String long,
     String? distance
@@ -187,7 +187,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       _isNearbyStoresLoading = false;
       update(['nearbyStores']);
     }catch(error) {
-      showSnackBar(context, message: error.toString(),error: true);
+      // showSnackBar(context, message: error.toString(),error: true);
     }
   }
 

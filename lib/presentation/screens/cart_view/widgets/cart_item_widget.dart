@@ -171,7 +171,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     // _cartItem.increment(
                     //   context: context,
                     // );
-                    _cartViewGetXController.calculateBell();
+                    // _cartViewGetXController.calculateBell();
                   },
                   child: Image.asset(
                     IconsAssets.plus1,
@@ -200,7 +200,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       // _cartItem.decrement(
                       //   context: context,
                       // );
-                      _cartViewGetXController.calculateBell();
+                      // _cartViewGetXController.calculateBell();
                     }
                   },
                   child: Image.asset(
