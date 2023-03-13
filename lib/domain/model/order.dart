@@ -1,4 +1,9 @@
+import 'package:ghaf_application/domain/model/address.dart';
+import 'package:ghaf_application/domain/model/branch.dart';
+import 'package:ghaf_application/domain/model/items.dart';
 import 'package:ghaf_application/domain/model/order_item.dart';
+
+
 
 class Order {
   Order({
@@ -15,6 +20,8 @@ class Order {
     this.deleveryCost,
     this.orderCostForCustomer,
     this.totalCostForItems,
+    this.statusName,
+    this.customer,
     this.items,
     this.userCredentialsId,
     this.branch,
@@ -22,6 +29,8 @@ class Order {
     this.redeemPointsForProducts,
     this.redeemPointsForBill,
     this.redeemPointsFactor,
+    this.sequenceNumber,
+    this.driverId,
   });
 
   String? id;
@@ -29,21 +38,83 @@ class Order {
   String? estimatedDeliveryDate;
   String? desiredDeliveryDate;
   String? deliverdAt;
-  dynamic deliveryPoint;
+  Address? deliveryPoint;
   dynamic currentLocation;
   int? status;
   bool? payed;
+  String? statusName;
+  String? customer;
   dynamic deliveryMethod;
   dynamic deleveryCost;
   num? orderCostForCustomer;
   num? totalCostForItems;
-  List<dynamic>? items;
+  List<Items>? items;
   String? userCredentialsId;
-  dynamic branch;
+  Branch? branch;
   int? canPayLaterValue;
   int? redeemPointsForProducts;
   int? redeemPointsForBill;
   int? redeemPointsFactor;
+  num? sequenceNumber;
+  String? driverId;
+
+  factory Order.fromJson(Map<String,dynamic> json) {
+    return Order(
+      id: json['id'],
+      userCredentialsId: json['userCredentialsId'],
+      sequenceNumber: json['sequenceNumber'],
+      driverId: json['driverId'],
+      redeemPointsForProducts: json['redeemPointsForProducts'],
+      redeemPointsFactor: json['redeemPointsFactor'],
+      createDate: json['createDate'],
+      deliverdAt: json['deliverdAt'],
+      desiredDeliveryDate: json['desiredDeliveryDate'],
+      estimatedDeliveryDate: json['estimatedDeliveryDate'],
+      items: json['items'] == null ? [] : List<Items>.from(
+          json['items'].map((x) => Items.fromJson(x))),
+      orderCostForCustomer: json['orderCostForCustomer'],
+      status: json['status'],
+      totalCostForItems: json['totalCostForItems'],
+      customer: json['customer'],
+      statusName: json['statusName'],
+      branch:json['branch'] == null ? null : Branch.fromJson(json['branch']),
+      canPayLaterValue: json['canPayLaterValue'],
+      currentLocation: json['currentLocation'],
+      deleveryCost: json['deleveryCost'],
+      deliveryMethod: json['deliveryMethod'],
+      deliveryPoint:json['deliveryPoint'] == null ? null :  Address.fromJson(json['deliveryPoint']),
+      payed: json['payed'],
+      redeemPointsForBill: json['redeemPointsForBill'],
+
+    );
+  }
+
+  Map<String,dynamic> toJson() => {
+    'id' : id,
+    'userCredentialsId' : userCredentialsId,
+    'sequenceNumber' : sequenceNumber,
+    'driverId' : driverId,
+    'redeemPointsForProducts' : redeemPointsForProducts,
+    'redeemPointsFactor' : redeemPointsFactor,
+    'createDate' : createDate,
+    'deliverdAt' : deliverdAt,
+    'desiredDeliveryDate' : desiredDeliveryDate,
+    'estimatedDeliveryDate' : estimatedDeliveryDate,
+    'items' : items,
+    'orderCostForCustomer' : orderCostForCustomer,
+    'status' : status,
+    'totalCostForItems' : totalCostForItems,
+    'customer' : customer,
+    'statusName' : statusName,
+    'branch' : branch,
+    'canPayLaterValue' : canPayLaterValue,
+    'currentLocation' : currentLocation,
+    'deleveryCost' : deleveryCost,
+    'deliveryMethod' : deliveryMethod,
+    'deliveryPoint' : deliveryPoint,
+    'payed' : payed,
+    'redeemPointsForBill' : redeemPointsForBill,
+  };
 
   // factory Order.fromJson(Map<String, dynamic> json) => Order(
   //       id: json["id"],

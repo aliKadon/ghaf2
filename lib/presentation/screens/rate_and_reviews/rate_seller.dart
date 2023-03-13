@@ -348,22 +348,22 @@ class _RateSellerState extends State<RateSeller> {
                       // print(_rateUsViewGetXController.description);
                       // _rateUsViewGetXController.reviewApp();
 
-                      Provider.of<ProductProvider>(context, listen: false)
-                          .postReviewStore('${provider[0]
-                          .items![0]['storeId']}', opinion, points).then((
-                          value) =>
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text(
-                              '${AppLocalizations.of(context)!
-                                  .thank_you}\n${AppLocalizations.of(context)!
-                                  .your_review_successfully}'),
-                              backgroundColor: Colors.green),)).then((value) =>
-                          Navigator.of(context).pushReplacementNamed(Routes
-                              .mainRoute));
+                      // Provider.of<ProductProvider>(context, listen: false)
+                      //     .postReviewStore('${provider[0]
+                      //     .items![0].storeId}', opinion, points).then((
+                      //     value) =>
+                      //     ScaffoldMessenger.of(context)
+                      //         .showSnackBar(SnackBar(content: Text(
+                      //         '${AppLocalizations.of(context)!
+                      //             .thank_you}\n${AppLocalizations.of(context)!
+                      //             .your_review_successfully}'),
+                      //         backgroundColor: Colors.green),)).then((value) =>
+                      //     Navigator.of(context).pushReplacementNamed(Routes
+                      //         .mainRoute));
                       print(
                           '-----------------------------------------------------------');
-                      print('id : ${provider[0]
-                          .items![0]['storeId']} , opinion:  $opinion, points: $points');
+                      // print('id : ${provider[0]
+                      //     .items![0].storeId} , opinion:  $opinion, points: $points');
                     },
                     child: Text(
                       AppLocalizations.of(context)!.send_a_note,

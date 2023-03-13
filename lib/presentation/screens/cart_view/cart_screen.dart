@@ -291,7 +291,8 @@ class _CartScreenState extends State<CartScreen> {
                                           borderRadius:
                                               BorderRadius.circular(15)))),
                               onPressed: () {
-                                _cartViewGetXController.emptyBasket(context);
+                                // _cartViewGetXController.emptyBasket(context);
+                                _cartViewGetXController.createOrder(context);
                               },
                               child: Text(
                                   AppLocalizations.of(context)!.place_order)),

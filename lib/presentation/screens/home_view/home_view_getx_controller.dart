@@ -163,8 +163,8 @@ class HomeViewGetXController extends GetxController with Helpers {
       isProductsLoading = false;
     } on DioError catch (error) {
       // error.
-      debugPrint(error.response?.data);
-      debugPrint(error.toString());
+      print(error.response?.data);
+      print(error.toString());
       showSnackBar(
           context, message: 'An Error Occurred, Please Try again', error: true);
     } catch (error) {

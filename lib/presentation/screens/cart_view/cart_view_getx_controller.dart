@@ -6,6 +6,7 @@ import 'package:ghaf_application/data/api/controllers/store_api_controller.dart'
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/product_provider.dart';
@@ -66,15 +67,15 @@ class CartViewGetXController extends GetxController with Helpers {
     subTotal2 = 0;
     for (CartItem cartItem in cartItems) {
       subTotal += (cartItem.product?.productDiscount == null
-              ? cartItem.product?.price ?? 0
-              : ((cartItem.product!.price!))) *
+          ? cartItem.product?.price ?? 0
+          : ((cartItem.product!.price!))) *
           cartItem.productCount!;
-      subTotal2 += (cartItem.product?.productDiscount == null
-              ? cartItem.product?.price ?? 0
-              : ((cartItem.product!.price! -
-                  (cartItem.product!.price! *
-                      cartItem.product!.productDiscount!.discount! /
-                      100)))) *
+      subTotal2 += (cartItem.product?.discountValueForAllUsers == null
+          ? cartItem.product?.price ?? 0
+          : ((cartItem.product!.price! -
+          (cartItem.product!.price! *
+              int.parse(cartItem.product!.discountValueForAllUsers!) /
+              100)))) *
           cartItem.productCount!;
     }
     discount = subTotal - subTotal2;
@@ -92,7 +93,8 @@ class CartViewGetXController extends GetxController with Helpers {
       notifyMyCart();
     } catch (error) {
       // error.
-      showSnackBar(context, message: error.toString(), error: true);
+      print(error.toString());
+      // showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
@@ -106,7 +108,7 @@ class CartViewGetXController extends GetxController with Helpers {
   }
 
   // create order.
-  void createOrder() async {
+  void createOrder(BuildContext context) async {
     try {
       showLoadingDialog(context: context, title: 'Creating Order');
       final ApiResponse apiResponse = await _ordersApiController.createOrder();
@@ -116,8 +118,11 @@ class CartViewGetXController extends GetxController with Helpers {
         showSnackBar(context, message: apiResponse.message, error: false);
         notifyBell();
         notifyMyCart();
+        emptyBasket(context);
         // Provider.of<ProductProvider>(context, listen: false).clearCart();
         // Navigator.pushNamed(context, Routes.ordersToPay, arguments: '');
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => CheckOutView(),));
       } else {
         // failed.
         Navigator.pop(context);

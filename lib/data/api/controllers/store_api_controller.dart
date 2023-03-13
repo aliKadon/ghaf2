@@ -188,9 +188,9 @@ class StoreApiController with ApiHelper, Helpers {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<Product>.from(
@@ -292,9 +292,9 @@ class StoreApiController with ApiHelper, Helpers {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         showSnackBar(context, message: response.data['message']);
@@ -315,9 +315,9 @@ class StoreApiController with ApiHelper, Helpers {
         headers: headers,
       ),
     );
-    print('============================================');
-    print(response.statusCode);
-    print(response.data);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         return List<CartItem>.from(
@@ -348,12 +348,12 @@ class StoreApiController with ApiHelper, Helpers {
     //   ),
     // );
     var response = await http.post(url,headers: headers,);
-    print('============================================');
-    print(response.statusCode);
-    print(response.body);
+    // print('============================================');
+    // print(response.statusCode);
+    // print(response.body);
     var jsondata = jsonDecode(response.body);
-    print('============================================');
-    print(response.statusCode);
+    // print('============================================');
+    // print(response.statusCode);
     print(jsondata['data']);
     if (response.statusCode == 200) {
       if (jsondata['status'] == 200) {
