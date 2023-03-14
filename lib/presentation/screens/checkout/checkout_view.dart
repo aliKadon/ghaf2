@@ -6,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
@@ -20,6 +22,10 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class CheckOutView extends StatefulWidget {
+
+  String? cardNumber;
+  CheckOutView({this.cardNumber});
+
   @override
   State<CheckOutView> createState() => _CheckOutViewState();
 }
@@ -32,6 +38,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
       Get.find<RegisterViewGetXController>();
   late final CheckOutGetxController _checkOutGetxController =
       Get.put(CheckOutGetxController());
+  late final AddressesViewGetXController _addressesViewGetXController =
+  Get.put(AddressesViewGetXController(context: context));
 
   var visibility = false;
   var isSwitchedPayLater = false;
@@ -68,6 +76,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   @override
   void initState() {
     _checkOutGetxController.getOrderToPay(context: context);
+    _addressesViewGetXController.getMyAddresses(notifyLoading: true);
     super.initState();
     _paymentMethodTextController = TextEditingController();
   }
@@ -116,11 +125,21 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () => Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MainView(),
-                                    )),
+                                onTap: () {
+                                  _checkOutGetxController.deleteUnpaidOrder(
+                                      context: context,
+                                      orderId: _checkOutGetxController
+                                          .orderToPay[_checkOutGetxController
+                                                  .orderToPay.length -
+                                              1]
+                                          .orderDetails!
+                                          .id!);
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MainView(),
+                                      ));
+                                },
                                 child: Image.asset(
                                   IconsAssets.arrow,
                                   height: AppSize.s18,
@@ -216,28 +235,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         ..hideCurrentSnackBar()
                                         ..showSnackBar(snackBar);
                                       setState(() {});
-
-                                      // if (widget.order.availableDeliveryMethod[index]
-                                      //         ['methodName'] ==
-                                      //     'Pick up') {
-                                      //   setState(() {
-                                      //     deleveryName = widget
-                                      //             .order.availableDeliveryMethod[index]
-                                      //         ['methodName'];
-                                      //     visibility = true;
-                                      //     deleveryMethod = widget.order
-                                      //         .availableDeliveryMethod[index]['id'];
-                                      //   });
-                                      // } else {
-                                      //   setState(() {
-                                      //     deleveryName = widget
-                                      //             .order.availableDeliveryMethod[index]
-                                      //         ['methodName'];
-                                      //     visibility = true;
-                                      //     deleveryMethod = widget.order
-                                      //         .availableDeliveryMethod[index]['id'];
-                                      //   });
-                                      // }
                                     },
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.only(
@@ -381,12 +378,22 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 SizedBox(
                                   width: AppSize.s20,
                                 ),
-                                Text(
+                                widget.cardNumber == null ? Text(
                                     AppLocalizations.of(context)!
                                         .select_the_payment_method,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 13)),
+                                        fontSize: 13)) : Row(
+                                  children: [
+                                    Icon(Icons.credit_card,color: ColorManager.primary),
+                                    SizedBox(width: AppSize.s24,),
+                                    Text(
+                                        '**** **** **** ${widget.cardNumber}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13))
+                                  ],
+                                ),
                                 // SizedBox(width: AppSize.s20,),
                                 Spacer(),
                                 InkWell(
@@ -785,7 +792,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                           ListView.builder(
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
-                            itemCount: 1,
+                            itemCount: _addressesViewGetXController.addresses.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
@@ -866,7 +873,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        'Home',
+                                                        _addressesViewGetXController.addresses[index].addressName!,
                                                         style: getSemiBoldStyle(
                                                           color: ColorManager
                                                               .primaryDark,
@@ -889,7 +896,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       width: AppSize.s8,
                                                     ),
                                                     Text(
-                                                      'Home',
+                                                      _addressesViewGetXController.addresses[index].cityName!,
                                                       style: getRegularStyle(
                                                         color:
                                                             ColorManager.black,
@@ -904,12 +911,13 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       IconsAssets.person,
                                                       height: AppSize.s15,
                                                       width: AppSize.s14,
+                                                      color: ColorManager.primaryDark,
                                                     ),
                                                     SizedBox(
                                                       width: AppSize.s8,
                                                     ),
                                                     Text(
-                                                      'zidan zidan',
+                                                      '${AppSharedData.currentUser?.firstName}',
                                                       style: getRegularStyle(
                                                         color:
                                                             ColorManager.black,
@@ -929,7 +937,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       width: AppSize.s8,
                                                     ),
                                                     Text(
-                                                      '022587467',
+                                                      _addressesViewGetXController.addresses[index].phone!,
                                                       style: getRegularStyle(
                                                         color:
                                                             ColorManager.black,
@@ -964,7 +972,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        'Home',
+                                                        _addressesViewGetXController.addresses[index].addressName!,
                                                         style: getSemiBoldStyle(
                                                           color: ColorManager
                                                               .primaryDark,
@@ -996,7 +1004,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       width: AppSize.s8,
                                                     ),
                                                     Text(
-                                                      'Home',
+                                                      _addressesViewGetXController.addresses[index].cityName!,
                                                       style: getRegularStyle(
                                                         color:
                                                             ColorManager.black,
@@ -1011,12 +1019,13 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       IconsAssets.person,
                                                       height: AppSize.s15,
                                                       width: AppSize.s14,
+
                                                     ),
                                                     SizedBox(
                                                       width: AppSize.s8,
                                                     ),
                                                     Text(
-                                                      'zidan zidan',
+                                                      '${AppSharedData.currentUser?.firstName}',
                                                       style: getRegularStyle(
                                                         color:
                                                             ColorManager.black,
@@ -1036,7 +1045,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       width: AppSize.s8,
                                                     ),
                                                     Text(
-                                                      '02478659',
+                                                      _addressesViewGetXController.addresses[index].phone!,
                                                       style: getRegularStyle(
                                                         color:
                                                             ColorManager.black,

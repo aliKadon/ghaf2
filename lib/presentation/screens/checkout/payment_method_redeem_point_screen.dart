@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:ghaf_application/presentation/screens/checkout/edit_payment_method.dart';
 import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.dart';
 
@@ -8,7 +12,25 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 
-class PaymentMethodRedeemPointScreen extends StatelessWidget {
+class PaymentMethodRedeemPointScreen extends StatefulWidget {
+  @override
+  State<PaymentMethodRedeemPointScreen> createState() =>
+      _PaymentMethodRedeemPointScreenState();
+}
+
+class _PaymentMethodRedeemPointScreenState
+    extends State<PaymentMethodRedeemPointScreen> {
+  //controller
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.find<CheckOutGetxController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _checkOutGetxController.getPaymentMethod(context: context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +43,11 @@ class PaymentMethodRedeemPointScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CheckOutView(),
+                        )),
                     child: Image.asset(
                       IconsAssets.arrow,
                       height: 18,
@@ -178,100 +204,149 @@ class PaymentMethodRedeemPointScreen extends StatelessWidget {
               //           fontWeight: FontWeight.w400)),
               // )
               //     :
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Dismissible(
-                        key: UniqueKey(),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (_) {
-                          // cubit.deletePaymentMethod(
-                          //     id: cubit
-                          //         .getPaymentMethods[index]
-                          //         .id!,
-                          //     context: context);
-                        },
-                        background: Container(
-                          color: Colors.red,
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          alignment: Alignment.centerRight,
-                          child: const Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                        ),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigator.of(context)
-                            //     .pushReplacement(
-                            //     MaterialPageRoute(
-                            //       builder: (context) => CheckOutView(
-                            //           paymentMethod:
-                            //           'Card : **** **** **** **** ${cubit.getPaymentMethods[index].last4Digits}',
-                            //           paymentMethodId: cubit
-                            //               .getPaymentMethods[
-                            //           index]
-                            //               .id!,
-                            //           useRedeemPoints:
-                            //           useRedeemPoint),
-                            //     ));
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white,
-                              border: Border.all(
-                                color: ColorManager.greyLight,
-                              ),
-                            ),
-                            child: Row(
+              GetBuilder<CheckOutGetxController>(
+                builder: (controller) {
+                  return controller.paymentMethod == 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 225.0),
+                          child: Text(
+                              AppLocalizations.of(context)!.no_payment_method,
+                              style: TextStyle(
+                                  color: ColorManager.primaryDark,
+                                  fontSize: FontSize.s20,
+                                  fontWeight: FontWeight.w400)),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.paymentMethod.length,
+                          itemBuilder: (context, index) {
+                            return Column(
                               children: [
-                                Image.asset(ImageAssets.visa,
-                                    height: 55, width: 55),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.1,
-                                ),
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '**** **** **** ****',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          '4258',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                Dismissible(
+                                  key: UniqueKey(),
+                                  direction: DismissDirection.endToStart,
+                                  onDismissed: (_) {
+                                    _checkOutGetxController.deletePaymentMethod(
+                                        context: context,
+                                        id: _checkOutGetxController
+                                            .paymentMethod[index].id!);
+                                    // cubit.deletePaymentMethod(
+                                    //     id: cubit
+                                    //         .getPaymentMethods[index]
+                                    //         .id!,
+                                    //     context: context);
+                                  },
+                                  background: Container(
+                                    color: Colors.red,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    alignment: Alignment.centerRight,
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
                                     ),
-                                    Text(
-                                      '${AppLocalizations.of(context)!.expiry_date} 10\\2028',
-                                      style: getSemiBoldStyle(
-                                        color: ColorManager.greyLight,
-                                        fontSize: FontSize.s12,
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Navigator.of(context)
+                                      //     .pushReplacement(
+                                      //     MaterialPageRoute(
+                                      //       builder: (context) => CheckOutView(
+                                      //           paymentMethod:
+                                      //           'Card : **** **** **** **** ${cubit.getPaymentMethods[index].last4Digits}',
+                                      //           paymentMethodId: cubit
+                                      //               .getPaymentMethods[
+                                      //           index]
+                                      //               .id!,
+                                      //           useRedeemPoints:
+                                      //           useRedeemPoint),
+                                      //     ));
+                                    },
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .pushReplacement(MaterialPageRoute(
+                                          builder: (context) => CheckOutView(
+                                              cardNumber: controller
+                                                  .paymentMethod[index]
+                                                  .last4Digits),
+                                        ));
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: ColorManager.greyLight,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            _checkOutGetxController
+                                                        .paymentMethod[index]
+                                                        .image ==
+                                                    null
+                                                ? Image.asset(ImageAssets.visa,
+                                                    height: 55, width: 55)
+                                                : Image.network(
+                                                    _checkOutGetxController
+                                                        .paymentMethod[index]
+                                                        .image!,
+                                                    height: 55,
+                                                    width: 55),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.1,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '**** **** **** **** ',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      _checkOutGetxController
+                                                          .paymentMethod[index]
+                                                          .last4Digits!,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  '${AppLocalizations.of(context)!.expiry_date} ${_checkOutGetxController.paymentMethod[index].expMonth}\\${_checkOutGetxController.paymentMethod[index].expYear}',
+                                                  style: getSemiBoldStyle(
+                                                    color:
+                                                        ColorManager.greyLight,
+                                                    fontSize: FontSize.s12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.017,
                                 ),
                               ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.017,
-                      ),
-                    ],
-                  );
+                            );
+                          },
+                        );
                 },
               )
             ],

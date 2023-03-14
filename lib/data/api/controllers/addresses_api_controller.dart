@@ -13,6 +13,10 @@ class AddressesApiController with ApiHelper {
     required String lat,
     required String long,
     required String phoneNumber,
+    required String villaOrApprtmentNumber,
+    required String buildingOrStreetName,
+    required String cityName,
+    required String countryName,
   }) async {
     // print('send request : add-user-address');
     Map<String, dynamic> data = {
@@ -20,10 +24,14 @@ class AddressesApiController with ApiHelper {
       "altitude": lat,
       "longitude": long,
       "phone": phoneNumber,
+      "villaOrApprtmentNumber":villaOrApprtmentNumber,
+      "buildingOrStreetName" : buildingOrStreetName,
+      "cityName": cityName,
+      "countryName" : countryName,
     };
     // print(data);
     var response = await _dio.post(
-      'Auth/add-user-address',
+      '/Auth/add-user-address',
       data: data,
       options: Options(
         headers: headers,
@@ -61,7 +69,7 @@ class AddressesApiController with ApiHelper {
     };
     // print(queryParameters);
     var response = await _dio.post(
-      'Auth/update-user-address',
+      '/Auth/update-user-address',
       queryParameters: queryParameters,
       options: Options(
         headers: headers,
@@ -91,7 +99,7 @@ class AddressesApiController with ApiHelper {
     };
     // print(queryParameters);
     var response = await _dio.post(
-      'Auth/delete-user-address',
+      '/Auth/delete-user-address',
       queryParameters: queryParameters,
       options: Options(
         headers: headers,
@@ -115,7 +123,7 @@ class AddressesApiController with ApiHelper {
   Future<List<Address>> getMyAddresses() async {
     // print('send request : get-user-address');
     var response = await _dio.get(
-      'Auth/get-user-address',
+      '/Auth/get-user-address',
       options: Options(
         headers: headers,
       ),

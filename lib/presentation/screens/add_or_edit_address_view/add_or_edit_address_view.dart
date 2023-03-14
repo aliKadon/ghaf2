@@ -377,8 +377,19 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                   width: double.infinity,
                                   height: AppSize.s55,
                                   child: ElevatedButton(
-                                    onPressed: _addAddressViewGetXController
-                                        .addOrEditAddress,
+                                    onPressed: () {
+                                      _addAddressViewGetXController
+                                          .addOrEditAddress(
+                                        buildingOrStreetName: _streetTextController.text,
+                                        villaOrApprtmentNumber: _buildingTextController.text,
+                                        countryName: place.country!,
+                                        cityName: place.locality!,
+                                        addressName: _nameAddressTextController.text,
+                                        lat: (_addAddressViewGetXController.latLng.latitude).toString(),
+                                        long: (_addAddressViewGetXController.latLng.longitude).toString(),
+                                        phoneNumber: _phoneNumberTextController.text,
+                                      );
+                                    },
                                     child: Text(
                                       _addAddressViewGetXController.address ==
                                               null

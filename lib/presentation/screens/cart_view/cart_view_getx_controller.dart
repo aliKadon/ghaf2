@@ -13,14 +13,14 @@ import '../../../providers/product_provider.dart';
 
 class CartViewGetXController extends GetxController with Helpers {
   // notifiable.
-  void notifyMyCart() {
-    // cartItems = [];
+  void notifyMyCart() async {
+    cartItems = await _storeApiController.getMyCart();
     notifyBell();
-    update(['cart']);
+    update();
   }
 
   void notifyBell() {
-    update(['bell']);
+    update();
   }
 
   // flags.
@@ -60,7 +60,7 @@ class CartViewGetXController extends GetxController with Helpers {
   }
 
   // calculate bell.
-  void calculateBell() {
+  void calculateBell() async{
     subTotal = 0;
     discount = 0;
     total = 0;
@@ -81,8 +81,9 @@ class CartViewGetXController extends GetxController with Helpers {
     discount = subTotal - subTotal2;
     total = subTotal2;
     print('you in');
-    notifyMyCart();
-    notifyBell();
+    cartItems = await _storeApiController.getMyCart();
+    update();
+    // notifyMyCart();
   }
 
   void emptyBasket(BuildContext context) async {

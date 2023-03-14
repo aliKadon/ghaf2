@@ -35,7 +35,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
   //controller
   late final CartItem _cartItem = Get.put<CartItem>(CartItem());
   late final CartViewGetXController _cartViewGetXController =
-      Get.put(CartViewGetXController());
+      Get.find<CartViewGetXController>();
 
   var selected = 0;
   num count = 0;
@@ -75,7 +75,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                       fontSize: 15),
                 ),
                 Text(
-                  'item ${count}',
+                  'item ${_cartViewGetXController.cartItems[widget.index].productCount!}',
                   style: TextStyle(
                       color: ColorManager.greyLight,
                       fontWeight: FontWeight.w400,
@@ -105,7 +105,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         });
                         _cartItem.increment(
                             idProduct: widget.cartItemId,
-                            productCount1: count,
+                            productCount1: _cartViewGetXController.cartItems[widget.index].productCount!,
                             context: context);
                         _cartViewGetXController.calculateBell();
 
@@ -114,11 +114,12 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         //     productCount: count,
                         //     idProduct: widget.idProduct);
                       },
+
                       child: Icon(
                         Icons.add_circle_outline,
                         color: ColorManager.primary,
                       )),
-                  Text(count.toString()),
+                  Text(_cartViewGetXController.cartItems[widget.index].productCount!.toString()),
                   GestureDetector(
                       onTap: () {
                         setState(() {
@@ -128,7 +129,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         });
                         _cartItem.decrement(
                             idProduct: widget.cartItemId,
-                            productCount: count,
+                            productCount: _cartViewGetXController.cartItems[widget.index].productCount!,
                             context: context);
                         _cartViewGetXController.calculateBell();
                       },

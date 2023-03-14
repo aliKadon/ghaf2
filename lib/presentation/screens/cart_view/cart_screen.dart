@@ -43,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<CartViewGetXController>(
-        id: 'cart',
+
         builder: (controller) => SafeArea(
           child: _cartViewGetXController.isMyCartLoading
               ? Center(
@@ -210,7 +210,6 @@ class _CartScreenState extends State<CartScreen> {
                                 height: 20,
                               ),
                               GetBuilder<CartViewGetXController>(
-                                id: 'cart',
                                 builder: (controller) =>  Column(
                                       children: [
                                         Row(

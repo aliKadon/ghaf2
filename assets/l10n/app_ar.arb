@@ -17,6 +17,8 @@
   "expired_month" : "شهر انتهاء الصلاحية",
   "expired_year" : "سنة انتهاء الصلاحية",
   "amount" : "الكمية",
+  "no_payment_method" : "لا يوجد طريقة الدفع",
+
   "upgrade_your_shopping_experience" : "قم بترقية تجربة التسوق الخاصة بك",
   "easy_and_comfortable" : "سهل ومريح",
   "subscribe_to_ghaf_gold" : "اشترك في غاف الذهبي",

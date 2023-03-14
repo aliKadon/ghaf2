@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/add_credit_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../../app/utils/helpers.dart';
 import '../../resources/values_manager.dart';
 
 class SnapsheetScreen extends StatefulWidget with Helpers {
-
   String? lastScreen;
 
   SnapsheetScreen({this.lastScreen});
@@ -26,6 +26,10 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
 // Stripe.setOptions(StripeOptions(
 // publishableKey: 'YOUR_STRIPE_PUBLISHABLE_KEY',
 // ));
+
+  //controller
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.find<CheckOutGetxController>();
 
   final _form = GlobalKey<FormState>();
 
@@ -48,12 +52,15 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
 
   TextEditingController cardNumberController = TextEditingController();
 
-  TextEditingController creditCardController = TextEditingController();
+  TextEditingController expireMonthCardController = TextEditingController();
   TextEditingController cvvController = TextEditingController();
-  TextEditingController expirationController = TextEditingController();
+  TextEditingController expireYearController = TextEditingController();
 
   bool _checkData() {
-    if (cardNumberController.text.isNotEmpty) {
+    if (cardNumberController.text.isNotEmpty ||
+        expireYearController.text.isNotEmpty ||
+        cvvController.text.isNotEmpty ||
+        expireMonthCardController.text.isNotEmpty) {
       return true;
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -71,10 +78,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 1,
+              height: MediaQuery.of(context).size.height * 1,
               child: Column(
                 children: [
                   SizedBox(
@@ -91,55 +95,8 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                           cvvCode: cardInfo['cvc']!,
                           showBackView: isCVV,
                           onCreditCardWidgetChange:
-                              (
-                              CreditCardBrand) {}, //true when you want to show cvv(back) view
+                              (CreditCardBrand) {}, //true when you want to show cvv(back) view
                         ),
-                        // CreditCardForm(
-                        //   formKey: _form,
-                        //   obscureCvv: true,
-                        //   obscureNumber: true,
-                        //   cardNumber: cardInfo['cardNumber']!,
-                        //   cvvCode: cardInfo['cvc']!,
-                        //   isHolderNameVisible: true,
-                        //   isCardNumberVisible: true,
-                        //   isExpiryDateVisible: true,
-                        //   expiryDate: cardInfo['expiredDate']!,
-                        //   themeColor: Colors.blue,
-                        //   textColor: Colors.white,
-                        //   cardNumberDecoration: InputDecoration(
-                        //     labelText: 'Number',
-                        //     hintText: 'XXXX XXXX XXXX XXXX',
-                        //     hintStyle: const TextStyle(color: Colors.white),
-                        //     labelStyle: const TextStyle(color: Colors.white),
-                        //     // focusedBorder: border,
-                        //     // enabledBorder: border,
-                        //   ),
-                        //   expiryDateDecoration: InputDecoration(
-                        //     hintStyle: const TextStyle(color: Colors.white),
-                        //     labelStyle: const TextStyle(color: Colors.white),
-                        //     // focusedBorder: border,
-                        //     // enabledBorder: border,
-                        //     labelText: 'Expired Date',
-                        //     hintText: 'XX/XX',
-                        //   ),
-                        //   cvvCodeDecoration: InputDecoration(
-                        //     hintStyle: const TextStyle(color: Colors.white),
-                        //     labelStyle: const TextStyle(color: Colors.white),
-                        //     // focusedBorder: border,
-                        //     // enabledBorder: border,
-                        //     labelText: 'CVV',
-                        //     hintText: 'XXX',
-                        //   ),
-                        //   cardHolderDecoration: InputDecoration(
-                        //     hintStyle: const TextStyle(color: Colors.white),
-                        //     labelStyle: const TextStyle(color: Colors.white),
-                        //     // focusedBorder: border,
-                        //     // enabledBorder: border,
-                        //     labelText: 'Card Holder',
-                        //   ),
-                        //   onCreditCardModelChange: (_){},
-                        //   cardHolderName: '',
-                        // ),
                         SizedBox(
                           height: AppSize.s44,
                         ),
@@ -152,7 +109,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                           ],
                           decoration: InputDecoration(
                               hintText:
-                              AppLocalizations.of(context)!.number_card),
+                                  AppLocalizations.of(context)!.number_card),
                           onSaved: (value) {
                             cardInfo = {
                               'cardNumber': value!,
@@ -175,6 +132,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: TextFormField(
+                            controller: cvvController,
                             decoration: InputDecoration(
                                 hintText: AppLocalizations.of(context)!.cvv),
                             onChanged: (_) {
@@ -196,6 +154,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                           children: [
                             Expanded(
                               child: TextFormField(
+                                controller: expireMonthCardController,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -204,7 +163,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                 ],
                                 decoration: InputDecoration(
                                     hintText:
-                                    AppLocalizations.of(context)!.month),
+                                        AppLocalizations.of(context)!.month),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -223,6 +182,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: TextFormField(
+                                controller: expireYearController,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
@@ -230,7 +190,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                 ],
                                 decoration: InputDecoration(
                                     hintText:
-                                    AppLocalizations.of(context)!.year),
+                                        AppLocalizations.of(context)!.year),
                                 onChanged: (_) {
                                   setState(() {
                                     isCVV = false;
@@ -259,31 +219,53 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                     child: ElevatedButton(
                       child: Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
-                        if (widget.lastScreen != null &&
-                            widget.lastScreen == 'topUp') {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => TopUpScreen(screenName: 'topUp'),));
+                        if (_checkData()) {
+                          _checkOutGetxController.addPaymentMethod(
+                              context: context,
+                              cardNumber: cardNumberController.text,
+                              cardExpMonth:
+                              num.parse(expireMonthCardController.text),
+                              cardExpCvc: cvvController.text,
+                              cardExpYear: num.parse(expireYearController.text));
+                          if (widget.lastScreen != null &&
+                              widget.lastScreen == 'topUp') {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) =>
+                                  TopUpScreen(screenName: 'topUp'),
+                            ));
+                          }
+
+                          if (widget.lastScreen != null &&
+                              widget.lastScreen == 'addCredit') {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) => AddCreditScreen(),
+                            ));
+                          }
+                          if (widget.lastScreen != null &&
+                              widget.lastScreen == 'manage') {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) =>
+                                  TopUpScreen(screenName: 'manage'),
+                            ));
+                          }
+                          if (widget.lastScreen != null &&
+                              widget.lastScreen == 'payLater') {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) =>
+                                  TopUpScreen(screenName: 'payLater'),
+                            ));
+                          } else {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PaymentMethodRedeemPointScreen()));
+                          }
                         }
 
-                        if (widget.lastScreen != null &&
-                            widget.lastScreen == 'addCredit') {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => AddCreditScreen(),));
-                        }
-                        if (widget.lastScreen != null &&
-                            widget.lastScreen == 'manage') {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => TopUpScreen(screenName: 'manage'),));
-                        }
-                        if (widget.lastScreen != null &&
-                            widget.lastScreen == 'payLater') {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => TopUpScreen(screenName: 'payLater'),));
-                        }
                         // show
                         // LoadingDialog(context: context, title: 'Logging In');
 
@@ -341,7 +323,6 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                         //             content: Text(error.toString()),
                         //             backgroundColor: Colors.red,
                         //           )));
-
 
                         // }
                       },

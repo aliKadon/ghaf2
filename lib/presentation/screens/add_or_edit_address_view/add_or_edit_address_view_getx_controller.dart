@@ -6,10 +6,8 @@ import 'package:ghaf_application/data/api/controllers/addresses_api_controller.d
 import 'package:ghaf_application/domain/model/address.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
 class AddOrEditAddressViewGetXController extends GetxController with Helpers {
-
   // final LocationData locationData;
   // AddOrEditAddressViewGetXController(this.locationData);
   // vars.
@@ -39,7 +37,16 @@ class AddOrEditAddressViewGetXController extends GetxController with Helpers {
   });
 
   // add or edit address.
-  void addOrEditAddress() async {
+  void addOrEditAddress({
+    required String addressName,
+    required String lat,
+    required String long,
+    required String phoneNumber,
+    required String villaOrApprtmentNumber,
+    required String buildingOrStreetName,
+    required String cityName,
+    required String countryName,
+  }) async {
     try {
       if (!formKey.currentState!.validate()) return;
       formKey.currentState!.save();
@@ -54,9 +61,13 @@ class AddOrEditAddressViewGetXController extends GetxController with Helpers {
       final ApiResponse apiResponse = address == null
           ? await _addressesApiController.addAddress(
               addressName: addressName!,
-              lat: selectedLatLng!.latitude.toString(),
-              long: selectedLatLng!.longitude.toString(),
+              lat: lat,
+              long: long,
               phoneNumber: phoneNumber!,
+              cityName: cityName,
+              countryName: countryName,
+              villaOrApprtmentNumber: villaOrApprtmentNumber,
+              buildingOrStreetName: buildingOrStreetName,
             )
           : await _addressesApiController.editAddress(
               addressId: address!.id,
@@ -78,7 +89,8 @@ class AddOrEditAddressViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       Navigator.pop(context);
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 }
