@@ -727,7 +727,7 @@ mixin Helpers {
         ),
       );
 
-  Future showArrivalTimeSheet(BuildContext context) => showSlidingBottomSheet(
+  Future showArrivalTimeSheet(BuildContext context,String orderId) => showSlidingBottomSheet(
         context,
         builder: (context) => SlidingSheetDialog(
           snapSpec: SnapSpec(
@@ -940,7 +940,7 @@ mixin Helpers {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) =>
-                                          CheckOutConfirmView(),
+                                          CheckOutConfirmView(orderId: orderId),
                                     ));
                                   },
                                   child: Text(

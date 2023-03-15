@@ -5,6 +5,7 @@ import 'package:ghaf_application/data/api/api_helper.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../domain/model/api_response.dart';
+import '../../../domain/model/order.dart';
 import '../../../domain/model/payment_mathod.dart';
 
 class PaymentMethodApiController with ApiHelper {
@@ -61,8 +62,8 @@ class PaymentMethodApiController with ApiHelper {
           'cardExpCvc': cardExpCvc,
           'cardExpYear': cardExpYear,
         }));
-    print('=======================addPayment');
-    print(response.body);
+    // print('=======================addPayment');
+    // print(response.body);
 
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
@@ -73,4 +74,6 @@ class PaymentMethodApiController with ApiHelper {
     }
     return failedResponse;
   }
+
+
 }

@@ -20,7 +20,7 @@ class CartItem extends GetxController with Helpers {
     print('=================product count');
     print(productCount);
     count = (productCount1).toInt();
-    productCount = count;
+    // productCount = count;
     productCount1 = productCount1! + 1;
 
 

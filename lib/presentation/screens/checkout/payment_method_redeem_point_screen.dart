@@ -269,7 +269,8 @@ class _PaymentMethodRedeemPointScreenState
                                           builder: (context) => CheckOutView(
                                               cardNumber: controller
                                                   .paymentMethod[index]
-                                                  .last4Digits),
+                                                  .last4Digits,
+                                          paymentMethodId: controller.paymentMethod[index].id),
                                         ));
                                       },
                                       child: Container(

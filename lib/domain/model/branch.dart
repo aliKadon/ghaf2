@@ -1,4 +1,4 @@
-import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:ghaf_application/domain/model/address.dart';
 import 'package:ghaf_application/domain/model/store_delivery_cost.dart';
 
 class Branch {

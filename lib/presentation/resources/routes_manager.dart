@@ -12,6 +12,8 @@ import 'package:ghaf_application/presentation/screens/addresses_view/addresses_v
 import 'package:ghaf_application/presentation/screens/all_restaurant_view.dart';
 import 'package:ghaf_application/presentation/screens/checkout/checkout_confirm_view.dart';
 import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
+import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
+import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.dart';
 import 'package:ghaf_application/presentation/screens/coupons_view.dart';
 import 'package:ghaf_application/presentation/screens/faq_view.dart';
 import 'package:ghaf_application/presentation/screens/forget_password_view/forget_password_view.dart';
@@ -29,7 +31,6 @@ import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_view.dart';
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';
-import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/screens/orders_history_view/orders_history_view.dart';
 import 'package:ghaf_application/presentation/screens/orders_to_pay_view/order_to_pay_2.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view.dart';
@@ -38,6 +39,7 @@ import 'package:ghaf_application/presentation/screens/product_view/product_view2
 import 'package:ghaf_application/presentation/screens/products_screen/all_products_screen.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_seller.dart';
+import 'package:ghaf_application/presentation/screens/rate_and_reviews/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view_getx_controller.dart';
@@ -61,9 +63,7 @@ import 'package:ghaf_application/presentation/screens/seller/submit_form_view/su
 import 'package:ghaf_application/presentation/screens/seller/subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/update_info_seller.dart';
 import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/rate_and_reviews/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
-import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.dart';
 import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category_screen.dart';
 import 'package:ghaf_application/presentation/screens/sub_categories_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_method_view.dart';
@@ -73,7 +73,6 @@ import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_v
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 import 'package:ghaf_application/presentation/screens/update_user_info.dart';
 
-import '../../domain/model/available_delevey_method.dart';
 import '../../domain/model/unpaid_order.dart';
 import '../screens/language_store.dart';
 import '../screens/login_view/login_view.dart';
@@ -81,9 +80,9 @@ import '../screens/onboarding_view.dart';
 import '../screens/rate_and_reviews/rate_delivery/rate_delivery.dart';
 import '../screens/rate_and_reviews/rate_us_view/rate_us_view.dart';
 import '../screens/rate_and_reviews/rate_us_view/rate_us_view_getx_controller.dart';
+import '../screens/rate_and_reviews/review_product.dart';
 import '../screens/register_view/register_view.dart';
 import '../screens/registration_screen.dart';
-import '../screens/rate_and_reviews/review_product.dart';
 import '../screens/seller/create_payment_link_seller_view.dart';
 import '../screens/seller_status.dart';
 import '../screens/splash_view.dart';
@@ -188,9 +187,7 @@ class RouteGenerator {
       // switch ("/add_item2_seller") {
       //customer
       case Routes.snapsheet:
-        return MaterialPageRoute(
-            builder: (_) =>
-                SnapsheetScreen());
+        return MaterialPageRoute(builder: (_) => SnapsheetScreen());
 
       case Routes.reviewProduct:
         return MaterialPageRoute(
@@ -219,7 +216,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PaymentMethodeForSubscribe());
       case Routes.orderTrackingScreen:
         return MaterialPageRoute(
-            builder: (_) => OrderTrackingScreen());
+            builder: (_) => OrderTrackingScreen(
+                  orderId: settings.arguments as String,
+                  destination: settings.arguments as Address,
+                  source: settings.arguments as Address,
+                ));
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
       case Routes.welcomeRoute:
@@ -227,9 +228,9 @@ class RouteGenerator {
 
       //new
       case Routes.storeByCategoryScreen:
-        return MaterialPageRoute(builder: (_) =>  StoreByCategryScreen(
-          settings.arguments as Map<String,dynamic>
-        ));
+        return MaterialPageRoute(
+            builder: (_) => StoreByCategryScreen(
+                settings.arguments as Map<String, dynamic>));
       case Routes.unpaidItemScreen:
         return MaterialPageRoute(
             builder: (_) =>
@@ -304,12 +305,12 @@ class RouteGenerator {
           ),
         );
       case Routes.checkOutRoute:
-        return MaterialPageRoute(
-            builder: (_) =>
-                CheckOutView());
+        return MaterialPageRoute(builder: (_) => CheckOutView());
       case Routes.checkOutConfirmRoute:
         return MaterialPageRoute(
-            builder: (_) => CheckOutConfirmView());
+            builder: (_) => CheckOutConfirmView(
+                  orderId: settings.arguments as String,
+                ));
       case Routes.orderInformationRoute:
         return MaterialPageRoute(builder: (_) => const OrderInformationView());
       case Routes.allRestaurantRoute:
@@ -346,8 +347,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => Builder(
             builder: (context) {
-              Get.put<OffersScreenGetXController>(
-                  OffersScreenGetXController());
+              Get.put<OffersScreenGetXController>(OffersScreenGetXController());
               return const OffersView();
             },
           ),
@@ -378,13 +378,13 @@ class RouteGenerator {
           ),
         );
       case Routes.products:
-      return MaterialPageRoute(
-        builder: (_) => ProductsScreen(
-          // categoryId: settings.arguments as String,
-          // categoryName: settings.arguments as String,
-          category: settings.arguments as Map<String,dynamic>,
-        ),
-      );
+        return MaterialPageRoute(
+          builder: (_) => ProductsScreen(
+            // categoryId: settings.arguments as String,
+            // categoryName: settings.arguments as String,
+            category: settings.arguments as Map<String, dynamic>,
+          ),
+        );
       case Routes.myFavorite:
         return MaterialPageRoute(builder: (_) => MyFavoriteScreen());
       case Routes.rateUs:

@@ -38,7 +38,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
       Get.find<CartViewGetXController>();
 
   var selected = 0;
-  num count = 0;
+  num count = 1;
 
   @override
   void initState() {
@@ -105,7 +105,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         });
                         _cartItem.increment(
                             idProduct: widget.cartItemId,
-                            productCount1: _cartViewGetXController.cartItems[widget.index].productCount!,
+                            productCount1: count,
                             context: context);
                         _cartViewGetXController.calculateBell();
 
@@ -119,7 +119,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         Icons.add_circle_outline,
                         color: ColorManager.primary,
                       )),
-                  Text(_cartViewGetXController.cartItems[widget.index].productCount!.toString()),
+                  Text(count.toString()),
                   GestureDetector(
                       onTap: () {
                         setState(() {
@@ -129,7 +129,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         });
                         _cartItem.decrement(
                             idProduct: widget.cartItemId,
-                            productCount: _cartViewGetXController.cartItems[widget.index].productCount!,
+                            productCount: count,
                             context: context);
                         _cartViewGetXController.calculateBell();
                       },

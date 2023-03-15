@@ -8,6 +8,8 @@ import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/order_to_pay.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../domain/model/order.dart';
+
 class OrdersApiController with ApiHelper {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
@@ -101,6 +103,9 @@ class OrdersApiController with ApiHelper {
           'usePayLater': usePayLater,
           'PaymentMethodId': PaymentMethodId,
         }));
+    print('============================================ pay for order');
+    print(response.statusCode);
+    print(response.body);
 
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
@@ -110,5 +115,22 @@ class OrdersApiController with ApiHelper {
       }
     }
     return failedResponse;
+  }
+
+  Future<Order?> getOrderById({required String orderId}) async{
+    var url = Uri.parse('${Constants.baseUrl}/orders/get-order-by-id?id=$orderId');
+
+    var response = await http.get(url,headers: headers);
+
+    print('=======================order by id');
+    print(response.body);
+
+    if(response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return Order.fromJson(jsonData['data']);
+      }
+    }
+    return null;
   }
 }

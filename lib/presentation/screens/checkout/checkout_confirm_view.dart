@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -14,15 +15,25 @@ import '../../resources/values_manager.dart';
 class CheckOutConfirmView extends StatefulWidget {
   // const CheckOutConfirmView({Key? key}) : super(key: key);
 
+  final String orderId;
+
+  CheckOutConfirmView({required this.orderId});
+
   @override
   State<CheckOutConfirmView> createState() => _CheckOutConfirmViewState();
 }
 
 class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
+  //controller
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.find<CheckOutGetxController>();
+
   var isLoading = true;
 
   @override
   void initState() {
+    _checkOutGetxController.getOrderById(
+        context: context, orderId: widget.orderId);
     super.initState();
   }
 
@@ -35,146 +46,152 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
 
   @override
   Widget build(BuildContext context) {
-    var order = Provider.of<ProductProvider>(context, listen: false).orderById;
-    print('============================orderByID');
-    print(order);
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(AppPadding.p16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // GestureDetector(
-                    //   // onTap: () => Navigator.pop(context),
-                    //   child: Image.asset(
-                    //     IconsAssets.arrow,
-                    //     height: AppSize.s18,
-                    //     width: AppSize.s10,
-                    //   ),
-                    // ),
-                    Spacer(),
-                    Text(
-                      AppLocalizations.of(context)!.checkout,
-                      style: getSemiBoldStyle(
-                        color: ColorManager.primaryDark,
-                        fontSize: FontSize.s18,
-                      ),
+    // var order = Provider.of<ProductProvider>(context, listen: false).orderById;
+    // print('============================orderByID');
+    // print(order);
+    return GetBuilder<CheckOutGetxController>(
+      builder: (controller) => Scaffold(
+        body: controller.isLoadingOrderById
+            ? Center(
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1,
+                  ),
+                ),
+              )
+            : SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.all(AppPadding.p16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // GestureDetector(
+                            //   // onTap: () => Navigator.pop(context),
+                            //   child: Image.asset(
+                            //     IconsAssets.arrow,
+                            //     height: AppSize.s18,
+                            //     width: AppSize.s10,
+                            //   ),
+                            // ),
+                            Spacer(),
+                            Text(
+                              AppLocalizations.of(context)!.checkout,
+                              style: getSemiBoldStyle(
+                                color: ColorManager.primaryDark,
+                                fontSize: FontSize.s18,
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                        SizedBox(
+                          height: AppSize.s12,
+                        ),
+                        Divider(height: 1, color: ColorManager.greyLight),
+                        SizedBox(
+                          height: AppSize.s65,
+                        ),
+                        Image.asset(
+                          ImageAssets.checkout,
+                          height: AppSize.s263,
+                          width: AppSize.s222,
+                        ),
+                        Container(
+                          // width: double.infinity,
+                          // padding: EdgeInsets.only(left: 50),
+                          child: Text(
+                            AppLocalizations.of(context)!.your_order_placed,
+                            style: getSemiBoldStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s20,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.placed_successfully,
+                          style: getSemiBoldStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s20,
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s18,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: ColorManager.greyLight),
+                          padding: EdgeInsets.all(12),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
+                            AppLocalizations.of(context)!.payment_has_been_made,
+                            style: getSemiBoldStyle(
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s35,
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: AppMargin.m16,
+                          ),
+                          width: double.infinity,
+                          height: AppSize.s55,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => OrderTrackingScreen(
+                                    orderId: widget.orderId,
+                                    source: _checkOutGetxController
+                                        .order!.deliveryPoint!,
+                                    destination: _checkOutGetxController
+                                        .order!.branch!.branchAddress!),
+                              ));
+                              print(
+                                  '=================================checkout confirm orderInfo');
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.order_tracking,
+                              style: getSemiBoldStyle(
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s18),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s22,
+                        ),
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.of(context).pushNamed(Routes.mainRoute),
+                          child: Text(
+                            AppLocalizations.of(context)!.back_to_home,
+                            style: getSemiBoldStyle(
+                              color: ColorManager.grey,
+                              fontSize: FontSize.s20,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s22,
+                        ),
+                      ],
                     ),
-                    Spacer(),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s12,
-                ),
-                Divider(height: 1, color: ColorManager.greyLight),
-                SizedBox(
-                  height: AppSize.s65,
-                ),
-                Image.asset(
-                  ImageAssets.checkout,
-                  height: AppSize.s263,
-                  width: AppSize.s222,
-                ),
-                Container(
-                  // width: double.infinity,
-                  // padding: EdgeInsets.only(left: 50),
-                  child: Text(
-                    AppLocalizations.of(context)!.your_order_placed,
-                    style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s20,
-                    ),
                   ),
                 ),
-                Text(
-                  AppLocalizations.of(context)!.placed_successfully,
-                  style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark,
-                    fontSize: FontSize.s20,
-                  ),
-                ),
-                SizedBox(
-                  height: AppSize.s18,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: ColorManager.greyLight),
-                  padding: EdgeInsets.all(12),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.clip,
-                    AppLocalizations.of(context)!.payment_has_been_made,
-                    style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s14,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: AppSize.s35,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: AppMargin.m16,
-                  ),
-                  width: double.infinity,
-                  height: AppSize.s55,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => OrderTrackingScreen(),
-                      ));
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (builder) => OrderTrackingScreen(widget.orderinfo)),
-                      // );
-                      print(
-                          '=================================checkout confirm orderInfo');
-                      // print(widget.orderId);
-                      // Navigator.of(context).pushReplacementNamed(
-                      //     Routes.orderTrackingScreen,
-                      //     arguments: {
-                      //       'orderId': widget.orderId,
-                      //       'order': order
-                      //     });
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.order_tracking,
-                      style: getSemiBoldStyle(
-                          color: ColorManager.white, fontSize: FontSize.s18),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: AppSize.s22,
-                ),
-                GestureDetector(
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(Routes.mainRoute),
-                  child: Text(
-                    AppLocalizations.of(context)!.back_to_home,
-                    style: getSemiBoldStyle(
-                      color: ColorManager.grey,
-                      fontSize: FontSize.s20,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: AppSize.s22,
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
