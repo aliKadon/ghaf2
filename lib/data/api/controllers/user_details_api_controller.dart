@@ -13,12 +13,11 @@ import '../../../domain/model/user.dart';
 import '../api_helper.dart';
 
 class UserDetailsApiController with ApiHelper, Helpers {
-
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
-
-
-  Future<ApiResponse> getUserDetails({required BuildContext context,}) async {
+  Future<ApiResponse> getUserDetails({
+    required BuildContext context,
+  }) async {
     // // print('send request : getUserDetails');
     // // print(headers);
     var response = await _dio.get(
@@ -35,7 +34,6 @@ class UserDetailsApiController with ApiHelper, Helpers {
         User user = User.fromJson(response.data['data']);
         SharedPrefController().save(user: user);
         AppSharedData.currentUser = user;
-
       }
       return ApiResponse(
         message: response.data['message'],
@@ -71,6 +69,24 @@ class UserDetailsApiController with ApiHelper, Helpers {
         message: jsonResponse['message'],
         status: jsonResponse['status'],
       );
+    }
+    return failedResponse;
+  }
+
+  Future<ApiResponse> changePassword(
+      {required String oldPassword,
+      required String newPassword,
+      required String confirmPassword}) async {
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Auth/change-user-password?oldPassword=$oldPassword&newPassword=$newPassword&confirmNewPassword=$confirmPassword');
+    var response = await http.post(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+      }
     }
     return failedResponse;
   }

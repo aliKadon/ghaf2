@@ -1125,141 +1125,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 ),
                                 maxLines: 3),
                           ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       padding: EdgeInsets.all(12),
-                          //       width: MediaQuery.of(context).size.width * 0.6,
-                          //       decoration: BoxDecoration(
-                          //         borderRadius: BorderRadius.circular(12.r),
-                          //         color: Colors.white,
-                          //         border: Border.all(
-                          //           color: Color(0xff125051),
-                          //         ),
-                          //       ),
-                          //       child: Text(
-                          //         date == null
-                          //             ? AppLocalizations.of(context)!.pick_date
-                          //             : date.toString().substring(0, 10),
-                          //         style: getSemiBoldStyle(
-                          //           color: ColorManager.primaryDark,
-                          //           fontSize: FontSize.s16,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     Spacer(),
-                          //     GestureDetector(
-                          //       onTap: () {
-                          //         // _registerViewGetXController.selectBirthDate(
-                          //         //     context: context);
-                          //         // selectBirthDate(context: context);
-                          //         showDialog(
-                          //           context: context,
-                          //           builder: (context) {
-                          //             return Dialog(
-                          //               child: Container(
-                          //                 // height: MediaQuery.of(context).size.height * 0.7,
-                          //                 // width: MediaQuery.of(context).size.height * 0.7,
-                          //                 padding: EdgeInsets.symmetric(
-                          //                     horizontal: AppPadding.p12),
-                          //                 decoration: BoxDecoration(
-                          //                   color: ColorManager.white,
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(AppRadius.r8),
-                          //                 ),
-                          //                 // child: SizedBox(
-                          //                 // height: MediaQuery.of(context).size.height * 1,
-                          //                 child: Container(
-                          //                   height: MediaQuery.of(context).size.height *
-                          //                       0.4,
-                          //                   child: Column(
-                          //                     children: [
-                          //                       Container(
-                          //                         height: MediaQuery.of(context)
-                          //                                 .size
-                          //                                 .height *
-                          //                             0.3,
-                          //                         child: CupertinoDatePicker(
-                          //                           mode: CupertinoDatePickerMode.date,
-                          //                           initialDateTime:
-                          //                               DateTime(2023, 1, 1),
-                          //                           onDateTimeChanged: (newDateTime) {
-                          //                             print(
-                          //                                 '======================newDate');
-                          //                             print(newDateTime);
-                          //                             // Do something
-                          //                             setState(() {
-                          //                               if (newDateTime == null) {
-                          //                                 date = null;
-                          //                               } else {
-                          //                                 date = newDateTime;
-                          //                                 dateTosend = newDateTime;
-                          //                               }
-                          //                             });
-                          //                           },
-                          //                         ),
-                          //                       ),
-                          //                       GestureDetector(
-                          //                         onTap: () => Navigator.pop(context),
-                          //                         child: Container(
-                          //                           width: MediaQuery.of(context)
-                          //                                   .size
-                          //                                   .height *
-                          //                               0.5,
-                          //                           height: MediaQuery.of(context)
-                          //                                   .size
-                          //                                   .height *
-                          //                               0.07,
-                          //                           alignment: Alignment.center,
-                          //                           decoration: BoxDecoration(
-                          //                             color: ColorManager.primary,
-                          //                             borderRadius:
-                          //                                 BorderRadius.circular(
-                          //                                     AppRadius.r8),
-                          //                           ),
-                          //                           child: Text(
-                          //                             AppLocalizations.of(context)!.yes,
-                          //                             textAlign: TextAlign.center,
-                          //                             style: getMediumStyle(
-                          //                                 color: ColorManager.white),
-                          //                           ),
-                          //                         ),
-                          //                       ),
-                          //                     ],
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             );
-                          //           },
-                          //         );
-                          //       },
-                          //       child: Container(
-                          //         height: AppSize.s75,
-                          //         width: AppSize.s75,
-                          //         padding: EdgeInsets.all(8),
-                          //         decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(12.r),
-                          //           color: Colors.white,
-                          //           border: Border.all(
-                          //             color: Color(0xff125051),
-                          //           ),
-                          //         ),
-                          //         child: Icon(
-                          //           Icons.date_range,
-                          //           // height: AppSize.s36,
-                          //           // width: AppSize.s36,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-
-                          // CardField(
-                          //   enablePostalCode: false,
-                          //   onCardChanged: (card) {
-                          //     setState(() {});
-                          //   },
-                          // ),
                           SizedBox(
                             height: AppSize.s44,
                           ),
@@ -1274,20 +1139,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 height: AppSize.s55,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //   builder: (context) => CheckOutConfirmView(),
-                                    // ));
-
-                                    print(
-                                        '================================orderID');
-
-                                    print(deleveryMethod);
-                                    print(Helpers.formatDate(dateTosend));
-                                    print(myAddress);
-                                    print(isSwitched);
-
                                     if (_checkData()) {
-                                      _checkOutGetxController.payForOrder(
+                                      showArrivalTimeSheet(
                                           context: context,
                                           orderId: _checkOutGetxController
                                               .orderToPay[
@@ -1296,30 +1149,20 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       1]
                                               .orderDetails!
                                               .id!,
-                                          deliveryMethodId:
-                                              _checkOutGetxController
-                                                  .orderToPay[
-                                                      _checkOutGetxController
-                                                              .orderToPay
-                                                              .length -
-                                                          1]
-                                                  .availableDeliveryMethod![
-                                                      selected]
-                                                  .id!,
-                                          deliveryPoint:
-                                              _addressesViewGetXController
-                                                  .addresses[selectedAddress],
-                                          PaymentMethodId:
-                                              widget.paymentMethodId!);
-                                      showArrivalTimeSheet(
-                                          context,
-                                          _checkOutGetxController
-                                              .orderToPay[
-                                                  _checkOutGetxController
-                                                          .orderToPay.length -
-                                                      1]
-                                              .orderDetails!
-                                              .id!);
+                                      deliveryPoint: _addressesViewGetXController
+                                          .addresses[selectedAddress],
+                                        deliveryMethodId: _checkOutGetxController
+                                            .orderToPay[
+                                        _checkOutGetxController
+                                            .orderToPay
+                                            .length -
+                                            1]
+                                            .availableDeliveryMethod![
+                                        selected]
+                                            .id!,
+                                        PaymentMethodId: widget.paymentMethodId!,
+
+                                      );
                                     }
                                     if (_checkData() == false) {
                                       ScaffoldMessenger.of(context)
@@ -1331,8 +1174,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                           backgroundColor: Colors.red,
                                         ));
                                     }
-                                    // print(
-                                    //     'orderaddrs ----------------------${myAddress.id}');
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!.checkout,

@@ -13,7 +13,7 @@ class SubscriptionApiController with ApiHelper {
 
   // subscribe as ghaf golden.
   Future<ApiResponse> subscribeAsGhafGolden(
-  {required String planId,required String paymentMethodId}) async {
+      {required String planId, required String paymentMethodId}) async {
     // print('send request : customer-subscripe-as-ghafgold');
 
     Map<String, dynamic> data = {
@@ -21,15 +21,6 @@ class SubscriptionApiController with ApiHelper {
       "PaymentMethodId": paymentMethodId,
     };
 
-    // Map<String, dynamic> data = {
-    //   "paymentMethodType": "card",
-    //   "cardNumber": "4242424242424242",
-    //   "cardExpMonth": 8,
-    //   "cardExpCvc": "314",
-    //   "cardExpYear": 2023,
-    //   "PlanId": planID
-    // };
-    // print(data);
     var response = await _dio.post(
       '/Auth/customer-subscripe-as-ghafgold',
       data: data,
@@ -51,13 +42,29 @@ class SubscriptionApiController with ApiHelper {
     return failedResponse;
   }
 
+  Future<ApiResponse> cancelSubscribe() async {
+    var url =
+        Uri.parse('${Constants.baseUrl}/Auth/customer-cancel-subscribtion');
+    var response = await http.post(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+      }
+    }
+    return failedResponse;
+  }
+
   Future<List<SubscriptionPlan>> getSubscriptionPlan() async {
     var url = Uri.parse('${Constants.baseUrl}/Auth/get-customer-plans');
     var response = await http.get(url, headers: headers);
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       if (jsonData['status'] == 200) {
-        return List<SubscriptionPlan>.from(jsonData['data'].map((x) => SubscriptionPlan.fromJson(x)));
+        return List<SubscriptionPlan>.from(
+            jsonData['data'].map((x) => SubscriptionPlan.fromJson(x)));
       }
     }
     return [];

@@ -18,6 +18,9 @@
   "expired_year" : "سنة انتهاء الصلاحية",
   "amount" : "الكمية",
   "no_payment_method" : "لا يوجد طريقة الدفع",
+  "password_setting" : "إعداد كلمة السر",
+  "old_password" : "كلمة السر القديمة",
+
 
   "upgrade_your_shopping_experience" : "قم بترقية تجربة التسوق الخاصة بك",
   "easy_and_comfortable" : "سهل ومريح",

@@ -1,7 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_getx_controller.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
@@ -20,6 +20,7 @@ class PasswordSetting extends StatefulWidget {
 class _PasswordSettingState extends State<PasswordSetting> {
   late TextEditingController _newPassword;
   late TextEditingController _confirmPassword;
+  late TextEditingController _oldPassword;
 
   var language = SharedPrefController().lang1;
 
@@ -27,6 +28,7 @@ class _PasswordSettingState extends State<PasswordSetting> {
   void initState() {
     _newPassword = TextEditingController();
     _confirmPassword = TextEditingController();
+    _oldPassword = TextEditingController();
     super.initState();
   }
 
@@ -34,13 +36,20 @@ class _PasswordSettingState extends State<PasswordSetting> {
   void dispose() {
     _confirmPassword.dispose();
     _newPassword.dispose();
+    _oldPassword.dispose();
     super.dispose();
   }
+
+  //controller
+  late final ProfileGetxController _profileSettingGetxController =
+      ProfileGetxController();
+
+  late final GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Padding(
+      body: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
@@ -62,7 +71,7 @@ class _PasswordSettingState extends State<PasswordSetting> {
                   ),
                   Spacer(),
                   Text(
-                    "Password setting",
+                    "${AppLocalizations.of(context)!.password_setting}",
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,
@@ -82,61 +91,96 @@ class _PasswordSettingState extends State<PasswordSetting> {
             SizedBox(
               height: AppSize.s30,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppPadding.p8,
-              ),
-              child: TextFormField(
-                controller: _newPassword,
-                cursorColor: ColorManager.primary,
-                decoration: InputDecoration(
-
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey,
-
-                      ),
-                      borderRadius: BorderRadius.circular(12),
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppPadding.p8,
                     ),
-                    label: Text('New password',
-                      style: TextStyle(color: ColorManager.greyLight),)),
-
-                validator: (value) {
-                  if (value == null || value.isEmpty)
-                    return 'password must is not empty';
-                  return null;
-                },
-              ),
-            ),
-            SizedBox(
-              height: AppSize.s15,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppPadding.p8,
-              ),
-              child: TextFormField(
-                controller: _confirmPassword,
-                cursorColor: ColorManager.primary,
-                decoration: InputDecoration(
-
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey,
-
-                      ),
-                      borderRadius: BorderRadius.circular(12),
+                    child: TextFormField(
+                      controller: _oldPassword,
+                      cursorColor: ColorManager.primary,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          label: Text(
+                            AppLocalizations.of(context)!.old_password,
+                            style: TextStyle(color: ColorManager.greyLight),
+                          )),
+                      validator: (value) {
+                        if (value == null || value.isEmpty)
+                          return AppLocalizations.of(context)!.field_required;
+                        return null;
+                      },
                     ),
-                    label: Text('Confirm password',
-                      style: TextStyle(color: ColorManager.greyLight),)),
-
-                validator: (value) {
-                  if (value == null || value.isEmpty)
-                    return 'password must is not empty';
-                  return null;
-                },
+                  ),
+                  SizedBox(
+                    height: AppSize.s15,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppPadding.p8,
+                    ),
+                    child: TextFormField(
+                      controller: _newPassword,
+                      cursorColor: ColorManager.primary,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          label: Text(
+                            AppLocalizations.of(context)!.new_password,
+                            style: TextStyle(color: ColorManager.greyLight),
+                          )),
+                      validator: (value) {
+                        if (value == null || value.isEmpty)
+                          return AppLocalizations.of(context)!.field_required;
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s15,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppPadding.p8,
+                    ),
+                    child: TextFormField(
+                      controller: _confirmPassword,
+                      cursorColor: ColorManager.primary,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          label: Text(
+                            AppLocalizations.of(context)!.confirm_password,
+                            style: TextStyle(color: ColorManager.greyLight),
+                          )),
+                      validator: (value) {
+                        if (value == null || value.isEmpty)
+                          return AppLocalizations.of(context)!.field_required;
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
               ),
+
             ),
+
 
             Spacer(),
             Padding(
@@ -147,7 +191,16 @@ class _PasswordSettingState extends State<PasswordSetting> {
                 width: double.infinity,
                 height: AppSize.s65,
                 padding: EdgeInsets.all(8),
-                child: ElevatedButton(onPressed: (){}, child: Text(AppLocalizations.of(context)!.save)),
+                child: ElevatedButton(
+                    onPressed: () {
+                      if (!formKey.currentState!.validate()) return;
+                      _profileSettingGetxController.changePassword(
+                          context: context,
+                          oldPassword: _oldPassword.text,
+                          newPassword: _newPassword.text,
+                          confirmPassword: _confirmPassword.text);
+                    },
+                    child: Text(AppLocalizations.of(context)!.save)),
               ),
             ),
             SizedBox(
@@ -159,4 +212,3 @@ class _PasswordSettingState extends State<PasswordSetting> {
     );
   }
 }
-

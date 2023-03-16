@@ -94,7 +94,7 @@ class SubscribeViewGetXController extends GetxController with Helpers {
     try {
       showLoadingDialog(context: context, title: 'Canceling');
       final ApiResponse cancelSubscriptionApiResponse =
-      await _subscriptionApiController.cancelSubscription();
+      await _subscriptionApiController.cancelSubscribe();
       final ApiResponse profileApiResponse = await _authApiController.profile();
       if (cancelSubscriptionApiResponse.status == 200 &&
           profileApiResponse.status == 200) {

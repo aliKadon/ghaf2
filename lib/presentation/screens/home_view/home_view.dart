@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
@@ -15,6 +16,7 @@ import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
 import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category.dart';
+import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -55,6 +57,7 @@ class _HomeViewState extends State<HomeView> {
   // controller.
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
+
   late final Product _product = Get.put(Product());
   late final ProfileSettingGetxController _profileSettingGetxController =
       Get.put(ProfileSettingGetxController());
@@ -96,14 +99,9 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    SubscribeViewGetXController _subscribeViewGetXController =
+    Get.put(SubscribeViewGetXController(context: context));
     var isArabic = SharedPrefController().lang1;
-    // var prodDiscount = Provider.of<ProductProvider>(context).productDiscount;
-    var product = Provider.of<ProductProvider>(context, listen: false).product;
-    // var storeid = Provider.of<ProductProvider>(context, listen: false).storeId;
-    // var storeName =
-    //     Provider.of<ProductProvider>(context, listen: false).storeName;
-    // print('============================================ALI');
-    // print(product);
     return ChangeNotifierProvider.value(
       value: ProductProvider(),
       child: Scaffold(
@@ -115,23 +113,6 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Image.asset(
-                  //       IconsAssets.location,
-                  //       height: AppSize.s20,
-                  //       width: AppSize.s14,
-                  //     ),
-                  //     SizedBox(
-                  //       width: AppSize.s17,
-                  //     ),
-                  //     Text(
-                  //       AppLocalizations.of(context)!.shipping,
-                  //       style: getRegularStyle(color: ColorManager.primaryDark),
-                  //     ),
-                  //   ],
-                  // ),
                   SizedBox(
                     height: AppSize.s5,
                   ),
@@ -139,17 +120,6 @@ class _HomeViewState extends State<HomeView> {
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
                     child: Row(
                       children: [
-                        // InkWell(
-                        //   onTap: _homeViewGetXController.onGhafIconTapped,
-                        //   child: SvgPicture.asset(
-                        //     '${Constants.vectorsPath}ghaf.svg',
-                        //     width: 40.h,
-                        //     height: 40.h,
-                        //     color: AppSharedData.currentUser!.ghafGold ?? false
-                        //         ? Theme.of(context).primaryColor
-                        //         : null,
-                        //   ),
-                        // ),
                         SizedBox(
                           width: 5.w,
                         ),
@@ -355,7 +325,21 @@ class _HomeViewState extends State<HomeView> {
                                                       .size
                                                       .height *
                                                   0.02),
-                                          ElevatedButton(
+                                          AppSharedData.currentUser!.ghafGold! ? ElevatedButton(
+                                            // onPressed: () {},
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                  MaterialStatePropertyAll(
+                                                      ColorManager
+                                                          .primaryDark)),
+                                              onPressed: () {
+                                                _subscribeViewGetXController.cancelSubscription();
+                                              },
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .unSubscribe,
+                                                style: TextStyle(fontSize: 15),
+                                              )) :  ElevatedButton(
                                               // onPressed: () {},
                                               style: ButtonStyle(
                                                   backgroundColor:

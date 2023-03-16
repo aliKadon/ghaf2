@@ -87,6 +87,10 @@ class OrdersApiController with ApiHelper {
     required String deliveryMethodId,
     String? desiredDeliveryDate,
     required Address deliveryPoint,
+    String? OrderNotes,
+    String? PromoCode,
+    bool? asap,
+    Map<String,dynamic>? SheduleInfo,
     bool? useRedeemPoints = false,
     bool? usePayLater = false,
     required String PaymentMethodId,
@@ -101,7 +105,11 @@ class OrdersApiController with ApiHelper {
           'deliveryPoint': deliveryPoint,
           'useRedeemPoints': useRedeemPoints,
           'usePayLater': usePayLater,
+          'OrderNotes' : OrderNotes,
           'PaymentMethodId': PaymentMethodId,
+          'PromoCode': PromoCode,
+          'Asap' : asap,
+          'SheduleInfo' : SheduleInfo,
         }));
     print('============================================ pay for order');
     print(response.statusCode);

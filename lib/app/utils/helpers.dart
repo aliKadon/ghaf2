@@ -8,7 +8,6 @@ import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/checkout/checkout_confirm_view.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
@@ -18,20 +17,50 @@ import 'package:redirect_icon/redirect_icon.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:social_media_flutter/widgets/icons.dart';
 
+import '../../domain/model/address.dart';
 import '../../domain/model/payment_mathod.dart';
 import '../../domain/model/subscription_plan.dart';
 import '../../presentation/resources/color_manager.dart';
 import '../../presentation/resources/styles_manager.dart';
 import '../../presentation/screens/checkout/cancelling_order_screen.dart';
 
+enum DayOfWeek {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+}
+
 mixin Helpers {
   //controller
   late final CheckOutGetxController _checkOutGetxController =
       Get.find<CheckOutGetxController>();
 
+  String dropdownValue = 'Sunday';
+  String dropdownValue1 = '11';
+  var numberOfDay = 0;
 
-  String dropdownValue = 'Today';
-  String dropdownValue1 = '11:00';
+  var isAsap;
+  var isSelectedToday = false;
+  var isSelectedAsap = true;
+  var isOneTime = false;
+  var isWeekly = false;
+  var isMonthly = false;
+  var frequency = 0;
+
+  List<String> days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+  List<String> hours = ['11', '12', '1', '2'];
 
   void showSnackBar(BuildContext context,
       {required String message, bool error = false}) {
@@ -459,7 +488,8 @@ mixin Helpers {
       required String planId,
       required String paymentMethodId}) {
     late final SubscribeViewGetXController _subscribeViewGetXController =
-    Get.put<SubscribeViewGetXController>(SubscribeViewGetXController(context: context));
+        Get.put<SubscribeViewGetXController>(
+            SubscribeViewGetXController(context: context));
     return showSlidingBottomSheet(
       context,
       builder: (context) => SlidingSheetDialog(
@@ -727,7 +757,19 @@ mixin Helpers {
         ),
       );
 
-  Future showArrivalTimeSheet(BuildContext context,String orderId) => showSlidingBottomSheet(
+  Future showArrivalTimeSheet({
+    required BuildContext context,
+    required String orderId,
+    required String deliveryMethodId,
+    required Address deliveryPoint,
+    required String PaymentMethodId,
+    String? OrderNotes,
+    String? PromoCode,
+    bool? useRedeemPoints = false,
+    bool? usePayLater = false,
+    String? desiredDeliveryDate,
+  }) =>
+      showSlidingBottomSheet(
         context,
         builder: (context) => SlidingSheetDialog(
           snapSpec: SnapSpec(
@@ -757,175 +799,315 @@ mixin Helpers {
                         ),
                         Column(
                           children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  color: ColorManager.primary,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s10,
-                                ),
-                                Text(AppLocalizations.of(context)!.today,
-                                    style: TextStyle(
-                                        color: ColorManager.grey,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: FontSize.s18)),
-                                // SizedBox(width: AppSize.s30,),
-                                Spacer(),
-                                Icon(
-                                  Icons.radio_button_checked,
-                                  color: ColorManager.primary,
-                                )
-                              ],
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedToday == true) {
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                    isAsap = true;
+                                  }
+                                  if (isSelectedToday == false) {
+                                    isAsap = false;
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    color: ColorManager.primary,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(AppLocalizations.of(context)!.today,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedToday
+                                      ? Icon(
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
+                                      : Icon(
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.024,
                             ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  ImageAssets.tomorrowTimer,
-                                  height: AppSize.s20,
-                                  width: AppSize.s20,
-                                ),
-                                SizedBox(
-                                  width: AppSize.s10,
-                                ),
-                                Text(
-                                    AppLocalizations.of(context)!
-                                        .fastest_delivery,
-                                    style: TextStyle(
-                                        color: ColorManager.grey,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: FontSize.s18)),
-                                // SizedBox(width: AppSize.s30,),
-                                Spacer(),
-                                Icon(
-                                  Icons.radio_button_off,
-                                  color: ColorManager.greyLight,
-                                )
-                              ],
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedAsap == true) {
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                    isAsap = false;
+                                  }
+                                  if (isSelectedAsap == false) {
+                                    isAsap = true;
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    ImageAssets.tomorrowTimer,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .fastest_delivery,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedAsap
+                                      ? Icon(
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
+                                      : Icon(
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.024,
                             ),
-                            Row(
-                              children: [
-                                Spacer(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: ColorManager.greyLight)),
-                                  padding: EdgeInsets.all(5),
-                                  child: DropdownButton<String>(
-                                    // Step 3.
-                                    value: dropdownValue,
-                                    // Step 4.
-                                    items: <String>[
-                                      'Today',
-                                      'sunday',
-                                      'monday',
-                                      'friday'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                              color: ColorManager.primaryDark,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: AppSize.s12),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    // Step 5.
-                                    onChanged: (String? newValue) {
+                            Visibility(
+                              visible: !isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    padding: EdgeInsets.all(5),
+                                    child: DropdownButton<String>(
+                                      // Step 3.
+                                      value: dropdownValue,
+                                      // Step 4.
+
+                                      items: days.map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: AppSize.s12),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      // Step 5.
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                          print(
+                                              '=====================number of days');
+                                          print(days.indexOf(newValue));
+                                          numberOfDay = days.indexOf(newValue);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    padding: EdgeInsets.all(5),
+                                    child: DropdownButton<String>(
+                                      // Step 3.
+                                      value: dropdownValue1,
+                                      // Step 4.
+                                      items: hours
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: AppSize.s12),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      // Step 5.
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          print(
+                                              '=========================hours');
+                                          print(dropdownValue1);
+                                          dropdownValue1 = newValue!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible: !isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  Text(AppLocalizations.of(context)!.frequency,
+                                      style: TextStyle(
+                                          color: ColorManager.primaryDark,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: FontSize.s14)),
+                                  // SizedBox(width: AppSize.s30,),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Visibility(
+                              visible: !isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
                                       setState(() {
-                                        dropdownValue = newValue!;
+                                        if (isOneTime == true) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        if (isOneTime == false) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = true;
+                                        }
+                                        frequency = 0;
                                       });
                                     },
-                                  ),
-                                ),
-                                Spacer(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: ColorManager.greyLight)),
-                                  padding: EdgeInsets.all(5),
-                                  child: DropdownButton<String>(
-                                    // Step 3.
-                                    value: dropdownValue1,
-                                    // Step 4.
-                                    items: <String>[
-                                      '11:00',
-                                      '12:00',
-                                      '1:00',
-                                      '2:00'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(
-                                              color: ColorManager.primaryDark,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: AppSize.s12),
+                                    child: Row(
+                                      children: [
+                                        isOneTime
+                                            ? Icon(
+                                                Icons.radio_button_checked,
+                                                color: ColorManager.primary,
+                                              )
+                                            : Icon(
+                                                Icons.radio_button_off,
+                                                color: ColorManager.primary,
+                                              ),
+                                        SizedBox(
+                                          width: AppSize.s8,
                                         ),
-                                      );
-                                    }).toList(),
-                                    // Step 5.
-                                    onChanged: (String? newValue) {
+                                        Text(AppLocalizations.of(context)!
+                                            .one_time),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
                                       setState(() {
-                                        dropdownValue1 = newValue!;
+                                        if (isWeekly == true) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        if (isWeekly == false) {
+                                          isWeekly = true;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        frequency = 1;
                                       });
                                     },
+                                    child: Row(
+                                      children: [
+                                        isWeekly
+                                            ? Icon(
+                                                Icons.radio_button_checked,
+                                                color: ColorManager.primary,
+                                              )
+                                            : Icon(
+                                                Icons.radio_button_off,
+                                                color: ColorManager.primary,
+                                              ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        Text(
+                                            AppLocalizations.of(context)!.weekly),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(AppLocalizations.of(context)!.frequency,
-                                    style: TextStyle(
-                                        color: ColorManager.primaryDark,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: FontSize.s14)),
-                                // SizedBox(width: AppSize.s30,),
-                              ],
-                            ),
-                            SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.024,
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.radio_button_off),
-                                SizedBox(
-                                  width: AppSize.s8,
-                                ),
-                                Text(AppLocalizations.of(context)!.one_time),
-                                Spacer(),
-                                Icon(Icons.radio_button_off),
-                                SizedBox(
-                                  width: AppSize.s8,
-                                ),
-                                Text(AppLocalizations.of(context)!.weekly),
-                                Spacer(),
-                                Icon(Icons.radio_button_off),
-                                SizedBox(
-                                  width: AppSize.s8,
-                                ),
-                                Text(AppLocalizations.of(context)!.monthly),
-                                Spacer(),
-                              ],
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (isMonthly == true) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        if (isMonthly == false) {
+                                          isWeekly = false;
+                                          isMonthly = true;
+                                          isOneTime = false;
+                                        }
+                                        frequency = 2;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        isMonthly
+                                            ? Icon(
+                                                Icons.radio_button_checked,
+                                                color: ColorManager.primary,
+                                              )
+                                            : Icon(
+                                                Icons.radio_button_off,
+                                                color: ColorManager.primary,
+                                              ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        Text(AppLocalizations.of(context)!
+                                            .monthly),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height:
@@ -937,11 +1119,32 @@ mixin Helpers {
                               padding: EdgeInsets.all(12),
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          CheckOutConfirmView(orderId: orderId),
-                                    ));
+                                    print(frequency);
+                                    print(isAsap);
+                                    print(numberOfDay);
+                                    print(int.parse(dropdownValue1));
+                                    _checkOutGetxController.payForOrder(
+                                      context: context,
+                                      orderId: orderId,
+                                      deliveryMethodId: deliveryMethodId,
+                                      deliveryPoint: deliveryPoint,
+                                      PaymentMethodId: PaymentMethodId,
+                                      useRedeemPoints: useRedeemPoints,
+                                      usePayLater: usePayLater,
+                                      desiredDeliveryDate: desiredDeliveryDate,
+                                      asap: isAsap,
+                                      SheduleInfo: isAsap
+                                          ? null
+                                          : {
+                                              'WeeklyOrMonthly': frequency,
+                                              'DayNumber': numberOfDay,
+                                              'HourNumber':
+                                                  int.parse(dropdownValue1),
+                                              'MinuteNumber': 0,
+                                            },
+                                      OrderNotes: OrderNotes,
+                                      PromoCode: PromoCode,
+                                    );
                                   },
                                   child: Text(
                                       AppLocalizations.of(context)!.confirm)),

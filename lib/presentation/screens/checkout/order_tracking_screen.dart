@@ -65,7 +65,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
         color3 = ColorManager.white;
         color4 = ColorManager.white;
       });
-    } else if (statusName == 'AssignedToEmployee' ||statusName =='Received' ||
+    } else if (statusName == 'AssignedToEmployee' ||
+        statusName == 'Received' ||
         statusName == 'NotAssignedToDriver') {
       setState(() {
         color2 = ColorManager.primaryDark;
@@ -103,7 +104,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
         cIcon3 = ColorManager.primary;
         cIcon4 = ColorManager.primary;
       });
-    } else if (statusName == 'AssignedToEmployee' ||statusName =='Received'||
+    } else if (statusName == 'AssignedToEmployee' ||
+        statusName == 'Received' ||
         statusName == 'NotAssignedToDriver') {
       setState(() {
         cIcon2 = ColorManager.white;
@@ -138,7 +140,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
       setState(() {
         textSetuaition = 'Great, You have an Order now! ';
       });
-    } else if (statusName == 'AssignedToEmployee' || statusName =='Received' ||
+    } else if (statusName == 'AssignedToEmployee' ||
+        statusName == 'Received' ||
         statusName == 'NotAssignedToDriver') {
       setState(() {
         textSetuaition = ' staff are processing the order! ';
@@ -159,13 +162,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   @override
   void initState() {
     getPolyPoints(
-        LatLng(
-            double.parse(
-                widget.source.altitude!),
-            double.parse(
-                widget.source.longitude!)),
-        LatLng(
-            double.parse(widget.destination.altitude!),
+        LatLng(double.parse(widget.source.altitude!),
+            double.parse(widget.source.longitude!)),
+        LatLng(double.parse(widget.destination.altitude!),
             double.parse(widget.destination.longitude!)));
     _checkOutGetxController.getOrderById(
         context: context, orderId: widget.orderId);
@@ -174,81 +173,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
     getColorBackground(_checkOutGetxController.order!.statusName!);
     getColorIcon(_checkOutGetxController.order!.statusName!);
     getTextSetuaition(_checkOutGetxController.order!.statusName!);
+    _checkOutGetxController.getDurationGoogleMap(
+        LatOne: double.parse(widget.source.altitude!),
+        LonOne: double.parse(widget.source.longitude!),
+        LatTow: double.parse(widget.destination.altitude!),
+        LonTow: double.parse(widget.destination.longitude!));
 
     super.initState();
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   Provider.of<ProductProvider>(context, listen: false)
-  //       .getOrderById(widget.orderId)
-  //       .then((value) => getLocation())
-  //       .then((value) =>
-  //           Provider.of<ProductProvider>(context, listen: false).orderById)
-  //       .then((value) => print(
-  //           Provider.of<ProductProvider>(context, listen: false)
-  //               .orderById['deliveryPoint']['altitude']))
-  //       .then((value) => Provider.of<ProductProvider>(context, listen: false)
-  //               .getDurationGoogleMap(
-  //             LatOne: double.parse(
-  //                 Provider.of<ProductProvider>(context, listen: false)
-  //                     .orderById['deliveryPoint']['altitude']),
-  //             LonOne: double.parse(
-  //                 Provider.of<ProductProvider>(context, listen: false)
-  //                     .orderById['deliveryPoint']['longitude']),
-  //             LatTow: double.parse(
-  //                 Provider.of<ProductProvider>(context, listen: false)
-  //                     .orderById['branch']['branchAddress']['altitude']),
-  //             LonTow: double.parse(
-  //                 Provider.of<ProductProvider>(context, listen: false)
-  //                     .orderById['branch']['branchAddress']['longitude']),
-  //           ))
-  //
-  //       // .then((value) => Timer(Duration(seconds: 6), () {
-  //       //       getPolyPoints(Provider.of<ProductProvider>(context, listen: false)
-  //       //           .orderById);
-  //       //       print('=====================================test');
-  //       //       print(Provider.of<ProductProvider>(context, listen: false)
-  //       //           .orderById['deliveryPoint']['altitude']);
-  //       //       Provider.of<ProductProvider>(context, listen: false)
-  //       //           .getDurationGoogleMap(
-  //       //         LatOne: double.parse(
-  //       //             Provider.of<ProductProvider>(context, listen: false)
-  //       //                 .orderById['deliveryPoint']['altitude']),
-  //       //         LonOne: double.parse(
-  //       //             Provider.of<ProductProvider>(context, listen: false)
-  //       //                 .orderById['deliveryPoint']['longitude']),
-  //       //         LatTow: double.parse(
-  //       //             Provider.of<ProductProvider>(context, listen: false)
-  //       //                 .orderById['branch']['branchAddress']['altitude']),
-  //       //         LonTow: double.parse(
-  //       //             Provider.of<ProductProvider>(context, listen: false)
-  //       //                 .orderById['branch']['branchAddress']['longitude']),
-  //       //       );
-  //       //
-  //       //     }))
-  //       .then((value) => getColorBackground(
-  //           Provider.of<ProductProvider>(context, listen: false)
-  //               .orderById['statusName']))
-  //       .then((value) => getColorIcon(
-  //           Provider.of<ProductProvider>(context, listen: false).orderById['statusName']))
-  //       .then((value) => getTextSetuaition(Provider.of<ProductProvider>(context, listen: false).orderById['statusName']));
-  //
-  //   print('=====================================test');
-  //   print(Provider.of<ProductProvider>(context, listen: false)
-  //       .orderById['deliveryPoint']['altitude']);
-  //   // Provider.of<ProductProvider>(context, listen: false).getDurationGoogleMap(
-  //   //   LatOne: 37.33500926,
-  //   //   LonOne: -122.03272188,
-  //   //   LatTow: 37.33429383,
-  //   //   LonTow: -122.06600055,
-  //   // );
-  //   super.didChangeDependencies();
-  // }
-
-  //
-  // static LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
-  // static LatLng destination1 = LatLng(37.33429383, -122.06600055);
 
   var isLoading = true;
   Location location = new Location();
@@ -257,34 +189,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   LocationData? locationData;
   LocationData? distination;
 
-  void getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled!) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled!) {
-        return;
-      }
-    }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    locationData = await location.getLocation();
-
-    if (locationData != null) {
-      isLoading = false;
-    }
-    print('===========================location');
-    print(locationData!.latitude);
-    // print(widget.orderId);
-  }
-
-  // LocationData locationData = await location.getLocation();
 
   final Completer<GoogleMapController> _controller = Completer();
 
@@ -292,59 +197,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   static LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   static LatLng destination1 = LatLng(37.33429383, -122.06600055);
 
-  // destination = LatLng(locationData!.latitude!, locationData!.latitude!);
-
-  // final url = "https://maps.googleapis.com/maps/api/directions/json?origin=$startLat,$startLng&destination=$endLat,$endLng&key=$apiKey";
-  //
-  // final response = await http.get(url);
-  // final data = json.decode(response.body);
-  //
-  // final distance = data["routes"][0]["legs"][0]["distance"]["text"];
-  // final duration = data["routes"][0]["legs"][0]["duration"]["text"];
-
-  // List<LatLng> polylineCoordinates = [];
-  //
-  // void getPolyPoints(Map<String,dynamic> source) async {
-  //   // Timer(Duration(seconds: 7), () async {
-  //     print('=========================location1');
-  //     print(source['deliveryPoint']['altitude']);
-  //     print(source['branch']['branchAddress']['altitude']);
-  //     // setState(() {
-  //     //
-  //     // });
-  //     PolylinePoints polylinePoints = PolylinePoints();
-  //     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-  //       Constants.google_key_map, // Your Google Map Key
-  //       // PointLatLng(
-  //       //     widget.orderinfo['deliveryPoint']['latitude'] ??
-  //       //         locationData!.latitude!,
-  //       //     widget.orderinfo['deliveryPoint']['longitude'] ??
-  //       //         locationData!.longitude!),
-  //       // PointLatLng(
-  //       //     widget.orderinfo['branchAddress']['latitude'] ??
-  //       //         destination1.latitude,
-  //       //     widget.orderinfo['branchAddress']['longitude'] ??
-  //       //         destination1.longitude),
-  //       PointLatLng(double.parse(source['deliveryPoint']['altitude']),
-  //           double.parse(source['deliveryPoint']['longitude'])),
-  //       PointLatLng(
-  //           double.parse(source['branch']['branchAddress']['altitude']), double.parse(source['branch']['branchAddress']['altitude'])),
-  //       // PointLatLng(locationData!.latitude!, locationData!.latitude!),
-  //     );
-  //     if (result.points.isNotEmpty) {
-  //       result.points.forEach(
-  //             (PointLatLng point) => polylineCoordinates.add(
-  //           LatLng(point.latitude, point.longitude),
-  //         ),
-  //       );
-  //       setState(() {});
-  //     }
-  //   // },
-  //   // );
-  // }
-
-  late var lat = Provider.of<ProductProvider>(context, listen: false)
-      .orderById['deliveryPoint']['altitude'];
 
   List<LatLng> polylineCoordinates = [];
 
@@ -375,33 +227,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
       });
     }
   }
-
-  // void getOrderLocationToreview(LocationData currentLocation,
-  //     LocationData distanation1) {
-  //   if (distanation1 == locationData) {
-  //     Navigator.of(context).pushNamed(Routes.checkOutConfirmRoute);
-  //   }
-  // }
-
-  // Future Time () async{
-  //   final directions = await GoogleMapDirections(apiKey: 'YOUR_API_KEY').directionsWithLocation(
-  //     origin: Location(startLat, startLng),
-  //     destination: Location(endLat, endLng),
-  //   );
-  //
-  //   final distance = directions.distance;
-  //   final duration = directions.duration;
-  // }
-
-  // var idLoading1 = true;
   @override
   Widget build(BuildContext context) {
-    // var orderById1 = Provider.of<ProductProvider>(context).orderById;
-
     return Scaffold(
       body: GetBuilder<CheckOutGetxController>(
-        builder: (controller) =>  SafeArea(
-          child: controller.isLoadingOrderById
+        builder: (controller) => SafeArea(
+          child: controller.isLoadingForOrderTracking
               ? Center(
                   child: Container(
                     width: 20.h,
@@ -460,17 +291,29 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     padding: EdgeInsets.all(10),
                                     child: GoogleMap(
                                       initialCameraPosition: CameraPosition(
-                                        target: LatLng(double.parse(widget.source!.altitude!), double.parse(widget.source!.longitude!)),
+                                        target: LatLng(
+                                            double.parse(
+                                                widget.source!.altitude!),
+                                            double.parse(
+                                                widget.source!.longitude!)),
                                         zoom: 12.5,
                                       ),
                                       markers: {
                                         Marker(
                                           markerId: MarkerId("source"),
-                                          position: LatLng(double.parse(widget.source!.altitude!), double.parse(widget.source!.longitude!)),
+                                          position: LatLng(
+                                              double.parse(
+                                                  widget.source!.altitude!),
+                                              double.parse(
+                                                  widget.source!.longitude!)),
                                         ),
                                         Marker(
                                           markerId: MarkerId("destination"),
-                                          position: LatLng(double.parse(widget.destination!.altitude!), double.parse(widget.destination!.longitude!)),
+                                          position: LatLng(
+                                              double.parse(widget
+                                                  .destination!.altitude!),
+                                              double.parse(widget
+                                                  .destination!.longitude!)),
                                         ),
                                       },
                                       onMapCreated: (mapController) {
@@ -499,8 +342,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                             height: 10,
                           ),
                           Text(
-                            controller.duration
-                                    .toString() ??
+                            controller.duration.toString() ??
                                 AppLocalizations.of(context)!.calculate_time,
                             style: TextStyle(
                                 fontSize: 18.0, color: ColorManager.primary),
@@ -522,8 +364,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       color: ColorManager.primaryDark,
                                     ),
                                   ),
-                                  child: Icon(Icons.done,
-                                      color: cIcon1, size: 35),
+                                  child:
+                                      Icon(Icons.done, color: cIcon1, size: 35),
                                 ),
                                 Spacer(),
                                 Container(
@@ -565,119 +407,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   child: Icon(Icons.done_all,
                                       color: cIcon4, size: 35),
                                 ),
-
-                                // widget.orderinfo['statusName'] == 'Intialized'
-                                //     ? Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.done,
-                                //             color: Colors.white, size: 35),
-                                //       )
-                                //     : Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.white,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.done,
-                                //             color: Colors.grey, size: 35),
-                                //       ),
-                                // Container(
-                                //   padding: EdgeInsets.all(8),
-                                //   decoration: BoxDecoration(
-                                //     borderRadius: BorderRadius.circular(12.r),
-                                //     color: Colors.green,
-                                //     border: Border.all(
-                                //       color: Color(0xff125051),
-                                //     ),
-                                //   ),
-                                //   child: Icon(Icons.done_all,
-                                //       color: Colors.white, size: 35),
-                                // ),
-                                // widget.orderinfo['statusName'] == 'AssignedToEmployee'
-                                //     ? Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.local_print_shop_rounded,
-                                //             color: Colors.white, size: 35),
-                                //       )
-                                //     : Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.local_print_shop_rounded,
-                                //             color: Colors.white, size: 35),
-                                //       ),
-                                // widget.orderinfo['statusName'] == 'ReadyForDriver'
-                                //     ? Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.drive_eta_rounded,
-                                //             color: Colors.white, size: 35),
-                                //       )
-                                //     : Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.drive_eta_rounded,
-                                //             color: Colors.white, size: 35),
-                                //       ),
-                                // widget.orderinfo['statusName'] == 'Done'
-                                //     ? Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.done_all,
-                                //             color: Colors.white, size: 35),
-                                //       )
-                                //     : Container(
-                                //         padding: EdgeInsets.all(8),
-                                //         decoration: BoxDecoration(
-                                //           borderRadius: BorderRadius.circular(12.r),
-                                //           color: Colors.green,
-                                //           border: Border.all(
-                                //             color: Color(0xff125051),
-                                //           ),
-                                //         ),
-                                //         child: Icon(Icons.done_all,
-                                //             color: Colors.white, size: 35),
-                                //       ),
                               ],
                             ),
                           ),
@@ -752,7 +481,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 Row(
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context)!.order_Number,
+                                      AppLocalizations.of(context)!
+                                          .order_Number,
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primaryDark,
                                         fontSize: FontSize.s16,
@@ -774,7 +504,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 Row(
                                   children: [
                                     Text(
-                                      '# 22',
+                                      '# ${controller.order!.sequenceNumber}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primary,
                                         fontSize: FontSize.s16,
@@ -782,7 +512,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     ),
                                     Spacer(),
                                     Text(
-                                      'Dubai',
+                                      '${controller.order!.branch!.branchName}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primary,
                                         fontSize: FontSize.s16,
@@ -843,7 +573,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     ),
                                     Spacer(),
                                     Text(
-                                      '100 ${AppLocalizations.of(context)!.aed}',
+                                      '${controller.order!.totalCostForItems} ${AppLocalizations.of(context)!.aed}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primaryDark,
                                         fontSize: FontSize.s16,
@@ -862,7 +592,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     ),
                                     Spacer(),
                                     Text(
-                                      '100 ${AppLocalizations.of(context)!.aed}',
+                                      '${(controller.order!.totalCostForItems!) - (controller.order!.orderCostForCustomer!)} ${AppLocalizations.of(context)!.aed}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primaryDark,
                                         fontSize: FontSize.s16,
@@ -885,7 +615,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     ),
                                     Spacer(),
                                     Text(
-                                      '100 ${AppLocalizations.of(context)!.aed}',
+                                      '${(controller.order!.orderCostForCustomer)} ${AppLocalizations.of(context)!.aed}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primaryDark,
                                         fontSize: FontSize.s16,
@@ -935,7 +665,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 Row(
                                   children: [
                                     Text(
-                                      'home',
+                                      '${controller.order!.deliveryPoint!.addressName}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primaryDark,
                                         fontSize: FontSize.s16,
@@ -965,7 +695,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     width: AppSize.s8,
                                   ),
                                   Text(
-                                    'home',
+                                    '${controller.order!.deliveryPoint!.cityName}',
                                     style: getRegularStyle(
                                       color: ColorManager.black,
                                     ),
@@ -1003,7 +733,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     width: AppSize.s8,
                                   ),
                                   Text(
-                                    '55267',
+                                    '${controller.order!.deliveryPoint!.phone}',
                                     style: getRegularStyle(
                                       color: ColorManager.black,
                                     ),
@@ -1015,21 +745,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                               ],
                             ),
                           ),
-                          // Container(
-                          //   width: MediaQuery.of(context).size.width * 1,
-                          //   child: ElevatedButton(
-                          //       onPressed: () {},
-                          //       child: Column(
-                          //         children: [
-                          //           Icon(Icons.phone),
-                          //           Text(
-                          //             AppLocalizations.of(context)!
-                          //                 .call_Store,
-                          //             style: TextStyle(fontSize: 10),
-                          //           )
-                          //         ],
-                          //       )),
-                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -1168,7 +883,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           ImageAssets.vector,
@@ -1199,8 +915,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                               ? Container(
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        _customDialogFeedBack(
-                                            context, _checkOutGetxController.order!);
+                                        _customDialogFeedBack(context,
+                                            _checkOutGetxController.order!);
                                         // Navigator.of(context).pushReplacementNamed(
                                         //     Routes.reviewProduct,
                                         //     arguments: widget.orderId);
