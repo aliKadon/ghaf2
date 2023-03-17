@@ -18,8 +18,36 @@ import '../api_settings.dart';
 class StoreApiController with ApiHelper, Helpers {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
+  Future<List<Product>> getMostPopularProduct() async {
+    // // print('send request : getProducts');
+    // Map<String, dynamic> queryParameters = {
+    //   'sid': sid,
+    //   'filter':
+    //   "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
+    //       0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+    // };
+    // // print(queryParameters);
+    final Response response = await _dio.get(
+      '/product/get-trending-products',
+      // queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+    );
+    // print('============================================PRODUCT');
+    // print(response.statusCode);
+    // print(response.data);
+    if (response.statusCode == 200) {
+      if (response.data['status'] == 200) {
+        return List<Product>.from(
+            response.data["data"].map((x) => Product.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
   Future<List<Category>> getCategories() async {
-    Uri uri = Uri.parse(ApiSettings.category);
+    Uri uri = Uri.parse('${Constants.baseUrl}/Category/GetCategories');
     var response = await http.get(
       uri,
       headers: headers,

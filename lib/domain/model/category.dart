@@ -2,17 +2,23 @@ class Category {
   String? id;
   String? name;
   String? categoryImage;
+  String? categoriesAr;
+  String? categoryImageData;
 
   Category({
     this.id,
     this.name,
     this.categoryImage,
+    this.categoriesAr,
+    this.categoryImageData,
   });
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     categoryImage = json['categoryImage'];
+    categoryImageData = json['categoryImageData'];
+    categoriesAr = json['categoriesAr'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,6 +26,8 @@ class Category {
     data['id'] = this.id;
     data['name'] = this.name;
     data['categoryImage'] = this.categoryImage;
+    data['categoryImageData'] = this.categoryImageData;
+    data['categoriesAr'] = this.categoriesAr;
     return data;
   }
 }

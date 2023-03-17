@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:ghaf_application/presentation/screens/checkout/edit_payment_method.dart';
@@ -11,6 +13,7 @@ import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../profile/profile_setting/profile_setting_getx_controller.dart';
 
 class PaymentMethodRedeemPointScreen extends StatefulWidget {
   @override
@@ -23,11 +26,15 @@ class _PaymentMethodRedeemPointScreenState
   //controller
   late final CheckOutGetxController _checkOutGetxController =
       Get.find<CheckOutGetxController>();
+  late final ProfileSettingGetxController _profileGetxController =
+      Get.find<ProfileSettingGetxController>();
 
   @override
   void initState() {
     // TODO: implement initState
     _checkOutGetxController.getPaymentMethod(context: context);
+    _checkOutGetxController.getPromoCode(context: context);
+    _profileGetxController.init(context: context);
     super.initState();
   }
 
@@ -138,7 +145,7 @@ class _PaymentMethodRedeemPointScreenState
                       Column(
                         children: [
                           Text(
-                            '0 ${AppLocalizations.of(context)!.point}',
+                            '${AppSharedData.currentUser!.customerPoints} ${AppLocalizations.of(context)!.point}',
                             style: getSemiBoldStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s16,
@@ -155,7 +162,7 @@ class _PaymentMethodRedeemPointScreenState
                       ),
                       Spacer(),
                       Visibility(
-                          visible: true,
+                          visible: false,
                           child: Icon(
                             Icons.check_circle,
                             color: Colors.green,
@@ -163,6 +170,136 @@ class _PaymentMethodRedeemPointScreenState
                     ],
                   ),
                 ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.017,
+              ),
+              Row(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.promo_code,
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s20,
+                    ),
+                  ),
+                ],
+              ),
+              // SizedBox(
+              //   height: MediaQuery
+              //       .of(context)
+              //       .size
+              //       .height * 0.017,
+              // ),
+              GetBuilder<CheckOutGetxController>(
+                builder: (controller) {
+                  return controller.paymentMethod == 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 225.0),
+                          child: Text(
+                              AppLocalizations.of(context)!.no_payment_method,
+                              style: TextStyle(
+                                  color: ColorManager.primaryDark,
+                                  fontSize: FontSize.s20,
+                                  fontWeight: FontWeight.w400)),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.promoCodes.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigator.of(context)
+                                    //     .pushReplacement(
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) => CheckOutView(
+                                    //           paymentMethod:
+                                    //           'Card : **** **** **** **** ${cubit.getPaymentMethods[index].last4Digits}',
+                                    //           paymentMethodId: cubit
+                                    //               .getPaymentMethods[
+                                    //           index]
+                                    //               .id!,
+                                    //           useRedeemPoints:
+                                    //           useRedeemPoint),
+                                    //     ));
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        color: ColorManager.greyLight,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                            _checkOutGetxController
+                                                .promoCodes[index].storeName!,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontSize: FontSize.s16,
+                                                fontWeight: FontWeight.w600)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.1,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  _checkOutGetxController
+                                                      .promoCodes[index].code!,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              '${AppLocalizations.of(context)!.discount} : ${_checkOutGetxController.promoCodes[index].discount}%',
+                                              style: getSemiBoldStyle(
+                                                color: ColorManager.greyLight,
+                                                fontSize: FontSize.s12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        InkWell(
+                                            onTap: () {
+                                              Clipboard.setData(ClipboardData(
+                                                  text: _checkOutGetxController
+                                                      .promoCodes[index].code));
+                                            },
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .copy,
+                                              style: TextStyle(
+                                                  fontSize: FontSize.s14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: ColorManager.primary),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.017,
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.017,
@@ -270,7 +407,8 @@ class _PaymentMethodRedeemPointScreenState
                                               cardNumber: controller
                                                   .paymentMethod[index]
                                                   .last4Digits,
-                                          paymentMethodId: controller.paymentMethod[index].id),
+                                              paymentMethodId: controller
+                                                  .paymentMethod[index].id),
                                         ));
                                       },
                                       child: Container(

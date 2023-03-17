@@ -379,7 +379,7 @@ class _HomeViewState extends State<HomeView> {
                                                 crossAxisSpacing: 20,
                                                 mainAxisExtent: 130),
                                         physics: BouncingScrollPhysics(),
-                                        itemCount: 4,
+                                        itemCount: _homeViewGetXController.categories.length,
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
                                             onTap: () {
@@ -396,13 +396,17 @@ class _HomeViewState extends State<HomeView> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
-                                                    child: Image.asset(
+                                                    child: _homeViewGetXController.categories[index].categoryImageData == null ? Image.asset(
                                                         ImageAssets.grocery,
+                                                        fit: BoxFit.scaleDown) : Image.network(
+                                                        _homeViewGetXController.categories[index].categoryImageData!,
+                                                        height: AppSize.s60,
+                                                        width: AppSize.s60,
                                                         fit: BoxFit.scaleDown),
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Groceries',
+                                                  _homeViewGetXController.categories[index].name!,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -500,28 +504,28 @@ class _HomeViewState extends State<HomeView> {
                           shrinkWrap: true,
                           padding: EdgeInsets.all(12),
                           scrollDirection: Axis.horizontal,
-                          itemCount: _homeViewGetXController.products.length,
+                          itemCount: _homeViewGetXController.mostPopular.length,
                           itemBuilder: (context, index) {
                             return ProductItemNew(
                               index: 0,
                               image: _homeViewGetXController
-                                  .products[index]
+                                  .mostPopular[index]
                                   .productImages?[index] ??
                                   '',
                               name: _homeViewGetXController
-                                  .products[index].name ??
+                                  .mostPopular[index].name ??
                                   '',
                               price: _homeViewGetXController
-                                  .products[index].price ??
+                                  .mostPopular[index].price ??
                                   0,
                               stars: _homeViewGetXController
-                                  .products[index].stars ??
+                                  .mostPopular[index].stars ??
                                   0,
                               idProduct: _homeViewGetXController
-                                  .products[index].id ??
+                                  .mostPopular[index].id ??
                                   '',
                               isFavorite: _homeViewGetXController
-                                  .products[index].isFavorite ??
+                                  .mostPopular[index].isFavorite ??
                                   false,
                             );
                           },

@@ -42,6 +42,9 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   late final AddressesViewGetXController _addressesViewGetXController =
       Get.put(AddressesViewGetXController(context: context));
 
+  final TextEditingController _enterPromoCode = TextEditingController();
+  final TextEditingController _sendNote = TextEditingController();
+
   var visibility = false;
   var isSwitchedPayLater = false;
   var isSwitched = false;
@@ -94,10 +97,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
 
   @override
   Widget build(BuildContext context) {
-    // var order = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
-    print('---------------------==========================');
-    // var deliveryMethode = Provider.of<ProductProvider>(context).deliveryMethode;
-    // print(widget.order);
     return Scaffold(
       body: GetBuilder<CheckOutGetxController>(
         id: "orderToPay",
@@ -305,8 +304,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                             height: AppSize.s7,
                                           ),
                                           Text(
-                                            // widget.order['id'],
-                                            // deliveryMethode[index].methodName!,
                                             _checkOutGetxController
                                                 .orderToPay[
                                                     _checkOutGetxController
@@ -489,10 +486,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 color: ColorManager.greyLight,
                               ),
                             ),
-                            // margin: EdgeInsets.only(
-                            //     bottom: AppMargin.m16,
-                            //     right: AppMargin.m16,
-                            //     left: AppMargin.m16),
                             child: Column(
                               children: [
                                 ListView.builder(
@@ -527,30 +520,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   },
                                   //count of items
                                 ),
-                                // Visibility(
-                                //   visible: true,
-                                //   child: Row(
-                                //     children: [
-                                //       Text(
-                                //         '3 x Cake',
-                                //         style: getSemiBoldStyle(
-                                //           color: ColorManager.grey,
-                                //           fontSize: FontSize.s16,
-                                //         ),
-                                //       ),
-                                //       Spacer(),
-                                //       Text(
-                                //         '20 ${AppLocalizations.of(context)!.aed}',
-                                //         style: getSemiBoldStyle(
-                                //           color: ColorManager.grey,
-                                //           fontSize: FontSize.s16,
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                                // Divider(
-                                //     thickness: 1, color: ColorManager.greyLight),
                                 Row(
                                   children: [
                                     Text(
@@ -712,11 +681,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                           ),
 
                           Container(
-                            // width: MediaQuery.of(context).size.width * 0.8,
-                            // height: MediaQuery.of(context).size.height * 0.05,
-                            // decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(10),
-                            //     border: Border.all(color: ColorManager.greyLight)),
                             child: Row(
                               children: [
                                 Container(
@@ -725,6 +689,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                     height: MediaQuery.of(context).size.height *
                                         0.06,
                                     child: TextField(
+                                        controller: _enterPromoCode,
                                         decoration: InputDecoration(
                                             label: Row(
                                           children: [
@@ -1004,7 +969,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                           color: Colors
                                                               .lightGreenAccent,
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                   SizedBox(
@@ -1077,9 +1042,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                 ],
                                               ),
                                             ),
-                                      // SizedBox(
-                                      //   height: AppSize.s10,
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -1118,6 +1080,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 border:
                                     Border.all(color: ColorManager.greyLight)),
                             child: TextField(
+                                controller: _sendNote,
                                 decoration: InputDecoration(
                                   label: Text(
                                     AppLocalizations.of(context)!.send_note,
@@ -1141,27 +1104,31 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   onPressed: () {
                                     if (_checkData()) {
                                       showArrivalTimeSheet(
-                                          context: context,
-                                          orderId: _checkOutGetxController
-                                              .orderToPay[
-                                                  _checkOutGetxController
-                                                          .orderToPay.length -
-                                                      1]
-                                              .orderDetails!
-                                              .id!,
-                                      deliveryPoint: _addressesViewGetXController
-                                          .addresses[selectedAddress],
-                                        deliveryMethodId: _checkOutGetxController
-                                            .orderToPay[
-                                        _checkOutGetxController
-                                            .orderToPay
-                                            .length -
-                                            1]
-                                            .availableDeliveryMethod![
-                                        selected]
+                                        context: context,
+                                        orderId: _checkOutGetxController
+                                            .orderToPay[_checkOutGetxController
+                                                    .orderToPay.length -
+                                                1]
+                                            .orderDetails!
                                             .id!,
-                                        PaymentMethodId: widget.paymentMethodId!,
-
+                                        deliveryPoint:
+                                            _addressesViewGetXController
+                                                .addresses[selectedAddress],
+                                        usePayLater: isSwitchedPayLater,
+                                        useRedeemPoints: isSwitched,
+                                        PromoCode: _enterPromoCode.text,
+                                        OrderNotes: _sendNote.text,
+                                        deliveryMethodId:
+                                            _checkOutGetxController
+                                                .orderToPay[
+                                                    _checkOutGetxController
+                                                            .orderToPay.length -
+                                                        1]
+                                                .availableDeliveryMethod![
+                                                    selected]
+                                                .id!,
+                                        PaymentMethodId:
+                                            widget.paymentMethodId!,
                                       );
                                     }
                                     if (_checkData() == false) {
@@ -1214,11 +1181,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                           SizedBox(
                             height: AppSize.s24,
                           ),
-                          // SnappingSheet(
-                          //   sheetBelow: SnappingSheetContent(child: Container(child: Text('HIII'),)),
-                          //   grabbingHeight: 75,
-                          //
-                          // ),
                         ],
                       ),
                     ),
@@ -1245,9 +1207,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   }) async {
     DateTime? date = await showDatePicker(
       context: context,
-      // initialDate: birthDate == null
-      //     ? DateTime(DateTime.now().year - 15)
-      //     : DateTime.parse(birthDate!),
       initialDate: DateTime(DateTime.now().year - 15),
       firstDate: DateTime(DateTime.now().year - 50),
       lastDate: DateTime(DateTime.now().year - 15),
@@ -1256,71 +1215,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
     // birthDate = Helpers.formatDate(date);
     // birthDateTextEditingController.text = birthDate!;
   }
-
-// Future<void> makePayment() async {
-//   try {
-//     //STEP 1: Create Payment Intent
-//     paymentIntent = await createPaymentIntent('11000', 'USD');
-//
-//     //STEP 2: Initialize Payment Sheet
-//     await Stripe.instance
-//         .initPaymentSheet(
-//
-//         paymentSheetParameters: SetupPaymentSheetParameters(
-//             paymentIntentClientSecret: paymentIntent![
-//             'client_secret'], //Gotten from payment intent
-//             style: ThemeMode.light,
-//             merchantDisplayName: 'Ikay'))
-//         .then((value) {});
-//
-//     //STEP 3: Display Payment sheet
-//     displayPaymentSheet();
-//   } catch (err) {
-//     throw Exception(err);
-//   }
-// }
-// createPaymentIntent(String amount, String currency) async {
-//   try {
-//     //Request body
-//     Map<String, dynamic> body = {
-//       'amount': amount,
-//       'currency': currency,
-//     };
-//
-//     //Make post request to Stripe
-//     var response = await http.post(
-//       Uri.parse('https://api.stripe.com/v1/payment_intents'),
-//       headers: {
-//         'Authorization': 'Bearer sk_test_51MLP4SIQef6xe4xw6JFXtWWrBmt2gsL4aat9wb3VKXRNp2P7tQ34iiqmg8Ua1OCUvtdne9QzOpeWinx1ix94BOto005KnKf7xD}',
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       },
-//       body: body,
-//     );
-//     return json.decode(response.body);
-//   } catch (err) {
-//     throw Exception(err.toString());
-//   }
-// }
-//
-// displayPaymentSheet() async {
-//   try {
-//     await Stripe.instance.presentPaymentSheet().then((value) {
-//
-//       //Clear paymentIntent variable after successful payment
-//       paymentIntent = null;
-//
-//     })
-//         .onError((error, stackTrace) {
-//       throw Exception(error);
-//     });
-//   }
-//   on StripeException catch (e) {
-//     print('Error is:---> $e');
-//   }
-//   catch (e) {
-//     print('$e');
-//   }
-// }
 }
 
 void _infoDialog(BuildContext context, String text) async {

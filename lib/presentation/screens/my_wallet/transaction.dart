@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/add_credit_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.dart';
+import 'package:ghaf_application/presentation/screens/my_wallet/wallet_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/transaction_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,6 +24,16 @@ class TransactionScreen extends StatefulWidget {
 }
 
 class _TransactionScreenState extends State<TransactionScreen> {
+
+  late final WalletGetxController _walletGetxController = Get.find<WalletGetxController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _walletGetxController.getMyWalletBalance(context: context);
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +97,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ),
                     ),
                     Text(
-                      'AED 0.00',
+                      'AED ${_walletGetxController.balance}',
                       style: getSemiBoldStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s18,

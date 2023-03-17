@@ -20,6 +20,9 @@
   "no_payment_method" : "لا يوجد طريقة الدفع",
   "password_setting" : "إعداد كلمة السر",
   "old_password" : "كلمة السر القديمة",
+  "promo_code" : "الرمز الترويجي",
+  "credit_available" : "الرصيد المتاح",
+  "total_credit_available" : "اجمالي الرصيد المتاح",
 
 
   "upgrade_your_shopping_experience" : "قم بترقية تجربة التسوق الخاصة بك",

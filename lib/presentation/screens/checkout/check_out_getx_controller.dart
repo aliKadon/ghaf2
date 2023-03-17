@@ -7,6 +7,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/orders_api_controller.dart';
 import 'package:ghaf_application/data/api/controllers/payment_method_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/domain/model/promo_code.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../app/constants.dart';
@@ -19,6 +20,7 @@ import 'checkout_confirm_view.dart';
 class CheckOutGetxController extends GetxController with Helpers {
   List<PaymentMethod> paymentMethod = [];
   List<OrderToPay> orderToPay = [];
+  List<PromoCode> promoCodes = [];
   late Order? order;
   var isLoading = true.obs;
   var isLoadingOrderToPay = true;
@@ -169,7 +171,7 @@ class CheckOutGetxController extends GetxController with Helpers {
 
       isLoadingForOrderTracking = false;
       update();
-      print('===========================================provider duration');
+      // print('===========================================provider duration');
       // DateFormat format = DateFormat('dd-MM-yyyy HH:mm');
       // var s = format.parse(duration);
       print(duration);
@@ -177,6 +179,15 @@ class CheckOutGetxController extends GetxController with Helpers {
     } catch (e) {
       print('==============================error in duration');
       print(e);
+    }
+  }
+
+  void getPromoCode({required BuildContext context}) async {
+    try {
+      promoCodes = await _paymentMethodApiController.getPromoCode();
+      update();
+    }catch (error) {
+      showSnackBar(context, message: error.toString());
     }
   }
 }

@@ -11,6 +11,8 @@ class ProfileSettingGetxController extends GetxController with Helpers {
 
   late User userDetails;
 
+  var isLoading = true;
+
   void init({
     required BuildContext context
   }) {
@@ -18,9 +20,11 @@ class ProfileSettingGetxController extends GetxController with Helpers {
   }
 
 
+
   void getUserDetails (BuildContext context) async{
     try {
       await _userDetailsApiController.getUserDetails(context: context);
+      isLoading = false;
     }catch(error) {
       showSnackBar(context, message: error.toString());
     }

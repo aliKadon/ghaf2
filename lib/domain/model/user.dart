@@ -13,6 +13,7 @@ class User {
   bool? ghafGold;
   bool? sellerSubmittedForm;
   String? fcmToken;
+  num? customerPoints;
 
   User({
     this.userName,
@@ -29,6 +30,7 @@ class User {
     this.ghafGold,
     this.sellerSubmittedForm,
     this.fcmToken,
+    this.customerPoints,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class User {
     ghafGold = json['ghafGold'];
     sellerSubmittedForm = json['sellerSubmittedForm'];
     fcmToken = json['fcm_token'];
+    customerPoints = json['customerPoints'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +63,7 @@ class User {
     data['telephone'] = this.telephone;
     data['birthDate'] = this.birthDate;
     data['referralCode'] = this.referralCode;
+    data['customerPoints'] = this.customerPoints;
     return data;
   }
 }

@@ -74,6 +74,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   late final StoreApiController _storeApiController = StoreApiController();
   List<Category> categories = [];
   List<Product> products = [];
+  List<Product> mostPopular = [];
   List<NearbyStores> nearbyStores = [];
   String search = '';
 
@@ -90,7 +91,8 @@ class HomeViewGetXController extends GetxController with Helpers {
     required BuildContext context,
   }) {
     this.context = context;
-    // getCategories();
+    getMostPopularProduct();
+    getCategories();
     getProducts();
   }
 
@@ -131,6 +133,14 @@ class HomeViewGetXController extends GetxController with Helpers {
 
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  void getMostPopularProduct() async {
+    try {
+      mostPopular = await _storeApiController.getMostPopularProduct();
+    }catch(error) {
+      showSnackBar(context, message: error.toString(),error: true);
+    }
   }
 
   // get categories.

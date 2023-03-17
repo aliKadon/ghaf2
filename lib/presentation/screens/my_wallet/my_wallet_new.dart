@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/transaction.dart';
+import 'package:ghaf_application/presentation/screens/my_wallet/wallet_getx_controller.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/font_manager.dart';
@@ -19,6 +21,17 @@ class MyWalletNew extends StatefulWidget {
 }
 
 class _MyWalletNewState extends State<MyWalletNew> {
+  //controller
+  late final WalletGetxController _walletGetxController =
+      Get.put(WalletGetxController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _walletGetxController.getMyWalletBalance(context: context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +56,6 @@ class _MyWalletNewState extends State<MyWalletNew> {
                         padding: EdgeInsets.all(AppSize.s6),
                         child: GestureDetector(
                           onTap: () {
-
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                               builder: (context) => MainView(),
@@ -76,38 +88,51 @@ class _MyWalletNewState extends State<MyWalletNew> {
                     child: Row(
                       children: [
                         ClipOval(
-                          child: Image.asset(ImageAssets.logo_wallet,
-                          height: AppSize.s55,width: AppSize.s55,),
+                          child: Image.asset(
+                            ImageAssets.logo_wallet,
+                            height: AppSize.s55,
+                            width: AppSize.s55,
+                          ),
                         ),
-                        SizedBox(width: AppSize.s6,),
+                        SizedBox(
+                          width: AppSize.s6,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Total credits available', style: getRegularStyle(
-                              color: ColorManager.white,
-                              fontSize: FontSize.s14,
-                            ),),
-                            Text('0 AED', style: getSemiBoldStyle(
-                              color: ColorManager.white,
-                              fontSize: FontSize.s14,
-                            ),),
+                            Text(
+                              '${AppLocalizations.of(context)!.total_credit_available}',
+                              style: getRegularStyle(
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
+                            Text(
+                              '${_walletGetxController.balance} ${AppLocalizations.of(context)!.aed}',
+                              style: getSemiBoldStyle(
+                                color: ColorManager.white,
+                                fontSize: FontSize.s14,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
                 ],
-
               ),
             ],
           ),
           SizedBox(
             height: AppSize.s18,
           ),
-          Text('Credit available', style: getSemiBoldStyle(
-            color: ColorManager.primaryDark,
-            fontSize: FontSize.s16,
-          ),),
+          Text(
+            '${AppLocalizations.of(context)!.credit_available}',
+            style: getSemiBoldStyle(
+              color: ColorManager.primaryDark,
+              fontSize: FontSize.s16,
+            ),
+          ),
           SizedBox(
             height: AppSize.s30,
           ),
@@ -115,15 +140,21 @@ class _MyWalletNewState extends State<MyWalletNew> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Text('Credit available', style: getSemiBoldStyle(
-                  color: ColorManager.black,
-                  fontSize: FontSize.s16,
-                ),),
+                Text(
+                  '${AppLocalizations.of(context)!.credit_available}',
+                  style: getSemiBoldStyle(
+                    color: ColorManager.black,
+                    fontSize: FontSize.s16,
+                  ),
+                ),
                 Spacer(),
-                Text('0.00 AED', style: getSemiBoldStyle(
-                  color: ColorManager.black,
-                  fontSize: FontSize.s16,
-                ),),
+                Text(
+                  '${_walletGetxController.balance} ${AppLocalizations.of(context)!.aed}',
+                  style: getSemiBoldStyle(
+                    color: ColorManager.black,
+                    fontSize: FontSize.s16,
+                  ),
+                ),
               ],
             ),
           ),
@@ -132,12 +163,20 @@ class _MyWalletNewState extends State<MyWalletNew> {
             width: AppSize.s306,
             height: AppSize.s44,
             child: ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (builder)=>TransactionScreen()));
-                }, child:  Text('Transaction', style: getSemiBoldStyle(
-              color: ColorManager.white,
-              fontSize: FontSize.s16,
-            ),),),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => TransactionScreen()));
+              },
+              child: Text(
+                '${AppLocalizations.of(context)!.transaction}',
+                style: getSemiBoldStyle(
+                  color: ColorManager.white,
+                  fontSize: FontSize.s16,
+                ),
+              ),
+            ),
           ),
           SizedBox(
             height: AppSize.s130,

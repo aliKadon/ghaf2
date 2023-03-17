@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/data/api/api_helper.dart';
+import 'package:ghaf_application/domain/model/promo_code.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../domain/model/api_response.dart';
-import '../../../domain/model/order.dart';
 import '../../../domain/model/payment_mathod.dart';
 
 class PaymentMethodApiController with ApiHelper {
@@ -75,5 +75,18 @@ class PaymentMethodApiController with ApiHelper {
     return failedResponse;
   }
 
+  Future<List<PromoCode>> getPromoCode({int? status}) async {
+    var url = Uri.parse(
+        '${Constants.baseUrl}/GiftAndReward/get-customer-promocode?status=$status');
+    var response = await http.get(url, headers: headers);
 
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<PromoCode>.from(
+            jsonData['data'].map((e) => PromoCode.fromJson(e)));
+      }
+    }
+    return [];
+  }
 }

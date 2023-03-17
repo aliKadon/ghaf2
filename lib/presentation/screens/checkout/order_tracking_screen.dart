@@ -10,10 +10,8 @@ import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/model/address.dart';
@@ -189,14 +187,11 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   LocationData? locationData;
   LocationData? distination;
 
-
-
   final Completer<GoogleMapController> _controller = Completer();
 
   // late LatLng destination;
   static LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   static LatLng destination1 = LatLng(37.33429383, -122.06600055);
-
 
   List<LatLng> polylineCoordinates = [];
 
@@ -227,6 +222,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -394,7 +390,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       color: cIcon3, size: 35),
                                 ),
                                 Spacer(),
-
                                 Container(
                                   padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
