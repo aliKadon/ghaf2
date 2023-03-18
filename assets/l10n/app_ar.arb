@@ -23,6 +23,9 @@
   "promo_code" : "الرمز الترويجي",
   "credit_available" : "الرصيد المتاح",
   "total_credit_available" : "اجمالي الرصيد المتاح",
+  "use_wallet" : "استخدم المحفظة",
+  "to_beneficiary_user_email" : "إلى البريد الإلكتروني للمستخدم المستفيد",
+  "info_enter_amount" : "يسمح بتحويل الأموال من بطاقة الائتمان إلى حساب شخص آخر في تطبيق غاف عن طريق الرجوع إلى اسم المستخدم الخاص بهم، مع مراعاة الرسوم وحدود المعاملات",
 
 
   "upgrade_your_shopping_experience" : "قم بترقية تجربة التسوق الخاصة بك",
@@ -318,7 +321,7 @@
   "i_already_have_account": "لدي حساب بالفعل",
   "to_reset_your_password_please_enter": "لإعادة تعيين كلمة المرور الخاصة بك ، الرجاء إدخال",
   "your": "",
-  "email_address": "بريدك الإلكتروني",
+  "email_address": "بريد الإلكتروني",
   "send": "إرسال",
   "home": "الصفحة الرئيسية",
   "categories": "التصنيفات",

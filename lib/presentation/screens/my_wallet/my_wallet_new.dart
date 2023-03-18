@@ -107,11 +107,13 @@ class _MyWalletNewState extends State<MyWalletNew> {
                                 fontSize: FontSize.s14,
                               ),
                             ),
-                            Text(
-                              '${_walletGetxController.balance} ${AppLocalizations.of(context)!.aed}',
-                              style: getSemiBoldStyle(
-                                color: ColorManager.white,
-                                fontSize: FontSize.s14,
+                            GetBuilder<WalletGetxController>(
+                              builder: (controller) =>  Text(
+                                '${_walletGetxController.balance} ${AppLocalizations.of(context)!.aed}',
+                                style: getSemiBoldStyle(
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s14,
+                                ),
                               ),
                             ),
                           ],
@@ -148,11 +150,13 @@ class _MyWalletNewState extends State<MyWalletNew> {
                   ),
                 ),
                 Spacer(),
-                Text(
-                  '${_walletGetxController.balance} ${AppLocalizations.of(context)!.aed}',
-                  style: getSemiBoldStyle(
-                    color: ColorManager.black,
-                    fontSize: FontSize.s16,
+                GetBuilder<WalletGetxController>(
+                  builder: (controller) =>  Text(
+                    '${_walletGetxController.balance} ${AppLocalizations.of(context)!.aed}',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.black,
+                      fontSize: FontSize.s16,
+                    ),
                   ),
                 ),
               ],

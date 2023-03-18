@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:ghaf_application/data/api/controllers/orders_api_controller.dart
 import 'package:ghaf_application/data/api/controllers/payment_method_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/promo_code.dart';
+import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../app/constants.dart';
@@ -15,6 +15,8 @@ import '../../../domain/model/address.dart';
 import '../../../domain/model/order.dart';
 import '../../../domain/model/order_to_pay.dart';
 import '../../../domain/model/payment_mathod.dart';
+import '../my_wallet/add_credit_screen.dart';
+import '../my_wallet/top_up_screen.dart';
 import 'checkout_confirm_view.dart';
 
 class CheckOutGetxController extends GetxController with Helpers {
@@ -64,9 +66,10 @@ class CheckOutGetxController extends GetxController with Helpers {
     String? desiredDeliveryDate,
     required Address deliveryPoint,
     bool? asap,
+    bool? useWallet = false,
     String? OrderNotes,
     String? PromoCode,
-    Map<String,dynamic>? SheduleInfo,
+    Map<String, dynamic>? SheduleInfo,
     bool? useRedeemPoints = false,
     bool? usePayLater = false,
     required String PaymentMethodId,
@@ -80,17 +83,21 @@ class CheckOutGetxController extends GetxController with Helpers {
           desiredDeliveryDate: desiredDeliveryDate,
           usePayLater: usePayLater,
           asap: asap,
+          useWallet: useWallet,
           OrderNotes: OrderNotes,
           PromoCode: PromoCode,
           SheduleInfo: SheduleInfo,
           useRedeemPoints: useRedeemPoints);
-      Navigator.of(context)
-          .push(MaterialPageRoute(
-        builder: (context) =>
-            CheckOutConfirmView(
-                orderId: orderId),
-      ));
-      showSnackBar(context, message: apiResponse.message);
+      if(apiResponse.status == 200) {
+        Navigator.of(context).pop();
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => CheckOutConfirmView(orderId: orderId),
+        ));
+        showSnackBar(context, message: apiResponse.message);
+      }else {
+        Navigator.of(context).pop();
+        showSnackBar(context, message: apiResponse.message,error: true);
+      }
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
     }
@@ -102,7 +109,9 @@ class CheckOutGetxController extends GetxController with Helpers {
     required num cardExpMonth,
     required String cardExpCvc,
     required num cardExpYear,
+    String? lastPage,
   }) async {
+    showLoadingDialog(context: context,title: 'adding...');
     try {
       apiResponse = await _paymentMethodApiController.addPaymentMethod(
           cardNumber: cardNumber,
@@ -111,8 +120,35 @@ class CheckOutGetxController extends GetxController with Helpers {
           cardExpYear: cardExpYear);
       paymentMethod = await _paymentMethodApiController.getPaymentMethod();
       update();
+      Navigator.of(context).pop();
+      if (lastPage == 'topUp') {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => TopUpScreen(screenName: 'topUp'),
+        ));
+      }
+
+      if (lastPage == 'addCredit') {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => AddCreditScreen(),
+        ));
+      }
+      if (lastPage == 'manage') {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => TopUpScreen(screenName: 'manage'),
+        ));
+      }
+      if (lastPage == 'payLater') {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => TopUpScreen(screenName: 'payLater'),
+        ));
+      }
+      if(lastPage == null) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => PaymentMethodRedeemPointScreen()));
+      }
       showSnackBar(context, message: apiResponse.message);
     } catch (error) {
+      Navigator.of(context).pop();
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
@@ -186,7 +222,7 @@ class CheckOutGetxController extends GetxController with Helpers {
     try {
       promoCodes = await _paymentMethodApiController.getPromoCode();
       update();
-    }catch (error) {
+    } catch (error) {
       showSnackBar(context, message: error.toString());
     }
   }

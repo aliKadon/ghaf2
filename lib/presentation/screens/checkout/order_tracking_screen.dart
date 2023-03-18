@@ -251,7 +251,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                             children: [
                               GestureDetector(
                                 onTap: () => Navigator.pushReplacementNamed(
-                                    context, Routes.OrdersHistoryRoute),
+                                    context, Routes.mainRoute),
                                 child: Image.asset(
                                   IconsAssets.arrow,
                                   height: AppSize.s18,

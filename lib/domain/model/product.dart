@@ -27,7 +27,8 @@ class Product extends GetxController with Helpers {
 
     if (sendRequest) _toggleFavoriteRequest(context: context,id: id);
 
-     _homeViewGetXController.getProducts();
+    _homeViewGetXController.getProducts();
+
     //
     // isFavorite = !isFavorite!;
 
@@ -204,6 +205,7 @@ class Product extends GetxController with Helpers {
           await _storeApiController.toggleFavorite(productId: id);
       if (apiResponse.status == 200) {
         // success.
+
         showSnackBar(context, message: apiResponse.message, error: false);
       } else {
         // failed.

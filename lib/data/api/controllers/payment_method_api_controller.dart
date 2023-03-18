@@ -75,7 +75,7 @@ class PaymentMethodApiController with ApiHelper {
     return failedResponse;
   }
 
-  Future<List<PromoCode>> getPromoCode({int? status}) async {
+  Future<List<PromoCode>> getPromoCode({int? status = -1}) async {
     var url = Uri.parse(
         '${Constants.baseUrl}/GiftAndReward/get-customer-promocode?status=$status');
     var response = await http.get(url, headers: headers);

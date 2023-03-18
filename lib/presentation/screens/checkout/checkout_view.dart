@@ -48,6 +48,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   var visibility = false;
   var isSwitchedPayLater = false;
   var isSwitched = false;
+  var isUseWallet = false;
   var visibilityChecked = false;
   late var paymentIntent;
   DateTime? date;
@@ -465,6 +466,47 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                             ),
                           ),
                           SizedBox(
+                            height: AppSize.s12,
+                          ),
+                          Container(
+                            child: Visibility(
+                              visible: true,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.use_wallet,
+                                    style: getSemiBoldStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontSize: FontSize.s16,
+                                    ),
+                                  ),
+                                  // GestureDetector(
+                                  //     onTap: () {
+                                  //       _infoDialog(
+                                  //           context,
+                                  //           AppLocalizations.of(context)!
+                                  //               .pay_later_text);
+                                  //     },
+                                  //     child: Icon(Icons.info_outline,
+                                  //         color: ColorManager.greyLight)),
+                                  Spacer(),
+                                  CupertinoSwitch(
+                                    value: isUseWallet,
+                                    onChanged: (_) {
+                                      setState(() {
+                                        if (isUseWallet == false) {
+                                          isUseWallet = true;
+                                        } else {
+                                          isUseWallet = false;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
                             height: AppSize.s22,
                           ),
                           Text(
@@ -564,10 +606,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 color: ColorManager.greyLight,
                               ),
                             ),
-                            // margin: EdgeInsets.only(
-                            //     bottom: AppMargin.m16,
-                            //     right: AppMargin.m16,
-                            //     left: AppMargin.m16),
                             child: Column(
                               children: [
                                 Row(
@@ -679,7 +717,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                           SizedBox(
                             height: AppSize.s22,
                           ),
-
                           Container(
                             child: Row(
                               children: [
@@ -1116,7 +1153,10 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                 .addresses[selectedAddress],
                                         usePayLater: isSwitchedPayLater,
                                         useRedeemPoints: isSwitched,
-                                        PromoCode: _enterPromoCode.text,
+                                        useWallet: isUseWallet,
+                                        PromoCode: _enterPromoCode.text == ''
+                                            ? null
+                                            : _enterPromoCode.text,
                                         OrderNotes: _sendNote.text,
                                         deliveryMethodId:
                                             _checkOutGetxController

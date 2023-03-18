@@ -89,6 +89,7 @@ class OrdersApiController with ApiHelper {
     required Address deliveryPoint,
     String? OrderNotes,
     String? PromoCode,
+    bool? useWallet,
     bool? asap,
     Map<String,dynamic>? SheduleInfo,
     bool? useRedeemPoints = false,
@@ -109,6 +110,7 @@ class OrdersApiController with ApiHelper {
           'PaymentMethodId': PaymentMethodId,
           'PromoCode': PromoCode,
           'Asap' : asap,
+          'UseWallet' : useWallet,
           'SheduleInfo' : SheduleInfo,
         }));
     print('============================================ pay for order');
@@ -118,6 +120,10 @@ class OrdersApiController with ApiHelper {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+
+      }else {
         return ApiResponse(
             message: jsonData['message'], status: jsonData['status']);
       }

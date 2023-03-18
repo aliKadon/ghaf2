@@ -220,50 +220,17 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                       child: Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
                         if (_checkData()) {
+                          print('=====================last screen');
+                          print(widget.lastScreen);
                           _checkOutGetxController.addPaymentMethod(
                               context: context,
                               cardNumber: cardNumberController.text,
                               cardExpMonth:
                               num.parse(expireMonthCardController.text),
+                              lastPage: widget.lastScreen,
                               cardExpCvc: cvvController.text,
                               cardExpYear: num.parse(expireYearController.text));
-                          if (widget.lastScreen != null &&
-                              widget.lastScreen == 'topUp') {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) =>
-                                  TopUpScreen(screenName: 'topUp'),
-                            ));
-                          }
 
-                          if (widget.lastScreen != null &&
-                              widget.lastScreen == 'addCredit') {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => AddCreditScreen(),
-                            ));
-                          }
-                          if (widget.lastScreen != null &&
-                              widget.lastScreen == 'manage') {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) =>
-                                  TopUpScreen(screenName: 'manage'),
-                            ));
-                          }
-                          if (widget.lastScreen != null &&
-                              widget.lastScreen == 'payLater') {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) =>
-                                  TopUpScreen(screenName: 'payLater'),
-                            ));
-                          } else {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PaymentMethodRedeemPointScreen()));
-                          }
                         }
 
                         // show

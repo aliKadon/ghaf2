@@ -81,6 +81,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
                             image: NetworkImage(widget.image),
                             fit: BoxFit.cover,
                           ),
+
                         ),
                       ),
                       GetBuilder<Product>(
@@ -97,7 +98,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
                                   borderRadius: BorderRadius.circular(100),
                                   color: Colors.black54),
                               padding: EdgeInsets.all(8),
-                              child: widget.controller[widget.index].isFavorite!
+                              child: widget.controller[widget.index].isFavorite ?? false
                                   ? Image.asset(
                                       IconsAssets.heart1,
                                       height: AppSize.s24,

@@ -96,11 +96,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         fontSize: FontSize.s18,
                       ),
                     ),
-                    Text(
-                      'AED ${_walletGetxController.balance}',
-                      style: getSemiBoldStyle(
-                        color: ColorManager.primaryDark,
-                        fontSize: FontSize.s18,
+                    GetBuilder<WalletGetxController>(
+                      builder:(controller) => Text(
+                        'AED ${_walletGetxController.balance}',
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s18,
+                        ),
                       ),
                     ),
                     SizedBox(

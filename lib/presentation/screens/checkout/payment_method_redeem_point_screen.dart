@@ -42,6 +42,7 @@ class _PaymentMethodRedeemPointScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.only(top: 60.0, right: 12.0, left: 12.0),
           child: Column(

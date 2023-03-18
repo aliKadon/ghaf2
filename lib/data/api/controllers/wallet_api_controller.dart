@@ -54,4 +54,6 @@ class WalletApiController with ApiHelper {
     }
     return failedResponse;
   }
+
+
 }

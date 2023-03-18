@@ -43,7 +43,7 @@ mixin Helpers {
   String dropdownValue1 = '11';
   var numberOfDay = 0;
 
-  var isAsap;
+  var isAsap = true;
   var isSelectedToday = false;
   var isSelectedAsap = true;
   var isOneTime = false;
@@ -765,6 +765,7 @@ mixin Helpers {
     required String PaymentMethodId,
     String? OrderNotes,
     String? PromoCode,
+    bool? useWallet,
     bool? useRedeemPoints = false,
     bool? usePayLater = false,
     String? desiredDeliveryDate,
@@ -1130,6 +1131,7 @@ mixin Helpers {
                                       deliveryPoint: deliveryPoint,
                                       PaymentMethodId: PaymentMethodId,
                                       useRedeemPoints: useRedeemPoints,
+                                      useWallet: useWallet,
                                       usePayLater: usePayLater,
                                       desiredDeliveryDate: desiredDeliveryDate,
                                       asap: isAsap,
@@ -1145,6 +1147,7 @@ mixin Helpers {
                                       OrderNotes: OrderNotes,
                                       PromoCode: PromoCode,
                                     );
+
                                   },
                                   child: Text(
                                       AppLocalizations.of(context)!.confirm)),

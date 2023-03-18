@@ -205,7 +205,7 @@ class StoreApiController with ApiHelper, Helpers {
       {String? sid, String? bid, String? cid,}) async {
     // print('send request : read-discount');
     Map<String, dynamic> queryParameters = {
-      'sid': cid,
+      'sid': sid,
       'bid': bid,
       'cid': cid
     };

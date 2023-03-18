@@ -6,14 +6,14 @@ import 'package:ghaf_application/domain/model/product.dart';
 
 class OffersScreenGetXController extends GetxController with Helpers {
   // notifiable.
-  bool _isOffersLoading = true;
+  bool isOffersLoading = true;
 
-  bool get isOffersLoading => _isOffersLoading;
-
-  set isOffersLoading(bool value) {
-    _isOffersLoading = value;
-    update(['isOffersLoading']);
-  }
+  // bool get isOffersLoading => _isOffersLoading;
+  //
+  // set isOffersLoading(bool value) {
+  //   _isOffersLoading = value;
+  //   update();
+  // }
 
   // vars.
   late final StoreApiController _storeApiController = StoreApiController();
@@ -41,7 +41,9 @@ class OffersScreenGetXController extends GetxController with Helpers {
     // isOffersLoading = false;
     try {
       offers = await _storeApiController.getOffers();
+      await _storeApiController.getProducts();
       isOffersLoading = false;
+      update();
     } catch (error) {
       // error.
       showSnackBar(context, message: error.toString(), error: true);
