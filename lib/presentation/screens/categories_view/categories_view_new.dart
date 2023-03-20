@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../../widgets/store_widget.dart';
+import 'categories_getx_controller.dart';
 
 class CategoriesViewNew extends StatefulWidget {
   @override
@@ -15,7 +19,22 @@ class CategoriesViewNew extends StatefulWidget {
 }
 
 class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
-  var selected = -1;
+  //controller
+  late final HomeViewGetXController _homeViewGetXController =
+      Get.put(HomeViewGetXController());
+  late final CategoriesGetxController _categoriesGetxController =
+      Get.put(CategoriesGetxController());
+
+  var selected = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _homeViewGetXController.getCategories();
+    _categoriesGetxController.getStores(
+        cid: SharedPrefController().firstStoreName);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,50 +64,58 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.03,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: selected == index
-                      ? GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selected = index;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Text('categories',
-                                  style: TextStyle(
-                                      color: ColorManager.primary,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: FontSize.s14)),
-                              SizedBox(
-                                width: AppSize.s30,
-                              )
-                            ],
+            child: GetBuilder<HomeViewGetXController>(
+              builder: (controller) => ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
+                itemCount: controller.categories.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: selected == index
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selected = index;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                    _homeViewGetXController
+                                        .categories[index].name!,
+                                    style: TextStyle(
+                                        color: ColorManager.primary,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s14)),
+                                SizedBox(
+                                  width: AppSize.s30,
+                                )
+                              ],
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              _categoriesGetxController.getStores(
+                                  cid: _homeViewGetXController
+                                      .categories[index].id);
+                              setState(() {
+                                selected = index;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Text(_homeViewGetXController
+                                    .categories[index].name!),
+                                SizedBox(
+                                  width: AppSize.s30,
+                                )
+                              ],
+                            ),
                           ),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selected = index;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Text('categories'),
-                              SizedBox(
-                                width: AppSize.s30,
-                              )
-                            ],
-                          ),
-                        ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
           Divider(thickness: 1, color: ColorManager.greyLight),
@@ -99,7 +126,10 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
               children: [
                 GestureDetector(
                   onTap: () {
-                    showSortBySheet(context);
+                    showSortBySheet(
+                        context: context,
+                        cid: _homeViewGetXController.categories[selected].id!,
+                        categoriesGetxController: _categoriesGetxController);
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
@@ -127,33 +157,33 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                 SizedBox(
                   width: AppSize.s6,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.68,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorManager.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Text('Delivery type'),
-                          ),
-                          SizedBox(
-                            width: AppSize.s6,
-                          )
-                        ],
-                      );
-                    },
-                  ),
-                )
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 0.68,
+                //   child: ListView.builder(
+                //     shrinkWrap: true,
+                //     scrollDirection: Axis.horizontal,
+                //     physics: BouncingScrollPhysics(),
+                //     itemCount: 5,
+                //     itemBuilder: (context, index) {
+                //       return Row(
+                //         children: [
+                //           Container(
+                //             padding: EdgeInsets.all(8),
+                //             decoration: BoxDecoration(
+                //                 border: Border.all(
+                //                   color: ColorManager.grey,
+                //                 ),
+                //                 borderRadius: BorderRadius.circular(15)),
+                //             child: Text('Delivery type'),
+                //           ),
+                //           SizedBox(
+                //             width: AppSize.s6,
+                //           )
+                //         ],
+                //       );
+                //     },
+                //   ),
+                // )
               ],
             ),
           ),
@@ -171,21 +201,40 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
               ),
             ],
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.57,
-            decoration: BoxDecoration(color: ColorManager.greyLight),
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: 5,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    showStoreClosedPreOrderSheet(context);
-                  },
-                    child: StoreWidget());
-              },
-            ),
+          GetBuilder<CategoriesGetxController>(
+            builder: (controller) => _categoriesGetxController.stores.length ==
+                    0
+                ? Center(
+                    child: Text(AppLocalizations.of(context)!.no_stores_found,
+                        style: TextStyle(
+                            color: ColorManager.primary,
+                            fontSize: FontSize.s16,
+                            fontWeight: FontWeight.w600)),
+                  )
+                : Container(
+                    height: MediaQuery.of(context).size.height * 0.57,
+                    decoration: BoxDecoration(color: ColorManager.greyLight),
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: controller.stores.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                            onTap: () {
+                              showStoreClosedPreOrderSheet(context: context);
+                            },
+                            child: StoreWidget(
+                              storeName: controller.stores[index].branchName ?? '',
+                              storeImageUrl:
+                                  controller.stores[index].branchLogoImage!,
+                              storeStars: 1,
+                              imageDeliveryUrl: controller.stores[index].storeDeliveryCost!,
+                              isOpen: controller.stores[index].isOpen!,
+                              workTime: controller.stores[index].todayWorkHoursToString!,
+                            ));
+                      },
+                    ),
+                  ),
           )
         ],
       ),

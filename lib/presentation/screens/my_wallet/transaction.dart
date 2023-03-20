@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
@@ -8,8 +9,6 @@ import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.da
 import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/wallet_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/transaction_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 import '../../resources/assets_manager.dart';
 import '../../resources/font_manager.dart';
@@ -24,16 +23,17 @@ class TransactionScreen extends StatefulWidget {
 }
 
 class _TransactionScreenState extends State<TransactionScreen> {
-
-  late final WalletGetxController _walletGetxController = Get.find<WalletGetxController>();
+  late final WalletGetxController _walletGetxController =
+      Get.find<WalletGetxController>();
 
   @override
   void initState() {
     // TODO: implement initState
     _walletGetxController.getMyWalletBalance(context: context);
-
+    _walletGetxController.getPaymentHistory(context: context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +50,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 padding: EdgeInsets.all(AppSize.s6),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => MyWalletNew(),
                     ));
                   },
@@ -97,7 +96,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ),
                     ),
                     GetBuilder<WalletGetxController>(
-                      builder:(controller) => Text(
+                      builder: (controller) => Text(
                         'AED ${_walletGetxController.balance}',
                         style: getSemiBoldStyle(
                           color: ColorManager.primaryDark,
@@ -116,7 +115,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => TopUpScreen(screenName: 'topUp'),));
+                                builder: (context) =>
+                                    TopUpScreen(screenName: 'topUp'),
+                              ));
                             },
                             child: Column(
                               children: [
@@ -143,7 +144,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => AddCreditScreen(),));
+                                builder: (context) => AddCreditScreen(),
+                              ));
                             },
                             child: Column(
                               children: [
@@ -170,7 +172,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => TopUpScreen(screenName: 'manage'),));
+                                builder: (context) =>
+                                    TopUpScreen(screenName: 'manage'),
+                              ));
                             },
                             child: Column(
                               children: [
@@ -202,43 +206,53 @@ class _TransactionScreenState extends State<TransactionScreen> {
               ),
             ],
           ),
-          SizedBox(
-            height: AppSize.s36,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Text(
-                  'October 2022',
-                  style: getRegularStyle(
-                    color: ColorManager.grey,
-                    fontSize: FontSize.s18,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(
+          //   height: AppSize.s6,
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.all(15.0),
+          //   child: Column(
+          //     children: [
+          //       Text(
+          //         'October 2022',
+          //         style: getRegularStyle(
+          //           color: ColorManager.grey,
+          //           fontSize: FontSize.s18,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height * 0.4,
-            child: ListView.builder(
-              itemCount: 5,
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, data) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      TransactionWidget(),
-                      Divider(),
-                    ],
-                  ),
-                );
-              },
+            height: MediaQuery.of(context).size.height * 0.54,
+            child: GetBuilder<WalletGetxController>(
+              builder: (controller) =>  ListView.builder(
+                itemCount: controller
+                    .paymentsHistory.length,
+                shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          TransactionWidget(
+                              balance: _walletGetxController
+                                  .paymentsHistory[index].balance
+                                  .toString(),
+                              storeName: _walletGetxController
+                                  .paymentsHistory[index].storeName!,
+                              imageUrl: _walletGetxController
+                                  .paymentsHistory[index].storeLogo!,
+                              date: _walletGetxController
+                                  .paymentsHistory[index].paymentDate!
+                                  .substring(0, 10)),
+                          Divider(),
+                        ],
+                      ),
+                  );
+                },
+              ),
             ),
           ),
         ],

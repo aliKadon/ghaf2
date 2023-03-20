@@ -26,6 +26,7 @@ enum PrefKeys {
   googleUserName,
   googleEmail,
   enableNotification,
+  firstStoreName
 }
 
 class SharedPrefController {
@@ -101,6 +102,9 @@ class SharedPrefController {
   String get userNameGoogle =>
       _sharedPreferences.getString(PrefKeys.googleUserName.toString()) ?? '';
 
+  String get firstStoreName =>
+      _sharedPreferences.getString(PrefKeys.firstStoreName.toString()) ?? '';
+
   String get emailGoogle =>
       _sharedPreferences.getString(PrefKeys.googleEmail.toString()) ?? '';
 
@@ -129,6 +133,10 @@ class SharedPrefController {
 
   Future<void> setFirstName(String firstName) async {
     await _sharedPreferences.setString(PrefKeys.firstName.name, '${firstName}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+  Future<void> setFirstStoreName(String firstStoretName) async {
+    await _sharedPreferences.setString(PrefKeys.firstStoreName.toString(), '${firstStoretName}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
   Future<void> setLastName(String lastName) async {

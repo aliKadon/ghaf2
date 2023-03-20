@@ -14,6 +14,7 @@ import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sh
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/nearby_stores.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
@@ -136,8 +137,10 @@ class HomeViewGetXController extends GetxController with Helpers {
   }
 
   void getMostPopularProduct() async {
+
     try {
       mostPopular = await _storeApiController.getMostPopularProduct();
+      update();
     }catch(error) {
       showSnackBar(context, message: error.toString(),error: true);
     }
@@ -147,7 +150,12 @@ class HomeViewGetXController extends GetxController with Helpers {
   void getCategories() async {
     try {
       categories = await _storeApiController.getCategories();
+      print('================category');
+      print(categories[0].id!);
+      SharedPrefController()
+          .setFirstStoreName(categories[0].id!);
       isCategoryLoading = false;
+
     } catch (error) {
       // error.
       showSnackBar(

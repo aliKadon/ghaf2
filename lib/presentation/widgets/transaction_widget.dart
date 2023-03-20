@@ -4,14 +4,30 @@ import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 
-class TransactionWidget extends StatelessWidget {
+class TransactionWidget extends StatefulWidget {
+  final String balance;
+  final String date;
+  final String imageUrl;
+  final String storeName;
+
+  TransactionWidget(
+      {required this.balance, required this.imageUrl, required this.date,required this.storeName});
+
+  @override
+  State<TransactionWidget> createState() => _TransactionWidgetState();
+}
+
+class _TransactionWidgetState extends State<TransactionWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Row(
         children: [
-          Image.asset(
+          widget.imageUrl.isEmpty ? Image.asset(
             ImageAssets.brIcon,
+            height: AppSize.s60,
+          ) : Image.network(
+            widget.imageUrl,
             height: AppSize.s60,
           ),
           SizedBox(
@@ -19,13 +35,13 @@ class TransactionWidget extends StatelessWidget {
           ),
           Column(
             children: [
-              Text('baskin robbins',
+              Text('${widget.storeName}',
                   style: TextStyle(
                       color: ColorManager.primaryDark,
                       fontWeight: FontWeight.w600,
                       fontSize: FontSize.s16)),
               Text(
-                'october 28, 2022',
+                '${widget.date}',
                 style: TextStyle(
                     color: ColorManager.greyLight,
                     fontSize: FontSize.s14,
@@ -35,13 +51,15 @@ class TransactionWidget extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            '-34',
+            '-${widget.balance}',
             style: TextStyle(
                 color: ColorManager.black,
                 fontWeight: FontWeight.w600,
                 fontSize: FontSize.s16),
           ),
-          SizedBox(width: AppSize.s20,)
+          SizedBox(
+            width: AppSize.s20,
+          )
         ],
       ),
     );

@@ -100,7 +100,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     SubscribeViewGetXController _subscribeViewGetXController =
-    Get.put(SubscribeViewGetXController(context: context));
+        Get.put(SubscribeViewGetXController(context: context));
     var isArabic = SharedPrefController().lang1;
     return ChangeNotifierProvider.value(
       value: ProductProvider(),
@@ -325,34 +325,42 @@ class _HomeViewState extends State<HomeView> {
                                                       .size
                                                       .height *
                                                   0.02),
-                                          AppSharedData.currentUser!.ghafGold! ? ElevatedButton(
-                                            // onPressed: () {},
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                  MaterialStatePropertyAll(
-                                                      ColorManager
-                                                          .primaryDark)),
-                                              onPressed: () {
-                                                _subscribeViewGetXController.cancelSubscription();
-                                              },
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .unSubscribe,
-                                                style: TextStyle(fontSize: 15),
-                                              )) :  ElevatedButton(
-                                              // onPressed: () {},
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStatePropertyAll(
-                                                          ColorManager
-                                                              .primaryDark)),
-                                              onPressed: _homeViewGetXController
-                                                  .onGhafIconTapped,
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .subscribe_to_ghaf_gold,
-                                                style: TextStyle(fontSize: 15),
-                                              ))
+                                          AppSharedData.currentUser!.ghafGold!
+                                              ? ElevatedButton(
+                                                  // onPressed: () {},
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStatePropertyAll(
+                                                              ColorManager
+                                                                  .primaryDark)),
+                                                  onPressed: () {
+                                                    _subscribeViewGetXController
+                                                        .cancelSubscription();
+                                                  },
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .unSubscribe,
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ))
+                                              : ElevatedButton(
+                                                  // onPressed: () {},
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStatePropertyAll(
+                                                              ColorManager
+                                                                  .primaryDark)),
+                                                  onPressed:
+                                                      _homeViewGetXController
+                                                          .onGhafIconTapped,
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .subscribe_to_ghaf_gold,
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ))
                                         ],
                                       ),
                                     ),
@@ -379,7 +387,8 @@ class _HomeViewState extends State<HomeView> {
                                                 crossAxisSpacing: 20,
                                                 mainAxisExtent: 130),
                                         physics: BouncingScrollPhysics(),
-                                        itemCount: _homeViewGetXController.categories.length,
+                                        itemCount: _homeViewGetXController
+                                            .categories.length,
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
                                             onTap: () {
@@ -396,17 +405,29 @@ class _HomeViewState extends State<HomeView> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
-                                                    child: _homeViewGetXController.categories[index].categoryImageData == null ? Image.asset(
-                                                        ImageAssets.grocery,
-                                                        fit: BoxFit.scaleDown) : Image.network(
-                                                        _homeViewGetXController.categories[index].categoryImageData!,
-                                                        height: AppSize.s60,
-                                                        width: AppSize.s60,
-                                                        fit: BoxFit.scaleDown),
+                                                    child: _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .categoryImageData ==
+                                                            null
+                                                        ? Image.asset(
+                                                            ImageAssets.grocery,
+                                                            fit: BoxFit
+                                                                .scaleDown)
+                                                        : Image.network(
+                                                            _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .categoryImageData!,
+                                                            height: AppSize.s60,
+                                                            width: AppSize.s60,
+                                                            fit: BoxFit
+                                                                .scaleDown),
                                                   ),
                                                 ),
                                                 Text(
-                                                  _homeViewGetXController.categories[index].name!,
+                                                  _homeViewGetXController
+                                                      .categories[index].name!,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -498,39 +519,38 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   GetBuilder<HomeViewGetXController>(
                     id: 'products',
-                    builder:(controller) => Container(
-                          height: MediaQuery.of(context).size.height * 0.45,
-                          child: ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.all(12),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _homeViewGetXController.mostPopular.length,
-                          itemBuilder: (context, index) {
-                            return ProductItemNew(
-                              index: 0,
-                              image: _homeViewGetXController
-                                  .mostPopular[index]
-                                  .productImages?[index] ??
-                                  '',
-                              name: _homeViewGetXController
-                                  .mostPopular[index].name ??
-                                  '',
-                              price: _homeViewGetXController
-                                  .mostPopular[index].price ??
-                                  0,
-                              stars: _homeViewGetXController
-                                  .mostPopular[index].stars ??
-                                  0,
-                              idProduct: _homeViewGetXController
-                                  .mostPopular[index].id ??
-                                  '',
-                              isFavorite: _homeViewGetXController
-                                  .mostPopular[index].isFavorite ??
-                                  false,
-                            );
-                          },
+                    builder: (controller) => Container(
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(12),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _homeViewGetXController.mostPopular.length,
+                        itemBuilder: (context, index) {
+                          return ProductItemNew(
+                            index: 0,
+                            image: _homeViewGetXController
+                                    .mostPopular[index].productImages?[index] ??
+                                '',
+                            name: _homeViewGetXController
+                                    .mostPopular[index].name ??
+                                '',
+                            price: _homeViewGetXController
+                                    .mostPopular[index].price ??
+                                0,
+                            stars: _homeViewGetXController
+                                    .mostPopular[index].stars ??
+                                0,
+                            idProduct:
+                                _homeViewGetXController.mostPopular[index].id ??
+                                    '',
+                            isFavorite: _homeViewGetXController
+                                    .mostPopular[index].isFavorite ??
+                                false,
+                          );
+                        },
                       ),
-                        ),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),

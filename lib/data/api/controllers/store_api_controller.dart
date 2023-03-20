@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+// import 'package:basic_utils/basic_utils.dart';
+// import 'package:basic_utils/basic_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/domain/model/branch.dart';
 import 'package:ghaf_application/domain/model/cart_item.dart';
 import 'package:ghaf_application/domain/model/category.dart';
 import 'package:ghaf_application/domain/model/nearby_stores.dart';
@@ -12,8 +15,8 @@ import 'package:ghaf_application/domain/model/popular_search.dart';
 import 'package:ghaf_application/domain/model/product.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../domain/model/store.dart';
 import '../api_helper.dart';
-import '../api_settings.dart';
 
 class StoreApiController with ApiHelper, Helpers {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
@@ -143,8 +146,7 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'sid': sid,
       'filter':
-      "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
-          0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
     // // print(queryParameters);
     final Response response = await _dio.get(
@@ -177,8 +179,7 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'cid': cid,
       'filter':
-      "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
-          0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
     };
     // // print(queryParameters);
     final Response response = await _dio.get(
@@ -201,14 +202,13 @@ class StoreApiController with ApiHelper, Helpers {
   }
 
   // get offers.
-  Future<List<Product>> getOffers(
-      {String? sid, String? bid, String? cid,}) async {
+  Future<List<Product>> getOffers({
+    String? sid,
+    String? bid,
+    String? cid,
+  }) async {
     // print('send request : read-discount');
-    Map<String, dynamic> queryParameters = {
-      'sid': sid,
-      'bid': bid,
-      'cid': cid
-    };
+    Map<String, dynamic> queryParameters = {'sid': sid, 'bid': bid, 'cid': cid};
     final Response response = await _dio.get(
       '/Product/read-offers',
       queryParameters: queryParameters,
@@ -360,8 +360,8 @@ class StoreApiController with ApiHelper, Helpers {
     required String cartItemId,
     required num count,
   }) async {
-    var url = Uri.parse('${Constants
-        .baseUrl}/Product/change-basket-item-count?id=$cartItemId&count=$count');
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Product/change-basket-item-count?id=$cartItemId&count=$count');
     // print('send request : add-remove-to-basket');
     Map<String, dynamic> queryParameters = {
       'id': '03aa23d5-8f38-4628-f8ee-08db21ee7c75',
@@ -375,7 +375,10 @@ class StoreApiController with ApiHelper, Helpers {
     //     headers: headers,
     //   ),
     // );
-    var response = await http.post(url,headers: headers,);
+    var response = await http.post(
+      url,
+      headers: headers,
+    );
     // print('============================================');
     // print(response.statusCode);
     // print(response.body);
@@ -392,5 +395,31 @@ class StoreApiController with ApiHelper, Helpers {
       }
     }
     return failedResponse;
+  }
+
+  Future<List<Branch>> getStoreByCategoriy(
+      {String? cid,
+      String? filterType = '',
+      String? filterContent = '',
+      String? sortType = ''}) async {
+    Map<String, String> queries = {
+      filterType== '' ? '' : 'filter': "$filterType~contains~\'$filterContent\'",
+      'cid': '$cid',
+      'sort': '$sortType-desc'
+    };
+    var query = Uri(queryParameters: queries).query;
+    var url = Uri.parse('${Constants.baseUrl}/Store/read-branch?$query');
+    var response = await http.get(url,headers: headers);
+
+    print('=======================store');
+    print('${Constants.baseUrl}/Store/read-store?$query');
+    print(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<Branch>.from(jsonData['data'].map((x) => Branch.fromJson(x)));
+      }
+    }
+    return [];
   }
 }

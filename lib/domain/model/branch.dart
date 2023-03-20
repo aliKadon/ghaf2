@@ -21,6 +21,8 @@ class Branch {
     this.minOrder,
     this.branchLogo,
     this.deleted,
+    this.isOpen,
+    this.todayWorkHoursToString,
   });
 
   String? id;
@@ -40,7 +42,9 @@ class Branch {
   String? storeId;
   List<dynamic>? branchTimes;
   String? storeName;
-  List<dynamic>? storeDeliveryCost;
+  List<StoreDeliveryCost>? storeDeliveryCost;
+  bool? isOpen;
+  String? todayWorkHoursToString;
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
         id: json["id"],
@@ -58,7 +62,9 @@ class Branch {
         branchTimes: json["branchTimes"],
         storeName: json["storeName"],
         whatsApp: json["whatsApp"],
-        storeDeliveryCost: json["storeDeliveryCost"],
+        storeDeliveryCost: json["storeDeliveryCost"] == null ? null : List<StoreDeliveryCost>.from(
+            json["storeDeliveryCost"]
+                .map((x) => StoreDeliveryCost.fromJson(x))),
 
         // json["storeDeliveryCost"] == null
         //     ? null
@@ -69,6 +75,8 @@ class Branch {
         branchLogoImage: json["branchLogoImage"],
         branchLogo: json["branchLogo"],
         deleted: json["deleted"],
+        isOpen: json["isOpen"],
+        todayWorkHoursToString: json["todayWorkHoursToString"],
         // storeDeliveryCost: List<StoreDeliveryCost>.from(
         //     json["storeDeliveryCost"].map((x) => StoreDeliveryCost.fromJson(x))),
       );
@@ -92,6 +100,8 @@ class Branch {
         "branchLogoImage": branchLogoImage,
         "branchLogo": branchLogo,
         "deleted": deleted,
+        "todayWorkHoursToString": todayWorkHoursToString,
+        "isOpen": isOpen,
 
         // "storeDeliveryCost": List<dynamic>.from(storeDeliveryCost!.map((x) => x.toJson()))
       };

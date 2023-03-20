@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/wallet_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/domain/model/payment_history.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/transaction.dart';
 
 class WalletGetxController extends GetxController with Helpers {
@@ -11,6 +12,7 @@ class WalletGetxController extends GetxController with Helpers {
 
   late ApiResponse apiResponse;
   late ApiResponse apiResponse1;
+  List<PaymentHistory> paymentsHistory = [];
   num balance = 0;
 
   void getMyWalletBalance({required BuildContext context}) async {
@@ -51,6 +53,15 @@ class WalletGetxController extends GetxController with Helpers {
       ));
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  void getPaymentHistory ({required BuildContext context}) async {
+    try {
+      paymentsHistory = await _walletApiController.getPaymentHistory();
+      update();
+    }catch(error) {
+      showSnackBar(context, message: error.toString());
     }
   }
 }

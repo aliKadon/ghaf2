@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 
+import '../../domain/model/store_delivery_cost.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/values_manager.dart';
 
+class StoreWidget extends StatefulWidget {
+  final String storeName;
+  final String storeImageUrl;
+  final num storeStars;
+  final String workTime;
+  final List<StoreDeliveryCost> imageDeliveryUrl;
+  final bool isOpen;
 
-class StoreWidget extends StatelessWidget {
+  StoreWidget(
+      {required this.storeName,
+      required this.storeImageUrl,
+      required this.storeStars,
+      required this.isOpen,
+      required this.imageDeliveryUrl,
+      required this.workTime});
 
+  @override
+  State<StoreWidget> createState() => _StoreWidgetState();
+}
+
+class _StoreWidgetState extends State<StoreWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,14 +39,16 @@ class StoreWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10)),
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
             child: Row(
               // crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
+                widget.storeImageUrl.isEmpty ? Image.asset(
                   ImageAssets.brStore,
+                  height: AppSize.s75,
+                ) : Image.network(
+                  widget.storeImageUrl,
                   height: AppSize.s75,
                 ),
                 Column(
@@ -33,7 +56,7 @@ class StoreWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Carrefour',
+                          '${widget.storeName}',
                           style: TextStyle(
                               color: ColorManager.primaryDark,
                               fontWeight: FontWeight.w600,
@@ -46,7 +69,7 @@ class StoreWidget extends StatelessWidget {
                           Icons.star,
                           color: Colors.yellow,
                         ),
-                        Text('4.0'),
+                        Text('1'),
                         SizedBox(
                           width: AppSize.s10,
                         ),
@@ -65,7 +88,7 @@ class StoreWidget extends StatelessWidget {
                           width: AppSize.s6,
                         ),
                         Text(
-                          'today 10 :AM-12 AM',
+                          '${widget.workTime}',
                           style: TextStyle(
                               color: ColorManager.primary,
                               fontWeight: FontWeight.bold,
@@ -80,12 +103,12 @@ class StoreWidget extends StatelessWidget {
                           // width: 100,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: 4,
+                            itemCount: widget.imageDeliveryUrl.length,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Image.asset(
-                                ImageAssets.carDelivery,
+                              return Image.network(
+                                widget.imageDeliveryUrl[index].methodImage!,
                                 height: AppSize.s20,
                                 width: AppSize.s20,
                               );
@@ -98,13 +121,11 @@ class StoreWidget extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),
                               color: ColorManager.primaryDark),
                           child: Text('deals up to 50 % off',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: FontSize.s10)),
+                                  color: Colors.white, fontSize: FontSize.s10)),
                         ),
                         SizedBox(
                           width: AppSize.s6,
@@ -132,7 +153,6 @@ class StoreWidget extends StatelessWidget {
             ),
           ),
         ),
-
       ],
     );
   }
