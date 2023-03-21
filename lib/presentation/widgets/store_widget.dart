@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 
 import '../../domain/model/store_delivery_cost.dart';
 import '../resources/assets_manager.dart';
@@ -16,14 +13,17 @@ class StoreWidget extends StatefulWidget {
   final String workTime;
   final List<StoreDeliveryCost> imageDeliveryUrl;
   final bool isOpen;
+  final num reviewCount;
 
-  StoreWidget(
-      {required this.storeName,
-      required this.storeImageUrl,
-      required this.storeStars,
-      required this.isOpen,
-      required this.imageDeliveryUrl,
-      required this.workTime});
+  StoreWidget({
+    required this.storeName,
+    required this.storeImageUrl,
+    required this.storeStars,
+    required this.isOpen,
+    required this.imageDeliveryUrl,
+    required this.workTime,
+    required this.reviewCount,
+  });
 
   @override
   State<StoreWidget> createState() => _StoreWidgetState();
@@ -44,13 +44,15 @@ class _StoreWidgetState extends State<StoreWidget> {
               // crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                widget.storeImageUrl.isEmpty ? Image.asset(
-                  ImageAssets.brStore,
-                  height: AppSize.s75,
-                ) : Image.network(
-                  widget.storeImageUrl,
-                  height: AppSize.s75,
-                ),
+                // widget.storeImageUrl.isEmpty
+                //     ? Image.asset(
+                //         ImageAssets.brStore,
+                //         height: AppSize.s75,
+                //       )
+                //     : Image.network(
+                //         widget.storeImageUrl,
+                //         height: AppSize.s75,
+                //       ),
                 Column(
                   children: [
                     Row(
@@ -73,7 +75,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                         SizedBox(
                           width: AppSize.s10,
                         ),
-                        Text('(100+)')
+                        Text('(${widget.reviewCount}+)')
                       ],
                     ),
                     Row(
@@ -98,6 +100,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                     ),
                     Row(
                       children: [
+
                         Container(
                           height: AppSize.s30,
                           // width: 100,
@@ -116,35 +119,41 @@ class _StoreWidgetState extends State<StoreWidget> {
                           ),
                         ),
                         SizedBox(
-                          width: AppSize.s10,
+                          width: AppSize.s44,
                         ),
-                        Container(
-                          padding: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ColorManager.primaryDark),
-                          child: Text('deals up to 50 % off',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: FontSize.s10)),
+
+                        // Container(
+                        //   padding: EdgeInsets.all(6),
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       color: ColorManager.primaryDark),
+                        //   child: Text('deals up to 50 % off',
+                        //       style: TextStyle(
+                        //           color: Colors.white, fontSize: FontSize.s10)),
+                        // ),
+                        // SizedBox(
+                        //   width: AppSize.s6,
+                        // ),
+
+                        Visibility(
+                          visible: !widget.isOpen,
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                ImageAssets.preOrder,
+                                height: AppSize.s20,
+                                width: AppSize.s20,
+                              ),
+                              Text(
+                                'pre order',
+                                style: TextStyle(
+                                    fontSize: FontSize.s10,
+                                    color: ColorManager.primary),
+                              ),
+                            ],
+                          ),
                         ),
-                        SizedBox(
-                          width: AppSize.s6,
-                        ),
-                        Column(
-                          children: [
-                            Image.asset(
-                              ImageAssets.preOrder,
-                              height: AppSize.s20,
-                              width: AppSize.s20,
-                            ),
-                            Text(
-                              'pre order',
-                              style: TextStyle(
-                                  fontSize: FontSize.s10,
-                                  color: ColorManager.primary),
-                            )
-                          ],
-                        )
+
                       ],
                     ),
                   ],

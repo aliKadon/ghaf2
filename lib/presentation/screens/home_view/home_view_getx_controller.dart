@@ -21,6 +21,7 @@ class HomeViewGetXController extends GetxController with Helpers {
 
   String address = '';
   var city = 'address'.obs;
+  var isLoadingPopular = true;
 
   // #############################################
   //get all information from latitude and longitude
@@ -136,10 +137,11 @@ class HomeViewGetXController extends GetxController with Helpers {
     return await Geolocator.getCurrentPosition();
   }
 
-  void getMostPopularProduct() async {
+  void getMostPopularProduct({String? bid}) async {
 
     try {
-      mostPopular = await _storeApiController.getMostPopularProduct();
+      mostPopular = await _storeApiController.getMostPopularProduct(bid: bid);
+      isLoadingPopular = false;
       update();
     }catch(error) {
       showSnackBar(context, message: error.toString(),error: true);

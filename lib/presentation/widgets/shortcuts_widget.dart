@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -6,22 +8,39 @@ import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/store_view/onsale_view.dart';
+import '../screens/store_view/trending_view.dart';
 
 class ShortcutsWidget extends StatelessWidget {
 
   final String text;
   final String imageUrl;
-  ShortcutsWidget({required this.text,required this.imageUrl});
+  final String bid;
+  ShortcutsWidget({required this.text,required this.imageUrl,required this.bid});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => OnsaleView(),
-          ),
-        );
+        if(text == AppLocalizations.of(context)!.discount) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => OffersScreenNew(),
+            ),
+          );
+        }else if (text == AppLocalizations.of(context)!.on_sale) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => OnsaleView(),
+            ),
+          );
+        }else if (text == AppLocalizations.of(context)!.trending ) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => TrendingView(bid: bid),
+            ),
+          );
+        }
+
       },
       child: Container(
         width: AppSize.s92,
@@ -69,8 +88,8 @@ class ShortcutsWidget extends StatelessWidget {
                     Image.asset(
                       // base64Decode(category.categoryImage ?? ''),
                       imageUrl,
-                      width: AppSize.s30,
-                      height: AppSize.s40,
+                      width: AppSize.s40,
+                      height: AppSize.s36,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(

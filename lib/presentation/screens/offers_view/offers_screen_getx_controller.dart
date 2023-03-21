@@ -35,12 +35,12 @@ class OffersScreenGetXController extends GetxController with Helpers {
   // }
 
   // get offers.
-  void getOffers({required BuildContext context}) async {
+  void getOffers({required BuildContext context,String? cid,String? bid,String? sid}) async {
 
     // offers = await _storeApiController.getOffers();
     // isOffersLoading = false;
     try {
-      offers = await _storeApiController.getOffers();
+      offers = await _storeApiController.getOffers(cid: cid,bid: bid,sid: sid);
       await _storeApiController.getProducts();
       isOffersLoading = false;
       update();

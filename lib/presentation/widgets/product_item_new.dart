@@ -61,13 +61,13 @@ class _ProductItemNewState extends State<ProductItemNew> {
                     alignment: Alignment.topRight,
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.29,
+                        height: MediaQuery.of(context).size.height * 0.2,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                             image: NetworkImage(widget.image),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.scaleDown,
                           ),
                         ),
                       ),
@@ -84,7 +84,7 @@ class _ProductItemNewState extends State<ProductItemNew> {
                                     borderRadius: BorderRadius.circular(100),
                                     color: Colors.black54),
                                 padding: EdgeInsets.all(8),
-                                child: _homeViewGetXController.products[widget.index].isFavorite! ?Image.asset(
+                                child: widget.isFavorite! ?Image.asset(
                                   IconsAssets.heart1,
                                   height: AppSize.s24,
                                   width: AppSize.s24,

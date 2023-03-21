@@ -17,6 +17,7 @@ class Store {
   num? reviewCount;
   String? storeLogoImage;
   num? storeSales;
+  num? storeStars;
 
   Store({
     this.storeName,
@@ -34,6 +35,7 @@ class Store {
     this.storeLogoImage,
     this.storeSales,
     this.subscriptionExpired,
+    this.storeStars,
   });
 
   factory Store.fromJson(Map<String, dynamic> json) => Store(
@@ -53,6 +55,7 @@ class Store {
         storeLogoImage: json['storeLogoImage'],
         storeSales: json['storeSales'],
         subscriptionExpired: json['subscriptionExpired'],
+        storeStars: json['storeStars'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +74,6 @@ class Store {
         'storeLogoImage': storeLogoImage,
         'storeSales': storeSales,
         'subscriptionExpired': subscriptionExpired,
+        'storeStars': storeStars,
       };
 }

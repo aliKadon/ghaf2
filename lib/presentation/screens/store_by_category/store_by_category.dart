@@ -55,9 +55,9 @@ class StoreByCategory extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => StoreView(),
-                    ));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => StoreView(),
+                    // ));
                   },
                   child: Column(
                     children: [

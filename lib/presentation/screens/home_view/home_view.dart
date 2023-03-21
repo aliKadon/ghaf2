@@ -475,6 +475,7 @@ class _HomeViewState extends State<HomeView> {
                                     itemCount: 2,
                                     itemBuilder: (context, index) {
                                       return ShortcutsWidget(
+                                        bid: '',
                                         imageUrl: ImageAssets.trending,
                                         text: 'Trending',
                                       );
@@ -525,10 +526,10 @@ class _HomeViewState extends State<HomeView> {
                         shrinkWrap: true,
                         padding: EdgeInsets.all(12),
                         scrollDirection: Axis.horizontal,
-                        itemCount: _homeViewGetXController.mostPopular.length,
+                        itemCount: controller.mostPopular.length,
                         itemBuilder: (context, index) {
                           return ProductItemNew(
-                            index: 0,
+                            index: index,
                             image: _homeViewGetXController
                                     .mostPopular[index].productImages?[index] ??
                                 '',

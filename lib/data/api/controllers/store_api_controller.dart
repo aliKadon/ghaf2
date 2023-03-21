@@ -21,18 +21,18 @@ import '../api_helper.dart';
 class StoreApiController with ApiHelper, Helpers {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
-  Future<List<Product>> getMostPopularProduct() async {
+  Future<List<Product>> getMostPopularProduct({String? bid}) async {
     // // print('send request : getProducts');
-    // Map<String, dynamic> queryParameters = {
-    //   'sid': sid,
-    //   'filter':
-    //   "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
-    //       0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
-    // };
+    Map<String, dynamic> queryParameters = {
+      'bid': bid,
+      // 'filter':
+      // "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ??
+      //     0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+    };
     // // print(queryParameters);
     final Response response = await _dio.get(
       '/product/get-trending-products',
-      // queryParameters: queryParameters,
+      queryParameters: queryParameters,
       options: Options(
         headers: headers,
       ),
@@ -421,5 +421,18 @@ class StoreApiController with ApiHelper, Helpers {
       }
     }
     return [];
+  }
+
+  Future<Branch?> getBranchById({required String branchId}) async{
+    var url = Uri.parse('${Constants.baseUrl}/Store/get-branch-byId?id=$branchId');
+    var response = await http.get(url,headers: headers);
+
+    if(response.statusCode == 200 ) {
+      var jsonData = jsonDecode(response.body);
+      if(jsonData['status'] == 200) {
+        return Branch.fromJson(jsonData['data']);
+      }
+    }
+    return null;
   }
 }

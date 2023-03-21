@@ -23,6 +23,7 @@ class CheckOutGetxController extends GetxController with Helpers {
   List<PaymentMethod> paymentMethod = [];
   List<OrderToPay> orderToPay = [];
   List<PromoCode> promoCodes = [];
+  List<Order> customerOrder = [];
   late Order? order;
   var isLoading = true.obs;
   var isLoadingOrderToPay = true;
@@ -88,15 +89,15 @@ class CheckOutGetxController extends GetxController with Helpers {
           PromoCode: PromoCode,
           SheduleInfo: SheduleInfo,
           useRedeemPoints: useRedeemPoints);
-      if(apiResponse.status == 200) {
+      if (apiResponse.status == 200) {
         Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => CheckOutConfirmView(orderId: orderId),
         ));
         showSnackBar(context, message: apiResponse.message);
-      }else {
+      } else {
         Navigator.of(context).pop();
-        showSnackBar(context, message: apiResponse.message,error: true);
+        showSnackBar(context, message: apiResponse.message, error: true);
       }
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
@@ -111,7 +112,7 @@ class CheckOutGetxController extends GetxController with Helpers {
     required num cardExpYear,
     String? lastPage,
   }) async {
-    showLoadingDialog(context: context,title: 'adding...');
+    showLoadingDialog(context: context, title: 'adding...');
     try {
       apiResponse = await _paymentMethodApiController.addPaymentMethod(
           cardNumber: cardNumber,
@@ -142,7 +143,7 @@ class CheckOutGetxController extends GetxController with Helpers {
           builder: (context) => TopUpScreen(screenName: 'payLater'),
         ));
       }
-      if(lastPage == null) {
+      if (lastPage == null) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => PaymentMethodRedeemPointScreen()));
       }
@@ -186,6 +187,15 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
+  void getCustomerOrder({required BuildContext context}) async {
+    try {
+      customerOrder = await _ordersApiController.getCustomerOrder();
+      update();
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
   Future<void> getDurationGoogleMap({
     required double LatOne,
     required double LonOne,
@@ -218,9 +228,11 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
-  void getPromoCode({required BuildContext context}) async {
+  void getPromoCode(
+      {required BuildContext context, required int status}) async {
     try {
-      promoCodes = await _paymentMethodApiController.getPromoCode();
+      promoCodes =
+          await _paymentMethodApiController.getPromoCode(status: status);
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString());

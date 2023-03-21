@@ -863,7 +863,7 @@ mixin Helpers {
                                                       AppLocalizations.of(
                                                           context)!.recommended
                                                       ? 'storeSales'
-                                                      : 'stars');
+                                                      : 'storeStars');
                                               Navigator.of(context).pop();
                                             },
                                             child:

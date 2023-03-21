@@ -33,7 +33,7 @@ class _PaymentMethodRedeemPointScreenState
   void initState() {
     // TODO: implement initState
     _checkOutGetxController.getPaymentMethod(context: context);
-    _checkOutGetxController.getPromoCode(context: context);
+    _checkOutGetxController.getPromoCode(context: context,status: -1);
     _profileGetxController.init(context: context);
     super.initState();
   }

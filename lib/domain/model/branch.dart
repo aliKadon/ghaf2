@@ -23,6 +23,8 @@ class Branch {
     this.deleted,
     this.isOpen,
     this.todayWorkHoursToString,
+    this.storeStars,
+    this.reviewCount,
   });
 
   String? id;
@@ -45,6 +47,8 @@ class Branch {
   List<StoreDeliveryCost>? storeDeliveryCost;
   bool? isOpen;
   String? todayWorkHoursToString;
+  num? storeStars;
+  num? reviewCount;
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
         id: json["id"],
@@ -62,8 +66,9 @@ class Branch {
         branchTimes: json["branchTimes"],
         storeName: json["storeName"],
         whatsApp: json["whatsApp"],
-        storeDeliveryCost: json["storeDeliveryCost"] == null ? null : List<StoreDeliveryCost>.from(
-            json["storeDeliveryCost"]
+        storeDeliveryCost: json["storeDeliveryCost"] == null
+            ? null
+            : List<StoreDeliveryCost>.from(json["storeDeliveryCost"]
                 .map((x) => StoreDeliveryCost.fromJson(x))),
 
         // json["storeDeliveryCost"] == null
@@ -77,6 +82,8 @@ class Branch {
         deleted: json["deleted"],
         isOpen: json["isOpen"],
         todayWorkHoursToString: json["todayWorkHoursToString"],
+        storeStars: json['storeStars'],
+        reviewCount: json['reviewCount'],
         // storeDeliveryCost: List<StoreDeliveryCost>.from(
         //     json["storeDeliveryCost"].map((x) => StoreDeliveryCost.fromJson(x))),
       );
@@ -102,6 +109,8 @@ class Branch {
         "deleted": deleted,
         "todayWorkHoursToString": todayWorkHoursToString,
         "isOpen": isOpen,
+        "storeStars": storeStars,
+        "reviewCount": reviewCount,
 
         // "storeDeliveryCost": List<dynamic>.from(storeDeliveryCost!.map((x) => x.toJson()))
       };

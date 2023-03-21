@@ -91,7 +91,7 @@ class OrdersApiController with ApiHelper {
     String? PromoCode,
     bool? useWallet,
     bool? asap,
-    Map<String,dynamic>? SheduleInfo,
+    Map<String, dynamic>? SheduleInfo,
     bool? useRedeemPoints = false,
     bool? usePayLater = false,
     required String PaymentMethodId,
@@ -106,12 +106,12 @@ class OrdersApiController with ApiHelper {
           'deliveryPoint': deliveryPoint,
           'useRedeemPoints': useRedeemPoints,
           'usePayLater': usePayLater,
-          'OrderNotes' : OrderNotes,
+          'OrderNotes': OrderNotes,
           'PaymentMethodId': PaymentMethodId,
           'PromoCode': PromoCode,
-          'Asap' : asap,
-          'UseWallet' : useWallet,
-          'SheduleInfo' : SheduleInfo,
+          'Asap': asap,
+          'UseWallet': useWallet,
+          'SheduleInfo': SheduleInfo,
         }));
     print('============================================ pay for order');
     print(response.statusCode);
@@ -122,8 +122,7 @@ class OrdersApiController with ApiHelper {
       if (jsonData['status'] == 200) {
         return ApiResponse(
             message: jsonData['message'], status: jsonData['status']);
-
-      }else {
+      } else {
         return ApiResponse(
             message: jsonData['message'], status: jsonData['status']);
       }
@@ -131,20 +130,34 @@ class OrdersApiController with ApiHelper {
     return failedResponse;
   }
 
-  Future<Order?> getOrderById({required String orderId}) async{
-    var url = Uri.parse('${Constants.baseUrl}/orders/get-order-by-id?id=$orderId');
+  Future<Order?> getOrderById({required String orderId}) async {
+    var url =
+        Uri.parse('${Constants.baseUrl}/orders/get-order-by-id?id=$orderId');
 
-    var response = await http.get(url,headers: headers);
+    var response = await http.get(url, headers: headers);
 
     print('=======================order by id');
     print(response.body);
 
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {
         return Order.fromJson(jsonData['data']);
       }
     }
     return null;
+  }
+
+  Future<List<Order>> getCustomerOrder() async {
+    var url = Uri.parse('${Constants.baseUrl}/Orders/get-customer-order');
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<Order>.from(jsonData['data'].map((x) => Order.fromJson(x)));
+      }
+    }
+    return [];
   }
 }

@@ -12,6 +12,9 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class OffersScreenNew extends StatefulWidget {
+
+  String? bid;
+  OffersScreenNew({this.bid});
   @override
   State<OffersScreenNew> createState() => _OffersScreenNewState();
 }
@@ -22,7 +25,7 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
 
   @override
   void initState() {
-    _offersScreenGetXController.getOffers(context: context);
+    _offersScreenGetXController.getOffers(context: context,bid:widget.bid ?? '' );
     super.initState();
   }
 
@@ -30,7 +33,6 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<OffersScreenGetXController>(
-        id: 'isOffersLoading',
         builder: (controller) =>  _offersScreenGetXController.isOffersLoading
             ? Center(
                 child: Container(

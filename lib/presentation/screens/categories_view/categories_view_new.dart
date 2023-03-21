@@ -5,6 +5,7 @@ import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/store_view/store_view.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -221,16 +222,30 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                       itemBuilder: (context, index) {
                         return InkWell(
                             onTap: () {
-                              showStoreClosedPreOrderSheet(context: context);
+                              if (controller.stores[index].isOpen!) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => StoreView(
+                                      branchId: _categoriesGetxController
+                                          .stores[index].id!),
+                                ));
+                              } else if (controller.stores[index].isOpen ==
+                                  false) {
+                                showStoreClosedPreOrderSheet(context: context);
+                              }
                             },
                             child: StoreWidget(
-                              storeName: controller.stores[index].branchName ?? '',
+                              storeName:
+                                  controller.stores[index].branchName ?? '',
                               storeImageUrl:
                                   controller.stores[index].branchLogoImage!,
-                              storeStars: 1,
-                              imageDeliveryUrl: controller.stores[index].storeDeliveryCost!,
+                              storeStars: controller.stores[index].storeStars!,
+                              imageDeliveryUrl:
+                                  controller.stores[index].storeDeliveryCost!,
                               isOpen: controller.stores[index].isOpen!,
-                              workTime: controller.stores[index].todayWorkHoursToString!,
+                              workTime: controller
+                                  .stores[index].todayWorkHoursToString!,
+                              reviewCount:
+                                  controller.stores[index].reviewCount!,
                             ));
                       },
                     ),
