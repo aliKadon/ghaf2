@@ -24,6 +24,7 @@ import 'package:provider/provider.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../widgets/shortcuts_widget.dart';
+import '../checkout/check_out_getx_controller.dart';
 import '../login_view/login_view_getx_controller.dart';
 import '../profile/profile_setting/profile_setting_getx_controller.dart';
 import 'home_view_getx_controller.dart';
@@ -57,7 +58,8 @@ class _HomeViewState extends State<HomeView> {
   // controller.
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
-
+  late final CheckOutGetxController _checkOutGetxController =
+  Get.put(CheckOutGetxController());
   late final Product _product = Get.put(Product());
   late final ProfileSettingGetxController _profileSettingGetxController =
       Get.put(ProfileSettingGetxController());
@@ -67,9 +69,10 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     _homeViewGetXController.init(context: context);
 
-    // Get.put(Product());
+    Get.put(Product());
     Get.put(LoginViewGetXController(context: context));
     _profileSettingGetxController.getUserDetails(context);
+    _checkOutGetxController.getCustomerOrder(context: context);
     _homeViewGetXController.determinePosition().then((value) => getLocation()
         .then((value) => _homeViewGetXController.GetAddressFromLatLong(
                 LatLng(position.latitude, position.longitude))
@@ -325,7 +328,7 @@ class _HomeViewState extends State<HomeView> {
                                                       .size
                                                       .height *
                                                   0.02),
-                                          AppSharedData.currentUser!.ghafGold!
+                                          AppSharedData.currentUser?.ghafGold ?? false
                                               ? ElevatedButton(
                                                   // onPressed: () {},
                                                   style: ButtonStyle(
@@ -335,7 +338,7 @@ class _HomeViewState extends State<HomeView> {
                                                                   .primaryDark)),
                                                   onPressed: () {
                                                     _subscribeViewGetXController
-                                                        .cancelSubscription();
+                                                        .cancelSubscription(context: context);
                                                   },
                                                   child: Text(
                                                     AppLocalizations.of(
@@ -519,7 +522,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   GetBuilder<HomeViewGetXController>(
-                    id: 'products',
+                    // id: 'products',
                     builder: (controller) => Container(
                       height: MediaQuery.of(context).size.height * 0.45,
                       child: ListView.builder(
@@ -528,26 +531,31 @@ class _HomeViewState extends State<HomeView> {
                         scrollDirection: Axis.horizontal,
                         itemCount: controller.mostPopular.length,
                         itemBuilder: (context, index) {
-                          return ProductItemNew(
-                            index: index,
-                            image: _homeViewGetXController
+                          return GetBuilder<Product>(
+                            builder:(controller) {
+                              print('==================favorite');
+                              print(_homeViewGetXController.mostPopular[index].isFavorite);
+                              return ProductItemNew(
+                                index: index,
+                                image: _homeViewGetXController
                                     .mostPopular[index].productImages?[index] ??
-                                '',
-                            name: _homeViewGetXController
+                                    '',
+                                name: _homeViewGetXController
                                     .mostPopular[index].name ??
-                                '',
-                            price: _homeViewGetXController
+                                    '',
+                                price: _homeViewGetXController
                                     .mostPopular[index].price ??
-                                0,
-                            stars: _homeViewGetXController
+                                    0,
+                                stars: _homeViewGetXController
                                     .mostPopular[index].stars ??
-                                0,
-                            idProduct:
+                                    0,
+                                idProduct:
                                 _homeViewGetXController.mostPopular[index].id ??
                                     '',
-                            isFavorite: _homeViewGetXController
-                                    .mostPopular[index].isFavorite ??
-                                false,
+                                isFavorite: _homeViewGetXController.mostPopular[index].isFavorite ??
+                                    false,
+                              );
+                            },
                           );
                         },
                       ),
@@ -583,87 +591,89 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.25,
-                    child: ListView.builder(
-                      padding: EdgeInsets.all(8),
+                    child: GetBuilder<CheckOutGetxController>(
+                      builder: (controller) => ListView.builder(
+                        padding: EdgeInsets.all(8),
 
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      physics: const BouncingScrollPhysics(),
-                      // gridDelegate:
-                      //     SliverGridDelegateWithFixedCrossAxisCount(
-                      //   crossAxisCount: Constants.crossAxisCount,
-                      //   mainAxisExtent: Constants.mainAxisExtent,
-                      //   mainAxisSpacing: Constants.mainAxisSpacing,
-                      // ),
-                      itemBuilder: (context, index) {
-                        return Builder(
-                          builder: (context) {
-                            // Get.put<Product>(
-                            //   _homeViewGetXController.products[index],
-                            //   tag:
-                            //       '${_homeViewGetXController.products[index].id}home',
-                            // );
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.11,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.27,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image:
-                                                AssetImage(ImageAssets.brStore),
-                                            fit: BoxFit.cover,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.customerOrder.length,
+                        physics: const BouncingScrollPhysics(),
+                        // gridDelegate:
+                        //     SliverGridDelegateWithFixedCrossAxisCount(
+                        //   crossAxisCount: Constants.crossAxisCount,
+                        //   mainAxisExtent: Constants.mainAxisExtent,
+                        //   mainAxisSpacing: Constants.mainAxisSpacing,
+                        // ),
+                        itemBuilder: (context, index) {
+                          return Builder(
+                            builder: (context) {
+                              // Get.put<Product>(
+                              //   _homeViewGetXController.products[index],
+                              //   tag:
+                              //       '${_homeViewGetXController.products[index].id}home',
+                              // );
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.11,
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.27,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            image: DecorationImage(
+                                              image:
+                                                  AssetImage(ImageAssets.brStore),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 14,
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text('baskin robbins',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          color: ColorManager.primaryDark)),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.timer,
-                                        color: ColorManager.grey,
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text('20 min',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              color: ColorManager.primaryDark)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
+                                        SizedBox(
+                                          width: 14,
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('${controller.customerOrder[index].branch!.storeName}',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: ColorManager.primaryDark)),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.timer,
+                                          color: ColorManager.grey,
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text('20 min',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: ColorManager.primaryDark)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Container(

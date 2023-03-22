@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
 import 'package:ghaf_application/presentation/widgets/pre_order_widget.dart';
 
 import '../../resources/color_manager.dart';
@@ -157,27 +158,51 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       itemCount: controller.customerOrder.length,
                       itemBuilder: (context, index) {
                         return selected == 0
-                            ? Column(
-                                children: [
-                                  MyOrdersWidget(
-                                      date: controller
-                                          .customerOrder[index].createDate!,
-                                      price: (controller.customerOrder[index]
-                                              .orderCostForCustomer)
-                                          .toString(),
-                                      orderSequence: (controller
-                                              .customerOrder[index]
-                                              .sequenceNumber)
-                                          .toString()),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 12.0, left: 12.0),
-                                    child: Divider(
-                                      thickness: 1,
-                                      color: ColorManager.greyLight,
-                                    ),
-                                  )
-                                ],
+                            ? GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => OrderTrackingScreen(
+                                        orderId:
+                                            controller.customerOrder[index].id!,
+                                        source: controller.customerOrder[index]
+                                            .deliveryPoint!,
+                                        destination: controller
+                                            .customerOrder[index]
+                                            .branch!
+                                            .branchAddress!),
+                                  ));
+                                },
+                                child: Column(
+                                  children: [
+                                    MyOrdersWidget(
+                                        date: controller
+                                            .customerOrder[index].createDate!,
+                                        price: (controller.customerOrder[index]
+                                                .orderCostForCustomer)
+                                            .toString(),
+                                        orderSequence: (controller
+                                                .customerOrder[index]
+                                                .sequenceNumber)
+                                            .toString(),
+                                        branchName: controller
+                                            .customerOrder[index]
+                                            .branch!
+                                            .storeName!,
+                                        branchAddress: controller
+                                                .customerOrder[index]
+                                                .branch!
+                                                .branchAddress ??
+                                            null),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 12.0, left: 12.0),
+                                      child: Divider(
+                                        thickness: 1,
+                                        color: ColorManager.greyLight,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               )
                             : selected == 1
                                 ? PreOrderWidget()

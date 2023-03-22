@@ -28,7 +28,7 @@ class OrderTrackingScreen extends StatefulWidget {
   final Address destination;
 
   OrderTrackingScreen(
-      {required this.orderId, required this.source, required this.destination});
+      {required this.orderId, required this.source,required this.destination});
 
   @override
   State<OrderTrackingScreen> createState() => _OrderTrackingScreenState();
@@ -174,7 +174,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
     _checkOutGetxController.getDurationGoogleMap(
         LatOne: double.parse(widget.source.altitude!),
         LonOne: double.parse(widget.source.longitude!),
-        LatTow: double.parse(widget.destination.altitude!),
+        LatTow: double.parse((widget.destination.altitude! )),
         LonTow: double.parse(widget.destination.longitude!));
 
     super.initState();
@@ -441,10 +441,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                     ),
-                                    Text(
-                                      'One of our delivery representatives',
-                                      style: TextStyle(
-                                          color: ColorManager.greyLight),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child: Text(
+                                        'One of our delivery representatives',
+                                        overflow: TextOverflow.clip,
+                                        style: TextStyle(
+                                            color: ColorManager.greyLight),
+                                      ),
                                     ),
                                   ],
                                 ),

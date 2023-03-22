@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:ghaf_application/domain/model/cart_item.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 
 import '../../resources/color_manager.dart';
@@ -43,126 +43,133 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<CartViewGetXController>(
-
         builder: (controller) => SafeArea(
-          child: _cartViewGetXController.isMyCartLoading
-              ? Center(
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 1,
+          child: AppSharedData.currentUser == null
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                )
-              : _cartViewGetXController.cartItems.length == 0
-                  ? Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: 20,
+                        Spacer(),
+                        Text(
+                          AppLocalizations.of(context)!.my_cart,
+                          style: getSemiBoldStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s18,
+                          ),
                         ),
+                        Spacer(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppSize.s12,
+                    ),
+                    Divider(height: 1, color: ColorManager.greyLight),
+                    SizedBox(
+                      height: AppSize.s75,
+                    ),
+                    Column(
+                      children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Spacer(),
                             Text(
-                              AppLocalizations.of(context)!.my_cart,
-                              style: getSemiBoldStyle(
-                                color: ColorManager.primaryDark,
-                                fontSize: FontSize.s18,
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppSize.s12,
-                        ),
-                        Divider(height: 1, color: ColorManager.greyLight),
-                        SizedBox(
-                          height: AppSize.s75,
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '${AppLocalizations.of(context)!.welcome_to_the} ',
-                                  style: TextStyle(
-                                      color: ColorManager.grey,
-                                      fontSize: FontSize.s14),
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .ghaf_application,
-                                  style: TextStyle(
-                                      color: ColorManager.primary,
-                                      fontSize: FontSize.s14,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.in_order_to_add,
+                              '${AppLocalizations.of(context)!.welcome_to_the} ',
                               style: TextStyle(
                                   color: ColorManager.grey,
                                   fontSize: FontSize.s14),
-                              overflow: TextOverflow.clip,
-                            )
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.ghaf_application,
+                              style: TextStyle(
+                                  color: ColorManager.primary,
+                                  fontSize: FontSize.s14,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: AppSize.s75,
-                        ),
-                        Image.asset(ImageAssets.emptyCard),
-                        SizedBox(
-                          height: AppSize.s46,
-                        ),
-                        Container(
-                          height: AppSize.s58,
-                          width: double.infinity,
-                          padding: EdgeInsets.all(4),
-                          child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text(AppLocalizations.of(context)!
-                                  .getting_started)),
+                        Text(
+                          AppLocalizations.of(context)!.in_order_to_add,
+                          style: TextStyle(
+                              color: ColorManager.grey, fontSize: FontSize.s14),
+                          overflow: TextOverflow.clip,
                         )
                       ],
+                    ),
+                    SizedBox(
+                      height: AppSize.s75,
+                    ),
+                    Image.asset(ImageAssets.emptyCard),
+                    SizedBox(
+                      height: AppSize.s46,
+                    ),
+                    Container(
+                      height: AppSize.s58,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(4),
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                              AppLocalizations.of(context)!.getting_started)),
                     )
-                  : Column(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20,
+                  ],
+                )
+              : _cartViewGetXController.isMyCartLoading
+                  ? Center(
+                      child: Container(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    )
+                  : _cartViewGetXController.cartItems.length == 0
+                      ? Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.cart_is_empty,
+                              style: TextStyle(
+                                  fontSize: FontSize.s18,
+                                  color: ColorManager.primary,
+                                  fontWeight: FontWeight.w600)),
+                        )
+                      : Column(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Spacer(),
-                            Text(
-                              AppLocalizations.of(context)!.my_cart,
-                              style: getSemiBoldStyle(
-                                color: ColorManager.primaryDark,
-                                fontSize: FontSize.s18,
-                              ),
+                            SizedBox(
+                              height: 20,
                             ),
-                            Spacer(),
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppSize.s12,
-                        ),
-                        Divider(height: 1, color: ColorManager.greyLight),
-                        SizedBox(
-                          height: AppSize.s12,
-                        ),
-                        Container(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                Text(
+                                  AppLocalizations.of(context)!.my_cart,
+                                  style: getSemiBoldStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontSize: FontSize.s18,
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                            SizedBox(
+                              height: AppSize.s12,
+                            ),
+                            Divider(height: 1, color: ColorManager.greyLight),
+                            SizedBox(
+                              height: AppSize.s12,
+                            ),
+                            Container(
                               height: MediaQuery.of(context).size.height * 0.45,
                               child: ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: _cartViewGetXController.cartItems.length,
+                                itemCount:
+                                    _cartViewGetXController.cartItems.length,
                                 itemBuilder: (context, index) {
                                   print('================cart screen');
                                   print(_cartViewGetXController
@@ -175,8 +182,10 @@ class _CartScreenState extends State<CartScreen> {
                                         .cartItems[index].product!.name!,
                                     price: _cartViewGetXController
                                         .cartItems[index].product!.price!,
-                                    image: _cartViewGetXController.cartItems[index]
-                                        .product!.productImages![0],
+                                    image: _cartViewGetXController
+                                        .cartItems[index]
+                                        .product!
+                                        .productImages![0],
                                     isoCurrencySymbol: _cartViewGetXController
                                         .cartItems[index]
                                         .product!
@@ -189,33 +198,33 @@ class _CartScreenState extends State<CartScreen> {
                                 },
                               ),
                             ),
-
-                        Divider(
-                          thickness: 1,
-                          color: ColorManager.greyLight,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.order_Summary,
-                                style: TextStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 17),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              GetBuilder<CartViewGetXController>(
-                                builder: (controller) =>  Column(
+                            Divider(
+                              thickness: 1,
+                              color: ColorManager.greyLight,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.order_Summary,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 17),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  GetBuilder<CartViewGetXController>(
+                                    builder: (controller) => Column(
                                       children: [
                                         Row(
                                           children: [
                                             Text(
-                                              AppLocalizations.of(context)!.subtotal,
+                                              AppLocalizations.of(context)!
+                                                  .subtotal,
                                               style: TextStyle(
                                                   color: ColorManager.greyLight,
                                                   fontWeight: FontWeight.w400,
@@ -233,7 +242,8 @@ class _CartScreenState extends State<CartScreen> {
                                         Row(
                                           children: [
                                             Text(
-                                              AppLocalizations.of(context)!.discount,
+                                              AppLocalizations.of(context)!
+                                                  .discount,
                                               style: TextStyle(
                                                   color: ColorManager.greyLight,
                                                   fontWeight: FontWeight.w400,
@@ -255,9 +265,11 @@ class _CartScreenState extends State<CartScreen> {
                                         Row(
                                           children: [
                                             Text(
-                                              AppLocalizations.of(context)!.total,
+                                              AppLocalizations.of(context)!
+                                                  .total,
                                               style: TextStyle(
-                                                  color: ColorManager.primaryDark,
+                                                  color:
+                                                      ColorManager.primaryDark,
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 15),
                                             ),
@@ -267,37 +279,37 @@ class _CartScreenState extends State<CartScreen> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 13,
-                                                  color: ColorManager.primaryDark),
+                                                  color:
+                                                      ColorManager.primaryDark),
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
+                                  ),
+                                ],
                               ),
-
-
-                            ],
-                          ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: AppSize.s82,
+                              padding: EdgeInsets.all(AppSize.s16),
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15)))),
+                                  onPressed: () {
+                                    // _cartViewGetXController.emptyBasket(context);
+                                    _cartViewGetXController
+                                        .createOrder(context);
+                                  },
+                                  child: Text(AppLocalizations.of(context)!
+                                      .place_order)),
+                            )
+                          ],
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: AppSize.s82,
-                          padding: EdgeInsets.all(AppSize.s16),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  shape: MaterialStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15)))),
-                              onPressed: () {
-                                // _cartViewGetXController.emptyBasket(context);
-                                _cartViewGetXController.createOrder(context);
-                              },
-                              child: Text(
-                                  AppLocalizations.of(context)!.place_order)),
-                        )
-                      ],
-                    ),
         ),
       ),
     );

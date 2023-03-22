@@ -417,7 +417,7 @@ class RouteGenerator {
               Get.put<SubscribeViewGetXController>(
                 SubscribeViewGetXController(context: _),
               );
-              return const SubscribeViewFromHomePage();
+              return SubscribeViewFromHomePage();
             },
           ),
         );

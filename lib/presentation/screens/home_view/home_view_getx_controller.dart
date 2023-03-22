@@ -61,8 +61,10 @@ class HomeViewGetXController extends GetxController with Helpers {
 
   set isProductsLoading(bool value) {
     _isProductsLoading = value;
-    update(['products']);
+    // update(['products']);
+    update();
   }
+
 
   bool get isSearching => _isSearching;
 
@@ -157,6 +159,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       SharedPrefController()
           .setFirstStoreName(categories[0].id!);
       isCategoryLoading = false;
+      update();
 
     } catch (error) {
       // error.

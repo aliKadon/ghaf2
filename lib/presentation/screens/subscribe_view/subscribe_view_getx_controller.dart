@@ -18,6 +18,8 @@ class SubscribeViewGetXController extends GetxController with Helpers {
   // constructor fields.
   final BuildContext context;
 
+  var isLoadingSubscribePlan = true;
+
   // constructor.
   SubscribeViewGetXController({
     required this.context,
@@ -55,13 +57,15 @@ class SubscribeViewGetXController extends GetxController with Helpers {
   void getSubscriptionPlan() async {
     try {
       subscriptionPlan = await _subscriptionApiController.getSubscriptionPlan();
+      isLoadingSubscribePlan = false;
+      update();
     }catch(error) {
       showSnackBar(context, message: error.toString(),error: true);
     }
   }
 
   // subscribe as ghaf golden.
-  void subscribeAsGhafGolden({required String paymentMethodId ,required String planId}) async {
+  void subscribeAsGhafGolden({required BuildContext context,required String paymentMethodId ,required String planId}) async {
     try {
       showLoadingDialog(context: context, title: 'Subscribing');
       final ApiResponse subscribeAsGhafGoldenApiResponse =
@@ -90,7 +94,7 @@ class SubscribeViewGetXController extends GetxController with Helpers {
   }
 
   // cancel subscription.
-  void cancelSubscription() async {
+  void cancelSubscription({required BuildContext context}) async {
     try {
       showLoadingDialog(context: context, title: 'Canceling');
       final ApiResponse cancelSubscriptionApiResponse =

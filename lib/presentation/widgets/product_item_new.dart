@@ -35,113 +35,114 @@ class ProductItemNew extends StatefulWidget {
 }
 
 class _ProductItemNewState extends State<ProductItemNew> {
-  late final Product _product = Get.put<Product>(Product());
+  late final Product _product = Get.find<Product>();
   HomeViewGetXController _homeViewGetXController =
   Get.find<HomeViewGetXController>();
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductViewNew(
-            idProduct: widget.idProduct,
-          ),
-        ));
-      },
-      child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.image),
-                            fit: BoxFit.scaleDown,
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProductViewNew(
+              idProduct: widget.idProduct,
+            ),
+          ));
+        },
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                              image: NetworkImage(widget.image),
+                              fit: BoxFit.scaleDown,
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
+                        InkWell(
 
-                            onTap: () {
-                               _product.toggleIsFavorite(
-                                  context: context, id: widget.idProduct);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.black54),
-                                padding: EdgeInsets.all(8),
-                                child: widget.isFavorite! ?Image.asset(
-                                  IconsAssets.heart1,
-                                  height: AppSize.s24,
-                                  width: AppSize.s24,
-                                  color: ColorManager.red,
-                                )
-                                    : Image.asset(
-                                  IconsAssets.heart,
-                                  height: AppSize.s24,
-                                  width: AppSize.s24,
+                              onTap: () {
+                                _product.toggleIsFavorite(
+                                    context: context, id: widget.idProduct);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: Colors.black54),
+                                  padding: EdgeInsets.all(8),
+                                  child: widget.isFavorite! ?Image.asset(
+                                    IconsAssets.heart1,
+                                    height: AppSize.s24,
+                                    width: AppSize.s24,
+                                    color: ColorManager.red,
+                                  )
+                                      : Image.asset(
+                                    IconsAssets.heart,
+                                    height: AppSize.s24,
+                                    width: AppSize.s24,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                    ],
-                  ),
-                  SizedBox(
-                    width: 14,
-                  )
-                ],
-              ),
-              Text(widget.name,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: ColorManager.primaryDark)),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: Text(
-                        '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
-                        overflow: TextOverflow.clip,
+                      ],
+                    ),
+                    SizedBox(
+                      width: 14,
+                    )
+                  ],
+                ),
+                Text(widget.name,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.primaryDark)),
+                Row(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: Text(
+                          '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.primaryDark)),
+                    ),
+                    SizedBox(
+                      width: 28,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(widget.stars.toString(),
                         style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             color: ColorManager.primaryDark)),
-                  ),
-                  SizedBox(
-                    width: 28,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(widget.stars.toString(),
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: ColorManager.primaryDark)),
-                ],
-              ),
-            ],
-          )),
+                  ],
+                ),
+              ],
+            )),
+
     );
   }
 }

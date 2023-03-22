@@ -50,7 +50,7 @@ class CartViewGetXController extends GetxController with Helpers {
   void getMyCart() async {
     try {
       cartItems = await _storeApiController.getMyCart();
-      calculateBell();
+      calculateBell(productCount: 1);
       isMyCartLoading = false;
       notifyMyCart();
     } catch (error) {
@@ -60,7 +60,7 @@ class CartViewGetXController extends GetxController with Helpers {
   }
 
   // calculate bell.
-  void calculateBell() async{
+  void calculateBell({required int productCount}) async{
     subTotal = 0;
     discount = 0;
     total = 0;
@@ -69,19 +69,19 @@ class CartViewGetXController extends GetxController with Helpers {
       subTotal += (cartItem.product?.productDiscount == null
           ? cartItem.product?.price ?? 0
           : ((cartItem.product!.price!))) *
-          cartItem.productCount!;
+          productCount!;
       subTotal2 += (cartItem.product?.discountValueForAllUsers == null
           ? cartItem.product?.price ?? 0
           : ((cartItem.product!.price! -
           (cartItem.product!.price! *
               int.parse(cartItem.product!.discountValueForAllUsers!) /
               100)))) *
-          cartItem.productCount!;
+          productCount!;
     }
     discount = subTotal - subTotal2;
     total = subTotal2;
     print('you in');
-    cartItems = await _storeApiController.getMyCart();
+    // cartItems = await _storeApiController.getMyCart();
     update();
     // notifyMyCart();
   }
@@ -104,7 +104,7 @@ class CartViewGetXController extends GetxController with Helpers {
     required int index,
   }) {
     cartItems.removeAt(index);
-    calculateBell();
+    calculateBell(productCount: 0);
     notifyMyCart();
   }
 

@@ -9,8 +9,10 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view.dart';
+import 'package:ghaf_application/presentation/screens/subscribe_view/payment_view_for_subscribe_new.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/dialogs/loading_dialog_widget.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +30,7 @@ import '../../presentation/screens/checkout/cancelling_order_screen.dart';
 mixin Helpers {
   //controller
   late final CheckOutGetxController _checkOutGetxController =
-  Get.find<CheckOutGetxController>();
+      Get.find<CheckOutGetxController>();
 
   String dropdownValue = 'Sunday';
   String dropdownValue1 = '11';
@@ -73,10 +75,9 @@ mixin Helpers {
   }) {
     showDialog(
       context: context,
-      builder: (_) =>
-          LoadingDialogWidget(
-            title: title,
-          ),
+      builder: (_) => LoadingDialogWidget(
+        title: title,
+      ),
       barrierDismissible: false,
     );
   }
@@ -93,223 +94,179 @@ mixin Helpers {
   Future showSheetGetHelpConfirm(BuildContext context) =>
       showSlidingBottomSheet(
         context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.4, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Text(
-                                textAlign: TextAlign.center,
-                                AppLocalizations.of(context)!
-                                    .your_request_will_be_handled_by_the_relevant_team_Thank_you,
-                                style: TextStyle(
-                                    fontSize: FontSize.s16,
-                                    fontWeight: FontWeight.w600,
-                                    color: ColorManager.grey)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Container(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 1,
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.06,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                  //   builder: (context) => RegisterScreen(),
-                                  // ));
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                    MaterialStatePropertyAll(ColorManager
-                                        .primary),
-                                    shape: MaterialStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                            side:
-                                            BorderSide(
-                                                color: ColorManager.primary),
-                                            borderRadius: BorderRadius.circular(
-                                                10)))),
-                                child: Text(
-                                  AppLocalizations.of(context)!.ok,
-                                  // 'Login',
-                                  style: getSemiBoldStyle(
-                                      color: ColorManager.white, fontSize: 18),
-                                ),
-                              ),
-                            ),
-                          ],
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.4, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(
+                        textAlign: TextAlign.center,
+                        AppLocalizations.of(context)!
+                            .your_request_will_be_handled_by_the_relevant_team_Thank_you,
+                        style: TextStyle(
+                            fontSize: FontSize.s16,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.grey)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          //   builder: (context) => RegisterScreen(),
+                          // ));
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(ColorManager.primary),
+                            shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    side:
+                                        BorderSide(color: ColorManager.primary),
+                                    borderRadius: BorderRadius.circular(10)))),
+                        child: Text(
+                          AppLocalizations.of(context)!.ok,
+                          // 'Login',
+                          style: getSemiBoldStyle(
+                              color: ColorManager.white, fontSize: 18),
                         ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
             ),
+          ),
+        ),
       );
 
-  Future showSheet(BuildContext context) =>
-      showSlidingBottomSheet(
+  Future showSheet(BuildContext context) => showSlidingBottomSheet(
         context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.4, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Text(AppLocalizations.of(context)!.canceling_order,
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w600,
-                                    color: ColorManager.primaryDark)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Text(AppLocalizations.of(context)!
-                                .are_you_sure_cancel,
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    color: ColorManager.primary)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Row(
-                              children: [
-                                Spacer(),
-                                Container(
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.3,
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.06,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CancellingOrderScreen(),
-                                          ));
-                                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                      //   builder: (context) => LoginScreen(),
-                                      // ));
-                                    },
-                                    style: ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll(
-                                            ColorManager.primaryDark),
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(10)))),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.yes,
-                                      // 'Login',
-                                      style: getSemiBoldStyle(
-                                          color: ColorManager.white,
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                                Container(
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.3,
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.06,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                      //   builder: (context) => RegisterScreen(),
-                                      // ));
-                                    },
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                        MaterialStatePropertyAll(Colors.white),
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                side: BorderSide(
-                                                    color: ColorManager
-                                                        .primaryDark),
-                                                borderRadius:
-                                                BorderRadius.circular(10)))),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.no,
-                                      // 'Login',
-                                      style: getSemiBoldStyle(
-                                          color: ColorManager.primaryDark,
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 150,
-                            ),
-                          ],
-                        ),
-                      ),
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.4, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
                     ),
-                  ),
+                    Text(AppLocalizations.of(context)!.canceling_order,
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.primaryDark)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(AppLocalizations.of(context)!.are_you_sure_cancel,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: ColorManager.primary)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => CancellingOrderScreen(),
+                              ));
+                              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              //   builder: (context) => LoginScreen(),
+                              // ));
+                            },
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    ColorManager.primaryDark),
+                                shape: MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)))),
+                            child: Text(
+                              AppLocalizations.of(context)!.yes,
+                              // 'Login',
+                              style: getSemiBoldStyle(
+                                  color: ColorManager.white, fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              //   builder: (context) => RegisterScreen(),
+                              // ));
+                            },
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.white),
+                                shape: MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: ColorManager.primaryDark),
+                                        borderRadius:
+                                            BorderRadius.circular(10)))),
+                            child: Text(
+                              AppLocalizations.of(context)!.no,
+                              // 'Login',
+                              style: getSemiBoldStyle(
+                                  color: ColorManager.primaryDark,
+                                  fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 150,
+                    ),
+                  ],
+                ),
+              ),
             ),
+          ),
+        ),
       );
 
-  Future showSubscribeSheet({required BuildContext context,
-    required List<SubscriptionPlan> subscriptionPlan,
-    required PaymentMethod paymentMethod,
-    required List<PaymentMethod> paymentMethodId}) {
+  Future showSubscribeSheet(
+      {required BuildContext context,
+      required List<SubscriptionPlan> subscriptionPlan,
+        String? last4DigitNumber,
+      required PaymentMethod paymentMethod,
+      required List<PaymentMethod> paymentMethodId}) {
     IconData icon = Icons.radio_button_off;
     IconData icon1 = Icons.radio_button_off;
     num priceAmount = 0;
@@ -318,574 +275,504 @@ mixin Helpers {
     String paymentId = '';
     return showSlidingBottomSheet(
       context,
-      builder: (context) =>
-          SlidingSheetDialog(
-            snapSpec: SnapSpec(
-              snappings: [0.6, 0.7],
-            ),
-            builder: (context, state) =>
-                Material(
-                  child: StatefulBuilder(
-                    builder: (context, setState) =>
-                        Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Container(
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+      builder: (context) => SlidingSheetDialog(
+        snapSpec: SnapSpec(
+          snappings: [0.6, 0.7],
+        ),
+        builder: (context, state) => Material(
+          child: StatefulBuilder(
+            builder: (context, setState) => Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(AppLocalizations.of(context)!.choose_plan,
+                        style: TextStyle(
+                            fontSize: FontSize.s24,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.black)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: ColorManager.greyLight),
+                      padding: EdgeInsets.all(14),
+                      child: Row(children: [
+                        Icon(
+                          Icons.wallet_giftcard,
+                          color: ColorManager.primaryDark,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.012,
+                        ),
+                        Text(
+                          '${subscriptionPlan[0].freeDays} ${AppLocalizations.of(context)!.two_weeks_free_trail}',
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s14),
+                        )
+                      ]),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.012,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          paymentId = paymentMethodId[0].id!;
+                          planId = subscriptionPlan[0].id!;
+                          freeDays = subscriptionPlan[0].freeDays!;
+                          priceAmount = subscriptionPlan[0].priceAmount!;
+                          if (icon1 == Icons.radio_button_off) {
+                            icon1 = Icons.radio_button_on_outlined;
+                            icon = Icons.radio_button_off;
+                          } else {
+                            icon1 = Icons.radio_button_off;
+                            icon = Icons.radio_button_on_outlined;
+                          }
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: ColorManager.greyLight),
+                        ),
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(AppLocalizations.of(context)!.monthly_plan1,
+                                style: TextStyle(color: ColorManager.grey)),
+                            SizedBox(
+                              height: AppSize.s10,
+                            ),
+                            Row(
                               children: [
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Text(AppLocalizations.of(context)!.choose_plan,
-                                    style: TextStyle(
-                                        fontSize: FontSize.s24,
-                                        fontWeight: FontWeight.w600,
-                                        color: ColorManager.black)),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: ColorManager.greyLight),
-                                  padding: EdgeInsets.all(14),
-                                  child: Row(children: [
-                                    Icon(
-                                      Icons.wallet_giftcard,
+                                Text(
+                                  '${AppLocalizations.of(context)!.aed} ${subscriptionPlan[0].priceAmount}/month',
+                                  style: TextStyle(
                                       color: ColorManager.primaryDark,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width * 0.012,
-                                    ),
-                                    Text(
-                                      '${subscriptionPlan[0]
-                                          .freeDays} ${AppLocalizations.of(
-                                          context)!.two_weeks_free_trail}',
-                                      style: TextStyle(
-                                          color: ColorManager.primaryDark,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: FontSize.s14),
-                                    )
-                                  ]),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: FontSize.s18),
                                 ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.012,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      paymentId = paymentMethodId[0].id!;
-                                      planId = subscriptionPlan[0].id!;
-                                      freeDays = subscriptionPlan[0].freeDays!;
-                                      priceAmount =
-                                      subscriptionPlan[0].priceAmount!;
-                                      if (icon1 == Icons.radio_button_off) {
-                                        icon1 = Icons.radio_button_on_outlined;
-                                        icon = Icons.radio_button_off;
-                                      } else {
-                                        icon1 = Icons.radio_button_off;
-                                        icon = Icons.radio_button_on_outlined;
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(
-                                          color: ColorManager.greyLight),
-                                    ),
-                                    padding: EdgeInsets.all(12),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Text(AppLocalizations.of(context)!
-                                            .monthly_plan1,
-                                            style: TextStyle(
-                                                color: ColorManager.grey)),
-                                        SizedBox(
-                                          height: AppSize.s10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${AppLocalizations.of(context)!
-                                                  .aed} ${subscriptionPlan[0]
-                                                  .priceAmount}/month',
-                                              style: TextStyle(
-                                                  color: ColorManager
-                                                      .primaryDark,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: FontSize.s18),
-                                            ),
-                                            Spacer(),
-                                            Icon(
-                                              icon1,
-                                              color: ColorManager.primary,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: AppSize.s10,
-                                        ),
-                                        Text(
-                                            AppLocalizations.of(context)!
-                                                .billed_every_month,
-                                            style: TextStyle(
-                                                color: ColorManager.grey)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.012,
-                                ),
-                                subscriptionPlan.length < 2
-                                    ? Container()
-                                    : InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      paymentId = paymentMethodId[1].id!;
-                                      planId = subscriptionPlan[1].id!;
-                                      freeDays = subscriptionPlan[1].freeDays!;
-                                      priceAmount =
-                                      subscriptionPlan[1].priceAmount!;
-                                      if (icon == Icons.radio_button_off) {
-                                        icon = Icons.radio_button_on_outlined;
-                                        icon1 = Icons.radio_button_off;
-                                      } else {
-                                        icon = Icons.radio_button_off;
-                                        icon1 = Icons.radio_button_on_outlined;
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      border:
-                                      Border.all(color: ColorManager.greyLight),
-                                    ),
-                                    padding: EdgeInsets.all(12),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Text(
-                                            AppLocalizations.of(context)!
-                                                .yearly_plan,
-                                            style:
-                                            TextStyle(
-                                                color: ColorManager.grey)),
-                                        SizedBox(
-                                          height: AppSize.s10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${AppLocalizations.of(context)!
-                                                  .aed} ${subscriptionPlan[1]
-                                                  .priceAmount}/month',
-                                              style: TextStyle(
-                                                  color: ColorManager
-                                                      .primaryDark,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: FontSize.s18),
-                                            ),
-                                            Spacer(),
-                                            Icon(
-                                              icon,
-                                              color: ColorManager.primary,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: AppSize.s10,
-                                        ),
-                                        Text(
-                                            AppLocalizations.of(context)!
-                                                .billed_every_year,
-                                            style:
-                                            TextStyle(
-                                                color: ColorManager.grey)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: AppSize.s82,
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(12),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        showAddPaymentDetailsForSubscribeSheet(
-                                            context: context,
-                                            priceAmount: priceAmount,
-                                            freeDays: freeDays,
-                                            paymentMethod: paymentMethod,
-                                            planId: planId,
-                                            paymentMethodId: paymentId);
-                                      },
-                                      child: Text(AppLocalizations.of(context)!
-                                          .continue1)),
+                                Spacer(),
+                                Icon(
+                                  icon1,
+                                  color: ColorManager.primary,
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                  ),
-                ),
-          ),
-    );
-  }
-
-  Future showAddPaymentDetailsForSubscribeSheet({required BuildContext context,
-    required num priceAmount,
-    required num freeDays,
-    required PaymentMethod paymentMethod,
-    required String planId,
-    required String paymentMethodId}) {
-    late final SubscribeViewGetXController _subscribeViewGetXController =
-    Get.put<SubscribeViewGetXController>(
-        SubscribeViewGetXController(context: context));
-    return showSlidingBottomSheet(
-      context,
-      builder: (context) =>
-          SlidingSheetDialog(
-            snapSpec: SnapSpec(
-              snappings: [0.6, 0.7],
-            ),
-            builder: (context, state) =>
-                Material(
-                  child: StatefulBuilder(
-                    builder: (context, setState) =>
-                        Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Container(
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(AppLocalizations.of(context)!
-                                        .add_payment_details,
-                                        style: TextStyle(
-                                            fontSize: FontSize.s24,
-                                            fontWeight: FontWeight.w600,
-                                            color: ColorManager.black)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Column(
-                                  children: [
-                                    Icon(
-                                      Icons.wallet_giftcard,
-                                      color: ColorManager.primaryDark,
-                                    ),
-                                    Text(
-                                      '${freeDays} ${AppLocalizations.of(
-                                          context)!.two_weeks_free_trail}',
-                                      style: TextStyle(
-                                          color: ColorManager.primaryDark,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: FontSize.s14),
-                                    ),
-                                    Text(
-                                      '${AppLocalizations.of(context)!
-                                          .cancel_anytime_before_your_trial_ends}',
-                                      style: TextStyle(
-                                          color: ColorManager.greyLight,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: FontSize.s12),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.03,
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: ColorManager.greyLight)),
-                                  child: Row(
-                                    children: [
-                                      Image.network(
-                                        paymentMethod.image!,
-                                        height: AppSize.s15,
-                                      ),
-                                      SizedBox(
-                                        width: AppSize.s10,
-                                      ),
-                                      Text(
-                                        "**** **** **** ${paymentMethod
-                                            .last4Digits} ",
-                                        style: TextStyle(
-                                            color: ColorManager.primaryDark,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: FontSize.s12),
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .change,
-                                            style: TextStyle(
-                                                color: ColorManager.primary)),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.019,
-                                ),
-                                Divider(color: ColorManager.greyLight,
-                                    thickness: 1),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${AppLocalizations.of(context)!
-                                          .aed} $priceAmount/month ⚫ ',
-                                      style: TextStyle(
-                                          color: ColorManager.primaryDark,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: FontSize.s14),
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .terms_apply1,
-                                      style: TextStyle(
-                                          color: ColorManager.primary,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: FontSize.s14),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.012,
-                                ),
-                                Container(
-                                  height: AppSize.s82,
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(12),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        _subscribeViewGetXController
-                                            .subscribeAsGhafGolden(
-                                            paymentMethodId: paymentMethodId,
-                                            planId: planId);
-                                      },
-                                      child: Text(AppLocalizations.of(context)!
-                                          .join_ghaf)),
-                                ),
-                              ],
+                            SizedBox(
+                              height: AppSize.s10,
                             ),
-                          ),
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .billed_every_month,
+                                style: TextStyle(color: ColorManager.grey)),
+                          ],
                         ),
-                  ),
-                ),
-          ),
-    );
-  }
-
-  Future showSortBySheet({required BuildContext context,
-    required CategoriesGetxController categoriesGetxController,required String cid}) =>
-      showSlidingBottomSheet(context,
-          // var List<String> sortedType = [AppLocalizations.of(context)!.recommended]
-          builder: (context) {
-            List<String> sortedType = [
-              AppLocalizations.of(context)!.recommended,
-              AppLocalizations.of(context)!.rating
-            ];
-            return SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.5, 0.7],
-              ),
-              builder: (context, state) =>
-                  StatefulBuilder(
-                    builder: (context, setState) =>
-                        Material(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.012,
+                    ),
+                    subscriptionPlan.length < 2
+                        ? Container()
+                        : InkWell(
+                            onTap: () {
+                              setState(() {
+                                paymentId = paymentMethodId[1].id!;
+                                planId = subscriptionPlan[1].id!;
+                                freeDays = subscriptionPlan[1].freeDays!;
+                                priceAmount = subscriptionPlan[1].priceAmount!;
+                                if (icon == Icons.radio_button_off) {
+                                  icon = Icons.radio_button_on_outlined;
+                                  icon1 = Icons.radio_button_off;
+                                } else {
+                                  icon = Icons.radio_button_off;
+                                  icon1 = Icons.radio_button_on_outlined;
+                                }
+                              });
+                            },
                             child: Container(
-                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border:
+                                    Border.all(color: ColorManager.greyLight),
+                              ),
+                              padding: EdgeInsets.all(12),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Text(
+                                      AppLocalizations.of(context)!.yearly_plan,
+                                      style:
+                                          TextStyle(color: ColorManager.grey)),
                                   SizedBox(
-                                    height: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .height * 0.024,
+                                    height: AppSize.s10,
                                   ),
                                   Row(
                                     children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Image.asset(
-                                          ImageAssets.x,
-                                          height: AppSize.s18,
-                                          width: AppSize.s18,
-                                          color: ColorManager.greyLight,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: AppSize.s10,
-                                      ),
                                       Text(
-                                          AppLocalizations.of(context)!.sort_by,
-                                          style: TextStyle(
-                                              fontSize: FontSize.s24,
-                                              fontWeight: FontWeight.w600,
-                                              color: ColorManager.black)),
+                                        '${AppLocalizations.of(context)!.aed} ${subscriptionPlan[1].priceAmount}/month',
+                                        style: TextStyle(
+                                            color: ColorManager.primaryDark,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: FontSize.s18),
+                                      ),
+                                      Spacer(),
+                                      Icon(
+                                        icon,
+                                        color: ColorManager.primary,
+                                      ),
                                     ],
                                   ),
                                   SizedBox(
-                                    height: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .height * 0.024,
+                                    height: AppSize.s10,
                                   ),
-                                  Column(
-                                    children: [
-                                      ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: sortedType.length,
-                                        physics: BouncingScrollPhysics(),
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                selected = index;
-                                              });
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text(sortedType[index],
-                                                        style: TextStyle(
-                                                            color: ColorManager
-                                                                .primaryDark,
-                                                            fontWeight: FontWeight
-                                                                .w600,
-                                                            fontSize: FontSize
-                                                                .s18)),
-                                                    // SizedBox(width: AppSize.s30,),
-                                                    Spacer(),
-                                                    selected == null
-                                                        ? Image.asset(
-                                                      ImageAssets.unChecked,
-                                                      height: AppSize.s20,
-                                                      width: AppSize.s20,
-                                                    )
-                                                        : selected == index
-                                                        ? Image.asset(
-                                                      ImageAssets.checked,
-                                                      height: AppSize.s20,
-                                                      width: AppSize.s20,
-                                                    )
-                                                        : Image.asset(
-                                                      ImageAssets.unChecked,
-                                                      height: AppSize.s20,
-                                                      width: AppSize.s20,
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height:
-                                                  MediaQuery
-                                                      .of(context)
-                                                      .size
-                                                      .height *
-                                                      0.024,
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      Container(
-                                        height: AppSize.s82,
-                                        width: double.infinity,
-                                        padding: EdgeInsets.all(12),
-                                        child: ElevatedButton(
-                                            onPressed: () {
-                                              categoriesGetxController
-                                                  .getStores(cid:cid,
-                                                  sortType: sortedType[selected] ==
-                                                      AppLocalizations.of(
-                                                          context)!.recommended
-                                                      ? 'storeSales'
-                                                      : 'storeStars');
-                                              Navigator.of(context).pop();
-                                            },
-                                            child:
-                                            Text(AppLocalizations.of(context)!
-                                                .apply)),
-                                      ),
-                                      SizedBox(
-                                        height: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .height * 0.024,
-                                      ),
-                                    ],
-                                  )
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .billed_every_year,
+                                      style:
+                                          TextStyle(color: ColorManager.grey)),
                                 ],
                               ),
                             ),
                           ),
+                    Container(
+                      height: AppSize.s82,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            showAddPaymentDetailsForSubscribeSheet(
+                                context: context,
+                                priceAmount: priceAmount,
+                                freeDays: freeDays,
+                                paymentMethod: paymentMethod,
+                                last4DigitNumber: last4DigitNumber,
+                                planId: planId,
+                                paymentMethodId: paymentId);
+                          },
+                          child: Text(AppLocalizations.of(context)!.continue1)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future showAddPaymentDetailsForSubscribeSheet(
+      {required BuildContext context,
+      required num priceAmount,
+      required num freeDays,
+        String? last4DigitNumber,
+      required PaymentMethod paymentMethod,
+      required String planId,
+      required String paymentMethodId}) {
+    late final SubscribeViewGetXController _subscribeViewGetXController =
+        Get.put<SubscribeViewGetXController>(
+            SubscribeViewGetXController(context: context));
+    return showSlidingBottomSheet(
+      context,
+      builder: (context) => SlidingSheetDialog(
+        snapSpec: SnapSpec(
+          snappings: [0.6, 0.7],
+        ),
+        builder: (context, state) => Material(
+          child: StatefulBuilder(
+            builder: (context, setState) => Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Row(
+                      children: [
+                        Text(AppLocalizations.of(context)!.add_payment_details,
+                            style: TextStyle(
+                                fontSize: FontSize.s24,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.black)),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Column(
+                      children: [
+                        Icon(
+                          Icons.wallet_giftcard,
+                          color: ColorManager.primaryDark,
                         ),
+                        Text(
+                          '${freeDays} ${AppLocalizations.of(context)!.two_weeks_free_trail}',
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s14),
+                        ),
+                        Text(
+                          '${AppLocalizations.of(context)!.cancel_anytime_before_your_trial_ends}',
+                          style: TextStyle(
+                              color: ColorManager.greyLight,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s12),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.03,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: ColorManager.greyLight)),
+                      child: Row(
+                        children: [
+                          Image.network(
+                            paymentMethod.image!,
+                            height: AppSize.s15,
+                          ),
+                          SizedBox(
+                            width: AppSize.s10,
+                          ),
+                          last4DigitNumber == null ? Text(
+                            "**** **** **** ${paymentMethod.last4Digits} ",
+                            style: TextStyle(
+                                color: ColorManager.primaryDark,
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSize.s12),
+                          ) : Text(
+                            "**** **** **** ${last4DigitNumber} ",
+                            style: TextStyle(
+                                color: ColorManager.primaryDark,
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSize.s12),
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    PaymentViewForSubscribeNew(),
+                              ));
+                            },
+                            child: Text(AppLocalizations.of(context)!.change,
+                                style: TextStyle(color: ColorManager.primary)),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.019,
+                    ),
+                    Divider(color: ColorManager.greyLight, thickness: 1),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${AppLocalizations.of(context)!.aed} $priceAmount/month ⚫ ',
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s14),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.terms_apply1,
+                          style: TextStyle(
+                              color: ColorManager.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s14),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.012,
+                    ),
+                    Container(
+                      height: AppSize.s82,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(12),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            _subscribeViewGetXController.subscribeAsGhafGolden(
+                                context: context,
+                                paymentMethodId: paymentMethodId,
+                                planId: planId);
+                          },
+                          child: Text(AppLocalizations.of(context)!.join_ghaf)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future showSortBySheet(
+          {required BuildContext context,
+          required CategoriesGetxController categoriesGetxController,
+          required String cid}) =>
+      showSlidingBottomSheet(context,
+          // var List<String> sortedType = [AppLocalizations.of(context)!.recommended]
+          builder: (context) {
+        List<String> sortedType = [
+          AppLocalizations.of(context)!.recommended,
+          AppLocalizations.of(context)!.rating
+        ];
+        return SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.5, 0.7],
+          ),
+          builder: (context, state) => StatefulBuilder(
+            builder: (context, setState) => Material(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.024,
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Image.asset(
+                              ImageAssets.x,
+                              height: AppSize.s18,
+                              width: AppSize.s18,
+                              color: ColorManager.greyLight,
+                            ),
+                          ),
+                          SizedBox(
+                            width: AppSize.s10,
+                          ),
+                          Text(AppLocalizations.of(context)!.sort_by,
+                              style: TextStyle(
+                                  fontSize: FontSize.s24,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorManager.black)),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.024,
+                      ),
+                      Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: sortedType.length,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selected = index;
+                                  });
+                                },
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(sortedType[index],
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: FontSize.s18)),
+                                        // SizedBox(width: AppSize.s30,),
+                                        Spacer(),
+                                        selected == null
+                                            ? Image.asset(
+                                                ImageAssets.unChecked,
+                                                height: AppSize.s20,
+                                                width: AppSize.s20,
+                                              )
+                                            : selected == index
+                                                ? Image.asset(
+                                                    ImageAssets.checked,
+                                                    height: AppSize.s20,
+                                                    width: AppSize.s20,
+                                                  )
+                                                : Image.asset(
+                                                    ImageAssets.unChecked,
+                                                    height: AppSize.s20,
+                                                    width: AppSize.s20,
+                                                  )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.024,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          Container(
+                            height: AppSize.s82,
+                            width: double.infinity,
+                            padding: EdgeInsets.all(12),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  categoriesGetxController.getStores(
+                                      cid: cid,
+                                      sortType: sortedType[selected] ==
+                                              AppLocalizations.of(context)!
+                                                  .recommended
+                                          ? 'storeSales'
+                                          : 'storeStars');
+                                  Navigator.of(context).pop();
+                                },
+                                child:
+                                    Text(AppLocalizations.of(context)!.apply)),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.024,
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-            );
-          });
+                ),
+              ),
+            ),
+          ),
+        );
+      });
 
   Future showArrivalTimeSheet({
     required BuildContext context,
@@ -902,956 +789,827 @@ mixin Helpers {
   }) =>
       showSlidingBottomSheet(
         context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.5, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: StatefulBuilder(
-                      builder: (context, setState) {
-                        return Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Container(
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Text(AppLocalizations.of(context)!.arrival_time,
-                                    style: TextStyle(
-                                        fontSize: FontSize.s20,
-                                        fontWeight: FontWeight.w600,
-                                        color: ColorManager.primaryDark)),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          if (isSelectedToday == true) {
-                                            isSelectedAsap = true;
-                                            isSelectedToday = false;
-                                            isAsap = true;
-                                          }
-                                          if (isSelectedToday == false) {
-                                            isAsap = false;
-                                            isSelectedAsap = false;
-                                            isSelectedToday = true;
-                                          }
-                                        });
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.access_time,
-                                            color: ColorManager.primary,
-                                          ),
-                                          SizedBox(
-                                            width: AppSize.s10,
-                                          ),
-                                          Text(AppLocalizations.of(context)!
-                                              .today,
-                                              style: TextStyle(
-                                                  color: ColorManager.grey,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: FontSize.s18)),
-                                          // SizedBox(width: AppSize.s30,),
-                                          Spacer(),
-                                          isSelectedToday
-                                              ? Icon(
-                                            Icons.radio_button_checked,
-                                            color: ColorManager.primary,
-                                          )
-                                              : Icon(
-                                            Icons.radio_button_off,
-                                            color: ColorManager.primary,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height * 0.024,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          if (isSelectedAsap == true) {
-                                            isSelectedAsap = false;
-                                            isSelectedToday = true;
-                                            isAsap = false;
-                                          }
-                                          if (isSelectedAsap == false) {
-                                            isAsap = true;
-                                            isSelectedAsap = true;
-                                            isSelectedToday = false;
-                                          }
-                                        });
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            ImageAssets.tomorrowTimer,
-                                            height: AppSize.s20,
-                                            width: AppSize.s20,
-                                          ),
-                                          SizedBox(
-                                            width: AppSize.s10,
-                                          ),
-                                          Text(
-                                              AppLocalizations.of(context)!
-                                                  .fastest_delivery,
-                                              style: TextStyle(
-                                                  color: ColorManager.grey,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: FontSize.s18)),
-                                          // SizedBox(width: AppSize.s30,),
-                                          Spacer(),
-                                          isSelectedAsap
-                                              ? Icon(
-                                            Icons.radio_button_checked,
-                                            color: ColorManager.primary,
-                                          )
-                                              : Icon(
-                                            Icons.radio_button_off,
-                                            color: ColorManager.primary,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height * 0.024,
-                                    ),
-                                    Visibility(
-                                      visible: !isSelectedAsap,
-                                      child: Row(
-                                        children: [
-                                          Spacer(),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius
-                                                    .circular(10),
-                                                border: Border.all(
-                                                    color: ColorManager
-                                                        .greyLight)),
-                                            padding: EdgeInsets.all(5),
-                                            child: DropdownButton<String>(
-                                              // Step 3.
-                                              value: dropdownValue,
-                                              // Step 4.
-
-                                              items: days.map<
-                                                  DropdownMenuItem<String>>(
-                                                      (String value) {
-                                                    return DropdownMenuItem<
-                                                        String>(
-                                                      value: value,
-                                                      child: Text(
-                                                        value,
-                                                        style: TextStyle(
-                                                            color: ColorManager
-                                                                .primaryDark,
-                                                            fontWeight: FontWeight
-                                                                .w600,
-                                                            fontSize: AppSize
-                                                                .s12),
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                              // Step 5.
-                                              onChanged: (String? newValue) {
-                                                setState(() {
-                                                  dropdownValue = newValue!;
-                                                  print(
-                                                      '=====================number of days');
-                                                  print(days.indexOf(newValue));
-                                                  numberOfDay =
-                                                      days.indexOf(newValue);
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius
-                                                    .circular(10),
-                                                border: Border.all(
-                                                    color: ColorManager
-                                                        .greyLight)),
-                                            padding: EdgeInsets.all(5),
-                                            child: DropdownButton<String>(
-                                              // Step 3.
-                                              value: dropdownValue1,
-                                              // Step 4.
-                                              items: hours
-                                                  .map<
-                                                  DropdownMenuItem<String>>(
-                                                      (String value) {
-                                                    return DropdownMenuItem<
-                                                        String>(
-                                                      value: value,
-                                                      child: Text(
-                                                        value,
-                                                        style: TextStyle(
-                                                            color: ColorManager
-                                                                .primaryDark,
-                                                            fontWeight: FontWeight
-                                                                .w600,
-                                                            fontSize: AppSize
-                                                                .s12),
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                              // Step 5.
-                                              onChanged: (String? newValue) {
-                                                setState(() {
-                                                  print(
-                                                      '=========================hours');
-                                                  print(dropdownValue1);
-                                                  dropdownValue1 = newValue!;
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          Spacer(),
-                                        ],
-                                      ),
-                                    ),
-                                    Visibility(
-                                      visible: !isSelectedAsap,
-                                      child: Row(
-                                        children: [
-                                          Text(AppLocalizations.of(context)!
-                                              .frequency,
-                                              style: TextStyle(
-                                                  color: ColorManager
-                                                      .primaryDark,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: FontSize.s14)),
-                                          // SizedBox(width: AppSize.s30,),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height * 0.024,
-                                    ),
-                                    Visibility(
-                                      visible: !isSelectedAsap,
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                if (isOneTime == true) {
-                                                  isWeekly = false;
-                                                  isMonthly = false;
-                                                  isOneTime = false;
-                                                }
-                                                if (isOneTime == false) {
-                                                  isWeekly = false;
-                                                  isMonthly = false;
-                                                  isOneTime = true;
-                                                }
-                                                frequency = 0;
-                                              });
-                                            },
-                                            child: Row(
-                                              children: [
-                                                isOneTime
-                                                    ? Icon(
-                                                  Icons.radio_button_checked,
-                                                  color: ColorManager.primary,
-                                                )
-                                                    : Icon(
-                                                  Icons.radio_button_off,
-                                                  color: ColorManager.primary,
-                                                ),
-                                                SizedBox(
-                                                  width: AppSize.s8,
-                                                ),
-                                                Text(AppLocalizations.of(
-                                                    context)!
-                                                    .one_time),
-                                              ],
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                if (isWeekly == true) {
-                                                  isWeekly = false;
-                                                  isMonthly = false;
-                                                  isOneTime = false;
-                                                }
-                                                if (isWeekly == false) {
-                                                  isWeekly = true;
-                                                  isMonthly = false;
-                                                  isOneTime = false;
-                                                }
-                                                frequency = 1;
-                                              });
-                                            },
-                                            child: Row(
-                                              children: [
-                                                isWeekly
-                                                    ? Icon(
-                                                  Icons.radio_button_checked,
-                                                  color: ColorManager.primary,
-                                                )
-                                                    : Icon(
-                                                  Icons.radio_button_off,
-                                                  color: ColorManager.primary,
-                                                ),
-                                                SizedBox(
-                                                  width: AppSize.s8,
-                                                ),
-                                                Text(AppLocalizations.of(
-                                                    context)!
-                                                    .weekly),
-                                              ],
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                if (isMonthly == true) {
-                                                  isWeekly = false;
-                                                  isMonthly = false;
-                                                  isOneTime = false;
-                                                }
-                                                if (isMonthly == false) {
-                                                  isWeekly = false;
-                                                  isMonthly = true;
-                                                  isOneTime = false;
-                                                }
-                                                frequency = 2;
-                                              });
-                                            },
-                                            child: Row(
-                                              children: [
-                                                isMonthly
-                                                    ? Icon(
-                                                  Icons.radio_button_checked,
-                                                  color: ColorManager.primary,
-                                                )
-                                                    : Icon(
-                                                  Icons.radio_button_off,
-                                                  color: ColorManager.primary,
-                                                ),
-                                                SizedBox(
-                                                  width: AppSize.s8,
-                                                ),
-                                                Text(AppLocalizations.of(
-                                                    context)!
-                                                    .monthly),
-                                              ],
-                                            ),
-                                          ),
-                                          Spacer(),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height * 0.024,
-                                    ),
-                                    Container(
-                                      height: AppSize.s82,
-                                      width: double.infinity,
-                                      padding: EdgeInsets.all(12),
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            print(frequency);
-                                            print(isAsap);
-                                            print(numberOfDay);
-                                            print(int.parse(dropdownValue1));
-                                            _checkOutGetxController.payForOrder(
-                                              context: context,
-                                              orderId: orderId,
-                                              deliveryMethodId: deliveryMethodId,
-                                              deliveryPoint: deliveryPoint,
-                                              PaymentMethodId: PaymentMethodId,
-                                              useRedeemPoints: useRedeemPoints,
-                                              useWallet: useWallet,
-                                              usePayLater: usePayLater,
-                                              desiredDeliveryDate: desiredDeliveryDate,
-                                              asap: isAsap,
-                                              SheduleInfo: isAsap
-                                                  ? null
-                                                  : {
-                                                'WeeklyOrMonthly': frequency,
-                                                'DayNumber': numberOfDay,
-                                                'HourNumber':
-                                                int.parse(dropdownValue1),
-                                                'MinuteNumber': 0,
-                                              },
-                                              OrderNotes: OrderNotes,
-                                              PromoCode: PromoCode,
-                                            );
-                                          },
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .confirm)),
-                                    ),
-                                    SizedBox(
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height * 0.024,
-                                    ),
-                                  ],
-                                )
-                              ],
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.5, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Text(AppLocalizations.of(context)!.arrival_time,
+                            style: TextStyle(
+                                fontSize: FontSize.s20,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.primaryDark)),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedToday == true) {
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                    isAsap = true;
+                                  }
+                                  if (isSelectedToday == false) {
+                                    isAsap = false;
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    color: ColorManager.primary,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(AppLocalizations.of(context)!.today,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedToday
+                                      ? Icon(
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
+                                      : Icon(
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedAsap == true) {
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                    isAsap = false;
+                                  }
+                                  if (isSelectedAsap == false) {
+                                    isAsap = true;
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    ImageAssets.tomorrowTimer,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .fastest_delivery,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedAsap
+                                      ? Icon(
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
+                                      : Icon(
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Visibility(
+                              visible: !isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    padding: EdgeInsets.all(5),
+                                    child: DropdownButton<String>(
+                                      // Step 3.
+                                      value: dropdownValue,
+                                      // Step 4.
+
+                                      items: days.map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: AppSize.s12),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      // Step 5.
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                          print(
+                                              '=====================number of days');
+                                          print(days.indexOf(newValue));
+                                          numberOfDay = days.indexOf(newValue);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    padding: EdgeInsets.all(5),
+                                    child: DropdownButton<String>(
+                                      // Step 3.
+                                      value: dropdownValue1,
+                                      // Step 4.
+                                      items: hours
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: AppSize.s12),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      // Step 5.
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          print(
+                                              '=========================hours');
+                                          print(dropdownValue1);
+                                          dropdownValue1 = newValue!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible: !isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  Text(AppLocalizations.of(context)!.frequency,
+                                      style: TextStyle(
+                                          color: ColorManager.primaryDark,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: FontSize.s14)),
+                                  // SizedBox(width: AppSize.s30,),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Visibility(
+                              visible: !isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (isOneTime == true) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        if (isOneTime == false) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = true;
+                                        }
+                                        frequency = 0;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        isOneTime
+                                            ? Icon(
+                                                Icons.radio_button_checked,
+                                                color: ColorManager.primary,
+                                              )
+                                            : Icon(
+                                                Icons.radio_button_off,
+                                                color: ColorManager.primary,
+                                              ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        Text(AppLocalizations.of(context)!
+                                            .one_time),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (isWeekly == true) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        if (isWeekly == false) {
+                                          isWeekly = true;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        frequency = 1;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        isWeekly
+                                            ? Icon(
+                                                Icons.radio_button_checked,
+                                                color: ColorManager.primary,
+                                              )
+                                            : Icon(
+                                                Icons.radio_button_off,
+                                                color: ColorManager.primary,
+                                              ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        Text(AppLocalizations.of(context)!
+                                            .weekly),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (isMonthly == true) {
+                                          isWeekly = false;
+                                          isMonthly = false;
+                                          isOneTime = false;
+                                        }
+                                        if (isMonthly == false) {
+                                          isWeekly = false;
+                                          isMonthly = true;
+                                          isOneTime = false;
+                                        }
+                                        frequency = 2;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        isMonthly
+                                            ? Icon(
+                                                Icons.radio_button_checked,
+                                                color: ColorManager.primary,
+                                              )
+                                            : Icon(
+                                                Icons.radio_button_off,
+                                                color: ColorManager.primary,
+                                              ),
+                                        SizedBox(
+                                          width: AppSize.s8,
+                                        ),
+                                        Text(AppLocalizations.of(context)!
+                                            .monthly),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Container(
+                              height: AppSize.s82,
+                              width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    print(frequency);
+                                    print(isAsap);
+                                    print(numberOfDay);
+                                    print(int.parse(dropdownValue1));
+                                    _checkOutGetxController.payForOrder(
+                                      context: context,
+                                      orderId: orderId,
+                                      deliveryMethodId: deliveryMethodId,
+                                      deliveryPoint: deliveryPoint,
+                                      PaymentMethodId: PaymentMethodId,
+                                      useRedeemPoints: useRedeemPoints,
+                                      useWallet: useWallet,
+                                      usePayLater: usePayLater,
+                                      desiredDeliveryDate: desiredDeliveryDate,
+                                      asap: isAsap,
+                                      SheduleInfo: isAsap
+                                          ? null
+                                          : {
+                                              'WeeklyOrMonthly': frequency,
+                                              'DayNumber': numberOfDay,
+                                              'HourNumber':
+                                                  int.parse(dropdownValue1),
+                                              'MinuteNumber': 0,
+                                            },
+                                      OrderNotes: OrderNotes,
+                                      PromoCode: PromoCode,
+                                    );
+                                  },
+                                  child: Text(
+                                      AppLocalizations.of(context)!.confirm)),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
+                );
+              },
             ),
+          ),
+        ),
       );
 
-  Future showFeesExplainSheet(BuildContext context) =>
-      showSlidingBottomSheet(
+  Future showFeesExplainSheet(BuildContext context) => showSlidingBottomSheet(
         context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.7, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.7, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(AppLocalizations.of(context)!.our_fees_explained,
+                        style: TextStyle(
+                            fontSize: FontSize.s20,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.primaryDark)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Column(
+                      children: [
+                        Row(
                           children: [
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
+                            Image.asset(
+                              ImageAssets.deliveryFee,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
                             ),
-                            Text(AppLocalizations.of(context)!
-                                .our_fees_explained,
-                                style: TextStyle(
-                                    fontSize: FontSize.s20,
-                                    fontWeight: FontWeight.w600,
-                                    color: ColorManager.primaryDark)),
                             SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
+                              width: AppSize.s24,
                             ),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      ImageAssets.deliveryFee,
-                                      height: AppSize.s20,
-                                      width: AppSize.s20,
-                                    ),
-                                    SizedBox(
-                                      width: AppSize.s24,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Text(AppLocalizations.of(context)!
-                                            .delivery_fee,
-                                            style: TextStyle(
-                                                color: ColorManager.primaryDark,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: FontSize.s18)),
-                                        Container(
-                                          width: AppSize.s258,
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .delivery_fee_text,
-                                              overflow: TextOverflow.clip,
-                                              style: TextStyle(
-                                                  color: ColorManager.grey,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: FontSize.s14)),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      ImageAssets.serviceFee,
-                                      height: AppSize.s20,
-                                      width: AppSize.s20,
-                                    ),
-                                    SizedBox(
-                                      width: AppSize.s24,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Text(AppLocalizations.of(context)!
-                                            .service_fee,
-                                            style: TextStyle(
-                                                color: ColorManager.primaryDark,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: FontSize.s18)),
-                                        Container(
-                                          width: AppSize.s258,
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .service_fee_text,
-                                              overflow: TextOverflow.clip,
-                                              style: TextStyle(
-                                                  color: ColorManager.grey,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: FontSize.s14)),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    Container(
-                                      height: AppSize.s82,
-                                      // width: double.infinity,
-                                      padding: EdgeInsets.all(12),
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                              backgroundColor: MaterialStatePropertyAll(
-                                                  Colors.white),
-                                              shape: MaterialStatePropertyAll(
-                                                RoundedRectangleBorder(
-                                                    side: BorderSide(
-                                                        color: ColorManager
-                                                            .primary),
-                                                    borderRadius:
-                                                    BorderRadius.circular(10)),
-                                              )),
-                                          onPressed: () {},
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .read_about_fee,
-                                            style:
-                                            TextStyle(
-                                                color: ColorManager.primary),
-                                          )),
-                                    ),
-                                    Spacer(),
-                                    Container(
-                                      height: AppSize.s82,
-                                      // width: double.infinity,
-                                      padding: EdgeInsets.all(12),
-                                      child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .got_it)),
-                                    ),
-                                    Spacer(),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
+                                Text(AppLocalizations.of(context)!.delivery_fee,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s18)),
+                                Container(
+                                  width: AppSize.s258,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .delivery_fee_text,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: FontSize.s14)),
                                 ),
                               ],
                             )
                           ],
                         ),
-                      ),
-                    ),
-                  ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              ImageAssets.serviceFee,
+                              height: AppSize.s20,
+                              width: AppSize.s20,
+                            ),
+                            SizedBox(
+                              width: AppSize.s24,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(AppLocalizations.of(context)!.service_fee,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: FontSize.s18)),
+                                Container(
+                                  width: AppSize.s258,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .service_fee_text,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: FontSize.s14)),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Row(
+                          children: [
+                            Spacer(),
+                            Container(
+                              height: AppSize.s82,
+                              // width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.white),
+                                      shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                            side: BorderSide(
+                                                color: ColorManager.primary),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      )),
+                                  onPressed: () {},
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .read_about_fee,
+                                    style:
+                                        TextStyle(color: ColorManager.primary),
+                                  )),
+                            ),
+                            Spacer(),
+                            Container(
+                              height: AppSize.s82,
+                              // width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                      AppLocalizations.of(context)!.got_it)),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
+          ),
+        ),
       );
 
   Future showStoreClosedPreOrderSheet({required BuildContext context}) =>
       showSlidingBottomSheet(
         context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.4, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Image.asset(
-                              ImageAssets.coffeeHouse,
-                              height: AppSize.s60,
-                              width: AppSize.s60,
-                            ),
-                            // Text(AppLocalizations.of(context)!.our_fees_explained,
-                            //     style: TextStyle(
-                            //         fontSize: FontSize.s20,
-                            //         fontWeight: FontWeight.w600,
-                            //         color: ColorManager.primaryDark)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                    AppLocalizations.of(context)!
-                                        .store_currently_closed,
-                                    style: TextStyle(
-                                        fontSize: FontSize.s20,
-                                        fontWeight: FontWeight.w600,
-                                        color: ColorManager.primaryDark)),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Container(
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 1,
-                                  child: Center(
-                                    child: Text(
-                                        AppLocalizations.of(context)!
-                                            .do_not_worry,
-                                        style: TextStyle(
-                                            fontSize: FontSize.s14,
-                                            fontWeight: FontWeight.w600,
-                                            color: ColorManager.greyLight)),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    Container(
-                                      height: AppSize.s82,
-                                      // width: double.infinity,
-                                      padding: EdgeInsets.all(12),
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                              backgroundColor: MaterialStatePropertyAll(
-                                                  Colors.white),
-                                              shape: MaterialStatePropertyAll(
-                                                RoundedRectangleBorder(
-                                                    side: BorderSide(
-                                                        color:
-                                                        ColorManager
-                                                            .primaryDark),
-                                                    borderRadius:
-                                                    BorderRadius.circular(10)),
-                                              )),
-                                          onPressed: () {},
-                                          child: Text(
-                                            AppLocalizations.of(context)!.back,
-                                            style: TextStyle(
-                                                color: ColorManager
-                                                    .primaryDark),
-                                          )),
-                                    ),
-                                    Spacer(),
-                                    Container(
-                                      height: AppSize.s82,
-                                      // width: double.infinity,
-                                      padding: EdgeInsets.all(12),
-                                      child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .pre_order)),
-                                    ),
-                                    Spacer(),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.024,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.4, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
                     ),
-                  ),
-            ),
-      );
-
-  Future showInviteSheet(BuildContext context) =>
-      showSlidingBottomSheet(
-        context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.6, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Column(
+                    Image.asset(
+                      ImageAssets.coffeeHouse,
+                      height: AppSize.s60,
+                      width: AppSize.s60,
+                    ),
+                    // Text(AppLocalizations.of(context)!.our_fees_explained,
+                    //     style: TextStyle(
+                    //         fontSize: FontSize.s20,
+                    //         fontWeight: FontWeight.w600,
+                    //         color: ColorManager.primaryDark)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Row(
-                            children: [
-                              RedirectSocialIcon(
-                                url: "https://www.instagram.com/",
-                                icon: SocialIconsFlutter.instagram,
-                                radius: 25,
-                                size: 30,
-                                iconColor: Colors.white,
-                                circleAvatarColor: Colors.pink,
-                              ),
-                              SizedBox(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.05,
-                              ),
-                              RedirectSocialIcon(
-                                url:
-                                "fb://facewebmodal/f?href=https://www.facebook.com/al.mamun.me12",
-                                icon: SocialIconsFlutter.facebook,
-                                radius: 25,
-                                size: 30,
-                                iconColor: Colors.white,
-                                circleAvatarColor: Colors.blue,
-                              ),
-                              SizedBox(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.05,
-                              ),
-                              RedirectSocialIcon(
-                                url: "https://www.twitter.com/",
-                                icon: SocialIconsFlutter.twitter,
-                                radius: 25,
-                                size: 30,
-                                iconColor: Colors.white,
-                                circleAvatarColor: Colors.blue,
-                              ),
-                              SizedBox(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.05,
-                              ),
-                              RedirectSocialIcon(
-                                url: "https://wa.me/?text=YourTextHere",
-                                icon: Icons.whatshot,
-                                radius: 25,
-                                size: 30,
-                                iconColor: Colors.white,
-                                circleAvatarColor: Colors.green,
-                              ),
-                            ],
+                        Text(
+                            AppLocalizations.of(context)!
+                                .store_currently_closed,
+                            style: TextStyle(
+                                fontSize: FontSize.s20,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.primaryDark)),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 1,
+                          child: Center(
+                            child: Text(
+                                AppLocalizations.of(context)!.do_not_worry,
+                                style: TextStyle(
+                                    fontSize: FontSize.s14,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.greyLight)),
                           ),
                         ),
                         SizedBox(
-                          height: AppSize.s60,
-                        )
-                      ],
-                    ),
-                  ),
-            ),
-      );
-
-  Future showSignInSheet(BuildContext context) =>
-      showSlidingBottomSheet(
-        context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.4, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Row(
                           children: [
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Text(AppLocalizations.of(context)!.register_now,
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w600,
-                                    color: ColorManager.primary)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Text(
-                                AppLocalizations.of(context)!
-                                    .you_must_register_or_log_in,
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    color: ColorManager.primaryDark)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
+                            Spacer(),
                             Container(
-                              width: double.infinity,
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.06,
+                              height: AppSize.s82,
+                              // width: double.infinity,
+                              padding: EdgeInsets.all(12),
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(
-                                    builder: (context) => LoginView(),
-                                  ));
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        ColorManager.primaryDark),
-                                    shape: MaterialStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10)))),
-                                child: Text(
-                                  AppLocalizations.of(context)!.login,
-                                  // 'Login',
-                                  style: getSemiBoldStyle(
-                                      color: ColorManager.white, fontSize: 18),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.06,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(
-                                    builder: (context) => RegisterView(),
-                                  ));
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                    MaterialStatePropertyAll(Colors.white),
-                                    shape: MaterialStatePropertyAll(
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.white),
+                                      shape: MaterialStatePropertyAll(
                                         RoundedRectangleBorder(
                                             side: BorderSide(
-                                                color: ColorManager
-                                                    .primaryDark),
-                                            borderRadius: BorderRadius.circular(
-                                                10)))),
-                                child: Text(
-                                  AppLocalizations.of(context)!.sign_up,
-                                  // 'Login',
-                                  style: getSemiBoldStyle(
-                                      color: ColorManager.primaryDark,
-                                      fontSize: 18),
-                                ),
-                              ),
+                                                color:
+                                                    ColorManager.primaryDark),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      )),
+                                  onPressed: () {},
+                                  child: Text(
+                                    AppLocalizations.of(context)!.back,
+                                    style: TextStyle(
+                                        color: ColorManager.primaryDark),
+                                  )),
                             ),
-                            SizedBox(
-                              height: 150,
+                            Spacer(),
+                            Container(
+                              height: AppSize.s82,
+                              // width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                      AppLocalizations.of(context)!.pre_order)),
                             ),
+                            Spacer(),
                           ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Future showInviteSheet(BuildContext context) => showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.6, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      RedirectSocialIcon(
+                        url: "https://www.instagram.com/",
+                        icon: SocialIconsFlutter.instagram,
+                        radius: 25,
+                        size: 30,
+                        iconColor: Colors.white,
+                        circleAvatarColor: Colors.pink,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      RedirectSocialIcon(
+                        url:
+                            "fb://facewebmodal/f?href=https://www.facebook.com/al.mamun.me12",
+                        icon: SocialIconsFlutter.facebook,
+                        radius: 25,
+                        size: 30,
+                        iconColor: Colors.white,
+                        circleAvatarColor: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      RedirectSocialIcon(
+                        url: "https://www.twitter.com/",
+                        icon: SocialIconsFlutter.twitter,
+                        radius: 25,
+                        size: 30,
+                        iconColor: Colors.white,
+                        circleAvatarColor: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.05,
+                      ),
+                      RedirectSocialIcon(
+                        url: "https://wa.me/?text=YourTextHere",
+                        icon: Icons.whatshot,
+                        radius: 25,
+                        size: 30,
+                        iconColor: Colors.white,
+                        circleAvatarColor: Colors.green,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s60,
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+
+  Future showSignInSheet(BuildContext context) => showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.4, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(AppLocalizations.of(context)!.register_now,
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.primary)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(
+                        AppLocalizations.of(context)!
+                            .you_must_register_or_log_in,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            color: ColorManager.primaryDark)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => LoginView(),
+                          ));
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                ColorManager.primaryDark),
+                            shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)))),
+                        child: Text(
+                          AppLocalizations.of(context)!.login,
+                          // 'Login',
+                          style: getSemiBoldStyle(
+                              color: ColorManager.white, fontSize: 18),
                         ),
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => RegisterView(),
+                          ));
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.white),
+                            shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: ColorManager.primaryDark),
+                                    borderRadius: BorderRadius.circular(10)))),
+                        child: Text(
+                          AppLocalizations.of(context)!.sign_up,
+                          // 'Login',
+                          style: getSemiBoldStyle(
+                              color: ColorManager.primaryDark, fontSize: 18),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 150,
+                    ),
+                  ],
+                ),
+              ),
             ),
+          ),
+        ),
       );
 }

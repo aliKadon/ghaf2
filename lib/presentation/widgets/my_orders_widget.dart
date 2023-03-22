@@ -4,15 +4,22 @@ import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 
+import '../../domain/model/address.dart';
 import '../resources/font_manager.dart';
 
 class MyOrdersWidget extends StatelessWidget {
+  final String branchName;
   final String date;
   final String price;
   final String orderSequence;
+  Address? branchAddress;
 
   MyOrdersWidget(
-      {required this.price, required this.date, required this.orderSequence});
+      {required this.price,
+      required this.date,
+      required this.orderSequence,
+      required this.branchAddress,
+      required this.branchName});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class MyOrdersWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('Beauty line baqala',
+                    Text('${branchName}',
                         style: TextStyle(
                             color: ColorManager.primaryDark,
                             fontWeight: FontWeight.w600,
@@ -43,7 +50,8 @@ class MyOrdersWidget extends StatelessWidget {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.16,
-                      child: Text('${price} ${AppLocalizations.of(context)!.aed}',
+                      child: Text(
+                          '${price} ${AppLocalizations.of(context)!.aed}',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: ColorManager.primaryDark,
@@ -52,12 +60,12 @@ class MyOrdersWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                Text('${date}',
+                Text('${date.substring(0, 10)}',
                     style: TextStyle(
                         color: ColorManager.greyLight,
                         fontWeight: FontWeight.w600,
                         fontSize: FontSize.s16)),
-                Text('also lila stret,247',
+                Text('${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
                     style: TextStyle(
                         color: ColorManager.black,
                         fontWeight: FontWeight.w600,

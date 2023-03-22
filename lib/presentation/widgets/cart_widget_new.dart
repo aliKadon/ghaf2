@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:provider/provider.dart';
 
 import '../../domain/model/cart_item.dart';
+import '../../providers/product_provider.dart';
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/cart_view/cart_view_getx_controller.dart';
@@ -40,11 +42,11 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
   var selected = 0;
   num count = 1;
 
-  @override
-  void initState() {
-    count = widget.productCount;
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   count = widget.productCount;
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +77,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                       fontSize: 15),
                 ),
                 Text(
-                  'item ${_cartViewGetXController.cartItems[widget.index].productCount!}',
+                  'item ${count!}',
                   style: TextStyle(
                       color: ColorManager.greyLight,
                       fontWeight: FontWeight.w400,
@@ -107,14 +109,14 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                             idProduct: widget.cartItemId,
                             productCount1: count,
                             context: context);
-                        _cartViewGetXController.calculateBell();
+                        _cartViewGetXController.calculateBell(
+                            productCount: count.toInt());
 
                         // _cartItem.increment(
                         //     context: context,
                         //     productCount: count,
                         //     idProduct: widget.idProduct);
                       },
-
                       child: Icon(
                         Icons.add_circle_outline,
                         color: ColorManager.primary,
@@ -127,11 +129,19 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                           count--;
                           // count = widget.productCount;
                         });
+                        if (count == 0) {
+                          print('==================it is 0');
+                          Provider.of<ProductProvider>(context, listen: false)
+                              .addOrRemoveFromCard(productId: widget.idProduct)
+                              .then((value) =>
+                                  _cartViewGetXController.getMyCart());
+                        }
                         _cartItem.decrement(
                             idProduct: widget.cartItemId,
                             productCount: count,
                             context: context);
-                        _cartViewGetXController.calculateBell();
+                        _cartViewGetXController.calculateBell(
+                            productCount: count.toInt());
                       },
                       child: Icon(
                         Icons.remove_circle_outline,

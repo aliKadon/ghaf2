@@ -12,10 +12,9 @@ import 'package:ghaf_application/domain/model/product_discount.dart';
 import '../../presentation/screens/home_view/home_view_getx_controller.dart';
 
 class Product extends GetxController with Helpers {
-
   // var isFavorite1 = true;
   HomeViewGetXController _homeViewGetXController =
-  Get.put<HomeViewGetXController>(HomeViewGetXController());
+      Get.put<HomeViewGetXController>(HomeViewGetXController());
 
   // notifiable.
   void toggleIsFavorite({
@@ -25,18 +24,20 @@ class Product extends GetxController with Helpers {
     bool sendRequest = true,
   }) {
 
-    if (sendRequest) _toggleFavoriteRequest(context: context,id: id);
 
     _homeViewGetXController.getProducts();
+    _homeViewGetXController.getMostPopularProduct();
 
     //
     // isFavorite = !isFavorite!;
 
-    update(['isFavorite']);
+    // update(['isFavorite']);
+    if (sendRequest) _toggleFavoriteRequest(context: context, id: id);
+    update();
 
   }
 
-  void init () {
+  void init() {
     // _homeViewGetXController.getProducts();
   }
 
@@ -210,12 +211,12 @@ class Product extends GetxController with Helpers {
       } else {
         // failed.
         showSnackBar(context, message: apiResponse.message, error: true);
-        toggleIsFavorite(context: context, sendRequest: false,id: id);
+        toggleIsFavorite(context: context, sendRequest: false, id: id);
       }
     } catch (error) {
       // error.
       showSnackBar(context, message: error.toString(), error: true);
-      toggleIsFavorite(context: context, sendRequest: false,id: id);
+      toggleIsFavorite(context: context, sendRequest: false, id: id);
     }
   }
 

@@ -4,10 +4,12 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/store_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/presentation/screens/cart_view/cart_view_getx_controller.dart';
 
 class CartItem extends GetxController with Helpers {
   // notifiable.
-
+  late final CartViewGetXController _cartViewGetXController =
+      Get.find<CartViewGetXController>();
   int count = 1;
 
   // increment.
@@ -22,9 +24,8 @@ class CartItem extends GetxController with Helpers {
     count = (productCount1).toInt();
     // productCount = count;
     productCount1 = productCount1! + 1;
-
-
-    update(['productCount']);
+    _cartViewGetXController.calculateBell(productCount: productCount1.toInt());
+    update();
     if (sendRequest)
       _ChangeCartItemCountRequest(
           context: context,
@@ -45,13 +46,10 @@ class CartItem extends GetxController with Helpers {
     count = (productCount).toInt();
     productCount = productCount - 1;
 
-    update(['productCount']);
+    update();
     if (sendRequest)
       _ChangeCartItemCountRequest(
-          context: context,
-          type: 2,
-          productCount: count,
-          idProduct: idProduct);
+          context: context, type: 2, productCount: count, idProduct: idProduct);
   }
 
   // vars.
@@ -92,7 +90,7 @@ class CartItem extends GetxController with Helpers {
     required int type,
   }) async {
     final ApiResponse apiResponse =
-    await _storeApiController.changeCartItemCount(
+        await _storeApiController.changeCartItemCount(
       cartItemId: idProduct,
       count: productCount,
     );
