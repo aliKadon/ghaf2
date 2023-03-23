@@ -13,9 +13,9 @@ import 'package:ghaf_application/domain/model/category.dart';
 import 'package:ghaf_application/domain/model/nearby_stores.dart';
 import 'package:ghaf_application/domain/model/popular_search.dart';
 import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/domain/model/product_type.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../domain/model/store.dart';
 import '../api_helper.dart';
 
 class StoreApiController with ApiHelper, Helpers {
@@ -397,19 +397,79 @@ class StoreApiController with ApiHelper, Helpers {
     return failedResponse;
   }
 
+  Future<List<Product>> getRecommendedProduct({String? bid}) async {
+    Map<String, String> queries = {'bid': '$bid', 'sort': 'stars-desc'};
+    var query = Uri(queryParameters: queries).query;
+    var url = Uri.parse('${Constants.baseUrl}/Product/read-product?$query');
+    var response = await http.get(url, headers: headers);
+    print('=======================recommended');
+    print('${Constants.baseUrl}/Product/read-product?$query');
+    print(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<Product>.from(
+            jsonData['data'].map((x) => Product.fromJson(x)));
+      }
+    }
+    return [];
+  }
+  
+  Future<List<Product>> getProductByType({String? bid,String? filterContent}) async{
+    Map<String, String> queries = {
+      'filter':
+      "productType~contains~\'$filterContent\'",
+      'bid': '$bid',
+    };
+    var query = Uri(queryParameters: queries).query;
+    var url = Uri.parse('${Constants.baseUrl}/Product/read-product?$query');
+    var response = await http.get(url, headers: headers);
+
+    print('=======================product by type');
+    print('${Constants.baseUrl}/Product/read-product?$query');
+    print(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<Product>.from(
+            jsonData['data'].map((x) => Product.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
+  Future<List<ProductType>> getProductType({String? bid}) async {
+    var url =
+        Uri.parse('${Constants.baseUrl}/product/read-products-types?bid=$bid');
+
+    var response = await http.get(url, headers: headers);
+
+    print('=======================product tupe');
+    print('${Constants.baseUrl}/product/read-products-types?bid=$bid');
+    print(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+
+      var jsonData = jsonDecode(response.body);
+      return List<ProductType>.from(
+          jsonData.map((x) => ProductType.fromJson(x)));
+    }
+    return [];
+  }
+
   Future<List<Branch>> getStoreByCategoriy(
       {String? cid,
       String? filterType = '',
       String? filterContent = '',
       String? sortType = ''}) async {
     Map<String, String> queries = {
-      filterType== '' ? '' : 'filter': "$filterType~contains~\'$filterContent\'",
+      filterType == '' ? '' : 'filter':
+          "$filterType~contains~\'$filterContent\'",
       'cid': '$cid',
       'sort': '$sortType-desc'
     };
     var query = Uri(queryParameters: queries).query;
     var url = Uri.parse('${Constants.baseUrl}/Store/read-branch?$query');
-    var response = await http.get(url,headers: headers);
+    var response = await http.get(url, headers: headers);
 
     print('=======================store');
     print('${Constants.baseUrl}/Store/read-store?$query');
@@ -417,19 +477,21 @@ class StoreApiController with ApiHelper, Helpers {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {
-        return List<Branch>.from(jsonData['data'].map((x) => Branch.fromJson(x)));
+        return List<Branch>.from(
+            jsonData['data'].map((x) => Branch.fromJson(x)));
       }
     }
     return [];
   }
 
-  Future<Branch?> getBranchById({required String branchId}) async{
-    var url = Uri.parse('${Constants.baseUrl}/Store/get-branch-byId?id=$branchId');
-    var response = await http.get(url,headers: headers);
+  Future<Branch?> getBranchById({required String branchId}) async {
+    var url =
+        Uri.parse('${Constants.baseUrl}/Store/get-branch-byId?id=$branchId');
+    var response = await http.get(url, headers: headers);
 
-    if(response.statusCode == 200 ) {
+    if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
-      if(jsonData['status'] == 200) {
+      if (jsonData['status'] == 200) {
         return Branch.fromJson(jsonData['data']);
       }
     }

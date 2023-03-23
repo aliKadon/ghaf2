@@ -3,9 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/shortcuts_widget.dart';
 
 import '../../resources/assets_manager.dart';
@@ -24,11 +27,26 @@ class _StoreViewState extends State<StoreView> {
   //controller
   late final CategoriesGetxController _categoriesGetxController =
       Get.find<CategoriesGetxController>();
+  late final HomeViewGetXController _homeViewGetXController =
+      Get.put(HomeViewGetXController());
+
+  var selected = 0;
 
   @override
   void initState() {
     _categoriesGetxController.getBranchById(
         context: context, branchId: widget.branchId);
+    _homeViewGetXController.getRecommendedProductForBranch(
+        context: context, bid: widget.branchId);
+    _homeViewGetXController.getProductType(
+        context: context, bid: widget.branchId);
+
+    //get product by type
+
+    // _homeViewGetXController.getProductByType(
+    //     context: context,
+    //     bid: widget.branchId,
+    //     filterContent: _homeViewGetXController.productType[0].productType);
     super.initState();
   }
 
@@ -44,7 +62,6 @@ class _StoreViewState extends State<StoreView> {
       AppLocalizations.of(context)!.trending,
       AppLocalizations.of(context)!.on_sale,
       AppLocalizations.of(context)!.discount,
-
     ];
     return GetBuilder<CategoriesGetxController>(
       builder: (controller) => Scaffold(
@@ -56,35 +73,6 @@ class _StoreViewState extends State<StoreView> {
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     GestureDetector(
-                    //       onTap: () => Navigator.pop(context),
-                    //       child: Image.asset(
-                    //         IconsAssets.arrow,
-                    //         height: AppSize.s18,
-                    //         width: AppSize.s10,
-                    //       ),
-                    //     ),
-                    //     Spacer(),
-                    //     Text(
-                    //       AppLocalizations.of(context)!.share_your_opinion,
-                    //       style: getSemiBoldStyle(
-                    //         color: ColorManager.primaryDark,
-                    //         fontSize: FontSize.s18,
-                    //       ),
-                    //     ),
-                    //     Spacer(),
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: AppSize.s12,
-                    // ),
-                    // Divider(height: 1, color: ColorManager.greyLight),
-                    // SizedBox(
-                    //   height: AppSize.s12,
-                    // ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.22,
                       child: Stack(
@@ -309,16 +297,45 @@ class _StoreViewState extends State<StoreView> {
                         ],
                       ),
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return Text('data');
-                        },
-                      ),
+                    GetBuilder<HomeViewGetXController>(
+                      builder:(controller) => _homeViewGetXController.recommendedProduct.length == 0
+                          ? Center(
+                              child: Text(
+                                  AppLocalizations.of(context)!.no_product_found,
+                                  style: TextStyle(
+                                      color: ColorManager.primary,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: FontSize.s16)),
+                            )
+                          : Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: controller.recommendedProduct.length,
+                                  itemBuilder: (context, index) {
+                                    return MostPopularProductWidget(
+                                        image: controller
+                                            .recommendedProduct[index]
+                                            .productImages![0],
+                                        name: controller
+                                            .recommendedProduct[index].name!,
+                                        stars: controller
+                                            .recommendedProduct[index].stars!,
+                                        index: index,
+                                        price: controller
+                                            .recommendedProduct[index].price!,
+                                        isFavorite: controller
+                                            .recommendedProduct[index]
+                                            .isFavorite!,
+                                        controller: controller
+                                            .recommendedProduct,
+                                        idProduct: controller
+                                            .recommendedProduct[index].id!);
+                                  },
+                                ),
+
+                            ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0, left: 8.0),
@@ -327,24 +344,75 @@ class _StoreViewState extends State<StoreView> {
                         thickness: 1,
                       ),
                     ),
-                    Container(
-                        height: AppSize.s50,
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemExtent: 100,
-                          itemBuilder: (context, index) {
-                            return Text(
-                              'Cold Coffee',
-                              style: TextStyle(
-                                  color: ColorManager.primaryDark,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: FontSize.s14),
-                            );
-                          },
-                        )),
+                    _homeViewGetXController.productType.length == 0
+                        ? Center(
+                            child: Text(
+                                AppLocalizations.of(context)!.no_type_found,
+                                style: TextStyle(
+                                    color: ColorManager.primary,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSize.s16)),
+                          )
+                        : Container(
+                            height: AppSize.s50,
+                            padding: const EdgeInsets.all(8.0),
+                            child: GetBuilder<HomeViewGetXController>(
+                              builder: (controller) => ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: controller.productType.length,
+                                itemExtent: 100,
+                                itemBuilder: (context, index) {
+                                  return SharedPrefController().lang1 == 'en'
+                                      ? selected == index
+                                          ? Text(
+                                              '${controller.productType[index].productType}',
+                                              style: TextStyle(
+                                                  color: ColorManager.primary,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: FontSize.s14),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  selected = index;
+                                                });
+                                              },
+                                              child: Text(
+                                                '${controller.productType[index].productType}',
+                                                style: TextStyle(
+                                                    color: ColorManager
+                                                        .primaryDark,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: FontSize.s14),
+                                              ),
+                                            )
+                                      : selected == index
+                                          ? Text(
+                                              '${controller.productType[index].productTypeAr}',
+                                              style: TextStyle(
+                                                  color: ColorManager.primary,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: FontSize.s14),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  selected = index;
+                                                });
+                                              },
+                                              child: Text(
+                                                '${controller.productType[index].productTypeAr}',
+                                                style: TextStyle(
+                                                    color: ColorManager
+                                                        .primaryDark,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: FontSize.s14),
+                                              ),
+                                            );
+                                },
+                              ),
+                            )),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.4,
                       child: ListView.builder(

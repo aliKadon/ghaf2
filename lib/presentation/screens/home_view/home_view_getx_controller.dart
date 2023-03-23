@@ -9,6 +9,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/store_api_controller.dart';
 import 'package:ghaf_application/domain/model/category.dart';
 import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/domain/model/product_type.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
@@ -18,7 +19,6 @@ import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/nearby_stores.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
-
   String address = '';
   var city = 'address'.obs;
   var isLoadingPopular = true;
@@ -28,7 +28,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   // #############################################
   Future<void> GetAddressFromLatLong(LatLng latLng) async {
     List<Placemark> placemarks =
-    await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
     print('======================================my address');
     print(placemarks[0]);
     Placemark place = placemarks[0];
@@ -36,13 +36,11 @@ class HomeViewGetXController extends GetxController with Helpers {
     print('=====================city');
     print(city);
     address =
-    '${place.street}, ${place.subLocality}, ${place.locality}, ${place
-        .postalCode}, ${place.country}';
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
   }
 
   // ##############################################
   // ##############################################
-
 
   // notifiable.
   bool _isCategoriesLoading = true;
@@ -65,7 +63,6 @@ class HomeViewGetXController extends GetxController with Helpers {
     update();
   }
 
-
   bool get isSearching => _isSearching;
 
   set isSearching(bool value) {
@@ -79,7 +76,10 @@ class HomeViewGetXController extends GetxController with Helpers {
   List<Category> categories = [];
   List<Product> products = [];
   List<Product> mostPopular = [];
+  List<Product> recommendedProduct = [];
+  List<Product> productByType = [];
   List<NearbyStores> nearbyStores = [];
+  List<ProductType> productType = [];
   String search = '';
 
   // filter.
@@ -135,18 +135,16 @@ class HomeViewGetXController extends GetxController with Helpers {
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
 
-
     return await Geolocator.getCurrentPosition();
   }
 
   void getMostPopularProduct({String? bid}) async {
-
     try {
       mostPopular = await _storeApiController.getMostPopularProduct(bid: bid);
       isLoadingPopular = false;
       update();
-    }catch(error) {
-      showSnackBar(context, message: error.toString(),error: true);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
@@ -156,15 +154,54 @@ class HomeViewGetXController extends GetxController with Helpers {
       categories = await _storeApiController.getCategories();
       print('================category');
       print(categories[0].id!);
-      SharedPrefController()
-          .setFirstStoreName(categories[0].id!);
+      SharedPrefController().setFirstStoreName(categories[0].id!);
       isCategoryLoading = false;
       update();
-
     } catch (error) {
       // error.
-      showSnackBar(
-          context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
+    }
+  }
+
+  //get recommended product
+  void getRecommendedProductForBranch(
+      {required BuildContext context, required String bid}) async {
+    try {
+      recommendedProduct =
+          await _storeApiController.getRecommendedProduct(bid: bid);
+      update();
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  //get product by type
+  void getProductByType(
+      {required BuildContext context,
+      String? bid = '',
+      String? filterContent = ''}) async {
+
+    productByType = await _storeApiController.getProductByType(
+        bid: bid, filterContent: filterContent);
+    update();
+    // try {
+    //   productByType = await _storeApiController.getProductByType(
+    //       bid: bid, filterContent: filterContent);
+    //   update();
+    // } catch (error) {
+    //   showSnackBar(context, message: error.toString(), error: true);
+    // }
+  }
+
+  //get product type
+  void getProductType({required BuildContext context, String? bid = ''}) async {
+    try {
+      productType = await _storeApiController.getProductType(bid: bid);
+      print(productType);
+      update();
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
@@ -188,28 +225,28 @@ class HomeViewGetXController extends GetxController with Helpers {
       // error.
       print(error.response?.data);
       print(error.toString());
-      showSnackBar(
-          context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
     } catch (error) {
       // error.
       debugPrint(error.toString());
-      showSnackBar(
-          context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
     }
   }
 
-  void getNearbyStores({
-    // required BuildContext context,
-    required String lat,
-    required String long,
-    String? distance
-  }) async {
+  void getNearbyStores(
+      {
+      // required BuildContext context,
+      required String lat,
+      required String long,
+      String? distance}) async {
     try {
-      nearbyStores =
-      await _storeApiController.getNearbyStores(lat: lat, long: long,distance: distance);
+      nearbyStores = await _storeApiController.getNearbyStores(
+          lat: lat, long: long, distance: distance);
       _isNearbyStoresLoading = false;
       update(['nearbyStores']);
-    }catch(error) {
+    } catch (error) {
       // showSnackBar(context, message: error.toString(),error: true);
     }
   }
@@ -251,7 +288,6 @@ class HomeViewGetXController extends GetxController with Helpers {
     }
   }
 
-
   // on filter button tapped.
   void onFilterButtonTapped() {
     showModalBottomSheet(
@@ -260,21 +296,20 @@ class HomeViewGetXController extends GetxController with Helpers {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
       ),
-      builder: (_) =>
-          Builder(
-            builder: (context) {
-              Get.put<FilterSheetWidgetGetXController>(
-                FilterSheetWidgetGetXController(
-                  context: context,
-                  onFilter: filter,
-                  minPrice: minPrice,
-                  maxPrice: maxPrice,
-                  filterBy: filterBy,
-                ),
-              );
-              return FilterSheetWidget();
-            },
-          ),
+      builder: (_) => Builder(
+        builder: (context) {
+          Get.put<FilterSheetWidgetGetXController>(
+            FilterSheetWidgetGetXController(
+              context: context,
+              onFilter: filter,
+              minPrice: minPrice,
+              maxPrice: maxPrice,
+              filterBy: filterBy,
+            ),
+          );
+          return FilterSheetWidget();
+        },
+      ),
     );
   }
 

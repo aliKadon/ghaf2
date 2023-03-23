@@ -222,16 +222,23 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                       itemBuilder: (context, index) {
                         return InkWell(
                             onTap: () {
-                              if (controller.stores[index].isOpen!) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => StoreView(
-                                      branchId: _categoriesGetxController
-                                          .stores[index].id!),
-                                ));
-                              } else if (controller.stores[index].isOpen ==
-                                  false) {
-                                showStoreClosedPreOrderSheet(context: context);
-                              }
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => StoreView(
+                                    branchId: _categoriesGetxController
+                                        .stores[index].id!),
+                              ));
+
+
+                              // if (controller.stores[index].isOpen!) {
+                              //   Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (context) => StoreView(
+                              //         branchId: _categoriesGetxController
+                              //             .stores[index].id!),
+                              //   ));
+                              // } else if (controller.stores[index].isOpen ==
+                              //     false) {
+                              //   showStoreClosedPreOrderSheet(context: context);
+                              // }
                             },
                             child: StoreWidget(
                               storeName:

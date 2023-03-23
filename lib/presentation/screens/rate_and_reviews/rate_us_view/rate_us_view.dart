@@ -11,6 +11,7 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_us_view/rate_us_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/rate_and_reviews/review_getx_controller.dart';
 
 class RateUsView extends StatefulWidget {
   const RateUsView({Key? key}) : super(key: key);
@@ -26,7 +27,9 @@ class _RateUsViewState extends State<RateUsView> {
 
   // controller.
   late final RateUsViewGetXController _rateUsViewGetXController =
-      Get.find<RateUsViewGetXController>();
+  Get.find<RateUsViewGetXController>();
+  late final ReviewGetxController _reviewGetxController =
+  Get.put(ReviewGetxController());
 
   // dispose.
   @override
@@ -104,9 +107,10 @@ class _RateUsViewState extends State<RateUsView> {
                   itemCount: 5,
                   glow: false,
                   itemPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                  itemBuilder: (context, _) => SvgPicture.asset(
-                    '${Constants.vectorsPath}star.svg',
-                  ),
+                  itemBuilder: (context, _) =>
+                      SvgPicture.asset(
+                        '${Constants.vectorsPath}star.svg',
+                      ),
                   unratedColor: Colors.grey.shade300,
                   onRatingUpdate: (value) {
                     _rateUsViewGetXController.rate = value.toInt();
@@ -193,10 +197,13 @@ class _RateUsViewState extends State<RateUsView> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStatePropertyAll(ColorManager.primaryDark)),
+                        MaterialStatePropertyAll(ColorManager.primaryDark)),
                     onPressed: () {
-                      print(_rateUsViewGetXController.description);
-                      _rateUsViewGetXController.reviewApp();
+                      _reviewGetxController.addAppReview(context: context,
+                          description: _rateUsViewGetXController.description!,
+                          points: _rateUsViewGetXController.rate);
+                      // print(_rateUsViewGetXController.description);
+                      // _rateUsViewGetXController.reviewApp();
                     },
                     child: Text(
                       AppLocalizations.of(context)!.send_note,
