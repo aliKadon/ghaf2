@@ -133,7 +133,13 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                       .width * 1,
                   child: Stack(
                     children: [
-                      Image.network(productById["productImages"][0],
+                      productById["productImages"].length == 0 ? Image.asset(ImageAssets.logo1,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.4) : Image.network(productById["productImages"][0],
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: MediaQuery
@@ -275,7 +281,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                               children: [
                                 Icon(Icons.timer,
                                     color: ColorManager.primaryDark),
-                                Text(productById["timeToPrepareMinutes"] ??
+                                SizedBox(width: AppSize.s26,),
+                                Text(productById["timeToPrepareMinutes"].toString() ??
                                     '20 - 40 min')
                               ],
                             ),

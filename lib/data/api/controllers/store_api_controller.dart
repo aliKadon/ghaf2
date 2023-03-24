@@ -365,7 +365,7 @@ class StoreApiController with ApiHelper, Helpers {
     // print('send request : add-remove-to-basket');
     Map<String, dynamic> queryParameters = {
       'id': '03aa23d5-8f38-4628-f8ee-08db21ee7c75',
-      'count': 2,
+      'count': count,
     };
     // print(queryParameters);
     // var response = await _dio.post(
@@ -403,6 +403,28 @@ class StoreApiController with ApiHelper, Helpers {
     var url = Uri.parse('${Constants.baseUrl}/Product/read-product?$query');
     var response = await http.get(url, headers: headers);
     print('=======================recommended');
+    print('${Constants.baseUrl}/Product/read-product?$query');
+    print(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<Product>.from(
+            jsonData['data'].map((x) => Product.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
+  Future<List<Product>> getOnlyOnGhaf() async{
+    Map<String, String> queries = {
+      'filter':
+      "onlyOnGhaf~eq~true",
+    };
+    var query = Uri(queryParameters: queries).query;
+    var url = Uri.parse('${Constants.baseUrl}/Product/read-product?$query');
+    var response = await http.get(url, headers: headers);
+
+    print('=======================product only on ghaf');
     print('${Constants.baseUrl}/Product/read-product?$query');
     print(jsonDecode(response.body));
     if (response.statusCode == 200) {
@@ -456,7 +478,9 @@ class StoreApiController with ApiHelper, Helpers {
     return [];
   }
 
-  Future<List<Branch>> getStoreByCategoriy(
+
+
+  Future<List<Branch>> getBranchByCategoriy(
       {String? cid,
       String? filterType = '',
       String? filterContent = '',

@@ -28,7 +28,7 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
 
   @override
   void initState() {
-    _homeViewGetXController.getProducts();
+    _homeViewGetXController.getProducts(context: context);
     _offersScreenGetXController.getOffers(context: context);
     super.initState();
   }

@@ -7,16 +7,16 @@ import 'package:ghaf_application/domain/model/branch.dart';
 class CategoriesGetxController extends GetxController with Helpers {
   late final StoreApiController _storeApiController = StoreApiController();
 
-  List<Branch> stores = [];
+  List<Branch> branches = [];
   Branch? branchById;
   var isLoadingBranchById = true;
 
-  void getStores(
+  void getBranches(
       {String? cid,
       String? filterType = '',
       String? filterContent = '',
       String? sortType = ''}) async {
-    stores = await _storeApiController.getStoreByCategoriy(
+    branches = await _storeApiController.getBranchByCategoriy(
         cid: cid,
         filterContent: filterContent,
         filterType: filterType,

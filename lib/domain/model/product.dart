@@ -8,6 +8,7 @@ import 'package:ghaf_application/domain/model/category.dart';
 import 'package:ghaf_application/domain/model/ghaf_image.dart';
 import 'package:ghaf_application/domain/model/offer.dart';
 import 'package:ghaf_application/domain/model/product_discount.dart';
+import 'package:ghaf_application/domain/model/product_type.dart';
 
 import '../../presentation/screens/home_view/home_view_getx_controller.dart';
 
@@ -25,7 +26,7 @@ class Product extends GetxController with Helpers {
   }) {
 
 
-    _homeViewGetXController.getProducts();
+    _homeViewGetXController.getProducts(context: context);
     _homeViewGetXController.getMostPopularProduct();
 
     //
@@ -92,7 +93,7 @@ class Product extends GetxController with Helpers {
   String? name;
   String? description;
   String? characteristics;
-  String? productType;
+  ProductType? productType;
   num? price;
   bool? subscriptionHide;
 
@@ -109,7 +110,7 @@ class Product extends GetxController with Helpers {
   ProductDiscount? productDiscount;
   Offer? offer;
   ProductDiscount? redeemPoints;
-  String? timeToPrepareMinutes;
+  num? timeToPrepareMinutes;
   Branch? branch;
   String? offerDescription;
   String? discountValueForAllUsers;
@@ -129,7 +130,7 @@ class Product extends GetxController with Helpers {
         name: json["name"],
         description: json["description"],
         characteristics: json["characteristics"],
-        productType: json["productType"],
+        productType:json["productType"] == null ? null : ProductType.fromJson(json["productType"]),
         price: json["price"],
         isoCurrencySymbol: json["isoCurrencySymbol"],
         quantity: json["quantity"],

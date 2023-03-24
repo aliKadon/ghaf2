@@ -21,16 +21,19 @@ class CartItem extends GetxController with Helpers {
   }) {
     print('=================product count');
     print(productCount);
+    _cartViewGetXController.getMyCart();
     count = (productCount1).toInt();
     // productCount = count;
-    productCount1 = productCount1! + 1;
-    _cartViewGetXController.calculateBell(productCount: productCount1.toInt());
+    // productCount1 = productCount1! + 1;
+
+
+    // _cartViewGetXController.calculateBell();
     update();
     if (sendRequest)
       _ChangeCartItemCountRequest(
           context: context,
           type: 1,
-          productCount: count!,
+          productCount: productCount1!,
           idProduct: idProduct);
   }
 
@@ -44,12 +47,13 @@ class CartItem extends GetxController with Helpers {
     print('=================product count');
     print(productCount);
     count = (productCount).toInt();
-    productCount = productCount - 1;
+    // productCount = productCount - 1;
+    _cartViewGetXController.getMyCart();
 
     update();
     if (sendRequest)
       _ChangeCartItemCountRequest(
-          context: context, type: 2, productCount: count, idProduct: idProduct);
+          context: context, type: 2, productCount: productCount, idProduct: idProduct);
   }
 
   // vars.
@@ -96,7 +100,7 @@ class CartItem extends GetxController with Helpers {
     );
     if (apiResponse.status == 200) {
       // success.
-      showSnackBar(context, message: apiResponse.message);
+      // showSnackBar(context, message: apiResponse.message);
     } else {
       // failed.
       showSnackBar(context, message: apiResponse.message, error: true);

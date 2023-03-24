@@ -32,7 +32,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
   void initState() {
     // TODO: implement initState
     _homeViewGetXController.getCategories();
-    _categoriesGetxController.getStores(
+    _categoriesGetxController.getBranches(
         cid: SharedPrefController().firstStoreName);
     super.initState();
   }
@@ -97,7 +97,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                           )
                         : GestureDetector(
                             onTap: () {
-                              _categoriesGetxController.getStores(
+                              _categoriesGetxController.getBranches(
                                   cid: _homeViewGetXController
                                       .categories[index].id);
                               setState(() {
@@ -203,7 +203,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
             ],
           ),
           GetBuilder<CategoriesGetxController>(
-            builder: (controller) => _categoriesGetxController.stores.length ==
+            builder: (controller) => _categoriesGetxController.branches.length ==
                     0
                 ? Center(
                     child: Text(AppLocalizations.of(context)!.no_stores_found,
@@ -217,7 +217,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                     decoration: BoxDecoration(color: ColorManager.greyLight),
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
-                      itemCount: controller.stores.length,
+                      itemCount: controller.branches.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return InkWell(
@@ -225,7 +225,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => StoreView(
                                     branchId: _categoriesGetxController
-                                        .stores[index].id!),
+                                        .branches[index].id!),
                               ));
 
 
@@ -242,17 +242,17 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                             },
                             child: StoreWidget(
                               storeName:
-                                  controller.stores[index].branchName ?? '',
+                                  controller.branches[index].branchName ?? '',
                               storeImageUrl:
-                                  controller.stores[index].branchLogoImage!,
-                              storeStars: controller.stores[index].storeStars!,
+                                  controller.branches[index].branchLogoImage!,
+                              storeStars: controller.branches[index].storeStars!,
                               imageDeliveryUrl:
-                                  controller.stores[index].storeDeliveryCost!,
-                              isOpen: controller.stores[index].isOpen!,
+                                  controller.branches[index].storeDeliveryCost!,
+                              isOpen: controller.branches[index].isOpen!,
                               workTime: controller
-                                  .stores[index].todayWorkHoursToString!,
+                                  .branches[index].todayWorkHoursToString!,
                               reviewCount:
-                                  controller.stores[index].reviewCount!,
+                                  controller.branches[index].reviewCount!,
                             ));
                       },
                     ),

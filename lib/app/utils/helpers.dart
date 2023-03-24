@@ -748,7 +748,7 @@ mixin Helpers {
                             padding: EdgeInsets.all(12),
                             child: ElevatedButton(
                                 onPressed: () {
-                                  categoriesGetxController.getStores(
+                                  categoriesGetxController.getBranches(
                                       cid: cid,
                                       sortType: sortedType[selected] ==
                                               AppLocalizations.of(context)!

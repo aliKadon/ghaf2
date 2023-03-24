@@ -13,11 +13,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class CartItemWidget extends StatefulWidget {
-  final int index;
+  int? index;
 
-  const CartItemWidget({
+   CartItemWidget({
     Key? key,
-    required this.index,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -26,9 +26,10 @@ class CartItemWidget extends StatefulWidget {
 
 class _CartItemWidgetState extends State<CartItemWidget> {
   // controller.
-  late final CartItem _cartItem = Get.find<CartItem>(
-    tag: widget.index.toString(),
-  );
+  // late final CartItem _cartItem = Get.find<CartItem>(
+  //   tag: widget.index.toString(),
+  // );
+  late final CartItem _cartItem = Get.put(CartItem());
   late final CartViewGetXController _cartViewGetXController =
       Get.find<CartViewGetXController>();
 
@@ -54,12 +55,12 @@ class _CartItemWidgetState extends State<CartItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('================================data');
-    print(_cartItem.product!.ghafImage);
+    // print('================================data');
+    // print(_cartItem.product!.ghafImage);
     return Dismissible(
-      key: ValueKey<int>(widget.index),
+      key: ValueKey<int>(widget.index!),
       onDismissed: (DismissDirection direction) {
-        _cartViewGetXController.removeCartItem(index: widget.index);
+        _cartViewGetXController.removeCartItem(index: widget.index!);
         _cartItem.toggleAddToCartRequest();
       },
       background: Container(
@@ -85,7 +86,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(AppRadius.r8),
-                child:_cartItem.product?.ghafImage?.length == 0 ?
+                child:_cartItem.product?.productImages?.length == 0 ?
                 Image.asset(
                   'assets/images/product_image.png',
                   height: AppSize.s84,
@@ -93,7 +94,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   fit: BoxFit.cover,
                 ) :
                 Image.network(
-                  _cartItem.product!.ghafImage![0].data! ,
+                  _cartItem.product!.productImages![0] ,
                   height: AppSize.s84,
                   width: AppSize.s77,
                   // fit: BoxFit.fill,
@@ -194,7 +195,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   onTap: () {
                     if (_cartItem.productCount == 1) {
                       _cartViewGetXController.removeCartItem(
-                          index: widget.index);
+                          index: widget.index!);
                       _cartItem.toggleAddToCartRequest();
                     } else {
                       // _cartItem.decrement(

@@ -46,6 +46,13 @@ class _HomeViewState extends State<HomeView> {
 
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
+  List<String> imageShortcuts = [
+    ImageAssets.logo1,
+    ImageAssets.trending,
+    ImageAssets.homePastOrder,
+    ImageAssets.homeOffers
+  ];
+
   Future<Position> getLocation() async {
     position = await _geolocatorPlatform.getCurrentPosition();
     print('===================my position');
@@ -59,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
   late final CheckOutGetxController _checkOutGetxController =
-  Get.put(CheckOutGetxController());
+      Get.put(CheckOutGetxController());
   late final Product _product = Get.put(Product());
   late final ProfileSettingGetxController _profileSettingGetxController =
       Get.put(ProfileSettingGetxController());
@@ -102,6 +109,12 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> typeOfShortcuts = [
+      AppLocalizations.of(context)!.only_on_ghaf,
+      AppLocalizations.of(context)!.trending,
+      AppLocalizations.of(context)!.past_order,
+      AppLocalizations.of(context)!.offers,
+    ];
     SubscribeViewGetXController _subscribeViewGetXController =
         Get.put(SubscribeViewGetXController(context: context));
     var isArabic = SharedPrefController().lang1;
@@ -328,7 +341,8 @@ class _HomeViewState extends State<HomeView> {
                                                       .size
                                                       .height *
                                                   0.02),
-                                          AppSharedData.currentUser?.ghafGold ?? false
+                                          AppSharedData.currentUser?.ghafGold ??
+                                                  false
                                               ? ElevatedButton(
                                                   // onPressed: () {},
                                                   style: ButtonStyle(
@@ -338,7 +352,8 @@ class _HomeViewState extends State<HomeView> {
                                                                   .primaryDark)),
                                                   onPressed: () {
                                                     _subscribeViewGetXController
-                                                        .cancelSubscription(context: context);
+                                                        .cancelSubscription(
+                                                            context: context);
                                                   },
                                                   child: Text(
                                                     AppLocalizations.of(
@@ -398,7 +413,12 @@ class _HomeViewState extends State<HomeView> {
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(
                                                 builder: (context) =>
-                                                    StoreByCategory(),
+                                                    StoreByCategory(
+                                                        cid:
+                                                            _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .id!),
                                               ));
                                             },
                                             child: Column(
@@ -468,19 +488,19 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.13,
+                                    MediaQuery.of(context).size.height * 0.137,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: AppPadding.p16),
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
-                                    itemCount: 2,
+                                    itemCount: typeOfShortcuts.length,
                                     itemBuilder: (context, index) {
                                       return ShortcutsWidget(
                                         bid: '',
-                                        imageUrl: ImageAssets.trending,
-                                        text: 'Trending',
+                                        imageUrl: imageShortcuts[index],
+                                        text: typeOfShortcuts[index],
                                       );
                                     },
                                   ),
@@ -531,32 +551,29 @@ class _HomeViewState extends State<HomeView> {
                         scrollDirection: Axis.horizontal,
                         itemCount: controller.mostPopular.length,
                         itemBuilder: (context, index) {
-                          return GetBuilder<Product>(
-                            builder:(controller) {
-                              print('==================favorite');
-                              print(_homeViewGetXController.mostPopular[index].isFavorite);
                               return ProductItemNew(
                                 index: index,
-                                image: _homeViewGetXController
-                                    .mostPopular[index].productImages?[index] ??
+                                image: controller
+                                        .mostPopular[index]
+                                        .productImages?[index] ??
                                     '',
-                                name: _homeViewGetXController
-                                    .mostPopular[index].name ??
+                                name: controller
+                                        .mostPopular[index].name ??
                                     '',
-                                price: _homeViewGetXController
-                                    .mostPopular[index].price ??
+                                price: controller
+                                        .mostPopular[index].price ??
                                     0,
-                                stars: _homeViewGetXController
-                                    .mostPopular[index].stars ??
+                                stars: controller
+                                        .mostPopular[index].stars ??
                                     0,
-                                idProduct:
-                                _homeViewGetXController.mostPopular[index].id ??
+                                idProduct: controller
+                                        .mostPopular[index].id ??
                                     '',
-                                isFavorite: _homeViewGetXController.mostPopular[index].isFavorite ??
+                                isFavorite: controller
+                                        .mostPopular[index].isFavorite ??
                                     false,
                               );
-                            },
-                          );
+
                         },
                       ),
                     ),
@@ -622,18 +639,20 @@ class _HomeViewState extends State<HomeView> {
                                     Row(
                                       children: [
                                         Container(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.11,
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.27,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.11,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.27,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                             image: DecorationImage(
-                                              image:
-                                                  AssetImage(ImageAssets.brStore),
+                                              image: AssetImage(
+                                                  ImageAssets.brStore),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -646,7 +665,8 @@ class _HomeViewState extends State<HomeView> {
                                     SizedBox(
                                       height: 8,
                                     ),
-                                    Text('${controller.customerOrder[index].branch!.storeName}',
+                                    Text(
+                                        '${controller.customerOrder[index].branch!.storeName}',
                                         style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
@@ -664,7 +684,8 @@ class _HomeViewState extends State<HomeView> {
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
-                                                color: ColorManager.primaryDark)),
+                                                color:
+                                                    ColorManager.primaryDark)),
                                       ],
                                     ),
                                   ],
@@ -676,60 +697,65 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.23,
-                    decoration: BoxDecoration(
-                        color: ColorManager.primary,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Stack(
-                      children: [
-                        isArabic == 'en'
-                            ? Image.asset(ImageAssets.blueRectangle)
-                            : Transform(
-                                alignment: Alignment.center,
-                                transform: Matrix4.rotationY(math.pi),
-                                child: Image.asset(
-                                  ImageAssets.blueRectangle,
-                                ),
+                  GetBuilder<HomeViewGetXController>(
+                    builder: (controller) => controller.isAddsLoading
+                        ? Container()
+                        : Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.23,
+                              decoration: BoxDecoration(
+                                  color: ColorManager.primary,
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Stack(
+                                children: [
+                                  isArabic == 'en'
+                                      ? Image.asset(ImageAssets.blueRectangle)
+                                      : Transform(
+                                          alignment: Alignment.center,
+                                          transform: Matrix4.rotationY(math.pi),
+                                          child: Image.asset(
+                                            ImageAssets.blueRectangle,
+                                          ),
+                                        ),
+                                  Positioned(
+                                      top: 20,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Image.asset(
+                                          ImageAssets.brIcon,
+                                          height: 40,
+                                          width: 40,
+                                        ),
+                                      )),
+                                  Positioned(
+                                      top: 70,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          '${controller.addsList[0].addHeader}',
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                      )),
+                                  Positioned(
+                                      top: 140,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          '${controller.addsList[0].addDescription}',
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      )),
+                                ],
                               ),
-                        Positioned(
-                            top: 20,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Image.asset(
-                                ImageAssets.brIcon,
-                                height: 40,
-                                width: 40,
-                              ),
-                            )),
-                        Positioned(
-                            top: 70,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'your favorite cake',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                            )),
-                        Positioned(
-                            top: 140,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                'only with Ghaf gold ',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
-                            )),
-                      ],
-                    ),
+                            ),
                   ),
+
                   SizedBox(
                     height: AppSize.s24,
                   ),

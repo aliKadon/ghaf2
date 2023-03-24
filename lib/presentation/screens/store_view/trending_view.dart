@@ -12,9 +12,9 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class TrendingView extends StatefulWidget {
-  final String bid;
+  String? bid;
 
-  TrendingView({required this.bid});
+  TrendingView({this.bid});
 
   @override
   State<TrendingView> createState() => _TrendingViewState();
@@ -29,7 +29,7 @@ class _TrendingViewState extends State<TrendingView> {
   void initState() {
     // TODO: implement initState
     _homeViewGetXController.getMostPopularProduct(bid: widget.bid);
-    _homeViewGetXController.getProducts();
+    _homeViewGetXController.getProducts(context: context);
     super.initState();
   }
 
@@ -70,7 +70,7 @@ class _TrendingViewState extends State<TrendingView> {
                             ),
                             Spacer(),
                             Text(
-                              AppLocalizations.of(context)!.on_sale,
+                              AppLocalizations.of(context)!.trending,
                               style: getSemiBoldStyle(
                                 color: ColorManager.primaryDark,
                                 fontSize: FontSize.s18,
@@ -88,6 +88,7 @@ class _TrendingViewState extends State<TrendingView> {
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.75,
+                        padding: EdgeInsets.all(12),
                         child: GridView.builder(
                           scrollDirection: Axis.vertical,
                           physics: BouncingScrollPhysics(),

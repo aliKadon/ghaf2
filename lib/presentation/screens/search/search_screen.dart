@@ -260,26 +260,27 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                       : Divider(color: ColorManager.greyLight, thickness: 4),
                 ),
                 GetBuilder<HomeViewGetXController>(
-                  id: 'products',
                   builder: (controller) =>  GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisExtent: 350,
                         crossAxisSpacing: 0),
-                    itemCount: _homeViewGetXController.products.length,
+                    itemCount: controller.products.length,
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductItemNew(
-                            image: _homeViewGetXController
-                                .products[index].productImages![0],
-                            name: _homeViewGetXController.products[index].name!,
-                            stars: _homeViewGetXController.products[index].stars!,
-                            price: _homeViewGetXController.products[index].price!,
+                            image: controller
+                                .products[index].productImages?.length == 0 ? '' : controller
+                                .products[index].productImages?[0] ?? '',
+                            name: controller.products[index].name!,
+                            stars: controller.products[index].stars!,
+                            price: controller.products[index].price!,
                             idProduct:
-                                _homeViewGetXController.products[index].id!,
-                        isFavorite: _homeViewGetXController.products[index].isFavorite!,
+                            controller.products[index].id!,
+                        isFavorite: controller.products[index].isFavorite!,
                         index: index),
                       );
                     },

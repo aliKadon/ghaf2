@@ -60,7 +60,17 @@ class _ProductItemNewState extends State<ProductItemNew> {
                     Stack(
                       alignment: Alignment.topRight,
                       children: [
-                        Container(
+                        widget.image == '' ? Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                              image: NetworkImage(ImageAssets.logo1),
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ) :  Container(
                           height: MediaQuery.of(context).size.height * 0.2,
                           width: MediaQuery.of(context).size.width * 0.35,
                           decoration: BoxDecoration(

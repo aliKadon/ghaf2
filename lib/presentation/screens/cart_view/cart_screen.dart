@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
+import 'package:ghaf_application/presentation/screens/cart_view/widgets/cart_item_widget.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -26,6 +27,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
+    Get.put(CartItemWidget());
     _cartViewGetXController.init(
       context: context,
     );
@@ -183,6 +185,9 @@ class _CartScreenState extends State<CartScreen> {
                                     price: _cartViewGetXController
                                         .cartItems[index].product!.price!,
                                     image: _cartViewGetXController
+                                        .cartItems[index]
+                                        .product!
+                                        .productImages!.length == 0 ? '' : _cartViewGetXController
                                         .cartItems[index]
                                         .product!
                                         .productImages![0],

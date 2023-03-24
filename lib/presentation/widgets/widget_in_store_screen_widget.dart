@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/presentation/screens/home_view/only_on_ghaf_screen.dart';
-import 'package:ghaf_application/presentation/screens/home_view/past_order_screen.dart';
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
 
 import '../resources/assets_manager.dart';
@@ -12,53 +10,55 @@ import '../resources/values_manager.dart';
 import '../screens/store_view/onsale_view.dart';
 import '../screens/store_view/trending_view.dart';
 
-class ShortcutsWidget extends StatelessWidget {
+class WidgetInStoreScreenWidget extends StatelessWidget {
 
   final String text;
   final String imageUrl;
   final String bid;
-
-  ShortcutsWidget(
-      {required this.text, required this.imageUrl, required this.bid});
+  WidgetInStoreScreenWidget({required this.text,required this.imageUrl,required this.bid});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (text == AppLocalizations.of(context)!.only_on_ghaf) {
+        if(text == AppLocalizations.of(context)!.discount) {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => OnlyOnGhafScreen(),));
-        }else if (text == AppLocalizations.of(context)!.trending) {
+            MaterialPageRoute(
+              builder: (context) => OffersScreenNew(),
+            ),
+          );
+        }else if (text == AppLocalizations.of(context)!.on_sale) {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => TrendingView(bid: ''),));
-        }else if (text == AppLocalizations.of(context)!.past_order) {
+            MaterialPageRoute(
+              builder: (context) => OnsaleView(),
+            ),
+          );
+        }else if (text == AppLocalizations.of(context)!.trending ) {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => PastOrderScreen(),));
-        }else if (text == AppLocalizations.of(context)!.offers) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => OffersScreenNew(),));
+            MaterialPageRoute(
+              builder: (context) => TrendingView(bid: bid),
+            ),
+          );
         }
+
       },
       child: Container(
         width: AppSize.s92,
-        // height: AppSize.s110,
         padding: EdgeInsetsDirectional.only(
           end: AppSize.s8,
         ),
         child: Container(
-          height: MediaQuery
-              .of(context)
+          height: MediaQuery.of(context)
               .size
               .height *
               0.2,
           child: Column(
             children: [
               Container(
-                height: MediaQuery
-                    .of(context)
+                height: MediaQuery.of(context)
                     .size
                     .height *
-                    0.135,
+                    0.12,
                 width: AppSize.s92,
                 padding: EdgeInsets.all(
                     AppPadding.p12),
@@ -98,9 +98,8 @@ class ShortcutsWidget extends StatelessWidget {
                     Flexible(
                       child: Text(
                         text,
-                        textAlign: TextAlign.center,
                         overflow: TextOverflow
-                            .clip,
+                            .ellipsis,
                         style: getMediumStyle(
                           color: ColorManager
                               .primaryDark,

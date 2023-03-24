@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/model/cart_item.dart';
@@ -42,11 +43,11 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
   var selected = 0;
   num count = 1;
 
-  // @override
-  // void initState() {
-  //   count = widget.productCount;
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    count = widget.productCount;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +55,23 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
       children: [
         Row(
           children: [
-            Container(
-              height: AppSize.s110,
-              width: AppSize.s110,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      widget.image,
-                    ),
+            widget.image == ''
+                ? Container(
+                    height: AppSize.s110,
+                    width: AppSize.s110,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(ImageAssets.logo1)),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  )
+                : Container(
+                    height: AppSize.s110,
+                    width: AppSize.s110,
+                    decoration: BoxDecoration(
+                        image:
+                            DecorationImage(image: NetworkImage(widget.image)),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,12 +112,16 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                           count++;
                           // count = widget.productCount;
                         });
-                        _cartItem.increment(
-                            idProduct: widget.cartItemId,
-                            productCount1: count,
-                            context: context);
-                        _cartViewGetXController.calculateBell(
-                            productCount: count.toInt());
+                        // _cartItem.increment(
+                        //     idProduct: widget.cartItemId,
+                        //     productCount1: count,
+                        //     context: context);
+                        _cartViewGetXController.changeCartAmount(
+                            context: context,
+                            cartItemId:
+                                _cartViewGetXController.cartItems[selected].id!,
+                            count: count);
+                        _cartViewGetXController.calculateBell();
 
                         // _cartItem.increment(
                         //     context: context,
@@ -136,12 +147,16 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                               .then((value) =>
                                   _cartViewGetXController.getMyCart());
                         }
-                        _cartItem.decrement(
-                            idProduct: widget.cartItemId,
-                            productCount: count,
-                            context: context);
-                        _cartViewGetXController.calculateBell(
-                            productCount: count.toInt());
+                        // _cartItem.decrement(
+                        //     idProduct: widget.cartItemId,
+                        //     productCount: count,
+                        //     context: context);
+                        _cartViewGetXController.changeCartAmount(
+                            context: context,
+                            cartItemId:
+                            _cartViewGetXController.cartItems[selected].id!,
+                            count: count);
+                        _cartViewGetXController.calculateBell();
                       },
                       child: Icon(
                         Icons.remove_circle_outline,

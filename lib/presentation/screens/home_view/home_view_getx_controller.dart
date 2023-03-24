@@ -16,6 +16,8 @@ import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sh
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
+import '../../../data/api/controllers/adds_api_controller.dart';
+import '../../../domain/model/adds.dart';
 import '../../../domain/model/nearby_stores.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
@@ -47,6 +49,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   bool _isProductsLoading = true;
   bool _isSearching = false;
   bool _isNearbyStoresLoading = true;
+  bool isAddsLoading = true;
 
   bool get isCategoryLoading => _isCategoriesLoading;
 
@@ -73,11 +76,14 @@ class HomeViewGetXController extends GetxController with Helpers {
   // vars.
   late BuildContext context;
   late final StoreApiController _storeApiController = StoreApiController();
+  late final AddsApiController _addsApiController = AddsApiController();
   List<Category> categories = [];
   List<Product> products = [];
   List<Product> mostPopular = [];
   List<Product> recommendedProduct = [];
+  List<Product> onlyOnghaf = [];
   List<Product> productByType = [];
+  List<Adds> addsList = [];
   List<NearbyStores> nearbyStores = [];
   List<ProductType> productType = [];
   String search = '';
@@ -95,9 +101,10 @@ class HomeViewGetXController extends GetxController with Helpers {
     required BuildContext context,
   }) {
     this.context = context;
+    getAdds(context: context);
     getMostPopularProduct();
     getCategories();
-    getProducts();
+    getProducts(context: context);
   }
 
   Future<Position> determinePosition() async {
@@ -194,6 +201,16 @@ class HomeViewGetXController extends GetxController with Helpers {
     // }
   }
 
+  //get only on ghaf
+  void getOnlyOnGhaf({required BuildContext context}) async{
+    try {
+      onlyOnghaf = await _storeApiController.getOnlyOnGhaf();
+      update();
+    }catch(error) {
+      showSnackBar(context, message: error.toString(),error: true);
+    }
+  }
+
   //get product type
   void getProductType({required BuildContext context, String? bid = ''}) async {
     try {
@@ -207,6 +224,7 @@ class HomeViewGetXController extends GetxController with Helpers {
 
   // get products.
   void getProducts({
+    required BuildContext context,
     bool notifyLoading = true,
   }) async {
     try {
@@ -231,7 +249,17 @@ class HomeViewGetXController extends GetxController with Helpers {
       // error.
       debugPrint(error.toString());
       showSnackBar(context,
-          message: 'An Error Occurred, Please Try again', error: true);
+          message: 'An Error Occurred, Please Try again!!', error: true);
+    }
+  }
+
+  void getAdds({required BuildContext context}) async {
+    try {
+      addsList = await _addsApiController.getAdds();
+      isAddsLoading = false;
+      update();
+    }catch(error) {
+      showSnackBar(context, message: error.toString(),error: true);
     }
   }
 
@@ -280,11 +308,11 @@ class HomeViewGetXController extends GetxController with Helpers {
     if (value == null || value.isEmpty) {
       isSearching = false;
       search = '';
-      getProducts(notifyLoading: true);
+      getProducts(notifyLoading: true,context: context);
     } else {
       search = value;
       isSearching = true;
-      getProducts(notifyLoading: true);
+      getProducts(notifyLoading: true,context: context);
     }
   }
 
@@ -322,7 +350,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     this.minPrice = minPrice;
     this.maxPrice = maxPrice;
     this.filterBy = filterBy;
-    getProducts(notifyLoading: true);
+    getProducts(notifyLoading: true,context: context);
   }
 
   // on ghaf icon tapped.

@@ -9,7 +9,7 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
-import 'package:ghaf_application/presentation/widgets/shortcuts_widget.dart';
+import 'package:ghaf_application/presentation/widgets/widget_in_store_screen_widget.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
@@ -267,7 +267,7 @@ class _StoreViewState extends State<StoreView> {
                           return Padding(
                             padding:
                                 const EdgeInsets.only(left: 8.0, right: 8.0),
-                            child: ShortcutsWidget(
+                            child: WidgetInStoreScreenWidget(
                               imageUrl: imageOfType[index],
                               text: typeOfList[index],
                               bid: _categoriesGetxController.branchById!.id!,
