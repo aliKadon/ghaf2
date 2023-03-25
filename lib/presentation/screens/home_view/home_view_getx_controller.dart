@@ -19,6 +19,7 @@ import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../data/api/controllers/adds_api_controller.dart';
 import '../../../domain/model/adds.dart';
 import '../../../domain/model/nearby_stores.dart';
+import '../../../domain/model/store_adds.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
   String address = '';
@@ -84,6 +85,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   List<Product> onlyOnghaf = [];
   List<Product> productByType = [];
   List<Adds> addsList = [];
+  List<StoreAdds> storeAddsList = [];
   List<NearbyStores> nearbyStores = [];
   List<ProductType> productType = [];
   String search = '';
@@ -105,6 +107,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     getMostPopularProduct();
     getCategories();
     getProducts(context: context);
+    getStoreAdds(context: context);
   }
 
   Future<Position> determinePosition() async {
@@ -187,27 +190,28 @@ class HomeViewGetXController extends GetxController with Helpers {
   void getProductByType(
       {required BuildContext context,
       String? bid = '',
-      String? filterContent = ''}) async {
-
-    productByType = await _storeApiController.getProductByType(
-        bid: bid, filterContent: filterContent);
-    update();
-    // try {
-    //   productByType = await _storeApiController.getProductByType(
-    //       bid: bid, filterContent: filterContent);
-    //   update();
-    // } catch (error) {
-    //   showSnackBar(context, message: error.toString(), error: true);
-    // }
+      String? productTypeId = ''}) async {
+    // productByType = await _storeApiController.getProductByType(
+    //     bid: bid, productTypeId: productTypeId,);
+    // update();
+    try {
+      productByType = await _storeApiController.getProductByType(
+        bid: bid,
+        productTypeId: productTypeId,
+      );
+      update();
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
   }
 
   //get only on ghaf
-  void getOnlyOnGhaf({required BuildContext context}) async{
+  void getOnlyOnGhaf({required BuildContext context}) async {
     try {
       onlyOnghaf = await _storeApiController.getOnlyOnGhaf();
       update();
-    }catch(error) {
-      showSnackBar(context, message: error.toString(),error: true);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
@@ -258,8 +262,17 @@ class HomeViewGetXController extends GetxController with Helpers {
       addsList = await _addsApiController.getAdds();
       isAddsLoading = false;
       update();
-    }catch(error) {
-      showSnackBar(context, message: error.toString(),error: true);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  void getStoreAdds({required BuildContext context}) async {
+    try {
+      storeAddsList = await _addsApiController.getStoreAdds();
+      update();
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
@@ -308,11 +321,11 @@ class HomeViewGetXController extends GetxController with Helpers {
     if (value == null || value.isEmpty) {
       isSearching = false;
       search = '';
-      getProducts(notifyLoading: true,context: context);
+      getProducts(notifyLoading: true, context: context);
     } else {
       search = value;
       isSearching = true;
-      getProducts(notifyLoading: true,context: context);
+      getProducts(notifyLoading: true, context: context);
     }
   }
 
@@ -350,7 +363,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     this.minPrice = minPrice;
     this.maxPrice = maxPrice;
     this.filterBy = filterBy;
-    getProducts(notifyLoading: true,context: context);
+    getProducts(notifyLoading: true, context: context);
   }
 
   // on ghaf icon tapped.

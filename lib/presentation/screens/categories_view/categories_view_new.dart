@@ -34,6 +34,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
     _homeViewGetXController.getCategories();
     _categoriesGetxController.getBranches(
         cid: SharedPrefController().firstStoreName);
+
     super.initState();
   }
 

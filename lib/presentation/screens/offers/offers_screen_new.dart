@@ -97,7 +97,7 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
                                     .offers[index].productImages!.length != 0 ? _offersScreenGetXController
                                     .offers[index].productImages![0] : '',
                                 discountDescription: _offersScreenGetXController
-                                    .offers[index].discountDescription!),
+                                    .offers[index].discountDescription ?? ''),
                             Padding(
                               padding: const EdgeInsets.all(14.0),
                               child: Divider(

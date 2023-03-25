@@ -346,9 +346,15 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         fontWeight: FontWeight.w500)),
                                 // SizedBox(width: AppSize.s20,),
                                 Spacer(),
-                                Text(
-                                  'change',
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                GestureDetector(
+                                  onTap:() {
+                                    // showArrivalTimeTodaySheet(context: context);
+                                    showArrivalTimeAsapSheet(context: context);
+                                  },
+                                  child: Text(
+                                    'change',
+                                    style: TextStyle(fontWeight: FontWeight.w500),
+                                  ),
                                 )
                               ],
                             ),

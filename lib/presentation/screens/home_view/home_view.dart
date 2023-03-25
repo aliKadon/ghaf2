@@ -16,6 +16,7 @@ import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
 import 'package:ghaf_application/presentation/screens/store_by_category/store_by_category.dart';
+import 'package:ghaf_application/presentation/screens/store_view/store_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
@@ -163,7 +164,8 @@ class _HomeViewState extends State<HomeView> {
                                       width: MediaQuery.of(context).size.width *
                                           0.03,
                                     ),
-                                    Text('21 points',
+                                    Text(
+                                        '${AppSharedData.currentUser?.customerPoints ?? 0} ${AppLocalizations.of(context)!.point}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15)),
@@ -544,36 +546,30 @@ class _HomeViewState extends State<HomeView> {
                   GetBuilder<HomeViewGetXController>(
                     // id: 'products',
                     builder: (controller) => Container(
-                      height: MediaQuery.of(context).size.height * 0.45,
+                      height: MediaQuery.of(context).size.height * 0.4,
                       child: ListView.builder(
                         shrinkWrap: true,
                         padding: EdgeInsets.all(12),
                         scrollDirection: Axis.horizontal,
                         itemCount: controller.mostPopular.length,
                         itemBuilder: (context, index) {
-                              return ProductItemNew(
-                                index: index,
-                                image: controller
-                                        .mostPopular[index]
+                          return ProductItemNew(
+                            index: index,
+                            image: controller.mostPopular[index].productImages!
+                                        .length ==
+                                    0
+                                ? ''
+                                : controller.mostPopular[index]
                                         .productImages?[index] ??
                                     '',
-                                name: controller
-                                        .mostPopular[index].name ??
-                                    '',
-                                price: controller
-                                        .mostPopular[index].price ??
-                                    0,
-                                stars: controller
-                                        .mostPopular[index].stars ??
-                                    0,
-                                idProduct: controller
-                                        .mostPopular[index].id ??
-                                    '',
-                                isFavorite: controller
-                                        .mostPopular[index].isFavorite ??
+                            name: controller.mostPopular[index].name ?? '',
+                            price: controller.mostPopular[index].price ?? 0,
+                            stars: controller.mostPopular[index].stars ?? 0,
+                            idProduct: controller.mostPopular[index].id ?? '',
+                            isFavorite:
+                                controller.mostPopular[index].isFavorite ??
                                     false,
-                              );
-
+                          );
                         },
                       ),
                     ),
@@ -701,59 +697,59 @@ class _HomeViewState extends State<HomeView> {
                     builder: (controller) => controller.isAddsLoading
                         ? Container()
                         : Container(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.23,
-                              decoration: BoxDecoration(
-                                  color: ColorManager.primary,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Stack(
-                                children: [
-                                  isArabic == 'en'
-                                      ? Image.asset(ImageAssets.blueRectangle)
-                                      : Transform(
-                                          alignment: Alignment.center,
-                                          transform: Matrix4.rotationY(math.pi),
-                                          child: Image.asset(
-                                            ImageAssets.blueRectangle,
-                                          ),
-                                        ),
-                                  Positioned(
-                                      top: 20,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.23,
+                            decoration: BoxDecoration(
+                                color: ColorManager.primary,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Stack(
+                              children: [
+                                isArabic == 'en'
+                                    ? Image.asset(ImageAssets.blueRectangle)
+                                    : Transform(
+                                        alignment: Alignment.center,
+                                        transform: Matrix4.rotationY(math.pi),
                                         child: Image.asset(
-                                          ImageAssets.brIcon,
-                                          height: 40,
-                                          width: 40,
+                                          ImageAssets.blueRectangle,
                                         ),
-                                      )),
-                                  Positioned(
-                                      top: 70,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          '${controller.addsList[0].addHeader}',
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      )),
-                                  Positioned(
-                                      top: 140,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          '${controller.addsList[0].addDescription}',
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
-                                        ),
-                                      )),
-                                ],
-                              ),
+                                      ),
+                                Positioned(
+                                    top: 20,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Image.asset(
+                                        ImageAssets.brIcon,
+                                        height: 40,
+                                        width: 40,
+                                      ),
+                                    )),
+                                Positioned(
+                                    top: 70,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        '${controller.addsList[0].addHeader}',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                    )),
+                                Positioned(
+                                    top: 140,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        '${controller.addsList[0].addDescription}',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                    )),
+                              ],
                             ),
+                          ),
                   ),
 
                   SizedBox(
@@ -796,7 +792,7 @@ class _HomeViewState extends State<HomeView> {
 
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: _homeViewGetXController.nearbyStores.length,
+                        itemCount: controller.nearbyStores.length,
                         physics: const BouncingScrollPhysics(),
                         // gridDelegate:
                         //     SliverGridDelegateWithFixedCrossAxisCount(
@@ -812,96 +808,109 @@ class _HomeViewState extends State<HomeView> {
                               //   tag:
                               //       '${_homeViewGetXController.products[index].id}home',
                               // );
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        _homeViewGetXController
-                                                        .nearbyStores[index]
-                                                        .branchLogoImage ==
-                                                    null ||
-                                                _homeViewGetXController
-                                                        .nearbyStores[index]
-                                                        .branchLogoImage ==
-                                                    ''
-                                            ? Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.11,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.27,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                        ImageAssets
-                                                            .coffeeHouse),
-                                                    fit: BoxFit.scaleDown,
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => StoreView(
+                                        branchId:
+                                            controller.nearbyStores[index].id!),
+                                  ));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          _homeViewGetXController
+                                                          .nearbyStores[index]
+                                                          .branchLogoImage ==
+                                                      null ||
+                                                  _homeViewGetXController
+                                                          .nearbyStores[index]
+                                                          .branchLogoImage ==
+                                                      ''
+                                              ? Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.11,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.27,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          ImageAssets
+                                                              .coffeeHouse),
+                                                      fit: BoxFit.scaleDown,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.11,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.27,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          _homeViewGetXController
+                                                              .nearbyStores[
+                                                                  index]
+                                                              .branchLogoImage!),
+                                                      fit: BoxFit.scaleDown,
+                                                    ),
                                                   ),
                                                 ),
-                                              )
-                                            : Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.11,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.27,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        _homeViewGetXController
-                                                            .nearbyStores[index]
-                                                            .branchLogoImage!),
-                                                    fit: BoxFit.scaleDown,
-                                                  ),
-                                                ),
-                                              ),
-                                        SizedBox(
-                                          width: 14,
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                        _homeViewGetXController
-                                            .nearbyStores[index].branchName!,
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                            color: ColorManager.primaryDark)),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.timer,
-                                          color: ColorManager.grey,
-                                        ),
-                                        SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text('20 min',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    ColorManager.primaryDark)),
-                                      ],
-                                    ),
-                                  ],
+                                          SizedBox(
+                                            width: 14,
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                          _homeViewGetXController
+                                              .nearbyStores[index].branchName!,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: ColorManager.primaryDark)),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.timer,
+                                            color: ColorManager.grey,
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text('20 min',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: ColorManager
+                                                      .primaryDark)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -910,45 +919,47 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-                  Card(
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: isArabic == 'en'
-                              ? Image.asset(
-                                  ImageAssets.save,
-                                  height: 150,
-                                  width: 150,
-                                )
-                              : Transform(
-                                  alignment: Alignment.center,
-                                  transform: Matrix4.rotationY(math.pi),
-                                  child: Image.asset(
+                  GetBuilder<HomeViewGetXController>(
+                    builder: (controller) => Card(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: isArabic == 'en'
+                                ? Image.asset(
                                     ImageAssets.save,
                                     height: 150,
                                     width: 150,
+                                  )
+                                : Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: Image.asset(
+                                      ImageAssets.save,
+                                      height: 150,
+                                      width: 150,
+                                    ),
                                   ),
-                                ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              'Save up to AED 30',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w700),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.01,
-                            ),
-                            Text(
-                              'limit time offer on resturants to try',
-                              style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                '${AppLocalizations.of(context)!.save_up_to} ${AppLocalizations.of(context)!.aed} ${controller.storeAddsList.isEmpty ? 0 : controller.storeAddsList[0].saveValue}',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w700),
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.01,
+                              ),
+                              Text(
+                                'limit time offer on resturants to try',
+                                style: TextStyle(
+                                    fontSize: 10, fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],

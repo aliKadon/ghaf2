@@ -774,6 +774,618 @@ mixin Helpers {
         );
       });
 
+
+  Future showArrivalTimeAsapSheet({
+    required BuildContext context,
+  }) =>
+      showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.5, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Text(AppLocalizations.of(context)!.arrival_time,
+                            style: TextStyle(
+                                fontSize: FontSize.s20,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.primaryDark)),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedToday == true) {
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                    isAsap = true;
+                                  }
+                                  if (isSelectedToday == false) {
+                                    isAsap = false;
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    color: ColorManager.primary,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(AppLocalizations.of(context)!.asap,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedToday
+                                      ? Icon(
+                                    Icons.radio_button_checked,
+                                    color: ColorManager.primary,
+                                  )
+                                      : Icon(
+                                    Icons.radio_button_off,
+                                    color: ColorManager.primary,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedAsap == true) {
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                    isAsap = false;
+                                  }
+                                  if (isSelectedAsap == false) {
+                                    isAsap = true;
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    ImageAssets.tomorrowTimer,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .schedule_for_later,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedAsap
+                                      ? Icon(
+                                    Icons.radio_button_checked,
+                                    color: ColorManager.primary,
+                                  )
+                                      : Icon(
+                                    Icons.radio_button_off,
+                                    color: ColorManager.primary,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Visibility(
+                              visible: isSelectedAsap,
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    padding: EdgeInsets.all(5),
+                                    child: DropdownButton<String>(
+                                      // Step 3.
+                                      value: dropdownValue,
+                                      // Step 4.
+
+                                      items: days.map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: TextStyle(
+                                                    color: ColorManager.primaryDark,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: AppSize.s12),
+                                              ),
+                                            );
+                                          }).toList(),
+                                      // Step 5.
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                          print(
+                                              '=====================number of days');
+                                          print(days.indexOf(newValue));
+                                          numberOfDay = days.indexOf(newValue);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    padding: EdgeInsets.all(5),
+                                    child: DropdownButton<String>(
+                                      // Step 3.
+                                      value: dropdownValue1,
+                                      // Step 4.
+                                      items: hours
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: TextStyle(
+                                                    color: ColorManager.primaryDark,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: AppSize.s12),
+                                              ),
+                                            );
+                                          }).toList(),
+                                      // Step 5.
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          print(
+                                              '=========================hours');
+                                          print(dropdownValue1);
+                                          dropdownValue1 = newValue!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Container(
+                              height: AppSize.s82,
+                              width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                  },
+                                  child: Text(
+                                      AppLocalizations.of(context)!.confirm)),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+  Future showArrivalTimeTodaySheet({
+    required BuildContext context,
+  }) =>
+      showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.5, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Text(AppLocalizations.of(context)!.arrival_time,
+                            style: TextStyle(
+                                fontSize: FontSize.s20,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.primaryDark)),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.024,
+                        ),
+                        Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedToday == true) {
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                    isAsap = true;
+                                  }
+                                  if (isSelectedToday == false) {
+                                    isAsap = false;
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    color: ColorManager.primary,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(AppLocalizations.of(context)!.today,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedToday
+                                      ? Icon(
+                                    Icons.radio_button_checked,
+                                    color: ColorManager.primary,
+                                  )
+                                      : Icon(
+                                    Icons.radio_button_off,
+                                    color: ColorManager.primary,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelectedAsap == true) {
+                                    isSelectedAsap = false;
+                                    isSelectedToday = true;
+                                    isAsap = false;
+                                  }
+                                  if (isSelectedAsap == false) {
+                                    isAsap = true;
+                                    isSelectedAsap = true;
+                                    isSelectedToday = false;
+                                  }
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    ImageAssets.tomorrowTimer,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                  ),
+                                  SizedBox(
+                                    width: AppSize.s10,
+                                  ),
+                                  Text(
+                                      AppLocalizations.of(context)!
+                                          .tomorrow,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s18)),
+                                  // SizedBox(width: AppSize.s30,),
+                                  Spacer(),
+                                  isSelectedAsap
+                                      ? Icon(
+                                    Icons.radio_button_checked,
+                                    color: ColorManager.primary,
+                                  )
+                                      : Icon(
+                                    Icons.radio_button_off,
+                                    color: ColorManager.primary,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Row(
+                              children: [
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: ColorManager.greyLight)),
+                                  padding: EdgeInsets.all(5),
+                                  child: DropdownButton<String>(
+                                    // Step 3.
+                                    value: dropdownValue,
+                                    // Step 4.
+
+                                    items: days.map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(
+                                                  color: ColorManager.primaryDark,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: AppSize.s12),
+                                            ),
+                                          );
+                                        }).toList(),
+                                    // Step 5.
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownValue = newValue!;
+                                        print(
+                                            '=====================number of days');
+                                        print(days.indexOf(newValue));
+                                        numberOfDay = days.indexOf(newValue);
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: ColorManager.greyLight)),
+                                  padding: EdgeInsets.all(5),
+                                  child: DropdownButton<String>(
+                                    // Step 3.
+                                    value: dropdownValue1,
+                                    // Step 4.
+                                    items: hours
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(
+                                                  color: ColorManager.primaryDark,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: AppSize.s12),
+                                            ),
+                                          );
+                                        }).toList(),
+                                    // Step 5.
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        print(
+                                            '=========================hours');
+                                        print(dropdownValue1);
+                                        dropdownValue1 = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(AppLocalizations.of(context)!.frequency,
+                                      style: TextStyle(
+                                          color: ColorManager.grey,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: FontSize.s14)),
+                                  // SizedBox(width: AppSize.s30,),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (isOneTime == true) {
+                                        isWeekly = false;
+                                        isMonthly = false;
+                                        isOneTime = false;
+                                      }
+                                      if (isOneTime == false) {
+                                        isWeekly = false;
+                                        isMonthly = false;
+                                        isOneTime = true;
+                                      }
+                                      frequency = 0;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      isOneTime
+                                          ? Icon(
+                                        Icons.radio_button_checked,
+                                        color: ColorManager.primary,
+                                      )
+                                          : Icon(
+                                        Icons.radio_button_off,
+                                        color: ColorManager.primary,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(AppLocalizations.of(context)!
+                                          .one_time),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (isWeekly == true) {
+                                        isWeekly = false;
+                                        isMonthly = false;
+                                        isOneTime = false;
+                                      }
+                                      if (isWeekly == false) {
+                                        isWeekly = true;
+                                        isMonthly = false;
+                                        isOneTime = false;
+                                      }
+                                      frequency = 1;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      isWeekly
+                                          ? Icon(
+                                        Icons.radio_button_checked,
+                                        color: ColorManager.primary,
+                                      )
+                                          : Icon(
+                                        Icons.radio_button_off,
+                                        color: ColorManager.primary,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(AppLocalizations.of(context)!
+                                          .weekly),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (isMonthly == true) {
+                                        isWeekly = false;
+                                        isMonthly = false;
+                                        isOneTime = false;
+                                      }
+                                      if (isMonthly == false) {
+                                        isWeekly = false;
+                                        isMonthly = true;
+                                        isOneTime = false;
+                                      }
+                                      frequency = 2;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      isMonthly
+                                          ? Icon(
+                                        Icons.radio_button_checked,
+                                        color: ColorManager.primary,
+                                      )
+                                          : Icon(
+                                        Icons.radio_button_off,
+                                        color: ColorManager.primary,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(AppLocalizations.of(context)!
+                                          .monthly),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Container(
+                              height: AppSize.s82,
+                              width: double.infinity,
+                              padding: EdgeInsets.all(12),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                  },
+                                  child: Text(
+                                      AppLocalizations.of(context)!.confirm)),
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * 0.024,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+
+
   Future showArrivalTimeSheet({
     required BuildContext context,
     required String orderId,

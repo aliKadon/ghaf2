@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/get_help/get_help_screen.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/font_manager.dart';
@@ -14,7 +15,10 @@ class HowItWorkRewardsScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          SizedBox(height: MediaQuery
+              .of(context)
+              .size
+              .height * 0.05),
           Row(
             children: [
               SizedBox(
@@ -32,11 +36,17 @@ class HowItWorkRewardsScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              Text(
-                AppLocalizations.of(context)!.get_help,
-                style: getSemiBoldStyle(
-                  color: ColorManager.primaryDark,
-                  fontSize: FontSize.s18,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => GetHelpScreen(),));
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.get_help,
+                  style: getSemiBoldStyle(
+                    color: ColorManager.primaryDark,
+                    fontSize: FontSize.s18,
+                  ),
                 ),
               ),
               SizedBox(
@@ -45,7 +55,10 @@ class HowItWorkRewardsScreen extends StatelessWidget {
             ],
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.4,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: ColorManager.greyLight,
@@ -80,8 +93,8 @@ class HowItWorkRewardsScreen extends StatelessWidget {
     );
   }
 
-  Widget StructureToEarnPoints(
-      BuildContext context, String image, String text) {
+  Widget StructureToEarnPoints(BuildContext context, String image,
+      String text) {
     return Padding(
       padding: const EdgeInsets.all(14.0),
       child: Row(
@@ -97,7 +110,10 @@ class HowItWorkRewardsScreen extends StatelessWidget {
             width: AppSize.s20,
           ),
           Container(
-            width: MediaQuery.of(context).size.width * 0.7,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 0.7,
             child: Text(text,
                 softWrap: true,
                 overflow: TextOverflow.clip,

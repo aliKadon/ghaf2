@@ -100,20 +100,20 @@ class _TrendingViewState extends State<TrendingView> {
                                   mainAxisExtent: AppSize.s311),
                           itemBuilder: (context, index) {
                             return ProductItemNew(
-                                image: _homeViewGetXController
-                                    .mostPopular[index].productImages![0],
-                                name: _homeViewGetXController
-                                    .mostPopular[index].name!,
-                                stars: _homeViewGetXController
-                                    .mostPopular[index].stars!,
+                                image: controller.mostPopular[index]
+                                            .productImages?.length ==
+                                        0
+                                    ? ''
+                                    : controller
+                                        .mostPopular[index].productImages![0],
+                                name: controller.mostPopular[index].name!,
+                                stars: controller.mostPopular[index].stars!,
                                 index: index,
-                                price: _homeViewGetXController
-                                    .mostPopular[index].price!,
-                                isFavorite: _homeViewGetXController
-                                    .mostPopular[index].isFavorite!,
+                                price: controller.mostPopular[index].price!,
+                                isFavorite:
+                                    controller.mostPopular[index].isFavorite!,
                                 // controller: _homeViewGetXController.mostPopular,
-                                idProduct: _homeViewGetXController
-                                    .mostPopular[index].id!);
+                                idProduct: controller.mostPopular[index].id!);
                           },
                         ),
                       ),

@@ -437,19 +437,19 @@ class StoreApiController with ApiHelper, Helpers {
     return [];
   }
   
-  Future<List<Product>> getProductByType({String? bid,String? filterContent}) async{
+  Future<List<Product>> getProductByType({String? bid,String? productTypeId}) async{
     Map<String, String> queries = {
       'filter':
-      "productType~contains~\'$filterContent\'",
+      "ProductType.id~eq~\'$productTypeId\'",
       'bid': '$bid',
     };
     var query = Uri(queryParameters: queries).query;
     var url = Uri.parse('${Constants.baseUrl}/Product/read-product?$query');
     var response = await http.get(url, headers: headers);
 
-    print('=======================product by type');
-    print('${Constants.baseUrl}/Product/read-product?$query');
-    print(jsonDecode(response.body));
+    // print('=======================product by type');
+    // print('${Constants.baseUrl}/Product/read-product?$query');
+    // print(jsonDecode(response.body));
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {
