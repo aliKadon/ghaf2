@@ -135,35 +135,41 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                 crossAxisSpacing: 20,
                               ),
                               physics: BouncingScrollPhysics(),
-                              itemCount: 4,
+                              itemCount: controller.recentSearch!.length < 4 ? controller.recentSearch!.length : 4,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: ColorManager.greyLight)),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.av_timer_rounded,
-                                        color: ColorManager.greyLight,
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.02,
-                                      ),
-                                      Flexible(
-                                        child: Text(
-                                          _searchGetxController
-                                              .recentSearch![index],
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 13),
+                                return GestureDetector(
+                                  onTap: () {
+                                    _homeViewGetXController.onSearch(_searchGetxController
+                                        .recentSearch![index]);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.av_timer_rounded,
+                                          color: ColorManager.greyLight,
                                         ),
-                                      )
-                                    ],
+                                        SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.02,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            _searchGetxController
+                                                .recentSearch![index],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
@@ -216,35 +222,42 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                               itemCount:
                                   _searchGetxController.popularSearch?.length,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: ColorManager.greyLight)),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.stacked_line_chart,
-                                        color: ColorManager.greyLight,
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.02,
-                                      ),
-                                      Flexible(
-                                        child: Text(
-                                          _searchGetxController
-                                                  .popularSearch?[index]
-                                                  .productName ??
-                                              '',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 13),
+                                return GestureDetector(
+                                  onTap: () {
+                                    _homeViewGetXController.onSearch(_searchGetxController
+                                        .popularSearch?[index]
+                                        .productName);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.stacked_line_chart,
+                                          color: ColorManager.greyLight,
                                         ),
-                                      )
-                                    ],
+                                        SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.02,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            _searchGetxController
+                                                    .popularSearch?[index]
+                                                    .productName ??
+                                                '',
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 );
                               },

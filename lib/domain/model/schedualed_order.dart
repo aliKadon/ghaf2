@@ -9,7 +9,7 @@ class ScheduledOrder {
   String? createDate;
   Address? deliveryPoint;
   String? branchDeliveryCostId;
-  String? totalCostForItems;
+  num? totalCostForItems;
   String? customer;
   List<Items>? items;
   String? userCredentialsId;
@@ -48,12 +48,12 @@ class ScheduledOrder {
         userCredentialsId: json['userCredentialsId'],
         branchId: json['branchId'],
         paymentMethodId: json['paymentMethodId'],
-        deliveryPoint: json['deliveryPoint'],
-        deliveryMethod: json['deliveryMethod'],
-        branch: json['branch'],
+        deliveryPoint: Address.fromJson(json['deliveryPoint']),
+        deliveryMethod: DeliveryMethod.fromJson(json['deliveryMethod']),
+        branch: Branch.fromJson(json['branch']),
         customer: json['customer'],
         totalCostForItems: json['totalCostForItems'],
-        items: json['items'],
+        items: List<Items>.from(json['items'].map((x) => Items.fromJson(x))),
         createDate: json['createDate'],
         sequenceNumber: json['sequenceNumber'],
         branchDeliveryCostId: json['branchDeliveryCostId'],

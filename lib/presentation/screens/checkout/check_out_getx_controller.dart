@@ -7,6 +7,7 @@ import 'package:ghaf_application/data/api/controllers/orders_api_controller.dart
 import 'package:ghaf_application/data/api/controllers/payment_method_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/promo_code.dart';
+import 'package:ghaf_application/domain/model/schedualed_order.dart';
 import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,6 +25,8 @@ class CheckOutGetxController extends GetxController with Helpers {
   List<OrderToPay> orderToPay = [];
   List<PromoCode> promoCodes = [];
   List<Order> customerOrder = [];
+  List<ScheduledOrder> scheduleOrders = [];
+  List<String> storeName = [];
   late Order? order;
   var isLoading = true.obs;
   var isLoadingOrderToPay = true;
@@ -236,6 +239,21 @@ class CheckOutGetxController extends GetxController with Helpers {
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString());
+    }
+  }
+
+  void getScheduleOrder({required BuildContext context}) async{
+
+    List<String> names = [];
+    try {
+      scheduleOrders = await _ordersApiController.getScheduleOrder();
+      for (ScheduledOrder scheduledOrder in scheduleOrders) {
+        names.add(scheduledOrder.branch!.storeName!);
+      }
+      storeName = names.toSet().toList();
+      update();
+    }catch(error) {
+      showSnackBar(context, message: error.toString(),error: true);
     }
   }
 }

@@ -6,12 +6,14 @@ import 'package:ghaf_application/data/api/api_helper.dart';
 import 'package:ghaf_application/domain/model/address.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/order_to_pay.dart';
+import 'package:ghaf_application/domain/model/schedualed_order.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../domain/model/order.dart';
 
 class OrdersApiController with ApiHelper {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
+
 
   // create order.
   Future<ApiResponse> createOrder() async {
@@ -156,6 +158,20 @@ class OrdersApiController with ApiHelper {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {
         return List<Order>.from(jsonData['data'].map((x) => Order.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
+  Future<List<ScheduledOrder>> getScheduleOrder() async {
+    var url = Uri.parse('${Constants.baseUrl}/Orders/get-scheduled-order');
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return List<ScheduledOrder>.from(
+            jsonData['data'].map((x) => ScheduledOrder.fromJson(x)));
       }
     }
     return [];

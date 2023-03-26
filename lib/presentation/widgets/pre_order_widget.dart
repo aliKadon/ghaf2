@@ -6,7 +6,21 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 
 import '../resources/values_manager.dart';
 
-class PreOrderWidget extends StatelessWidget {
+class PreOrderWidget extends StatefulWidget {
+
+  final String storeName;
+
+  PreOrderWidget({required this.storeName});
+
+
+  @override
+  State<PreOrderWidget> createState() => _PreOrderWidgetState();
+}
+
+class _PreOrderWidgetState extends State<PreOrderWidget> {
+
+
+
   var language = SharedPrefController().lang1;
 
   @override
@@ -24,7 +38,7 @@ class PreOrderWidget extends StatelessWidget {
               width: AppSize.s30,
             ),
             Text(
-              'Albaik',
+              '${widget.storeName}',
               style: TextStyle(
                   color: ColorManager.primaryDark,
                   fontSize: FontSize.s16,

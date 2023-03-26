@@ -8,6 +8,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../store_view/store_view.dart';
 
 class StoreByCategory extends StatefulWidget {
   final String cid;
@@ -85,9 +86,9 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) => StoreView(),
-                            // ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => StoreView(branchId: controller.branches[index].id!),
+                            ));
                           },
                           child: Column(
                             children: [
