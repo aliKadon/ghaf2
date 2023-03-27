@@ -9,7 +9,6 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_view_for_subscribe_new.dart';
@@ -264,7 +263,7 @@ mixin Helpers {
   Future showSubscribeSheet(
       {required BuildContext context,
       required List<SubscriptionPlan> subscriptionPlan,
-        String? last4DigitNumber,
+      String? last4DigitNumber,
       required PaymentMethod paymentMethod,
       required List<PaymentMethod> paymentMethodId}) {
     IconData icon = Icons.radio_button_off;
@@ -480,7 +479,7 @@ mixin Helpers {
       {required BuildContext context,
       required num priceAmount,
       required num freeDays,
-        String? last4DigitNumber,
+      String? last4DigitNumber,
       required PaymentMethod paymentMethod,
       required String planId,
       required String paymentMethodId}) {
@@ -558,19 +557,21 @@ mixin Helpers {
                           SizedBox(
                             width: AppSize.s10,
                           ),
-                          last4DigitNumber == null ? Text(
-                            "**** **** **** ${paymentMethod.last4Digits} ",
-                            style: TextStyle(
-                                color: ColorManager.primaryDark,
-                                fontWeight: FontWeight.w600,
-                                fontSize: FontSize.s12),
-                          ) : Text(
-                            "**** **** **** ${last4DigitNumber} ",
-                            style: TextStyle(
-                                color: ColorManager.primaryDark,
-                                fontWeight: FontWeight.w600,
-                                fontSize: FontSize.s12),
-                          ),
+                          last4DigitNumber == null
+                              ? Text(
+                                  "**** **** **** ${paymentMethod.last4Digits} ",
+                                  style: TextStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: FontSize.s12),
+                                )
+                              : Text(
+                                  "**** **** **** ${last4DigitNumber} ",
+                                  style: TextStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: FontSize.s12),
+                                ),
                           Spacer(),
                           GestureDetector(
                             onTap: () {
@@ -774,9 +775,9 @@ mixin Helpers {
         );
       });
 
-
   Future showArrivalTimeAsapSheet({
     required BuildContext context,
+    required String text,
   }) =>
       showSlidingBottomSheet(
         context,
@@ -798,7 +799,7 @@ mixin Helpers {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.024,
                         ),
-                        Text(AppLocalizations.of(context)!.arrival_time,
+                        Text('$text',
                             style: TextStyle(
                                 fontSize: FontSize.s20,
                                 fontWeight: FontWeight.w600,
@@ -810,6 +811,8 @@ mixin Helpers {
                           children: [
                             InkWell(
                               onTap: () {
+                                print('=======================asap');
+                                print(isAsap);
                                 setState(() {
                                   if (isSelectedToday == true) {
                                     isSelectedAsap = true;
@@ -841,22 +844,24 @@ mixin Helpers {
                                   Spacer(),
                                   isSelectedToday
                                       ? Icon(
-                                    Icons.radio_button_checked,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
                                       : Icon(
-                                    Icons.radio_button_off,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
                                 ],
                               ),
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             InkWell(
                               onTap: () {
+                                print('=======================asap');
+                                print(isAsap);
                                 setState(() {
                                   if (isSelectedAsap == true) {
                                     isSelectedAsap = false;
@@ -891,19 +896,19 @@ mixin Helpers {
                                   Spacer(),
                                   isSelectedAsap
                                       ? Icon(
-                                    Icons.radio_button_checked,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
                                       : Icon(
-                                    Icons.radio_button_off,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
                                 ],
                               ),
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             Visibility(
                               visible: isSelectedAsap,
@@ -922,18 +927,18 @@ mixin Helpers {
                                       // Step 4.
 
                                       items: days.map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: ColorManager.primaryDark,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: AppSize.s12),
-                                              ),
-                                            );
-                                          }).toList(),
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: AppSize.s12),
+                                          ),
+                                        );
+                                      }).toList(),
                                       // Step 5.
                                       onChanged: (String? newValue) {
                                         setState(() {
@@ -960,17 +965,17 @@ mixin Helpers {
                                       items: hours
                                           .map<DropdownMenuItem<String>>(
                                               (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: ColorManager.primaryDark,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: AppSize.s12),
-                                              ),
-                                            );
-                                          }).toList(),
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: AppSize.s12),
+                                          ),
+                                        );
+                                      }).toList(),
                                       // Step 5.
                                       onChanged: (String? newValue) {
                                         setState(() {
@@ -988,21 +993,34 @@ mixin Helpers {
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             Container(
                               height: AppSize.s82,
                               width: double.infinity,
                               padding: EdgeInsets.all(12),
                               child: ElevatedButton(
+
                                   onPressed: () {
+                                    print('=============result');
+                                    print(frequency);
+                                    print(numberOfDay);
+                                    print(dropdownValue1);
+                                    print(isAsap);
+                                    Navigator.of(context).pop({
+                                      'WeeklyOrMonthly': frequency,
+                                      'DayNumber': numberOfDay,
+                                      'HourNumber': int.parse(dropdownValue1),
+                                      'MinuteNumber': 0,
+                                      'asap' : !isAsap,
+                                    });
                                   },
                                   child: Text(
                                       AppLocalizations.of(context)!.confirm)),
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                           ],
                         )
@@ -1018,6 +1036,7 @@ mixin Helpers {
 
   Future showArrivalTimeTodaySheet({
     required BuildContext context,
+    required String text,
   }) =>
       showSlidingBottomSheet(
         context,
@@ -1039,7 +1058,7 @@ mixin Helpers {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.024,
                         ),
-                        Text(AppLocalizations.of(context)!.arrival_time,
+                        Text('$text',
                             style: TextStyle(
                                 fontSize: FontSize.s20,
                                 fontWeight: FontWeight.w600,
@@ -1082,19 +1101,19 @@ mixin Helpers {
                                   Spacer(),
                                   isSelectedToday
                                       ? Icon(
-                                    Icons.radio_button_checked,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
                                       : Icon(
-                                    Icons.radio_button_off,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
                                 ],
                               ),
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             InkWell(
                               onTap: () {
@@ -1121,9 +1140,7 @@ mixin Helpers {
                                   SizedBox(
                                     width: AppSize.s10,
                                   ),
-                                  Text(
-                                      AppLocalizations.of(context)!
-                                          .tomorrow,
+                                  Text(AppLocalizations.of(context)!.tomorrow,
                                       style: TextStyle(
                                           color: ColorManager.grey,
                                           fontWeight: FontWeight.w600,
@@ -1132,19 +1149,19 @@ mixin Helpers {
                                   Spacer(),
                                   isSelectedAsap
                                       ? Icon(
-                                    Icons.radio_button_checked,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_checked,
+                                          color: ColorManager.primary,
+                                        )
                                       : Icon(
-                                    Icons.radio_button_off,
-                                    color: ColorManager.primary,
-                                  )
+                                          Icons.radio_button_off,
+                                          color: ColorManager.primary,
+                                        )
                                 ],
                               ),
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             Row(
                               children: [
@@ -1161,18 +1178,18 @@ mixin Helpers {
                                     // Step 4.
 
                                     items: days.map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                              style: TextStyle(
-                                                  color: ColorManager.primaryDark,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: AppSize.s12),
-                                            ),
-                                          );
-                                        }).toList(),
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                              color: ColorManager.primaryDark,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: AppSize.s12),
+                                        ),
+                                      );
+                                    }).toList(),
                                     // Step 5.
                                     onChanged: (String? newValue) {
                                       setState(() {
@@ -1196,25 +1213,23 @@ mixin Helpers {
                                     // Step 3.
                                     value: dropdownValue1,
                                     // Step 4.
-                                    items: hours
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                              style: TextStyle(
-                                                  color: ColorManager.primaryDark,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: AppSize.s12),
-                                            ),
-                                          );
-                                        }).toList(),
+                                    items: hours.map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                              color: ColorManager.primaryDark,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: AppSize.s12),
+                                        ),
+                                      );
+                                    }).toList(),
                                     // Step 5.
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        print(
-                                            '=========================hours');
+                                        print('=========================hours');
                                         print(dropdownValue1);
                                         dropdownValue1 = newValue!;
                                       });
@@ -1224,7 +1239,6 @@ mixin Helpers {
                                 Spacer(),
                               ],
                             ),
-
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -1240,7 +1254,7 @@ mixin Helpers {
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             Row(
                               children: [
@@ -1264,13 +1278,13 @@ mixin Helpers {
                                     children: [
                                       isOneTime
                                           ? Icon(
-                                        Icons.radio_button_checked,
-                                        color: ColorManager.primary,
-                                      )
+                                              Icons.radio_button_checked,
+                                              color: ColorManager.primary,
+                                            )
                                           : Icon(
-                                        Icons.radio_button_off,
-                                        color: ColorManager.primary,
-                                      ),
+                                              Icons.radio_button_off,
+                                              color: ColorManager.primary,
+                                            ),
                                       SizedBox(
                                         width: AppSize.s8,
                                       ),
@@ -1300,18 +1314,18 @@ mixin Helpers {
                                     children: [
                                       isWeekly
                                           ? Icon(
-                                        Icons.radio_button_checked,
-                                        color: ColorManager.primary,
-                                      )
+                                              Icons.radio_button_checked,
+                                              color: ColorManager.primary,
+                                            )
                                           : Icon(
-                                        Icons.radio_button_off,
-                                        color: ColorManager.primary,
-                                      ),
+                                              Icons.radio_button_off,
+                                              color: ColorManager.primary,
+                                            ),
                                       SizedBox(
                                         width: AppSize.s8,
                                       ),
-                                      Text(AppLocalizations.of(context)!
-                                          .weekly),
+                                      Text(
+                                          AppLocalizations.of(context)!.weekly),
                                     ],
                                   ),
                                 ),
@@ -1336,13 +1350,13 @@ mixin Helpers {
                                     children: [
                                       isMonthly
                                           ? Icon(
-                                        Icons.radio_button_checked,
-                                        color: ColorManager.primary,
-                                      )
+                                              Icons.radio_button_checked,
+                                              color: ColorManager.primary,
+                                            )
                                           : Icon(
-                                        Icons.radio_button_off,
-                                        color: ColorManager.primary,
-                                      ),
+                                              Icons.radio_button_off,
+                                              color: ColorManager.primary,
+                                            ),
                                       SizedBox(
                                         width: AppSize.s8,
                                       ),
@@ -1356,7 +1370,7 @@ mixin Helpers {
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                             Container(
                               height: AppSize.s82,
@@ -1364,13 +1378,25 @@ mixin Helpers {
                               padding: EdgeInsets.all(12),
                               child: ElevatedButton(
                                   onPressed: () {
+                                    print('=============result');
+                                    print(frequency);
+                                    print(numberOfDay);
+                                    print(dropdownValue1);
+                                    print(isAsap);
+                                    Navigator.of(context).pop({
+                                      'WeeklyOrMonthly': frequency,
+                                      'DayNumber': numberOfDay,
+                                      'HourNumber': int.parse(dropdownValue1),
+                                      'MinuteNumber': 0,
+                                      'asap' : false,
+                                    });
                                   },
                                   child: Text(
                                       AppLocalizations.of(context)!.confirm)),
                             ),
                             SizedBox(
                               height:
-                              MediaQuery.of(context).size.height * 0.024,
+                                  MediaQuery.of(context).size.height * 0.024,
                             ),
                           ],
                         )
@@ -1383,8 +1409,6 @@ mixin Helpers {
           ),
         ),
       );
-
-
 
   Future showArrivalTimeSheet({
     required BuildContext context,

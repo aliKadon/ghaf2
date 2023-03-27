@@ -156,11 +156,15 @@ class StoreApiController with ApiHelper, Helpers {
         headers: headers,
       ),
     );
-    // print('============================================PRODUCT');
-    // print(response.statusCode);
-    // print(response.data);
+    print('============================================filter PRODUCT');
+    print(queryParameters);
+    print(response.statusCode);
+    print(response.data);
+    print(queryParameters);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
+        print('============================================filter PRODUCT');
+        print(queryParameters);
         return List<Product>.from(
             response.data["data"].map((x) => Product.fromJson(x)));
       }

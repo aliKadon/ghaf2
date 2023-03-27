@@ -151,7 +151,8 @@ class _HomeViewState extends State<HomeView> {
                                       color: ColorManager.blackLight),
                                 ),
                                 SizedBox(
-                                  width: AppSize.s82,
+                                  width: MediaQuery.of(context).size.width *
+                                      0.2,
                                 ),
                                 Row(
                                   children: [

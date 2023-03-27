@@ -21,4 +21,26 @@ class ReviewGetxController extends GetxController with Helpers {
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
+
+  void addShopReview(
+      {required BuildContext context,
+        required String StoreId,
+        required String description,
+        required num points}) async {
+    try {
+      showLoadingDialog(context: context, title: 'Sending');
+      apiResponse = await _reviewApiController.addStoreReview(storeId: StoreId,
+          opinion: description, points: points);
+      if(apiResponse.status == 200) {
+        Navigator.of(context).pop();
+        showSnackBar(context, message: apiResponse.message);
+      }else {
+        Navigator.of(context).pop();
+        showSnackBar(context, message: apiResponse.message,error: true);
+      }
+
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
 }

@@ -95,9 +95,11 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   }
 
   var deliveryFees = 0;
+  var result;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: GetBuilder<CheckOutGetxController>(
         id: "orderToPay",
@@ -347,13 +349,37 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 // SizedBox(width: AppSize.s20,),
                                 Spacer(),
                                 GestureDetector(
-                                  onTap:() {
+                                  onTap: () async{
+                                    if (_checkOutGetxController
+                                            .orderToPay[_checkOutGetxController
+                                                    .orderToPay.length -
+                                                1]
+                                            .availableDeliveryMethod![selected]
+                                            .methodName! ==
+                                        'Pick up') {
+                                      result = await showArrivalTimeTodaySheet(
+                                          context: context,
+                                          text:
+                                              '${AppLocalizations.of(context)!.arrival_time}');
+                                    } else if (_checkOutGetxController
+                                            .orderToPay[_checkOutGetxController
+                                                    .orderToPay.length -
+                                                1]
+                                            .availableDeliveryMethod![selected]
+                                            .methodName! ==
+                                        'Delivery') {
+                                      result = await showArrivalTimeAsapSheet(
+                                          context: context,
+                                          text: AppLocalizations.of(context)!
+                                              .delivery_time);
+                                    }
                                     // showArrivalTimeTodaySheet(context: context);
-                                    showArrivalTimeAsapSheet(context: context);
+                                    // showArrivalTimeAsapSheet(context: context);
                                   },
                                   child: Text(
                                     'change',
-                                    style: TextStyle(fontWeight: FontWeight.w500),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
                                   ),
                                 )
                               ],
@@ -1145,38 +1171,81 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 height: AppSize.s55,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    if (_checkData()) {
-                                      showArrivalTimeSheet(
+                                    print('====================result');
+                                    print(result);
+                                    if(_checkData()) {
+                                      _checkOutGetxController.payForOrder(
                                         context: context,
                                         orderId: _checkOutGetxController
                                             .orderToPay[_checkOutGetxController
-                                                    .orderToPay.length -
-                                                1]
+                                            .orderToPay.length -
+                                            1]
                                             .orderDetails!
                                             .id!,
-                                        deliveryPoint:
-                                            _addressesViewGetXController
-                                                .addresses[selectedAddress],
-                                        usePayLater: isSwitchedPayLater,
+                                        deliveryMethodId: _checkOutGetxController
+                                            .orderToPay[
+                                        _checkOutGetxController
+                                            .orderToPay.length -
+                                            1]
+                                            .availableDeliveryMethod![
+                                        selected]
+                                            .id!,
+                                        deliveryPoint: _addressesViewGetXController
+                                            .addresses[selectedAddress],
+                                        PaymentMethodId: widget.paymentMethodId!,
                                         useRedeemPoints: isSwitched,
                                         useWallet: isUseWallet,
-                                        PromoCode: _enterPromoCode.text == ''
+                                        usePayLater: isSwitchedPayLater,
+                                        // desiredDeliveryDate: desiredDeliveryDate,
+                                        asap: result['asap'],
+                                        SheduleInfo: result['asap']
+                                            ? null
+                                            : {
+                                          'WeeklyOrMonthly': result['WeeklyOrMonthly'],
+                                          'DayNumber': result['DayNumber'],
+                                          'HourNumber':
+                                          result['HourNumber'],
+                                          'MinuteNumber': 0,
+                                        },
+                                        OrderNotes: _sendNote.text,
+                                        PromoCode:  _enterPromoCode.text == ''
                                             ? null
                                             : _enterPromoCode.text,
-                                        OrderNotes: _sendNote.text,
-                                        deliveryMethodId:
-                                            _checkOutGetxController
-                                                .orderToPay[
-                                                    _checkOutGetxController
-                                                            .orderToPay.length -
-                                                        1]
-                                                .availableDeliveryMethod![
-                                                    selected]
-                                                .id!,
-                                        PaymentMethodId:
-                                            widget.paymentMethodId!,
                                       );
                                     }
+
+                                    // if (_checkData()) {
+                                    //   showArrivalTimeSheet(
+                                    //     context: context,
+                                    //     orderId: _checkOutGetxController
+                                    //         .orderToPay[_checkOutGetxController
+                                    //                 .orderToPay.length -
+                                    //             1]
+                                    //         .orderDetails!
+                                    //         .id!,
+                                    //     deliveryPoint:
+                                    //         _addressesViewGetXController
+                                    //             .addresses[selectedAddress],
+                                    //     usePayLater: isSwitchedPayLater,
+                                    //     useRedeemPoints: isSwitched,
+                                    //     useWallet: isUseWallet,
+                                    //     PromoCode: _enterPromoCode.text == ''
+                                    //         ? null
+                                    //         : _enterPromoCode.text,
+                                    //     OrderNotes: _sendNote.text,
+                                    //     deliveryMethodId:
+                                    //         _checkOutGetxController
+                                    //             .orderToPay[
+                                    //                 _checkOutGetxController
+                                    //                         .orderToPay.length -
+                                    //                     1]
+                                    //             .availableDeliveryMethod![
+                                    //                 selected]
+                                    //             .id!,
+                                    //     PaymentMethodId:
+                                    //         widget.paymentMethodId!,
+                                    //   );
+                                    // }
                                     if (_checkData() == false) {
                                       ScaffoldMessenger.of(context)
                                         ..hideCurrentSnackBar()

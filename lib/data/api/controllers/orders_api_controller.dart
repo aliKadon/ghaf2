@@ -163,8 +163,8 @@ class OrdersApiController with ApiHelper {
     return [];
   }
 
-  Future<List<ScheduledOrder>> getScheduleOrder() async {
-    var url = Uri.parse('${Constants.baseUrl}/Orders/get-scheduled-order');
+  Future<List<ScheduledOrder>> getScheduleOrder({String? storeName}) async {
+    var url = Uri.parse('${Constants.baseUrl}/Orders/get-scheduled-order?storeName=$storeName');
     var response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {

@@ -242,11 +242,11 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
-  void getScheduleOrder({required BuildContext context}) async{
+  void getScheduleOrder({required BuildContext context,String? store = ''}) async{
 
     List<String> names = [];
     try {
-      scheduleOrders = await _ordersApiController.getScheduleOrder();
+      scheduleOrders = await _ordersApiController.getScheduleOrder(storeName: store);
       for (ScheduledOrder scheduledOrder in scheduleOrders) {
         names.add(scheduledOrder.branch!.storeName!);
       }

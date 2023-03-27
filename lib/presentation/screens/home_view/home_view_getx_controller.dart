@@ -67,6 +67,8 @@ class HomeViewGetXController extends GetxController with Helpers {
     update();
   }
 
+  var isFilterProductLoading = true;
+
   bool get isSearching => _isSearching;
 
   set isSearching(bool value) {
@@ -224,6 +226,52 @@ class HomeViewGetXController extends GetxController with Helpers {
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
     }
+  }
+
+  // get products.
+  void getFilterProducts({
+    required BuildContext context,
+    String? sid,
+    String search = '',
+    num? minPrice,
+    num? maxPrice,
+    String? filterBy,
+    bool notifyLoading = true,
+  }) async {
+    // if (notifyLoading) isProductsLoading = true;
+    products = await _storeApiController.getProducts(
+      search: search,
+      maxPrice: maxPrice,
+      minPrice: minPrice,
+      filterBy: filterBy,
+      // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+    );
+    isFilterProductLoading = false;
+    update();
+    // try {
+    //   if (notifyLoading) isProductsLoading = true;
+    //   // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
+    //   // print(ModalRoute.of(context)?.settings.arguments as String);
+    //   products = await _storeApiController.getProducts(
+    //     search: search,
+    //     maxPrice: maxPrice,
+    //     minPrice: minPrice,
+    //     filterBy: filterBy,
+    //     // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+    //   );
+    //   isProductsLoading = false;
+    // } on DioError catch (error) {
+    //   // error.
+    //   print(error.response?.data);
+    //   print(error.toString());
+    //   showSnackBar(context,
+    //       message: 'An Error Occurred, Please Try again', error: true);
+    // } catch (error) {
+    //   // error.
+    //   debugPrint(error.toString());
+    //   showSnackBar(context,
+    //       message: 'An Error Occurred, Please Try again!!', error: true);
+    // }
   }
 
   // get products.

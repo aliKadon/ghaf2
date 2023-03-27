@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_shop/rate_shop_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_us_view/rate_us_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/rate_and_reviews/review_getx_controller.dart';
 
 import '../../../../app/constants.dart';
 import '../../../resources/assets_manager.dart';
@@ -15,25 +15,28 @@ import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 
+class RateShop extends StatefulWidget {
+  String? storeId;
 
-class RateShop extends StatefulWidget{
+  RateShop({this.storeId});
 
   @override
   State<RateShop> createState() => _RateShopState();
 }
 
 class _RateShopState extends State<RateShop> {
-
   // controller.
   late final RateShopGetxController _rateShopGetxController =
-  Get.find<RateShopGetxController>();
+      Get.find<RateShopGetxController>();
+  late final ReviewGetxController _reviewGetxController =
+      Get.put(ReviewGetxController());
   var selected = -1;
 
   var isChecked = false;
+
   @override
   void initState() {
-    Get.put<RateShopGetxController>(
-        RateShopGetxController(context: context));
+    Get.put<RateShopGetxController>(RateShopGetxController(context: context));
     super.initState();
   }
 
@@ -44,7 +47,7 @@ class _RateShopState extends State<RateShop> {
     String review3 = AppLocalizations.of(context)!.height_rating;
     String review4 = AppLocalizations.of(context)!.wide_product;
     String review5 = AppLocalizations.of(context)!.right_order_arrived;
-    List notesReview = [review1, review2, review3,review4,review5];
+    List notesReview = [review1, review2, review3, review4, review5];
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -197,10 +200,15 @@ class _RateShopState extends State<RateShop> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                        MaterialStatePropertyAll(ColorManager.primaryDark)),
+                            MaterialStatePropertyAll(ColorManager.primaryDark)),
                     onPressed: () {
-                      print(_rateShopGetxController.description);
-                      _rateShopGetxController.reviewApp();
+                      _reviewGetxController.addShopReview(
+                          context: context,
+                          StoreId: widget.storeId!,
+                          description: notesReview[selected],
+                          points: _rateShopGetxController.rate);
+                      // print(_rateShopGetxController.description);
+                      // _rateShopGetxController.reviewApp();
                     },
                     child: Text(
                       AppLocalizations.of(context)!.send_note,
@@ -244,7 +252,7 @@ class _RateShopState extends State<RateShop> {
                 // height: AppSize.s43,
                 child: Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width* 0.7,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                       text,
                       overflow: TextOverflow.clip,

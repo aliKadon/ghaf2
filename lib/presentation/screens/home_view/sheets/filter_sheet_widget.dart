@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
+import 'package:ghaf_application/presentation/screens/home_view/filter_screen.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
@@ -20,6 +21,9 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
   late final FilterSheetWidgetGetXController _filterSheetWidgetGetXController =
       Get.find<FilterSheetWidgetGetXController>();
 
+  late TextEditingController _minPriceController = TextEditingController();
+  late TextEditingController _maxPriceController = TextEditingController();
+
   //new
   var color1 = Colors.white;
   var colorText1 = Color(0xff125051);
@@ -31,6 +35,8 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
   @override
   void dispose() {
     Get.delete<FilterSheetWidgetGetXController>();
+    _minPriceController.dispose();
+    _maxPriceController.dispose();
     super.dispose();
   }
 
@@ -114,7 +120,9 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                             print(selected);
                           });
                         },
-                        child: selected == index ? containerFilterSelected(flitterType[index]) : containerFilter(flitterType[index]));
+                        child: selected == index
+                            ? containerFilterSelected(flitterType[index])
+                            : containerFilter(flitterType[index]));
                   },
                 )),
             // Row(
@@ -234,8 +242,16 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
             Container(
               child: Row(
                 children: [
-                  Expanded(child: AppTextField(hint: AppLocalizations.of(context)!.min_price)),
-                  Expanded(child: AppTextField(hint: AppLocalizations.of(context)!.max_price))
+                  Expanded(
+                      child: AppTextField(
+                    hint: AppLocalizations.of(context)!.min_price,
+                    textController: _minPriceController,
+                  )),
+                  Expanded(
+                      child: AppTextField(
+                    hint: AppLocalizations.of(context)!.max_price,
+                    textController: _maxPriceController,
+                  ))
                 ],
               ),
             ),
@@ -262,7 +278,16 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                 Expanded(
                   flex: 3,
                   child: InkWell(
-                    onTap: _filterSheetWidgetGetXController.onApplyTapped,
+                    // onTap: _filterSheetWidgetGetXController.onApplyTapped,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => FilterScreen(
+                            search: '',
+                            minPrice: num.parse(_minPriceController.text),
+                            maxPrice: num.parse(_maxPriceController.text),
+                            filterBy: flitterType[selected]),
+                      ));
+                    },
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           vertical: 16.h, horizontal: 16.w),
@@ -322,19 +347,18 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
   }
 
   Widget containerFilter(String filterType) {
-    return
-       Container(
-            decoration: BoxDecoration(
-                color: ColorManager.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: ColorManager.primaryDark)),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(filterType,
-                  style: TextStyle(
-                      color: ColorManager.primaryDark, fontWeight: FontWeight.bold)),
-            ),
-          );
+    return Container(
+      decoration: BoxDecoration(
+          color: ColorManager.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: ColorManager.primaryDark)),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Text(filterType,
+            style: TextStyle(
+                color: ColorManager.primaryDark, fontWeight: FontWeight.bold)),
+      ),
+    );
   }
 
   Widget containerFilterSelected(String filterType) {
