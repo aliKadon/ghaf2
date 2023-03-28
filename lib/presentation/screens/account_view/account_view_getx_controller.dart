@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
-import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 
 class AccountViewGetXController extends GetxController with Helpers {
   // vars.
@@ -18,6 +18,10 @@ class AccountViewGetXController extends GetxController with Helpers {
     await _sharedPrefController.logout();
     await Future.delayed(Duration(seconds: 1));
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainView(),
+        ));
   }
 }

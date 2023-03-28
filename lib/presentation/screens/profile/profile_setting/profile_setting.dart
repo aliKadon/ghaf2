@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 
 import '../../../../app/preferences/shared_pref_controller.dart';
@@ -22,7 +23,7 @@ class ProfileSetting extends StatefulWidget {
 class _ProfileSettingState extends State<ProfileSetting> {
   // controller.
   late final ProfileSettingGetxController _profileSettingGetxController =
-      Get.put(ProfileSettingGetxController());
+  Get.put(ProfileSettingGetxController());
 
   late TextEditingController _firstNameTextController;
 
@@ -31,7 +32,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
 
   var language = SharedPrefController().lang1;
   late final AccountViewGetXController _accountViewGetXController =
-      Get.put(AccountViewGetXController());
+  Get.put(AccountViewGetXController());
 
   @override
   void initState() {
@@ -87,18 +88,30 @@ class _ProfileSettingState extends State<ProfileSetting> {
                     ),
                   ),
                   Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      _accountViewGetXController.logout(context: context);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.logout,
-                      style: getSemiBoldStyle(
-                        color: ColorManager.grey,
-                        fontSize: FontSize.s12,
-                      ),
-                    ),
-                  ),
+                  AppSharedData.currentUser == null
+                      ? GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => LoginView(),));
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.login,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.grey,
+                          fontSize: FontSize.s12,
+                        ),
+                      ))
+                      : GestureDetector(
+                      onTap: () {
+                        _accountViewGetXController.logout(context: context);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.grey,
+                          fontSize: FontSize.s12,
+                        ),
+                      )),
                 ],
               ),
             ),
@@ -121,9 +134,9 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 cursorColor: ColorManager.primary,
                 decoration: InputDecoration(
                     label: Text(
-                  AppLocalizations.of(context)!.first_name,
-                  style: TextStyle(color: ColorManager.greyLight),
-                )),
+                      AppLocalizations.of(context)!.first_name,
+                      style: TextStyle(color: ColorManager.greyLight),
+                    )),
                 validator: (value) {
                   if (value == null || value.isEmpty)
                     return AppLocalizations.of(context)!.first_name_is_required;
@@ -150,9 +163,9 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 controller: _lastNameTextController,
                 decoration: InputDecoration(
                     label: Text(
-                  AppLocalizations.of(context)!.last_name,
-                  style: TextStyle(color: ColorManager.greyLight),
-                )),
+                      AppLocalizations.of(context)!.last_name,
+                      style: TextStyle(color: ColorManager.greyLight),
+                    )),
               ),
             ),
             SizedBox(
@@ -247,15 +260,15 @@ class _ProfileSettingState extends State<ProfileSetting> {
                     Spacer(),
                     language == 'en'
                         ? Image.asset(
-                            IconsAssets.arrow2,
-                            height: AppSize.s18,
-                            color: ColorManager.primary,
-                          )
+                      IconsAssets.arrow2,
+                      height: AppSize.s18,
+                      color: ColorManager.primary,
+                    )
                         : Image.asset(
-                            IconsAssets.arrow,
-                            height: AppSize.s18,
-                            color: ColorManager.primary,
-                          ),
+                      IconsAssets.arrow,
+                      height: AppSize.s18,
+                      color: ColorManager.primary,
+                    ),
                   ],
                 ),
               ),

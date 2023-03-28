@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view_new.dart';
 
+import '../../app/utils/app_shared_data.dart';
 import '../../domain/model/product.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -35,7 +37,7 @@ class MostPopularProductWidget extends StatefulWidget {
       _MostPopularProductWidgetState();
 }
 
-class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
+class _MostPopularProductWidgetState extends State<MostPopularProductWidget> with Helpers {
   late final Product _product = Get.find<Product>();
 
   HomeViewGetXController _homeViewGetXController =
@@ -88,8 +90,13 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> {
                         id: 'isFavorite',
                         builder: (controller) => InkWell(
                           onTap: () {
-                            _product.toggleIsFavorite(
+                            if(AppSharedData.currentUser == null) {
+                              showSignInSheet(context);
+                            }else {
+                              _product.toggleIsFavorite(
                                 context: context, id: widget.idProduct,);
+                            }
+
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

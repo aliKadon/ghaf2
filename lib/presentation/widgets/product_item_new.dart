@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 
 import '../../domain/model/product.dart';
 import '../resources/assets_manager.dart';
@@ -34,7 +36,7 @@ class ProductItemNew extends StatefulWidget {
   State<ProductItemNew> createState() => _ProductItemNewState();
 }
 
-class _ProductItemNewState extends State<ProductItemNew> {
+class _ProductItemNewState extends State<ProductItemNew> with Helpers {
   late final Product _product = Get.find<Product>();
   HomeViewGetXController _homeViewGetXController =
   Get.find<HomeViewGetXController>();
@@ -84,8 +86,12 @@ class _ProductItemNewState extends State<ProductItemNew> {
                         InkWell(
 
                               onTap: () {
-                                _product.toggleIsFavorite(
-                                    context: context, id: widget.idProduct);
+                                if(AppSharedData.currentUser == null) {
+                                  showSignInSheet(context);
+                                }else {
+                                  _product.toggleIsFavorite(
+                                      context: context, id: widget.idProduct);
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),

@@ -58,6 +58,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   var deleveryName;
   var selectedAddress;
   var isLoading = true;
+  var isSelectedDelivery = true;
 
   var dateTosend = DateTime.now();
 
@@ -70,7 +71,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   bool _checkData() {
     if (selected != null &&
         widget.cardNumber != null &&
-        selectedAddress != null &&
         widget.paymentMethodId != null) {
       return true;
     }
@@ -99,7 +99,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: GetBuilder<CheckOutGetxController>(
         id: "orderToPay",
@@ -208,6 +207,19 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       setState(() {
                                         selected = index;
                                         selectedTime = index;
+                                        if (_checkOutGetxController
+                                                .orderToPay[
+                                                    _checkOutGetxController
+                                                            .orderToPay.length -
+                                                        1]
+                                                .availableDeliveryMethod?[
+                                                    selected]
+                                                .methodName ==
+                                            'Pick up') {
+                                          isSelectedDelivery = false;
+                                        } else {
+                                          isSelectedDelivery = true;
+                                        }
                                         deliveryFees = (_checkOutGetxController
                                                 .orderToPay[
                                                     _checkOutGetxController
@@ -342,36 +354,48 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 SizedBox(
                                   width: AppSize.s20,
                                 ),
-                                Text('It takes 11 minutes',
+                                Text(
+                                    'It takes ${_checkOutGetxController.orderToPay[_checkOutGetxController.orderToPay.length - 1].orderDetails?.estimatedDeliveryDate ?? 0} minutes',
                                     style: TextStyle(
                                         color: ColorManager.primary,
                                         fontWeight: FontWeight.w500)),
                                 // SizedBox(width: AppSize.s20,),
                                 Spacer(),
                                 GestureDetector(
-                                  onTap: () async{
-                                    if (_checkOutGetxController
-                                            .orderToPay[_checkOutGetxController
-                                                    .orderToPay.length -
-                                                1]
-                                            .availableDeliveryMethod![selected]
-                                            .methodName! ==
-                                        'Pick up') {
-                                      result = await showArrivalTimeTodaySheet(
-                                          context: context,
-                                          text:
-                                              '${AppLocalizations.of(context)!.arrival_time}');
-                                    } else if (_checkOutGetxController
-                                            .orderToPay[_checkOutGetxController
-                                                    .orderToPay.length -
-                                                1]
-                                            .availableDeliveryMethod![selected]
-                                            .methodName! ==
-                                        'Delivery') {
-                                      result = await showArrivalTimeAsapSheet(
-                                          context: context,
-                                          text: AppLocalizations.of(context)!
-                                              .delivery_time);
+                                  onTap: () async {
+                                    if (selected == null) {
+                                      showSnackBar(context,
+                                          message:
+                                              'please select delivery method first.',
+                                          error: true);
+                                    } else {
+                                      if (_checkOutGetxController
+                                              .orderToPay[
+                                                  _checkOutGetxController
+                                                          .orderToPay.length -
+                                                      1]
+                                              .availableDeliveryMethod![
+                                                  selected]
+                                              .methodName! ==
+                                          'Pick up') {
+                                        result = await showArrivalTimeTodaySheet(
+                                            context: context,
+                                            text:
+                                                '${AppLocalizations.of(context)!.arrival_time}');
+                                      } else if (_checkOutGetxController
+                                              .orderToPay[
+                                                  _checkOutGetxController
+                                                          .orderToPay.length -
+                                                      1]
+                                              .availableDeliveryMethod![
+                                                  selected]
+                                              .methodName! ==
+                                          'Delivery') {
+                                        result = await showArrivalTimeAsapSheet(
+                                            context: context,
+                                            text: AppLocalizations.of(context)!
+                                                .delivery_time);
+                                      }
                                     }
                                     // showArrivalTimeTodaySheet(context: context);
                                     // showArrivalTimeAsapSheet(context: context);
@@ -829,6 +853,26 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                           SizedBox(
                             height: AppSize.s20,
                           ),
+                          Visibility(
+                            visible: isSelectedDelivery,
+                            child: Row(children: [
+                              Text(
+                                AppLocalizations.of(context)!.address,
+                                style: getSemiBoldStyle(
+                                  color: ColorManager.primaryDark,
+                                  fontSize: FontSize.s16,
+                                ),
+                              ),
+                              Spacer(),
+                              Text(
+                                AppLocalizations.of(context)!.choose_route,
+                                style: getSemiBoldStyle(
+                                  color: ColorManager.primaryDark,
+                                  fontSize: FontSize.s10,
+                                ),
+                              ),
+                            ]),
+                          ),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
@@ -867,27 +911,9 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   );
                                 },
                                 child: Visibility(
-                                  visible: true,
+                                  visible: isSelectedDelivery,
                                   child: Column(
                                     children: [
-                                      Row(children: [
-                                        Text(
-                                          AppLocalizations.of(context)!.address,
-                                          style: getSemiBoldStyle(
-                                            color: ColorManager.primaryDark,
-                                            fontSize: FontSize.s16,
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .choose_route,
-                                          style: getSemiBoldStyle(
-                                            color: ColorManager.primaryDark,
-                                            fontSize: FontSize.s10,
-                                          ),
-                                        ),
-                                      ]),
                                       SizedBox(
                                         height: AppSize.s12,
                                       ),
@@ -1173,26 +1199,30 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   onPressed: () {
                                     print('====================result');
                                     print(result);
-                                    if(_checkData()) {
+                                    if (_checkData()) {
                                       _checkOutGetxController.payForOrder(
                                         context: context,
                                         orderId: _checkOutGetxController
                                             .orderToPay[_checkOutGetxController
-                                            .orderToPay.length -
-                                            1]
+                                                    .orderToPay.length -
+                                                1]
                                             .orderDetails!
                                             .id!,
-                                        deliveryMethodId: _checkOutGetxController
-                                            .orderToPay[
-                                        _checkOutGetxController
-                                            .orderToPay.length -
-                                            1]
-                                            .availableDeliveryMethod![
-                                        selected]
-                                            .id!,
-                                        deliveryPoint: _addressesViewGetXController
-                                            .addresses[selectedAddress],
-                                        PaymentMethodId: widget.paymentMethodId!,
+                                        deliveryMethodId:
+                                            _checkOutGetxController
+                                                .orderToPay[
+                                                    _checkOutGetxController
+                                                            .orderToPay.length -
+                                                        1]
+                                                .availableDeliveryMethod![
+                                                    selected]
+                                                .id!,
+                                        deliveryPoint: selectedAddress == null
+                                            ? null
+                                            : _addressesViewGetXController
+                                                .addresses[selectedAddress],
+                                        PaymentMethodId:
+                                            widget.paymentMethodId!,
                                         useRedeemPoints: isSwitched,
                                         useWallet: isUseWallet,
                                         usePayLater: isSwitchedPayLater,
@@ -1201,14 +1231,16 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         SheduleInfo: result['asap']
                                             ? null
                                             : {
-                                          'WeeklyOrMonthly': result['WeeklyOrMonthly'],
-                                          'DayNumber': result['DayNumber'],
-                                          'HourNumber':
-                                          result['HourNumber'],
-                                          'MinuteNumber': 0,
-                                        },
+                                                'WeeklyOrMonthly':
+                                                    result['WeeklyOrMonthly'],
+                                                'DayNumber':
+                                                    result['DayNumber'],
+                                                'HourNumber':
+                                                    result['HourNumber'],
+                                                'MinuteNumber': 0,
+                                              },
                                         OrderNotes: _sendNote.text,
-                                        PromoCode:  _enterPromoCode.text == ''
+                                        PromoCode: _enterPromoCode.text == ''
                                             ? null
                                             : _enterPromoCode.text,
                                       );

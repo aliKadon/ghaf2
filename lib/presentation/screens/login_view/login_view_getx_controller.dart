@@ -52,7 +52,7 @@ class LoginViewGetXController extends GetxController with Helpers {
   FirebaseMessagingService? firebaseMessagingService;
 
   // login.
-  void login() async {
+  void login({required BuildContext context}) async {
     // if (!formKey.currentState!.validate()) return;
     // formKey.currentState!.save();
     // showLoadingDialog(context: context, title: 'Logging In');

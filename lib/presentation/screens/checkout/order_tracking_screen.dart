@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
@@ -664,7 +666,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 Row(
                                   children: [
                                     Text(
-                                      '${controller.order!.deliveryPoint!.addressName}',
+                                      '${controller.order!.deliveryPoint?.addressName ?? SharedPrefController().city}',
                                       style: getSemiBoldStyle(
                                         color: ColorManager.primaryDark,
                                         fontSize: FontSize.s16,
@@ -694,7 +696,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     width: AppSize.s8,
                                   ),
                                   Text(
-                                    '${controller.order!.deliveryPoint!.cityName}',
+                                    '${controller.order!.deliveryPoint?.cityName ?? SharedPrefController().city}',
                                     style: getRegularStyle(
                                       color: ColorManager.black,
                                     ),
@@ -732,7 +734,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     width: AppSize.s8,
                                   ),
                                   Text(
-                                    '${controller.order!.deliveryPoint!.phone}',
+                                    '${controller.order!.deliveryPoint?.phone ?? 000000}',
                                     style: getRegularStyle(
                                       color: ColorManager.black,
                                     ),

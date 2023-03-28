@@ -138,7 +138,9 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   width: double.infinity,
                   height: AppSize.s55,
                   child: ElevatedButton(
-                    onPressed: _loginViewGetXController.login,
+                    onPressed: () {
+                      _loginViewGetXController.login(context: context);
+                    },
                     child: Text(
                       AppLocalizations.of(context)!.login,
                       style: getSemiBoldStyle(

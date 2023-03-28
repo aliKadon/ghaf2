@@ -36,6 +36,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     print(placemarks[0]);
     Placemark place = placemarks[0];
     city.value = (place.locality)!;
+    SharedPrefController().setCity(city.value);
     print('=====================city');
     print(city);
     address =

@@ -68,7 +68,7 @@ class CheckOutGetxController extends GetxController with Helpers {
     required String orderId,
     required String deliveryMethodId,
     String? desiredDeliveryDate,
-    required Address deliveryPoint,
+    Address? deliveryPoint,
     bool? asap,
     bool? useWallet = false,
     String? OrderNotes,
@@ -79,6 +79,7 @@ class CheckOutGetxController extends GetxController with Helpers {
     required String PaymentMethodId,
   }) async {
     try {
+      showLoadingDialog(context: context,title: 'loading...');
       apiResponse = await _ordersApiController.payForOrder(
           orderId: orderId,
           deliveryMethodId: deliveryMethodId,

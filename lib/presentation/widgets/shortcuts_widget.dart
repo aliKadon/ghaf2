@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/home_view/only_on_ghaf_screen.dart';
 import 'package:ghaf_application/presentation/screens/home_view/past_order_screen.dart';
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
@@ -12,7 +14,7 @@ import '../resources/values_manager.dart';
 import '../screens/store_view/onsale_view.dart';
 import '../screens/store_view/trending_view.dart';
 
-class ShortcutsWidget extends StatelessWidget {
+class ShortcutsWidget extends StatelessWidget with Helpers{
 
   final String text;
   final String imageUrl;
@@ -32,8 +34,13 @@ class ShortcutsWidget extends StatelessWidget {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => TrendingView(bid: ''),));
         }else if (text == AppLocalizations.of(context)!.past_order) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => PastOrderScreen(),));
+          if (AppSharedData.currentUser == null) {
+            showSignInSheet(context);
+          }else {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PastOrderScreen(),));
+          }
+
         }else if (text == AppLocalizations.of(context)!.offers) {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => OffersScreenNew(),));

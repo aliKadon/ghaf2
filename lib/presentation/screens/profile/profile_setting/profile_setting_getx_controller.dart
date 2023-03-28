@@ -26,7 +26,8 @@ class ProfileSettingGetxController extends GetxController with Helpers {
       await _userDetailsApiController.getUserDetails(context: context);
       isLoading = false;
     }catch(error) {
-      showSnackBar(context, message: error.toString());
+      // showSnackBar(context, message: error.toString(),error: true);
+      print(error);
     }
 
   }

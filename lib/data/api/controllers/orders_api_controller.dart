@@ -88,7 +88,7 @@ class OrdersApiController with ApiHelper {
     required String orderId,
     required String deliveryMethodId,
     String? desiredDeliveryDate,
-    required Address deliveryPoint,
+    Address? deliveryPoint,
     String? OrderNotes,
     String? PromoCode,
     bool? useWallet,
@@ -108,7 +108,7 @@ class OrdersApiController with ApiHelper {
           'deliveryPoint': deliveryPoint,
           'useRedeemPoints': useRedeemPoints,
           'usePayLater': usePayLater,
-          'OrderNotes': OrderNotes,
+          'orderNotes': OrderNotes,
           'PaymentMethodId': PaymentMethodId,
           'PromoCode': PromoCode,
           'Asap': asap,
@@ -151,7 +151,7 @@ class OrdersApiController with ApiHelper {
   }
 
   Future<List<Order>> getCustomerOrder() async {
-    var url = Uri.parse('${Constants.baseUrl}/Orders/get-customer-order');
+    var url = Uri.parse('${Constants.baseUrl}/Orders/get-customer-order?pageRows=1000');
     var response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {

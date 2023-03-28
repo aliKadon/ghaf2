@@ -26,7 +26,6 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
-import '../profile/profile_setting/profile_setting_getx_controller.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -37,6 +36,7 @@ class AccountView extends StatefulWidget {
 
 class _AccountViewState extends State<AccountView> {
   var language = SharedPrefController().lang1;
+
   // // controller.
   // late final ProfileSettingGetxController _profileSettingGetxController =
   // Get.put(ProfileSettingGetxController());
@@ -271,164 +271,168 @@ class _AccountViewState extends State<AccountView> {
                 SizedBox(
                   height: AppSize.s28,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: AppPadding.p10, vertical: AppPadding.p16),
-                  decoration: BoxDecoration(
-                    color: ColorManager.white,
-                    borderRadius: BorderRadius.circular(AppRadius.r8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorManager.grey,
-                        blurRadius: AppSize.s2,
-                        offset:
-                            Offset(AppSize.s0, AppSize.s2), // Shadow position
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => RewardsViewNew()),
-                          );
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => CancellingOrderScreen(),));
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.rewards,
-                          AppLocalizations.of(context)!.rewards,
+                AppSharedData.currentUser == null
+                    ? Container()
+                    : Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppPadding.p10,
+                            vertical: AppPadding.p16),
+                        decoration: BoxDecoration(
+                          color: ColorManager.white,
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorManager.grey,
+                              blurRadius: AppSize.s2,
+                              offset: Offset(
+                                  AppSize.s0, AppSize.s2), // Shadow position
+                            ),
+                          ],
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: accountWidget(context, IconsAssets.start1,
-                            AppLocalizations.of(context)!.ghaf_gold,
-                            // subscribe,
-                            subTitle: subscribe),
-                      ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.pushNamed(context, Routes.addressesRoute);
-                      //   },
-                      //   child: accountWidget(
-                      //     context,
-                      //     IconsAssets.location1,
-                      //     AppLocalizations.of(context)!.address,
-                      //   ),
-                      // ),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigator.pushNamed(
-                          //     context, Routes.OrdersHistoryRoute);
-                          // _customDialogProgress();
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OrdersScreen(),
-                          ));
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.note,
-                          // 'Orders History',
-                          AppLocalizations.of(context)!.order_history,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => MyWalletNew()),
-                          );
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.wallet,
-                          AppLocalizations.of(context)!.my_wallet,
-                        ),
-                        // subTitle: '120 AED'),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => PayLaterViewNew()),
-                          );
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.pay,
-                          AppLocalizations.of(context)!.pay_later,
-                        ),
-                      ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.of(context).pushNamed(Routes.ordersToPay, arguments: 'orderTrack');
-                      //   },
-                      //   child: accountWidget(
-                      //     context,
-                      //     IconsAssets.location,
-                      //     AppLocalizations.of(context)!.order_track,
-                      //     // 'Order Track'
-                      //   ),
-                      // ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OffersScreenNew(),
-                          ));
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.offers,
-                          AppLocalizations.of(context)!.offers,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => NotificationsScreenNew()),
-                          );
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.notifications,
-                          AppLocalizations.of(context)!.notifications,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigator.pushNamed(context, Routes.gifts);
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Vouchers(),
-                          ));
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.vouchers,
-                          AppLocalizations.of(context)!.vouchers,
-                        ),
-                      ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (builder) => CouponsView()),
-                      //     );
-                      //   },
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => RewardsViewNew()),
+                                );
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //   builder: (context) => CancellingOrderScreen(),));
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.rewards,
+                                AppLocalizations.of(context)!.rewards,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: accountWidget(context, IconsAssets.start1,
+                                  AppLocalizations.of(context)!.ghaf_gold,
+                                  // subscribe,
+                                  subTitle: subscribe),
+                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.pushNamed(context, Routes.addressesRoute);
+                            //   },
+                            //   child: accountWidget(
+                            //     context,
+                            //     IconsAssets.location1,
+                            //     AppLocalizations.of(context)!.address,
+                            //   ),
+                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigator.pushNamed(
+                                //     context, Routes.OrdersHistoryRoute);
+                                // _customDialogProgress();
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => OrdersScreen(),
+                                ));
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.note,
+                                // 'Orders History',
+                                AppLocalizations.of(context)!.order_history,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => MyWalletNew()),
+                                );
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.wallet,
+                                AppLocalizations.of(context)!.my_wallet,
+                              ),
+                              // subTitle: '120 AED'),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => PayLaterViewNew()),
+                                );
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.pay,
+                                AppLocalizations.of(context)!.pay_later,
+                              ),
+                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.of(context).pushNamed(Routes.ordersToPay, arguments: 'orderTrack');
+                            //   },
+                            //   child: accountWidget(
+                            //     context,
+                            //     IconsAssets.location,
+                            //     AppLocalizations.of(context)!.order_track,
+                            //     // 'Order Track'
+                            //   ),
+                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => OffersScreenNew(),
+                                ));
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.offers,
+                                AppLocalizations.of(context)!.offers,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) =>
+                                          NotificationsScreenNew()),
+                                );
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.notifications,
+                                AppLocalizations.of(context)!.notifications,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigator.pushNamed(context, Routes.gifts);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Vouchers(),
+                                ));
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.vouchers,
+                                AppLocalizations.of(context)!.vouchers,
+                              ),
+                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (builder) => CouponsView()),
+                            //     );
+                            //   },
 
-                      // ),
-                    ],
-                  ),
-                ),
+                            // ),
+                          ],
+                        ),
+                      ),
                 SizedBox(
                   height: AppSize.s12,
                 ),

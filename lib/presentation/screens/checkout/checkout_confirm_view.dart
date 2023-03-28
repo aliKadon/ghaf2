@@ -155,7 +155,8 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                                 builder: (context) => OrderTrackingScreen(
                                     orderId: widget.orderId,
                                     source: _checkOutGetxController
-                                        .order!.deliveryPoint!,
+                                        .order!.deliveryPoint ?? _checkOutGetxController
+                                        .order!.branch!.branchAddress!,
                                     destination: _checkOutGetxController
                                         .order!.branch!.branchAddress!),
                               ));

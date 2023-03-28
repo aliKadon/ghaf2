@@ -45,7 +45,13 @@ class CartViewGetXController extends GetxController with Helpers {
     required BuildContext context,
   }) {
     this.context = context;
-    getMyCart();
+    if(AppSharedData.currentUser == null) {
+
+      print(AppSharedData.currentUser);
+    }else {
+      getMyCart();
+    }
+
   }
 
   // get my cart.
