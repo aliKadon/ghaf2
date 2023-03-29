@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/domain/model/address.dart';
@@ -38,6 +39,7 @@ import 'package:ghaf_application/presentation/screens/product_view/product_view.
 import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/all_products_screen.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_seller.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
@@ -47,7 +49,7 @@ import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart'
 import 'package:ghaf_application/presentation/screens/seller/add_bank_account_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/add_payment_card_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/add_payment_card_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/checkout_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/choose_payment_method_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/create_payment_link_2_seller_view.dart';
@@ -55,12 +57,12 @@ import 'package:ghaf_application/presentation/screens/seller/main_seller_view.da
 import 'package:ghaf_application/presentation/screens/seller/payment_link_subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/register_payment_link_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/register_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/shop_address_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/seller/subscription_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/update_info_seller.dart';
 import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
@@ -246,7 +248,7 @@ class RouteGenerator {
           builder: (_) => Builder(
             builder: (context) {
               Get.put(LoginViewGetXController(context: context));
-              return LoginView();
+              return LoginView(role: settings.arguments as String);
             },
           ),
         );
@@ -258,11 +260,9 @@ class RouteGenerator {
                 RegisterViewGetXController(
                   context: context,
                   role: args?['role'],
-                  latitude: args?['locationLat'],
-                  longitude: args?['locationLong'],
                 ),
               );
-              return const RegisterView();
+              return RegisterView(role: settings.arguments as Map<String,dynamic>,);
             },
           ),
         );
@@ -271,7 +271,7 @@ class RouteGenerator {
           builder: (_) => Builder(
             builder: (context) {
               Get.put(ForgotPasswordViewGetXController(context: context));
-              return const ForgetPasswordView();
+              return ForgetPasswordView(role: settings.arguments as String,);
             },
           ),
         );
@@ -280,7 +280,7 @@ class RouteGenerator {
           builder: (_) => Builder(
             builder: (context) {
               Get.put(ResetPasswordViewGetXController(context: context));
-              return const ResetPasswordView();
+              return ResetPasswordView(role: settings.arguments as String,);
             },
           ),
         );
@@ -468,8 +468,21 @@ class RouteGenerator {
             builder: (_) => const ChoosePaymentMethodView());
       case Routes.addPaymentCardSelleRoute:
         return MaterialPageRoute(
-            builder: (_) =>
-                AddPaymentCardSellerView(settings.arguments as String));
+            builder: (_) => Builder(builder: (context) {
+              Get.put<ProfileSettingGetxController>(ProfileSettingGetxController());
+              return AddPaymentCardSellerView(settings.arguments as String);
+            })
+                );
+        // MaterialPageRoute(
+        //   builder: (_) => Builder(
+        //     builder: (context) {
+        //       Get.put<SubmitFormViewGetXController>(
+        //         SubmitFormViewGetXController(context: _),
+        //       );
+        //       return SubmitFormView(settings.arguments as Map<String, dynamic>);
+        //     },
+        //   ),
+        // );
       case Routes.paymentLinkSubscriptionSellerRoute:
         return MaterialPageRoute(
             builder: (_) => const PaymentLinkSubscriptionSellerView());

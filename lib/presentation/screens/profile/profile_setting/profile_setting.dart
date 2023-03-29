@@ -92,7 +92,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                       ? GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => LoginView(),));
+                          builder: (context) => LoginView(role: 'Customer'),));
                       },
                       child: Text(
                         AppLocalizations.of(context)!.login,

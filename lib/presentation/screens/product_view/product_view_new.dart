@@ -346,7 +346,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                 productById["isInCart"] == false ? ElevatedButton(
                                   onPressed: () {
                                     if (AppSharedData.currentUser == null) {
-                                      showSignInSheet(context);
+                                      showSignInSheet(context: context,role: 'Customer');
                                     } else {
                                       Provider
                                           .of<ProductProvider>(context,listen: false)
@@ -375,7 +375,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                 ) : ElevatedButton(
                                   onPressed: () {
                                     if (AppSharedData.currentUser == null) {
-                                      showSignInSheet(context);
+                                      showSignInSheet(context: context,role: 'Customer');
                                     } else {
                                       Provider
                                           .of<ProductProvider>(context,listen: false)

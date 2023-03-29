@@ -25,8 +25,6 @@ class RegisterViewGetXController extends GetxController with Helpers {
   RegisterViewGetXController({
     required this.context,
     required this.role,
-    required this.latitude,
-    required this.longitude,
   });
 
   // vars.
@@ -70,7 +68,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
         // success.
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pop(context);
-        _customDialogProgress();
+        _customDialogProgress(role: role);
         // Navigator.of(context).pushReplacementNamed(Routes.verifiedEmail);
         // if (role == Constants.roleRegisterCustomer ||role == Constants.roleRegisterIndividual ) Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
         // if (role == Constants.roleRegisterSeller) Navigator.of(context).pushReplacementNamed(Routes.submitForm ,arguments: {
@@ -90,7 +88,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
     }
   }
 
-  void _customDialogProgress() async {
+  void _customDialogProgress({required String role}) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -156,7 +154,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushReplacementNamed(Routes.loginRoute);
+                            .pushReplacementNamed(Routes.loginRoute,arguments: role);
                       },
                       child: Container(
                         width: AppSize.s110,

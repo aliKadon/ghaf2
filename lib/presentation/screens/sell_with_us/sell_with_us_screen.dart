@@ -5,7 +5,7 @@ import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/register_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view.dart';
 
 class SellWithUsScreen extends StatelessWidget {
@@ -53,7 +53,9 @@ class SellWithUsScreen extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RegisterView(),));
+                      builder: (context) => RegisterView(role: {
+                        'role' : 'Seller',
+                      }),));
                   },
                   child: Text(
                       AppLocalizations.of(context)!.register_create_account)),
@@ -73,7 +75,12 @@ class SellWithUsScreen extends StatelessWidget {
               child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.white)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RegisterView(role: {
+                      'role' : 'Seller',
+                    }),));
+                },
                 child: Text(
                   AppLocalizations.of(context)!.register_payment_link,
                   style: TextStyle(color: ColorManager.primaryDark),

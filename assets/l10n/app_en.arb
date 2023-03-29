@@ -23,6 +23,14 @@
   "password_setting" : "Password setting",
   "old_password" : "Old password",
   "promo_code" : "Promo code",
+
+  "join_us_now_and_get" : "Join us now and get",
+  "introduce_to_subscribe1" : "No Commission",
+  "introduce_to_subscribe2" : "Easy POS integration",
+  "introduce_to_subscribe3" : "More visibility and new customers",
+  "introduce_to_subscribe4" : "Leave hiring a driver to us",
+  "introduce_to_subscribe5" : "Helping you build your first menu and products",
+
   "credit_available" : "Credit available",
   "total_credit_available" : "Total credit available",
   "use_wallet" : "Use wallet",

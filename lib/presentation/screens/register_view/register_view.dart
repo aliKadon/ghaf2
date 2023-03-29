@@ -18,7 +18,8 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class RegisterView extends StatefulWidget {
-  const RegisterView({Key? key}) : super(key: key);
+  final Map<String,dynamic> role;
+  RegisterView({required this.role});
 
   @override
   State<RegisterView> createState() => _RegisterViewState();
@@ -39,9 +40,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
     Get.put(
       RegisterViewGetXController(
         context: context,
-        role: '',
-        latitude: 454.7,
-        longitude: 878.3,
+        role: widget.role['role'] ?? '',
       ),
     );
     _nameTextController = TextEditingController();
@@ -311,35 +310,39 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                 SizedBox(
                   height: AppSize.s35,
                 ),
-                Visibility(
-                  visible: true,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.register_as_a,
-                        style: getRegularStyle(
-                            color: ColorManager.grey, fontSize: FontSize.s16),
-                      ),
-                      SizedBox(
-                        width: AppSize.s1,
-                      ),
-                      GestureDetector(
-                        onTap: () =>
-                            Navigator.pushNamed(
-                                context, Routes.welcomeSellerRoute),
-                        child: Text(
-                          AppLocalizations.of(context)!.seller,
-                          style: getExtraBoldStyle(
-                              color: ColorManager.primary,
-                              fontSize: FontSize.s16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Visibility(
+                //   visible: true,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Text(
+                //         AppLocalizations.of(context)!.register_as_a,
+                //         style: getRegularStyle(
+                //             color: ColorManager.grey, fontSize: FontSize.s16),
+                //       ),
+                //       SizedBox(
+                //         width: AppSize.s1,
+                //       ),
+                //       GestureDetector(
+                //         onTap: () =>
+                //             Navigator.pushNamed(
+                //                 context, Routes.welcomeSellerRoute),
+                //         child: Text(
+                //           AppLocalizations.of(context)!.seller,
+                //           style: getExtraBoldStyle(
+                //               color: ColorManager.primary,
+                //               fontSize: FontSize.s16),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 GestureDetector(
-                  onTap: () => Navigator.pushReplacementNamed(context, Routes.loginRoute),
+                  onTap: () {
+                    print('=====================role');
+                    print(widget.role['role']);
+                    Navigator.pushReplacementNamed(context, Routes.loginRoute,arguments: widget.role['role']);
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

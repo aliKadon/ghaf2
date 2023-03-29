@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/data/api/api_helper.dart';
 import 'package:ghaf_application/data/api/api_settings.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 
 class SubmitFormApiController with ApiHelper {
-  late final Dio _dio = Dio(BaseOptions(baseUrl: ApiSettings.baseUrl));
+  late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
   // submit form.
   Future<ApiResponse> submitForm({
@@ -18,6 +19,8 @@ class SubmitFormApiController with ApiHelper {
     required String addressName,
     required String addressLat,
     required String addressLong,
+    required String addressCity,
+    required String addressCountry,
     required MultipartFile licencePDF,
   }) async {
     print('send request : submit-application-form');
@@ -32,11 +35,16 @@ class SubmitFormApiController with ApiHelper {
       "storeAddress.addressName": addressName,
       "storeAddress.altitude": addressLat,
       "storeAddress.longitude": addressLong,
+      "storeAddress.CityName": addressCity,
+      "storeAddress.CountryName": addressCountry,
+      "storeAddress.BuildingOrStreetName" : '11',
+      "storeAddress.VillaOrApprtmentNumber" : '11',
+      "storeAddress.Phone" : phoneNumber,
       "LicensePDF": licencePDF,
     };
     print(data);
     var response = await _dio.post(
-      'Auth/submit-application-form',
+      '/auth/submit-application-form',
       data: FormData.fromMap(data),
       options: Options(
         headers: headers,

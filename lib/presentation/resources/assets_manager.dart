@@ -100,6 +100,7 @@ class ImageAssets {
   static const String sellWithUs = "$imagePath/sell_with_us.png";
   static const String homePastOrder = "$imagePath/home_past_order.png";
   static const String homeOffers = "$imagePath/home_offers.png";
+  static const String introduceSubscribeSeller = "$imagePath/introduce_subscribe_seller.png";
 }
 
 class IconsAssets {

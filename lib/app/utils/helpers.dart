@@ -2149,7 +2149,7 @@ mixin Helpers {
         ),
       );
 
-  Future showSignInSheet(BuildContext context) => showSlidingBottomSheet(
+  Future showSignInSheet({required BuildContext context,required String role}) => showSlidingBottomSheet(
         context,
         builder: (context) => SlidingSheetDialog(
           snapSpec: SnapSpec(
@@ -2192,7 +2192,7 @@ mixin Helpers {
                         onPressed: () {
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
-                            builder: (context) => LoginView(),
+                            builder: (context) => LoginView(role: role),
                           ));
                         },
                         style: ButtonStyle(
@@ -2219,7 +2219,9 @@ mixin Helpers {
                         onPressed: () {
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
-                            builder: (context) => RegisterView(),
+                            builder: (context) => RegisterView(role: {
+                              'role' : role,
+                            }),
                           ));
                         },
                         style: ButtonStyle(

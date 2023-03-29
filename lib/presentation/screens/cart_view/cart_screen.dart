@@ -120,7 +120,7 @@ class _CartScreenState extends State<CartScreen> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => LoginView(),));
+                                builder: (context) => LoginView(role: 'Customer'),));
                         },
                         child: Text(
                             AppLocalizations.of(context)!.getting_started)),

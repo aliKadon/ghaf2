@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/api_helper.dart';
 import 'package:ghaf_application/domain/model/ghaf_image.dart';
 import 'package:ghaf_application/domain/model/plan_seller_individual.dart';
@@ -9,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 import '../domain/model/read-individual-products.dart';
 
-class SellerProvider with ChangeNotifier, ApiHelper {
+class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
   List<ReadIndividualProducts> _readIndividualProducts = [];
 
   List<ReadIndividualProducts> get readIndividualProduct {
@@ -76,18 +77,24 @@ class SellerProvider with ChangeNotifier, ApiHelper {
 
   Future<void> addPaymentCardSeller(BuildContext context, String cardNumber,
       String cvv, int expiredMonth, int expiredYear, String PlanId) async {
-    var url = Uri.parse('${Constants.urlBase}/Auth/pay-for-subscribtion-as-seller');
+    var url = Uri.parse('${Constants.baseUrl}/auth/pay-for-subscribtion-as-seller');
     try {
       final response = await http.post(url,
           headers: headers,
-          body: json.encode({
-            'paymentMethodType': 'card',
-            'cardNumber': cardNumber,
-            'cardExpMonth': expiredMonth,
-            'cardExpCvc': cvv,
-            'cardExpYear': expiredYear,
-            'PlanId': PlanId,
+          body: jsonEncode({
+            "CardInfo":{
+              "paymentMethodType": "card",
+              "cardNumber": cardNumber,
+              "cardExpMonth": expiredMonth,
+              "cardExpCvc": cvv,
+              "cardExpYear": expiredYear
+            },
+            "PlanId": PlanId,
           }));
+
+      print('==============================subscribe');
+      print(response);
+      print(PlanId);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           jsonDecode(response.body)['message'],
@@ -105,6 +112,7 @@ class SellerProvider with ChangeNotifier, ApiHelper {
       notifyListeners();
       // print(repo);
     } catch (e) {
+      showSnackBar(context, message: e.toString(),error: true);
       // print(e);
     }
   }
@@ -385,7 +393,7 @@ class SellerProvider with ChangeNotifier, ApiHelper {
 
   Future<void> getUserDetails() async {
     var url = Uri.parse(
-        '${Constants.urlBase}/Auth/getUserDetails');
+        '${Constants.baseUrl}/Auth/get-user-details');
     final response = await http.get(url,headers: headers);
 
     var data = jsonDecode(response.body)['data'];

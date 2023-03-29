@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -7,7 +6,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
@@ -18,17 +19,13 @@ import 'package:ghaf_application/presentation/screens/register_view/register_vie
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../resources/routes_manager.dart';
 import '../../account_view/account_view_getx_controller.dart';
 
-
-
 class SubmitFormView extends StatefulWidget {
+  late final Map<String, dynamic> locationData;
 
-  late final Map<String,dynamic> locationData;
   // // const SubmitFormView({Key? key}) : super(key: key);
   SubmitFormView(this.locationData);
 
@@ -42,7 +39,31 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
       Get.find<SubmitFormViewGetXController>();
 
   late final AccountViewGetXController _accountViewGetXController =
-  Get.put(AccountViewGetXController());
+      Get.put(AccountViewGetXController());
+
+  late Placemark place;
+  String city = '';
+  String country = '';
+
+  // #############################################
+  //get all information from latitude and longitude
+  // #############################################
+  Future<void> GetAddressFromLatLong(LatLng latLng) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    print('======================================my address');
+    print(placemarks);
+    place = placemarks[0];
+    city = '${place.locality}';
+    country = '${place.country}';
+    // _addressTextController.text =
+    // '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    print('================myaddress');
+    print(place.country);
+  }
+
+  // ##############################################
+  // ##############################################
   // Location location = new Location();
   // bool? _serviceEnabled;
   // PermissionStatus? _permissionGranted;
@@ -78,7 +99,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
   double? latitude;
   double? longitude;
 
-  Future<void> getLocation () async {
+  Future<void> getLocation() async {
     final prefs = await SharedPreferences.getInstance();
     latitude = prefs.getDouble('latitude') ?? 24.400661;
     longitude = prefs.getDouble('longitude') ?? 54.635448;
@@ -112,20 +133,17 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
     Get.delete<RegisterViewGetXController>();
     super.dispose();
   }
+
   GoogleMapController? mapController;
 
-
-
-
   void _onMapCreated(GoogleMapController controller) {
-   setState(() {
-     mapController = controller;
-   });
+    setState(() {
+      mapController = controller;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -158,7 +176,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   hint: AppLocalizations.of(context)!.store_name,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!.store_name_is_required;
+                      return AppLocalizations.of(context)!
+                          .store_name_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -229,7 +248,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return AppLocalizations.of(context)!.phone_number_is_required;
+                        return AppLocalizations.of(context)!
+                            .phone_number_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -255,7 +275,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   hint: AppLocalizations.of(context)!.social_media_account,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!.social_media_is_required;
+                      return AppLocalizations.of(context)!
+                          .social_media_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -268,7 +289,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       right: AppMargin.m16,
                       left: AppMargin.m16),
                   child: DropdownButtonFormField<bool>(
-                    items: [AppLocalizations.of(context)!.yes, AppLocalizations.of(context)!.no]
+                    items: [
+                      AppLocalizations.of(context)!.yes,
+                      AppLocalizations.of(context)!.no
+                    ]
                         .map(
                           (e) => DropdownMenuItem<bool>(
                             child: Text(
@@ -285,7 +309,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       _submitFormViewGetXController.isInUAE = value!;
                     },
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.is_company_registered_in_uae,
+                      hintText: AppLocalizations.of(context)!
+                          .is_company_registered_in_uae,
                       hintStyle: getMediumStyle(
                         color: ColorManager.hintTextFiled,
                       ),
@@ -308,7 +333,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     ),
                     icon: Icon(Icons.keyboard_arrow_down),
                     validator: (value) {
-                      if (value == null) return AppLocalizations.of(context)!.field_required;
+                      if (value == null)
+                        return AppLocalizations.of(context)!.field_required;
                       return null;
                     },
                   ),
@@ -318,7 +344,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   textInputType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!.busniss_number_required;
+                      return AppLocalizations.of(context)!
+                          .busniss_number_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -450,7 +477,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   hint: AppLocalizations.of(context)!.shop_address,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!.shop_address_is_required;
+                      return AppLocalizations.of(context)!
+                          .shop_address_is_required;
                     return null;
                   },
                   onSaved: (value) {
@@ -466,11 +494,12 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   ),
                   child: GoogleMap(
                     onMapCreated: _onMapCreated,
-                    
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(widget.locationData['locationLat'], widget.locationData['locationLong'],),
+                      target: LatLng(
+                        SharedPrefController().locationLat,
+                        SharedPrefController().locationLong,
+                      ),
                       zoom: 13,
-
                     ),
                     gestureRecognizers: {
                       Factory<PanGestureRecognizer>(
@@ -482,21 +511,23 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                       Factory<VerticalDragGestureRecognizer>(
                           () => VerticalDragGestureRecognizer())
                     },
-                    markers:  {
-                            Marker(
-                              visible: true,
-                              markerId: MarkerId('source'),
-                              flat: true,
-                              position:
-                                  _submitFormViewGetXController.selectedLatLng ?? LatLng(widget.locationData['locationLat'] ?? 24.400661, widget.locationData['locationLong'] ?? 54.635448)
-
-                            )
-                          },
+                    markers: {
+                      Marker(
+                          visible: true,
+                          markerId: MarkerId('source'),
+                          flat: true,
+                          position:
+                              _submitFormViewGetXController.selectedLatLng ??
+                                  LatLng(SharedPrefController().locationLat,
+                                      SharedPrefController().locationLong))
+                    },
                     onTap: (latLng) {
                       setState(() {
-                        print('================================================latLng');
+                        print(
+                            '================================================latLng');
                         print(latLng);
                         _submitFormViewGetXController.selectedLatLng = latLng;
+                        GetAddressFromLatLong(latLng);
                       });
                     },
                   ),
@@ -511,7 +542,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   width: double.infinity,
                   height: AppSize.s55,
                   child: ElevatedButton(
-                    onPressed: _submitFormViewGetXController.submitForm,
+                    onPressed: () {
+                      _submitFormViewGetXController.submitForm(
+                          city: city, country: country);
+                    },
                     child: Text(
                       AppLocalizations.of(context)!.submit_form,
                       style: getSemiBoldStyle(
@@ -526,10 +560,11 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                   margin: EdgeInsets.symmetric(
                     horizontal: 110,
                   ),
-                  child: ElevatedButton(onPressed: (){
-                    _customDialogSubscriptionExit(context);
-
-                  }, child: Text(AppLocalizations.of(context)!.cancel)),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        _customDialogSubscriptionExit(context);
+                      },
+                      child: Text(AppLocalizations.of(context)!.cancel)),
                 ),
               ],
             ),
@@ -594,7 +629,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     SizedBox(
                       height: AppSize.s10,
                     ),
-                    Text('${AppLocalizations.of(context)!.are_you_sur_process}',style: TextStyle(fontSize: AppSize.s20),),
+                    Text(
+                      '${AppLocalizations.of(context)!.are_you_sur_process}',
+                      style: TextStyle(fontSize: AppSize.s20),
+                    ),
                     // Text('Schedule your food order in advance',style: TextStyle(fontSize: AppSize.s16),),
                     // Text('What do you like for breakfast ',style: TextStyle(fontSize: AppSize.s18),),
                     // Text('What do you like for dinner ',style: TextStyle(fontSize: AppSize.s16),),
@@ -614,44 +652,40 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                           onTap: () {
                             _accountViewGetXController.logout(context: context);
                           },
-
                           child: Container(
                             width: AppSize.s110,
                             height: AppSize.s38,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: ColorManager.primaryDark,
-                              borderRadius:
-                              BorderRadius.circular(AppRadius.r8),
+                              borderRadius: BorderRadius.circular(AppRadius.r8),
                             ),
                             child: Text(
                               AppLocalizations.of(context)!.yes,
                               textAlign: TextAlign.center,
-                              style:
-                              getMediumStyle(color: ColorManager.white),
+                              style: getMediumStyle(color: ColorManager.white),
                             ),
                           ),
                         ),
-                        SizedBox(width: AppSize.s10,),
+                        SizedBox(
+                          width: AppSize.s10,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
                           },
-
                           child: Container(
                             width: AppSize.s110,
                             height: AppSize.s38,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: ColorManager.primaryDark,
-                              borderRadius:
-                              BorderRadius.circular(AppRadius.r8),
+                              borderRadius: BorderRadius.circular(AppRadius.r8),
                             ),
                             child: Text(
                               AppLocalizations.of(context)!.no,
                               textAlign: TextAlign.center,
-                              style:
-                              getMediumStyle(color: ColorManager.white),
+                              style: getMediumStyle(color: ColorManager.white),
                             ),
                           ),
                         ),

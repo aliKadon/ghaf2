@@ -12,7 +12,10 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class ResetPasswordView extends StatefulWidget {
-  const ResetPasswordView({Key? key}) : super(key: key);
+  // const ResetPasswordView({Key? key}) : super(key: key);
+  final String role;
+
+  ResetPasswordView({required this.role});
 
   @override
   State<ResetPasswordView> createState() => _ResetPasswordViewState();
@@ -98,7 +101,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       hint: AppLocalizations.of(context)!.verification_code,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context)!.verification_required;
+                          return AppLocalizations.of(context)!
+                              .verification_required;
                         return null;
                       },
                       onSaved: (value) {
@@ -110,7 +114,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context)!.new_password_is_required;
+                          return AppLocalizations.of(context)!
+                              .new_password_is_required;
                         return null;
                       },
                       onSaved: (value) {
@@ -122,7 +127,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context)!.confirmed_password_is_required;
+                          return AppLocalizations.of(context)!
+                              .confirmed_password_is_required;
                         return null;
                       },
                       onSaved: (value) {
@@ -143,7 +149,10 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: _resetPasswordViewGetXController.resetPassword,
+                  onPressed: () {
+                    _resetPasswordViewGetXController.resetPassword(
+                        role: widget.role);
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.save,
                     style: getSemiBoldStyle(

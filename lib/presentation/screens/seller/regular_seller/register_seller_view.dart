@@ -4,14 +4,16 @@ import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 
-import '../../../data/api/controllers/auth_api_controller.dart';
-import '../../../domain/model/api_response.dart';
-import '../../../domain/model/user.dart';
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
+import '../../../../data/api/controllers/auth_api_controller.dart';
+import '../../../../domain/model/api_response.dart';
+import '../../../../domain/model/user.dart';
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
+
+
 
 class RegisterSellerView extends StatefulWidget {
   const RegisterSellerView({Key? key}) : super(key: key);

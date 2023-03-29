@@ -162,6 +162,9 @@ class AuthApiController with ApiHelper {
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         User user = User.fromJson(response.data['data']);
+        // if(user.role == 'Customer') {
+        //
+        // }
         SharedPrefController().save(user: user);
         AppSharedData.currentUser = user;
       }

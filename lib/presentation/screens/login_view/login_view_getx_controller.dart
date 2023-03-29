@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 // import 'package:geocoding/geocoding.dart';
 // import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,6 +12,8 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,10 +43,7 @@ class LoginViewGetXController extends GetxController with Helpers {
   // late final errorMessageProfileApiResponse;
 
 
-
   var isLoading = true;
-
-
 
 
   // fields.
@@ -72,7 +72,7 @@ class LoginViewGetXController extends GetxController with Helpers {
       );
 
 
-      if (loginApiResponse.status == 200 ) {
+      if (loginApiResponse.status == 200) {
         ApiResponse profileApiResponse = await AuthApiController().profile();
         // print('=======================================role');
         // print(AppSharedData.currentUser!.role);
@@ -82,23 +82,20 @@ class LoginViewGetXController extends GetxController with Helpers {
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(context, Routes.mainRoute);
           } else {
-            Navigator.pushReplacementNamed(context, Routes.subscribeFromHomePage);
+            Navigator.pushReplacementNamed(
+                context, Routes.subscribeFromHomePage);
           }
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterSeller) {
-          print('==============================sellerStatus');
-          print(profileApiResponse);
           if (AppSharedData.currentUser!.sellerSubmittedForm! == false) {
-
-
-          }else {
-
+            Navigator.of(context).pushNamed(Routes.submitForm,arguments: {'':20.222});
+          } else {
             Navigator.pushReplacementNamed(context, Routes.sellerStatus,
                 arguments: profileApiResponse.message)
-                .then((value) => ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text('success'))));
+                .then((value) =>
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text('success'))));
           }
-
         } else {
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(
@@ -108,9 +105,10 @@ class LoginViewGetXController extends GetxController with Helpers {
                 context, Routes.mainRoute);
           }
         }
-      } else if(loginApiResponse.status >= 400){
+      } else if (loginApiResponse.status >= 400) {
         Navigator.pop(context);
-        _customDialogProgress(loginApiResponse.message ,loginApiResponse.status);
+        _customDialogProgress(
+            loginApiResponse.message, loginApiResponse.status);
       }
 
       // else {
@@ -126,7 +124,8 @@ class LoginViewGetXController extends GetxController with Helpers {
       // showSnackBar(context, message: loginApiResponse.message, error: true);
       // showSnackBar(context, message: profileApiResponse.message, error: true);
 
-      showSnackBar(context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(
+          context, message: 'An Error Occurred, Please Try again', error: true);
 
       print(error.toString());
 
@@ -141,7 +140,7 @@ class LoginViewGetXController extends GetxController with Helpers {
     }
   }
 
-  void _customDialogProgress(String message,int status) async {
+  void _customDialogProgress(String message, int status) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -193,7 +192,7 @@ class LoginViewGetXController extends GetxController with Helpers {
                       height: AppSize.s10,
                     ),
 
-                   status == 400 ? Container(
+                    status == 400 ? Container(
                       alignment: Alignment.center,
                       child: Text(
                         AppLocalizations.of(context)!.check_your_email,

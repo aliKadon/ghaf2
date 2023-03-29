@@ -20,7 +20,10 @@ import '../../resources/values_manager.dart';
 // '453527024227-n7pneahs3s6dd1ucjjpjfidem5sv3hnf.apps.googleusercontent.com'
 
 class LoginView extends StatefulWidget {
-  LoginView({Key? key}) : super(key: key);
+  // LoginView({Key? key}) : super(key: key);
+  final String role;
+
+  LoginView({required this.role});
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -31,14 +34,13 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> with Helpers {
   // controller.
   late final LoginViewGetXController _loginViewGetXController =
-      Get.put<LoginViewGetXController>(LoginViewGetXController(context: context));
-
+      Get.put<LoginViewGetXController>(
+          LoginViewGetXController(context: context));
 
   GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
-
     // _googleSignIn.onCurrentUserChanged.listen((event) {
     //   _currentUser = event;
     // });
@@ -116,7 +118,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 ),
                 GestureDetector(
                   onTap: () =>
-                      Navigator.pushNamed(context, Routes.forgetPasswordRoute),
+                      Navigator.pushNamed(context, Routes.forgetPasswordRoute,arguments: widget.role),
                   child: Container(
                     alignment: AlignmentDirectional.centerEnd,
                     padding: EdgeInsets.symmetric(
@@ -220,35 +222,35 @@ class _LoginViewState extends State<LoginView> with Helpers {
                 SizedBox(
                   height: AppSize.s23,
                 ),
-                Visibility(
-                  visible: true,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.register_as_a,
-                        style: getRegularStyle(
-                            color: ColorManager.grey, fontSize: FontSize.s16),
-                      ),
-                      SizedBox(
-                        width: AppSize.s1,
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                            context, Routes.welcomeSellerRoute),
-                        child: Text(
-                          AppLocalizations.of(context)!.seller,
-                          style: getExtraBoldStyle(
-                              color: ColorManager.primary,
-                              fontSize: FontSize.s16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: AppSize.s12,
-                ),
+                // Visibility(
+                //   visible: true,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Text(
+                //         AppLocalizations.of(context)!.register_as_a,
+                //         style: getRegularStyle(
+                //             color: ColorManager.grey, fontSize: FontSize.s16),
+                //       ),
+                //       SizedBox(
+                //         width: AppSize.s1,
+                //       ),
+                //       GestureDetector(
+                //         onTap: () => Navigator.pushNamed(
+                //             context, Routes.welcomeSellerRoute),
+                //         child: Text(
+                //           AppLocalizations.of(context)!.seller,
+                //           style: getExtraBoldStyle(
+                //               color: ColorManager.primary,
+                //               fontSize: FontSize.s16),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: AppSize.s12,
+                // ),
                 Text(
                   AppLocalizations.of(context)!.i_do_not_have_account,
                   style: getRegularStyle(
@@ -258,7 +260,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   onTap: () => Navigator.pushReplacementNamed(
                       context, Routes.registerRoute,
                       arguments: {
-                        'role': 'Customer',
+                        'role': widget.role,
                         'locationLat': 24.400661,
                         'locationLong': 54.635448,
                       }),

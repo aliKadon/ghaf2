@@ -24,7 +24,7 @@ class ForgotPasswordViewGetXController extends GetxController with Helpers {
   String? email;
 
   // forgot password.
-  void forgotPassword() async {
+  void forgotPassword({required String role}) async {
     try {
       if (!formKey.currentState!.validate()) return;
       formKey.currentState!.save();
@@ -36,7 +36,7 @@ class ForgotPasswordViewGetXController extends GetxController with Helpers {
         // success.
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pop(context);
-        Navigator.pushNamed(context, Routes.resetPassword);
+        Navigator.pushNamed(context, Routes.resetPassword,arguments: role);
       } else {
         // failed.
         Navigator.pop(context);

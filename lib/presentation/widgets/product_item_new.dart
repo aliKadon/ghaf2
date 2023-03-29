@@ -87,7 +87,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
 
                               onTap: () {
                                 if(AppSharedData.currentUser == null) {
-                                  showSignInSheet(context);
+                                  showSignInSheet(context: context,role: 'Customer');
                                 }else {
                                   _product.toggleIsFavorite(
                                       context: context, id: widget.idProduct);

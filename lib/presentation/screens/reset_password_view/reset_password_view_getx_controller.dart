@@ -27,7 +27,7 @@ class ResetPasswordViewGetXController extends GetxController with Helpers {
   String? confirmPassword;
 
   // reset password.
-  void resetPassword() async {
+  void resetPassword({required String role}) async {
     try {
       if (!formKey.currentState!.validate()) return;
       formKey.currentState!.save();
@@ -47,7 +47,7 @@ class ResetPasswordViewGetXController extends GetxController with Helpers {
         showSnackBar(context, message: apiResponse.message, error: false);
         Navigator.pop(context);
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => LoginView(),));
+            MaterialPageRoute(builder: (context) => LoginView(role: ''),));
       } else {
         // failed.
         Navigator.pop(context);

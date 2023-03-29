@@ -3,18 +3,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:ghaf_application/app/constants.dart';
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/routes_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
-import '../account_view/account_view_getx_controller.dart';
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/routes_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
+import '../../account_view/account_view_getx_controller.dart';
 
 class AddPaymentCardSellerView extends StatefulWidget {
   // const AddPaymentCardSellerView({Key? key}) : super(key: key);
@@ -35,6 +36,8 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
   var subscribeResponse;
   late final AccountViewGetXController _accountViewGetXController =
   Get.put(AccountViewGetXController());
+  late final ProfileSettingGetxController _profileSettingGetxController =
+  Get.put(ProfileSettingGetxController());
 
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
@@ -44,6 +47,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
   @override
   void initState() {
     Provider.of<SellerProvider>(context,listen: false).getUserDetails();
+    // _profileSettingGetxController.init(context: context);
     super.initState();
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
@@ -66,213 +70,217 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
   Widget build(BuildContext context) {
     var repo = Provider.of<SellerProvider>(context).repo;
     var userInfo = Provider.of<SellerProvider>(context).userDetails;
-    print('============================repo');
-    print(repo);
+    // var userDetails = _profileSettingGetxController.userDetails;
+    // print('============================repo');
+    // print(userInfo);
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: AppSize.s9,
-              ),
-              Text(
-                AppLocalizations.of(context)!.add_payment_card,
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s24),
-              ),
-              SizedBox(
-                height: AppSize.s9,
-              ),
-              Image.asset(
-                ImageAssets.logo2,
-                height: AppSize.s192,
-                width: AppSize.s192,
-              ),
-              SizedBox(
-                height: AppSize.s9,
-              ),
-              Text(
-                AppLocalizations.of(context)!
-                    .to_complete_the_store_registration,
-                style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark, fontSize: FontSize.s20),
-              ),
-              SizedBox(
-                height: AppSize.s30,
-              ),
-              AppTextField(
-                textController: _nameTextController,
-                hint: AppLocalizations.of(context)!.number_card,
-              ),
-              AppTextField(
-                textController: _emailTextController,
-                hint: AppLocalizations.of(context)!.cvv,
-                textInputType: TextInputType.emailAddress,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: AppTextField(
-                      textController: _passwordTextController,
-                      hint: AppLocalizations.of(context)!.expired_month,
-                      textInputType: TextInputType.visiblePassword,
-                      obscureText: true,
+      body: GetBuilder<ProfileSettingGetxController>(
+        builder: (controller) => controller.isLoading ? Center(child: CircularProgressIndicator(),) : SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: AppSize.s9,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.add_payment_card,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                ),
+                SizedBox(
+                  height: AppSize.s9,
+                ),
+                Image.asset(
+                  ImageAssets.logo2,
+                  height: AppSize.s192,
+                  width: AppSize.s192,
+                ),
+                SizedBox(
+                  height: AppSize.s9,
+                ),
+                Text(
+                  AppLocalizations.of(context)!
+                      .to_complete_the_store_registration,
+                  style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark, fontSize: FontSize.s20),
+                ),
+                SizedBox(
+                  height: AppSize.s30,
+                ),
+                AppTextField(
+                  textController: _nameTextController,
+                  hint: AppLocalizations.of(context)!.number_card,
+                ),
+                AppTextField(
+                  textController: _emailTextController,
+                  hint: AppLocalizations.of(context)!.cvv,
+                  textInputType: TextInputType.emailAddress,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        textController: _passwordTextController,
+                        hint: AppLocalizations.of(context)!.expired_month,
+                        textInputType: TextInputType.visiblePassword,
+                        obscureText: true,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: AppTextField(
-                      textController: _phoneTextController,
-                      hint: AppLocalizations.of(context)!.expired_year,
-                      textInputType: TextInputType.visiblePassword,
-                      obscureText: true,
+                    Expanded(
+                      child: AppTextField(
+                        textController: _phoneTextController,
+                        hint: AppLocalizations.of(context)!.expired_year,
+                        textInputType: TextInputType.visiblePassword,
+                        obscureText: true,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              // Row(
-              //   children: [
-              //     Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Radio(
-              //             value: '538ca56d-059d-4aa1-9e76-08daecd00fd8',
-              //             onChanged: (n) {
-              //               setState(() {
-              //                 monthly = !monthly;
-              //                 option = n!;
-              //                 print('==============================option');
-              //                 print(option);
-              //               });
-              //             },
-              //             groupValue: option),
-              //         Text(
-              //           'Monthly',
-              //           style: getRegularStyle(
-              //               color: ColorManager.grey, fontSize: FontSize.s16),
-              //         ),
-              //       ],
-              //     ),
-              //     SizedBox(
-              //       height: AppSize.s82,
-              //     ),
-              //     Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Radio(
-              //             value: 'b744fc7b-1d84-4dfb-9e77-08daecd00fd8',
-              //             onChanged: (n) {
-              //               setState(() {
-              //                 print('==============================option');
-              //
-              //                 annual = !annual;
-              //                 option = n!;
-              //                 print(n);
-              //               });
-              //             },
-              //             groupValue: option),
-              //         Text(
-              //           'Annual',
-              //           style: getRegularStyle(
-              //               color: ColorManager.grey, fontSize: FontSize.s16),
-              //         ),
-              //         SizedBox(
-              //           height: AppSize.s82,
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              SizedBox(
-                height: AppSize.s9,
-              ),
-              // Container(
-              //   margin: EdgeInsets.symmetric(
-              //     horizontal: AppMargin.m16,
-              //   ),
-              //   width: double.infinity,
-              //   height: AppSize.s55,
-              //   child:
-              // ),
-              //
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
+                  ],
+                ),
+                // Row(
+                //   children: [
+                //     Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Radio(
+                //             value: '538ca56d-059d-4aa1-9e76-08daecd00fd8',
+                //             onChanged: (n) {
+                //               setState(() {
+                //                 monthly = !monthly;
+                //                 option = n!;
+                //                 print('==============================option');
+                //                 print(option);
+                //               });
+                //             },
+                //             groupValue: option),
+                //         Text(
+                //           'Monthly',
+                //           style: getRegularStyle(
+                //               color: ColorManager.grey, fontSize: FontSize.s16),
+                //         ),
+                //       ],
+                //     ),
+                //     SizedBox(
+                //       height: AppSize.s82,
+                //     ),
+                //     Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Radio(
+                //             value: 'b744fc7b-1d84-4dfb-9e77-08daecd00fd8',
+                //             onChanged: (n) {
+                //               setState(() {
+                //                 print('==============================option');
+                //
+                //                 annual = !annual;
+                //                 option = n!;
+                //                 print(n);
+                //               });
+                //             },
+                //             groupValue: option),
+                //         Text(
+                //           'Annual',
+                //           style: getRegularStyle(
+                //               color: ColorManager.grey, fontSize: FontSize.s16),
+                //         ),
+                //         SizedBox(
+                //           height: AppSize.s82,
+                //         ),
+                //       ],
+                //     ),
+                //   ],
+                // ),
+                SizedBox(
+                  height: AppSize.s9,
+                ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(
+                //     horizontal: AppMargin.m16,
+                //   ),
+                //   width: double.infinity,
+                //   height: AppSize.s55,
+                //   child:
+                // ),
+                //
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
 
-                      onPressed: (){
+                        onPressed: (){
 
-                        _customDialogCancel(context);
-                      }, child: Text(AppLocalizations.of(context)!.cancel)),
-                  SizedBox(width: 5,),
-                  userInfo['role'] == 'Seller' ? ElevatedButton(
-                    onPressed: () {
-                      _checkData();
-                      if (_checkData()) {
-                        Provider.of<SellerProvider>(context, listen: false)
-                            .addPaymentCardSeller(
-                            context,
-                            _nameTextController.text,
-                            _emailTextController.text,
-                            int.parse(_passwordTextController.text),
-                            int.parse(_phoneTextController.text),
-                            widget.planeId)
-                        //     .then((value) => ScaffoldMessenger.of(context)
-                        //     .showSnackBar(SnackBar(
-                        //   content: Text(repo,style: TextStyle(color: Colors.white)),
-                        //   backgroundColor: Colors.green,
-                        // )))
-                            .then((value) =>   _accountViewGetXController.logout(context: context)
-                        )
-                            .catchError((e) => ScaffoldMessenger.of(context)
-                            .showSnackBar(
-                            SnackBar(content: Text(repo,style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,)));
-                      }
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.create_store,
-                      style: getSemiBoldStyle(
-                          color: ColorManager.white, fontSize: FontSize.s18),
-                    ),
-                  ) :  userInfo['role'] == 'IndividualSeller'? ElevatedButton(
-                    onPressed: () {
-                      _checkData();
-                      if (_checkData()) {
-                        Provider.of<SellerProvider>(context, listen: false)
-                            .addPaymentCard(
-                            context,
-                            _nameTextController.text,
-                            _emailTextController.text,
-                            int.parse(_passwordTextController.text),
-                            int.parse(_phoneTextController.text),
-                            widget.planeId)
-                        //     .then((value) => ScaffoldMessenger.of(context)
-                        //     .showSnackBar(SnackBar(
-                        //   content: Text(repo,style: TextStyle(color: Colors.white)),
-                        //   backgroundColor: Colors.green,
-                        // )))
-                            .then((value) =>   Navigator.pushReplacementNamed(
-                            context, Routes.registerPaymentLinkSellerRoute))
-                            .catchError((e) => ScaffoldMessenger.of(context)
-                            .showSnackBar(
-                            SnackBar(content: Text(repo,style: TextStyle(color: Colors.white)),backgroundColor: Colors.red,)));
-                      }
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.create_store,
-                      style: getSemiBoldStyle(
-                          color: ColorManager.white, fontSize: FontSize.s18),
-                    ),
-                  ) : Container(),
-                ],
-              ),
-              SizedBox(
-                height: AppSize.s16,
-              ),
+                          _customDialogCancel(context);
+                        }, child: Text(AppLocalizations.of(context)!.cancel)),
+                    SizedBox(width: 5,),
+                    userInfo['role'] == 'Seller' ? ElevatedButton(
+                      onPressed: () {
+                        _checkData();
+                        if (_checkData()) {
+                          Provider.of<SellerProvider>(context, listen: false)
+                              .addPaymentCardSeller(
+                              context,
+                              _nameTextController.text,
+                              _emailTextController.text,
+                              int.parse(_passwordTextController.text),
+                              int.parse(_phoneTextController.text),
+                              widget.planeId)
+                          //     .then((value) => ScaffoldMessenger.of(context)
+                          //     .showSnackBar(SnackBar(
+                          //   content: Text(repo,style: TextStyle(color: Colors.white)),
+                          //   backgroundColor: Colors.green,
+                          // )))
+                              .then((value) =>   _accountViewGetXController.logout(context: context)
+                          )
+                              .catchError((e) => ScaffoldMessenger.of(context)
+                              .showSnackBar(
+                              SnackBar(content: Text("repo",style: TextStyle(color: Colors.white),),backgroundColor: Colors.red,)));
+                        }
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.create_store,
+                        style: getSemiBoldStyle(
+                            color: ColorManager.white, fontSize: FontSize.s18),
+                      ),
+                    ) :  userInfo['role'] == 'IndividualSeller'? ElevatedButton(
+                      onPressed: () {
+                        _checkData();
+                        if (_checkData()) {
 
-            ],
+                          Provider.of<SellerProvider>(context, listen: false)
+                              .addPaymentCard(
+                              context,
+                              _nameTextController.text,
+                              _emailTextController.text,
+                              int.parse(_passwordTextController.text),
+                              int.parse(_phoneTextController.text),
+                              widget.planeId)
+                          //     .then((value) => ScaffoldMessenger.of(context)
+                          //     .showSnackBar(SnackBar(
+                          //   content: Text(repo,style: TextStyle(color: Colors.white)),
+                          //   backgroundColor: Colors.green,
+                          // )))
+                              .then((value) =>   Navigator.pushReplacementNamed(
+                              context, Routes.registerPaymentLinkSellerRoute))
+                              .catchError((e) => ScaffoldMessenger.of(context)
+                              .showSnackBar(
+                              SnackBar(content: Text("repo",style: TextStyle(color: Colors.white)),backgroundColor: Colors.red,)));
+                        }
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.create_store,
+                        style: getSemiBoldStyle(
+                            color: ColorManager.white, fontSize: FontSize.s18),
+                      ),
+                    ) : Container(),
+                  ],
+                ),
+                SizedBox(
+                  height: AppSize.s16,
+                ),
+
+              ],
+            ),
           ),
         ),
       ),

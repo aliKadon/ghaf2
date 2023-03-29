@@ -35,7 +35,7 @@ class ShortcutsWidget extends StatelessWidget with Helpers{
               MaterialPageRoute(builder: (context) => TrendingView(bid: ''),));
         }else if (text == AppLocalizations.of(context)!.past_order) {
           if (AppSharedData.currentUser == null) {
-            showSignInSheet(context);
+            showSignInSheet(role: 'Customer',context: context);
           }else {
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => PastOrderScreen(),));

@@ -91,7 +91,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
                         builder: (controller) => InkWell(
                           onTap: () {
                             if(AppSharedData.currentUser == null) {
-                              showSignInSheet(context);
+                              showSignInSheet(role: 'Customer',context: context);
                             }else {
                               _product.toggleIsFavorite(
                                 context: context, id: widget.idProduct,);

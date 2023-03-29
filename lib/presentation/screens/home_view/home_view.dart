@@ -378,7 +378,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                                   .primaryDark)),
                                                   onPressed:() {
                                                     if(AppSharedData.currentUser == null) {
-                                                      showSignInSheet(context);
+                                                      showSignInSheet(context: context,role: 'Customer');
                                                     }else {
                                                       _homeViewGetXController
                                                           .onGhafIconTapped();

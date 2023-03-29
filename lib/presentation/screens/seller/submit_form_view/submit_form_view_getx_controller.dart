@@ -59,7 +59,7 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
   late dio.MultipartFile licencePDF;
 
   // submit form.
-  void submitForm() async {
+  void submitForm({required String city,required String country}) async {
     try {
       if (!formKey.currentState!.validate()) return;
       formKey.currentState!.save();
@@ -84,6 +84,8 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
         socialMediaAccount: socialMediaAccount,
         storeName: storeName,
         website: website,
+        addressCity: city,
+        addressCountry: country,
         licencePDF: await dio.MultipartFile.fromFile(licencePDFFile!.path),
       );
       print('object=======================${apiResponse.status}');

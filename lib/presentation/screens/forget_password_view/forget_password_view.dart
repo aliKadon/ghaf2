@@ -11,7 +11,9 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class ForgetPasswordView extends StatefulWidget {
-  const ForgetPasswordView({Key? key}) : super(key: key);
+  // const ForgetPasswordView({Key? key}) : super(key: key);
+  final String role;
+  ForgetPasswordView({required this.role});
 
   @override
   State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
@@ -140,7 +142,9 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: _forgotPasswordViewGetXController.forgotPassword,
+                  onPressed: () {
+                    _forgotPasswordViewGetXController.forgotPassword(role: widget.role);
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.send,
                     style: getSemiBoldStyle(
