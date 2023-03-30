@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/routes_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
 
 class AddBankAccountSellerView extends StatefulWidget {
-  const AddBankAccountSellerView({Key? key}) : super(key: key);
+  // const AddBankAccountSellerView({Key? key}) : super(key: key);
+  final Map<String,dynamic> infoSubmit;
+  AddBankAccountSellerView({required this.infoSubmit});
 
   @override
   State<AddBankAccountSellerView> createState() =>
@@ -21,6 +25,11 @@ class AddBankAccountSellerView extends StatefulWidget {
 
 class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
     with Helpers {
+  //controller
+  late final RegisterPaymentLinkSellerGetxController
+      _registerPaymentLinkSellerGetxController =
+      Get.put(RegisterPaymentLinkSellerGetxController());
+
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
   late TextEditingController _passwordTextController;
@@ -30,6 +39,8 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
 
   @override
   void initState() {
+    print('================================0');
+    print(widget.infoSubmit);
     super.initState();
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
@@ -116,25 +127,49 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_checkData()) {
-                      showLoadingDialog(context: context, title: 'Loading');
-                      Provider.of<SellerProvider>(context, listen: false)
-                          .addBankInfo(
-                              context,
-                              _nameTextController.text,
-                              _emailTextController.text,
-                              _passwordTextController.text,
-                              _phoneTextController.text)
-                          // .then((value) => ScaffoldMessenger.of(context)
-                          //         .showSnackBar(SnackBar(
-                          //       content: Text(repo),
-                          //       backgroundColor: Colors.green,
-                          //     )))
-                          .then((value) => Navigator.of(context).pushReplacementNamed(
-                              Routes.mainSellerRoute))
-                          .catchError((e) => ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text(repo))));
+                    if(_checkData()) {
+                      print('================passs');
+                      print(widget.infoSubmit['info']['password']);
+                      _registerPaymentLinkSellerGetxController.submitForm(
+                        context: context,
+                        PostalCode: widget.infoSubmit['postal'],
+                        password: widget.infoSubmit['info']['password'],
+                        LicensePDF: widget.infoSubmit['info']['pdf'],
+                        AccountNumber: _emailTextController.text,
+                        AddressName: widget.infoSubmit['address'],
+                        BankAddress: 'aaa',
+                        IBAN: _nameTextController.text,
+                        CountryName: widget.infoSubmit['country'],
+                        CompanyName: widget.infoSubmit['info']['businessName'],
+                        CityName: widget.infoSubmit['city'],
+                        businessType: (widget.infoSubmit['info']['businessType']).toString(),
+                        businessSector: widget.infoSubmit['info']['businessSector'],
+                        BusinessName: widget.infoSubmit['info']['businessName'],
+                        BankName: _phoneTextController.text,
+                        email: widget.infoSubmit['info']['businessEmail'],
+                        phoneNumber: widget.infoSubmit['info']['phoneNumber'],
+                      );
                     }
+
+                    // if (_checkData()) {
+                    //   showLoadingDialog(context: context, title: 'Loading');
+                    //   Provider.of<SellerProvider>(context, listen: false)
+                    //       .addBankInfo(
+                    //           context,
+                    //           _nameTextController.text,
+                    //           _emailTextController.text,
+                    //           _passwordTextController.text,
+                    //           _phoneTextController.text)
+                    //       // .then((value) => ScaffoldMessenger.of(context)
+                    //       //         .showSnackBar(SnackBar(
+                    //       //       content: Text(repo),
+                    //       //       backgroundColor: Colors.green,
+                    //       //     )))
+                    //       .then((value) => Navigator.of(context).pushReplacementNamed(
+                    //           Routes.mainSellerRoute))
+                    //       .catchError((e) => ScaffoldMessenger.of(context)
+                    //           .showSnackBar(SnackBar(content: Text(repo))));
+                    // }
                   },
                   child: Text(
                     AppLocalizations.of(context)!.confirm,
@@ -166,7 +201,9 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
         _phoneTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
+    showSnackBar(context,
+        message: AppLocalizations.of(context)!.enter_required_data,
+        error: true);
     return false;
   }
 

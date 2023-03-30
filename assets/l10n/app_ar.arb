@@ -36,6 +36,11 @@
   "introduce_to_subscribe5" : "مساعدتك في بناء قائمتك ومنتجاتك الأولى",
 
 
+  "business_name" : "اسم النشاط التجاري",
+  "business_email" : "البريد الإلكتروني للنشاط التجاري",
+  "business_phone_number" : "رقم هاتف العمل",
+  "upload_business_license_Doc_pDF" : "تحميل رخصة العمل ملف PDF",
+
   "upgrade_your_shopping_experience" : "قم بترقية تجربة التسوق الخاصة بك",
   "easy_and_comfortable" : "سهل ومريح",
   "subscribe_to_ghaf_gold" : "اشترك في غاف الذهبي",

@@ -14,6 +14,7 @@ class User {
   bool? sellerSubmittedForm;
   String? fcmToken;
   num? customerPoints;
+  bool? individualSellerSubmittedForm;
 
   User({
     this.userName,
@@ -31,6 +32,7 @@ class User {
     this.sellerSubmittedForm,
     this.fcmToken,
     this.customerPoints,
+    this.individualSellerSubmittedForm,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class User {
     sellerSubmittedForm = json['sellerSubmittedForm'];
     fcmToken = json['fcm_token'];
     customerPoints = json['customerPoints'];
+    individualSellerSubmittedForm = json['individualSellerSubmittedForm'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,6 +67,7 @@ class User {
     data['birthDate'] = this.birthDate;
     data['referralCode'] = this.referralCode;
     data['customerPoints'] = this.customerPoints;
+    data['individualSellerSubmittedForm'] = this.individualSellerSubmittedForm;
     return data;
   }
 }

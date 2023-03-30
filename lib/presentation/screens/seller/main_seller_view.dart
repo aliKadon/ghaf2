@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view.dart';
 import 'package:ghaf_application/presentation/screens/notification_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/add_item2_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';

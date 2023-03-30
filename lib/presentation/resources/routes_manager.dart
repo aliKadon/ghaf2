@@ -46,8 +46,8 @@ import 'package:ghaf_application/presentation/screens/register_view/register_vie
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/add_bank_account_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/add_item2_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_bank_account_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/add_payment_card_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/checkout_seller_view.dart';
@@ -56,9 +56,9 @@ import 'package:ghaf_application/presentation/screens/seller/create_payment_link
 import 'package:ghaf_application/presentation/screens/seller/main_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/payment_link_subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/products_with_out_details_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/register_payment_link_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/shop_address_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/shop_address_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view_getx_controller.dart';
@@ -495,7 +495,7 @@ class RouteGenerator {
                 settings.arguments as Map<String, dynamic>));
       case Routes.addBankAccountSellerRoute:
         return MaterialPageRoute(
-            builder: (_) => const AddBankAccountSellerView());
+            builder: (_) =>  AddBankAccountSellerView(infoSubmit: settings.arguments as Map<String,dynamic>,));
       case Routes.productsWithOutDetailsSellerRoute:
         return MaterialPageRoute(
             builder: (_) => const ProductsWithOutDetailsSellerView());

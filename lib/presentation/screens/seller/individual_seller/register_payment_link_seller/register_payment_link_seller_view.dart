@@ -1,14 +1,23 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
+import '../../../../resources/assets_manager.dart';
+import '../../../../resources/color_manager.dart';
+import '../../../../resources/font_manager.dart';
+import '../../../../resources/styles_manager.dart';
+import '../../../../resources/values_manager.dart';
+import '../shop_address_seller_view.dart';
 
 enum businessSector {
   corporate,
@@ -25,11 +34,39 @@ class RegisterPaymentLinkSellerView extends StatefulWidget {
 
 class _RegisterPaymentLinkSellerViewState
     extends State<RegisterPaymentLinkSellerView> with Helpers {
+  //controller
+  late final RegisterPaymentLinkSellerGetxController
+      _registerPaymentLinkSellerGetxController =
+      Get.put(RegisterPaymentLinkSellerGetxController());
+
+  File? _licencePDFFile;
+
+  // File get licencePDFFile => _licencePDFFile;
+
+  // set licencePDFFile(File? value) {
+  //   _licencePDFFile = value!;
+  //   update(['licencePDFFile']);
+  // }
+  String? fileBytes;
+
+  // pick pdf file.
+  void pickPdfFile() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+    if (result != null) {
+      setState(() {
+        _licencePDFFile = File(result.paths.first!);
+
+      });
+      fileBytes = await _licencePDFFile!.readAsString();
+    }
+  }
+
   var sectorName = 'Business Sector';
   var sectorNumber = 0;
 
   var business = [
-    'Corporate business',
+    'Business types',
     'Accessories',
     'Agriculture And Landscaping',
     'Beauty services',
@@ -42,7 +79,7 @@ class _RegisterPaymentLinkSellerViewState
     'web-Development/Design',
     'Other'
   ];
-  var businessType = 'Corporate business';
+  var businessType = 'Business types';
 
   var option = '';
   var Agree = false;
@@ -106,11 +143,11 @@ class _RegisterPaymentLinkSellerViewState
               ),
               AppTextField(
                 textController: _nameTextController,
-                hint: AppLocalizations.of(context)!.shop_name,
+                hint: AppLocalizations.of(context)!.business_name,
               ),
               AppTextField(
                 textController: _emailTextController,
-                hint: AppLocalizations.of(context)!.your_company_email_address,
+                hint: AppLocalizations.of(context)!.business_email,
                 textInputType: TextInputType.emailAddress,
               ),
               Padding(
@@ -149,7 +186,8 @@ class _RegisterPaymentLinkSellerViewState
                           fontSize: FontSize.s14,
                         ),
                         decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.phone_number,
+                          hintText: AppLocalizations.of(context)!
+                              .business_phone_number,
                           hintStyle: getMediumStyle(
                             color: ColorManager.hintTextFiled,
                           ),
@@ -184,12 +222,61 @@ class _RegisterPaymentLinkSellerViewState
               SizedBox(
                 height: AppSize.s16,
               ),
-              Visibility(
-                visible: true,
-                child: AppTextField(
-                  textController: _referralCodeTextController,
-                  hint: AppLocalizations.of(context)!.company_name,
+              Column(
+                  children: [
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: AppTextField(
+                              onTap: pickPdfFile,
+                              hint: AppLocalizations.of(context)!
+                                  .upload_business_license_Doc_pDF,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: pickPdfFile,
+                            child: Container(
+                              height: double.infinity,
+                              width: 50.w,
+                              margin: EdgeInsets.only(
+                                bottom: AppMargin.m16,
+                                right: AppMargin.m16,
+                              ),
+                              padding: EdgeInsets.all(8.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(
+                                  color: ColorManager.grey,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.drive_folder_upload,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (_licencePDFFile != null) ...[
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 16.w,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.pdf_attach_success,
+                            style: TextStyle(
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
                 ),
+              SizedBox(
+                height: 16.w,
               ),
               Container(
                 // height: AppSize.s75,
@@ -288,49 +375,61 @@ class _RegisterPaymentLinkSellerViewState
               //   obscureText: true,
               // ),
 
-              GestureDetector(
-                // onTap: () => Navigator.pop(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Radio(
-                        activeColor: ColorManager.primary,
-                        value: 'Agree',
-                        onChanged: (n) {
-                          setState(() {
-                            Agree = true;
-                            option = n!;
-                          });
-                          print('--------------------------------agree');
-                          print(Agree);
-                        },
-                        groupValue: option),
-                    Row(
-                      children: [
-                        Text(
-                          '${AppLocalizations.of(context)!.i_agree_to} ',
-                          style: getRegularStyle(
-                              color: ColorManager.grey, fontSize: FontSize.s16),
-                        ),
-                        InkWell(
-                          onTap: (){
+              // GestureDetector(
+              //   // onTap: () => Navigator.pop(context),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Radio(
+              //           activeColor: ColorManager.primary,
+              //           value: 'Agree',
+              //           onChanged: (n) {
+              //             setState(() {
+              //               Agree = true;
+              //               option = n!;
+              //             });
+              //             print('--------------------------------agree');
+              //             print(Agree);
+              //           },
+              //           groupValue: option),
+              // Row(
+              //   children: [
+              //     Text(
+              //       '${AppLocalizations.of(context)!.i_agree_to} ',
+              //       style: getRegularStyle(
+              //           color: ColorManager.grey, fontSize: FontSize.s16),
+              //     ),
+              //     InkWell(
+              //       onTap: () {
+              //         Navigator.of(context)
+              //             .pushNamed(Routes.termsOfUseRoute);
+              //       },
+              //       child: Text.rich(
+              //         //underline partially
+              //         TextSpan(
+              //             style: TextStyle(
+              //                 fontSize: FontSize.s16, color: Colors.blue),
+              //             //global text style
+              //             children: [
+              //               TextSpan(
+              //                   text:
+              //                   "${AppLocalizations.of(context)!
+              //                       .terms_of_services}",
+              //                   style: TextStyle(
+              //                       decoration: TextDecoration
+              //                           .underline)), //partial text style
+              //             ]),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              //     ],
+              //   ),
+              // ),
 
-                            Navigator.of(context).pushNamed(Routes.termsOfUseRoute);
-                          },
-                          child: Text.rich( //underline partially
-                            TextSpan(
-                                style: TextStyle(fontSize: FontSize.s16 , color: Colors.blue), //global text style
-                                children: [
-                                  TextSpan(text:"${AppLocalizations.of(context)!.terms_of_services}", style: TextStyle(
-                                      decoration:TextDecoration.underline
-                                  )), //partial text style
-                                ]
-                            ),
-                          ),
-                        ),
-                      ],),
-                  ],
-                ),
+              AppTextField(
+                textController: _passwordTextController,
+                hint: AppLocalizations.of(context)!.hint_password,
               ),
 
               Container(
@@ -341,16 +440,21 @@ class _RegisterPaymentLinkSellerViewState
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {
-                     if (_checkData()) {
-                      Navigator.of(context)
-                          .pushReplacementNamed(Routes.shopAddressSellerRoute, arguments: {
-                        'storeName': _nameTextController.text,
-                        'email': _emailTextController.text,
-                        'phoneNumber': _phoneTextController.text,
-                        'companyName': _referralCodeTextController.text,
-                        'businessType': sectorNumber,
-                        'businessSector': businessType
-                      });
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => ShopAddressSellerView({'': 0.222}),
+                    // ));
+                    if (_checkData()) {
+                      Navigator.of(context).pushReplacementNamed(
+                          Routes.shopAddressSellerRoute,
+                          arguments: {
+                            'businessName': _nameTextController.text,
+                            'businessEmail': _emailTextController.text,
+                            'phoneNumber': _phoneTextController.text,
+                            'pdf': _licencePDFFile,
+                            'businessType': sectorNumber,
+                            'businessSector': businessType,
+                            'password': _passwordTextController.text
+                          });
                     }
                   },
                   child: Text(
@@ -381,10 +485,12 @@ class _RegisterPaymentLinkSellerViewState
     if (_nameTextController.text.isNotEmpty &&
         _emailTextController.text.isNotEmpty &&
         _phoneTextController.text.isNotEmpty &&
-        Agree) {
+        _passwordTextController.text.isNotEmpty ) {
       return true;
     }
-    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
+    showSnackBar(context,
+        message: AppLocalizations.of(context)!.enter_required_data,
+        error: true);
     return false;
   }
 

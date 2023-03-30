@@ -12,16 +12,17 @@ import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
 
 class AddItem2SellerView extends StatefulWidget {
   // const AddItem2SellerView({Key? key}) : super(key: key);
 
   final bool isShow;
+
   AddItem2SellerView(this.isShow);
 
   @override
@@ -29,7 +30,6 @@ class AddItem2SellerView extends StatefulWidget {
 }
 
 class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
-
   List<GhafImage>? imageProduct;
 
   late TextEditingController _nameTextController;
@@ -66,6 +66,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
   String? base64;
 
   var isShow2 = true;
+  var count = -1;
+  List<String> imageList = [];
 
   Future pickImage1() async {
     try {
@@ -80,6 +82,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
         base64 = base64Encode(byts);
         listImage.add('data:image/jpeg;base64,$base64');
         imageProduct?[0].data = base64Decode(base64!).toString();
+        imageList.add(base64!);
+        count++;
         print('================================listImage');
         print(listImage.toString());
       });
@@ -99,7 +103,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: AppSize.s9,
@@ -127,28 +131,29 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                     GestureDetector(
                       onTap: () {
                         showLoadingDialog(context: context, title: 'Loading');
-                        Provider.of<SellerProvider>(context,listen: false)
+                        Provider.of<SellerProvider>(context, listen: false)
                             .createIndividualProducts(
-                            _nameTextController.text,
-                            _passwordTextController.text,
-                            _phoneTextController.text,
-                            _discTextController.text,
-                            int.parse(_emailTextController.text),
-                            listImage ,context)
-                        //     .then((value) => ScaffoldMessenger.of(context)
-                        //     .showSnackBar(SnackBar(
-                        //   content: Text(repo),
-                        //   backgroundColor: Colors.green,
-                        // )))
+                                _nameTextController.text,
+                                _passwordTextController.text,
+                                _phoneTextController.text,
+                                _discTextController.text,
+                                int.parse(_emailTextController.text),
+                                listImage,
+                                context)
+                            //     .then((value) => ScaffoldMessenger.of(context)
+                            //     .showSnackBar(SnackBar(
+                            //   content: Text(repo),
+                            //   backgroundColor: Colors.green,
+                            // )))
                             .then((value) => Navigator.of(context).pop())
                             .then((value) => Navigator.of(context)
-                            .pushNamed(Routes.addItemSellerRoute,arguments: isShow2)
-                            .catchError((e) => ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(
-                          content: Text(repo),
-                          backgroundColor: Colors.red,
-                        ))));
-
+                                .pushNamed(Routes.addItemSellerRoute,
+                                    arguments: isShow2)
+                                .catchError((e) => ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(repo),
+                                      backgroundColor: Colors.red,
+                                    ))));
                       },
                       child: Text(
                         AppLocalizations.of(context)!.save,
@@ -163,61 +168,131 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
               SizedBox(
                 height: AppSize.s30,
               ),
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-                  child: ElevatedButton(
-                    onPressed: () => pickImage1(),
-                    child: Text(
-                      AppLocalizations.of(context)!.add_photo,
-                      style: getMediumStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s16),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s20,
-              ),
-              Container(
-                  padding: EdgeInsets.all(AppPadding.p10),
-                  decoration: BoxDecoration(
-                    color: ColorManager.white,
-                    borderRadius: BorderRadius.circular(AppRadius.r8),
-                  ),
-                  child: base64 != null
-                      ? Image.memory(base64Decode(base64!))
-                      : Image.asset(
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      pickImage1();
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(AppPadding.p10),
+                        decoration: BoxDecoration(
+                          color: ColorManager.white,
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                        ),
+                        child:
+                            // base64 != null
+                            //     ? Image.memory(base64Decode(base64!))
+                            //     :
+                            Image.asset(
                           ImageAssets.photoGallery,
                           height: AppSize.s55,
                           width: AppSize.s55,
                         )),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    child: ListView.builder(
+                      itemCount: 3,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Container(
+                            padding: EdgeInsets.all(AppPadding.p10),
+                            decoration: BoxDecoration(
+                              color: ColorManager.white,
+                              borderRadius: BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: index < imageList.length
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        color: ColorManager.greyLight,
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: DecorationImage(
+                                            image: MemoryImage(base64Decode(
+                                                imageList[index]!)),
+                                            fit: BoxFit.cover)),
+                                    height: AppSize.s55,
+                                    width: AppSize.s55,
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        color: ColorManager.greyLight,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    height: AppSize.s55,
+                                    width: AppSize.s55,
+                                  ));
+                      },
+                    ),
+                  )
+                ],
+              ),
               SizedBox(
                 height: AppSize.s20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                child: Text(AppLocalizations.of(context)!.name_of_product,
+                    style: TextStyle(
+                        color: ColorManager.primaryDark,
+                        fontWeight: FontWeight.w500,
+                        fontSize: AppSize.s16)),
               ),
               AppTextField(
                 textController: _nameTextController,
                 hint: AppLocalizations.of(context)!.name_of_product,
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                child: Text(AppLocalizations.of(context)!.price,
+                    style: TextStyle(
+                        color: ColorManager.primaryDark,
+                        fontWeight: FontWeight.w500,
+                        fontSize: AppSize.s16)),
+              ),
               AppTextField(
                 textController: _emailTextController,
                 hint: AppLocalizations.of(context)!.price,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                child: Text(AppLocalizations.of(context)!.description,
+                    style: TextStyle(
+                        color: ColorManager.primaryDark,
+                        fontWeight: FontWeight.w500,
+                        fontSize: AppSize.s16)),
               ),
               AppTextField(
                 textController: _passwordTextController,
                 hint: AppLocalizations.of(context)!.description,
               ),
-              SizedBox(
-                height: AppSize.s16,
+              // SizedBox(
+              //   height: AppSize.s16,
+              // ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                child: Text(AppLocalizations.of(context)!.characteristics,
+                    style: TextStyle(
+                        color: ColorManager.primaryDark,
+                        fontWeight: FontWeight.w500,
+                        fontSize: AppSize.s16)),
               ),
               AppTextField(
                 textController: _phoneTextController,
                 hint: AppLocalizations.of(context)!.characteristics,
               ),
-              SizedBox(
-                height: AppSize.s16,
+              // SizedBox(
+              //   height: AppSize.s16,
+              // ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                child: Text(AppLocalizations.of(context)!.productType,
+                    style: TextStyle(
+                        color: ColorManager.primaryDark,
+                        fontWeight: FontWeight.w500,
+                        fontSize: AppSize.s16)),
               ),
               AppTextField(
                 textController: _discTextController,
@@ -246,7 +321,9 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
         _phoneTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
+    showSnackBar(context,
+        message: AppLocalizations.of(context)!.enter_required_data,
+        error: true);
     return false;
   }
 

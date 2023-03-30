@@ -12,6 +12,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
@@ -25,6 +26,7 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
 
 class LoginViewGetXController extends GetxController with Helpers {
   // constructor fields.
@@ -88,7 +90,8 @@ class LoginViewGetXController extends GetxController with Helpers {
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterSeller) {
           if (AppSharedData.currentUser!.sellerSubmittedForm! == false) {
-            Navigator.of(context).pushNamed(Routes.submitForm,arguments: {'':20.222});
+            Navigator.of(context).pushNamed(
+                Routes.submitForm, arguments: {'': 20.222});
           } else {
             Navigator.pushReplacementNamed(context, Routes.sellerStatus,
                 arguments: profileApiResponse.message)
@@ -96,14 +99,24 @@ class LoginViewGetXController extends GetxController with Helpers {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('success'))));
           }
-        } else {
-          if (AppSharedData.currentUser!.active!) {
-            Navigator.pushReplacementNamed(
-                context, Routes.registerPaymentLinkSellerRoute);
-          } else {
-            Navigator.pushReplacementNamed(
-                context, Routes.mainRoute);
+        } else if (AppSharedData.currentUser!.active!) {
+          Navigator.pushReplacementNamed(
+              context, Routes.registerPaymentLinkSellerRoute);
+          // else {
+          //   Navigator.pushReplacementNamed(
+          //       context, Routes.mainRoute);
+          // }
+        } else if (AppSharedData.currentUser!.role ==
+            Constants.roleRegisterIndividual) {
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => AddItem2SellerView(true),));
+          if(AppSharedData.currentUser!.individualSellerSubmittedForm == false) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => RegisterPaymentLinkSellerView(),));
+          }else if (AppSharedData.currentUser!.individualSellerSubmittedForm == true && AppSharedData.currentUser!.active == false) {
+            print('========================you need to subscribe');
           }
+
         }
       } else if (loginApiResponse.status >= 400) {
         Navigator.pop(context);

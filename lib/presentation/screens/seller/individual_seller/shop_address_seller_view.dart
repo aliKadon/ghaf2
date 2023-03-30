@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
-import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_bank_account_seller_view.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/seller_provider.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
+import '../../../../providers/seller_provider.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
 
 class ShopAddressSellerView extends StatefulWidget {
   // const ShopAddressSellerView({Key? key}) : super(key: key);
@@ -107,34 +107,49 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => AddBankAccountSellerView(),
+                    // ));
                     if (_checkData()) {
-                      showLoadingDialog(context: context, title: 'Loading');
-                      Provider.of<SellerProvider>(context, listen: false)
-                          .submitIndividualForm(
-                              context,
-                              widget.info['storeName'],
-                              widget.info['email'],
-                              widget.info['phoneNumber'],
-                              widget.info['companyName'],
-                              widget.info['businessType'],
-                              widget.info['businessSector'],
-                              _nameTextController.text,
-                              _emailTextController.text,
-                              _boDTextController.text,
-                              _passwordTextController.text)
-                          // .then((value) => ScaffoldMessenger.of(context)
-                          //         .showSnackBar(SnackBar(
-                          //       content: Text(repo),
-                          //       backgroundColor: Colors.green,
-                          //     )))
-                          .then((value) => Navigator.of(context)
-                              .pushReplacementNamed(Routes.addBankAccountSellerRoute))
-                          .catchError((e) => ScaffoldMessenger.of(context)
-                              .showSnackBar(
-                                  SnackBar(content: Text(repo))));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AddBankAccountSellerView(infoSubmit: {
+                            'info': widget.info,
+                            'country': _nameTextController.text,
+                            'city': _emailTextController.text,
+                            'address': _boDTextController.text,
+                            'postal': _passwordTextController.text,
+                          }),
+                        ),
+                      );
+                      // showLoadingDialog(context: context, title: 'Loading');
+                      // Provider.of<SellerProvider>(context, listen: false)
+                      //     .submitIndividualForm(
+                      //         context,
+                      //         widget.info['businessName'],
+                      //         widget.info['businessEmail'],
+                      //         widget.info['phoneNumber'],
+                      //         widget.info['pdf'],
+                      //         widget.info['businessType'],
+                      //         widget.info['businessSector'],
+                      //         widget.info['password'],
+                      //         _nameTextController.text,
+                      //         _emailTextController.text,
+                      //         _boDTextController.text,
+                      //         _passwordTextController.text)
+                      //     // .then((value) => ScaffoldMessenger.of(context)
+                      //     //         .showSnackBar(SnackBar(
+                      //     //       content: Text(repo),
+                      //     //       backgroundColor: Colors.green,
+                      //     //     )))
+                      //     .then((value) => Navigator.of(context)
+                      //         .pushReplacementNamed(Routes.addBankAccountSellerRoute))
+                      //     .catchError((e) => ScaffoldMessenger.of(context)
+                      //         .showSnackBar(
+                      //             SnackBar(content: Text(repo))));
                     }
                     // _performRegister();
-
                   },
                   child: Text(
                     AppLocalizations.of(context)!.confirm,
@@ -166,7 +181,9 @@ class _ShopAddressSellerViewState extends State<ShopAddressSellerView>
         _boDTextController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: AppLocalizations.of(context)!.enter_required_data, error: true);
+    showSnackBar(context,
+        message: AppLocalizations.of(context)!.enter_required_data,
+        error: true);
     return false;
   }
 

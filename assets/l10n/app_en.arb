@@ -31,6 +31,12 @@
   "introduce_to_subscribe4" : "Leave hiring a driver to us",
   "introduce_to_subscribe5" : "Helping you build your first menu and products",
 
+  "business_name" : "Business name",
+  "business_email" : "Business email",
+  "business_phone_number" : "Business phone number",
+  "upload_business_license_Doc_pDF" : "Upload business license Doc PDF",
+
+
   "credit_available" : "Credit available",
   "total_credit_available" : "Total credit available",
   "use_wallet" : "Use wallet",

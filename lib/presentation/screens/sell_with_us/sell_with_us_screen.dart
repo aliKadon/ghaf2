@@ -78,7 +78,7 @@ class SellWithUsScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RegisterView(role: {
-                      'role' : 'Seller',
+                      'role' : 'IndividualSeller',
                     }),));
                 },
                 child: Text(
