@@ -71,8 +71,8 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
     var repo = Provider.of<SellerProvider>(context).repo;
     var userInfo = Provider.of<SellerProvider>(context).userDetails;
     // var userDetails = _profileSettingGetxController.userDetails;
-    // print('============================repo');
-    // print(userInfo);
+    print('============================repo');
+    print(userInfo);
     return Scaffold(
       body: GetBuilder<ProfileSettingGetxController>(
         builder: (controller) => controller.isLoading ? Center(child: CircularProgressIndicator(),) : SafeArea(
@@ -254,17 +254,17 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                               _emailTextController.text,
                               int.parse(_passwordTextController.text),
                               int.parse(_phoneTextController.text),
-                              widget.planeId)
+                              widget.planeId);
                           //     .then((value) => ScaffoldMessenger.of(context)
                           //     .showSnackBar(SnackBar(
                           //   content: Text(repo,style: TextStyle(color: Colors.white)),
                           //   backgroundColor: Colors.green,
                           // )))
-                              .then((value) =>   Navigator.pushReplacementNamed(
-                              context, Routes.registerPaymentLinkSellerRoute))
-                              .catchError((e) => ScaffoldMessenger.of(context)
-                              .showSnackBar(
-                              SnackBar(content: Text("repo",style: TextStyle(color: Colors.white)),backgroundColor: Colors.red,)));
+                          //     .then((value) =>   Navigator.pushReplacementNamed(
+                          //     context, Routes.registerPaymentLinkSellerRoute))
+                          //     .catchError((e) => ScaffoldMessenger.of(context)
+                          //     .showSnackBar(
+                          //     SnackBar(content: Text("repo",style: TextStyle(color: Colors.white)),backgroundColor: Colors.red,)));
                         }
                       },
                       child: Text(

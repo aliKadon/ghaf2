@@ -4,9 +4,9 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/styles_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
 
 class ProductsWithOutDetailsSellerView extends StatefulWidget {
   const ProductsWithOutDetailsSellerView({Key? key}) : super(key: key);
@@ -45,9 +45,11 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
               width: double.infinity,
               height: AppSize.s55,
               child: ElevatedButton(
-                onPressed: () =>Navigator.pushNamed(context, Routes.addItem2SellerRoute,arguments: isShow),
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.createPaymentLinkSellerRoute);
+                },
                 child: Text(
-                  AppLocalizations.of(context)!.products_with_details,
+                  AppLocalizations.of(context)!.generate_payment_link,
                   style: getSemiBoldStyle(
                       color: ColorManager.white, fontSize: FontSize.s18),
                 ),
@@ -63,7 +65,10 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
               width: double.infinity,
               height: AppSize.s55,
               child: ElevatedButton(
-                onPressed: () =>Navigator.pushNamed(context, Routes.createPaymentLinkSellerRoute),
+                onPressed: () {
+
+                  Navigator.pushNamed(context, Routes.addItem2SellerRoute,arguments: isShow);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorManager.transparent,
                   elevation: 0,
@@ -73,7 +78,7 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
                   ),
                 ),
                 child: Text(
-                  AppLocalizations.of(context)!.products_without_details,
+                  AppLocalizations.of(context)!.generate_detailed_payment_link,
                   style: getSemiBoldStyle(
                       color: ColorManager.primaryDark, fontSize: FontSize.s18),
                 ),

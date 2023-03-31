@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../providers/product_provider.dart';
-import '../../../providers/seller_provider.dart';
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/routes_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/values_manager.dart';
+import '../../../../../providers/product_provider.dart';
+import '../../../../../providers/seller_provider.dart';
+import '../../../../resources/assets_manager.dart';
+import '../../../../resources/color_manager.dart';
+import '../../../../resources/font_manager.dart';
+import '../../../../resources/routes_manager.dart';
+import '../../../../resources/styles_manager.dart';
+import '../../../../resources/values_manager.dart';
 
 class CreatePaymentLink2SellerView extends StatefulWidget {
   // const CreatePaymentLink2SellerView({Key? key}) : super(key: key);
@@ -140,7 +140,7 @@ class _CreatePaymentLink2SellerViewState
                   ),
                   Spacer(),
                   Text(
-                    readProduct[0].addedAt.substring(0, 10),
+                    readProduct[0].addedAt!.substring(0, 10),
                     style: getSemiBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.s16),
                   ),
@@ -164,7 +164,7 @@ class _CreatePaymentLink2SellerViewState
                 onPressed: () {
                   print('id : ${readProduct[0].id}');
                   Provider.of<SellerProvider>(context, listen: false)
-                      .createPaymnetLink(readProduct[0].id, widget.amount)
+                      .createPaymnetLink(readProduct[0].id!, widget.amount.toString())
                       .then((value) => _customDialogProgress());
                 },
                 child: Text(
@@ -188,7 +188,7 @@ class _CreatePaymentLink2SellerViewState
                   ),
                   Spacer(),
                   Text(
-                    ((readProduct[0].price) * widget.amount).toString(),
+                    ((readProduct[0].price!) * widget.amount).toString(),
                     style: getSemiBoldStyle(
                         color: ColorManager.grey, fontSize: FontSize.s16),
                   ),

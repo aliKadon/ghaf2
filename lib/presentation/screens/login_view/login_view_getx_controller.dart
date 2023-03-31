@@ -1,32 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:geocoding/geocoding.dart';
-// import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/constants.dart';
-import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
-import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/main_seller_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
-import 'package:location/location.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../seller/individual_seller/payment_link_subscription_seller_view.dart';
 import '../seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
+import '../seller/welcome_seller_view.dart';
 
 class LoginViewGetXController extends GetxController with Helpers {
   // constructor fields.
@@ -44,9 +36,7 @@ class LoginViewGetXController extends GetxController with Helpers {
   // late final errorMessageLoginApiResponse;
   // late final errorMessageProfileApiResponse;
 
-
   var isLoading = true;
-
 
   // fields.
   String? userName;
@@ -73,7 +63,6 @@ class LoginViewGetXController extends GetxController with Helpers {
         password: password!,
       );
 
-
       if (loginApiResponse.status == 200) {
         ApiResponse profileApiResponse = await AuthApiController().profile();
         // print('=======================================role');
@@ -90,33 +79,38 @@ class LoginViewGetXController extends GetxController with Helpers {
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterSeller) {
           if (AppSharedData.currentUser!.sellerSubmittedForm! == false) {
-            Navigator.of(context).pushNamed(
-                Routes.submitForm, arguments: {'': 20.222});
+            Navigator.of(context)
+                .pushNamed(Routes.submitForm, arguments: {'': 20.222});
           } else {
             Navigator.pushReplacementNamed(context, Routes.sellerStatus,
-                arguments: profileApiResponse.message)
-                .then((value) =>
-                ScaffoldMessenger.of(context)
+                    arguments: profileApiResponse.message)
+                .then((value) => ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('success'))));
           }
-        } else if (AppSharedData.currentUser!.active!) {
-          Navigator.pushReplacementNamed(
-              context, Routes.registerPaymentLinkSellerRoute);
-          // else {
-          //   Navigator.pushReplacementNamed(
-          //       context, Routes.mainRoute);
-          // }
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterIndividual) {
           // Navigator.of(context).push(MaterialPageRoute(
           //   builder: (context) => AddItem2SellerView(true),));
-          if(AppSharedData.currentUser!.individualSellerSubmittedForm == false) {
+          if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+              false) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => RegisterPaymentLinkSellerView(),));
-          }else if (AppSharedData.currentUser!.individualSellerSubmittedForm == true && AppSharedData.currentUser!.active == false) {
+              builder: (context) => RegisterPaymentLinkSellerView(),
+            ));
+          } else if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+                  true &&
+              AppSharedData.currentUser!.active == false) {
             print('========================you need to subscribe');
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => PaymentLinkSubscriptionSellerView(),
+            ));
+          }else if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+              true &&
+              AppSharedData.currentUser!.active == true) {
+            print('========================add item');
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => MainSellerView(),
+            ));
           }
-
         }
       } else if (loginApiResponse.status >= 400) {
         Navigator.pop(context);
@@ -137,8 +131,8 @@ class LoginViewGetXController extends GetxController with Helpers {
       // showSnackBar(context, message: loginApiResponse.message, error: true);
       // showSnackBar(context, message: profileApiResponse.message, error: true);
 
-      showSnackBar(
-          context, message: 'An Error Occurred, Please Try again', error: true);
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
 
       print(error.toString());
 
@@ -204,17 +198,18 @@ class LoginViewGetXController extends GetxController with Helpers {
                     SizedBox(
                       height: AppSize.s10,
                     ),
-
-                    status == 400 ? Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocalizations.of(context)!.check_your_email,
-                        textAlign: TextAlign.center,
-                        style: getMediumStyle(
-                            color: ColorManager.red,
-                            fontSize: FontSize.s16),
-                      ),
-                    ) : Container(),
+                    status == 400
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              AppLocalizations.of(context)!.check_your_email,
+                              textAlign: TextAlign.center,
+                              style: getMediumStyle(
+                                  color: ColorManager.red,
+                                  fontSize: FontSize.s16),
+                            ),
+                          )
+                        : Container(),
                     SizedBox(
                       height: AppSize.s20,
                     ),
@@ -228,14 +223,12 @@ class LoginViewGetXController extends GetxController with Helpers {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: ColorManager.primaryDark,
-                          borderRadius:
-                          BorderRadius.circular(AppRadius.r8),
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
                         ),
                         child: Text(
                           'Ok',
                           textAlign: TextAlign.center,
-                          style:
-                          getMediumStyle(color: ColorManager.white),
+                          style: getMediumStyle(color: ColorManager.white),
                         ),
                       ),
                     ),

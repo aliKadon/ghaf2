@@ -36,7 +36,13 @@
   "business_phone_number" : "Business phone number",
   "upload_business_license_Doc_pDF" : "Upload business license Doc PDF",
 
+  "generate_payment_link" : "Generate payment link",
+  "generate_detailed_payment_link" : "Generate detailed payment link",
 
+
+  "payment_link_solution_subscription1" : "Payment link Solution Subscription",
+  "you_can_cancel_anytime" : "You can cancel your subscription anytime for free",
+  "home_business" : "Home business",
   "credit_available" : "Credit available",
   "total_credit_available" : "Total credit available",
   "use_wallet" : "Use wallet",

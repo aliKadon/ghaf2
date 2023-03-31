@@ -37,11 +37,11 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
 
   Future<void> addPaymentCard(BuildContext context, String cardNumber,
   String cvv, int expiredMonth, int expiredYear, String PlanId) async {
-    var url = Uri.parse('${Constants.urlBase}/Auth/subscripe-as-individual');
+    var url = Uri.parse('${Constants.baseUrl}/Auth/subscripe-as-individual');
     try {
       final response = await http.post(url,
           headers: headers,
-          body: json.encode({
+          body: jsonEncode({
             'paymentMethodType': 'card',
             'cardNumber': cardNumber,
             'cardExpMonth': expiredMonth,
@@ -49,6 +49,8 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
             'cardExpYear': expiredYear,
             'PlanId': PlanId,
           }));
+      print('=======================subscribe individual');
+      print(response.body);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           jsonDecode(response.body)['message'],
@@ -286,7 +288,7 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
 }
     ) async {
     var url =
-    Uri.parse('${Constants.urlBase}/product/create-individual-products');
+    Uri.parse('${Constants.baseUrl}/product/create-individual-products');
     try {
       final response = await http.post(url,
           headers: headers,
@@ -299,9 +301,9 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
             'images': [],
           }));
 
-      // print('=====================addItemSeller============');
-      // print(response.statusCode);
-      // print(response.body);
+      print('=====================addItemSeller============');
+      print(response.statusCode);
+      print(response.body);
       // print(json.decode(response.body));
       // print('=====================================repo');
       repo = jsonDecode(response.body)['message'];
@@ -315,7 +317,7 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
 
   Future<void> readIndividualProducts() async {
     var url =
-        Uri.parse('${Constants.urlBase}/product/read-individual-products');
+        Uri.parse('${Constants.baseUrl}/product/read-individual-products');
 
     final response = await http.get(url, headers: headers);
 
@@ -325,21 +327,22 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
 
     for (int i = 0; i < data.length; i++) {
       list.add(ReadIndividualProducts(
-          data[i]['id'],
-          data[i]['name'],
-          data[i]['price'],
-          data[i]['stripeId'] ?? '',
-          data[i]['priceId'] ?? '',
-          data[i]['description'],
-          data[i]['characteristics'],
-          data[i]['productType'],
-          data[i]['isoCurrencySymbol'],
-          data[i]['addedAt'],
-          data[i]['ghafImageIndividual']));
-      // print('=================================ReadIndividualProducts');
-      // print(response.statusCode);
-      // print(json.decode(response.body));
+          id:data[i]['id'],
+          name:data[i]['name'],
+          price:data[i]['price'],
+          stripeId:data[i]['stripeId'] ?? '',
+          priceId:data[i]['priceId'] ?? '',
+          description:data[i]['description'],
+          characteristics:data[i]['characteristics'],
+          productType:data[i]['productType'],
+          isoCurrencySymbol:data[i]['isoCurrencySymbol'],
+          addedAt:data[i]['addedAt'],
+          ghafImageIndividual:data[i]['ghafImageIndividual']));
+
     }
+    print('=================================ReadIndividualProducts');
+    print(response.statusCode);
+    print(json.decode(response.body));
     _readIndividualProducts = list;
     // print('=====================================repo');
     repo = jsonDecode(response.body)['message'];
@@ -359,7 +362,7 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
   }
 
   Future<void> getPlanForSellerIndividual() async {
-    var url = Uri.parse('${Constants.urlBase}/Auth/get-individual-plans');
+    var url = Uri.parse('${Constants.baseUrl}/Auth/get-individual-plans');
     final response = await http.get(url, headers: headers);
 
     List data = jsonDecode(response.body)['data'];
@@ -419,21 +422,27 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
 
   }
 
-  Future<void> createPaymnetLink(String productId, int count) async {
+  Future<void> createPaymnetLink(String productId, String count) async {
     var url = Uri.parse(
-        '${Constants.urlBase}/product/create-paymnet-link?prodId=$productId&Quantity=$count');
+        '${Constants.baseUrl}/product/create-paymnet-link?prodId=2b21f3a2-49b0-4593-ac77-08db31bb5948&Quantity=10');
 
-    final response = await http.get(url, headers: headers);
-    print('response : ${response.body}');
+    final response = await http.post(url, headers: headers);
+    print('=====================================get the link');
+    print('response : ${response.statusCode}');
+    if(response.statusCode == 200) {
+      var data = jsonDecode(response.body)['data'];
+      print('============================================data0');
+      print(data.toString());
 
-    var data = jsonDecode(response.body)['data'];
-    print('============================================data0');
-    print(data.toString());
+      // print('=====================================repo');
+      repo = jsonDecode(response.body)['message'];
+      // print(repo);
+      createPaymentLink = data.toString();
+    }else {
+      print('error---------------------------------------');
+    }
 
-    // print('=====================================repo');
-    repo = jsonDecode(response.body)['message'];
-    // print(repo);
-    createPaymentLink = data.toString();
+
 
     notifyListeners();
     // for (int i = 0; i < data.length; i++) {

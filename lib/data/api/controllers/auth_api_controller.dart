@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:http/http.dart' as http;
@@ -162,9 +163,7 @@ class AuthApiController with ApiHelper {
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         User user = User.fromJson(response.data['data']);
-        // if(user.role == 'Customer') {
-        //
-        // }
+
         SharedPrefController().save(user: user);
         AppSharedData.currentUser = user;
       }

@@ -52,10 +52,10 @@ import 'package:ghaf_application/presentation/screens/seller/add_item_seller_vie
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/add_payment_card_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/checkout_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/choose_payment_method_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/create_payment_link_2_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/main_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/payment_link_subscription_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/products_with_out_details_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/create_payment_link_without_details/create_payment_link_2_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/main_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/payment_link_subscription_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/shop_address_seller_view.dart';
@@ -85,7 +85,7 @@ import '../screens/rate_and_reviews/rate_us_view/rate_us_view_getx_controller.da
 import '../screens/rate_and_reviews/review_product.dart';
 import '../screens/register_view/register_view.dart';
 import '../screens/registration_screen.dart';
-import '../screens/seller/create_payment_link_seller_view.dart';
+import '../screens/seller/individual_seller/create_payment_link_without_details/create_payment_link_seller_view.dart';
 import '../screens/seller_status.dart';
 import '../screens/splash_view.dart';
 import '../screens/subscribe_view/payment_methode_for_subscribe.dart';

@@ -35,6 +35,12 @@
   "introduce_to_subscribe4" : "اترك لنا توظيف سائق",
   "introduce_to_subscribe5" : "مساعدتك في بناء قائمتك ومنتجاتك الأولى",
 
+  "payment_link_solution_subscription1" : "رابط الدفع الاشتراك",
+  "you_can_cancel_anytime" : "يمكنك إلغاء اشتراكك في أي وقت مجانًا",
+  "home_business" : "الأعمال التجارية المنزلية",
+
+  "generate_payment_link" : "توليد رابط الدفع",
+  "generate_detailed_payment_link" : "توليد رابط الدفع مع التفاصيل",
 
   "business_name" : "اسم النشاط التجاري",
   "business_email" : "البريد الإلكتروني للنشاط التجاري",

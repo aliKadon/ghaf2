@@ -164,7 +164,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                                     .ghafImageIndividual![0]['data']!),
                               ),
                         title: Text(
-                          provider[index].name,
+                          provider[index].name!,
                           style: getMediumStyle(
                               color: ColorManager.primaryDark,
                               fontSize: FontSize.s18),
@@ -315,7 +315,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                       onPressed: () {
                         Provider.of<SellerProvider>(context, listen: false)
                             .createPaymnetLink(
-                                provider[selected].id, productCount)
+                                provider[selected].id!, productCount.toString())
                             .then((value) => _customDialogProgress());
 
                         // Provider.of<SellerProvider>(context,listen: false)

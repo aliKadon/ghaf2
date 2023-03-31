@@ -56,29 +56,28 @@ class RegisterPaymentLinkSellerGetxController extends GetxController
     String? BankAddress,
     String? IBAN,
   }) async {
-    apiResponse = await _submitFormIndividualApiController.submitForm(
-        phoneNumber: phoneNumber,
-        email: email,
-        AccountNumber: AccountNumber,
-        AddressName: AddressName,
-        BankAddress: BankAddress,
-        BankName: BankName,
-        BusinessName: BusinessName,
-        businessSector: businessSector,
-        businessType: businessType,
-        CityName: CityName,
-        CompanyName: CompanyName,
-        CountryName: CountryName,
-        IBAN: IBAN,
-        LicensePDF: LicensePDF,
-        password: password,
-        PostalCode: PostalCode);
-    showSnackBar(context, message: apiResponse.message);
-    // try {
-    //   apiResponse = await _submitFormIndividualApiController.submitForm();
-    //   showSnackBar(context, message: apiResponse.message);
-    // }catch (error) {
-    //   showSnackBar(context, message: error.toString(),error: true);
-    // }
+
+    try {
+      apiResponse = await _submitFormIndividualApiController.submitForm(
+          phoneNumber: phoneNumber,
+          email: email,
+          AccountNumber: AccountNumber,
+          AddressName: AddressName,
+          BankAddress: BankAddress,
+          BankName: BankName,
+          BusinessName: BusinessName,
+          businessSector: businessSector,
+          businessType: businessType,
+          CityName: CityName,
+          CompanyName: CompanyName,
+          CountryName: CountryName,
+          IBAN: IBAN,
+          LicensePDF: LicensePDF,
+          password: password,
+          PostalCode: PostalCode);
+      showSnackBar(context, message: apiResponse.message);
+    }catch (error) {
+      showSnackBar(context, message: error.toString(),error: true);
+    }
   }
 }
