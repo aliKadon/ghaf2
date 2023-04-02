@@ -1,3 +1,5 @@
+import 'ghaf_image_individual.dart';
+
 class ReadIndividualProducts {
   String? id;
   String? name;
@@ -9,7 +11,7 @@ class ReadIndividualProducts {
   String? productType;
   String? isoCurrencySymbol;
   String? addedAt;
-  List<dynamic>? ghafImageIndividual;
+  List<GhafImageIndividual>? ghafImageIndividual;
   String? userCredentialsId;
 
   ReadIndividualProducts({
@@ -40,7 +42,9 @@ class ReadIndividualProducts {
         priceId: json['priceId'],
         description: json['description'],
         characteristics: json['characteristics'],
-        ghafImageIndividual: json['ghafImageIndividual'],
+        ghafImageIndividual:json['ghafImageIndividual'] == null ? null : List<GhafImageIndividual>.from(
+            json['ghafImageIndividual']
+                .map((x) => GhafImageIndividual.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

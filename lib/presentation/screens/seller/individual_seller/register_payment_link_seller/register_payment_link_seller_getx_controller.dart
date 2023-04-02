@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/seller/seller_individual/submit_form_indivedual_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 
 import '../../../../../app/constants.dart';
 
@@ -75,6 +76,8 @@ class RegisterPaymentLinkSellerGetxController extends GetxController
           LicensePDF: LicensePDF,
           password: password,
           PostalCode: PostalCode);
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginView(role: ''),));
       showSnackBar(context, message: apiResponse.message);
     }catch (error) {
       showSnackBar(context, message: error.toString(),error: true);

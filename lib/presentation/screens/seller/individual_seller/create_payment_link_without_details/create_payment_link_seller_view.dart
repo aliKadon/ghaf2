@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
-import 'package:ghaf_application/presentation/screens/seller/individual_seller/create_payment_link_without_details/create_link_without_details_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/seller/controller/create_link_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,7 @@ class CreatePaymentLinkSellerView extends StatefulWidget {
 class _CreatePaymentLinkSellerViewState
     extends State<CreatePaymentLinkSellerView> with Helpers {
   //controller
-  late final CreateLinkWithoutDetailsGetxController
+  late final CreateLinkGetxController
       _createLinkWithoutDetailsGetxController;
 
   late TextEditingController _nameTextController;
@@ -43,7 +43,7 @@ class _CreatePaymentLinkSellerViewState
   @override
   void initState() {
     _createLinkWithoutDetailsGetxController =
-        Get.put(CreateLinkWithoutDetailsGetxController());
+        Get.put(CreateLinkGetxController());
     super.initState();
     _nameTextController = TextEditingController();
     _productTypeTextController = TextEditingController();

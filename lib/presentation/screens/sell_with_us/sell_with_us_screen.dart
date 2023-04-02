@@ -58,7 +58,7 @@ class SellWithUsScreen extends StatelessWidget {
                       }),));
                   },
                   child: Text(
-                      AppLocalizations.of(context)!.register_create_account)),
+                      AppLocalizations.of(context)!.register_create_account,style: TextStyle(fontSize: FontSize.s16),)),
             ),
             SizedBox(
               height: MediaQuery
@@ -83,7 +83,8 @@ class SellWithUsScreen extends StatelessWidget {
                 },
                 child: Text(
                   AppLocalizations.of(context)!.register_payment_link,
-                  style: TextStyle(color: ColorManager.primaryDark),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: ColorManager.primaryDark,fontSize: FontSize.s16),
                 ),
               ),
             ),

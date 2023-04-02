@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/data/api/api_helper.dart';
 import 'package:ghaf_application/data/api/api_settings.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:http/http.dart' as http;
 
-class SubmitFormApiController with ApiHelper {
+import '../../../../domain/model/seller_details.dart';
+
+class RegularSellerApiController with ApiHelper {
   late final Dio _dio = Dio(BaseOptions(baseUrl: Constants.baseUrl));
 
   // submit form.
@@ -113,5 +118,18 @@ class SubmitFormApiController with ApiHelper {
       }
     }
     return failedResponse;
+  }
+  
+  Future<SellerDetails?> getSellerDetails() async{
+    var url = Uri.parse('${Constants.baseUrl}/Auth/getsellerdetails');
+    var response = await http.get(url,headers: headers);
+
+    if(response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if(jsonData['status'] == 200) {
+        return SellerDetails.fromJson(jsonData['data']);
+      }
+    }
+    return null;
   }
 }

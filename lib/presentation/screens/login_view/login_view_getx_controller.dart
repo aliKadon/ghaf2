@@ -8,7 +8,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
-import 'package:ghaf_application/presentation/screens/seller/individual_seller/main_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/controller/seller_getx_controller.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 
 import '../../resources/assets_manager.dart';
@@ -17,8 +17,8 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../seller/individual_seller/payment_link_subscription_seller_view.dart';
+import '../seller/individual_seller/products_with_out_details_seller_view.dart';
 import '../seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
-import '../seller/welcome_seller_view.dart';
 
 class LoginViewGetXController extends GetxController with Helpers {
   // constructor fields.
@@ -35,6 +35,9 @@ class LoginViewGetXController extends GetxController with Helpers {
 
   // late final errorMessageLoginApiResponse;
   // late final errorMessageProfileApiResponse;
+
+  late final SellerGetxController _sellerGetxController =
+      Get.put(SellerGetxController());
 
   var isLoading = true;
 
@@ -82,10 +85,11 @@ class LoginViewGetXController extends GetxController with Helpers {
             Navigator.of(context)
                 .pushNamed(Routes.submitForm, arguments: {'': 20.222});
           } else {
-            Navigator.pushReplacementNamed(context, Routes.sellerStatus,
-                    arguments: profileApiResponse.message)
-                .then((value) => ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text('success'))));
+            _sellerGetxController.getSellerDetails(context: context);
+            // Navigator.pushReplacementNamed(context, Routes.sellerStatus,
+            //         arguments: profileApiResponse.message)
+            //     .then((value) => ScaffoldMessenger.of(context)
+            //         .showSnackBar(SnackBar(content: Text('success'))));
           }
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterIndividual) {
@@ -103,12 +107,12 @@ class LoginViewGetXController extends GetxController with Helpers {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => PaymentLinkSubscriptionSellerView(),
             ));
-          }else if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
-              true &&
+          } else if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+                  true &&
               AppSharedData.currentUser!.active == true) {
             print('========================add item');
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => MainSellerView(),
+              builder: (context) => ProductsWithOutDetailsSellerView(),
             ));
           }
         }
@@ -236,5 +240,33 @@ class LoginViewGetXController extends GetxController with Helpers {
             ),
           );
         });
+  }
+
+  void _customDialogSellerStatus() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            height: AppSize.s306,
+            width: AppSize.s306,
+            child: Column(
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.success,
+                  style: TextStyle(
+                      color: ColorManager.primary,
+                      fontSize: FontSize.s14,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: AppSize.s22,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

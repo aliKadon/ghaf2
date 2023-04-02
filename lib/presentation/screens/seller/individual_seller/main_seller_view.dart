@@ -6,7 +6,7 @@ import 'package:ghaf_application/presentation/screens/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/store_seller_view.dart';
 
 import '../../../../domain/model/models.dart';
 import '../../../resources/assets_manager.dart';

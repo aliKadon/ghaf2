@@ -59,7 +59,7 @@ import 'package:ghaf_application/presentation/screens/seller/individual_seller/p
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/shop_address_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/store_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/store_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/subscription_seller_view.dart';
@@ -86,7 +86,7 @@ import '../screens/rate_and_reviews/review_product.dart';
 import '../screens/register_view/register_view.dart';
 import '../screens/registration_screen.dart';
 import '../screens/seller/individual_seller/create_payment_link_without_details/create_payment_link_seller_view.dart';
-import '../screens/seller_status.dart';
+import '../screens/seller/regular_seller/seller_status.dart';
 import '../screens/splash_view.dart';
 import '../screens/subscribe_view/payment_methode_for_subscribe.dart';
 import '../screens/unpaid_items_screen.dart';

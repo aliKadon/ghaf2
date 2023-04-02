@@ -2,42 +2,50 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/seller/seller_individual/individual_seller_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/items_list.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/store_seller_view.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../domain/model/read-individual-products.dart';
-import '../../../../../providers/product_provider.dart';
-import '../../../../resources/assets_manager.dart';
-import '../../../../resources/color_manager.dart';
-import '../../../../resources/font_manager.dart';
-import '../../../../resources/styles_manager.dart';
-import '../../../../resources/values_manager.dart';
+import '../../../../domain/model/read-individual-products.dart';
+import '../../../../providers/product_provider.dart';
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/font_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/values_manager.dart';
 
-class CreateLinkWithoutDetailsGetxController extends GetxController
-    with Helpers {
+class CreateLinkGetxController extends GetxController with Helpers {
   List<ReadIndividualProducts> individualProducts = [];
   late ApiResponse apiResponse;
   late ApiResponse apiResponse1;
   String link = '';
   late final IndividualSellerApiController _individualSellerApiController =
-      IndividualSellerApiController();
+  IndividualSellerApiController();
+
+  List<String> productId = [];
+  List<num> productCount = [];
 
   final TextEditingController _textController = TextEditingController();
 
-
-  void getIndividualProducts({required BuildContext context,required bool isNotDetailed,num? amount}) async {
+  void getIndividualProducts({required BuildContext context,
+    required bool isNotDetailed,
+    num? amount}) async {
     try {
       individualProducts =
-          await _individualSellerApiController.getIndividualProducts();
+      await _individualSellerApiController.getIndividualProducts();
       update();
-      if(isNotDetailed) {
-        createLink(context: context, productId: individualProducts[0].id!, amount: amount!);
+      if (isNotDetailed) {
+        createLink(
+            withDetails: !isNotDetailed,
+            context: context,
+            productId: individualProducts[0].id!,
+            amount: amount!);
         Navigator.of(context).pop();
       }
     } catch (error) {
@@ -45,16 +53,15 @@ class CreateLinkWithoutDetailsGetxController extends GetxController
     }
   }
 
-  void createProduct(
-      {required BuildContext context,
-      required String name,
-      required String description,
-      String? characteristics,
-      required String productType,
-      required num price,
-      num? amount,
-      required bool isNotDetailed,
-      required List<String> images}) async {
+  void createProduct({required BuildContext context,
+    required String name,
+    required String description,
+    String? characteristics,
+    required String productType,
+    required num price,
+    num? amount,
+    required bool isNotDetailed,
+    required List<String> images}) async {
     // apiResponse = await _individualSellerApiController.createProduct(
     //     name: name,
     //     description: description,
@@ -71,28 +78,36 @@ class CreateLinkWithoutDetailsGetxController extends GetxController
           price: price,
           images: images);
       if (isNotDetailed) {
-        getIndividualProducts(context: context,isNotDetailed: isNotDetailed,amount: amount);
+        getIndividualProducts(
+            context: context, isNotDetailed: isNotDetailed, amount: amount);
+      } else {
+        Navigator.of(context).pop();
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ItemsList(),
+        ));
+        showSnackBar(context, message: apiResponse.message);
       }
     } catch (e) {
       showSnackBar(context, message: e.toString(), error: true);
     }
   }
 
-  void createLink(
-      {required BuildContext context,
-      required String productId,
-      required num amount}) async {
+  void createLink({required BuildContext context,
+    required String productId,
+    required bool withDetails,
+    required num amount}) async {
     try {
       link = await _individualSellerApiController.createLink(
           productId: productId, amount: amount);
-      _customDialogProgress1(context: context);
+      _customDialogProgress1(withDetails: withDetails, context: context);
       update();
     } catch (e) {
       showSnackBar(context, message: e.toString(), error: true);
     }
   }
 
-  void _customDialogProgress1({required BuildContext context}) async {
+  void _customDialogProgress1(
+      {required BuildContext context, required bool withDetails}) async {
     var ghaf = Provider.of<ProductProvider>(context, listen: false);
 
     showDialog(
@@ -100,7 +115,10 @@ class CreateLinkWithoutDetailsGetxController extends GetxController
         builder: (context) {
           return Dialog(
             child: Container(
-              height: AppSize.s360,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.5,
               width: AppSize.s343,
               margin: EdgeInsets.symmetric(horizontal: AppPadding.p16),
               decoration: BoxDecoration(
@@ -284,7 +302,7 @@ class CreateLinkWithoutDetailsGetxController extends GetxController
 
                     InkWell(
                       onTap: () {
-                        _customDialog(context: context,pro: link);
+                        _customDialog(context: context, pro: link);
                       },
                       child: Row(
                         children: [
@@ -308,13 +326,27 @@ class CreateLinkWithoutDetailsGetxController extends GetxController
                     SizedBox(
                       height: AppSize.s12,
                     ),
+                    Visibility(
+                      visible: withDetails,
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.45,
+                        child: ElevatedButton(onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => StoreSellerView(),));
+                        }, child: Text(AppLocalizations.of(context)!.ok)),
+                      ),
+                    )
                   ]),
             ),
           );
         });
   }
 
-  void _customDialog({required BuildContext context,required String pro}) async {
+  void _customDialog(
+      {required BuildContext context, required String pro}) async {
     showDialog(
         context: context,
         builder: (context) {

@@ -7,12 +7,14 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/routes_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../account_view/account_view_getx_controller.dart';
+import '../../main_view.dart';
 
 class PaymentLinkSubscriptionSellerView extends StatefulWidget {
   const PaymentLinkSubscriptionSellerView({Key? key}) : super(key: key);
@@ -57,232 +59,182 @@ class _PaymentLinkSubscriptionSellerViewState
         .planSellerIndividual;
     // var repo = Provider.of<SellerProvider>(context).repo;
 
-    return Scaffold(
-      body: isLoading
-          ? Center(
-        child: Container(
-          width: 20.h,
-          height: 20.h,
-          child: CircularProgressIndicator(
-            strokeWidth: 1,
+    return WillPopScope(
+      onWillPop: () async {
+        await SharedPrefController().logout();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => MainView(),
+        ));
+        return false;
+      },
+      child: Scaffold(
+        body: isLoading
+            ? Center(
+          child: Container(
+            width: 20.h,
+            height: 20.h,
+            child: CircularProgressIndicator(
+              strokeWidth: 1,
+            ),
           ),
-        ),
-      )
-          : SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: AppSize.s28,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .payment_link_solution_subscription1,
-                  style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s20),
+        )
+            : SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: AppSize.s28,
                 ),
-              ),
-              SizedBox(
-                height: AppSize.s16,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  AppLocalizations.of(context)!.home_business,
-                  style: TextStyle(
-                      fontSize: FontSize.s20,
-                      fontWeight: FontWeight.w400,
-                      color: ColorManager.primaryDark),
-                ),
-              ),
-              SizedBox(
-                height: AppSize.s20,
-              ),
-              Card(
-                elevation: 2,
-                child: Container(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.63,
-                  padding: EdgeInsets.all(AppPadding.p12),
-                  decoration: BoxDecoration(
-                    color: ColorManager.white,
-                    borderRadius: BorderRadius.circular(AppRadius.r8),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .payment_link_solution_subscription1,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s20),
                   ),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      // SizedBox(
-                      //   height: AppSize.s15,
-                      // ),
-                      // monthly
-                      //     ? Row(
-                      //         children: [
-                      //           Spacer(),
-                      //           Text(
-                      //             '${plane[0].priceAmount} ${plane[0].priceCurrency}',
-                      //             textAlign: TextAlign.center,
-                      //             style: getMediumStyle(
-                      //                 color: ColorManager.primaryDark,
-                      //                 fontSize: FontSize.s20),
-                      //           ),
-                      //         ],
-                      //       )
-                      //     : Row(
-                      //         children: [
-                      //           Spacer(),
-                      //           Text(
-                      //             '${plane[1].priceAmount} ${plane[1].priceCurrency}',
-                      //             textAlign: TextAlign.center,
-                      //             style: getMediumStyle(
-                      //                 color: ColorManager.primaryDark,
-                      //                 fontSize: FontSize.s20),
-                      //           ),
-                      //         ],
-                      //       ),
-                      // SizedBox(
-                      //   height: AppSize.s60,
-                      // ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: AppPadding.p8),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: AppRadius.r8,
-                              backgroundColor: ColorManager.primary,
-                            ),
-                            SizedBox(
-                              width: AppSize.s12,
-                            ),
-                            Expanded(
-                              child: Text(
-                                '${AppLocalizations.of(context)!
-                                    .monthly_plane} ${plane[0]
-                                    .priceAmount} ${plane[0]
-                                    .priceCurrency} ${AppLocalizations.of(
-                                    context)!.every_month}'
-                                    '${AppLocalizations.of(context)!
-                                    .and_have} ${plane[0]
-                                    .freeDays} ${AppLocalizations.of(context)!
-                                    .free_days}',
-                                textAlign: TextAlign.start,
-                                style: getMediumStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16),
+                ),
+                SizedBox(
+                  height: AppSize.s16,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppLocalizations.of(context)!.home_business,
+                    style: TextStyle(
+                        fontSize: FontSize.s20,
+                        fontWeight: FontWeight.w400,
+                        color: ColorManager.primaryDark),
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s20,
+                ),
+                Card(
+                  elevation: 2,
+                  child: Container(
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.63,
+                    padding: EdgeInsets.all(AppPadding.p12),
+                    decoration: BoxDecoration(
+                      color: ColorManager.white,
+                      borderRadius: BorderRadius.circular(AppRadius.r8),
+                    ),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        // SizedBox(
+                        //   height: AppSize.s15,
+                        // ),
+                        // monthly
+                        //     ? Row(
+                        //         children: [
+                        //           Spacer(),
+                        //           Text(
+                        //             '${plane[0].priceAmount} ${plane[0].priceCurrency}',
+                        //             textAlign: TextAlign.center,
+                        //             style: getMediumStyle(
+                        //                 color: ColorManager.primaryDark,
+                        //                 fontSize: FontSize.s20),
+                        //           ),
+                        //         ],
+                        //       )
+                        //     : Row(
+                        //         children: [
+                        //           Spacer(),
+                        //           Text(
+                        //             '${plane[1].priceAmount} ${plane[1].priceCurrency}',
+                        //             textAlign: TextAlign.center,
+                        //             style: getMediumStyle(
+                        //                 color: ColorManager.primaryDark,
+                        //                 fontSize: FontSize.s20),
+                        //           ),
+                        //         ],
+                        //       ),
+                        // SizedBox(
+                        //   height: AppSize.s60,
+                        // ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: AppPadding.p8),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: AppRadius.r8,
+                                backgroundColor: ColorManager.primary,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s12,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: AppPadding.p8),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: AppRadius.r8,
-                              backgroundColor: ColorManager.primary,
-                            ),
-                            SizedBox(
-                              width: AppSize.s12,
-                            ),
-                            Expanded(
-                              child: Text(
-                                '${AppLocalizations.of(context)!
-                                    .annual_plane} ${plane[1]
-                                    .priceAmount} ${plane[1]
-                                    .priceCurrency} ${AppLocalizations.of(
-                                    context)!.every_month}'
-                                    '${AppLocalizations.of(context)!
-                                    .and_have} ${plane[1]
-                                    .freeDays} ${AppLocalizations.of(context)!
-                                    .free_days}',
-                                textAlign: TextAlign.start,
-                                style: getMediumStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16),
+                              SizedBox(
+                                width: AppSize.s12,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s50,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: AppPadding.p8),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              // onTap: () => Navigator.pop(context),
-                              child: Container(
-                                padding: EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(12),
-                                    border: Border.all(
-                                        color: ColorManager.greyLight)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                                  children: [
-                                    Radio(
-                                        activeColor: ColorManager.primary,
-                                        value: 'Monthly',
-                                        onChanged: (n) {
-                                          setState(() {
-                                            monthly = true;
-                                            Agree1 = true;
-                                            // Agree = !Agree;
-                                            planId = plane[0].id!;
-                                            option = n!;
-                                          });
-                                          print(
-                                              '--------------------------------monthly');
-                                          print(option);
-                                        },
-                                        groupValue: option),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .monthly,
-                                          style: getRegularStyle(
-                                              color: ColorManager.primaryDark,
-                                              fontSize: FontSize.s16),
-                                        ),
-                                        SizedBox(height: AppSize.s8,),
-                                        Text(
-                                          '${plane[0].priceAmount} ${plane[0]
-                                              .priceCurrency}',
-                                          textAlign: TextAlign.end,
-                                          style: getMediumStyle(
-                                              color: ColorManager.primary,
-                                              fontSize: FontSize.s16),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                              Expanded(
+                                child: Text(
+                                  '${AppLocalizations.of(context)!
+                                      .monthly_plane} ${plane[0]
+                                      .priceAmount} ${plane[0]
+                                      .priceCurrency} ${AppLocalizations.of(
+                                      context)!.every_month}'
+                                      '${AppLocalizations.of(context)!
+                                      .and_have} ${plane[0]
+                                      .freeDays} ${AppLocalizations.of(context)!
+                                      .free_days}',
+                                  textAlign: TextAlign.start,
+                                  style: getMediumStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontSize: FontSize.s16),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: AppSize.s22,
-                            ),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: GestureDetector(
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s12,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: AppPadding.p8),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: AppRadius.r8,
+                                backgroundColor: ColorManager.primary,
+                              ),
+                              SizedBox(
+                                width: AppSize.s12,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${AppLocalizations.of(context)!
+                                      .annual_plane} ${plane[1]
+                                      .priceAmount} ${plane[1]
+                                      .priceCurrency} ${AppLocalizations.of(
+                                      context)!.every_month}'
+                                      '${AppLocalizations.of(context)!
+                                      .and_have} ${plane[1]
+                                      .freeDays} ${AppLocalizations.of(context)!
+                                      .free_days}',
+                                  textAlign: TextAlign.start,
+                                  style: getMediumStyle(
+                                      color: ColorManager.primaryDark,
+                                      fontSize: FontSize.s16),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s50,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: AppPadding.p8),
+                          child: Row(
+                            children: [
+                              GestureDetector(
                                 // onTap: () => Navigator.pop(context),
                                 child: Container(
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(12),
                                   decoration: BoxDecoration(
                                       borderRadius:
                                       BorderRadius.circular(12),
@@ -293,18 +245,18 @@ class _PaymentLinkSubscriptionSellerViewState
                                     MainAxisAlignment.center,
                                     children: [
                                       Radio(
-                                          activeColor:
-                                          ColorManager.primary,
-                                          value: 'Annual',
+                                          activeColor: ColorManager.primary,
+                                          value: 'Monthly',
                                           onChanged: (n) {
                                             setState(() {
-                                              monthly = false;
+                                              monthly = true;
                                               Agree1 = true;
-                                              planId = plane[1].id!;
+                                              // Agree = !Agree;
+                                              planId = plane[0].id!;
                                               option = n!;
                                             });
                                             print(
-                                                '--${monthly}------------------------------annual');
+                                                '--------------------------------monthly');
                                             print(option);
                                           },
                                           groupValue: option),
@@ -312,15 +264,14 @@ class _PaymentLinkSubscriptionSellerViewState
                                         children: [
                                           Text(
                                             AppLocalizations.of(context)!
-                                                .annual,
+                                                .monthly,
                                             style: getRegularStyle(
-                                                color:
-                                                ColorManager.primaryDark,
+                                                color: ColorManager.primaryDark,
                                                 fontSize: FontSize.s16),
                                           ),
                                           SizedBox(height: AppSize.s8,),
                                           Text(
-                                            '${plane[1].priceAmount} ${plane[1]
+                                            '${plane[0].priceAmount} ${plane[0]
                                                 .priceCurrency}',
                                             textAlign: TextAlign.end,
                                             style: getMediumStyle(
@@ -333,154 +284,214 @@ class _PaymentLinkSubscriptionSellerViewState
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s43,
-                      ),
-                      Text(AppLocalizations.of(context)!.you_can_cancel_anytime,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: ColorManager.primaryDark,
-                            fontSize: FontSize.s14,
-                            fontWeight: FontWeight.w500),),
-                      SizedBox(
-                        height: AppSize.s14,
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: AppMargin.m50,
-                        ),
-                        width: double.infinity,
-                        height: AppSize.s55,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  ColorManager.primaryDark)),
-                          onPressed: () =>
-                          Agree && Agree1
-                              ? Navigator.of(context).pushReplacementNamed(
-                              Routes.addPaymentCardSelleRoute,
-                              arguments: planId)
-                              : ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(
-                            content: Text(
-                                "Please Choose All The Options"),
-                            backgroundColor: Colors.red,
-                          )),
-
-                          // {
-                          //   _customDialogSubscriptionSeller(context);
-                          // },
-                          //onPressed: () => Agree && Agree1 ? Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute , arguments: planId ) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Choose All The Options"),backgroundColor: Colors.red,)),
-                          child: Text(
-                            AppLocalizations.of(context)!.subscribe_now,
-                            style: getSemiBoldStyle(
-                                color: ColorManager.white,
-                                fontSize: FontSize.s18),
+                              SizedBox(
+                                width: AppSize.s22,
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: GestureDetector(
+                                  // onTap: () => Navigator.pop(context),
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(12),
+                                        border: Border.all(
+                                            color: ColorManager.greyLight)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Radio(
+                                            activeColor:
+                                            ColorManager.primary,
+                                            value: 'Annual',
+                                            onChanged: (n) {
+                                              setState(() {
+                                                monthly = false;
+                                                Agree1 = true;
+                                                planId = plane[1].id!;
+                                                option = n!;
+                                              });
+                                              print(
+                                                  '--${monthly}------------------------------annual');
+                                              print(option);
+                                            },
+                                            groupValue: option),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .annual,
+                                              style: getRegularStyle(
+                                                  color:
+                                                  ColorManager.primaryDark,
+                                                  fontSize: FontSize.s16),
+                                            ),
+                                            SizedBox(height: AppSize.s8,),
+                                            Text(
+                                              '${plane[1].priceAmount} ${plane[1]
+                                                  .priceCurrency}',
+                                              textAlign: TextAlign.end,
+                                              style: getMediumStyle(
+                                                  color: ColorManager.primary,
+                                                  fontSize: FontSize.s16),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.2,
+                        SizedBox(
+                          height: AppSize.s43,
                         ),
-                        width: AppSize.s16,
-                        height: AppSize.s46,
-                        child: ElevatedButton(
+                        Text(AppLocalizations.of(context)!.you_can_cancel_anytime,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: ColorManager.primaryDark,
+                              fontSize: FontSize.s14,
+                              fontWeight: FontWeight.w500),),
+                        SizedBox(
+                          height: AppSize.s14,
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: AppMargin.m50,
+                          ),
+                          width: double.infinity,
+                          height: AppSize.s55,
+                          child: ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStatePropertyAll(
-                                    Colors.white)),
-                            onPressed: () {
-                              _customDialogSubscriptionExit(context);
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.cancel,
-                              style: TextStyle(
-                                  color: ColorManager.primaryDark),
+                                    ColorManager.primaryDark)),
+                            onPressed: () =>
+                            Agree && Agree1
+                                ? Navigator.of(context).pushReplacementNamed(
+                                Routes.addPaymentCardSelleRoute,
+                                arguments: planId)
+                                : ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(
+                              content: Text(
+                                  "Please Choose All The Options"),
+                              backgroundColor: Colors.red,
                             )),
+
+                            // {
+                            //   _customDialogSubscriptionSeller(context);
+                            // },
+                            //onPressed: () => Agree && Agree1 ? Navigator.of(context).pushNamed(Routes.addPaymentCardSelleRoute , arguments: planId ) : ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Choose All The Options"),backgroundColor: Colors.red,)),
+                            child: Text(
+                              AppLocalizations.of(context)!.subscribe_now,
+                              style: getSemiBoldStyle(
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s18),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSize.s10,
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.2,
+                          ),
+                          width: AppSize.s16,
+                          height: AppSize.s46,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      Colors.white)),
+                              onPressed: () {
+                                _customDialogSubscriptionExit(context);
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.cancel,
+                                style: TextStyle(
+                                    color: ColorManager.primaryDark),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s16,
+                ),
+                TabPageSelectorIndicator(
+                  backgroundColor: ColorManager.primaryDark,
+                  borderColor: ColorManager.primaryDark,
+                  size: AppSize.s12,
+                ),
+                SizedBox(
+                  height: AppSize.s22,
+                ),
+                GestureDetector(
+                  // onTap: () => Navigator.pop(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Radio(
+                          activeColor: ColorManager.primary,
+                          value: 'Agree',
+                          onChanged: (n) {
+                            setState(() {
+                              Agree = !Agree;
+                              option1 = n!;
+                            });
+                            print('--------------------------------agree');
+                            print(Agree);
+                          },
+                          groupValue: option1),
+                      // Text(
+                      //   AppLocalizations.of(context)!
+                      //       .i_agree_to_the_terms_of_service,
+                      //   style: getRegularStyle(
+                      //       color: ColorManager.grey, fontSize: FontSize.s16),
+                      // ),
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.i_agree_to,
+                            style: getRegularStyle(
+                                color: ColorManager.grey,
+                                fontSize: FontSize.s16),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(Routes.termsOfUseRoute);
+                            },
+                            child: Text.rich(
+                              //underline partially
+                              TextSpan(
+                                  style: TextStyle(
+                                      fontSize: FontSize.s16,
+                                      color: Colors.blue),
+                                  //global text style
+                                  children: [
+                                    TextSpan(
+                                        text: AppLocalizations.of(context)!
+                                            .terms_of,
+                                        style: TextStyle(
+                                            decoration: TextDecoration
+                                                .underline)), //partial text style
+                                  ]),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(
-                height: AppSize.s16,
-              ),
-              TabPageSelectorIndicator(
-                backgroundColor: ColorManager.primaryDark,
-                borderColor: ColorManager.primaryDark,
-                size: AppSize.s12,
-              ),
-              SizedBox(
-                height: AppSize.s22,
-              ),
-              GestureDetector(
-                // onTap: () => Navigator.pop(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Radio(
-                        activeColor: ColorManager.primary,
-                        value: 'Agree',
-                        onChanged: (n) {
-                          setState(() {
-                            Agree = !Agree;
-                            option1 = n!;
-                          });
-                          print('--------------------------------agree');
-                          print(Agree);
-                        },
-                        groupValue: option1),
-                    // Text(
-                    //   AppLocalizations.of(context)!
-                    //       .i_agree_to_the_terms_of_service,
-                    //   style: getRegularStyle(
-                    //       color: ColorManager.grey, fontSize: FontSize.s16),
-                    // ),
-                    Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.i_agree_to,
-                          style: getRegularStyle(
-                              color: ColorManager.grey,
-                              fontSize: FontSize.s16),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(Routes.termsOfUseRoute);
-                          },
-                          child: Text.rich(
-                            //underline partially
-                            TextSpan(
-                                style: TextStyle(
-                                    fontSize: FontSize.s16,
-                                    color: Colors.blue),
-                                //global text style
-                                children: [
-                                  TextSpan(
-                                      text: AppLocalizations.of(context)!
-                                          .terms_of,
-                                      style: TextStyle(
-                                          decoration: TextDecoration
-                                              .underline)), //partial text style
-                                ]),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

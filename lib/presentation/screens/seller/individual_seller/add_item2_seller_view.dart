@@ -4,9 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/ghaf_image.dart';
-import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/seller/controller/create_link_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,31 +31,34 @@ class AddItem2SellerView extends StatefulWidget {
 }
 
 class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
+  //controller
+  late final CreateLinkGetxController _createLinkGetxController =
+      Get.put(CreateLinkGetxController());
   List<GhafImage>? imageProduct;
 
   late TextEditingController _nameTextController;
-  late TextEditingController _emailTextController;
-  late TextEditingController _passwordTextController;
-  late TextEditingController _phoneTextController;
-  late TextEditingController _discTextController;
+  late TextEditingController _priceTextController;
+  late TextEditingController _descriptionsTextController;
+  late TextEditingController _characteristicsTextController;
+  late TextEditingController _productTypeTextController;
 
   @override
   void initState() {
     super.initState();
     _nameTextController = TextEditingController();
-    _emailTextController = TextEditingController();
-    _passwordTextController = TextEditingController();
-    _phoneTextController = TextEditingController();
-    _discTextController = TextEditingController();
+    _priceTextController = TextEditingController();
+    _descriptionsTextController = TextEditingController();
+    _characteristicsTextController = TextEditingController();
+    _productTypeTextController = TextEditingController();
   }
 
   @override
   void dispose() {
     _nameTextController.dispose();
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
-    _phoneTextController.dispose();
-    _discTextController.dispose();
+    _priceTextController.dispose();
+    _descriptionsTextController.dispose();
+    _characteristicsTextController.dispose();
+    _productTypeTextController.dispose();
     super.dispose();
   }
 
@@ -131,29 +135,14 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                     GestureDetector(
                       onTap: () {
                         showLoadingDialog(context: context, title: 'Loading');
-                        Provider.of<SellerProvider>(context, listen: false)
-                            .createIndividualProducts(
-                                _nameTextController.text,
-                                _passwordTextController.text,
-                                _phoneTextController.text,
-                                _discTextController.text,
-                                int.parse(_emailTextController.text),
-                                listImage,
-                                context)
-                            //     .then((value) => ScaffoldMessenger.of(context)
-                            //     .showSnackBar(SnackBar(
-                            //   content: Text(repo),
-                            //   backgroundColor: Colors.green,
-                            // )))
-                            .then((value) => Navigator.of(context).pop())
-                            .then((value) => Navigator.of(context)
-                                .pushNamed(Routes.addItemSellerRoute,
-                                    arguments: isShow2)
-                                .catchError((e) => ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(repo),
-                                      backgroundColor: Colors.red,
-                                    ))));
+                        _createLinkGetxController.createProduct(
+                            context: context,
+                            name: _nameTextController.text,
+                            description: _descriptionsTextController.text,
+                            productType: _productTypeTextController.text,
+                            price: num.parse(_priceTextController.text),
+                            isNotDetailed: false,
+                            images: listImage);
                       },
                       child: Text(
                         AppLocalizations.of(context)!.save,
@@ -168,72 +157,87 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
               SizedBox(
                 height: AppSize.s30,
               ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      pickImage1();
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(AppPadding.p10),
-                        decoration: BoxDecoration(
-                          color: ColorManager.white,
-                          borderRadius: BorderRadius.circular(AppRadius.r8),
-                        ),
-                        child:
-                            // base64 != null
-                            //     ? Image.memory(base64Decode(base64!))
-                            //     :
-                            Image.asset(
-                          ImageAssets.photoGallery,
-                          height: AppSize.s55,
-                          width: AppSize.s55,
-                        )),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.12,
-                    child: ListView.builder(
-                      itemCount: 3,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            padding: EdgeInsets.all(AppPadding.p10),
-                            decoration: BoxDecoration(
-                              color: ColorManager.white,
-                              borderRadius: BorderRadius.circular(AppRadius.r8),
-                            ),
-                            child: index < imageList.length
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                        color: ColorManager.greyLight,
-                                        borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                            image: MemoryImage(base64Decode(
-                                                imageList[index]!)),
-                                            fit: BoxFit.cover)),
-                                    height: AppSize.s55,
-                                    width: AppSize.s55,
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                        color: ColorManager.greyLight,
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    height: AppSize.s55,
-                                    width: AppSize.s55,
-                                  ));
+              Container(
+                color: Colors.black12,
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        pickImage1();
                       },
+                      child: Container(
+                          padding: EdgeInsets.all(AppPadding.p10),
+                          decoration: BoxDecoration(
+                            color: ColorManager.white,
+                            borderRadius: BorderRadius.circular(AppRadius.r8),
+                          ),
+                          child:
+                              // base64 != null
+                              //     ? Image.memory(base64Decode(base64!))
+                              //     :
+                              Image.asset(
+                            ImageAssets.photoGallery,
+                            height: AppSize.s55,
+                            width: AppSize.s55,
+                          )),
                     ),
-                  )
-                ],
+                    Container(
+                      // height: AppSize.s55,
+                      // width: AppSize.s55,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: ListView.builder(
+                        padding: EdgeInsets.all(12),
+                        itemCount: 3,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+
+                                // padding: EdgeInsets.all(AppPadding.p10),
+                                decoration: BoxDecoration(
+                                  color: ColorManager.greyLight,
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.r8),
+                                ),
+                                child: index < imageList.length
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            color: ColorManager.greyLight,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            image: DecorationImage(
+                                                image: MemoryImage(base64Decode(
+                                                    imageList[index])),
+                                                fit: BoxFit.cover)),
+                                        height: AppSize.s75,
+                                        width: AppSize.s75,
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.black26,
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        height: AppSize.s75,
+                                        width: AppSize.s75,
+                                      )),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
               SizedBox(
                 height: AppSize.s20,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                padding: const EdgeInsets.only(
+                    bottom: 17.0, right: 17.0, left: 17.0),
                 child: Text(AppLocalizations.of(context)!.name_of_product,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -245,7 +249,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                 hint: AppLocalizations.of(context)!.name_of_product,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                padding: const EdgeInsets.only(
+                    bottom: 17.0, right: 17.0, left: 17.0),
                 child: Text(AppLocalizations.of(context)!.price,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -253,11 +258,12 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                         fontSize: AppSize.s16)),
               ),
               AppTextField(
-                textController: _emailTextController,
+                textController: _priceTextController,
                 hint: AppLocalizations.of(context)!.price,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                padding: const EdgeInsets.only(
+                    bottom: 17.0, right: 17.0, left: 17.0),
                 child: Text(AppLocalizations.of(context)!.description,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -265,14 +271,15 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                         fontSize: AppSize.s16)),
               ),
               AppTextField(
-                textController: _passwordTextController,
+                textController: _descriptionsTextController,
                 hint: AppLocalizations.of(context)!.description,
               ),
               // SizedBox(
               //   height: AppSize.s16,
               // ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                padding: const EdgeInsets.only(
+                    bottom: 17.0, right: 17.0, left: 17.0),
                 child: Text(AppLocalizations.of(context)!.characteristics,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -280,14 +287,15 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                         fontSize: AppSize.s16)),
               ),
               AppTextField(
-                textController: _phoneTextController,
+                textController: _characteristicsTextController,
                 hint: AppLocalizations.of(context)!.characteristics,
               ),
               // SizedBox(
               //   height: AppSize.s16,
               // ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 17.0,right: 17.0,left: 17.0),
+                padding: const EdgeInsets.only(
+                    bottom: 17.0, right: 17.0, left: 17.0),
                 child: Text(AppLocalizations.of(context)!.productType,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -295,7 +303,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                         fontSize: AppSize.s16)),
               ),
               AppTextField(
-                textController: _discTextController,
+                textController: _productTypeTextController,
                 hint: AppLocalizations.of(context)!.productType,
               ),
               SizedBox(
@@ -316,9 +324,9 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
 
   bool _checkData() {
     if (_nameTextController.text.isNotEmpty &&
-        _emailTextController.text.isNotEmpty &&
-        _passwordTextController.text.isNotEmpty &&
-        _phoneTextController.text.isNotEmpty) {
+        _priceTextController.text.isNotEmpty &&
+        _descriptionsTextController.text.isNotEmpty &&
+        _characteristicsTextController.text.isNotEmpty) {
       return true;
     }
     showSnackBar(context,

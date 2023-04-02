@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
-import 'package:ghaf_application/data/api/controllers/seller/submit_form_api_controller.dart';
+import 'package:ghaf_application/data/api/controllers/seller/regular_seller_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,8 +41,8 @@ class SubmitFormViewGetXController extends GetxController with Helpers {
   });
 
   // vars.
-  late final SubmitFormApiController _submitFormApiController =
-      SubmitFormApiController();
+  late final RegularSellerApiController _submitFormApiController =
+      RegularSellerApiController();
   late final GlobalKey<FormState> formKey = GlobalKey();
   late final LatLng latLng = const LatLng(31.5180304, 34.430782);
   LatLng? selectedLatLng;

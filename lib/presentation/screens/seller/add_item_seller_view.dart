@@ -147,8 +147,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                     return Card(
                       // padding: EdgeInsets.all(AppSize.s6),
                       child: ListTile(
-                        leading: provider[index].ghafImageIndividual?[0]
-                                    ['data'] ==
+                        leading: provider[index].ghafImageIndividual?[0].data ==
                                 null
                             ? ClipRRect(
                                 borderRadius:
@@ -161,7 +160,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                               )
                             : ClipRRect(
                                 child: Image.network(provider[index]
-                                    .ghafImageIndividual![0]['data']!),
+                                    .ghafImageIndividual![0].data!),
                               ),
                         title: Text(
                           provider[index].name!,

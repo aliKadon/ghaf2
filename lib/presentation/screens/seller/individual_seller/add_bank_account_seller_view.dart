@@ -128,8 +128,7 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
                 child: ElevatedButton(
                   onPressed: () {
                     if(_checkData()) {
-                      print('================passs');
-                      print(widget.infoSubmit['info']['password']);
+                      showLoadingDialog(context: context,title: 'loading...');
                       _registerPaymentLinkSellerGetxController.submitForm(
                         context: context,
                         PostalCode: widget.infoSubmit['postal'],

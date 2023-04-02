@@ -48,6 +48,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
   bool Agree = false;
   bool monthly = true;
 
+
   @override
   Widget build(BuildContext context) {
     var sellerPlan = Provider.of<SellerProvider>(context).getSellerPlansData;

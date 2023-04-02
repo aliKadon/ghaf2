@@ -22,6 +22,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../account_view/account_view_getx_controller.dart';
+import '../../main_view.dart';
 
 class SubmitFormView extends StatefulWidget {
   late final Map<String, dynamic> locationData;
@@ -44,6 +45,11 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
   late Placemark place;
   String city = '';
   String country = '';
+  var agree = false;
+  var agree1 = false;
+  var option1 = '';
+  var option2 = '';
+
 
   // #############################################
   //get all information from latitude and longitude
@@ -144,429 +150,528 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _submitFormViewGetXController.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: AppSize.s9,
-                ),
-                Text(
-                  AppLocalizations.of(context)!.submit_form,
-                  style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark, fontSize: FontSize.s24),
-                ),
-                SizedBox(
-                  height: AppSize.s31,
-                ),
-                Image.asset(
-                  ImageAssets.logo2,
-                  fit: BoxFit.fill,
-                  height: AppSize.s92,
-                  width: AppSize.s92,
-                ),
-                SizedBox(
-                  height: AppSize.s32,
-                ),
-                AppTextField(
-                  hint: AppLocalizations.of(context)!.store_name,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!
-                          .store_name_is_required;
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _submitFormViewGetXController.storeName = value!;
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppPadding.p16,
+    return WillPopScope(
+      onWillPop: () async {
+        await SharedPrefController().logout();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => MainView(),
+        ));
+        return false;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _submitFormViewGetXController.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: AppSize.s9,
                   ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    textAlign: TextAlign.start,
-                    style: getMediumStyle(
-                      color: ColorManager.black,
-                      fontSize: FontSize.s14,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.phone_number,
-                      hintStyle: getMediumStyle(
-                        color: ColorManager.hintTextFiled,
-                      ),
-                      filled: false,
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: AppPadding.p18, horizontal: AppPadding.p4),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r10),
-                        borderSide: BorderSide(
-                          width: AppSize.s1,
-                          color: ColorManager.grey,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r10),
-                        borderSide: BorderSide(
-                          width: AppSize.s1,
-                          color: ColorManager.grey,
-                        ),
-                      ),
-                      prefixIcon: IntrinsicHeight(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              width: AppSize.s15,
-                            ),
-                            Image.asset(
-                              ImageAssets.uaeFlag,
-                              fit: BoxFit.fill,
-                              height: AppSize.s34,
-                              width: AppSize.s34,
-                            ),
-                            SizedBox(
-                              width: AppSize.s15,
-                            ),
-                            Container(
-                              height: double.infinity,
-                              width: AppSize.s1,
-                              color: ColorManager.grey,
-                            ),
-                            SizedBox(
-                              width: AppSize.s15,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  Text(
+                    AppLocalizations.of(context)!.submit_form,
+                    style: getSemiBoldStyle(
+                        color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                  ),
+                  SizedBox(
+                    height: AppSize.s31,
+                  ),
+                  Image.asset(
+                    ImageAssets.logo2,
+                    fit: BoxFit.fill,
+                    height: AppSize.s92,
+                    width: AppSize.s92,
+                  ),
+                  SizedBox(
+                    height: AppSize.s32,
+                  ),
+                  AppTextField(
+                    hint: AppLocalizations.of(context)!.store_name,
                     validator: (value) {
                       if (value == null || value.isEmpty)
                         return AppLocalizations.of(context)!
-                            .phone_number_is_required;
+                            .store_name_is_required;
                       return null;
                     },
                     onSaved: (value) {
-                      _submitFormViewGetXController.phoneNumber = value!;
+                      _submitFormViewGetXController.storeName = value!;
                     },
                   ),
-                ),
-                SizedBox(
-                  height: AppSize.s16,
-                ),
-                AppTextField(
-                  hint: AppLocalizations.of(context)!.website,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!.website_is_required;
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _submitFormViewGetXController.website = value!;
-                  },
-                ),
-                AppTextField(
-                  hint: AppLocalizations.of(context)!.social_media_account,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!
-                          .social_media_is_required;
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _submitFormViewGetXController.socialMediaAccount = value!;
-                  },
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      bottom: AppMargin.m16,
-                      right: AppMargin.m16,
-                      left: AppMargin.m16),
-                  child: DropdownButtonFormField<bool>(
-                    items: [
-                      AppLocalizations.of(context)!.yes,
-                      AppLocalizations.of(context)!.no
-                    ]
-                        .map(
-                          (e) => DropdownMenuItem<bool>(
-                            child: Text(
-                              e.toString(),
-                              style: getMediumStyle(
-                                color: ColorManager.hintTextFiled,
-                              ),
-                            ),
-                            value: e == AppLocalizations.of(context)!.yes,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppPadding.p16,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      textAlign: TextAlign.start,
+                      style: getMediumStyle(
+                        color: ColorManager.black,
+                        fontSize: FontSize.s14,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.phone_number,
+                        hintStyle: getMediumStyle(
+                          color: ColorManager.hintTextFiled,
+                        ),
+                        filled: false,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: AppPadding.p18, horizontal: AppPadding.p4),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r10),
+                          borderSide: BorderSide(
+                            width: AppSize.s1,
+                            color: ColorManager.grey,
                           ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      _submitFormViewGetXController.isInUAE = value!;
-                    },
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!
-                          .is_company_registered_in_uae,
-                      hintStyle: getMediumStyle(
-                        color: ColorManager.hintTextFiled,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p16, vertical: AppPadding.p16),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r8),
-                        borderSide: BorderSide(
-                          width: AppSize.s1,
-                          color: ColorManager.grey,
                         ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r8),
-                        borderSide: BorderSide(
-                          width: AppSize.s1,
-                          color: ColorManager.grey,
-                        ),
-                      ),
-                    ),
-                    icon: Icon(Icons.keyboard_arrow_down),
-                    validator: (value) {
-                      if (value == null)
-                        return AppLocalizations.of(context)!.field_required;
-                      return null;
-                    },
-                  ),
-                ),
-                AppTextField(
-                  hint: AppLocalizations.of(context)!.business_license_number,
-                  textInputType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!
-                          .busniss_number_required;
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _submitFormViewGetXController.businessLicenceNumber =
-                        value!;
-                  },
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      bottom: AppMargin.m16,
-                      right: AppMargin.m16,
-                      left: AppMargin.m16),
-                  child: DropdownButtonFormField<int>(
-                    items: [1, 2, 3, 4, 5]
-                        .map(
-                          (e) => DropdownMenuItem<int>(
-                            child: Text(
-                              e.toString(),
-                              style: getMediumStyle(
-                                color: ColorManager.hintTextFiled,
-                              ),
-                            ),
-                            value: e,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r10),
+                          borderSide: BorderSide(
+                            width: AppSize.s1,
+                            color: ColorManager.grey,
                           ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      _submitFormViewGetXController.numberOfBranches = value!;
-                    },
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.number_branch,
-                      hintStyle: getMediumStyle(
-                        color: ColorManager.hintTextFiled,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p16, vertical: AppPadding.p16),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r8),
-                        borderSide: BorderSide(
-                          width: AppSize.s1,
-                          color: ColorManager.grey,
                         ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r8),
-                        borderSide: BorderSide(
-                          width: AppSize.s1,
-                          color: ColorManager.grey,
-                        ),
-                      ),
-                    ),
-                    icon: Icon(Icons.keyboard_arrow_down),
-                    validator: (value) {
-                      if (value == null)
-                        return AppLocalizations.of(context)!.number_of_branches;
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Text(
-                    AppLocalizations.of(context)!.branch_can_added,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
-                GetBuilder<SubmitFormViewGetXController>(
-                  id: 'licencePDFFile',
-                  builder: (controller) => Column(
-                    children: [
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: AppTextField(
-                                onTap:
-                                    _submitFormViewGetXController.pickPdfFile,
-                                hint: AppLocalizations.of(context)!.upload_pdf,
+                        prefixIcon: IntrinsicHeight(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: AppSize.s15,
                               ),
-                            ),
-                            InkWell(
-                              onTap: _submitFormViewGetXController.pickPdfFile,
-                              child: Container(
+                              Image.asset(
+                                ImageAssets.uaeFlag,
+                                fit: BoxFit.fill,
+                                height: AppSize.s34,
+                                width: AppSize.s34,
+                              ),
+                              SizedBox(
+                                width: AppSize.s15,
+                              ),
+                              Container(
                                 height: double.infinity,
-                                width: 50.w,
-                                margin: EdgeInsets.only(
-                                  bottom: AppMargin.m16,
-                                  right: AppMargin.m16,
+                                width: AppSize.s1,
+                                color: ColorManager.grey,
+                              ),
+                              SizedBox(
+                                width: AppSize.s15,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty)
+                          return AppLocalizations.of(context)!
+                              .phone_number_is_required;
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _submitFormViewGetXController.phoneNumber = value!;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s16,
+                  ),
+                  AppTextField(
+                    hint: AppLocalizations.of(context)!.website,
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations.of(context)!.website_is_required;
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _submitFormViewGetXController.website = value!;
+                    },
+                  ),
+                  AppTextField(
+                    hint: AppLocalizations.of(context)!.social_media_account,
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations.of(context)!
+                            .social_media_is_required;
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _submitFormViewGetXController.socialMediaAccount = value!;
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: AppMargin.m16,
+                        right: AppMargin.m16,
+                        left: AppMargin.m16),
+                    child: DropdownButtonFormField<bool>(
+                      items: [
+                        AppLocalizations.of(context)!.yes,
+                        AppLocalizations.of(context)!.no
+                      ]
+                          .map(
+                            (e) => DropdownMenuItem<bool>(
+                              child: Text(
+                                e.toString(),
+                                style: getMediumStyle(
+                                  color: ColorManager.hintTextFiled,
                                 ),
-                                padding: EdgeInsets.all(8.h),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  border: Border.all(
-                                    color: ColorManager.grey,
+                              ),
+                              value: e == AppLocalizations.of(context)!.yes,
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        _submitFormViewGetXController.isInUAE = value!;
+                      },
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!
+                            .is_company_registered_in_uae,
+                        hintStyle: getMediumStyle(
+                          color: ColorManager.hintTextFiled,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: AppPadding.p16, vertical: AppPadding.p16),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                          borderSide: BorderSide(
+                            width: AppSize.s1,
+                            color: ColorManager.grey,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                          borderSide: BorderSide(
+                            width: AppSize.s1,
+                            color: ColorManager.grey,
+                          ),
+                        ),
+                      ),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      validator: (value) {
+                        if (value == null)
+                          return AppLocalizations.of(context)!.field_required;
+                        return null;
+                      },
+                    ),
+                  ),
+                  AppTextField(
+                    hint: AppLocalizations.of(context)!.business_license_number,
+                    textInputType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations.of(context)!
+                            .busniss_number_required;
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _submitFormViewGetXController.businessLicenceNumber =
+                          value!;
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: AppMargin.m16,
+                        right: AppMargin.m16,
+                        left: AppMargin.m16),
+                    child: DropdownButtonFormField<int>(
+                      items: [1, 2, 3, 4, 5]
+                          .map(
+                            (e) => DropdownMenuItem<int>(
+                              child: Text(
+                                e.toString(),
+                                style: getMediumStyle(
+                                  color: ColorManager.hintTextFiled,
+                                ),
+                              ),
+                              value: e,
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        _submitFormViewGetXController.numberOfBranches = value!;
+                      },
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.number_branch,
+                        hintStyle: getMediumStyle(
+                          color: ColorManager.hintTextFiled,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: AppPadding.p16, vertical: AppPadding.p16),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                          borderSide: BorderSide(
+                            width: AppSize.s1,
+                            color: ColorManager.grey,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r8),
+                          borderSide: BorderSide(
+                            width: AppSize.s1,
+                            color: ColorManager.grey,
+                          ),
+                        ),
+                      ),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      validator: (value) {
+                        if (value == null)
+                          return AppLocalizations.of(context)!.number_of_branches;
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Text(
+                      AppLocalizations.of(context)!.branch_can_added,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  GetBuilder<SubmitFormViewGetXController>(
+                    id: 'licencePDFFile',
+                    builder: (controller) => Column(
+                      children: [
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: AppTextField(
+                                  onTap:
+                                      _submitFormViewGetXController.pickPdfFile,
+                                  hint: AppLocalizations.of(context)!.upload_pdf,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: _submitFormViewGetXController.pickPdfFile,
+                                child: Container(
+                                  height: double.infinity,
+                                  width: 50.w,
+                                  margin: EdgeInsets.only(
+                                    bottom: AppMargin.m16,
+                                    right: AppMargin.m16,
+                                  ),
+                                  padding: EdgeInsets.all(8.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    border: Border.all(
+                                      color: ColorManager.grey,
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Icons.drive_folder_upload,
                                   ),
                                 ),
-                                child: Icon(
-                                  Icons.drive_folder_upload,
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (controller.licencePDFFile != null) ...[
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 16.w,
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.pdf_attach_success,
+                                style: TextStyle(
+                                  color: Colors.green,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  AppTextField(
+                    hint: AppLocalizations.of(context)!.shop_address,
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations.of(context)!
+                            .shop_address_is_required;
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _submitFormViewGetXController.addressName = value!;
+                    },
+                  ),
+                  Container(
+                    height: 200.h,
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                          SharedPrefController().locationLat,
+                          SharedPrefController().locationLong,
                         ),
+                        zoom: 13,
                       ),
-                      if (controller.licencePDFFile != null) ...[
+                      gestureRecognizers: {
+                        Factory<PanGestureRecognizer>(
+                            () => PanGestureRecognizer()),
+                        Factory<ScaleGestureRecognizer>(
+                            () => ScaleGestureRecognizer()),
+                        Factory<TapGestureRecognizer>(
+                            () => TapGestureRecognizer()),
+                        Factory<VerticalDragGestureRecognizer>(
+                            () => VerticalDragGestureRecognizer())
+                      },
+                      markers: {
+                        Marker(
+                            visible: true,
+                            markerId: MarkerId('source'),
+                            flat: true,
+                            position:
+                                _submitFormViewGetXController.selectedLatLng ??
+                                    LatLng(SharedPrefController().locationLat,
+                                        SharedPrefController().locationLong))
+                      },
+                      onTap: (latLng) {
+                        setState(() {
+                          print(
+                              '================================================latLng');
+                          print(latLng);
+                          _submitFormViewGetXController.selectedLatLng = latLng;
+                          GetAddressFromLatLong(latLng);
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  GestureDetector(
+                    // onTap: () => Navigator.pop(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Radio(
+                            activeColor: ColorManager.primary,
+                            value: 'Agree',
+                            onChanged: (n) {
+                              setState(() {
+                                agree = !agree;
+                                option1 = n!;
+                              });
+                              print('--------------------------------agree');
+                              print(agree);
+                            },
+                            groupValue: option1),
+                        // Text(
+                        //   AppLocalizations.of(context)!
+                        //       .i_agree_to_the_terms_of_service,
+                        //   style: getRegularStyle(
+                        //       color: ColorManager.grey, fontSize: FontSize.s16),
+                        // ),
                         Row(
                           children: [
-                            SizedBox(
-                              width: 16.w,
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.pdf_attach_success,
-                              style: TextStyle(
-                                color: Colors.green,
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              child: Text(
+                                AppLocalizations.of(context)!.text1_submit_form_seller,
+                                overflow: TextOverflow.clip,
+                                style: getRegularStyle(
+                                    color: ColorManager.grey,
+                                    fontSize: FontSize.s12),
                               ),
                             ),
+
                           ],
                         ),
                       ],
-                    ],
-                  ),
-                ),
-                AppTextField(
-                  hint: AppLocalizations.of(context)!.shop_address,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return AppLocalizations.of(context)!
-                          .shop_address_is_required;
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _submitFormViewGetXController.addressName = value!;
-                  },
-                ),
-                Container(
-                  height: 200.h,
-                  margin: EdgeInsets.symmetric(horizontal: 16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                        SharedPrefController().locationLat,
-                        SharedPrefController().locationLong,
-                      ),
-                      zoom: 13,
-                    ),
-                    gestureRecognizers: {
-                      Factory<PanGestureRecognizer>(
-                          () => PanGestureRecognizer()),
-                      Factory<ScaleGestureRecognizer>(
-                          () => ScaleGestureRecognizer()),
-                      Factory<TapGestureRecognizer>(
-                          () => TapGestureRecognizer()),
-                      Factory<VerticalDragGestureRecognizer>(
-                          () => VerticalDragGestureRecognizer())
-                    },
-                    markers: {
-                      Marker(
-                          visible: true,
-                          markerId: MarkerId('source'),
-                          flat: true,
-                          position:
-                              _submitFormViewGetXController.selectedLatLng ??
-                                  LatLng(SharedPrefController().locationLat,
-                                      SharedPrefController().locationLong))
-                    },
-                    onTap: (latLng) {
-                      setState(() {
-                        print(
-                            '================================================latLng');
-                        print(latLng);
-                        _submitFormViewGetXController.selectedLatLng = latLng;
-                        GetAddressFromLatLong(latLng);
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: AppMargin.m16,
-                  ),
-                  width: double.infinity,
-                  height: AppSize.s55,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _submitFormViewGetXController.submitForm(
-                          city: city, country: country);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.submit_form,
-                      style: getSemiBoldStyle(
-                          color: ColorManager.white, fontSize: FontSize.s18),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: AppSize.s16,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 110,
+                  SizedBox(height: AppSize.s18,),
+                  GestureDetector(
+                    // onTap: () => Navigator.pop(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Radio(
+                            activeColor: ColorManager.primary,
+                            value: 'Agree1',
+                            onChanged: (n) {
+                              setState(() {
+                                agree1 = !agree1;
+                                option2 = n!;
+                              });
+                              print('--------------------------------agree');
+                              print(agree1);
+                            },
+                            groupValue: option2),
+                        // Text(
+                        //   AppLocalizations.of(context)!
+                        //       .i_agree_to_the_terms_of_service,
+                        //   style: getRegularStyle(
+                        //       color: ColorManager.grey, fontSize: FontSize.s16),
+                        // ),
+                        Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              child: Text(
+                                AppLocalizations.of(context)!.text2_submit_form_seller,
+                                overflow: TextOverflow.clip,
+                                style: getRegularStyle(
+                                    color: ColorManager.grey,
+                                    fontSize: FontSize.s12),
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  child: ElevatedButton(
+                  SizedBox(height: AppSize.s18,),
+
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: AppMargin.m16,
+                    ),
+                    width: double.infinity,
+                    height: AppSize.s55,
+                    child: ElevatedButton(
                       onPressed: () {
-                        _customDialogSubscriptionExit(context);
+                        if(agree && agree1) {
+                          _submitFormViewGetXController.submitForm(
+                              city: city, country: country);
+                        }else {
+
+                        }
+
                       },
-                      child: Text(AppLocalizations.of(context)!.cancel)),
-                ),
-              ],
+                      child: Text(
+                        AppLocalizations.of(context)!.next,
+                        style: getSemiBoldStyle(
+                            color: ColorManager.white, fontSize: FontSize.s18),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s16,
+                  ),
+                  // Container(
+                  //   margin: EdgeInsets.symmetric(
+                  //     horizontal: 110,
+                  //   ),
+                  //   child: ElevatedButton(
+                  //       onPressed: () {
+                  //         _customDialogSubscriptionExit(context);
+                  //       },
+                  //       child: Text(AppLocalizations.of(context)!.cancel)),
+                  // ),
+                ],
+              ),
             ),
           ),
         ),

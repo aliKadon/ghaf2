@@ -76,12 +76,13 @@ class _HomeViewState extends State<HomeView> with Helpers {
   // init state.
   @override
   void initState() {
+    _profileSettingGetxController.init(context: context);
     _homeViewGetXController.init(context: context);
 
     Get.put(Product());
     Get.put(LoginViewGetXController(context: context));
     if (AppSharedData.currentUser != null) {
-      _profileSettingGetxController.getUserDetails(context);
+      // _profileSettingGetxController.getUserDetails(context);
       _checkOutGetxController.getCustomerOrder(context: context);
     }
 
