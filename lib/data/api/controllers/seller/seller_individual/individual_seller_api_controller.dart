@@ -40,28 +40,19 @@ class IndividualSellerApiController with ApiHelper {
     return failedResponse;
   }
 
-  Future<String> createLink(
-      {required String productId, required num amount}) async {
+  Future<String> createLink({required List<dynamic> ItemForLinks}) async {
     var data = {
-      'prodId':'740eedd8-5efa-42c5-ac86-08db31bb5948',
-      'Quantity' : 3,
+      'prodId': '740eedd8-5efa-42c5-ac86-08db31bb5948',
+      'Quantity': 3,
     };
     List<dynamic> list = [];
     list.add(data);
-    var url = Uri.parse(
-        '${Constants.baseUrl}/product/create-paymnet-link');
-    var response = await http.post(url, headers: headers,body: jsonEncode(
-      [
-        {
-          'prodId':'740eedd8-5efa-42c5-ac86-08db31bb5948',
-          'Quantity' : 3,
-        },
-        {
-          'prodId':'ee63e94b-433c-4511-ac87-08db31bb5948',
-          'Quantity' : 3,
-        }
-      ]
-    ));
+    var url = Uri.parse('${Constants.baseUrl}/product/create-paymnet-link');
+    var response = await http.post(url,
+        headers: headers,
+        body: jsonEncode({
+          'ItemForLinks': ItemForLinks,
+        }));
     print('=========================create link');
     print(response.statusCode);
     print(response.body);

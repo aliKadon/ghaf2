@@ -170,15 +170,19 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                       width: MediaQuery.of(context).size.width *
                                           0.03,
                                     ),
-                                    Text(
-                                        '${AppSharedData.currentUser?.customerPoints ?? 0} ${AppLocalizations.of(context)!.point}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15)),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.03,
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.2,
+                                      child: Text(
+                                          '${AppSharedData.currentUser?.customerPoints ?? 0} ${AppLocalizations.of(context)!.point}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15)),
                                     ),
+                                    // SizedBox(
+                                    //   width: MediaQuery.of(context).size.width *
+                                    //       0.03,
+                                    // ),
                                     InkWell(
                                       onTap: () {
                                         Navigator.pushNamed(

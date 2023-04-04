@@ -41,7 +41,7 @@ class OffersScreenGetXController extends GetxController with Helpers {
     // isOffersLoading = false;
     try {
       offers = await _storeApiController.getOffers(cid: cid,bid: bid,sid: sid);
-      await _storeApiController.getProducts();
+      // await _storeApiController.getProducts();
       isOffersLoading = false;
       update();
     } catch (error) {

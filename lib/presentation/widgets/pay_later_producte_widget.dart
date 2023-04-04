@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_product_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
-import '../resources/values_manager.dart';
 
-class PayLaterProductWidget extends StatelessWidget {
+class PayLaterProductWidget extends StatefulWidget {
+  final String name;
+  final num price;
+  final num stars;
+  final int index;
+  final String imageUrl;
+
+  PayLaterProductWidget(
+      {required this.price,
+      required this.name,
+      required this.index,
+      required this.stars,
+      required this.imageUrl});
+
+  @override
+  State<PayLaterProductWidget> createState() => _PayLaterProductWidgetState();
+}
+
+class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PayLaterProductView(),
+          builder: (context) => PayLaterProductView(index: widget.index),
         ));
       },
       child: Padding(
@@ -25,7 +43,7 @@ class PayLaterProductWidget extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      Container(
+                      widget.imageUrl == '' ? Container(
                         height: MediaQuery.of(context).size.height * 0.29,
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
@@ -35,20 +53,30 @@ class PayLaterProductWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
+                      ) : Container(
+                        height: MediaQuery.of(context).size.height * 0.29,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.imageUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.black54),
-                            padding: EdgeInsets.all(8),
-                            child: Image.asset(
-                              IconsAssets.heart,
-                              height: AppSize.s24,
-                              width: AppSize.s24,
-                            )),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Container(
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(100),
+                      //           color: Colors.black54),
+                      //       padding: EdgeInsets.all(8),
+                      //       child: Image.asset(
+                      //         IconsAssets.heart,
+                      //         height: AppSize.s24,
+                      //         width: AppSize.s24,
+                      //       )),
+                      // ),
                     ],
                   ),
                   SizedBox(
@@ -56,14 +84,14 @@ class PayLaterProductWidget extends StatelessWidget {
                   )
                 ],
               ),
-              Text('Pizza',
+              Text(widget.name,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
                 children: [
-                  Text('22.5 AED',
+                  Text('${widget.price} ${AppLocalizations.of(context)!.aed}',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -78,7 +106,7 @@ class PayLaterProductWidget extends StatelessWidget {
                   SizedBox(
                     width: 8,
                   ),
-                  Text('4.0',
+                  Text('${widget.stars}.0',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

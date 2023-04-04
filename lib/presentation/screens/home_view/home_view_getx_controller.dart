@@ -25,6 +25,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   String address = '';
   var city = 'address'.obs;
   var isLoadingPopular = true;
+  var isFave = false;
 
   // #############################################
   //get all information from latitude and longitude
@@ -237,14 +238,16 @@ class HomeViewGetXController extends GetxController with Helpers {
     num? minPrice,
     num? maxPrice,
     String? filterBy,
+    String? stars,
     bool notifyLoading = true,
   }) async {
     // if (notifyLoading) isProductsLoading = true;
-    products = await _storeApiController.getProducts(
+    products = await _storeApiController.getFilterProducts(
       search: search,
       maxPrice: maxPrice,
       minPrice: minPrice,
       filterBy: filterBy,
+      stars: stars,
       // filterBy: ModalRoute.of(context)?.settings.arguments as String,
     );
     isFilterProductLoading = false;

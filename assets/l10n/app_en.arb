@@ -39,6 +39,8 @@
   "generate_payment_link" : "Generate payment link",
   "generate_detailed_payment_link" : "Generate detailed payment link",
 
+  "your_order_is_under_progress" : "Your order is under process",
+
   "items_list" : "Items list",
   "please_select_item_to_create_payment_link" : "please select an item to create link ",
   "add_an_item" : "Add an item",

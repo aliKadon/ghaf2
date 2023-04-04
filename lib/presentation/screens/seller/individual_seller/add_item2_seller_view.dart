@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/ghaf_image.dart';
 import 'package:ghaf_application/presentation/screens/seller/controller/create_link_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -117,7 +118,11 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
+                      onTap: () => Navigator.of(context)
+                          .pushReplacement(MaterialPageRoute(
+                        builder: (context) =>
+                            ProductsWithOutDetailsSellerView(),
+                      )),
                       child: Text(
                         AppLocalizations.of(context)!.cancel,
                         style: getMediumStyle(

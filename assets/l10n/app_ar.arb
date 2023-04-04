@@ -51,6 +51,10 @@
   "your_subscription_has_been_completed" : "تم الانتهاء من اشتراكك",
   "subscribe_to_get_seller_services" : "اشترك للحصول على خدمات البائع",
 
+
+  "your_order_is_under_progress" : "طلبك قيد الإعداد",
+
+
   "items_list" : "قائمة العناصر",
   "please_select_item_to_create_payment_link" : "يرجى اختيار عنصر لإنشاء رابط",
   "add_an_item" : "إضافة عنصر",

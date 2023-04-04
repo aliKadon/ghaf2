@@ -12,6 +12,7 @@ import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
+import 'add_item2_seller_view.dart';
 
 class ItemsList extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class ItemsList extends StatefulWidget {
 class _ItemsListState extends State<ItemsList> {
   //controller
   late final CreateLinkGetxController _createLinkGetxController =
-      Get.find<CreateLinkGetxController>();
+  Get.find<CreateLinkGetxController>();
 
   @override
   void initState() {
@@ -45,10 +46,10 @@ class _ItemsListState extends State<ItemsList> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _createLinkGetxController.productId = [];
-                    _createLinkGetxController.productCount = [];
-                    print('==================productId');
-                    print(_createLinkGetxController.productId);
+                    // _createLinkGetxController.productId = [];
+                    // _createLinkGetxController.productCount = [];
+                    // print('==================productId');
+                    // print(_createLinkGetxController.productId);
                     print('==================productCount');
                     print(_createLinkGetxController.productCount);
                     Navigator.pop(context);
@@ -79,30 +80,34 @@ class _ItemsListState extends State<ItemsList> {
             height: AppSize.s12,
           ),
           GetBuilder<CreateLinkGetxController>(
-            builder: (controller) => Container(
-              height: MediaQuery.of(context).size.height * 0.75,
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: controller.individualProducts.length,
-                itemBuilder: (context, index) {
-                  return ItemWidgetForIndividualSeller(
-                    index: index,
-                    isoCurrencySymbol: controller
-                        .individualProducts[index].isoCurrencySymbol!,
-                    price: controller.individualProducts[index].price!,
-                    name: controller.individualProducts[index].name!,
-                    idProduct: controller.individualProducts[index].id!,
-                    image: controller.individualProducts[index]
-                                .ghafImageIndividual ==
+            builder: (controller) =>
+                Container(
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.75,
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: controller.individualProducts.length,
+                    itemBuilder: (context, index) {
+                      return ItemWidgetForIndividualSeller(
+                        index: index,
+                        isoCurrencySymbol: controller
+                            .individualProducts[index].isoCurrencySymbol!,
+                        price: controller.individualProducts[index].price!,
+                        name: controller.individualProducts[index].name!,
+                        idProduct: controller.individualProducts[index].id!,
+                        image: controller.individualProducts[index]
+                            .ghafImageIndividual ==
                             null
-                        ? ''
-                        : controller.individualProducts[index]
+                            ? ''
+                            : controller.individualProducts[index]
                             .ghafImageIndividual![0].data!,
-                  );
-                },
-              ),
-            ),
+                      );
+                    },
+                  ),
+                ),
           ),
           SizedBox(height: AppSize.s16),
           Row(
@@ -113,14 +118,17 @@ class _ItemsListState extends State<ItemsList> {
                 child: ElevatedButton(
                     style: ButtonStyle(
                         shape:
-                            MaterialStatePropertyAll(RoundedRectangleBorder(
-                                side: BorderSide(
-                                  color: ColorManager.primaryDark,
-                                ),
-                                borderRadius: BorderRadius.circular(12))),
+                        MaterialStatePropertyAll(RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: ColorManager.primaryDark,
+                            ),
+                            borderRadius: BorderRadius.circular(12))),
                         backgroundColor:
-                            MaterialStatePropertyAll(Colors.white)),
-                    onPressed: () {},
+                        MaterialStatePropertyAll(Colors.white)),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => AddItem2SellerView(true),));
+                    },
                     child: Text(
                       AppLocalizations.of(context)!.add_item,
                       style: TextStyle(color: ColorManager.primaryDark),
@@ -134,13 +142,8 @@ class _ItemsListState extends State<ItemsList> {
                       _createLinkGetxController.createLink(
                           withDetails: true,
                           context: context,
-                          productId: '',
-                          amount: 0);
-                      // _createLinkGetxController.createLink(
-                      //     withDetails: true,
-                      //     context: context,
-                      //     productId: _createLinkGetxController.productId[0],
-                      //     amount: _createLinkGetxController.productCount[0]);
+                          ItemForLinks: _createLinkGetxController
+                              .itemForLinkList);
                     },
                     child: Text(
                       AppLocalizations.of(context)!.confirm,

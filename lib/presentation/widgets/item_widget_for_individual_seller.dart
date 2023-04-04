@@ -40,6 +40,11 @@ class _ItemWidgetForIndividualSellerState
   num count = 1;
   bool isChecked = false;
 
+  Map<String,dynamic> itemForLink = {
+    'prodId': '',
+    'Quantity' : 1,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -94,13 +99,16 @@ class _ItemWidgetForIndividualSellerState
                           isChecked = !isChecked;
                         });
                         if(isChecked) {
+                          itemForLink.update('prodId', (value) => widget.idProduct);
+                          itemForLink.update('Quantity', (value) => count);
 
-                          _createLinkGetxController.productId.add(widget.idProduct);
+
+                          _createLinkGetxController.itemForLinkList.add(itemForLink);
                         }else {
-                          _createLinkGetxController.productId.remove(widget.idProduct);
+                          _createLinkGetxController.itemForLinkList.remove(itemForLink);
                         }
                         print('==================productId');
-                        print(_createLinkGetxController.productId);
+                        print(_createLinkGetxController.itemForLinkList);
                       },
                     ),
                     SizedBox(height: 20),
@@ -128,9 +136,11 @@ class _ItemWidgetForIndividualSellerState
 
                             // count = widget.productCount;
                           });
+
+                          itemForLink.update('Quantity', (value) => count);
+                          // _createLinkGetxController.productCount.add(count);
                           print('==================productCount');
-                          print(_createLinkGetxController.productCount);
-                          _createLinkGetxController.productCount.add(count);
+                          print(_createLinkGetxController.itemForLinkList);
                         },
                         child: Icon(
                           Icons.add_circle_outline,
@@ -143,7 +153,10 @@ class _ItemWidgetForIndividualSellerState
                             selected = widget.index;
                             count--;
                             print(count);
-                            _createLinkGetxController.productCount.add(count);
+                            itemForLink.update('Quantity', (value) => count);
+                            // _createLinkGetxController.productCount.add(count);
+                            print('==================productCount');
+                            print(_createLinkGetxController.itemForLinkList);
                             // count = widget.productCount;
                           });
                           if (count == 0) {}

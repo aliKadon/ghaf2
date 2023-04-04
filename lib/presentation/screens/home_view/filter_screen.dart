@@ -17,12 +17,14 @@ class FilterScreen extends StatefulWidget {
   num? maxPrice;
   num? minPrice;
   String search = '';
+  String? stars;
 
   FilterScreen(
       {this.sid,
       required this.search,
       this.filterBy,
       this.maxPrice,
+        this.stars,
       this.minPrice});
 
   @override
@@ -44,6 +46,7 @@ class _FilterScreenState extends State<FilterScreen> {
       maxPrice: widget.maxPrice,
       minPrice: widget.minPrice,
       search: widget.search,
+      stars:widget.stars,
     );
     super.initState();
   }

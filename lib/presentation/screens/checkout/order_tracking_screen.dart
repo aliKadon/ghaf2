@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
-import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';

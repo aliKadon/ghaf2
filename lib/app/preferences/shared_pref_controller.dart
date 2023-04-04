@@ -28,6 +28,7 @@ enum PrefKeys {
   enableNotification,
   firstStoreName,
   city,
+  indexOfPayLaterProduct,
 }
 
 class SharedPrefController {
@@ -106,6 +107,9 @@ class SharedPrefController {
   String get firstStoreName =>
       _sharedPreferences.getString(PrefKeys.firstStoreName.toString()) ?? '';
 
+  int get indexOfPayLaterProduct =>
+      _sharedPreferences.getInt(PrefKeys.indexOfPayLaterProduct.name) ?? 0;
+
   String get city =>
       _sharedPreferences.getString(PrefKeys.city.name) ?? '';
 
@@ -132,6 +136,11 @@ class SharedPrefController {
 
   Future<void> setUserName(String userName) async {
     await _sharedPreferences.setString(PrefKeys.userName.name, '${userName}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
+  Future<void> setIndexOfPayLaterProduct(int indexOfPayLaterProduct) async {
+    await _sharedPreferences.setInt(PrefKeys.indexOfPayLaterProduct.name, indexOfPayLaterProduct);
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 

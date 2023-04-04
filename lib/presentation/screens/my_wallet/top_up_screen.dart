@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/edit_payment_method_screen.dart';
@@ -93,7 +94,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                 onTap: () {
                                   Navigator.of(context)
                                       .pushReplacement(MaterialPageRoute(
-                                    builder: (context) => PayLaterProductView(),
+                                    builder: (context) => PayLaterProductView(
+                                        index: SharedPrefController()
+                                            .indexOfPayLaterProduct),
                                   ));
                                 },
                                 child: Image.asset(
@@ -219,8 +222,12 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                   if (widget.screenName == 'payLater') {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          PayLaterProductView(),
+                                      builder: (context) => PayLaterProductView(
+                                          index: SharedPrefController()
+                                              .indexOfPayLaterProduct,
+                                          cardNumber: _checkOutGetxController
+                                              .paymentMethod[index]
+                                              .last4Digits),
                                     ));
                                   } else {
                                     Navigator.of(context)

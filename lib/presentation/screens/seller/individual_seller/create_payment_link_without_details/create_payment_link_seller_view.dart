@@ -132,7 +132,7 @@ class _CreatePaymentLinkSellerViewState
                 ],
               ),
               AppTextField(
-                textController: _amountTextController,
+                textController: _createLinkWithoutDetailsGetxController.amountTextController,
                 // hint: AppLocalizations.of(context)!.link_expiration_date,
                 hint: AppLocalizations.of(context)!.amount,
                 textInputType: TextInputType.phone,
@@ -158,8 +158,8 @@ class _CreatePaymentLinkSellerViewState
 
                     _createLinkWithoutDetailsGetxController.createProduct(
                         context: context,
-                        isNotDetailed: true,
-                        amount: num.parse(_amountTextController.text),
+                        isNotDetailed: false,
+                        // itemForLink: num.parse(_amountTextController.text),
                         name: _nameTextController.text,
                         description: _descriptionTextController.text,
                         characteristics: '',

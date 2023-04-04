@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.dart';
+import 'package:ghaf_application/presentation/screens/pay_later/pay_later_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_new.dart';
 
 import '../../resources/assets_manager.dart';
@@ -9,7 +12,29 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-class PayLaterProductView extends StatelessWidget {
+class PayLaterProductView extends StatefulWidget {
+  final int index;
+  String? cardNumber;
+
+  PayLaterProductView({required this.index, this.cardNumber});
+
+  @override
+  State<PayLaterProductView> createState() => _PayLaterProductViewState();
+}
+
+class _PayLaterProductViewState extends State<PayLaterProductView> {
+  //controller
+  final PayLaterGetxController _payLaterGetxController =
+      Get.find<PayLaterGetxController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _payLaterGetxController.getCustomerInstallments(context: context);
+    SharedPrefController().setIndexOfPayLaterProduct(widget.index);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +103,7 @@ class PayLaterProductView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Pizza meal for two',
+                        '${_payLaterGetxController.payLater[widget.index].productForThisOperation!.name!}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: ColorManager.primaryDark,
@@ -95,7 +120,7 @@ class PayLaterProductView extends StatelessWidget {
                         height: AppSize.s12,
                       ),
                       Text(
-                        '99 AED',
+                        '${_payLaterGetxController.payLater[widget.index].productForThisOperation!.price} ${_payLaterGetxController.payLater[widget.index].productForThisOperation!.isoCurrencySymbol}',
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: ColorManager.primary,
@@ -236,8 +261,7 @@ class PayLaterProductView extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        TopUpScreen(screenName: 'payLater'),
+                    builder: (context) => TopUpScreen(screenName: 'payLater'),
                   ));
                 },
                 child: Row(
@@ -245,9 +269,13 @@ class PayLaterProductView extends StatelessWidget {
                     SizedBox(
                       width: AppSize.s20,
                     ),
-                    Text(AppLocalizations.of(context)!.select_the_payment_method,
-                        style:
-                            TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+                    Text(
+                        widget.cardNumber == null
+                            ? AppLocalizations.of(context)!
+                                .select_the_payment_method
+                            : 'card : **** **** **** ${widget.cardNumber}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 13)),
                     // SizedBox(width: AppSize.s20,),
                     Spacer(),
                     Icon(

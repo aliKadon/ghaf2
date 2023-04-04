@@ -19,6 +19,7 @@ import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
+import '../individual_seller/products_with_out_details_seller_view.dart';
 
 class CreateLinkGetxController extends GetxController with Helpers {
   List<ReadIndividualProducts> individualProducts = [];
@@ -26,42 +27,46 @@ class CreateLinkGetxController extends GetxController with Helpers {
   late ApiResponse apiResponse1;
   String link = '';
   late final IndividualSellerApiController _individualSellerApiController =
-  IndividualSellerApiController();
+      IndividualSellerApiController();
 
-  List<String> productId = [];
+  List<dynamic> itemForLinkList = [];
   List<num> productCount = [];
 
-  final TextEditingController _textController = TextEditingController();
+  final TextEditingController amountTextController = TextEditingController();
 
-  void getIndividualProducts({required BuildContext context,
+  void getIndividualProducts({
+    required BuildContext context,
     required bool isNotDetailed,
-    num? amount}) async {
+  }) async {
     try {
       individualProducts =
-      await _individualSellerApiController.getIndividualProducts();
+          await _individualSellerApiController.getIndividualProducts();
       update();
       if (isNotDetailed) {
         createLink(
             withDetails: !isNotDetailed,
             context: context,
-            productId: individualProducts[0].id!,
-            amount: amount!);
-        Navigator.of(context).pop();
+            ItemForLinks: [
+              {
+                "prodId": individualProducts[0].id,
+                "Quantity": num.parse(amountTextController.text)
+              }
+            ]);
       }
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
-  void createProduct({required BuildContext context,
-    required String name,
-    required String description,
-    String? characteristics,
-    required String productType,
-    required num price,
-    num? amount,
-    required bool isNotDetailed,
-    required List<String> images}) async {
+  void createProduct(
+      {required BuildContext context,
+      required String name,
+      required String description,
+      String? characteristics,
+      required String productType,
+      required num price,
+      required bool isNotDetailed,
+      required List<String> images}) async {
     // apiResponse = await _individualSellerApiController.createProduct(
     //     name: name,
     //     description: description,
@@ -77,33 +82,98 @@ class CreateLinkGetxController extends GetxController with Helpers {
           productType: productType,
           price: price,
           images: images);
-      if (isNotDetailed) {
-        getIndividualProducts(
-            context: context, isNotDetailed: isNotDetailed, amount: amount);
-      } else {
-        Navigator.of(context).pop();
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ItemsList(),
-        ));
-        showSnackBar(context, message: apiResponse.message);
-      }
+      Navigator.of(context).pop();
+      _customDialogProgressCreateProduct(context: context);
+      // if (isNotDetailed) {
+      //   getIndividualProducts(context: context, isNotDetailed: isNotDetailed);
+      // } else {
+      //   Navigator.of(context).pop();
+      //   Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (context) => ItemsList(),
+      //   ));
+      //   showSnackBar(context, message: apiResponse.message);
+      // }
     } catch (e) {
       showSnackBar(context, message: e.toString(), error: true);
     }
   }
 
-  void createLink({required BuildContext context,
-    required String productId,
+  void createLink({
+    required BuildContext context,
+    required List<dynamic> ItemForLinks,
     required bool withDetails,
-    required num amount}) async {
+  }) async {
     try {
       link = await _individualSellerApiController.createLink(
-          productId: productId, amount: amount);
+          ItemForLinks: ItemForLinks);
       _customDialogProgress1(withDetails: withDetails, context: context);
       update();
     } catch (e) {
       showSnackBar(context, message: e.toString(), error: true);
     }
+  }
+
+  void _customDialogProgressCreateProduct(
+      {required BuildContext context}) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: AppSize.s343,
+            child: Column(
+              children: [
+                SizedBox(height: AppSize.s18),
+                Text(
+                  AppLocalizations.of(context)!.success,
+                  style: TextStyle(
+                      fontSize: FontSize.s20,
+                      color: ColorManager.primaryDark,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: AppSize.s35),
+                Text(
+                  AppLocalizations.of(context)!.your_order_is_under_progress,
+                  style: TextStyle(
+                      color: ColorManager.primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: FontSize.s16),
+                ),
+                SizedBox(height: AppSize.s35),
+                Row(
+                  children: [
+                    Spacer(),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                ColorManager.primaryDark)),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => ItemsList(),
+                          ));
+                        },
+                        child: Text(AppLocalizations.of(context)!.items_list)),
+                    Spacer(),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) =>
+                                ProductsWithOutDetailsSellerView(),
+                          ));
+                        },
+                        child: Text(AppLocalizations.of(context)!.back)),
+                    Spacer(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _customDialogProgress1(
@@ -115,10 +185,7 @@ class CreateLinkGetxController extends GetxController with Helpers {
         builder: (context) {
           return Dialog(
             child: Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.5,
               width: AppSize.s343,
               margin: EdgeInsets.symmetric(horizontal: AppPadding.p16),
               decoration: BoxDecoration(
@@ -179,7 +246,7 @@ class CreateLinkGetxController extends GetxController with Helpers {
                               decoration: BoxDecoration(
                                 color: ColorManager.white,
                                 borderRadius:
-                                BorderRadius.circular(AppRadius.r8),
+                                    BorderRadius.circular(AppRadius.r8),
                               ),
                               child: Text(
                                 AppLocalizations.of(context)!.copy,
@@ -329,14 +396,14 @@ class CreateLinkGetxController extends GetxController with Helpers {
                     Visibility(
                       visible: withDetails,
                       child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.45,
-                        child: ElevatedButton(onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => StoreSellerView(),));
-                        }, child: Text(AppLocalizations.of(context)!.ok)),
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => StoreSellerView(),
+                              ));
+                            },
+                            child: Text(AppLocalizations.of(context)!.ok)),
                       ),
                     )
                   ]),
