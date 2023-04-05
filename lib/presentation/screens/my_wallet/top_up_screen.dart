@@ -223,6 +223,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) => PayLaterProductView(
+                                          paymentMethodId:
+                                              _checkOutGetxController
+                                                  .paymentMethod[index].id,
                                           index: SharedPrefController()
                                               .indexOfPayLaterProduct,
                                           cardNumber: _checkOutGetxController

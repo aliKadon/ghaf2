@@ -35,6 +35,7 @@ class CheckOutGetxController extends GetxController with Helpers {
   late ApiResponse apiResponse;
   var distance = '0';
   var duration = '0';
+  var isLoadingDistance = true;
 
   late final PaymentMethodApiController _paymentMethodApiController =
       PaymentMethodApiController();
@@ -213,12 +214,15 @@ class CheckOutGetxController extends GetxController with Helpers {
     final response = await http.get(Url);
     final data = jsonDecode(response.body);
 
+    print('=====================response duration');
+    print(response.body);
     try {
-      final response = await http.get(Url);
+      // final response = await http.get(Url);
       final data = jsonDecode(response.body);
       distance = data["routes"][0]["legs"][0]["distance"]["text"];
       duration = data["routes"][0]["legs"][0]["duration"]["text"];
 
+      isLoadingDistance = false;
       isLoadingForOrderTracking = false;
       update();
       // print('===========================================provider duration');

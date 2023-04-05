@@ -1952,7 +1952,9 @@ mixin Helpers {
                               // width: double.infinity,
                               padding: EdgeInsets.all(12),
                               child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                   child: Text(
                                       AppLocalizations.of(context)!.got_it)),
                             ),

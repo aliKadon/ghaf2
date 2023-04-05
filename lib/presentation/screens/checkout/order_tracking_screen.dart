@@ -29,7 +29,7 @@ class OrderTrackingScreen extends StatefulWidget {
   final Address destination;
 
   OrderTrackingScreen(
-      {required this.orderId, required this.source,required this.destination});
+      {required this.orderId, required this.source, required this.destination});
 
   @override
   State<OrderTrackingScreen> createState() => _OrderTrackingScreenState();
@@ -175,7 +175,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
     _checkOutGetxController.getDurationGoogleMap(
         LatOne: double.parse(widget.source.altitude!),
         LonOne: double.parse(widget.source.longitude!),
-        LatTow: double.parse((widget.destination.altitude! )),
+        LatTow: double.parse((widget.destination.altitude!)),
         LonTow: double.parse(widget.destination.longitude!));
 
     super.initState();
@@ -443,7 +443,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                           fontSize: 14),
                                     ),
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
                                       child: Text(
                                         'One of our delivery representatives',
                                         overflow: TextOverflow.clip,
@@ -760,6 +761,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       // await call(
                                       //     Telephone: widget.orderId['branch']
                                       //         ['telephone']);
+                                      _callShopDialog(context,
+                                          controller.order!.branch!.telephone!);
                                     },
                                     child: Container(
                                       width: AppSize.s60,
@@ -1072,6 +1075,78 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
         });
   }
 
+  void _callShopDialog(BuildContext context, String telephone) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Stack(
+          children: [
+            Positioned(
+              // top: 0,
+              bottom: 0,
+              child: Dialog(
+                backgroundColor: Colors.transparent,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.16,
+                  // color: Colors.transparent,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: AppSize.s44,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.white)),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              _contactPhoneNumber(telephone);
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(width: AppSize.s30,),
+                                Icon(Icons.phone,color: ColorManager.primaryDark,),
+                                Spacer(),
+                                Text(
+                                  telephone,
+                                  style: TextStyle(color: ColorManager.primaryDark),
+                                ),
+                                Spacer(),
+                              ],
+                            )),
+                      ),
+                      SizedBox(height: AppSize.s22),
+                      Container(
+                        height: AppSize.s44,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                MaterialStatePropertyAll(Colors.white)),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.cancel,
+                              style: TextStyle(color: ColorManager.primaryDark),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
   whatsapp({required String phone}) async {
     final url;
 
@@ -1095,6 +1170,16 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
 
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  // open phone number in mobile
+  void _contactPhoneNumber(String phoneNumber) async {
+    final url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
       throw 'Could not launch $url';
     }

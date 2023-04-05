@@ -36,111 +36,114 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
       //         child: CircularProgressIndicator(),
       //       )
       //     :
-      Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          // allRedeemPoint = 0;
-                          Navigator.pop(context);
-                        },
-                        child: Image.asset(
-                          IconsAssets.arrow,
-                          height: AppSize.s18,
-                          width: AppSize.s10,
-                        ),
-                      ),
-                      Spacer(),
-                      Text(
-                        AppLocalizations.of(context)!.redeem_history,
-                        style: getSemiBoldStyle(
-                          color: ColorManager.primaryDark,
-                          fontSize: FontSize.s18,
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppSize.s12,
-                  ),
-                  Divider(height: 1, color: ColorManager.greyLight),
-                  SizedBox(
-                    height: AppSize.s30,
-                  ),
-                  GetBuilder<RewardsGetxController>(
-                    builder: (controller) => ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: controller.redeemHistory!.list!.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: ColorManager.greyLight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Row(
-                                  children: [
-                                    controller.redeemHistory!.list![index]
-                                                .storeLogo ==
-                                            null
-                                        ? Image.asset(ImageAssets.brStore,
-                                            height: AppSize.s82)
-                                        : Image.network(
-                                            controller.redeemHistory!
-                                                .list![index].storeLogo!,
-                                            height: AppSize.s82,
-                                          ),
-                                    Spacer(),
-                                    Column(
-                                      children: [
-                                        Text(
-                                            controller.redeemHistory!
-                                                .list![index].storeName!,
-                                            style: TextStyle(
-                                                color: ColorManager.primaryDark,
-                                                fontSize: FontSize.s16,
-                                                fontWeight: FontWeight.w600)),
-                                        Text(
-                                            controller.redeemHistory!
-                                                .list![index].paymentDate!
-                                                .substring(0, 10),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: ColorManager.greyLight,
-                                                fontSize: FontSize.s16)),
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                        '${controller.redeemHistory!.list![index].balance} ${AppLocalizations.of(context)!.point}',
-                                        style: TextStyle(
-                                            fontSize: FontSize.s16,
-                                            color: ColorManager.primary,
-                                            fontWeight: FontWeight.w600)),
-                                    Spacer(),
-                                  ],
-                                ),
-                              ),
-                            ],
+      SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            // allRedeemPoint = 0;
+                            Navigator.pop(context);
+                          },
+                          child: Image.asset(
+                            IconsAssets.arrow,
+                            height: AppSize.s18,
+                            width: AppSize.s10,
                           ),
-                        );
-                      },
+                        ),
+                        Spacer(),
+                        Text(
+                          AppLocalizations.of(context)!.redeem_history,
+                          style: getSemiBoldStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s18,
+                          ),
+                        ),
+                        Spacer(),
+                      ],
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: AppSize.s12,
+                    ),
+                    Divider(height: 1, color: ColorManager.greyLight),
+                    SizedBox(
+                      height: AppSize.s30,
+                    ),
+                    GetBuilder<RewardsGetxController>(
+                      builder: (controller) => ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.redeemHistory!.list!.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: ColorManager.greyLight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Row(
+                                    children: [
+                                      controller.redeemHistory!.list![index]
+                                                  .storeLogo ==
+                                              null
+                                          ? Image.asset(ImageAssets.brStore,
+                                              height: AppSize.s82)
+                                          : Image.network(
+                                              controller.redeemHistory!
+                                                  .list![index].storeLogo!,
+                                              height: AppSize.s82,
+                                            ),
+                                      Spacer(),
+                                      Column(
+                                        children: [
+                                          Text(
+                                              controller.redeemHistory!
+                                                  .list![index].storeName!,
+                                              style: TextStyle(
+                                                  color: ColorManager.primaryDark,
+                                                  fontSize: FontSize.s16,
+                                                  fontWeight: FontWeight.w600)),
+                                          Text(
+                                              controller.redeemHistory!
+                                                  .list![index].paymentDate!
+                                                  .substring(0, 10),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: ColorManager.greyLight,
+                                                  fontSize: FontSize.s16)),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                          '${controller.redeemHistory!.list![index].balance} ${AppLocalizations.of(context)!.point}',
+                                          style: TextStyle(
+                                              fontSize: FontSize.s16,
+                                              color: ColorManager.primary,
+                                              fontWeight: FontWeight.w600)),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }

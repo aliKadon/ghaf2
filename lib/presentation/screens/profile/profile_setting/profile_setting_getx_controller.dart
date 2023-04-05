@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 
 import '../../../../app/utils/helpers.dart';
 import '../../../../data/api/controllers/user_details_api_controller.dart';
@@ -13,23 +16,20 @@ class ProfileSettingGetxController extends GetxController with Helpers {
 
   var isLoading = true;
 
-  void init({
-    required BuildContext context
-  }) {
+  late ApiResponse apiResponse;
+
+  void init({required BuildContext context}) {
     getUserDetails(context);
   }
 
-
-
-  void getUserDetails (BuildContext context) async{
+  void getUserDetails(BuildContext context) async {
     try {
       await _userDetailsApiController.getUserDetails(context: context);
       isLoading = false;
-    }catch(error) {
+    } catch (error) {
       // showSnackBar(context, message: error.toString(),error: true);
       print(error);
     }
-
   }
 
   void editUserDetails(
@@ -38,8 +38,15 @@ class ProfileSettingGetxController extends GetxController with Helpers {
       required String lastName,
       required String telephone}) async {
     try {
-      await _userDetailsApiController.updateUserDetails(context: context,
-          firstName: firstName, lastName: lastName, telephone: telephone);
+      apiResponse = await _userDetailsApiController.updateUserDetails(
+          context: context,
+          firstName: firstName,
+          lastName: lastName,
+          telephone: telephone);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => MainView(),
+      ));
+      showSnackBar(context, message: apiResponse.message);
     } catch (error) {
       showSnackBar(context, message: error.toString());
     }

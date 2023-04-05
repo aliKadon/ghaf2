@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_view_new.dart';
@@ -15,14 +16,17 @@ import '../../resources/values_manager.dart';
 class PayLaterProductView extends StatefulWidget {
   final int index;
   String? cardNumber;
+  String? paymentMethodId;
 
-  PayLaterProductView({required this.index, this.cardNumber});
+  PayLaterProductView(
+      {required this.index, this.cardNumber, this.paymentMethodId});
 
   @override
   State<PayLaterProductView> createState() => _PayLaterProductViewState();
 }
 
-class _PayLaterProductViewState extends State<PayLaterProductView> {
+class _PayLaterProductViewState extends State<PayLaterProductView>
+    with Helpers {
   //controller
   final PayLaterGetxController _payLaterGetxController =
       Get.find<PayLaterGetxController>();
@@ -293,7 +297,19 @@ class _PayLaterProductViewState extends State<PayLaterProductView> {
               width: double.infinity,
               height: AppSize.s50,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (widget.paymentMethodId == null) {
+                      showSnackBar(context,
+                          message: AppLocalizations.of(context)!
+                              .please_select_payment_method);
+                    } else {
+                      _payLaterGetxController.payForInstallments(
+                          context: context,
+                          productId: _payLaterGetxController
+                              .payLater[widget.index].id!,
+                          paymentMethodId: widget.paymentMethodId!);
+                    }
+                  },
                   child: Text(AppLocalizations.of(context)!.next)),
             )
           ],

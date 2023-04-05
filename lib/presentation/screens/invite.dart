@@ -131,7 +131,7 @@ class _InviteState extends State<Invite> with Helpers {
                         children: [
                           DottedLine(
                             direction: Axis.horizontal,
-                            lineLength: MediaQuery.of(context).size.width * 0.14,
+                            lineLength: MediaQuery.of(context).size.width * 0.1,
                             lineThickness: 2.0,
                             dashLength: 2.0,
                             dashColor: Colors.black,
@@ -181,7 +181,7 @@ class _InviteState extends State<Invite> with Helpers {
                         children: [
                           DottedLine(
                             direction: Axis.horizontal,
-                            lineLength: MediaQuery.of(context).size.width * 0.14,
+                            lineLength: MediaQuery.of(context).size.width * 0.1,
                             lineThickness: 2.0,
                             dashLength: 2.0,
                             dashColor: Colors.black,

@@ -27,7 +27,7 @@ class StoreView extends StatefulWidget {
 class _StoreViewState extends State<StoreView> {
   //controller
   late final CategoriesGetxController _categoriesGetxController =
-  Get.find<CategoriesGetxController>();
+  Get.put(CategoriesGetxController());
   late final HomeViewGetXController _homeViewGetXController =
   Get.put(HomeViewGetXController());
 

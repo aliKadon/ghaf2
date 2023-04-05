@@ -20,12 +20,19 @@ import '../../../data/api/controllers/adds_api_controller.dart';
 import '../../../domain/model/adds.dart';
 import '../../../domain/model/nearby_stores.dart';
 import '../../../domain/model/store_adds.dart';
+import '../checkout/check_out_getx_controller.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
   String address = '';
   var city = 'address'.obs;
   var isLoadingPopular = true;
   var isFave = false;
+
+  // var durationForNearByStore = [];
+
+  //controller
+  // late final CheckOutGetxController _checkOutGetxController =
+  //     Get.put(CheckOutGetxController());
 
   // #############################################
   //get all information from latitude and longitude
@@ -337,6 +344,19 @@ class HomeViewGetXController extends GetxController with Helpers {
     try {
       nearbyStores = await _storeApiController.getNearbyStores(
           lat: lat, long: long, distance: distance);
+      // for (NearbyStores nearbyStore in nearbyStores) {
+      //   print('==========================duration near by store');
+      //   print(SharedPrefController().locationLat);
+      //   print(double.parse((nearbyStore.branchAddress!.altitude!)));
+      //   _checkOutGetxController
+      //       .getDurationGoogleMap(
+      //           LatOne: SharedPrefController().locationLat,
+      //           LonOne: SharedPrefController().locationLong,
+      //           LatTow: double.parse((nearbyStores[0].branchAddress!.altitude!)),
+      //           LonTow: double.parse((nearbyStores[0].branchAddress!.longitude!)))
+      //       .then((value) =>
+      //           durationForNearByStore.add(_checkOutGetxController.duration));
+      // }
       _isNearbyStoresLoading = false;
       update(['nearbyStores']);
     } catch (error) {

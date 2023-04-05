@@ -68,7 +68,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             image: DecorationImage(
-                              image: NetworkImage(ImageAssets.logo1),
+                              image: AssetImage(ImageAssets.logo1),
                               fit: BoxFit.scaleDown,
                             ),
                           ),

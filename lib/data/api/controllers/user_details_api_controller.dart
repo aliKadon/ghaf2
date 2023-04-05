@@ -63,7 +63,7 @@ class UserDetailsApiController with ApiHelper, Helpers {
         SharedPrefController().setFirstName(firstName);
         SharedPrefController().setLastName(lastName);
         SharedPrefController().setTelephone(telephone);
-        showSnackBar(context, message: jsonResponse['message']);
+
       }
       return ApiResponse(
         message: jsonResponse['message'],
