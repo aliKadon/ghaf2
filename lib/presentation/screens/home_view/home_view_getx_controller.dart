@@ -249,40 +249,33 @@ class HomeViewGetXController extends GetxController with Helpers {
     bool notifyLoading = true,
   }) async {
     // if (notifyLoading) isProductsLoading = true;
-    products = await _storeApiController.getFilterProducts(
-      search: search,
-      maxPrice: maxPrice,
-      minPrice: minPrice,
-      filterBy: filterBy,
-      stars: stars,
-      // filterBy: ModalRoute.of(context)?.settings.arguments as String,
-    );
-    isFilterProductLoading = false;
-    update();
-    // try {
-    //   if (notifyLoading) isProductsLoading = true;
-    //   // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
-    //   // print(ModalRoute.of(context)?.settings.arguments as String);
-    //   products = await _storeApiController.getProducts(
-    //     search: search,
-    //     maxPrice: maxPrice,
-    //     minPrice: minPrice,
-    //     filterBy: filterBy,
-    //     // filterBy: ModalRoute.of(context)?.settings.arguments as String,
-    //   );
-    //   isProductsLoading = false;
-    // } on DioError catch (error) {
-    //   // error.
-    //   print(error.response?.data);
-    //   print(error.toString());
-    //   showSnackBar(context,
-    //       message: 'An Error Occurred, Please Try again', error: true);
-    // } catch (error) {
-    //   // error.
-    //   debugPrint(error.toString());
-    //   showSnackBar(context,
-    //       message: 'An Error Occurred, Please Try again!!', error: true);
-    // }
+
+    try {
+      if (notifyLoading) isProductsLoading = true;
+      // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
+      // print(ModalRoute.of(context)?.settings.arguments as String);
+      products = await _storeApiController.getFilterProducts(
+        search: search,
+        maxPrice: maxPrice,
+        minPrice: minPrice,
+        filterBy: filterBy,
+        stars: stars,
+        // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+      );
+      isFilterProductLoading = false;
+      update();
+    } on DioError catch (error) {
+      // error.
+      print(error.response?.data);
+      print(error.toString());
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
+    } catch (error) {
+      // error.
+      debugPrint(error.toString());
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again!!', error: true);
+    }
   }
 
   // get products.
@@ -344,19 +337,6 @@ class HomeViewGetXController extends GetxController with Helpers {
     try {
       nearbyStores = await _storeApiController.getNearbyStores(
           lat: lat, long: long, distance: distance);
-      // for (NearbyStores nearbyStore in nearbyStores) {
-      //   print('==========================duration near by store');
-      //   print(SharedPrefController().locationLat);
-      //   print(double.parse((nearbyStore.branchAddress!.altitude!)));
-      //   _checkOutGetxController
-      //       .getDurationGoogleMap(
-      //           LatOne: SharedPrefController().locationLat,
-      //           LonOne: SharedPrefController().locationLong,
-      //           LatTow: double.parse((nearbyStores[0].branchAddress!.altitude!)),
-      //           LonTow: double.parse((nearbyStores[0].branchAddress!.longitude!)))
-      //       .then((value) =>
-      //           durationForNearByStore.add(_checkOutGetxController.duration));
-      // }
       _isNearbyStoresLoading = false;
       update(['nearbyStores']);
     } catch (error) {

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -99,21 +100,30 @@ class _TrendingViewState extends State<TrendingView> {
                                   crossAxisCount: 2,
                                   mainAxisExtent: AppSize.s311),
                           itemBuilder: (context, index) {
-                            return ProductItemNew(
-                                image: controller.mostPopular[index]
-                                            .productImages?.length ==
-                                        0
-                                    ? ''
-                                    : controller
-                                        .mostPopular[index].productImages![0],
-                                name: controller.mostPopular[index].name!,
-                                stars: controller.mostPopular[index].stars!,
-                                index: index,
-                                price: controller.mostPopular[index].price!,
-                                isFavorite:
-                                    controller.mostPopular[index].isFavorite!,
-                                // controller: _homeViewGetXController.mostPopular,
-                                idProduct: controller.mostPopular[index].id!);
+                            return Builder(
+                              builder: (context) {
+                                Get.put<Product>(
+                                  controller
+                                      .mostPopular[index],tag:
+                                '${controller.mostPopular[index].id}trending',);
+                                return ProductItemNew(
+                                  tag: '${controller.mostPopular[index].id}trending',
+                                    image: controller.mostPopular[index]
+                                                .productImages?.length ==
+                                            0
+                                        ? ''
+                                        : controller
+                                            .mostPopular[index].productImages![0],
+                                    name: controller.mostPopular[index].name!,
+                                    stars: controller.mostPopular[index].stars!,
+                                    index: index,
+                                    price: controller.mostPopular[index].price!,
+                                    isFavorite:
+                                        controller.mostPopular[index].isFavorite!,
+                                    // controller: _homeViewGetXController.mostPopular,
+                                    idProduct: controller.mostPopular[index].id!);
+                              }
+                            );
                           },
                         ),
                       ),

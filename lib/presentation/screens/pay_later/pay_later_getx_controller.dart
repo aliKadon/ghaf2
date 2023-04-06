@@ -3,19 +3,42 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/pay_later_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/domain/model/pay_later_produc.dart';
 
-import '../../../domain/model/pay_later.dart';
+import '../../../domain/model/pay_later_installment.dart';
 
 class PayLaterGetxController extends GetxController with Helpers {
-  List<PayLater> payLater = [];
+  List<PayLaterInstallment> payLaterInstallments = [];
+  List<PayLaterProduct> payLaterProducts = [];
+  List<PayLaterProduct> payLaterProductActive = [];
+  List<PayLaterProduct> payLaterProductComplete = [];
   num? totalCredit;
+  var isLoading = true;
   late ApiResponse apiResponse;
   final PayLaterApiController _payLaterApiController = PayLaterApiController();
 
-  void getCustomerInstallments({required BuildContext context}) async {
+
+  void getCustomerPayLaterProduct({required BuildContext context}) async {
     try {
-      payLater = await _payLaterApiController.getCustomerInstallments();
+      payLaterProducts = await _payLaterApiController.getCustomerPayLaterProduct();
+      for(PayLaterProduct payLaterProduct in payLaterProducts) {
+        if (payLaterProduct.active!) {
+          payLaterProductActive.add(payLaterProduct);
+        }else {
+          payLaterProductComplete.add(payLaterProduct);
+        }
+      }
+      update();
+    }catch (e) {
+      showSnackBar(context, message: e.toString(),error: true);
+    }
+  }
+
+  void getCustomerInstallments({required BuildContext context,required String id}) async {
+    try {
+      payLaterInstallments = await _payLaterApiController.getCustomerInstallments(id: id);
       totalCredit = await _payLaterApiController.totalCredit;
+      isLoading = false;
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);

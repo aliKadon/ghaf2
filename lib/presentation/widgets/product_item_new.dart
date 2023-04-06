@@ -15,6 +15,7 @@ import '../screens/product_view/product_view_new.dart';
 
 class ProductItemNew extends StatefulWidget {
 
+  final String tag;
   final String image;
   final String name;
   final num price;
@@ -26,6 +27,7 @@ class ProductItemNew extends StatefulWidget {
   ProductItemNew(
       {required this.image,
         required this.name,
+        required this.tag,
         required this.stars,
         required this.price,
         required this.index,
@@ -37,9 +39,18 @@ class ProductItemNew extends StatefulWidget {
 }
 
 class _ProductItemNewState extends State<ProductItemNew> with Helpers {
-  late final Product _product = Get.find<Product>();
+  late final Product _product = Get.find<Product>(tag: widget.tag);
   HomeViewGetXController _homeViewGetXController =
   Get.find<HomeViewGetXController>();
+
+
+  // dispose.
+  @override
+  void dispose() {
+    Get.delete<Product>(tag: widget.tag);
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,37 +94,41 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                             ),
                           ),
                         ),
-                        InkWell(
+                       GetBuilder<Product>(
+                         tag: widget.tag,
+                         builder: (controller) => InkWell(
+                                    onTap: () {
+                                      if(AppSharedData.currentUser == null) {
+                                        showSignInSheet(context: context,role: 'Customer');
+                                      }else {
+                                        _product.toggleIsFavorite(
+                                            context: context, id: widget.idProduct,);
 
-                              onTap: () {
-                                if(AppSharedData.currentUser == null) {
-                                  showSignInSheet(context: context,role: 'Customer');
-                                }else {
-                                  _product.toggleIsFavorite(
-                                      context: context, id: widget.idProduct);
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      color: Colors.black54),
-                                  padding: EdgeInsets.all(8),
-                                  child: widget.isFavorite! ?Image.asset(
-                                    IconsAssets.heart1,
-                                    height: AppSize.s24,
-                                    width: AppSize.s24,
-                                    color: ColorManager.red,
-                                  )
-                                      : Image.asset(
-                                    IconsAssets.heart,
-                                    height: AppSize.s24,
-                                    width: AppSize.s24,
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(100),
+                                            color: Colors.black54),
+                                        padding: EdgeInsets.all(8),
+                                        child: _product.isFavorite! ?Image.asset(
+                                          IconsAssets.heart1,
+                                          height: AppSize.s24,
+                                          width: AppSize.s24,
+                                          color: ColorManager.red,
+                                        )
+                                            : Image.asset(
+                                          IconsAssets.heart,
+                                          height: AppSize.s24,
+                                          width: AppSize.s24,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
+                       ),
+
 
                       ],
                     ),

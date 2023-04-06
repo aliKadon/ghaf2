@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -86,20 +87,29 @@ class _OnlyOnGhafScreenState extends State<OnlyOnGhafScreen> {
                       itemCount: controller.onlyOnghaf.length,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return ProductItemNew(
-                            image: _homeViewGetXController
-                                .onlyOnghaf[index].productImages![0],
-                            name:
+                        return Builder(
+                          builder: (context) {
+                            Get.put<Product>(
+                              _homeViewGetXController
+                                  .products[index],tag:
+                            '${_homeViewGetXController.products[index].id}onlyOnGhaf',);
+                            return ProductItemNew(
+                               tag: '${_homeViewGetXController.products[index].id}onlyOnGhaf',
+                                image: _homeViewGetXController
+                                    .onlyOnghaf[index].productImages![0],
+                                name:
                                 _homeViewGetXController.onlyOnghaf[index].name!,
-                            stars: _homeViewGetXController
-                                .onlyOnghaf[index].stars!,
-                            price: _homeViewGetXController
-                                .onlyOnghaf[index].price!,
-                            index: index,
-                            isFavorite: _homeViewGetXController
-                                .onlyOnghaf[index].isFavorite!,
-                            idProduct:
+                                stars: _homeViewGetXController
+                                    .onlyOnghaf[index].stars!,
+                                price: _homeViewGetXController
+                                    .onlyOnghaf[index].price!,
+                                index: index,
+                                isFavorite: _homeViewGetXController
+                                    .onlyOnghaf[index].isFavorite!,
+                                idProduct:
                                 _homeViewGetXController.onlyOnghaf[index].id!);
+                          },
+                        );
                       },
                     ),
             )

@@ -1,7 +1,8 @@
 import 'package:ghaf_application/domain/model/product_for_this_operation_pay_later.dart';
 
-class PayLater {
+class PayLaterInstallment {
   String? id;
+  num? quantityItem;
   num? balance;
   String? userCredentialsId;
   String? storeId;
@@ -16,8 +17,9 @@ class PayLater {
   String? customerName;
   ProductForThisOperationPayLater? productForThisOperation;
 
-  PayLater({
+  PayLaterInstallment({
     this.id,
+    this.quantityItem,
     this.userCredentialsId,
     this.storeId,
     this.status,
@@ -33,8 +35,9 @@ class PayLater {
     this.totalInstallment,
   });
 
-  factory PayLater.fromJson(Map<String,dynamic> json) => PayLater(
+  factory PayLaterInstallment.fromJson(Map<String,dynamic> json) => PayLaterInstallment(
     id: json['id'],
+    quantityItem: json['quantity'],
     productsId: json['productsId'],
     userCredentialsId: json['userCredentialsId'],
     storeName: json['storeName'],
@@ -52,6 +55,7 @@ class PayLater {
 
   Map<String,dynamic> toJson() => {
     'id' : id,
+    'quantityItem' : quantityItem,
     'productsId' : productsId,
     'userCredentialsId' : userCredentialsId,
     'storeName' : storeName,

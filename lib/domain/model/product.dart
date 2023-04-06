@@ -20,25 +20,38 @@ class Product extends GetxController with Helpers {
   OffersScreenGetXController _offersScreenGetXController =
   Get.put<OffersScreenGetXController>(OffersScreenGetXController());
 
+  bool? isFav;
+
   // notifiable.
   void toggleIsFavorite({
     required String id,
-    // required bool isFavorite,
     required BuildContext context,
     bool sendRequest = true,
   }) {
 
 
-    _homeViewGetXController.getProducts(context: context);
-    _homeViewGetXController.getMostPopularProduct();
-    _offersScreenGetXController.getOffers(context: context);
+    // _homeViewGetXController.getProducts(context: context);
+    // _homeViewGetXController.getMostPopularProduct();
+    // _offersScreenGetXController.getOffers(context: context);
+
+    // print('====================is fave');
+    // print(isFavorite);
+    // if(isFavorite == null){
+    //   isFavorite = isFave;
+    // }
+    isFavorite = !isFavorite!;
+    print('====================is fave1');
+    print(isFavorite);
+    //
+    // isFav = !isFav!;
 
     //
     // isFavorite = !isFavorite!;
 
     // update(['isFavorite']);
-    if (sendRequest) _toggleFavoriteRequest(context: context, id: id);
+
     update();
+    if (sendRequest) _toggleFavoriteRequest(context: context, id: id);
 
   }
 
@@ -205,6 +218,7 @@ class Product extends GetxController with Helpers {
   void _toggleFavoriteRequest({
     required String id,
     required BuildContext context,
+
   }) async {
     try {
       final ApiResponse apiResponse =
@@ -216,12 +230,12 @@ class Product extends GetxController with Helpers {
       } else {
         // failed.
         showSnackBar(context, message: apiResponse.message, error: true);
-        toggleIsFavorite(context: context, sendRequest: false, id: id);
+        toggleIsFavorite(context: context, sendRequest: false, id: id,);
       }
     } catch (error) {
       // error.
       showSnackBar(context, message: error.toString(), error: true);
-      toggleIsFavorite(context: context, sendRequest: false, id: id);
+      toggleIsFavorite(context: context, sendRequest: false, id: id,);
     }
   }
 

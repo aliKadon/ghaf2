@@ -147,7 +147,7 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'sid': sid,
       'filter':
-      "Name~contains~'$search'~and~Price~gte~${minPrice ?? 0}~and~Price~lte~${maxPrice ?? 500}",
+      "Name~contains~'$search'~and~Price~gte~${minPrice ?? 0}~and~Price~lte~${maxPrice ?? 1000}",
       'sort':"${stars ?? 'Name'}-desc"
     };
     print('queryParameters : $queryParameters');

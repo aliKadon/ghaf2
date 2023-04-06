@@ -104,7 +104,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                           strokeWidth: 1,
                         ),
                       )
-                    : _myFavoriteScreenGetXController.products.isEmpty
+                    : controller.products.isEmpty
                         ? Column(
                             children: [
                               SizedBox(
@@ -165,7 +165,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: AppPadding.p8, vertical: AppPadding.p4),
                             itemCount:
-                                _myFavoriteScreenGetXController.products.length,
+                            controller.products.length,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 
                               crossAxisCount: 2,
@@ -176,17 +176,26 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                               return Builder(builder: (context) {
                                 return Padding(
                                   padding: const EdgeInsets.all(0.0),
-                                  child: ProductItemNew(
-                                      image: controller
-                                          .products[index].productImages?.length == 0 ? '' : controller
-                                          .products[index].productImages?[0] ?? '',
-                                      name: controller.products[index].name!,
-                                      stars: controller.products[index].stars!,
-                                      price: controller.products[index].price!,
-                                      idProduct:
-                                      controller.products[index].id!,
-                                      isFavorite: controller.products[index].isFavorite!,
-                                      index: index),
+                                  child: Builder(
+                                    builder: (context) {
+                                      Get.put<Product>(
+                                        controller
+                                            .products[index],tag:
+                                      '${controller.products[index].id}',);
+                                      return ProductItemNew(
+                                        tag: '${controller.products[index].id}',
+                                          image: controller
+                                              .products[index].productImages?.length == 0 ? '' : controller
+                                              .products[index].productImages?[0] ?? '',
+                                          name: controller.products[index].name!,
+                                          stars: controller.products[index].stars!,
+                                          price: controller.products[index].price!,
+                                          idProduct:
+                                          controller.products[index].id!,
+                                          isFavorite: controller.products[index].isFavorite!,
+                                          index: index);
+                                    },
+                                  ),
                                 );
                               });
                             },

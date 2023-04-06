@@ -25,7 +25,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
   @override
   void initState() {
     // TODO: implement initState
-    _payLaterGetxController.getCustomerInstallments(context: context);
+    _payLaterGetxController.getCustomerPayLaterProduct(context: context);
     super.initState();
   }
 
@@ -151,7 +151,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
               builder: (controller) => Container(
                 padding: EdgeInsets.all(5),
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: controller.payLater == 0
+                child: controller.payLaterProducts == 0
                     ? Center(
                         child: Text(
                             AppLocalizations.of(context)!.no_order_found,
@@ -160,32 +160,90 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
                                 fontSize: FontSize.s16,
                                 fontWeight: FontWeight.w600)),
                       )
-                    : GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.payLater.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, mainAxisExtent: 300),
-                        itemBuilder: (context, index) {
-                          return PayLaterProductWidget(
-                            index: index,
-                            stars: controller.payLater[index]
-                                .productForThisOperation!.stars!,
-                            imageUrl: controller
-                                        .payLater[index]
-                                        .productForThisOperation!
-                                        .productImages!
-                                        .length ==
-                                    0
-                                ? ''
-                                : controller.payLater[index]
-                                    .productForThisOperation!.productImages![0],
-                            price: controller.payLater[index]
-                                .productForThisOperation!.price!,
-                            name: controller
-                                .payLater[index].productForThisOperation!.name!,
-                          );
-                        },
-                      ),
+                    : selected == 0
+                        ? controller.payLaterProductActive.length == 0
+                            ? Center(
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .no_product_found,
+                                    style: TextStyle(
+                                        color: ColorManager.primary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: FontSize.s16)),
+                              )
+                            : GridView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller.payLaterProductActive.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2, mainAxisExtent: 300),
+                                itemBuilder: (context, index) {
+                                  return PayLaterProductWidget(
+                                    index: index,
+                                    id: controller
+                                        .payLaterProductActive[index].groupId!,
+                                    stars: controller
+                                        .payLaterProductActive[index].stars!,
+                                    imageUrl: controller
+                                                .payLaterProductActive[index]
+                                                .images!
+                                                .length ==
+                                            0
+                                        ? ''
+                                        : controller
+                                            .payLaterProductActive[index]
+                                            .images![0],
+                                    price: controller
+                                        .payLaterProductActive[index].price!,
+                                    name: controller
+                                        .payLaterProductActive[index]
+                                        .productName!,
+                                  );
+                                },
+                              )
+                        : controller.payLaterProductComplete.length == 0
+                            ? Center(
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .no_product_found,
+                                    style: TextStyle(
+                                        color: ColorManager.primary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: FontSize.s16)),
+                              )
+                            : GridView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller.payLaterProductComplete.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2, mainAxisExtent: 300),
+                                itemBuilder: (context, index) {
+                                  return PayLaterProductWidget(
+                                    index: index,
+                                    id: controller
+                                        .payLaterProductComplete[index]
+                                        .groupId!,
+                                    stars: controller
+                                        .payLaterProductComplete[index].stars!,
+                                    imageUrl: controller
+                                                .payLaterProductComplete[index]
+                                                .images!
+                                                .length ==
+                                            0
+                                        ? ''
+                                        : controller
+                                            .payLaterProductComplete[index]
+                                            .images![0],
+                                    price: controller
+                                        .payLaterProductComplete[index].price!,
+                                    name: controller
+                                        .payLaterProductComplete[index]
+                                        .productName!,
+                                  );
+                                },
+                              ),
               ),
             )
           ],

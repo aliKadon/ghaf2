@@ -10,11 +10,13 @@ class PayLaterProductWidget extends StatefulWidget {
   final num price;
   final num stars;
   final int index;
+  final String id;
   final String imageUrl;
 
   PayLaterProductWidget(
       {required this.price,
       required this.name,
+      required this.id,
       required this.index,
       required this.stars,
       required this.imageUrl});
@@ -29,7 +31,7 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PayLaterProductView(index: widget.index),
+          builder: (context) => PayLaterProductView(index: widget.index,id: widget.id),
         ));
       },
       child: Padding(
@@ -50,7 +52,7 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                             image: AssetImage(ImageAssets.pizza),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.scaleDown,
                           ),
                         ),
                       ) : Container(
@@ -60,7 +62,7 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                             image: NetworkImage(widget.imageUrl),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.scaleDown,
                           ),
                         ),
                       ),

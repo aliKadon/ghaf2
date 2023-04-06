@@ -72,7 +72,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
   Get.put<HomeViewGetXController>(HomeViewGetXController());
   late final CheckOutGetxController _checkOutGetxController =
   Get.put(CheckOutGetxController());
-  late final Product _product = Get.put(Product());
+
+  // final Product _product = Get.put(Product());
   late final ProfileSettingGetxController _profileSettingGetxController =
   Get.put(ProfileSettingGetxController());
 
@@ -82,7 +83,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
     _profileSettingGetxController.init(context: context);
     _homeViewGetXController.init(context: context);
 
-    Get.put(Product());
+    // Get.put(Product());
     Get.put(LoginViewGetXController(context: context));
     if (AppSharedData.currentUser != null) {
       // _profileSettingGetxController.getUserDetails(context);
@@ -605,24 +606,39 @@ class _HomeViewState extends State<HomeView> with Helpers {
                             scrollDirection: Axis.horizontal,
                             itemCount: controller.mostPopular.length,
                             itemBuilder: (context, index) {
-                              return ProductItemNew(
-                                index: index,
-                                image: controller.mostPopular[index]
-                                    .productImages!
-                                    .length ==
-                                    0
-                                    ? ''
-                                    : controller.mostPopular[index]
-                                    .productImages?[0] ??
-                                    '',
-                                name: controller.mostPopular[index].name ?? '',
-                                price: controller.mostPopular[index].price ?? 0,
-                                stars: controller.mostPopular[index].stars ?? 0,
-                                idProduct: controller.mostPopular[index].id ??
-                                    '',
-                                isFavorite:
-                                controller.mostPopular[index].isFavorite ??
-                                    false,
+                              return Builder(
+                                  builder: (context) {
+                                    Get.put<Product>(
+                                      controller
+                                            .mostPopular[index],tag:
+                                    '${controller.products[index].id}',);
+                                    return ProductItemNew(
+                                      tag:
+                                      '${controller.products[index].id}',
+                                      index: index,
+                                      image: controller.mostPopular[index]
+                                          .productImages!
+                                          .length ==
+                                          0
+                                          ? ''
+                                          : controller.mostPopular[index]
+                                          .productImages?[0] ??
+                                          '',
+                                      name: controller.mostPopular[index]
+                                          .name ?? '',
+                                      price: controller.mostPopular[index]
+                                          .price ?? 0,
+                                      stars: controller.mostPopular[index]
+                                          .stars ?? 0,
+                                      idProduct: controller.mostPopular[index]
+                                          .id ??
+                                          '',
+                                      isFavorite:
+                                      controller.mostPopular[index]
+                                          .isFavorite ??
+                                          false,
+                                    );
+                                  }
                               );
                             },
                           ),
@@ -887,12 +903,18 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 builder: (context) {
                                   return NearByWidget(index: index,
                                     imageUrl: controller.nearbyStores[index]
-                                        .branchLogoImage?.length == 0 || controller.nearbyStores[index]
-                                        .branchLogoImage == null ? '' : controller.nearbyStores[index]
+                                        .branchLogoImage?.length == 0 ||
+                                        controller.nearbyStores[index]
+                                            .branchLogoImage == null
+                                        ? ''
+                                        : controller.nearbyStores[index]
                                         .branchLogoImage!,
-                                  storeName: controller.nearbyStores[index].branchName!,
-                                  branchId: controller.nearbyStores[index].id!,
-                                  address: controller.nearbyStores[index].branchAddress!,);
+                                    storeName: controller.nearbyStores[index]
+                                        .branchName!,
+                                    branchId: controller.nearbyStores[index]
+                                        .id!,
+                                    address: controller.nearbyStores[index]
+                                        .branchAddress!,);
                                 },
                               );
                             },

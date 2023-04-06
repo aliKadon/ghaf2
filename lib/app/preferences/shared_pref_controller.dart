@@ -29,6 +29,7 @@ enum PrefKeys {
   firstStoreName,
   city,
   indexOfPayLaterProduct,
+  idPayLater,
 }
 
 class SharedPrefController {
@@ -116,6 +117,9 @@ class SharedPrefController {
   String get emailGoogle =>
       _sharedPreferences.getString(PrefKeys.googleEmail.toString()) ?? '';
 
+  String get idPayLater =>
+      _sharedPreferences.getString(PrefKeys.idPayLater.name) ?? '';
+
   String get lang1 {
     return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'en';
   }
@@ -160,6 +164,11 @@ class SharedPrefController {
   }
   Future<void> setLastName(String lastName) async {
     await _sharedPreferences.setString(PrefKeys.lastName.name, '${lastName}');
+    // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
+  }
+
+  Future<void> setIdPayLaterProduct(String idPayLaterProduct) async {
+    await _sharedPreferences.setString(PrefKeys.idPayLater.name, '${idPayLaterProduct}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 

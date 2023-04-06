@@ -2,17 +2,34 @@ import 'dart:convert';
 
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/data/api/api_helper.dart';
-import 'package:ghaf_application/domain/model/pay_later.dart';
+import 'package:ghaf_application/domain/model/pay_later_installment.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../domain/model/api_response.dart';
+import '../../../domain/model/pay_later_produc.dart';
 
 class PayLaterApiController with ApiHelper {
   num? totalCredit;
 
-  Future<List<PayLater>> getCustomerInstallments() async {
+  Future<List<PayLaterProduct>> getCustomerPayLaterProduct() async {
     var url =
-        Uri.parse('${Constants.baseUrl}/Orders/get-customer-installments');
+        Uri.parse('${Constants.baseUrl}/Orders/get-installments-by-product');
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        totalCredit = jsonData['totalCredit'];
+        return List<PayLaterProduct>.from(
+            jsonData['data'].map((x) => PayLaterProduct.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
+  Future<List<PayLaterInstallment>> getCustomerInstallments({required String id}) async {
+    var url =
+        Uri.parse('${Constants.baseUrl}/Orders/get-customer-installments?GroupId=$id');
     var response = await http.get(url, headers: headers);
 
     print('=================pay later');
@@ -21,9 +38,9 @@ class PayLaterApiController with ApiHelper {
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {
-        totalCredit = jsonData['totalCredit'];
-        return List<PayLater>.from(
-            jsonData['data'].map((x) => PayLater.fromJson(x)));
+
+        return List<PayLaterInstallment>.from(
+            jsonData['data'].map((x) => PayLaterInstallment.fromJson(x)));
       }
     }
     return [];

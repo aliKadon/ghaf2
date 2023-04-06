@@ -134,13 +134,13 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                   child: Stack(
                     children: [
                       productById["productImages"].length == 0 ? Image.asset(ImageAssets.logo1,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.scaleDown,
                           width: double.infinity,
                           height: MediaQuery
                               .of(context)
                               .size
                               .height * 0.4) : Image.network(productById["productImages"][0],
-                          fit: BoxFit.cover,
+                          fit: BoxFit.scaleDown,
                           width: double.infinity,
                           height: MediaQuery
                               .of(context)

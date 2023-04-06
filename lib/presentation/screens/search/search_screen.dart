@@ -284,17 +284,26 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ProductItemNew(
-                            image: controller
-                                .products[index].productImages?.length == 0 ? '' : controller
-                                .products[index].productImages?[0] ?? '',
-                            name: controller.products[index].name!,
-                            stars: controller.products[index].stars!,
-                            price: controller.products[index].price!,
-                            idProduct:
-                            controller.products[index].id!,
-                        isFavorite: controller.products[index].isFavorite!,
-                        index: index),
+                        child: Builder(
+                          builder: (context) {
+                            Get.put<Product>(
+                              _homeViewGetXController
+                                  .products[index],tag:
+                            '${_homeViewGetXController.products[index].id}',);
+                            return ProductItemNew(
+                              tag: '${_homeViewGetXController.products[index].id}',
+                                image: controller
+                                    .products[index].productImages?.length == 0 ? '' : controller
+                                    .products[index].productImages?[0] ?? '',
+                                name: controller.products[index].name!,
+                                stars: controller.products[index].stars!,
+                                price: controller.products[index].price!,
+                                idProduct:
+                                controller.products[index].id!,
+                            isFavorite: controller.products[index].isFavorite!,
+                            index: index);
+                          }
+                        ),
                       );
                     },
                   ),

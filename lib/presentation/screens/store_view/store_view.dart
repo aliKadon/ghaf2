@@ -12,6 +12,7 @@ import 'package:ghaf_application/presentation/widgets/most_popular_product_widge
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 import 'package:ghaf_application/presentation/widgets/widget_in_store_screen_widget.dart';
 
+import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
 
@@ -346,28 +347,35 @@ class _StoreViewState extends State<StoreView> {
                         shrinkWrap: true,
                         itemCount: controller.recommendedProduct.length,
                         itemBuilder: (context, index) {
-                          return MostPopularProductWidget(
-                              image: controller
-                                  .recommendedProduct[index]
-                                  .productImages
-                                  ?.length ==
-                                  0
-                                  ? ''
-                                  : controller.recommendedProduct[index]
-                                  .productImages![0],
-                              name: controller
-                                  .recommendedProduct[index].name!,
-                              stars: controller
-                                  .recommendedProduct[index].stars!,
-                              index: index,
-                              price: controller
-                                  .recommendedProduct[index].price!,
-                              isFavorite: controller
-                                  .recommendedProduct[index]
-                                  .isFavorite!,
-                              controller: controller.recommendedProduct,
-                              idProduct: controller
-                                  .recommendedProduct[index].id!);
+                          return Builder(
+                            builder: (context) {
+                              Get.put<Product>(
+                                controller.recommendedProduct[index],tag:
+                              '${controller.recommendedProduct[index].id}recommend',);
+                              return ProductItemNew(
+                                tag: '${controller.recommendedProduct[index].id}recommend',
+                                  image: controller
+                                      .recommendedProduct[index]
+                                      .productImages
+                                      ?.length ==
+                                      0
+                                      ? ''
+                                      : controller.recommendedProduct[index]
+                                      .productImages![0],
+                                  name: controller
+                                      .recommendedProduct[index].name!,
+                                  stars: controller
+                                      .recommendedProduct[index].stars!,
+                                  index: index,
+                                  price: controller
+                                      .recommendedProduct[index].price!,
+                                  isFavorite: controller
+                                      .recommendedProduct[index]
+                                      .isFavorite!,
+                                  idProduct: controller
+                                      .recommendedProduct[index].id!);
+                            }
+                          );
                         },
                       ),
                     ),
@@ -483,24 +491,33 @@ class _StoreViewState extends State<StoreView> {
                         shrinkWrap: true,
                         itemCount: controller.productByType.length,
                         itemBuilder: (context, index) {
-                          return ProductItemNew(
-                              image: controller.productByType[index]
-                                  .productImages?.length ==
-                                  0
-                                  ? ''
-                                  : controller.productByType[index]
-                                  .productImages?[0],
-                              name:
-                              controller.productByType[index].name!,
-                              stars: controller
-                                  .productByType[index].stars!,
-                              price: controller
-                                  .productByType[index].price!,
-                              index: index,
-                              isFavorite: controller
-                                  .productByType[index].isFavorite!,
-                              idProduct:
-                              controller.productByType[index].id!);
+                          return Builder(
+                            builder: (context) {
+                              Get.put<Product>(
+                                _homeViewGetXController
+                                    .productByType[index],tag:
+                              '${_homeViewGetXController.productByType[index].id}storeView',);
+                              return ProductItemNew(
+                                tag: '${_homeViewGetXController.productByType[index].id}storeView',
+                                  image: controller.productByType[index]
+                                      .productImages?.length ==
+                                      0
+                                      ? ''
+                                      : controller.productByType[index]
+                                      .productImages?[0],
+                                  name:
+                                  controller.productByType[index].name!,
+                                  stars: controller
+                                      .productByType[index].stars!,
+                                  price: controller
+                                      .productByType[index].price!,
+                                  index: index,
+                                  isFavorite: controller
+                                      .productByType[index].isFavorite!,
+                                  idProduct:
+                                  controller.productByType[index].id!);
+                            }
+                          );
                         },
                       ),
                     ),

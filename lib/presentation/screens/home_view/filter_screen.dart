@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -119,20 +120,30 @@ class _FilterScreenState extends State<FilterScreen> {
                             itemCount: controller.products.length,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return ProductItemNew(
-                                  image: controller.products[index]
-                                              .productImages?.length ==
+                              return Builder(
+
+                                builder: (context) {
+                                  Get.put<Product>(
+                                    _homeViewGetXController
+                                        .products[index],tag:
+                                  '${_homeViewGetXController.products[index].id}filter',);
+                                  return ProductItemNew(
+                                    tag: '${_homeViewGetXController.products[index].id}filter',
+                                      image: controller.products[index]
+                                          .productImages?.length ==
                                           0
-                                      ? ''
-                                      : controller
+                                          ? ''
+                                          : controller
                                           .products[index].productImages![0],
-                                  name: controller.products[index].name!,
-                                  stars: controller.products[index].stars!,
-                                  price: controller.products[index].price!,
-                                  index: index,
-                                  isFavorite:
+                                      name: controller.products[index].name!,
+                                      stars: controller.products[index].stars!,
+                                      price: controller.products[index].price!,
+                                      index: index,
+                                      isFavorite:
                                       controller.products[index].isFavorite!,
-                                  idProduct: controller.products[index].id!);
+                                      idProduct: controller.products[index].id!);
+                                },
+                              );
                             },
                           ),
               )

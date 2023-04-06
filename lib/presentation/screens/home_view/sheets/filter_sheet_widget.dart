@@ -50,7 +50,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
   ];
 
   var isSelected = false;
-  var selected = 0;
+  var selected = -1;
 
   var stars = '';
 

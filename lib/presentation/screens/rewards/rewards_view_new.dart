@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/screens/rewards/rewards_getx_contr
 import 'package:ghaf_application/presentation/widgets/free_delivery_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -243,19 +244,28 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                           itemBuilder: (context, index) {
                             print('===================controller');
                             print(_offersScreenGetXController.offers);
-                            return ProductItemNew(
-                              image: controller.offers[index].productImages!
-                                          .length !=
-                                      0
-                                  ? controller.offers[index].productImages![0]
-                                  : '',
-                              stars: controller.offers[index].stars!,
-                              price: controller.offers[index].price!,
-                              name: controller.offers[index].name!,
-                              idProduct: controller.offers[index].id!,
-                              isFavorite: controller.offers[index].isFavorite!,
-                              index: index,
-                              // controller: _offersScreenGetXController.offers,
+                            return Builder(
+                              builder: (context) {
+                                Get.put<Product>(
+                                  _offersScreenGetXController
+                                      .offers[index],tag:
+                                '${_offersScreenGetXController.offers[index].id}offers',);
+                                return ProductItemNew(
+                                  tag: '${_offersScreenGetXController.offers[index].id}offers',
+                                  image: controller.offers[index].productImages!
+                                              .length !=
+                                          0
+                                      ? controller.offers[index].productImages![0]
+                                      : '',
+                                  stars: controller.offers[index].stars!,
+                                  price: controller.offers[index].price!,
+                                  name: controller.offers[index].name!,
+                                  idProduct: controller.offers[index].id!,
+                                  isFavorite: controller.offers[index].isFavorite!,
+                                  index: index,
+                                  // controller: _offersScreenGetXController.offers,
+                                );
+                              }
                             );
                           },
                         ),
