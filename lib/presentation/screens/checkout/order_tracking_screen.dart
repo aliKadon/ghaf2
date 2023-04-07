@@ -436,7 +436,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Zidan',
+                                      '${_checkOutGetxController.order!.branch!.storeName}',
                                       style: TextStyle(
                                           color: ColorManager.primaryDark,
                                           fontWeight: FontWeight.w600,
@@ -457,16 +457,28 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 SizedBox(
                                   width: AppSize.s10,
                                 ),
-                                Icon(
-                                  Icons.textsms_outlined,
-                                  color: ColorManager.primary,
+                                GestureDetector(
+                                  onTap: () async {
+                                    var whatsapp ="+971${_checkOutGetxController.order!.branch!.whatsApp}";
+                                    var whatsappURl_android = "whatsapp://send?phone="+whatsapp+"&text=hello";
+                                    await launch(whatsappURl_android);
+                                  },
+                                  child: Icon(
+                                    Icons.textsms_outlined,
+                                    color: ColorManager.primary,
+                                  ),
                                 ),
                                 SizedBox(
                                   width: AppSize.s16,
                                 ),
-                                Icon(
-                                  Icons.phone_outlined,
-                                  color: ColorManager.primary,
+                                GestureDetector(
+                                  onTap: () {
+                                    _contactPhoneNumber(_checkOutGetxController.order!.branch!.telephone!);
+                                  },
+                                  child: Icon(
+                                    Icons.phone_outlined,
+                                    color: ColorManager.primary,
+                                  ),
                                 ),
                               ],
                             ),
@@ -1109,12 +1121,18 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                             },
                             child: Row(
                               children: [
-                                SizedBox(width: AppSize.s30,),
-                                Icon(Icons.phone,color: ColorManager.primaryDark,),
+                                SizedBox(
+                                  width: AppSize.s30,
+                                ),
+                                Icon(
+                                  Icons.phone,
+                                  color: ColorManager.primaryDark,
+                                ),
                                 Spacer(),
                                 Text(
                                   telephone,
-                                  style: TextStyle(color: ColorManager.primaryDark),
+                                  style: TextStyle(
+                                      color: ColorManager.primaryDark),
                                 ),
                                 Spacer(),
                               ],
@@ -1127,7 +1145,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         child: ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor:
-                                MaterialStatePropertyAll(Colors.white)),
+                                    MaterialStatePropertyAll(Colors.white)),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },

@@ -579,7 +579,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, Routes.allProductScreen);
+                                context, Routes.allProductScreen,arguments: 'mostPopular');
                           },
                           child: Text(
                             AppLocalizations.of(context)!.more,
@@ -595,7 +595,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                   GetBuilder<HomeViewGetXController>(
                     // id: 'products',
                     builder: (controller) =>
-                        Container(
+                    controller.mostPopular.length == 0 ? Container() : Container(
                           height: MediaQuery
                               .of(context)
                               .size
@@ -665,7 +665,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                             InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, Routes.allProductScreen);
+                                    context, Routes.allProductScreen,arguments: 'order');
                               },
                               child: Text(
                                 AppLocalizations.of(context)!.more,
@@ -870,7 +870,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, Routes.allProductScreen);
+                                context, Routes.allProductScreen,arguments: 'near');
                           },
                           child: Text(
                             AppLocalizations.of(context)!.more,

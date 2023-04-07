@@ -240,7 +240,7 @@ class RouteGenerator {
       case Routes.homePage:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.allProductScreen:
-        return MaterialPageRoute(builder: (_) => AllProductScreen());
+        return MaterialPageRoute(builder: (_) => AllProductScreen(type: settings.arguments as String,));
       case Routes.accountView:
         return MaterialPageRoute(builder: (_) => AccountView());
       case Routes.loginRoute:

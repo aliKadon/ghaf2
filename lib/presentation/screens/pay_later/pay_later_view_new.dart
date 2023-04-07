@@ -29,6 +29,14 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
     super.initState();
   }
 
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   _payLaterGetxController.payLaterProductActive = [];
+  //   _payLaterGetxController.payLaterProductComplete = [];
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     List payLaterType = [

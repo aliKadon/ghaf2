@@ -41,6 +41,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
       SharedPrefController().setIdPayLaterProduct(widget.id!);
     }
     SharedPrefController().setIndexOfPayLaterProduct(widget.index!);
+
     super.initState();
   }
 
@@ -236,7 +237,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                         ),
                         Spacer(),
                         Text(
-                          '20 days',
+                          '${_payLaterGetxController.daysBetweenInstallments} days',
                         ),
                       ],
                     ),

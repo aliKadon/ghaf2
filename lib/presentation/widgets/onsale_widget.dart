@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 
+import '../../app/utils/app_shared_data.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/product_view/product_view_new.dart';
 
-class OnsaleWidget extends StatelessWidget {
+class OnsaleWidget extends StatefulWidget {
+  String tag;
+
+  OnsaleWidget({required this.tag});
+
+  @override
+  State<OnsaleWidget> createState() => _OnsaleWidgetState();
+}
+
+class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
+  //controller
+  late final Product _product = Get.find<Product>(tag: widget.tag);
+  final OffersScreenGetXController _offersScreenGetXController =
+  Get.find<OffersScreenGetXController>();
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductViewNew(idProduct: ''),
+          builder: (context) => ProductViewNew(idProduct: _product.id!),
         ));
       },
       child: Padding(
@@ -25,38 +45,106 @@ class OnsaleWidget extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.29,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          image: DecorationImage(
-                            image: AssetImage(ImageAssets.pizza),
-                            fit: BoxFit.cover,
+                      GestureDetector(
+                        onTap: () {
+                          _offersScreenGetXController.addItemToonSaleCart(
+                              price: _product.price!,
+                              minOrder: _product.branch!.minOrder!);
+                        },
+                        child: _product.productImages!.length == 0
+                            ? Container(
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.29,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            image: DecorationImage(
+                              image: AssetImage(ImageAssets.pizza),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: GridTile(
-                            footer: GridTileBar(
-                                backgroundColor: ColorManager.primaryDark,
-                                title: Center(child: Text('Save 12 AED'))),
-                            child: Container(),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: GridTile(
+                              footer: GridTileBar(
+                                  backgroundColor: ColorManager.primaryDark,
+                                  title:
+                                  Center(child: Text('Save 12 AED'))),
+                              child: Container(),
+                            ),
+                          ),
+                        )
+                            : Container(
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.29,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            image: DecorationImage(
+                              image:
+                              NetworkImage(_product.productImages![0]),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: GridTile(
+                              footer: GridTileBar(
+                                  backgroundColor: ColorManager.primaryDark,
+                                  title:
+                                  Center(child: Text('Save 12 AED'))),
+                              child: Container(),
+                            ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.black54),
-                            padding: EdgeInsets.all(8),
-                            child: Image.asset(
-                              IconsAssets.heart,
-                              height: AppSize.s24,
-                              width: AppSize.s24,
-                            )),
+                      GetBuilder<Product>(
+                        tag: widget.tag,
+                        builder: (controller) =>
+                            InkWell(
+                              onTap: () {
+                                if (AppSharedData.currentUser == null) {
+                                  showSignInSheet(
+                                      context: context, role: 'Customer');
+                                } else {
+                                  _product.toggleIsFavorite(
+                                    context: context,
+                                    id: _product.id!,
+                                  );
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: Colors.black54),
+                                  padding: EdgeInsets.all(8),
+                                  child: _product.isFavorite!
+                                      ? Image.asset(
+                                    IconsAssets.heart1,
+                                    height: AppSize.s24,
+                                    width: AppSize.s24,
+                                    color: ColorManager.red,
+                                  )
+                                      : Image.asset(
+                                    IconsAssets.heart,
+                                    height: AppSize.s24,
+                                    width: AppSize.s24,
+                                  ),
+                                ),
+                              ),
+                            ),
                       ),
                     ],
                   ),
@@ -65,14 +153,14 @@ class OnsaleWidget extends StatelessWidget {
                   )
                 ],
               ),
-              Text('Pizza',
+              Text(_product.name!,
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
                 children: [
-                  Text('22.5 AED',
+                  Text('${_product.price} ${_product.isoCurrencySymbol}',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -87,7 +175,7 @@ class OnsaleWidget extends StatelessWidget {
                   SizedBox(
                     width: 8,
                   ),
-                  Text('4.0',
+                  Text('${_product.stars}',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

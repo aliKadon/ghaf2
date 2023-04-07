@@ -48,7 +48,7 @@ class ScheduledOrder {
         userCredentialsId: json['userCredentialsId'],
         branchId: json['branchId'],
         paymentMethodId: json['paymentMethodId'],
-        deliveryPoint: Address.fromJson(json['deliveryPoint']),
+        deliveryPoint: json['deliveryPoint'] == null ? null : Address.fromJson(json['deliveryPoint']),
         deliveryMethod: DeliveryMethod.fromJson(json['deliveryMethod']),
         branch: Branch.fromJson(json['branch']),
         customer: json['customer'],

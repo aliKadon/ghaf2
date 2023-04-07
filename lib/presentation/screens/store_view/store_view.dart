@@ -172,8 +172,16 @@ class _StoreViewState extends State<StoreView> {
                           bottom: 0,
                           start: 0,
                           end: 0,
-                          child: Image.asset(
+                          child: _categoriesGetxController.branchById
+                              ?.branchLogoImage == null ||
+                              _categoriesGetxController.branchById
+                                  ?.branchLogoImage == '' ? Image.asset(
                             ImageAssets.coffeeHouse,
+                            height: AppSize.s84,
+                            width: AppSize.s84,
+                          ) : Image.network(
+                            _categoriesGetxController.branchById
+                                !.branchLogoImage!,
                             height: AppSize.s84,
                             width: AppSize.s84,
                           ),
@@ -348,33 +356,35 @@ class _StoreViewState extends State<StoreView> {
                         itemCount: controller.recommendedProduct.length,
                         itemBuilder: (context, index) {
                           return Builder(
-                            builder: (context) {
-                              Get.put<Product>(
-                                controller.recommendedProduct[index],tag:
-                              '${controller.recommendedProduct[index].id}recommend',);
-                              return ProductItemNew(
-                                tag: '${controller.recommendedProduct[index].id}recommend',
-                                  image: controller
-                                      .recommendedProduct[index]
-                                      .productImages
-                                      ?.length ==
-                                      0
-                                      ? ''
-                                      : controller.recommendedProduct[index]
-                                      .productImages![0],
-                                  name: controller
-                                      .recommendedProduct[index].name!,
-                                  stars: controller
-                                      .recommendedProduct[index].stars!,
-                                  index: index,
-                                  price: controller
-                                      .recommendedProduct[index].price!,
-                                  isFavorite: controller
-                                      .recommendedProduct[index]
-                                      .isFavorite!,
-                                  idProduct: controller
-                                      .recommendedProduct[index].id!);
-                            }
+                              builder: (context) {
+                                Get.put<Product>(
+                                  controller.recommendedProduct[index], tag:
+                                '${controller.recommendedProduct[index]
+                                    .id}recommend',);
+                                return ProductItemNew(
+                                    tag: '${controller.recommendedProduct[index]
+                                        .id}recommend',
+                                    image: controller
+                                        .recommendedProduct[index]
+                                        .productImages
+                                        ?.length ==
+                                        0
+                                        ? ''
+                                        : controller.recommendedProduct[index]
+                                        .productImages![0],
+                                    name: controller
+                                        .recommendedProduct[index].name!,
+                                    stars: controller
+                                        .recommendedProduct[index].stars!,
+                                    index: index,
+                                    price: controller
+                                        .recommendedProduct[index].price!,
+                                    isFavorite: controller
+                                        .recommendedProduct[index]
+                                        .isFavorite!,
+                                    idProduct: controller
+                                        .recommendedProduct[index].id!);
+                              }
                           );
                         },
                       ),
@@ -401,11 +411,13 @@ class _StoreViewState extends State<StoreView> {
                       padding: const EdgeInsets.all(8.0),
                       child: GetBuilder<HomeViewGetXController>(
                           builder: (controller) {
-                            if(_homeViewGetXController.productType.length > 0) {
+                            if (_homeViewGetXController.productType.length >
+                                0) {
                               _homeViewGetXController.getProductByType(
                                   context: context,
                                   bid: widget.branchId,
-                                  productTypeId: _homeViewGetXController.productType[selected].id);
+                                  productTypeId: _homeViewGetXController
+                                      .productType[selected].id);
                             }
                             return ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -492,31 +504,33 @@ class _StoreViewState extends State<StoreView> {
                         itemCount: controller.productByType.length,
                         itemBuilder: (context, index) {
                           return Builder(
-                            builder: (context) {
-                              Get.put<Product>(
-                                _homeViewGetXController
-                                    .productByType[index],tag:
-                              '${_homeViewGetXController.productByType[index].id}storeView',);
-                              return ProductItemNew(
-                                tag: '${_homeViewGetXController.productByType[index].id}storeView',
-                                  image: controller.productByType[index]
-                                      .productImages?.length ==
-                                      0
-                                      ? ''
-                                      : controller.productByType[index]
-                                      .productImages?[0],
-                                  name:
-                                  controller.productByType[index].name!,
-                                  stars: controller
-                                      .productByType[index].stars!,
-                                  price: controller
-                                      .productByType[index].price!,
-                                  index: index,
-                                  isFavorite: controller
-                                      .productByType[index].isFavorite!,
-                                  idProduct:
-                                  controller.productByType[index].id!);
-                            }
+                              builder: (context) {
+                                Get.put<Product>(
+                                  _homeViewGetXController
+                                      .productByType[index], tag:
+                                '${_homeViewGetXController.productByType[index]
+                                    .id}storeView',);
+                                return ProductItemNew(
+                                    tag: '${_homeViewGetXController
+                                        .productByType[index].id}storeView',
+                                    image: controller.productByType[index]
+                                        .productImages?.length ==
+                                        0
+                                        ? ''
+                                        : controller.productByType[index]
+                                        .productImages?[0],
+                                    name:
+                                    controller.productByType[index].name!,
+                                    stars: controller
+                                        .productByType[index].stars!,
+                                    price: controller
+                                        .productByType[index].price!,
+                                    index: index,
+                                    isFavorite: controller
+                                        .productByType[index].isFavorite!,
+                                    idProduct:
+                                    controller.productByType[index].id!);
+                              }
                           );
                         },
                       ),

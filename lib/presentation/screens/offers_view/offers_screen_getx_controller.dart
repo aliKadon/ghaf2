@@ -15,9 +15,28 @@ class OffersScreenGetXController extends GetxController with Helpers {
   //   update();
   // }
 
+  var isCanBuyFromOnSale = false;
+  num total = 0;
+  num subtotal = 0;
+
+
+  void addItemToonSaleCart({required num price,required num minOrder}) {
+    total += price;
+    subtotal = minOrder;
+
+    if(subtotal > 0) {
+      subtotal = minOrder - total;
+    }
+
+
+
+    update();
+  }
+
   // vars.
   late final StoreApiController _storeApiController = StoreApiController();
   List<Product> offers = [];
+  List<Product> gifts = [];
 
   // // constructor fields.
   // final BuildContext context;
@@ -41,6 +60,22 @@ class OffersScreenGetXController extends GetxController with Helpers {
     // isOffersLoading = false;
     try {
       offers = await _storeApiController.getOffers(cid: cid,bid: bid,sid: sid);
+      // await _storeApiController.getProducts();
+      isOffersLoading = false;
+      update();
+    } catch (error) {
+      // error.
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  // get gifts.
+  void getGifts({required BuildContext context,String? cid,String? bid,String? sid}) async {
+
+    // offers = await _storeApiController.getOffers();
+    // isOffersLoading = false;
+    try {
+      gifts = await _storeApiController.getGifts(cid: cid,bid: bid,sid: sid);
       // await _storeApiController.getProducts();
       isOffersLoading = false;
       update();

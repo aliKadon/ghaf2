@@ -18,7 +18,7 @@ class Product extends GetxController with Helpers {
   HomeViewGetXController _homeViewGetXController =
       Get.put<HomeViewGetXController>(HomeViewGetXController());
   OffersScreenGetXController _offersScreenGetXController =
-  Get.put<OffersScreenGetXController>(OffersScreenGetXController());
+      Get.put<OffersScreenGetXController>(OffersScreenGetXController());
 
   bool? isFav;
 
@@ -28,8 +28,6 @@ class Product extends GetxController with Helpers {
     required BuildContext context,
     bool sendRequest = true,
   }) {
-
-
     // _homeViewGetXController.getProducts(context: context);
     // _homeViewGetXController.getMostPopularProduct();
     // _offersScreenGetXController.getOffers(context: context);
@@ -52,7 +50,6 @@ class Product extends GetxController with Helpers {
 
     update();
     if (sendRequest) _toggleFavoriteRequest(context: context, id: id);
-
   }
 
   void init() {
@@ -104,6 +101,7 @@ class Product extends GetxController with Helpers {
       this.isFavorite,
       this.isInCart,
       this.category,
+      this.canPayLater,
       this.storeStars});
 
   String? id;
@@ -113,7 +111,7 @@ class Product extends GetxController with Helpers {
   ProductType? productType;
   num? price;
   bool? subscriptionHide;
-
+  bool? canPayLater;
   String? isoCurrencySymbol;
   int? quantity;
   bool? visible;
@@ -145,9 +143,12 @@ class Product extends GetxController with Helpers {
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         name: json["name"],
+        canPayLater: json["canPayLater"],
         description: json["description"],
         characteristics: json["characteristics"],
-        productType:json["productType"] == null ? null : ProductType.fromJson(json["productType"]),
+        productType: json["productType"] == null
+            ? null
+            : ProductType.fromJson(json["productType"]),
         price: json["price"],
         isoCurrencySymbol: json["isoCurrencySymbol"],
         quantity: json["quantity"],
@@ -189,6 +190,7 @@ class Product extends GetxController with Helpers {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "canPayLater": canPayLater,
         "description": description,
         "characteristics": characteristics,
         "productType": productType,
@@ -218,7 +220,6 @@ class Product extends GetxController with Helpers {
   void _toggleFavoriteRequest({
     required String id,
     required BuildContext context,
-
   }) async {
     try {
       final ApiResponse apiResponse =
@@ -230,12 +231,20 @@ class Product extends GetxController with Helpers {
       } else {
         // failed.
         showSnackBar(context, message: apiResponse.message, error: true);
-        toggleIsFavorite(context: context, sendRequest: false, id: id,);
+        toggleIsFavorite(
+          context: context,
+          sendRequest: false,
+          id: id,
+        );
       }
     } catch (error) {
       // error.
       showSnackBar(context, message: error.toString(), error: true);
-      toggleIsFavorite(context: context, sendRequest: false, id: id,);
+      toggleIsFavorite(
+        context: context,
+        sendRequest: false,
+        id: id,
+      );
     }
   }
 

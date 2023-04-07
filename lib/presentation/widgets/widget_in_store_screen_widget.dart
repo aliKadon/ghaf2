@@ -30,7 +30,7 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
         }else if (text == AppLocalizations.of(context)!.on_sale) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => OnsaleView(),
+              builder: (context) => OnsaleView(bid: bid),
             ),
           );
         }else if (text == AppLocalizations.of(context)!.trending ) {

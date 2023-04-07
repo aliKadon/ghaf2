@@ -91,6 +91,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   late final AddsApiController _addsApiController = AddsApiController();
   List<Category> categories = [];
   List<Product> products = [];
+  List<Product> payLaterProduct = [];
   List<Product> mostPopular = [];
   List<Product> recommendedProduct = [];
   List<Product> onlyOnghaf = [];
@@ -99,6 +100,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   List<StoreAdds> storeAddsList = [];
   List<NearbyStores> nearbyStores = [];
   List<ProductType> productType = [];
+  List<Product> product = [];
   String search = '';
 
   // filter.
@@ -163,6 +165,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     try {
       mostPopular = await _storeApiController.getMostPopularProduct(bid: bid);
       isLoadingPopular = false;
+      product = mostPopular;
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
@@ -294,6 +297,12 @@ class HomeViewGetXController extends GetxController with Helpers {
         filterBy: filterBy,
         // filterBy: ModalRoute.of(context)?.settings.arguments as String,
       );
+      for (Product product in products) {
+        if(product.canPayLater!) {
+          payLaterProduct.removeWhere((element) => element.id == product.id);
+          payLaterProduct.add(product);
+        }
+      }
       isProductsLoading = false;
     } on DioError catch (error) {
       // error.

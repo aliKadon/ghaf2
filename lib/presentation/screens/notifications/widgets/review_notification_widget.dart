@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/domain/model/items.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
@@ -9,29 +10,61 @@ import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_shop
 import '../../../resources/font_manager.dart';
 
 class ReviewNotificationWidget extends StatelessWidget {
+  final num sequenceNumber;
+  final String createDate;
+  String? branchLogoImage;
+  String? deliveryDate;
+  final List<Items> items;
+  final num orderCostForCustomer;
+
+  ReviewNotificationWidget(
+      {required this.branchLogoImage,
+      required this.createDate,
+      required this.items,
+      required this.deliveryDate,
+      required this.orderCostForCustomer,
+      required this.sequenceNumber});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListTile(
-        leading: Image.asset(ImageAssets.brStore),
-        title: Text('baskin robbins',
+        leading: branchLogoImage == null
+            ? Image.asset(ImageAssets.brStore)
+            : Image.network(
+                branchLogoImage!,
+                errorBuilder: (context, error, stackTrace) =>
+                    Image.asset(ImageAssets.x, color: ColorManager.red),
+              ),
+        title: Text('# $sequenceNumber',
             style: TextStyle(
                 color: ColorManager.primaryDark, fontWeight: FontWeight.w600)),
-        subtitle: Text('20 dec 2022',
-            style: TextStyle(color: ColorManager.greyLight)),
+        subtitle:
+            Text(createDate, style: TextStyle(color: ColorManager.greyLight)),
         trailing: ElevatedButton(
             style: ButtonStyle(
                 backgroundColor:
                     MaterialStatePropertyAll(ColorManager.primaryDark)),
             onPressed: () {
-              _customDialogRate(context);
+              _customDialogRate(
+                  context: context,
+                  createDate: createDate,
+                  items: items,
+                  orderCostForCustomer: orderCostForCustomer,
+                  deliveryDate: deliveryDate);
             },
             child: Text(AppLocalizations.of(context)!.rate)),
       ),
     );
   }
 
-  void _customDialogRate(context) async {
+  void _customDialogRate({
+    required BuildContext context,
+    required List<Items> items,
+    required String createDate,
+    required String? deliveryDate,
+    required num orderCostForCustomer,
+  }) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -77,18 +110,19 @@ class ReviewNotificationWidget extends StatelessWidget {
                             children: [
                               ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: 2,
+                                itemCount: items.length,
                                 itemBuilder: (context, index) {
                                   return Row(
                                     children: [
                                       Text(
-                                        '1 x coffee',
+                                        '${items[index].quanity} x ${items[index].name}',
                                         style: TextStyle(
                                             color: ColorManager.primaryDark,
                                             fontWeight: FontWeight.w600),
                                       ),
                                       Spacer(),
-                                      Text('20 AED'),
+                                      Text(
+                                          '${items[index].price} ${items[index].isoCurrencySymbol}'),
                                       SizedBox(
                                         height: AppSize.s24,
                                       )
@@ -110,7 +144,8 @@ class ReviewNotificationWidget extends StatelessWidget {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Spacer(),
-                                  Text('40 AED',
+                                  Text(
+                                      '${orderCostForCustomer} ${items[0].isoCurrencySymbol}',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: FontSize.s14,
@@ -132,7 +167,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                                   fontWeight: FontWeight.w600),
                             ),
                             Spacer(),
-                            Text('10\\3\\2023',
+                            Text('${createDate}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: FontSize.s12,
@@ -152,7 +187,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                                   fontWeight: FontWeight.w600),
                             ),
                             Spacer(),
-                            Text('10\\3\\2023',
+                            Text('${deliveryDate}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: FontSize.s12,
