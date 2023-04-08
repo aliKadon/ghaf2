@@ -1,14 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/presentation/screens/checkout/cancelling_order_screen.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../checkout/check_out_getx_controller.dart';
+import '../checkout/order_tracking_screen.dart';
+import 'controller/help_getx_controller.dart';
 
-class ReportDelayedScreen extends StatelessWidget {
+class ReportDelayedScreen extends StatefulWidget {
+  String? orderId;
+  String? name;
+  String? imageUrl;
+
+  ReportDelayedScreen({this.orderId, this.name, this.imageUrl});
+
+  @override
+  State<ReportDelayedScreen> createState() => _ReportDelayedScreenState();
+}
+
+class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
+  //controller
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.put(CheckOutGetxController());
+  late final HelpGetxController _helpGetxController =
+      Get.put(HelpGetxController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _checkOutGetxController.getOrderById(
+        context: context, orderId: widget.orderId!);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,10 +49,7 @@ class ReportDelayedScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.06,
+              height: MediaQuery.of(context).size.height * 0.06,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -59,19 +87,28 @@ class ReportDelayedScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Container(
-                    height: AppSize.s110,
-                    width: AppSize.s110,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                            image: AssetImage(ImageAssets.pizza))),
-                  ),
+                  widget.imageUrl == null || widget.imageUrl == ''
+                      ? Container(
+                          height: AppSize.s110,
+                          width: AppSize.s110,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  image: AssetImage(ImageAssets.pizza))),
+                        )
+                      : Container(
+                          height: AppSize.s110,
+                          width: AppSize.s110,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  image: NetworkImage(widget.imageUrl!))),
+                        ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'pizza neew pizza',
+                        '${widget.name}',
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: FontSize.s14,
@@ -80,22 +117,35 @@ class ReportDelayedScreen extends StatelessWidget {
                       SizedBox(
                         height: AppSize.s14,
                       ),
-                      Text(
-                        'ordered on 9 dec 2022',
-                        style: TextStyle(
-                            color: ColorManager.greyLight,
-                            fontWeight: FontWeight.w500,
-                            fontSize: FontSize.s14),
-                      ),
+                      // Text(
+                      //   'ordered on 9 dec 2022',
+                      //   style: TextStyle(
+                      //       color: ColorManager.greyLight,
+                      //       fontWeight: FontWeight.w500,
+                      //       fontSize: FontSize.s14),
+                      // ),
                       SizedBox(
                         height: AppSize.s14,
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.review_order,
-                        style: TextStyle(
-                            color: ColorManager.primaryDark,
-                            fontWeight: FontWeight.w500,
-                            fontSize: FontSize.s14),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => OrderTrackingScreen(
+                                orderId: widget.orderId!,
+                                source: _checkOutGetxController
+                                    .order!.deliveryPoint!,
+                                destination: _checkOutGetxController
+                                    .order!.branch!.branchAddress!),
+                          ));
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.review_order,
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w500,
+                              fontSize: FontSize.s14),
+                        ),
                       ),
                     ],
                   ),
@@ -113,7 +163,7 @@ class ReportDelayedScreen extends StatelessWidget {
                   fontSize: FontSize.s18),
             ),
             Text(
-              '# 1212',
+              '# ${_checkOutGetxController.order?.sequenceNumber}',
               style: TextStyle(
                   color: ColorManager.primary,
                   fontWeight: FontWeight.w500,
@@ -130,13 +180,11 @@ class ReportDelayedScreen extends StatelessWidget {
                   fontSize: FontSize.s18),
             ),
             Container(
-              padding:
-              EdgeInsets.symmetric(horizontal: AppPadding.p8),
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p8),
               decoration: BoxDecoration(
                 color: ColorManager.white,
                 borderRadius: BorderRadius.circular(AppRadius.r8),
-                border: Border.all(
-                    width: AppSize.s1, color: ColorManager.grey),
+                border: Border.all(width: AppSize.s1, color: ColorManager.grey),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,20 +195,12 @@ class ReportDelayedScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'home',
+                        '${_checkOutGetxController.order?.deliveryPoint?.addressName}',
                         style: getSemiBoldStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s16,
                         ),
                       ),
-                      Spacer(),
-                      Visibility(
-                        visible: false,
-                        child: Icon(
-                          Icons.check_circle,
-                          color: Colors.lightGreenAccent,
-                        ),
-                      )
                     ],
                   ),
 
@@ -177,7 +217,7 @@ class ReportDelayedScreen extends StatelessWidget {
                       width: AppSize.s8,
                     ),
                     Text(
-                      'home',
+                      '${_checkOutGetxController.order?.deliveryPoint?.buildingOrStreetName}',
                       style: getRegularStyle(
                         color: ColorManager.black,
                       ),
@@ -212,7 +252,7 @@ class ReportDelayedScreen extends StatelessWidget {
                       width: AppSize.s8,
                     ),
                     Text(
-                      'zidan zidan',
+                      '${AppSharedData.currentUser?.firstName} ${AppSharedData.currentUser?.lastName}',
                       style: getRegularStyle(
                         color: ColorManager.black,
                       ),
@@ -231,7 +271,7 @@ class ReportDelayedScreen extends StatelessWidget {
                       width: AppSize.s8,
                     ),
                     Text(
-                      '55267',
+                      '${_checkOutGetxController.order?.deliveryPoint?.phone}',
                       style: getRegularStyle(
                         color: ColorManager.black,
                       ),
@@ -254,15 +294,17 @@ class ReportDelayedScreen extends StatelessWidget {
                       // await call(
                       //     Telephone: widget.orderId['branch']
                       //         ['telephone']);
+                      _callShopDialog(
+                          context,
+                          _checkOutGetxController.order?.branch?.telephone ??
+                              '22114488');
                     },
                     child: Container(
                       width: AppSize.s60,
                       height: AppSize.s110,
                       child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             IconsAssets.call2,
@@ -287,8 +329,9 @@ class ReportDelayedScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CancellingOrderScreen(),));
+                      _helpGetxController.cancelOrder(
+                          context: context,
+                          id: _checkOutGetxController.order!.id!);
                       // canLaunchUrl('tel://+1234567890'),
                       // await call(
                       //     Telephone: widget.orderId['branch']
@@ -298,10 +341,8 @@ class ReportDelayedScreen extends StatelessWidget {
                       width: AppSize.s60,
                       height: AppSize.s110,
                       child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             ImageAssets.x,
@@ -327,6 +368,9 @@ class ReportDelayedScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () async {
+                      _helpGetxController.requestCallBack(
+                          context: context,
+                          bid: _checkOutGetxController.order!.branch!.id!);
                       // canLaunchUrl('tel://+1234567890'),
                       // await call(
                       //     Telephone: widget.orderId['branch']
@@ -336,12 +380,13 @@ class ReportDelayedScreen extends StatelessWidget {
                       width: AppSize.s60,
                       height: AppSize.s110,
                       child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.center,
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.phone_callback, color: Colors.white,),
+                          Icon(
+                            Icons.phone_callback,
+                            color: Colors.white,
+                          ),
                           SizedBox(
                             height: 6,
                           ),
@@ -364,5 +409,93 @@ class ReportDelayedScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _callShopDialog(BuildContext context, String telephone) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Stack(
+          children: [
+            Positioned(
+              // top: 0,
+              bottom: 0,
+              child: Dialog(
+                backgroundColor: Colors.transparent,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.16,
+                  // color: Colors.transparent,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: AppSize.s44,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.white)),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              _contactPhoneNumber(telephone);
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: AppSize.s30,
+                                ),
+                                Icon(
+                                  Icons.phone,
+                                  color: ColorManager.primaryDark,
+                                ),
+                                Spacer(),
+                                Text(
+                                  telephone,
+                                  style: TextStyle(
+                                      color: ColorManager.primaryDark),
+                                ),
+                                Spacer(),
+                              ],
+                            )),
+                      ),
+                      SizedBox(height: AppSize.s22),
+                      Container(
+                        height: AppSize.s44,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.white)),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.cancel,
+                              style: TextStyle(color: ColorManager.primaryDark),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  // open phone number in mobile
+  void _contactPhoneNumber(String phoneNumber) async {
+    final url = Uri.parse('tel:$phoneNumber');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

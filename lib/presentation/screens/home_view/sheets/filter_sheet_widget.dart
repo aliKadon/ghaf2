@@ -18,8 +18,8 @@ class FilterSheetWidget extends StatefulWidget {
 
 class _FilterSheetWidgetState extends State<FilterSheetWidget> {
   // controller.
-  late final FilterSheetWidgetGetXController _filterSheetWidgetGetXController =
-      Get.find<FilterSheetWidgetGetXController>();
+  // late final FilterSheetWidgetGetXController _filterSheetWidgetGetXController =
+  //     Get.find<FilterSheetWidgetGetXController>();
 
   late TextEditingController _minPriceController = TextEditingController();
   late TextEditingController _maxPriceController = TextEditingController();
@@ -40,8 +40,12 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
     super.dispose();
   }
 
+  var type = '';
+  var search = '';
+
   List<String> flitterType = [
     'Price',
+    'New arrival',
     'Free delivery',
     'Pick up order',
     'Deliver to car window',
@@ -122,6 +126,15 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                               selected = index;
                               if(flitterType[index] == 'recommended') {
                                 stars = 'stars';
+                                type = 'Name';
+                              }else if(flitterType[index] == 'New arrival') {
+                                stars = 'Name';
+                                type = 'Name';
+                              }else if(flitterType[index] == 'Pick up order') {
+                                type = 'branch.storeDeliveryCost.deliveryMethodId';
+                                search = '7cc577e9-7d5c-4a12-0149-08dafd69d37b';
+                              }else if(flitterType[index] == 'Price') {
+                                search = 'Name';
                               }
                               print(selected);
                             });
@@ -288,11 +301,11 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FilterScreen(
-                              search: '',
+                              search: search,
                               stars: stars,
                               minPrice:_minPriceController.text.isEmpty ? 0 :  num.parse(_minPriceController.text),
                               maxPrice:_maxPriceController.text.isEmpty ? 1000 : num.parse(_maxPriceController.text),
-                              filterBy: flitterType[selected]),
+                              filterBy: type),
                         ));
                       },
                       child: Container(
@@ -323,7 +336,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                   Expanded(
                     flex: 1,
                     child: InkWell(
-                      onTap: _filterSheetWidgetGetXController.onClearTapped,
+                      // onTap: _filterSheetWidgetGetXController.onClearTapped,
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             vertical: 16.h, horizontal: 16.w),

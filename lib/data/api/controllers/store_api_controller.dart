@@ -144,30 +144,30 @@ class StoreApiController with ApiHelper, Helpers {
     String? filterBy,
   }) async {
     // // print('send request : getProducts');
-    Map<String, dynamic> queryParameters = {
+    Map<String, dynamic> queryParameters1 = {
       'sid': sid,
       'filter':
-      "Name~contains~'$search'~and~Price~gte~${minPrice ?? 0}~and~Price~lte~${maxPrice ?? 1000}",
+      "${filterBy ?? 'Name'}~contains~'$search'~and~Price~gte~${minPrice ?? 0}~and~Price~lte~${maxPrice ?? 1000}",
       'sort':"${stars ?? 'Name'}-desc"
     };
-    print('queryParameters : $queryParameters');
-    // // print(queryParameters);
+    print('queryParameters : $queryParameters1');
+    // print(queryParameters);
     final Response response = await _dio.get(
       '/Product/read-product/',
-      queryParameters: queryParameters,
+      queryParameters: queryParameters1,
       options: Options(
         headers: headers,
       ),
     );
     print('============================================filter PRODUCT');
-    print(queryParameters);
+    print(queryParameters1);
     print(response.statusCode);
     print(response.data);
-    print(queryParameters);
+    print(queryParameters1);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
         print('============================================filter PRODUCT');
-        print(queryParameters);
+        print(queryParameters1);
         return List<Product>.from(
             response.data["data"].map((x) => Product.fromJson(x)));
       }
@@ -180,6 +180,7 @@ class StoreApiController with ApiHelper, Helpers {
     String? sid,
     String search = '',
     num? minPrice,
+    String? stars,
     num? maxPrice,
     String? filterBy,
   }) async {
@@ -188,9 +189,9 @@ class StoreApiController with ApiHelper, Helpers {
     Map<String, dynamic> queryParameters = {
       'sid': sid,
       'filter':
-          "Name~contains~'$search'~and~${filterBy ?? 'price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'price'}~lte~${maxPrice ?? 500}",
+          "Name~contains~'$search'~and~${filterBy ?? 'Price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'Price'}~lte~${maxPrice ?? 500}",
     };
-    print('queryParameters : $queryParameters');
+    print('queryParameters product : $queryParameters');
 
     // // print(queryParameters);
     final Response response = await _dio.get(

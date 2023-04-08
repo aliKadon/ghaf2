@@ -926,20 +926,20 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                           SizedBox(
                             height: 30,
                           ),
-                          _checkOutGetxController.order!.statusName == 'Done'
-                              ? Container(
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        _customDialogFeedBack(context,
-                                            _checkOutGetxController.order!);
-                                        // Navigator.of(context).pushReplacementNamed(
-                                        //     Routes.reviewProduct,
-                                        //     arguments: widget.orderId);
-                                      },
-                                      child: Text(AppLocalizations.of(context)!
-                                          .feed_back)),
-                                )
-                              : Container(),
+                          // _checkOutGetxController.order!.statusName == 'Done'
+                          //     ? Container(
+                          //         child: ElevatedButton(
+                          //             onPressed: () {
+                          //               _customDialogFeedBack(context,
+                          //                   _checkOutGetxController.order!);
+                          //               // Navigator.of(context).pushReplacementNamed(
+                          //               //     Routes.reviewProduct,
+                          //               //     arguments: widget.orderId);
+                          //             },
+                          //             child: Text(AppLocalizations.of(context)!
+                          //                 .feed_back)),
+                          //       )
+                          //     : Container(),
                         ],
                       ),
                     ),

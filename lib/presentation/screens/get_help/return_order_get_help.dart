@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/presentation/screens/get_help/controller/help_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/get_help/report_another_issue_screen.dart';
 import 'package:ghaf_application/presentation/screens/get_help/report_delayed_screen.dart';
 import 'package:ghaf_application/presentation/screens/get_help/report_issue_with_order_Screen.dart';
@@ -11,9 +14,27 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-class ReturnOrderGetHelp extends StatelessWidget {
+class ReturnOrderGetHelp extends StatefulWidget {
   final String getHelpType;
+
   ReturnOrderGetHelp({required this.getHelpType});
+
+  @override
+  State<ReturnOrderGetHelp> createState() => _ReturnOrderGetHelpState();
+}
+
+class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
+  //controller
+  late final HelpGetxController _helpGetxController =
+      Get.put(HelpGetxController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _helpGetxController.getItemsToReturn(context: context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +46,7 @@ class ReturnOrderGetHelp extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -66,17 +84,14 @@ class ReturnOrderGetHelp extends StatelessWidget {
                 height: AppSize.s14,
               ),
               Text(
-                getHelpType,
+                widget.getHelpType,
                 style: TextStyle(
                     fontSize: FontSize.s14,
                     fontWeight: FontWeight.w600,
                     color: ColorManager.primaryDark),
               ),
               SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.04,
               ),
               Text(
                 AppLocalizations.of(context)!.tap_an_item_you_need_help_with,
@@ -87,10 +102,7 @@ class ReturnOrderGetHelp extends StatelessWidget {
               ),
               Container(
                 height: 50,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 1,
+                width: MediaQuery.of(context).size.width * 1,
                 child: TextField(
                   textInputAction: TextInputAction.search,
                   textAlign: TextAlign.start,
@@ -114,89 +126,226 @@ class ReturnOrderGetHelp extends StatelessWidget {
                       color: ColorManager.hintTextFiled,
                     ),
                   ),
+                  onChanged: (value) {
+                    _helpGetxController.getItemsToReturn(
+                        context: context, productName: value);
+                  },
                 ),
               ),
-              Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.6,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        if(getHelpType == AppLocalizations.of(context)!.return_an_item_you_ordered) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                ReturnOrderItemDetailsGetHelp(),));
-                        }
-                        if (getHelpType == AppLocalizations.of(context)!.report_issues_with_your_order) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                ReportIssueWithOrderScreen(),));
-                        }
-                        if (getHelpType == AppLocalizations.of(context)!.report_delayed_delivery) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                ReportDelayedScreen(),));
-                        }
-                        if (getHelpType == AppLocalizations.of(context)!.report_other_issues) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                ReportAnotherIssueScreen(),));
-                        }
-
-                      },
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: AppSize.s110,
-                                width: AppSize.s110,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    image: DecorationImage(
-                                        image: AssetImage(ImageAssets.pizza))),
-                              ),
-                              Column(
+              GetBuilder<HelpGetxController>(
+                builder: (controller) => Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: controller.itemsToReturn.length == 0
+                      ? Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.no_product_found,
+                              style: TextStyle(
+                                  color: ColorManager.primary,
+                                  fontSize: FontSize.s16,
+                                  fontWeight: FontWeight.w600)),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.itemsToReturn.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                if (widget.getHelpType ==
+                                    AppLocalizations.of(context)!
+                                        .return_an_item_you_ordered) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ReturnOrderItemDetailsGetHelp(
+                                            orderId:
+                                                controller.itemsToReturn[index]
+                                                    .orderId,
+                                            productId:
+                                                controller.itemsToReturn[index]
+                                                    .productId,
+                                            name: controller
+                                                .itemsToReturn[index]
+                                                .product
+                                                ?.name,
+                                            imageUrl: controller
+                                                            .itemsToReturn[
+                                                                index]
+                                                            .product
+                                                            ?.productImages
+                                                            ?.length ==
+                                                        0 ||
+                                                    controller
+                                                            .itemsToReturn[
+                                                                index]
+                                                            .product
+                                                            ?.productImages ==
+                                                        null
+                                                ? null
+                                                : controller
+                                                    .itemsToReturn[index]
+                                                    .product
+                                                    ?.productImages?[0]),
+                                  ));
+                                }
+                                if (widget.getHelpType ==
+                                    AppLocalizations.of(context)!
+                                        .report_issues_with_your_order) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ReportIssueWithOrderScreen(
+                                            orderId: controller
+                                                .itemsToReturn[index].orderId,
+                                            name: controller
+                                                .itemsToReturn[index]
+                                                .product
+                                                ?.name,
+                                            imageUrl: controller
+                                                            .itemsToReturn[
+                                                                index]
+                                                            .product
+                                                            ?.productImages
+                                                            ?.length ==
+                                                        0 ||
+                                                    controller
+                                                            .itemsToReturn[
+                                                                index]
+                                                            .product
+                                                            ?.productImages ==
+                                                        null
+                                                ? null
+                                                : controller
+                                                    .itemsToReturn[index]
+                                                    .product
+                                                    ?.productImages?[0]),
+                                  ));
+                                }
+                                if (widget.getHelpType ==
+                                    AppLocalizations.of(context)!
+                                        .report_delayed_delivery) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ReportDelayedScreen(
+                                        orderId: controller
+                                            .itemsToReturn[index].orderId,
+                                        imageUrl: controller
+                                                        .itemsToReturn[index]
+                                                        .product
+                                                        ?.productImages
+                                                        ?.length ==
+                                                    0 ||
+                                                controller
+                                                        .itemsToReturn[index]
+                                                        .product
+                                                        ?.productImages ==
+                                                    null
+                                            ? null
+                                            : controller.itemsToReturn[index]
+                                                .product?.productImages?[0],
+                                        name: controller.itemsToReturn[index]
+                                            .product?.name),
+                                  ));
+                                }
+                                if (widget.getHelpType ==
+                                    AppLocalizations.of(context)!
+                                        .report_other_issues) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ReportAnotherIssueScreen(
+                                          imageUrl:  controller
+                                              .itemsToReturn[index]
+                                              .product
+                                              ?.productImages
+                                              ?.length ==
+                                              0 ||
+                                              controller
+                                                  .itemsToReturn[index]
+                                                  .product
+                                                  ?.productImages ==
+                                                  null
+                                              ? null
+                                              : controller.itemsToReturn[index]
+                                              .product?.productImages?[0],
+                                          name: controller.itemsToReturn[index]
+                                              .product?.name,
+                                          orderId:  controller
+                                              .itemsToReturn[index].orderId,
+                                        ),
+                                  ));
+                                }
+                              },
+                              child: Column(
                                 children: [
-                                  Text(
-                                    'pizza neew pizza',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: FontSize.s14,
-                                        fontWeight: FontWeight.w500),
+                                  Row(
+                                    children: [
+                                      controller.itemsToReturn[index].product
+                                                      ?.productImages ==
+                                                  null ||
+                                              controller
+                                                      .itemsToReturn[index]
+                                                      .product
+                                                      ?.productImages
+                                                      ?.length ==
+                                                  0
+                                          ? Container(
+                                              height: AppSize.s110,
+                                              width: AppSize.s110,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          ImageAssets.pizza))),
+                                            )
+                                          : Container(
+                                              height: AppSize.s110,
+                                              width: AppSize.s110,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          controller
+                                                                  .itemsToReturn[
+                                                                      index]
+                                                                  .product!
+                                                                  .productImages![
+                                                              0]))),
+                                            ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            '${_helpGetxController.itemsToReturn[index].product?.name}',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: FontSize.s14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          SizedBox(
+                                            height: AppSize.s30,
+                                          ),
+                                          // Text(
+                                          //   'ordered on 9 dec 2022',
+                                          //   style: TextStyle(
+                                          //     color: ColorManager.greyLight,
+                                          //     fontWeight: FontWeight.w500,
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Image.asset(
+                                        IconsAssets.arrow2,
+                                        height: AppSize.s18,
+                                        color: ColorManager.primary,
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(
-                                    height: AppSize.s30,
-                                  ),
-                                  Text(
-                                    'ordered on 9 dec 2022',
-                                    style: TextStyle(
-                                      color: ColorManager.greyLight,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                                    height: AppSize.s18,
+                                  )
                                 ],
                               ),
-                              Spacer(),
-                              Image.asset(
-                                IconsAssets.arrow2,
-                                height: AppSize.s18,
-                                color: ColorManager.primary,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: AppSize.s18,
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                            );
+                          },
+                        ),
                 ),
               )
             ],

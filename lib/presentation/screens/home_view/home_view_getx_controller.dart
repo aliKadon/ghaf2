@@ -254,7 +254,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     // if (notifyLoading) isProductsLoading = true;
 
     try {
-      if (notifyLoading) isProductsLoading = true;
+      // if (notifyLoading) isProductsLoading = true;
       // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
       // print(ModalRoute.of(context)?.settings.arguments as String);
       products = await _storeApiController.getFilterProducts(
@@ -276,8 +276,9 @@ class HomeViewGetXController extends GetxController with Helpers {
     } catch (error) {
       // error.
       debugPrint(error.toString());
-      showSnackBar(context,
-          message: 'An Error Occurred, Please Try again!!', error: true);
+      print(error);
+      // showSnackBar(context,
+      //     message: 'An Error Occurred, Please Try again!!', error: true);
     }
   }
 
@@ -400,15 +401,15 @@ class HomeViewGetXController extends GetxController with Helpers {
       ),
       builder: (_) => Builder(
         builder: (context) {
-          Get.put<FilterSheetWidgetGetXController>(
-            FilterSheetWidgetGetXController(
-              context: context,
-              onFilter: filter,
-              minPrice: minPrice,
-              maxPrice: maxPrice,
-              filterBy: filterBy,
-            ),
-          );
+          // Get.put<FilterSheetWidgetGetXController>(
+          //   FilterSheetWidgetGetXController(
+          //     context: context,
+          //     onFilter: filter,
+          //     minPrice: minPrice,
+          //     maxPrice: maxPrice,
+          //     filterBy: filterBy,
+          //   ),
+          // );
           return FilterSheetWidget();
         },
       ),

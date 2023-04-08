@@ -28,7 +28,7 @@ import 'package:ghaf_application/presentation/screens/login_view/login_view_getx
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
-import 'package:ghaf_application/presentation/screens/notification_view.dart';
+import 'package:ghaf_application/presentation/screens/profile/notification/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_view.dart';
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';

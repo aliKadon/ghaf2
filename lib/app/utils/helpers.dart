@@ -126,6 +126,7 @@ mixin Helpers {
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
+                          Navigator.of(context).pop();
                           // Navigator.of(context).pushReplacement(MaterialPageRoute(
                           //   builder: (context) => RegisterScreen(),
                           // ));

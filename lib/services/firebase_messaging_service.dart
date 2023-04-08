@@ -58,14 +58,16 @@ class FirebaseMessagingService {
         ));
         // Map<String,dynamic> x = jsonEncode(message.toMap()) as Map<String, dynamic>;
         // print(x);
-        _localNotificationsService?.showNotification(
-          notification.title,
-          notification.body,
-          payload: jsonEncode(
-            message.toMap(),
-          ),
-        );
-        if (SharedPrefController().enableNotifications) {}
+
+        if (SharedPrefController().enableNotifications) {
+          _localNotificationsService?.showNotification(
+            notification.title,
+            notification.body,
+            payload: jsonEncode(
+              message.toMap(),
+            ),
+          );
+        }
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {

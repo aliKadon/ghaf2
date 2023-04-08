@@ -566,7 +566,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                   // Most Popular
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),
-                    child: Row(
+                    child: _homeViewGetXController.mostPopular.length == 0 ? Container() : Row(
                       children: [
                         Text(
                           AppLocalizations.of(context)!.most_popular,
@@ -595,12 +595,12 @@ class _HomeViewState extends State<HomeView> with Helpers {
                   GetBuilder<HomeViewGetXController>(
                     // id: 'products',
                     builder: (controller) =>
-                    controller.mostPopular.length == 0 ? Container() : Container(
+                    Container(
                           height: MediaQuery
                               .of(context)
                               .size
                               .height * 0.4,
-                          child: ListView.builder(
+                          child: controller.mostPopular.length == 0 ? Container() : ListView.builder(
                             shrinkWrap: true,
                             padding: EdgeInsets.all(12),
                             scrollDirection: Axis.horizontal,

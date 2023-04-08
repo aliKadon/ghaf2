@@ -4,7 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
+import 'package:ghaf_application/presentation/screens/get_help/controller/help_getx_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
@@ -13,8 +17,17 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../checkout/check_out_getx_controller.dart';
 
 class ReturnOrderItemDetailsGetHelp extends StatefulWidget {
+  String? name;
+  String? imageUrl;
+  String? orderId;
+  String? productId;
+
+  ReturnOrderItemDetailsGetHelp(
+      {this.name, this.orderId, this.productId, this.imageUrl});
+
   @override
   State<ReturnOrderItemDetailsGetHelp> createState() =>
       _ReturnOrderItemDetailsGetHelpState();
@@ -22,6 +35,12 @@ class ReturnOrderItemDetailsGetHelp extends StatefulWidget {
 
 class _ReturnOrderItemDetailsGetHelpState
     extends State<ReturnOrderItemDetailsGetHelp> with Helpers {
+  //controller
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.put(CheckOutGetxController());
+  late final HelpGetxController _helpGetxController =
+      Get.put(HelpGetxController());
+
   File? image;
   String? base64;
   List<String> listImage = [];
@@ -36,19 +55,26 @@ class _ReturnOrderItemDetailsGetHelpState
       this.image = imageTemp;
       List<int> byts = (await image!.readAsBytes());
       setState(() {
-      base64 = base64Encode(byts);
-      print('==================================new image');
-      print('11${base64}');
-      listImage.add('data:image/jpeg;base64,$base64');
-      // imageProduct?[0].data = base64Decode(base64!).toString();
-      print('================================listImage');
-      print(listImage.toString());
+        base64 = base64Encode(byts);
+        print('==================================new image');
+        print('11${base64}');
+        listImage.add('data:image/jpeg;base64,$base64');
+        // imageProduct?[0].data = base64Decode(base64!).toString();
+        print('================================listImage');
+        print(listImage.toString());
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    _checkOutGetxController.getOrderById(
+        context: context, orderId: widget.orderId!);
+    super.initState();
+  }
 
   var selected = -1;
 
@@ -110,19 +136,28 @@ class _ReturnOrderItemDetailsGetHelpState
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Container(
-                      height: AppSize.s110,
-                      width: AppSize.s110,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                              image: AssetImage(ImageAssets.pizza))),
-                    ),
+                    widget.imageUrl == null || widget.imageUrl == ''
+                        ? Container(
+                            height: AppSize.s110,
+                            width: AppSize.s110,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                image: DecorationImage(
+                                    image: AssetImage(ImageAssets.pizza))),
+                          )
+                        : Container(
+                            height: AppSize.s110,
+                            width: AppSize.s110,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                image: DecorationImage(
+                                    image: NetworkImage(widget.imageUrl!))),
+                          ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'pizza neew pizza',
+                          '${widget.name}',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: FontSize.s14,
@@ -131,22 +166,35 @@ class _ReturnOrderItemDetailsGetHelpState
                         SizedBox(
                           height: AppSize.s14,
                         ),
-                        Text(
-                          'ordered on 9 dec 2022',
-                          style: TextStyle(
-                              color: ColorManager.greyLight,
-                              fontWeight: FontWeight.w500,
-                              fontSize: FontSize.s14),
-                        ),
+                        // Text(
+                        //   'ordered on 9 dec 2022',
+                        //   style: TextStyle(
+                        //       color: ColorManager.greyLight,
+                        //       fontWeight: FontWeight.w500,
+                        //       fontSize: FontSize.s14),
+                        // ),
                         SizedBox(
                           height: AppSize.s14,
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.review_order,
-                          style: TextStyle(
-                              color: ColorManager.primaryDark,
-                              fontWeight: FontWeight.w500,
-                              fontSize: FontSize.s14),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (context) => OrderTrackingScreen(
+                                  orderId: widget.orderId!,
+                                  source: _checkOutGetxController
+                                      .order!.deliveryPoint!,
+                                  destination: _checkOutGetxController
+                                      .order!.branch!.branchAddress!),
+                            ));
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.review_order,
+                            style: TextStyle(
+                                color: ColorManager.primaryDark,
+                                fontWeight: FontWeight.w500,
+                                fontSize: FontSize.s14),
+                          ),
                         ),
                       ],
                     ),
@@ -211,7 +259,6 @@ class _ReturnOrderItemDetailsGetHelpState
                     InkWell(
                       onTap: () {
                         showSheetAddImage(context);
-
                       },
                       child: Row(
                         children: [
@@ -234,16 +281,16 @@ class _ReturnOrderItemDetailsGetHelpState
                   ],
                 ),
               ),
-              SizedBox(
-                height: AppSize.s24,
-              ),
-              Text(
-                AppLocalizations.of(context)!.add_more_items,
-                style: TextStyle(
-                    color: ColorManager.primary,
-                    fontWeight: FontWeight.w600,
-                    fontSize: FontSize.s18),
-              ),
+              // SizedBox(
+              //   height: AppSize.s24,
+              // ),
+              // Text(
+              //   AppLocalizations.of(context)!.add_more_items,
+              //   style: TextStyle(
+              //       color: ColorManager.primary,
+              //       fontWeight: FontWeight.w600,
+              //       fontSize: FontSize.s18),
+              // ),
               SizedBox(
                 height: AppSize.s24,
               ),
@@ -252,7 +299,12 @@ class _ReturnOrderItemDetailsGetHelpState
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      showSheetGetHelpConfirm(context);
+                      _helpGetxController.itemToReturn(
+                          context: context,
+                          orderId: widget.orderId!,
+                          productId: widget.productId!,
+                          comment: returnType[selected] ,
+                          ticketImage: listImage[0]);
                     },
                     child: Text(AppLocalizations.of(context)!.confirm)),
               )
@@ -292,83 +344,65 @@ class _ReturnOrderItemDetailsGetHelpState
       ],
     );
   }
-  Future showSheetAddImage(BuildContext context) =>
-      showSlidingBottomSheet(
-        context,
-        builder: (context) =>
-            SlidingSheetDialog(
-              snapSpec: SnapSpec(
-                snappings: [0.4, 0.7],
-              ),
-              builder: (context, state) =>
-                  Material(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Text(AppLocalizations.of(context)!.add_an_image_to_proceed,
 
-                                style: TextStyle(
-                                    fontSize: FontSize.s16,
-                                    fontWeight: FontWeight.w600,
-                                    color: ColorManager.grey)),
-                            SizedBox(
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.024,
-                            ),
-                            Container(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 1,
-                              height: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.06,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  pickImage();
-                                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                  //   builder: (context) => RegisterScreen(),
-                                  // ));
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                    MaterialStatePropertyAll(ColorManager.primary),
-                                    shape: MaterialStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                color: ColorManager
-                                                    .primary),
-                                            borderRadius:
-                                            BorderRadius.circular(10)))),
-                                child: Text(
-                                  AppLocalizations.of(context)!.ok,
-                                  // 'Login',
-                                  style: getSemiBoldStyle(
-                                      color: ColorManager.white,
-                                      fontSize: 18),
-                                ),
-                              ),
-                            ),
-                          ],
+  Future showSheetAddImage(BuildContext context) => showSlidingBottomSheet(
+        context,
+        builder: (context) => SlidingSheetDialog(
+          snapSpec: SnapSpec(
+            snappings: [0.4, 0.7],
+          ),
+          builder: (context, state) => Material(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Text(AppLocalizations.of(context)!.add_an_image_to_proceed,
+                        style: TextStyle(
+                            fontSize: FontSize.s16,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.grey)),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.024,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          pickImage();
+                          // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          //   builder: (context) => RegisterScreen(),
+                          // ));
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(ColorManager.primary),
+                            shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    side:
+                                        BorderSide(color: ColorManager.primary),
+                                    borderRadius: BorderRadius.circular(10)))),
+                        child: Text(
+                          AppLocalizations.of(context)!.ok,
+                          // 'Login',
+                          style: getSemiBoldStyle(
+                              color: ColorManager.white, fontSize: 18),
                         ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
             ),
+          ),
+        ),
       );
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
-import 'package:ghaf_application/presentation/screens/notification_view.dart';
+import 'package:ghaf_application/presentation/screens/profile/notification/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/change_email.dart';
 import 'package:ghaf_application/presentation/screens/profile/password_setting.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting.dart';

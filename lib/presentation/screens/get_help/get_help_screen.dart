@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/screens/get_help/return_order_get_help.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -8,7 +13,13 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-class GetHelpScreen extends StatelessWidget {
+class GetHelpScreen extends StatefulWidget {
+  @override
+  State<GetHelpScreen> createState() => _GetHelpScreenState();
+}
+
+class _GetHelpScreenState extends State<GetHelpScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +63,7 @@ class GetHelpScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
-              '${AppLocalizations.of(context)!.hi} Fatima alhmmadi. ${AppLocalizations.of(context)!.what_we_can_help_you}',
+              '${AppLocalizations.of(context)!.hi} ${AppSharedData.currentUser?.firstName} ${AppSharedData.currentUser?.lastName}. ${AppLocalizations.of(context)!.what_we_can_help_you}',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
@@ -106,14 +117,15 @@ class GetHelpScreen extends StatelessWidget {
                 AppLocalizations.of(context)!.report_issues_with_your_order),
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ReturnOrderGetHelp(
-                    getHelpType: AppLocalizations.of(context)!
-                        .report_other_issues),
-              ));
-            },
-              child: GetHelpType(AppLocalizations.of(context)!.report_other_issues)),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ReturnOrderGetHelp(
+                      getHelpType:
+                          AppLocalizations.of(context)!.report_other_issues),
+                ));
+              },
+              child: GetHelpType(
+                  AppLocalizations.of(context)!.report_other_issues)),
         ],
       ),
     );
