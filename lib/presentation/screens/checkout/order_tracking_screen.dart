@@ -340,7 +340,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         ),
                         Text(
                           AppLocalizations.of(context)!
-                              .time_Of_Your_Order_Arrival,
+                              .estimated_delivery_time,
                           style: TextStyle(
                               fontSize: 18.0,
                               color: ColorManager.primaryDark,

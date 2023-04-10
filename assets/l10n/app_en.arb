@@ -24,6 +24,8 @@
   "old_password" : "Old password",
   "promo_code" : "Promo code",
   "add_to_order" : "Add to order",
+  "payment_confirmation" : "Payment confirmation",
+  "estimated_delivery_time" : "Estimated delivery time",
 
   "join_us_now_and_get" : "Join us now and get",
   "introduce_to_subscribe1" : "No Commission",

@@ -62,134 +62,131 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                 ),
               )
             : SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.all(AppPadding.p16),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // GestureDetector(
-                            //   // onTap: () => Navigator.pop(context),
-                            //   child: Image.asset(
-                            //     IconsAssets.arrow,
-                            //     height: AppSize.s18,
-                            //     width: AppSize.s10,
-                            //   ),
-                            // ),
-                            Spacer(),
-                            Text(
-                              AppLocalizations.of(context)!.checkout,
-                              style: getSemiBoldStyle(
-                                color: ColorManager.primaryDark,
-                                fontSize: FontSize.s18,
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppSize.s12,
-                        ),
-                        Divider(height: 1, color: ColorManager.greyLight),
-                        SizedBox(
-                          height: AppSize.s65,
-                        ),
-                        Image.asset(
-                          ImageAssets.checkout,
-                          height: AppSize.s263,
-                          width: AppSize.s222,
-                        ),
-                        Container(
-                          // width: double.infinity,
-                          // padding: EdgeInsets.only(left: 50),
-                          child: Text(
-                            AppLocalizations.of(context)!.your_order_placed,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // GestureDetector(
+                          //   // onTap: () => Navigator.pop(context),
+                          //   child: Image.asset(
+                          //     IconsAssets.arrow,
+                          //     height: AppSize.s18,
+                          //     width: AppSize.s10,
+                          //   ),
+                          // ),
+                          Spacer(),
+                          Text(
+                            AppLocalizations.of(context)!.payment_confirmation,
                             style: getSemiBoldStyle(
                               color: ColorManager.primaryDark,
-                              fontSize: FontSize.s20,
+                              fontSize: FontSize.s18,
                             ),
                           ),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.placed_successfully,
+                          Spacer(),
+                        ],
+                      ),
+                      SizedBox(
+                        height: AppSize.s12,
+                      ),
+                      Divider(height: 1, color: ColorManager.greyLight),
+                      // SizedBox(
+                      //   height: AppSize.s65,
+                      // ),
+                      Image.asset(
+                        ImageAssets.checkout,
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        width: double.infinity,
+                      ),
+                      Container(
+                        // width: double.infinity,
+                        // padding: EdgeInsets.only(left: 50),
+                        child: Text(
+                          AppLocalizations.of(context)!.your_order_placed,
                           style: getSemiBoldStyle(
                             color: ColorManager.primaryDark,
                             fontSize: FontSize.s20,
                           ),
                         ),
-                        SizedBox(
-                          height: AppSize.s18,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.placed_successfully,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s20,
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ColorManager.greyLight),
-                          padding: EdgeInsets.all(12),
+                      ),
+                      SizedBox(
+                        height: AppSize.s18,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorManager.greyLight),
+                        padding: EdgeInsets.all(12),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.clip,
+                          AppLocalizations.of(context)!.payment_has_been_made,
+                          style: getSemiBoldStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s14,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: AppSize.s35,
+                      ),
+                      _checkOutGetxController.order!.branch!.isOpen! ? Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: AppMargin.m16,
+                        ),
+                        width: double.infinity,
+                        height: AppSize.s55,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => OrderTrackingScreen(
+                                  orderId: widget.orderId,
+                                  source: _checkOutGetxController
+                                      .order!.deliveryPoint ?? _checkOutGetxController
+                                      .order!.branch!.branchAddress!,
+                                  destination: _checkOutGetxController
+                                      .order!.branch!.branchAddress!),
+                            ));
+                            print(
+                                '=================================checkout confirm orderInfo');
+                          },
                           child: Text(
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.clip,
-                            AppLocalizations.of(context)!.payment_has_been_made,
+                            AppLocalizations.of(context)!.order_tracking,
                             style: getSemiBoldStyle(
-                              color: ColorManager.primaryDark,
-                              fontSize: FontSize.s14,
-                            ),
+                                color: ColorManager.white,
+                                fontSize: FontSize.s18),
                           ),
                         ),
-                        SizedBox(
-                          height: AppSize.s35,
-                        ),
-                        _checkOutGetxController.order!.branch!.isOpen! ? Container(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: AppMargin.m16,
-                          ),
-                          width: double.infinity,
-                          height: AppSize.s55,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => OrderTrackingScreen(
-                                    orderId: widget.orderId,
-                                    source: _checkOutGetxController
-                                        .order!.deliveryPoint ?? _checkOutGetxController
-                                        .order!.branch!.branchAddress!,
-                                    destination: _checkOutGetxController
-                                        .order!.branch!.branchAddress!),
-                              ));
-                              print(
-                                  '=================================checkout confirm orderInfo');
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!.order_tracking,
-                              style: getSemiBoldStyle(
-                                  color: ColorManager.white,
-                                  fontSize: FontSize.s18),
-                            ),
-                          ),
-                        ) : Container(),
-                        SizedBox(
-                          height: AppSize.s22,
-                        ),
-                        GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed(Routes.mainRoute),
-                          child: Text(
-                            AppLocalizations.of(context)!.back_to_home,
-                            style: getSemiBoldStyle(
-                              color: ColorManager.grey,
-                              fontSize: FontSize.s20,
-                            ),
+                      ) : Container(),
+                      SizedBox(
+                        height: AppSize.s22,
+                      ),
+                      GestureDetector(
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(Routes.mainRoute),
+                        child: Text(
+                          AppLocalizations.of(context)!.back_to_home,
+                          style: getSemiBoldStyle(
+                            color: ColorManager.grey,
+                            fontSize: FontSize.s20,
                           ),
                         ),
-                        SizedBox(
-                          height: AppSize.s22,
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: AppSize.s22,
+                      ),
+                    ],
                   ),
                 ),
               ),

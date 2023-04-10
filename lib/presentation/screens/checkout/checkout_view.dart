@@ -372,8 +372,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                                 .availableDeliveryMethod![
                                                                     index]
                                                                 .methodImage!,
-                                                            color: ColorManager
-                                                                .primaryDark,
+                                                            // color: ColorManager
+                                                            //     .primaryDark,
                                                           ),
                                                         ),
                                                   SizedBox(
