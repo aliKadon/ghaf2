@@ -35,7 +35,7 @@ mixin Helpers {
       Get.find<CheckOutGetxController>();
 
   String dropdownValue = 'Sunday';
-  String dropdownValue1 = 'Time';
+  String dropdownValue1 = '0';
   var numberOfDay = 0;
 
   var isAsap = true;

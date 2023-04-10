@@ -25,7 +25,7 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
   @override
   void initState() {
     // TODO: implement initState
-    _checkOutGetxController.getScheduleOrder(context: context,store: widget.branchName);
+    _checkOutGetxController.getSchedualOrder1(context: context,store: widget.branchName);
     super.initState();
   }
 
@@ -74,7 +74,7 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
 
-                  itemCount: controller.scheduleOrders.length,
+                  itemCount: controller.scheduleOrders1.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -84,7 +84,8 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                           Row(
                             children: [
                               Text(
-                                '${controller.scheduleOrders[index].mealType}',
+                                // '${_checkOutGetxController.scheduleOrders1[index].mealType}',
+                                'aasdasd',
                                 style: TextStyle(
                                     color: ColorManager.primaryDark,
                                     fontSize: FontSize.s18,
@@ -100,7 +101,8 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                                 width: AppSize.s16,
                               ),
                               Text(
-                                '${controller.scheduleOrders[index].deliveryPoint?.addressName}',
+                                // '${_checkOutGetxController.scheduleOrders1[index].branch!.branchAddress}',
+                                'aasdasd',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: FontSize.s16,
@@ -119,7 +121,8 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                               Icon(Icons.timer, color: ColorManager.primaryDark),
                               SizedBox(width: AppSize.s16),
                               Text(
-                                '${controller.scheduleOrders[index].hourNumber}',
+                                // '${_checkOutGetxController.scheduleOrders1[index].hourNumber}',
+                                'aasdasd',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: FontSize.s16,

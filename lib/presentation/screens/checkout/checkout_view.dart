@@ -79,7 +79,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
     return false;
   }
 
-  var hours = ['Time'];
+  var hours = ['0'];
 
   //
   @override
@@ -125,14 +125,18 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
             id: "orderToPay",
             builder: (controller) {
 
-              for (MealTimes meal in controller
-                  .orderToPay[controller.orderToPay.length - 1]
-                  .orderDetails!
-                  .branch!
-                  .mealTimes!) {
-                hours.add(meal.startTime!);
-                hours.add(meal.endTime!);
+              if(controller.orderToPay.length != 0) {
+                for (MealTimes meal in controller
+                    .orderToPay[controller.orderToPay.length - 1]
+                    .orderDetails!
+                    .branch!
+                    .mealTimes!) {
+                  hours.add(meal.startTime!);
+                  hours.add(meal.endTime!);
+                }
               }
+
+
                 return controller.isLoadingOrderToPay
                     ? Center(
                         child: Container(

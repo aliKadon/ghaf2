@@ -29,6 +29,7 @@ class CheckOutGetxController extends GetxController with Helpers {
   List<Order> preOrders = [];
   List<Order> doneorder = [];
   List<ScheduledOrder> scheduleOrders = [];
+  List<ScheduledOrder> scheduleOrders1 = [];
   List<String> storeName = [];
   List<dynamic> imageName = [];
   List<String> storeNamePreOrder = [];
@@ -71,6 +72,21 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
+  void getPreOrder1(
+      {required BuildContext context, String? branchName = ''}) async {
+
+    try {
+
+      preOrders =
+      await _ordersApiController.getPreOrder(branchName: branchName);
+
+      update();
+    } catch (e) {
+      print(e);
+      // showSnackBar(context, message: e.toString(), error: true);
+    }
+  }
+
   void getPreOrder(
       {required BuildContext context, String? branchName = ''}) async {
 
@@ -86,13 +102,15 @@ class CheckOutGetxController extends GetxController with Helpers {
         image.removeWhere((element) =>
         element['storeName'] == names[i]);
         image.add({
-          'storeName' : scheduleOrders[i].branch!.branchName!,
-          'image' : scheduleOrders[i].branch!.branchLogoImage!,
+          'storeName' : preOrders[i].branch!.branchName!,
+          'image' : preOrders[i].branch!.branchLogoImage!,
         });
         print(image);
       }
       storeNamePreOrder = names.toSet().toList();
       imageNamePreOrder = image;
+      print('========================list of store name');
+      print(storeNamePreOrder);
       update();
     } catch (e) {
       print(e);
@@ -310,6 +328,16 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
+  void getSchedualOrder1({required BuildContext context, String? store = ''}) async{
+    try {
+      scheduleOrders =
+      await _ordersApiController.getScheduleOrder(storeName: store);
+      update();
+    }catch(e) {
+      showSnackBar(context, message: e.toString(),error: true);
+    }
+  }
+
   void getScheduleOrder(
       {required BuildContext context, String? store = ''}) async {
     List<String> names = [];
@@ -319,12 +347,12 @@ class CheckOutGetxController extends GetxController with Helpers {
           await _ordersApiController.getScheduleOrder(storeName: store);
       for (int i = 0; i < scheduleOrders.length ; i++) {
         print('====================branch name');
-        names.add(scheduleOrders[i].branch!.branchName!);
+        names.add(scheduleOrders[i].branch!.storeName!);
         
         imageList.removeWhere((element) =>
         element['storeName'] == names[i]);
         imageList.add({
-          'storeName' : scheduleOrders[i].branch!.branchName!,
+          'storeName' : scheduleOrders[i].branch!.storeName!,
           'image' : scheduleOrders[i].branch!.branchLogoImage!,
         });
         print(imageList);

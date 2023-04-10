@@ -34,7 +34,7 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
   @override
   void initState() {
     // TODO: implement initState
-    _checkOutGetxController.getPreOrder(context: context,branchName: widget.branchName);
+    _checkOutGetxController.getPreOrder1(context: context,branchName: widget.branchName);
     super.initState();
   }
   @override
