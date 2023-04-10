@@ -24,7 +24,7 @@ import '../checkout/check_out_getx_controller.dart';
 
 class HomeViewGetXController extends GetxController with Helpers {
   String address = '';
-  var city = 'address'.obs;
+  var city = 'your address'.obs;
   var isLoadingPopular = true;
   var isFave = false;
 

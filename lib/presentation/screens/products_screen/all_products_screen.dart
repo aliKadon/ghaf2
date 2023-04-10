@@ -69,7 +69,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Container(
-        padding: EdgeInsets.all(16.h),
+        padding: EdgeInsets.all(14.h),
         child: widget.type == 'mostPopular'
             ? _homeViewGetXController.product.isEmpty
                 ? Center(

@@ -74,7 +74,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
         ));
       },
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,8 +97,8 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                               ),
                             )
                           : Container(
-                              height: MediaQuery.of(context).size.height * 0.2,
-                              width: MediaQuery.of(context).size.width * 0.35,
+                              height: MediaQuery.of(context).size.height * 0.24,
+                              width: MediaQuery.of(context).size.width * 0.36,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
@@ -131,14 +131,14 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                               child: _product.isFavorite!
                                   ? Image.asset(
                                       IconsAssets.heart1,
-                                      height: AppSize.s24,
-                                      width: AppSize.s24,
+                                      height: AppSize.s20,
+                                      width: AppSize.s20,
                                       color: ColorManager.red,
                                     )
                                   : Image.asset(
                                       IconsAssets.heart,
-                                      height: AppSize.s24,
-                                      width: AppSize.s24,
+                                      height: AppSize.s20,
+                                      width: AppSize.s20,
                                     ),
                             ),
                           ),
@@ -151,9 +151,12 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                   )
                 ],
               ),
+              SizedBox(
+                height: 5,
+              ),
               Text(widget.name,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
@@ -164,19 +167,19 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                         '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
                         overflow: TextOverflow.clip,
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: ColorManager.primaryDark)),
                   ),
                   SizedBox(
-                    width: 28,
+                    width: 12,
                   ),
                   Icon(
                     Icons.star,
                     color: Colors.yellow,
                   ),
                   SizedBox(
-                    width: 8,
+                    width: 2,
                   ),
                   Text(widget.stars.toString(),
                       style: TextStyle(

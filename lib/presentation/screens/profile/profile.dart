@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/screens/profile/profile_setting/pr
 import 'package:provider/provider.dart';
 
 import '../../../app/constants.dart';
+import '../../../app/utils/app_shared_data.dart';
 import '../../../providers/language_provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -16,6 +17,7 @@ import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../login_view/login_view.dart';
 import '../main_view.dart';
 
 class Profile extends StatefulWidget {
@@ -76,7 +78,7 @@ class _ProfileState extends State<Profile> {
               thickness: 1,
               color: ColorManager.greyLight,
             ),
-            Container(
+            AppSharedData.currentUser == null?Container():    Container(
               padding: EdgeInsets.symmetric(
                   horizontal: AppPadding.p10, vertical: AppPadding.p16),
               decoration: BoxDecoration(
@@ -90,9 +92,19 @@ class _ProfileState extends State<Profile> {
                   ),
                 ],
               ),
+
+              //
+              // AppSharedData.currentUser == null
+              //     ? GestureDetector(
+              //   onTap: () {
+              //     Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //       builder: (context) => LoginView(role: 'Customer'),));
+              //   },
+
+
               child: Column(
                 children: [
-                  GestureDetector(
+                  AppSharedData.currentUser == null?Container():        GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ProfileSetting(),));
@@ -116,7 +128,7 @@ class _ProfileState extends State<Profile> {
                   //           : IconsAssets.arrow,
                   //       AppLocalizations.of(context)!.change_email),
                   // ),
-                  GestureDetector(
+                  AppSharedData.currentUser == null?Container():     GestureDetector(
                     onTap: (){
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PasswordSetting(),));
@@ -131,10 +143,26 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            SizedBox(
+            AppSharedData.currentUser == null?SizedBox(height: 40,):Container(),
+            AppSharedData.currentUser == null
+                ? GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => LoginView(role: 'Customer'),));
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.login,
+                  style: getSemiBoldStyle(
+                    color: ColorManager.grey,
+                    fontSize: FontSize.s20,
+                  ),
+                )):Container(),
+
+            AppSharedData.currentUser == null?SizedBox(height: 10,):Container(),
+            AppSharedData.currentUser == null?Container():      SizedBox(
               height: AppSize.s20,
             ),
-            Container(
+            AppSharedData.currentUser == null?Container():   Container(
               padding: EdgeInsets.symmetric(
                   horizontal: AppPadding.p10, vertical: AppPadding.p16),
               decoration: BoxDecoration(
@@ -165,7 +193,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            SizedBox(
+            AppSharedData.currentUser == null?Container():    SizedBox(
               height: AppSize.s20,
             ),
             Container(

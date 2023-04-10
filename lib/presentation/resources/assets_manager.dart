@@ -41,6 +41,8 @@ class ImageAssets {
   static const String fawry = "$imagePath/fawry.png";
   static const String google_pay = "$imagePath/google_pay.png";
   static const String mada = "$imagePath/mada.png";
+  static const String faster = "$imagePath/faster.png";
+  static const String warranty = "$imagePath/warranty.png";
   static const String mastercard = "$imagePath/mastercard.png";
   static const String paypal = "$imagePath/paypal.png";
   static const String stcPay = "$imagePath/stc_pay.png";
@@ -175,4 +177,5 @@ class IconsAssets {
   static const String top_up = "$iconPath/top_up.png";
   static const String add_credit = "$iconPath/add_credit.png";
   static const String manage = "$iconPath/manage.png";
+  static const String timer = "$iconPath/timer.png";
 }

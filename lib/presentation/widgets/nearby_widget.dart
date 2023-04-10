@@ -8,6 +8,7 @@ import '../../app/preferences/shared_pref_controller.dart';
 import '../../domain/model/address.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/values_manager.dart';
 import '../screens/checkout/check_out_getx_controller.dart';
 import '../screens/store_view/store_view.dart';
 
@@ -115,9 +116,10 @@ class _NearByWidgetState extends State<NearByWidget> {
                     color: ColorManager.greyLight)),
             Row(
               children: [
-                Icon(
-                  Icons.timer,
-                  color: ColorManager.grey,
+                Image.asset(
+                  IconsAssets.timer,
+                  height: AppSize.s20,
+                  width: AppSize.s20,
                 ),
                 SizedBox(
                   width: 8,

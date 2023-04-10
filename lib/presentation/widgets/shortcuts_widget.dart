@@ -5,12 +5,14 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/home_view/only_on_ghaf_screen.dart';
 import 'package:ghaf_application/presentation/screens/home_view/past_order_screen.dart';
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
+import 'package:ghaf_application/presentation/screens/store_view/top_rated_view.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
+import '../screens/store_view/fastest_delivery.dart';
 import '../screens/store_view/onsale_view.dart';
 import '../screens/store_view/trending_view.dart';
 
@@ -44,6 +46,15 @@ class ShortcutsWidget extends StatelessWidget with Helpers{
         }else if (text == AppLocalizations.of(context)!.offers) {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => OffersScreenNew(),));
+        }
+        else if (text == AppLocalizations.of(context)!.top_rated) {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => TopRatedView(bid: ''),));
+        }
+
+        else if (text == AppLocalizations.of(context)!.fastest_delivery) {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => FastestDeliveryView(bid: ''),));
         }
       },
       child: Container(
@@ -95,12 +106,12 @@ class ShortcutsWidget extends StatelessWidget with Helpers{
                     Image.asset(
                       // base64Decode(category.categoryImage ?? ''),
                       imageUrl,
-                      width: AppSize.s40,
-                      height: AppSize.s36,
+                      width: text == AppLocalizations.of(context)!.only_on_ghaf? AppSize.s44:AppSize.s34,
+                      height:text == AppLocalizations.of(context)!.past_order? AppSize.s40: AppSize.s46,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(
-                      height: AppSize.s12,
+                      height: AppSize.s4,
                     ),
                     Flexible(
                       child: Text(

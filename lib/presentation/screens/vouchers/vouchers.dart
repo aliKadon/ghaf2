@@ -99,7 +99,7 @@ class _VouchersState extends State<Vouchers> {
                           AppLocalizations.of(context)!.got_a_code,
                           style: TextStyle(
                               color: ColorManager.black,
-                              fontSize: FontSize.s16,
+                              fontSize: FontSize.s12,
                               fontWeight: FontWeight.w600),
                         ),
                         Text(

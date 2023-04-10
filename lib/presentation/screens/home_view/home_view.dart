@@ -29,6 +29,7 @@ import '../../widgets/shortcuts_widget.dart';
 import '../checkout/check_out_getx_controller.dart';
 import '../checkout/order_tracking_screen.dart';
 import '../login_view/login_view_getx_controller.dart';
+import '../profile/notification/notification_view.dart';
 import '../profile/profile_setting/profile_setting_getx_controller.dart';
 import 'home_view_getx_controller.dart';
 
@@ -49,12 +50,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
 
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
-  List<String> imageShortcuts = [
-    ImageAssets.logo1,
-    ImageAssets.trending,
-    ImageAssets.homePastOrder,
-    ImageAssets.homeOffers
-  ];
+
 
   Future<Position> getLocation() async {
     position = await _geolocatorPlatform.getCurrentPosition();
@@ -117,13 +113,24 @@ class _HomeViewState extends State<HomeView> with Helpers {
   // )
   //     :
 
+  List<String> imageShortcuts = [
+    ImageAssets.trending,
+    ImageAssets.homeOffers,
+    ImageAssets.homePastOrder,
+    ImageAssets.logo2,
+    ImageAssets.warranty,
+    ImageAssets.faster,
+  ];
+
   @override
   Widget build(BuildContext context) {
     List<String> typeOfShortcuts = [
-      AppLocalizations.of(context)!.only_on_ghaf,
       AppLocalizations.of(context)!.trending,
-      AppLocalizations.of(context)!.past_order,
       AppLocalizations.of(context)!.offers,
+      AppLocalizations.of(context)!.past_order,
+      AppLocalizations.of(context)!.only_on_ghaf,
+      AppLocalizations.of(context)!.top_rated,
+      AppLocalizations.of(context)!.fastest_delivery,
     ];
     SubscribeViewGetXController _subscribeViewGetXController =
         Get.put(SubscribeViewGetXController(context: context));
@@ -154,33 +161,57 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           children: [
                             Row(
                               children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.826,
+                                ),
+                                InkWell(
+                                    onTap:(){
+                                      //NotificationView
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => NotificationView(),
+                                      ));
+                                    },
+                                    child: Image.asset('assets/icons/bell.png',height: 25,width: 25,)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8.w,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
                                 Text(
                                   AppLocalizations.of(context)!.hello_welcome,
                                   style: getRegularStyle(
                                       color: ColorManager.blackLight),
                                 ),
+                                // SizedBox(
+                                //   width:
+                                //       MediaQuery.of(context).size.width * 0.38,
+                                // ),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2,
+                                  width: MediaQuery.of(context).size.width * 0.44,
                                 ),
                                 Row(
                                   children: [
-                                    Image.asset(
-                                      ImageAssets.homePoints,
-                                      height: 20,
-                                      width: 20,
-                                    ),
+
+                                     Image.asset(
+                                        ImageAssets.homePoints,
+                                        height: 20,
+                                        width: 20,
+                                      ),
+
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.03,
+                                          0.01,
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.2,
+                                          0.16,
                                       child: Text(
                                           '${AppSharedData.currentUser?.customerPoints ?? 0} ${AppLocalizations.of(context)!.point}',
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
+                                          style: TextStyle(color: ColorManager.primaryDark,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15)),
                                     ),
@@ -197,7 +228,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                         IconsAssets.heart,
                                         height: AppSize.s20,
                                         width: AppSize.s20,
-                                        color: Theme.of(context).primaryColor,
+                                        color: ColorManager.primaryDark,
                                       ),
                                     ),
                                   ],
@@ -208,7 +239,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Obx(
-                                  () => Text(
+                                      () => Text(
                                     '${AppLocalizations.of(context)!.shipping} ${_homeViewGetXController.city}',
                                     style: getRegularStyle(
                                         color: ColorManager.primaryDark),
@@ -266,21 +297,11 @@ class _HomeViewState extends State<HomeView> with Helpers {
                       ),
                       InkWell(
                         onTap: _homeViewGetXController.onFilterButtonTapped,
-                        child: Container(
-                          height: AppSize.s50,
-                          width: AppSize.s55,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: AppPadding.p12,
-                              vertical: AppPadding.p12),
-                          decoration: BoxDecoration(
-                            color: ColorManager.primary,
-                            borderRadius: BorderRadius.circular(AppRadius.r12),
-                          ),
-                          child: Image.asset(
-                            IconsAssets.filter,
-                            width: AppSize.s16,
-                            height: AppSize.s14,
-                          ),
+                        child: Image.asset(
+                          IconsAssets.filter,
+                          width: AppSize.s40,
+                          height: AppSize.s55,
+                          color: ColorManager.primary,
                         ),
                       ),
                       SizedBox(
@@ -415,7 +436,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 height: AppSize.s24,
                               ),
                               Container(
-                                height: AppSize.s210,
+                                height: MediaQuery.of(context).size.height * 0.34,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: AppPadding.p16),
@@ -430,7 +451,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                 childAspectRatio: 0.4,
                                                 crossAxisSpacing: 20,
                                                 mainAxisExtent: 130),
-                                        physics: BouncingScrollPhysics(),
+                                        physics: _homeViewGetXController
+                                            .categories.length <=6? NeverScrollableScrollPhysics():BouncingScrollPhysics(),
                                         itemCount: _homeViewGetXController
                                             .categories.length,
                                         itemBuilder: (context, index) {
@@ -491,9 +513,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: AppSize.s24,
-                              ),
+                              // SizedBox(
+                              //   height: AppSize.s16,
+                              // ),
                               Row(
                                 children: [
                                   SizedBox(
@@ -510,7 +532,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 ],
                               ),
                               SizedBox(
-                                height: AppSize.s24,
+                                height: AppSize.s8,
                               ),
                               Container(
                                 height:
@@ -536,12 +558,12 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           ),
                   ),
                   SizedBox(
-                    height: AppSize.s24,
+                    height: AppSize.s16,
                   ),
                   // Most Popular
                   GetBuilder<HomeViewGetXController>(
                     builder: (controller) => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppPadding.p24),
+                      padding:controller.mostPopular.length == 0? EdgeInsets.symmetric(horizontal: 0): EdgeInsets.symmetric(horizontal: AppPadding.p24),
                       child: controller.mostPopular.length == 0
                           ? Container()
                           : Row(
@@ -572,51 +594,62 @@ class _HomeViewState extends State<HomeView> with Helpers {
                             ),
                     ),
                   ),
-                  GetBuilder<HomeViewGetXController>(
-                    // id: 'products',
-                    builder: (controller) => Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: controller.mostPopular.length == 0
-                          ? Container()
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.all(12),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: controller.mostPopular.length,
-                              itemBuilder: (context, index) {
-                                return Builder(builder: (context) {
-                                  Get.put<Product>(
-                                    controller.mostPopular[index],
-                                    tag: '${controller.mostPopular[index].id}',
-                                  );
-                                  return ProductItemNew(
-                                    tag: '${controller.mostPopular[index].id}',
-                                    index: index,
-                                    image: controller.mostPopular[index]
-                                                .productImages!.length ==
-                                            0
-                                        ? ''
-                                        : controller.mostPopular[index]
-                                                .productImages?[0] ??
-                                            '',
-                                    name: controller.mostPopular[index].name ??
-                                        '',
-                                    price:
-                                        controller.mostPopular[index].price ??
-                                            0,
-                                    stars:
-                                        controller.mostPopular[index].stars ??
-                                            0,
-                                    idProduct:
-                                        controller.mostPopular[index].id ?? '',
-                                    isFavorite: controller
-                                            .mostPopular[index].isFavorite ??
-                                        false,
-                                  );
-                                });
-                              },
-                            ),
-                    ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 25,
+                      ),
+                      Container(
+                        width: 330,
+                        child: GetBuilder<HomeViewGetXController>(
+                          // id: 'products',
+                          builder: (controller) => Container(
+                            height: controller.mostPopular.length == 0?0: MediaQuery.of(context).size.height * 0.4,
+                            child: controller.mostPopular.length == 0
+                                ? Container()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.all(12),
+                                    scrollDirection: Axis.horizontal,
+                                    physics: BouncingScrollPhysics(),
+                                    itemCount: controller.mostPopular.length,
+                                    itemBuilder: (context, index) {
+                                      return Builder(builder: (context) {
+                                        Get.put<Product>(
+                                          controller.mostPopular[index],
+                                          tag: '${controller.mostPopular[index].id}',
+                                        );
+                                        return ProductItemNew(
+                                          tag: '${controller.mostPopular[index].id}',
+                                          index: index,
+                                          image: controller.mostPopular[index]
+                                                      .productImages!.length ==
+                                                  0
+                                              ? ''
+                                              : controller.mostPopular[index]
+                                                      .productImages?[0] ??
+                                                  '',
+                                          name: controller.mostPopular[index].name ??
+                                              '',
+                                          price:
+                                              controller.mostPopular[index].price ??
+                                                  0,
+                                          stars:
+                                              controller.mostPopular[index].stars ??
+                                                  0,
+                                          idProduct:
+                                              controller.mostPopular[index].id ?? '',
+                                          isFavorite: controller
+                                                  .mostPopular[index].isFavorite ??
+                                              false,
+                                        );
+                                      });
+                                    },
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   AppSharedData.currentUser == null
                       ? Container()
@@ -657,7 +690,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                               height: MediaQuery.of(context).size.height * 0.25,
                               child: GetBuilder<CheckOutGetxController>(
                                 builder: (controller) => ListView.builder(
-                                  padding: EdgeInsets.all(8),
+                                  padding: controller.customerOrder.length==0? EdgeInsets.all(0):EdgeInsets.all(8),
 
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
@@ -858,7 +891,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                             fontSize: 16),
                                       ),
                                     )),
-                                Positioned(
+                                controller.addsList[0].addFooter != "Footer"?  Positioned(
                                     top: 140,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -869,7 +902,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
-                                    )),
+                                    )):Container(),
                               ],
                             ),
                           ),
@@ -953,20 +986,20 @@ class _HomeViewState extends State<HomeView> with Helpers {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: isArabic == 'en'
                                       ? Image.asset(
                                           ImageAssets.save,
-                                          height: 150,
-                                          width: 150,
+                                          height: 100,
+                                          width: 100,
                                         )
                                       : Transform(
                                           alignment: Alignment.center,
                                           transform: Matrix4.rotationY(math.pi),
                                           child: Image.asset(
                                             ImageAssets.save,
-                                            height: 150,
-                                            width: 150,
+                                            height: 100,
+                                            width: 100,
                                           ),
                                         ),
                                 ),

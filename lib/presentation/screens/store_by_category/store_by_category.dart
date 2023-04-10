@@ -125,7 +125,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                               height: 60,
                                               width: 60,
                                             ),
-                                      SizedBox(width: 10),
+                                      // SizedBox(width: 2),
                                       Column(
                                         children: [
                                           Row(
@@ -145,7 +145,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.1,
+                                                    0.08,
                                               ),
                                               Row(
                                                 children: [

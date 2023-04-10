@@ -76,8 +76,9 @@ class LoginViewGetXController extends GetxController with Helpers {
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(context, Routes.mainRoute);
           } else {
-            Navigator.pushReplacementNamed(
-                context, Routes.subscribeFromHomePage);
+            // Navigator.pushReplacementNamed(
+            //     context, Routes.subscribeFromHomePage);
+            Navigator.pushReplacementNamed(context, Routes.mainRoute);
           }
         } else if (AppSharedData.currentUser!.role ==
             Constants.roleRegisterSeller) {

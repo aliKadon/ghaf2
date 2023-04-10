@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
   Timer? _timer;
 
   _startDelay() {
-    _timer = Timer(const Duration(seconds: 15), _goNext);
+    _timer = Timer(const Duration(seconds: 12), _goNext);
   }
 
   // LocationData? locationData;
@@ -89,10 +90,12 @@ class _SplashViewState extends State<SplashView> {
     //     Navigator.pushReplacementNamed(context, Routes.welcomeRoute);
     // }
   }
+  AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
 
   @override
   void initState() {
     super.initState();
+    _assetsAudioPlayer.open(Audio('assets/images/sound.mp3'));
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     _startDelay();
   }

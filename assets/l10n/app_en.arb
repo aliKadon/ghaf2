@@ -69,7 +69,7 @@
   "upgrade_your_shopping_experience" : "Upgrade your shopping experience",
   "easy_and_comfortable" : "Easy and Comfortable",
   "subscribe_to_ghaf_gold" : "Subscribe to Ghaf Gold",
-  "shortcut" : "shortcuts",
+  "shortcut" : "Shortcuts",
   "trending" : "Trending",
   "no_type_found" : "No type found",
   "only_on_ghaf" : "Only on ghaf",
@@ -313,7 +313,7 @@
   "categories": "Categories",
   "cart": "Cart",
   "account": "Account",
-  "hello_welcome": "Hello, Welcome 👋",
+  "hello_welcome": "Welcome",
   "search_flower": "Search flower. . .",
   "stay_home_we_deliver": "Stay home \nwe deliver",
   "any_where_any_time": "Any where... Any time!!",
@@ -511,7 +511,7 @@
   "recent_transactions": "Recent Transactions",
   "name_address": "Name Address",
   "address1" : "address",
-  "shipping": "Shipping to your",
+  "shipping": "Shipping to",
   "userName_or_email": "UserName or Email",
   "something_went_wrong": "Something went wrong",
   "register_create_account": "Register to create an account",
@@ -749,5 +749,7 @@
   "delivery_fee_text" : "This is based on how far you are from the store or restaurant. The closer you are, the lower the fee.",
   "service_fee_text" : "This is 3% of the order total before discounts, andis capped at AED 3.90 with a minimum of AED0.90. This fee helps to continue to provide youwith a great experience.",
   "read_about_fee" : "Read about fees",
-  "got_it" : "Got it"
+  "got_it" : "Got it",
+  "top_rated":"Top rated",
+  "fastest_delivery": "Fastest delivery"
 }
