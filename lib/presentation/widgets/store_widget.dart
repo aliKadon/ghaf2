@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../domain/model/store_delivery_cost.dart';
 import '../resources/assets_manager.dart';
@@ -44,15 +47,22 @@ class _StoreWidgetState extends State<StoreWidget> {
               // crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // widget.storeImageUrl.isEmpty
-                //     ? Image.asset(
-                //         ImageAssets.brStore,
-                //         height: AppSize.s75,
-                //       )
-                //     : Image.network(
-                //         widget.storeImageUrl,
-                //         height: AppSize.s75,
-                //       ),
+                widget.storeImageUrl.isEmpty
+                    ? Image.asset(
+                        ImageAssets.brStore,
+                        height: AppSize.s75,
+                      )
+                    : Image.network(
+                        widget.storeImageUrl,
+                        height: AppSize.s75,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      ImageAssets.brStore,
+                      height: AppSize.s75,
+                    );
+                  },
+                      ),
+                SizedBox(width: AppSize.s20),
                 Column(
                   children: [
                     Row(
@@ -65,7 +75,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                               fontSize: AppSize.s16),
                         ),
                         SizedBox(
-                          width: AppSize.s92,
+                          width: AppSize.s60,
                         ),
                         Icon(
                           Icons.star,
@@ -90,7 +100,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                           width: AppSize.s6,
                         ),
                         Text(
-                          '${widget.workTime}',
+                          widget.isOpen ? '${widget.workTime}' : '${AppLocalizations.of(context)!.close}',
                           style: TextStyle(
                               color: ColorManager.primary,
                               fontWeight: FontWeight.bold,
@@ -110,10 +120,15 @@ class _StoreWidgetState extends State<StoreWidget> {
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return Image.network(
-                                widget.imageDeliveryUrl[index].methodImage!,
-                                height: AppSize.s20,
-                                width: AppSize.s20,
+                              return Row(
+                                children: [
+                                  Image.network(
+                                    widget.imageDeliveryUrl[index].methodImage!,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                  ),
+                                  SizedBox(width: AppSize.s6,)
+                                ],
                               );
                             },
                           ),

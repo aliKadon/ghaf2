@@ -7,6 +7,30 @@ import '../../../domain/model/api_response.dart';
 import '../api_helper.dart';
 
 class ReviewApiController with ApiHelper {
+  Future<ApiResponse> addDeliveryReview(
+      {required String employeeId,
+      required num points,
+      required String opinion}) async {
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Employee/create-review?employeeId=$employeeId&opinion=$opinion&points=$points');
+    var response = await http.post(
+      url,
+      headers: headers,
+    );
+    print('===================delivery review');
+    print(opinion);
+    print(points);
+    print(response.body);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+      }
+    }
+    return failedResponse;
+  }
+
   Future<ApiResponse> addAppReview(
       {required String description, required num points}) async {
     var url = Uri.parse('${Constants.baseUrl}/AppReview/add-user-review');
@@ -51,7 +75,9 @@ class ReviewApiController with ApiHelper {
   }
 
   Future<ApiResponse> addStoreReview(
-      {required String storeId, required num points,required String opinion}) async {
+      {required String storeId,
+      required num points,
+      required String opinion}) async {
     var url = Uri.parse(
         '${Constants.baseUrl}/Auth/create-store-review?storeId=$storeId&opinion=$opinion&points=$points');
     var response = await http.post(

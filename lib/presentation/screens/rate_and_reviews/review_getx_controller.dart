@@ -8,6 +8,7 @@ class ReviewGetxController extends GetxController with Helpers {
   late final ReviewApiController _reviewApiController = ReviewApiController();
 
   late ApiResponse apiResponse;
+  late ApiResponse apiResponse1;
 
   void addAppReview(
       {required BuildContext context,
@@ -17,6 +18,28 @@ class ReviewGetxController extends GetxController with Helpers {
       apiResponse = await _reviewApiController.addAppReview(
           description: description, points: points);
       showSnackBar(context, message: apiResponse.message);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  void addDeliveryReview(
+      {required BuildContext context,
+        required String deliverId,
+        required String description,
+        required num points}) async {
+    try {
+      showLoadingDialog(context: context, title: 'Sending');
+      apiResponse1 = await _reviewApiController.addDeliveryReview(employeeId: deliverId,
+          opinion: description, points: points);
+      if(apiResponse.status == 200) {
+        Navigator.of(context).pop();
+        showSnackBar(context, message: apiResponse.message);
+      }else {
+        Navigator.of(context).pop();
+        showSnackBar(context, message: apiResponse.message,error: true);
+      }
+
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
     }

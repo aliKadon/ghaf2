@@ -143,7 +143,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                         SizedBox(
                           height: AppSize.s35,
                         ),
-                        Container(
+                        _checkOutGetxController.order!.branch!.isOpen! ? Container(
                           margin: EdgeInsets.symmetric(
                             horizontal: AppMargin.m16,
                           ),
@@ -170,7 +170,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                                   fontSize: FontSize.s18),
                             ),
                           ),
-                        ),
+                        ) : Container(),
                         SizedBox(
                           height: AppSize.s22,
                         ),

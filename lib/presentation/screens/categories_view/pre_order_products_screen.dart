@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
@@ -10,31 +11,18 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../../widgets/product_item_new.dart';
-import 'home_view_getx_controller.dart';
+import '../home_view/home_view_getx_controller.dart';
 
-class FilterScreen extends StatefulWidget {
-  String? sid;
-  String? filterBy;
-  num? maxPrice;
-  num? minPrice;
-  String search = '';
-  String? stars;
-  String? did;
+class PreOrderProductsScreen extends StatefulWidget {
+  String? bid;
 
-  FilterScreen(
-      {this.sid,
-      required this.search,
-      this.filterBy,
-      this.maxPrice,
-        this.stars,
-        this.did,
-      this.minPrice});
+  PreOrderProductsScreen({this.bid});
 
   @override
-  State<FilterScreen> createState() => _FilterScreenState();
+  State<PreOrderProductsScreen> createState() => _PreOrderProductsScreenState();
 }
 
-class _FilterScreenState extends State<FilterScreen> {
+class _PreOrderProductsScreenState extends State<PreOrderProductsScreen> {
   //controller
   late final HomeViewGetXController _homeViewGetXController =
       Get.put(HomeViewGetXController());
@@ -42,21 +30,7 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    if(widget.filterBy == 'Free delivery') {
-      _homeViewGetXController.getFreeDeliveryProduct(context: context);
-    }else {
-      _homeViewGetXController.getFilterProducts(
-        did: widget.did,
-        context: context,
-        sid: widget.sid,
-        filterBy: widget.filterBy,
-        maxPrice: widget.maxPrice,
-        minPrice: widget.minPrice,
-        search: widget.search,
-        stars:widget.stars,
-      );
-    }
-
+    _homeViewGetXController.getProducts(context: context, bid: widget.bid);
     super.initState();
   }
 
@@ -105,7 +79,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 color: ColorManager.greyLight,
               ),
               GetBuilder<HomeViewGetXController>(
-                builder: (controller) => controller.isFilterProductLoading
+                builder: (controller) => controller.isProductsLoading
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
@@ -129,27 +103,29 @@ class _FilterScreenState extends State<FilterScreen> {
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Builder(
-
                                 builder: (context) {
                                   Get.put<Product>(
-                                    _homeViewGetXController
-                                        .products[index],tag:
-                                  '${_homeViewGetXController.products[index].id}filter',);
+                                    _homeViewGetXController.products[index],
+                                    tag:
+                                        '${_homeViewGetXController.products[index].id}pre',
+                                  );
                                   return ProductItemNew(
-                                    tag: '${_homeViewGetXController.products[index].id}filter',
+                                      tag:
+                                          '${_homeViewGetXController.products[index].id}pre',
                                       image: controller.products[index]
-                                          .productImages?.length ==
-                                          0
+                                                  .productImages?.length ==
+                                              0
                                           ? ''
-                                          : controller
-                                          .products[index].productImages![0],
+                                          : controller.products[index]
+                                              .productImages![0],
                                       name: controller.products[index].name!,
                                       stars: controller.products[index].stars!,
                                       price: controller.products[index].price!,
                                       index: index,
-                                      isFavorite:
-                                      controller.products[index].isFavorite!,
-                                      idProduct: controller.products[index].id!);
+                                      isFavorite: controller
+                                          .products[index].isFavorite!,
+                                      idProduct:
+                                          controller.products[index].id!);
                                 },
                               );
                             },

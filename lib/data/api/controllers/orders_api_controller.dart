@@ -36,6 +36,27 @@ class OrdersApiController with ApiHelper {
     return failedResponse;
   }
 
+  Future<ApiResponse> addItems(
+      {required String orderId, required String productId}) async {
+    var url = Uri.parse(
+        '${Constants
+            .baseUrl}/Orders/add-item-for-order?pordId=$productId&orderId=$orderId');
+    var response = await http.post(url, headers: headers);
+
+    print('==================add items');
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+      }
+    }
+    return failedResponse;
+  }
+
+
   Future<ApiResponse> deleteUnpaidOrderById({required String orderId}) async {
     var url = Uri.parse(
         '${Constants.baseUrl}/Orders/delete-unpaid-order?Id=$orderId');
@@ -49,6 +70,33 @@ class OrdersApiController with ApiHelper {
       }
     }
     return failedResponse;
+  }
+
+  Future<List<Order>> getPreOrder({String? branchName}) async {
+    var url = Uri.parse('${Constants
+        .baseUrl}/Orders/get-customer-pre-order?filter=branch.branchName~contains~\'$branchName\'');
+    var response = await http.get(url,headers: headers);
+    // var response = await _dio.get(
+    //   '/Orders/get-customer-pre-order',
+    //   options: Options(
+    //     headers: headers,
+    //   ),
+    // );
+    print('============================================pre order');
+    print(response.statusCode);
+    print(response.body);
+    // print('===============delivery method');
+    // print(jsonData['data']['availableDeliveryMethod']);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      // var jsonData = jsonDecode(response.data);
+      // print(jsonData['data']);
+      if (jsonData['status'] == 200) {
+        return List<Order>.from(
+            jsonData['data'].map((x) => Order.fromJson(x)));
+      }
+    }
+    return [];
   }
 
   // get ready orders to pay.
@@ -134,7 +182,7 @@ class OrdersApiController with ApiHelper {
 
   Future<Order?> getOrderById({required String orderId}) async {
     var url =
-        Uri.parse('${Constants.baseUrl}/orders/get-order-by-id?id=$orderId');
+    Uri.parse('${Constants.baseUrl}/orders/get-order-by-id?id=$orderId');
 
     var response = await http.get(url, headers: headers);
 
@@ -151,7 +199,8 @@ class OrdersApiController with ApiHelper {
   }
 
   Future<List<Order>> getCustomerOrder() async {
-    var url = Uri.parse('${Constants.baseUrl}/Orders/get-customer-order?pageRows=1000');
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Orders/get-customer-order?pageRows=1000');
     var response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {
@@ -164,7 +213,8 @@ class OrdersApiController with ApiHelper {
   }
 
   Future<List<ScheduledOrder>> getScheduleOrder({String? storeName}) async {
-    var url = Uri.parse('${Constants.baseUrl}/Orders/get-scheduled-order?storeName=$storeName');
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Orders/get-scheduled-order?storeName=$storeName');
     var response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {

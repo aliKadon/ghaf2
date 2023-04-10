@@ -28,7 +28,7 @@ class Product extends GetxController with Helpers {
     required BuildContext context,
     bool sendRequest = true,
   }) {
-    // _homeViewGetXController.getProducts(context: context);
+    _homeViewGetXController.getProducts(context: context);
     // _homeViewGetXController.getMostPopularProduct();
     // _offersScreenGetXController.getOffers(context: context);
 

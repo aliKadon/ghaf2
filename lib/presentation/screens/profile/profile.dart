@@ -104,18 +104,18 @@ class _ProfileState extends State<Profile> {
                             : IconsAssets.arrow,
                         AppLocalizations.of(context)!.account_info),
                   ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ChangeEmail(),));
-                    },
-                    child: accountWidget(
-                        context,
-                        language == 'en'
-                            ? IconsAssets.arrow2
-                            : IconsAssets.arrow,
-                        AppLocalizations.of(context)!.change_email),
-                  ),
+                  // GestureDetector(
+                  //   onTap: (){
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //       builder: (context) => ChangeEmail(),));
+                  //   },
+                  //   child: accountWidget(
+                  //       context,
+                  //       language == 'en'
+                  //           ? IconsAssets.arrow2
+                  //           : IconsAssets.arrow,
+                  //       AppLocalizations.of(context)!.change_email),
+                  // ),
                   GestureDetector(
                     onTap: (){
                       Navigator.of(context).push(MaterialPageRoute(

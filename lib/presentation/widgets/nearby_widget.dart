@@ -17,10 +17,12 @@ class NearByWidget extends StatefulWidget {
   final String storeName;
   final String branchId;
   final Address address;
+  final String details;
 
   NearByWidget(
       {required this.index,
       required this.imageUrl,
+      required this.details,
       required this.storeName,
       required this.address,
       required this.branchId});
@@ -103,6 +105,14 @@ class _NearByWidgetState extends State<NearByWidget> {
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
                     color: ColorManager.primaryDark)),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            Text(widget.details,
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                    color: ColorManager.greyLight)),
             Row(
               children: [
                 Icon(

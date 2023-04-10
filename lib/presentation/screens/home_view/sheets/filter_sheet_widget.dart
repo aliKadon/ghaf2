@@ -42,6 +42,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
 
   var type = '';
   var search = '';
+  var did = '';
 
   List<String> flitterType = [
     'Price',
@@ -124,17 +125,33 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                           onTap: () {
                             setState(() {
                               selected = index;
+
                               if(flitterType[index] == 'recommended') {
                                 stars = 'stars';
                                 type = 'Name';
+                                did = '';
                               }else if(flitterType[index] == 'New arrival') {
                                 stars = 'Name';
                                 type = 'Name';
+                                did = '';
                               }else if(flitterType[index] == 'Pick up order') {
-                                type = 'branch.storeDeliveryCost.deliveryMethodId';
-                                search = '7cc577e9-7d5c-4a12-0149-08dafd69d37b';
+                                type = 'Name';
+                                stars = 'Name';
+                                did = '7cc577e9-7d5c-4a12-0149-08dafd69d37b';
                               }else if(flitterType[index] == 'Price') {
                                 search = 'Name';
+                                type = 'Price';
+                                did = '';
+                              }else if(flitterType[index] == 'Deliver to car window') {
+                                type = 'Name';
+                                stars = 'Name';
+                                did = 'bbcb7d68-8dc4-46ae-014a-08dafd69d37b';
+                              }else if(flitterType[index] == 'Fast Delivery') {
+                                type = 'Name';
+                                stars = 'Name';
+                                did = 'bc4f3b43-df7b-48ca-014c-08dafd69d37b';
+                              }else if(flitterType[index] == 'Free delivery') {
+                                type = flitterType[index];
                               }
                               print(selected);
                             });
@@ -301,6 +318,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FilterScreen(
+                            did: did,
                               search: search,
                               stars: stars,
                               minPrice:_minPriceController.text.isEmpty ? 0 :  num.parse(_minPriceController.text),

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/screens/get_help/return_order_get_help.dart';
-import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';

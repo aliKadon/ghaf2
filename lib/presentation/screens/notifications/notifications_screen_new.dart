@@ -246,6 +246,9 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                 _checkOutGetxController.doneorder.length,
                 itemBuilder: (context, index) {
                   return ReviewNotificationWidget(
+                    deliveryId: _checkOutGetxController.doneorder[index].driverId,
+                    orderId: _checkOutGetxController
+                        .doneorder[index].branch!.storeId,
                     deliveryDate: _checkOutGetxController
                         .doneorder[index].deliverdAt ==
                         null

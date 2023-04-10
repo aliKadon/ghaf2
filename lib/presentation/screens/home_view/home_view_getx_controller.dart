@@ -93,6 +93,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   List<Product> products = [];
   List<Product> payLaterProduct = [];
   List<Product> mostPopular = [];
+  List<Product> freeDeliveryProduct = [];
   List<Product> recommendedProduct = [];
   List<Product> onlyOnghaf = [];
   List<Product> productByType = [];
@@ -121,6 +122,15 @@ class HomeViewGetXController extends GetxController with Helpers {
     getCategories();
     getProducts(context: context);
     getStoreAdds(context: context);
+  }
+
+  void getFreeDeliveryProduct({required BuildContext context}) async{
+    try {
+      freeDeliveryProduct = await _storeApiController.getFreeDeliveryProducts();
+      update();
+    }catch(e) {
+      showSnackBar(context, message: e.toString(),error: true);
+    }
   }
 
   Future<Position> determinePosition() async {
@@ -249,6 +259,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     num? maxPrice,
     String? filterBy,
     String? stars,
+    String? did,
     bool notifyLoading = true,
   }) async {
     // if (notifyLoading) isProductsLoading = true;
@@ -258,6 +269,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
       // print(ModalRoute.of(context)?.settings.arguments as String);
       products = await _storeApiController.getFilterProducts(
+        did: did,
         search: search,
         maxPrice: maxPrice,
         minPrice: minPrice,
@@ -285,6 +297,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   // get products.
   void getProducts({
     required BuildContext context,
+    String? bid,
     bool notifyLoading = true,
   }) async {
     try {
@@ -292,6 +305,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
       // print(ModalRoute.of(context)?.settings.arguments as String);
       products = await _storeApiController.getProducts(
+        bid: bid,
         search: search,
         maxPrice: maxPrice,
         minPrice: minPrice,

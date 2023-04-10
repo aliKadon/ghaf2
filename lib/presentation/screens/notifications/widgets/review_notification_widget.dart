@@ -14,6 +14,8 @@ class ReviewNotificationWidget extends StatelessWidget {
   final String createDate;
   String? branchLogoImage;
   String? deliveryDate;
+  String? orderId;
+  String? deliveryId;
   final List<Items> items;
   final num orderCostForCustomer;
 
@@ -21,6 +23,8 @@ class ReviewNotificationWidget extends StatelessWidget {
       {required this.branchLogoImage,
       required this.createDate,
       required this.items,
+        this.orderId,
+        this.deliveryId,
       required this.deliveryDate,
       required this.orderCostForCustomer,
       required this.sequenceNumber});
@@ -48,6 +52,7 @@ class ReviewNotificationWidget extends StatelessWidget {
             onPressed: () {
               _customDialogRate(
                   context: context,
+                  orderId: orderId!,
                   createDate: createDate,
                   items: items,
                   orderCostForCustomer: orderCostForCustomer,
@@ -64,6 +69,7 @@ class ReviewNotificationWidget extends StatelessWidget {
     required String createDate,
     required String? deliveryDate,
     required num orderCostForCustomer,
+    required String orderId,
   }) async {
     showDialog(
         context: context,
@@ -214,7 +220,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => RateShop(),
+                                          builder: (context) => RateShop(storeId: orderId),
                                         ));
                                   },
                                   child: Text(AppLocalizations.of(context)!
@@ -235,7 +241,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => RateDelivery(),
+                                          builder: (context) => RateDelivery(deliveryId: deliveryId! ),
                                         ));
                                   },
                                   child: Text(AppLocalizations.of(context)!

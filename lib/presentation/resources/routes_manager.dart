@@ -197,7 +197,7 @@ class RouteGenerator {
                 ReviewProduct(settings.arguments as Map<String, dynamic>));
 
       case Routes.rateDelivery:
-        return MaterialPageRoute(builder: (_) => RateDelivery());
+        return MaterialPageRoute(builder: (_) => RateDelivery(deliveryId: settings.arguments as String,));
 
       case Routes.rateSeller:
         return MaterialPageRoute(builder: (_) => RateSeller());

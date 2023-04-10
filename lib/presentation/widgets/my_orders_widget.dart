@@ -9,14 +9,18 @@ import '../resources/font_manager.dart';
 
 class MyOrdersWidget extends StatelessWidget {
   final String branchName;
+  final String statusName;
   final String date;
   final String price;
   final String orderSequence;
   Address? branchAddress;
+  String image;
 
   MyOrdersWidget(
       {required this.price,
       required this.date,
+      required this.image,
+      required this.statusName,
       required this.orderSequence,
       required this.branchAddress,
       required this.branchName});
@@ -28,9 +32,15 @@ class MyOrdersWidget extends StatelessWidget {
       child: Container(
         child: Row(
           children: [
-            Image.asset(
-              ImageAssets.groceryOrder,
+            Image.network(
+              image,
               height: AppSize.s92,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  ImageAssets.groceryOrder,
+                  height: AppSize.s92,
+                );
+              },
             ),
             SizedBox(
               width: AppSize.s20,
@@ -65,7 +75,8 @@ class MyOrdersWidget extends StatelessWidget {
                         color: ColorManager.greyLight,
                         fontWeight: FontWeight.w600,
                         fontSize: FontSize.s16)),
-                Text('${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
+                Text(
+                    '${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
                     style: TextStyle(
                         color: ColorManager.black,
                         fontWeight: FontWeight.w600,
@@ -75,11 +86,13 @@ class MyOrdersWidget extends StatelessWidget {
                         color: ColorManager.primaryDark,
                         fontWeight: FontWeight.w500,
                         fontSize: FontSize.s14)),
-                Text('canceled',
-                    style: TextStyle(
-                        color: ColorManager.red,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16)),
+                statusName == 'Canceled'
+                    ? Text('canceled',
+                        style: TextStyle(
+                            color: ColorManager.red,
+                            fontWeight: FontWeight.w600,
+                            fontSize: FontSize.s16))
+                    : Container(),
               ],
             )
           ],

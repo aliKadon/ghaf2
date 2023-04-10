@@ -189,14 +189,14 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                         fontWeight: FontWeight.w600,
                         fontSize: FontSize.s16),
                   ),
-                  Spacer(),
-                  Text(
-                    AppLocalizations.of(context)!.more,
-                    style: TextStyle(
-                        color: ColorManager.greyLight,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16),
-                  ),
+                  // Spacer(),
+                  // Text(
+                  //   AppLocalizations.of(context)!.more,
+                  //   style: TextStyle(
+                  //       color: ColorManager.greyLight,
+                  //       fontWeight: FontWeight.w600,
+                  //       fontSize: FontSize.s16),
+                  // ),
                 ],
               ),
               Container(
@@ -213,7 +213,7 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
               SizedBox(
                 height: AppSize.s30,
               ),
-              Row(
+              _offersScreenGetXController.offers.length == 0 ? Container() :Row(
                 children: [
                   Text(
                     AppLocalizations.of(context)!.offers,
@@ -223,13 +223,13 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                         fontSize: FontSize.s16),
                   ),
                   Spacer(),
-                  Text(
-                    AppLocalizations.of(context)!.more,
-                    style: TextStyle(
-                        color: ColorManager.greyLight,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16),
-                  ),
+                  // Text(
+                  //   AppLocalizations.of(context)!.more,
+                  //   style: TextStyle(
+                  //       color: ColorManager.greyLight,
+                  //       fontWeight: FontWeight.w600,
+                  //       fontSize: FontSize.s16),
+                  // ),
                 ],
               ),
               GetBuilder<OffersScreenGetXController>(
@@ -237,7 +237,7 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                     ? Container()
                     : Container(
                         height: MediaQuery.of(context).size.height * 0.4,
-                        child: ListView.builder(
+                        child: controller.offers.length == 0 ? Container() : ListView.builder(
                           itemCount: controller.offers.length,
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,

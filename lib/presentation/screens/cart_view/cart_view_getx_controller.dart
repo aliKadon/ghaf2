@@ -39,6 +39,7 @@ class CartViewGetXController extends GetxController with Helpers {
   num discount = 0;
   num total = 0;
   num subTotal2 = 0;
+  num? minOrder;
 
   // init.
   void init({
@@ -53,6 +54,7 @@ class CartViewGetXController extends GetxController with Helpers {
     }
 
   }
+
 
   // get my cart.
   void getMyCart() async {
@@ -85,11 +87,12 @@ class CartViewGetXController extends GetxController with Helpers {
   }
 
   // calculate bell.
-  void calculateBell() async {
+  void calculateBell({num? minOrder1}) async {
     subTotal = 0;
     discount = 0;
     total = 0;
     subTotal2 = 0;
+
     // for (CartItem cartItem in cartItems) {
     //
     //
@@ -123,10 +126,30 @@ class CartViewGetXController extends GetxController with Helpers {
     }
     discount = subTotal - subTotal2;
     total = subTotal2;
+
+    if(minOrder1 != null) {
+      calculate(subtotal1: subTotal,minOrder1: minOrder1);
+    }
     print('you in');
     // cartItems = await _storeApiController.getMyCart();
     update();
     // notifyMyCart();
+  }
+
+  void calculate({num? subtotal1,num? minOrder1}) {
+
+    num minOrder2 = 0;
+    minOrder = minOrder1;
+    minOrder2 = (minOrder1 ?? 0 - subtotal1!);
+    print('===============calculate');
+    print(minOrder2);
+    print(subtotal1);
+    if(minOrder2 > 0) {
+      minOrder = minOrder2;
+      print(minOrder);
+    }else {
+      minOrder = 0;
+    }
   }
 
   void emptyBasket(BuildContext context) async {

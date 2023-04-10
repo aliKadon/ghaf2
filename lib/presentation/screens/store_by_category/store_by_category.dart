@@ -3,11 +3,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
+import '../checkout/check_out_getx_controller.dart';
 import '../store_view/store_view.dart';
 
 class StoreByCategory extends StatefulWidget {
@@ -23,10 +25,13 @@ class _StoreByCategoryState extends State<StoreByCategory> {
   //controller
   late final CategoriesGetxController _categoriesGetxController =
       Get.put(CategoriesGetxController());
+  late final CheckOutGetxController _checkOutGetxController =
+  Get.put(CheckOutGetxController());
 
   @override
   void initState() {
     // TODO: implement initState
+
     _categoriesGetxController.getBranches(cid: widget.cid);
     super.initState();
   }
@@ -98,39 +103,49 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                   padding: const EdgeInsets.all(12.0),
                                   child: Row(
                                     children: [
-                                      // _categoriesGetxController.branches[index]
-                                      //             .branchLogoImage ==
-                                      //         null
-                                      //     ? Image.asset(
-                                      //         ImageAssets.brIcon,
-                                      //         height: 80,
-                                      //         width: 80,
-                                      //       )
-                                      //     : Image.network(
-                                      //         _categoriesGetxController
-                                      //             .branches[index]
-                                      //             .branchLogoImage!,
-                                      //         height: 80,
-                                      //         width: 80,
-                                      //       ),
+                                      _categoriesGetxController.branches[index]
+                                                  .branchLogoImage ==
+                                              null
+                                          ? Image.asset(
+                                              ImageAssets.brIcon,
+                                              height: 60,
+                                              width: 60,
+                                            )
+                                          : Image.network(
+                                              _categoriesGetxController
+                                                  .branches[index]
+                                                  .branchLogoImage!,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return Image.asset(
+                                                  ImageAssets.brIcon,
+                                                  height: 60,
+                                                  width: 60,
+                                                );
+                                              },
+                                              height: 60,
+                                              width: 60,
+                                            ),
                                       SizedBox(width: 10),
                                       Column(
                                         children: [
                                           Row(
                                             children: [
-                                              Text(
-                                                '${_categoriesGetxController.branches[index].storeName} (${_categoriesGetxController.branches[index].branchName})',
-                                                style: TextStyle(
-                                                    color: ColorManager
-                                                        .primaryDark,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15),
+                                              Container(
+                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                child: Text(
+                                                  '${_categoriesGetxController.branches[index].storeName} (${_categoriesGetxController.branches[index].branchName})',
+                                                  style: TextStyle(
+                                                      color: ColorManager
+                                                          .primaryDark,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: FontSize.s14),
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.22,
+                                                    0.1,
                                               ),
                                               Row(
                                                 children: [
@@ -139,12 +154,17 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                     color: ColorManager.primary,
                                                   ),
                                                   SizedBox(width: 5),
-                                                  Text(
-                                                    '12 min',
-                                                    style: TextStyle(
-                                                        color:
-                                                            ColorManager.grey,
-                                                        fontSize: 12),
+                                                  GetBuilder<CategoriesGetxController>(
+                                                    builder: (controller) => Container(
+                                                      width: MediaQuery.of(context).size.width * 0.17,
+                                                      child: Text(
+                                                        '${controller.durations[index]} ',
+                                                        style: TextStyle(
+                                                            color:
+                                                                ColorManager.grey,
+                                                            fontSize: FontSize.s10),
+                                                      ),
+                                                    ),
                                                   )
                                                 ],
                                               ),
@@ -186,7 +206,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                 '(${_categoriesGetxController.branches[index].reviewCount}+)',
                                                 style: TextStyle(
                                                     color: ColorManager.grey,
-                                                    fontSize: 12),
+                                                    fontSize: FontSize.s10),
                                               )
                                             ],
                                           ),

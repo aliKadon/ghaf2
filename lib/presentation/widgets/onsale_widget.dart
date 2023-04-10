@@ -13,8 +13,10 @@ import '../screens/product_view/product_view_new.dart';
 
 class OnsaleWidget extends StatefulWidget {
   String tag;
+  num minOrder;
+  String discount;
 
-  OnsaleWidget({required this.tag});
+  OnsaleWidget({required this.tag,required this.minOrder,required this.discount});
 
   @override
   State<OnsaleWidget> createState() => _OnsaleWidgetState();
@@ -30,8 +32,9 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        print('====================click1');
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductViewNew(idProduct: _product.id!),
+          builder: (context) => ProductViewNew(idProduct: _product.id!,minOrder: widget.minOrder),
         ));
       },
       child: Padding(
@@ -45,66 +48,60 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          _offersScreenGetXController.addItemToonSaleCart(
-                              price: _product.price!,
-                              minOrder: _product.branch!.minOrder!);
-                        },
-                        child: _product.productImages!.length == 0
-                            ? Container(
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.29,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            image: DecorationImage(
-                              image: AssetImage(ImageAssets.pizza),
-                              fit: BoxFit.cover,
-                            ),
+                      _product.productImages!.length == 0
+                          ? Container(
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.29,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          image: DecorationImage(
+                            image: AssetImage(ImageAssets.pizza),
+                            fit: BoxFit.cover,
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: GridTile(
-                              footer: GridTileBar(
-                                  backgroundColor: ColorManager.primaryDark,
-                                  title:
-                                  Center(child: Text('Save 12 AED'))),
-                              child: Container(),
-                            ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: GridTile(
+                            footer: GridTileBar(
+
+                                backgroundColor: ColorManager.primaryDark,
+                                title:
+                                Text('Save ${((_product.price!) * (num.parse(widget.discount) / 100)).toInt()} AED')),
+                            child: Container(),
                           ),
-                        )
-                            : Container(
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.29,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            image: DecorationImage(
-                              image:
-                              NetworkImage(_product.productImages![0]),
-                              fit: BoxFit.cover,
-                            ),
+                        ),
+                      )
+                          : Container(
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.29,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          image: DecorationImage(
+                            image:
+                            NetworkImage(_product.productImages![0]),
+                            fit: BoxFit.cover,
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: GridTile(
-                              footer: GridTileBar(
-                                  backgroundColor: ColorManager.primaryDark,
-                                  title:
-                                  Center(child: Text('Save 12 AED'))),
-                              child: Container(),
-                            ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: GridTile(
+                            footer: GridTileBar(
+                                backgroundColor: ColorManager.primaryDark,
+                                title:
+                                Center(child: Text('Save 12 AED'))),
+                            child: Container(),
                           ),
                         ),
                       ),

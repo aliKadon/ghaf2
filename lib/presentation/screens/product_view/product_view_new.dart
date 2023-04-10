@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/screens/cart_view/cart_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view_getx_controller.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,11 @@ import '../../resources/values_manager.dart';
 
 class ProductViewNew extends StatefulWidget {
   final String idProduct;
+  bool? isFromChekOut;
+  String? orderId;
+  num? minOrder;
 
-  ProductViewNew({required this.idProduct});
+  ProductViewNew({required this.idProduct, this.isFromChekOut, this.orderId,this.minOrder});
 
   @override
   State<ProductViewNew> createState() => _ProductViewNewState();
@@ -33,11 +37,17 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
       Get.put(ProductViewGetXController());
   final CartViewGetXController _cartViewGetXController =
       Get.put(CartViewGetXController());
+  final CheckOutGetxController _checkOutGetxController =
+      Get.put(CheckOutGetxController());
 
   late final Product _product = Get.put<Product>(Product());
 
   @override
   void initState() {
+    print('=====================isFromCheckOut');
+    print(widget.isFromChekOut);
+    print(widget.idProduct);
+    print(widget.orderId);
     _productViewGetXController.init(
       context: context,
     );
@@ -65,7 +75,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
         Provider.of<ProductProvider>(context, listen: false).productById;
     var provider = Provider.of<ProductProvider>(context);
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         _cartViewGetXController.getMyCart();
         _cartViewGetXController.calculateBell();
         Navigator.of(context).pop();
@@ -95,7 +105,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () async{
+                          onTap: () async {
                             _cartViewGetXController.getMyCart();
                             _cartViewGetXController.calculateBell();
                             Navigator.of(context).pop();
@@ -157,7 +167,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                 shrinkWrap: true,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: AppSize.s30,
@@ -281,7 +292,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                               width: AppSize.s130,
                               decoration: BoxDecoration(
                                 color: ColorManager.primaryDark,
-                                borderRadius: BorderRadius.circular(AppRadius.r4),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.r4),
                                 boxShadow: [
                                   BoxShadow(
                                     color: ColorManager.primaryDark,
@@ -317,12 +329,14 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                       topLeft: Radius.circular(50)),
                                   color: Colors.white,
                                 ),
-                                height: MediaQuery.of(context).size.height * 0.1,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
                                 width: 50,
                                 child: Row(
                                   children: [
                                     Spacer(),
-                                    productById["isInCart"] == false
+                                    widget.isFromChekOut != null &&
+                                            widget.isFromChekOut!
                                         ? ElevatedButton(
                                             onPressed: () {
                                               if (AppSharedData.currentUser ==
@@ -331,83 +345,129 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                                     context: context,
                                                     role: 'Customer');
                                               } else {
-                                                Provider.of<ProductProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .addOrRemoveFromCard(
+
+                                                _checkOutGetxController
+                                                    .addItems(
+                                                        context: context,
+                                                        orderId:
+                                                            widget.orderId!,
                                                         productId:
-                                                            widget.idProduct)
-                                                    .then((value) =>
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                                SnackBar(
-                                                          content: Text(
-                                                              provider.message),
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                        )));
+                                                            widget.idProduct);
                                               }
                                             },
                                             style: ButtonStyle(
                                                 shape: MaterialStatePropertyAll(
                                                     RoundedRectangleBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                10)))),
+                                                            BorderRadius
+                                                                .circular(
+                                                                    10)))),
                                             child: Text(
                                               AppLocalizations.of(context)!
-                                                  .add_to_cart,
+                                                  .add_to_order,
                                               // 'Login',
                                               style: getSemiBoldStyle(
                                                   color: ColorManager.white,
                                                   fontSize: FontSize.s18),
                                             ),
                                           )
-                                        : ElevatedButton(
-                                            onPressed: () {
-                                              if (AppSharedData.currentUser ==
-                                                  null) {
-                                                showSignInSheet(
-                                                    context: context,
-                                                    role: 'Customer');
-                                              } else {
-                                                Provider.of<ProductProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .addOrRemoveFromCard(
-                                                        productId:
-                                                            widget.idProduct)
-                                                    .then((value) =>
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                                SnackBar(
-                                                          content: Text(
-                                                              provider.message),
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                        )));
-                                              }
-                                            },
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStatePropertyAll(
-                                                        ColorManager.red),
-                                                shape: MaterialStatePropertyAll(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                10)))),
-                                            child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .remove_from_cart,
-                                              // 'Login',
-                                              style: getSemiBoldStyle(
-                                                  color: ColorManager.white,
-                                                  fontSize: FontSize.s18),
-                                            ),
-                                          ),
+                                        : productById["isInCart"] == false
+                                            ? ElevatedButton(
+                                                onPressed: () {
+                                                  if (AppSharedData
+                                                          .currentUser ==
+                                                      null) {
+                                                    showSignInSheet(
+                                                        context: context,
+                                                        role: 'Customer');
+                                                  } else {
+                                                    print('============================min order');
+                                                    print(widget.minOrder);
+
+                                                    // _cartViewGetXController.calculate(minOrder1: widget.minOrder!);
+                                                    Provider.of<ProductProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .addOrRemoveFromCard(
+                                                            productId: widget
+                                                                .idProduct)
+                                                        .then((value) =>
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    SnackBar(
+                                                              content: Text(
+                                                                  provider
+                                                                      .message),
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                            )));
+                                                    _cartViewGetXController.calculateBell(minOrder1: widget.minOrder);
+                                                  }
+                                                },
+                                                style: ButtonStyle(
+                                                    shape: MaterialStatePropertyAll(
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)))),
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .add_to_cart,
+                                                  // 'Login',
+                                                  style: getSemiBoldStyle(
+                                                      color: ColorManager.white,
+                                                      fontSize: FontSize.s18),
+                                                ),
+                                              )
+                                            : ElevatedButton(
+                                                onPressed: () {
+                                                  if (AppSharedData
+                                                          .currentUser ==
+                                                      null) {
+                                                    showSignInSheet(
+                                                        context: context,
+                                                        role: 'Customer');
+                                                  } else {
+                                                    Provider.of<ProductProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .addOrRemoveFromCard(
+                                                            productId: widget
+                                                                .idProduct)
+                                                        .then((value) =>
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    SnackBar(
+                                                              content: Text(
+                                                                  provider
+                                                                      .message),
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                            )));
+                                                  }
+                                                },
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStatePropertyAll(
+                                                            ColorManager.red),
+                                                    shape: MaterialStatePropertyAll(
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)))),
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .remove_from_cart,
+                                                  // 'Login',
+                                                  style: getSemiBoldStyle(
+                                                      color: ColorManager.white,
+                                                      fontSize: FontSize.s18),
+                                                ),
+                                              ),
                                   ],
                                 ),
                               ))

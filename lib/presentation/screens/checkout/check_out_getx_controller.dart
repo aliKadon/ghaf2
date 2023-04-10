@@ -8,6 +8,7 @@ import 'package:ghaf_application/data/api/controllers/payment_method_api_control
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/promo_code.dart';
 import 'package:ghaf_application/domain/model/schedualed_order.dart';
+import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,15 +26,20 @@ class CheckOutGetxController extends GetxController with Helpers {
   List<OrderToPay> orderToPay = [];
   List<PromoCode> promoCodes = [];
   List<Order> customerOrder = [];
+  List<Order> preOrders = [];
   List<Order> doneorder = [];
   List<ScheduledOrder> scheduleOrders = [];
   List<String> storeName = [];
-  late Order? order;
+  List<dynamic> imageName = [];
+  List<String> storeNamePreOrder = [];
+  List<dynamic> imageNamePreOrder = [];
+  Order? order;
   var isLoading = true.obs;
   var isLoadingOrderToPay = true;
   var isLoadingOrderById = true;
   var isLoadingForOrderTracking = true;
   late ApiResponse apiResponse;
+  late ApiResponse apiResponse1;
   var distance = '0';
   var duration = '0';
   var isLoadingDistance = true;
@@ -65,6 +71,35 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
+  void getPreOrder(
+      {required BuildContext context, String? branchName = ''}) async {
+
+    try {
+      List<String> names = [];
+      List<dynamic> image = [];
+      preOrders =
+          await _ordersApiController.getPreOrder(branchName: branchName);
+      for (int i = 0; i < preOrders.length ; i++) {
+        print('====================branch name');
+        names.add(preOrders[i].branch!.branchName!);
+
+        image.removeWhere((element) =>
+        element['storeName'] == names[i]);
+        image.add({
+          'storeName' : scheduleOrders[i].branch!.branchName!,
+          'image' : scheduleOrders[i].branch!.branchLogoImage!,
+        });
+        print(image);
+      }
+      storeNamePreOrder = names.toSet().toList();
+      imageNamePreOrder = image;
+      update();
+    } catch (e) {
+      print(e);
+      // showSnackBar(context, message: e.toString(), error: true);
+    }
+  }
+
   void payForOrder({
     required BuildContext context,
     required String orderId,
@@ -81,7 +116,7 @@ class CheckOutGetxController extends GetxController with Helpers {
     required String PaymentMethodId,
   }) async {
     try {
-      showLoadingDialog(context: context,title: 'loading...');
+      showLoadingDialog(context: context, title: 'loading...');
       apiResponse = await _ordersApiController.payForOrder(
           orderId: orderId,
           deliveryMethodId: deliveryMethodId,
@@ -160,6 +195,25 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
+  void addItems(
+      {required BuildContext context,
+      required String orderId,
+      required String productId}) async {
+    try {
+      showLoadingDialog(context: context, title: 'loading...');
+      apiResponse1 = await _ordersApiController.addItems(
+          orderId: orderId, productId: productId);
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => CheckOutView(),
+      ));
+      showSnackBar(context, message: apiResponse1.message);
+      update();
+    } catch (e) {
+      showSnackBar(context, message: e.toString(), error: true);
+    }
+  }
+
   void deleteUnpaidOrder(
       {required BuildContext context, required String orderId}) async {
     try {
@@ -196,8 +250,8 @@ class CheckOutGetxController extends GetxController with Helpers {
   void getCustomerOrder({required BuildContext context}) async {
     try {
       customerOrder = await _ordersApiController.getCustomerOrder();
-      for(Order order in customerOrder) {
-        if(order.statusName == 'Done') {
+      for (Order order in customerOrder) {
+        if (order.statusName == 'Done') {
           doneorder.removeWhere((element) => element.id == order.id);
           doneorder.add(order);
         }
@@ -229,6 +283,8 @@ class CheckOutGetxController extends GetxController with Helpers {
       distance = data["routes"][0]["legs"][0]["distance"]["text"];
       duration = data["routes"][0]["legs"][0]["duration"]["text"];
 
+      print('=====================response duration1');
+      print(response.body);
       isLoadingDistance = false;
       isLoadingForOrderTracking = false;
       update();
@@ -254,18 +310,36 @@ class CheckOutGetxController extends GetxController with Helpers {
     }
   }
 
-  void getScheduleOrder({required BuildContext context,String? store = ''}) async{
-
+  void getScheduleOrder(
+      {required BuildContext context, String? store = ''}) async {
     List<String> names = [];
+    List<dynamic> imageList = [];
     try {
-      scheduleOrders = await _ordersApiController.getScheduleOrder(storeName: store);
-      for (ScheduledOrder scheduledOrder in scheduleOrders) {
-        names.add(scheduledOrder.branch!.storeName!);
+      scheduleOrders =
+          await _ordersApiController.getScheduleOrder(storeName: store);
+      for (int i = 0; i < scheduleOrders.length ; i++) {
+        print('====================branch name');
+        names.add(scheduleOrders[i].branch!.branchName!);
+        
+        imageList.removeWhere((element) =>
+        element['storeName'] == names[i]);
+        imageList.add({
+          'storeName' : scheduleOrders[i].branch!.branchName!,
+          'image' : scheduleOrders[i].branch!.branchLogoImage!,
+        });
+        print(imageList);
       }
       storeName = names.toSet().toList();
+      imageName = imageList;
+      print('==========================image name');
+      print(imageName);
+      print(storeName);
+      print(imageList);
+      print(names);
       update();
-    }catch(error) {
-      showSnackBar(context, message: error.toString(),error: true);
+    } catch (error) {
+      print(error);
+      // showSnackBar(context, message: error.toString(), error: true);
     }
   }
 }

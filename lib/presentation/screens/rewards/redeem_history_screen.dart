@@ -72,11 +72,12 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                       height: AppSize.s12,
                     ),
                     Divider(height: 1, color: ColorManager.greyLight),
-                    SizedBox(
-                      height: AppSize.s30,
-                    ),
+                    // SizedBox(
+                    //   height: AppSize.s30,
+                    // ),
                     GetBuilder<RewardsGetxController>(
                       builder: (controller) => ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.redeemHistory!.list!.length,
                         itemBuilder: (context, index) {
@@ -134,12 +135,14 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                                     ],
                                   ),
                                 ),
+                                // SizedBox(height: AppSize.s30,),
                               ],
                             ),
                           );
                         },
                       ),
-                    )
+                    ),
+                    SizedBox(height: AppSize.s30,),
                   ],
                 ),
               ),

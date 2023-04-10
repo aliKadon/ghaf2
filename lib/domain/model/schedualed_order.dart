@@ -22,6 +22,7 @@ class ScheduledOrder {
   num? minuteNumber;
   DeliveryMethod? deliveryMethod;
   Branch? branch;
+  String? mealType;
 
   ScheduledOrder({
     this.id,
@@ -41,6 +42,7 @@ class ScheduledOrder {
     this.hourNumber,
     this.minuteNumber,
     this.weeklyOrMonthly,
+    this.mealType,
   });
 
   factory ScheduledOrder.fromJson(Map<String, dynamic> json) => ScheduledOrder(
@@ -48,7 +50,9 @@ class ScheduledOrder {
         userCredentialsId: json['userCredentialsId'],
         branchId: json['branchId'],
         paymentMethodId: json['paymentMethodId'],
-        deliveryPoint: json['deliveryPoint'] == null ? null : Address.fromJson(json['deliveryPoint']),
+        deliveryPoint: json['deliveryPoint'] == null
+            ? null
+            : Address.fromJson(json['deliveryPoint']),
         deliveryMethod: DeliveryMethod.fromJson(json['deliveryMethod']),
         branch: Branch.fromJson(json['branch']),
         customer: json['customer'],
@@ -61,6 +65,7 @@ class ScheduledOrder {
         hourNumber: json['hourNumber'],
         minuteNumber: json['minuteNumber'],
         weeklyOrMonthly: json['weeklyOrMonthly'],
+        mealType: json['mealType'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,5 +87,6 @@ class ScheduledOrder {
         'hourNumber': hourNumber,
         'minuteNumber': minuteNumber,
         'weeklyOrMonthly': weeklyOrMonthly,
+        'mealType': mealType,
       };
 }

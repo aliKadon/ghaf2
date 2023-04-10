@@ -3,6 +3,8 @@ import 'package:ghaf_application/domain/model/branch.dart';
 import 'package:ghaf_application/domain/model/items.dart';
 import 'package:ghaf_application/domain/model/order_item.dart';
 
+import 'meal_times.dart';
+
 
 
 class Order {
@@ -31,6 +33,7 @@ class Order {
     this.redeemPointsFactor,
     this.sequenceNumber,
     this.driverId,
+
   });
 
   String? id;
@@ -57,6 +60,7 @@ class Order {
   int? redeemPointsFactor;
   num? sequenceNumber;
   String? driverId;
+
 
   factory Order.fromJson(Map<String,dynamic> json) {
     return Order(
@@ -114,6 +118,7 @@ class Order {
     'deliveryPoint' : deliveryPoint,
     'payed' : payed,
     'redeemPointsForBill' : redeemPointsForBill,
+
   };
 
   // factory Order.fromJson(Map<String, dynamic> json) => Order(

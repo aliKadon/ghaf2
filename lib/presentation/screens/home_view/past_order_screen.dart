@@ -108,6 +108,8 @@ class _PastOrderScreenState extends State<PastOrderScreen> {
                     child: Column(
                       children: [
                         MyOrdersWidget(
+                            statusName: controller.customerOrder[index].statusName!,
+                            image: controller.customerOrder[index].branch!.branchLogoImage!,
                             date: controller
                                 .customerOrder[index].createDate!,
                             price: (controller.customerOrder[index]

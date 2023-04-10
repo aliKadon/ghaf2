@@ -96,6 +96,7 @@ class _ItemWidgetForIndividualSellerState
                         print('==================check box');
                         print(isChecked);
                         setState(() {
+
                           isChecked = !isChecked;
                         });
                         if(isChecked) {

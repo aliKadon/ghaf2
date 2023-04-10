@@ -112,6 +112,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                           count++;
                           // count = widget.productCount;
                         });
+
                         // _cartItem.increment(
                         //     idProduct: widget.cartItemId,
                         //     productCount1: count,

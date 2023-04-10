@@ -14,6 +14,7 @@ import '../../resources/values_manager.dart';
 import '../../widgets/my_orders_widget.dart';
 import '../../widgets/nearby_widget.dart';
 import '../checkout/check_out_getx_controller.dart';
+import '../checkout/order_tracking_screen.dart';
 import '../home_view/home_view_getx_controller.dart';
 
 class AllProductScreen extends StatefulWidget {
@@ -132,34 +133,52 @@ class _AllProductScreenState extends State<AllProductScreen> {
                         itemCount: _checkOutGetxController.customerOrder.length,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              MyOrdersWidget(
-                                  date: _checkOutGetxController
-                                      .customerOrder[index].createDate!,
-                                  price: (_checkOutGetxController
-                                          .customerOrder[index]
-                                          .orderCostForCustomer)
-                                      .toString(),
-                                  orderSequence: (_checkOutGetxController
-                                          .customerOrder[index].sequenceNumber)
-                                      .toString(),
-                                  branchName: _checkOutGetxController
-                                      .customerOrder[index].branch!.storeName!,
-                                  branchAddress: _checkOutGetxController
-                                          .customerOrder[index]
-                                          .branch!
-                                          .branchAddress ??
-                                      null),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 12.0, left: 12.0),
-                                child: Divider(
-                                  thickness: 1,
-                                  color: ColorManager.greyLight,
-                                ),
-                              )
-                            ],
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    OrderTrackingScreen(
+                                        orderId:
+                                        _checkOutGetxController.customerOrder[index].id!,
+                                        source: _checkOutGetxController.customerOrder[index]
+                                            .deliveryPoint!,
+                                        destination: _checkOutGetxController
+                                            .customerOrder[index]
+                                            .branch!
+                                            .branchAddress!),
+                              ));
+                            },
+                            child: Column(
+                              children: [
+                                MyOrdersWidget(
+                                  image: _checkOutGetxController.customerOrder[index].branch!.branchLogoImage!,
+                                    statusName: _checkOutGetxController.customerOrder[index].statusName!,
+                                    date: _checkOutGetxController
+                                        .customerOrder[index].createDate!,
+                                    price: (_checkOutGetxController
+                                            .customerOrder[index]
+                                            .orderCostForCustomer)
+                                        .toString(),
+                                    orderSequence: (_checkOutGetxController
+                                            .customerOrder[index].sequenceNumber)
+                                        .toString(),
+                                    branchName: _checkOutGetxController
+                                        .customerOrder[index].branch!.storeName!,
+                                    branchAddress: _checkOutGetxController
+                                            .customerOrder[index]
+                                            .branch!
+                                            .branchAddress ??
+                                        null),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 12.0, left: 12.0),
+                                  child: Divider(
+                                    thickness: 1,
+                                    color: ColorManager.greyLight,
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         },
                       )
@@ -179,7 +198,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              // mainAxisExtent: Constants.mainAxisExtent,
+                              mainAxisExtent: 200,
                               // mainAxisSpacing: Constants.mainAxisSpacing,
                             ),
                             itemBuilder: (context, index) {
@@ -187,6 +206,8 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                 return Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: NearByWidget(
+                                    details: _homeViewGetXController
+                                        .nearbyStores[index].details!,
                                     index: index,
                                     imageUrl: _homeViewGetXController
                                                     .nearbyStores[index]

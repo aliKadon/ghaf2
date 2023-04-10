@@ -272,6 +272,7 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                 }
                               },
                               child: Column(
+
                                 children: [
                                   Row(
                                     children: [
@@ -310,6 +311,8 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                                               0]))),
                                             ),
                                       Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             '${_helpGetxController.itemsToReturn[index].product?.name}',
@@ -321,13 +324,13 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                           SizedBox(
                                             height: AppSize.s30,
                                           ),
-                                          // Text(
-                                          //   'ordered on 9 dec 2022',
-                                          //   style: TextStyle(
-                                          //     color: ColorManager.greyLight,
-                                          //     fontWeight: FontWeight.w500,
-                                          //   ),
-                                          // ),
+                                          Text(
+                                            '${(_helpGetxController.itemsToReturn[index].product!.addedAt!)}'.substring(0,10),
+                                            style: TextStyle(
+                                              color: ColorManager.greyLight,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       Spacer(),

@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/product.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/search/search_getx_controller.dart';
-import 'package:ghaf_application/presentation/widgets/most_popular_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
 import '../../resources/assets_manager.dart';
@@ -51,7 +51,11 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => MainView(),
+                        ));
+                      },
                       child: Image.asset(
                         IconsAssets.arrow,
                         height: AppSize.s18,
@@ -105,16 +109,17 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                 ),
                 GetBuilder<SearchGetxController>(
                   id: 'recentSearch',
-                  builder: (controller) =>  _searchGetxController.recentSearch == null ||
-                          _searchGetxController.recentSearch == []
-                      ? Container()
-                      : Text(
-                          AppLocalizations.of(context)!.recent_search,
-                          style: getMediumStyle(
-                            color: ColorManager.primaryDark,
-                            fontSize: FontSize.s18,
-                          ),
-                        ),
+                  builder: (controller) =>
+                      _searchGetxController.recentSearch == null ||
+                              _searchGetxController.recentSearch == []
+                          ? Container()
+                          : Text(
+                              AppLocalizations.of(context)!.recent_search,
+                              style: getMediumStyle(
+                                color: ColorManager.primaryDark,
+                                fontSize: FontSize.s18,
+                              ),
+                            ),
                 ),
                 GetBuilder<SearchGetxController>(
                   id: 'recentSearch',
@@ -135,12 +140,15 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                 crossAxisSpacing: 20,
                               ),
                               physics: BouncingScrollPhysics(),
-                              itemCount: controller.recentSearch!.length < 4 ? controller.recentSearch!.length : 4,
+                              itemCount: controller.recentSearch!.length < 4
+                                  ? controller.recentSearch!.length
+                                  : 4,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    _homeViewGetXController.onSearch(_searchGetxController
-                                        .recentSearch![index]);
+                                    _homeViewGetXController.onSearch(
+                                        _searchGetxController
+                                            .recentSearch![index]);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -154,9 +162,10 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                           color: ColorManager.greyLight,
                                         ),
                                         SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.02,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.02,
                                         ),
                                         Flexible(
                                           child: Text(
@@ -179,8 +188,9 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                 ),
                 GetBuilder<SearchGetxController>(
                   id: 'recentSearch',
-                  builder: (controller) =>  _searchGetxController.recentSearch == null ||
-                      _searchGetxController.recentSearch == []
+                  builder: (controller) => _searchGetxController.recentSearch ==
+                              null ||
+                          _searchGetxController.recentSearch == []
                       ? Container()
                       : Divider(color: ColorManager.greyLight, thickness: 4),
                 ),
@@ -189,16 +199,17 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                 ),
                 GetBuilder<SearchGetxController>(
                   id: 'popularSearches',
-                  builder: (controller) =>  _searchGetxController.popularSearch == null ||
-                      _searchGetxController.popularSearch == []
-                      ? Container()
-                      : Text(
-                    AppLocalizations.of(context)!.popular_search,
-                    style: getMediumStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s18,
-                    ),
-                  ),
+                  builder: (controller) =>
+                      _searchGetxController.popularSearch == null ||
+                              _searchGetxController.popularSearch == []
+                          ? Container()
+                          : Text(
+                              AppLocalizations.of(context)!.popular_search,
+                              style: getMediumStyle(
+                                color: ColorManager.primaryDark,
+                                fontSize: FontSize.s18,
+                              ),
+                            ),
                 ),
                 GetBuilder<SearchGetxController>(
                   id: 'popularSearches',
@@ -224,9 +235,9 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    _homeViewGetXController.onSearch(_searchGetxController
-                                        .popularSearch?[index]
-                                        .productName);
+                                    _homeViewGetXController.onSearch(
+                                        _searchGetxController
+                                            .popularSearch?[index].productName);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -240,9 +251,10 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                           color: ColorManager.greyLight,
                                         ),
                                         SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.02,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.02,
                                         ),
                                         Flexible(
                                           child: Text(
@@ -267,13 +279,15 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                 ),
                 GetBuilder<SearchGetxController>(
                   id: 'popularSearches',
-                  builder: (controller) =>  _searchGetxController.popularSearch == null ||
-                      _searchGetxController.popularSearch == []
+                  builder: (controller) => _searchGetxController
+                                  .popularSearch ==
+                              null ||
+                          _searchGetxController.popularSearch == []
                       ? Container()
                       : Divider(color: ColorManager.greyLight, thickness: 4),
                 ),
                 GetBuilder<HomeViewGetXController>(
-                  builder: (controller) =>  GridView.builder(
+                  builder: (controller) => GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisExtent: 350,
@@ -284,26 +298,30 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Builder(
-                          builder: (context) {
-                            Get.put<Product>(
-                              _homeViewGetXController
-                                  .products[index],tag:
-                            '${_homeViewGetXController.products[index].id}',);
-                            return ProductItemNew(
-                              tag: '${_homeViewGetXController.products[index].id}',
-                                image: controller
-                                    .products[index].productImages?.length == 0 ? '' : controller
-                                    .products[index].productImages?[0] ?? '',
-                                name: controller.products[index].name!,
-                                stars: controller.products[index].stars!,
-                                price: controller.products[index].price!,
-                                idProduct:
-                                controller.products[index].id!,
-                            isFavorite: controller.products[index].isFavorite!,
-                            index: index);
-                          }
-                        ),
+                        child: Builder(builder: (context) {
+                          Get.put<Product>(
+                            _homeViewGetXController.products[index],
+                            tag:
+                                '${_homeViewGetXController.products[index].id}',
+                          );
+                          return ProductItemNew(
+                              tag:
+                                  '${_homeViewGetXController.products[index].id}',
+                              image: controller.products[index].productImages
+                                          ?.length ==
+                                      0
+                                  ? ''
+                                  : controller
+                                          .products[index].productImages?[0] ??
+                                      '',
+                              name: controller.products[index].name!,
+                              stars: controller.products[index].stars!,
+                              price: controller.products[index].price!,
+                              idProduct: controller.products[index].id!,
+                              isFavorite:
+                                  controller.products[index].isFavorite!,
+                              index: index);
+                        }),
                       );
                     },
                   ),

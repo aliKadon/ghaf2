@@ -16,9 +16,12 @@ import 'package:provider/provider.dart';
 
 import '../../../../providers/product_provider.dart';
 import '../../../resources/routes_manager.dart';
+import '../review_getx_controller.dart';
 
 class RateDelivery extends StatefulWidget {
-  const RateDelivery({Key? key}) : super(key: key);
+  String deliveryId;
+
+  RateDelivery({required this.deliveryId});
 
   @override
   State<RateDelivery> createState() => _RateDeliveryState();
@@ -28,6 +31,8 @@ class _RateDeliveryState extends State<RateDelivery> {
   // controller.
   late final RateDeliveryGetxController _rateShopGetxController =
   Get.find<RateDeliveryGetxController>();
+  late final ReviewGetxController _reviewGetxController =
+  Get.put(ReviewGetxController());
   var selected = -1;
 
   var isChecked = false;
@@ -198,8 +203,9 @@ class _RateDeliveryState extends State<RateDelivery> {
                         backgroundColor:
                         MaterialStatePropertyAll(ColorManager.primaryDark)),
                     onPressed: () {
-                      print(_rateShopGetxController.description);
-                      _rateShopGetxController.reviewApp();
+                      _reviewGetxController.addDeliveryReview(context: context, deliverId: widget.deliveryId, description: _rateShopGetxController.description!, points: _rateShopGetxController.rate);
+                      // print(_rateShopGetxController.description);
+                      // _rateShopGetxController.reviewApp();
                     },
                     child: Text(
                       AppLocalizations.of(context)!.send_note,

@@ -135,6 +135,25 @@ class StoreApiController with ApiHelper, Helpers {
     return [];
   }
 
+  Future<List<Product>> getFreeDeliveryProducts() async {
+    final Response response = await _dio.get(
+      '/Product/get-products-with-free-delivey',
+      options: Options(
+        headers: headers,
+      ),
+    );
+    // print('============================================POPULAR SEARCHES');
+    // print(response.statusCode);
+    // print(response.data);
+    if (response.statusCode == 200) {
+      if (response.data['status'] == 200) {
+        return List<Product>.from(
+            response.data["data"].map((x) => Product.fromJson(x)));
+      }
+    }
+    return [];
+  }
+
   Future<List<Product>> getFilterProducts({
     String? sid,
     String search = '',
@@ -142,13 +161,15 @@ class StoreApiController with ApiHelper, Helpers {
     num? maxPrice,
     String? stars,
     String? filterBy,
+    String? did,
   }) async {
     // // print('send request : getProducts');
     Map<String, dynamic> queryParameters1 = {
       'sid': sid,
       'filter':
       "${filterBy ?? 'Name'}~contains~'$search'~and~Price~gte~${minPrice ?? 0}~and~Price~lte~${maxPrice ?? 1000}",
-      'sort':"${stars ?? 'Name'}-desc"
+      'sort':"${stars ?? 'Name'}-desc",
+      'did' : "$did"
     };
     print('queryParameters : $queryParameters1');
     // print(queryParameters);
@@ -178,6 +199,7 @@ class StoreApiController with ApiHelper, Helpers {
 
   Future<List<Product>> getProducts({
     String? sid,
+    String? bid,
     String search = '',
     num? minPrice,
     String? stars,
@@ -187,6 +209,7 @@ class StoreApiController with ApiHelper, Helpers {
     // // print('send request : getProducts');
 
     Map<String, dynamic> queryParameters = {
+      'bid' : bid,
       'sid': sid,
       'filter':
           "Name~contains~'$search'~and~${filterBy ?? 'Price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'Price'}~lte~${maxPrice ?? 500}",
