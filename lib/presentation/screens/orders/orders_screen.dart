@@ -169,6 +169,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                       orderId:
                                           controller.customerOrder[index].id!,
                                       source: controller
+                                          .customerOrder[index].deliveryPoint == null ? controller
+                                          .customerOrder[index]
+                                          .branch!
+                                          .branchAddress! : controller
                                           .customerOrder[index].deliveryPoint!,
                                       destination: controller
                                           .customerOrder[index]
