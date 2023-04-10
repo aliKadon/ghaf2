@@ -337,8 +337,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                                 .availableDeliveryMethod![
                                                                     index]
                                                                 .methodImage!,
-                                                            color: ColorManager
-                                                                .white,
+                                                            // color: ColorManager
+                                                            //     .white,
                                                           ),
                                                         )
                                                       : Container(
