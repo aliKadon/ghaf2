@@ -40,7 +40,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
     super.dispose();
   }
 
-  var type = '';
+  var type;
   var search = '';
   var did = '';
 
@@ -139,8 +139,8 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                                 stars = 'Name';
                                 did = '7cc577e9-7d5c-4a12-0149-08dafd69d37b';
                               }else if(flitterType[index] == 'Price') {
-                                search = 'Name';
-                                type = 'Price';
+                                search = '';
+                                type = null;
                                 did = '';
                               }else if(flitterType[index] == 'Deliver to car window') {
                                 type = 'Name';

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -170,7 +171,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                             child: Divider(
                                 color: ColorManager.greyLight,
                                 height: AppSize.s1)),
-                        Padding(
+                        defaultTargetPlatform == TargetPlatform.iOS ? Container() : Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: AppPadding.p24),
                           child: Text(
@@ -190,7 +191,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
                   SizedBox(
                     height: AppSize.s8,
                   ),
-                  Container(
+                  defaultTargetPlatform == TargetPlatform.iOS ? Container() :Container(
                     margin: EdgeInsets.symmetric(
                       horizontal: AppMargin.m16,
                     ),

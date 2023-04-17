@@ -330,7 +330,7 @@ class CheckOutGetxController extends GetxController with Helpers {
 
   void getSchedualOrder1({required BuildContext context, String? store = ''}) async{
     try {
-      scheduleOrders =
+      scheduleOrders1 =
       await _ordersApiController.getScheduleOrder(storeName: store);
       update();
     }catch(e) {
@@ -346,7 +346,7 @@ class CheckOutGetxController extends GetxController with Helpers {
       scheduleOrders =
           await _ordersApiController.getScheduleOrder(storeName: store);
       for (int i = 0; i < scheduleOrders.length ; i++) {
-        print('====================branch name');
+        // print('====================branch name');
         names.add(scheduleOrders[i].branch!.storeName!);
         
         imageList.removeWhere((element) =>
@@ -355,15 +355,15 @@ class CheckOutGetxController extends GetxController with Helpers {
           'storeName' : scheduleOrders[i].branch!.storeName!,
           'image' : scheduleOrders[i].branch!.branchLogoImage!,
         });
-        print(imageList);
+        // print(imageList);
       }
       storeName = names.toSet().toList();
       imageName = imageList;
-      print('==========================image name');
-      print(imageName);
-      print(storeName);
-      print(imageList);
-      print(names);
+      // print('==========================image name');
+      // print(imageName);
+      // print(storeName);
+      // print(imageList);
+      // print(names);
       update();
     } catch (error) {
       print(error);

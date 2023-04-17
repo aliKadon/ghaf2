@@ -430,7 +430,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                         SizedBox(
                           height: AppSize.s16,
                         ),
-                        Container(
+                        _checkOutGetxController.order!.driverName == null ? Container() : Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border:
@@ -447,8 +447,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${_checkOutGetxController.order!.branch!
-                                        .storeName}',
+                                    '${_checkOutGetxController.order!.driverName}',
                                     style: TextStyle(
                                         color: ColorManager.primaryDark,
                                         fontWeight: FontWeight.w600,
@@ -475,8 +474,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                               GestureDetector(
                                 onTap: () async {
                                   var whatsapp =
-                                      "+971${_checkOutGetxController.order!
-                                      .branch!.whatsApp}";
+                                      "+971${_checkOutGetxController.order!.driverPhone}";
                                   var whatsappURl_android =
                                       "whatsapp://send?phone=" +
                                           whatsapp +

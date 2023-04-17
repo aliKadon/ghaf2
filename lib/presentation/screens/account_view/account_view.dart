@@ -10,6 +10,7 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/about_app_view.dart';
 import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/get_help/get_help_screen.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/my_wallet_new.dart';
 import 'package:ghaf_application/presentation/screens/notifications/notifications_screen_new.dart';
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
@@ -44,11 +45,14 @@ class _AccountViewState extends State<AccountView> {
   // controller.
   late final AccountViewGetXController _accountViewGetXController =
       Get.put(AccountViewGetXController());
+  late final HomeViewGetXController _homeViewGetXController =
+  Get.put(HomeViewGetXController());
 
   var subscribe = '';
 
   @override
   void initState() {
+    _homeViewGetXController.getRegStatus(context: context);
     super.initState();
     if (AppSharedData.currentUser == null) {
       subscribe = '';
@@ -532,7 +536,7 @@ class _AccountViewState extends State<AccountView> {
                             IconsAssets.share,
                             AppLocalizations.of(context)!.invite_friend,
                           )),
-                      GestureDetector(
+                      _homeViewGetXController.regStatus!.status! ? GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -544,7 +548,7 @@ class _AccountViewState extends State<AccountView> {
                             context,
                             IconsAssets.sell,
                             AppLocalizations.of(context)!.sell_with_us,
-                          )),
+                          )) : Container(),
                       // GestureDetector(
                       //     onTap: () {
                       //       // Navigator.push(

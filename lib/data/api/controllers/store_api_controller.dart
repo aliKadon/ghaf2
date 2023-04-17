@@ -142,7 +142,7 @@ class StoreApiController with ApiHelper, Helpers {
         headers: headers,
       ),
     );
-    // print('============================================POPULAR SEARCHES');
+    // print('============================================free delivery');
     // print(response.statusCode);
     // print(response.data);
     if (response.statusCode == 200) {

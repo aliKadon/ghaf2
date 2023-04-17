@@ -38,6 +38,8 @@ class _NearByWidgetState extends State<NearByWidget> {
   late final CheckOutGetxController _checkOutGetxController =
       Get.put(CheckOutGetxController());
 
+  var dur= "0";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -46,14 +48,14 @@ class _NearByWidgetState extends State<NearByWidget> {
               LatOne: SharedPrefController().locationLat,
               LonOne: SharedPrefController().locationLong,
               LatTow: double.parse((widget.address.altitude!)),
-              LonTow: double.parse((widget.address.longitude!)));
-    print('============================duration in widget');
-    print(_checkOutGetxController.duration);
+              LonTow: double.parse((widget.address.longitude!))).then((value) => dur = _checkOutGetxController.duration);
     super.initState();
   }
+  // late var dur = _checkOutGetxController.duration;
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -125,7 +127,7 @@ class _NearByWidgetState extends State<NearByWidget> {
                   width: 8,
                 ),
                 GetBuilder<CheckOutGetxController>(
-                  builder: (controller) => Text('${controller.duration}',
+                  builder: (controller) => Text('${dur}',
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

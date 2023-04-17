@@ -14,8 +14,9 @@ import '../store_view/store_view.dart';
 
 class StoreByCategory extends StatefulWidget {
   final String cid;
+  final String nameStore;
 
-  StoreByCategory({required this.cid});
+  StoreByCategory({required this.cid,required this.nameStore});
 
   @override
   State<StoreByCategory> createState() => _StoreByCategoryState();
@@ -61,7 +62,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                   ),
                   Spacer(),
                   Text(
-                    AppLocalizations.of(context)!.all_stores,
+                    widget.nameStore,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s18,

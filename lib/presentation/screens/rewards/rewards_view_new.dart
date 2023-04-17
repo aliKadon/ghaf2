@@ -28,12 +28,14 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
       Get.put<OffersScreenGetXController>(OffersScreenGetXController());
   late final HomeViewGetXController _homeViewGetXController =
       Get.put(HomeViewGetXController());
+
   //controller
   late final RewardsGetxController _rewardsGetxController =
-  Get.put(RewardsGetxController());
+      Get.put(RewardsGetxController());
 
   @override
   void initState() {
+    _homeViewGetXController.getFreeDeliveryProduct(context: context);
     _homeViewGetXController.getProducts(context: context);
     _offersScreenGetXController.getOffers(context: context);
     _rewardsGetxController.getRedeemHistory(context: context);
@@ -180,95 +182,117 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
               SizedBox(
                 height: AppSize.s30,
               ),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.free_delivery_rewards,
-                    style: TextStyle(
-                        color: ColorManager.primaryDark,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   AppLocalizations.of(context)!.more,
-                  //   style: TextStyle(
-                  //       color: ColorManager.greyLight,
-                  //       fontWeight: FontWeight.w600,
-                  //       fontSize: FontSize.s16),
-                  // ),
-                ],
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: ListView.builder(
-                  itemCount: 4,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return FreeDeliveryProductWidget();
-                  },
-                ),
-              ),
+              _homeViewGetXController.freeDeliveryProduct.length == 0
+                  ? Container()
+                  : Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.free_delivery_rewards,
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s16),
+                        ),
+                        // Spacer(),
+                        // Text(
+                        //   AppLocalizations.of(context)!.more,
+                        //   style: TextStyle(
+                        //       color: ColorManager.greyLight,
+                        //       fontWeight: FontWeight.w600,
+                        //       fontSize: FontSize.s16),
+                        // ),
+                      ],
+                    ),
+              _homeViewGetXController.freeDeliveryProduct.length == 0
+                  ? Container()
+                  : GetBuilder<HomeViewGetXController>(
+                      builder: (controller) => Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: ListView.builder(
+                          itemCount: controller.freeDeliveryProduct.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Builder(builder: (context) {
+                              Get.put<Product>(
+                                  _homeViewGetXController
+                                      .freeDeliveryProduct[index],
+                                  tag:
+                                      '${_homeViewGetXController.freeDeliveryProduct[index].id}');
+                              return FreeDeliveryProductWidget(
+                                tag:
+                                    '${_homeViewGetXController.freeDeliveryProduct[index].id}',
+                              );
+                            });
+                          },
+                        ),
+                      ),
+                    ),
               SizedBox(
                 height: AppSize.s30,
               ),
-              _offersScreenGetXController.offers.length == 0 ? Container() :Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.offers,
-                    style: TextStyle(
-                        color: ColorManager.primaryDark,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16),
-                  ),
-                  Spacer(),
-                  // Text(
-                  //   AppLocalizations.of(context)!.more,
-                  //   style: TextStyle(
-                  //       color: ColorManager.greyLight,
-                  //       fontWeight: FontWeight.w600,
-                  //       fontSize: FontSize.s16),
-                  // ),
-                ],
-              ),
+              _offersScreenGetXController.offers.length == 0
+                  ? Container()
+                  : Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.offers,
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s16),
+                        ),
+                        Spacer(),
+                        // Text(
+                        //   AppLocalizations.of(context)!.more,
+                        //   style: TextStyle(
+                        //       color: ColorManager.greyLight,
+                        //       fontWeight: FontWeight.w600,
+                        //       fontSize: FontSize.s16),
+                        // ),
+                      ],
+                    ),
               GetBuilder<OffersScreenGetXController>(
                 builder: (controller) => controller.isOffersLoading
                     ? Container()
                     : Container(
                         height: MediaQuery.of(context).size.height * 0.4,
-                        child: controller.offers.length == 0 ? Container() : ListView.builder(
-                          itemCount: controller.offers.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            print('===================controller');
-                            print(_offersScreenGetXController.offers);
-                            return Builder(
-                              builder: (context) {
-                                Get.put<Product>(
-                                  _offersScreenGetXController
-                                      .offers[index],tag:
-                                '${_offersScreenGetXController.offers[index].id}offers',);
-                                return ProductItemNew(
-                                  tag: '${_offersScreenGetXController.offers[index].id}offers',
-                                  image: controller.offers[index].productImages!
-                                              .length !=
-                                          0
-                                      ? controller.offers[index].productImages![0]
-                                      : '',
-                                  stars: controller.offers[index].stars!,
-                                  price: controller.offers[index].price!,
-                                  name: controller.offers[index].name!,
-                                  idProduct: controller.offers[index].id!,
-                                  isFavorite: controller.offers[index].isFavorite!,
-                                  index: index,
-                                  // controller: _offersScreenGetXController.offers,
-                                );
-                              }
-                            );
-                          },
-                        ),
+                        child: controller.offers.length == 0
+                            ? Container()
+                            : ListView.builder(
+                                itemCount: controller.offers.length,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  print('===================controller');
+                                  print(_offersScreenGetXController.offers);
+                                  return Builder(builder: (context) {
+                                    Get.put<Product>(
+                                      _offersScreenGetXController.offers[index],
+                                      tag:
+                                          '${_offersScreenGetXController.offers[index].id}offers',
+                                    );
+                                    return ProductItemNew(
+                                      tag:
+                                          '${_offersScreenGetXController.offers[index].id}offers',
+                                      image: controller.offers[index]
+                                                  .productImages!.length !=
+                                              0
+                                          ? controller
+                                              .offers[index].productImages![0]
+                                          : '',
+                                      stars: controller.offers[index].stars!,
+                                      price: controller.offers[index].price!,
+                                      name: controller.offers[index].name!,
+                                      idProduct: controller.offers[index].id!,
+                                      isFavorite:
+                                          controller.offers[index].isFavorite!,
+                                      index: index,
+                                      // controller: _offersScreenGetXController.offers,
+                                    );
+                                  });
+                                },
+                              ),
                       ),
               ),
             ],

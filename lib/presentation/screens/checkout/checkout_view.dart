@@ -189,7 +189,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       ),
                                       Spacer(),
                                       Text(
-                                        AppLocalizations.of(context)!.checkout,
+                                        AppLocalizations.of(context)!.my_cart,
                                         style: getSemiBoldStyle(
                                           color: ColorManager.primaryDark,
                                           fontSize: FontSize.s18,

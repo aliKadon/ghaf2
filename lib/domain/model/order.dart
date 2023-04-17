@@ -33,6 +33,8 @@ class Order {
     this.redeemPointsFactor,
     this.sequenceNumber,
     this.driverId,
+    this.driverName,
+    this.driverPhone,
 
   });
 
@@ -60,6 +62,8 @@ class Order {
   int? redeemPointsFactor;
   num? sequenceNumber;
   String? driverId;
+  String? driverName;
+  String? driverPhone;
 
 
   factory Order.fromJson(Map<String,dynamic> json) {
@@ -89,6 +93,8 @@ class Order {
       deliveryPoint:json['deliveryPoint'] == null ? null :  Address.fromJson(json['deliveryPoint']),
       payed: json['payed'],
       redeemPointsForBill: json['redeemPointsForBill'],
+      driverName: json['driverName'],
+      driverPhone: json['driverPhone'],
 
     );
   }
@@ -118,6 +124,8 @@ class Order {
     'deliveryPoint' : deliveryPoint,
     'payed' : payed,
     'redeemPointsForBill' : redeemPointsForBill,
+    'driverName' : driverName,
+    'driverPhone' : driverPhone,
 
   };
 

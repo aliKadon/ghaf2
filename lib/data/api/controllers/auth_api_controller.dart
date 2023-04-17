@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/api_response.dart';
+import '../../../domain/model/reg_status.dart';
 import '../../../domain/model/user.dart';
 import '../api_helper.dart';
 import '../api_settings.dart';
@@ -54,6 +55,19 @@ class AuthApiController with ApiHelper {
 
     }
     return failedResponse;
+  }
+  
+  Future<RegStatus?> getRegStatus() async{
+    var url = Uri.parse('${Constants.baseUrl}/auth/get-reg-status');
+    var response = await http.get(url,headers: headers);
+
+    if(response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return RegStatus.fromJson(jsonData['data']);
+      }
+    }
+    return null;
   }
 
   Future<ApiResponse> login(

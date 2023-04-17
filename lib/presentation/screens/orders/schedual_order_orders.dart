@@ -25,55 +25,55 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
   @override
   void initState() {
     // TODO: implement initState
-    _checkOutGetxController.getSchedualOrder1(context: context,store: widget.branchName);
+    _checkOutGetxController.getSchedualOrder1(
+        context: context, store: widget.branchName);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0, right: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+      body: GetBuilder<CheckOutGetxController>(
+        builder: (controller) => SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0, right: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  Text(
-                    AppLocalizations.of(context)!.pre_order,
-                    style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s18,
+                    Spacer(),
+                    Text(
+                      AppLocalizations.of(context)!.scheduled_orders,
+                      style: getSemiBoldStyle(
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s18,
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                ],
+                    Spacer(),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            Divider(
-              color: ColorManager.greyLight,
-              thickness: 1,
-            ),
-            GetBuilder<CheckOutGetxController>(
-              builder:(controller) =>  Container(
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Divider(
+                color: ColorManager.greyLight,
+                thickness: 1,
+              ),
+              Container(
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
-
                   itemCount: controller.scheduleOrders1.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -84,8 +84,8 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                           Row(
                             children: [
                               Text(
-                                // '${_checkOutGetxController.scheduleOrders1[index].mealType}',
-                                'aasdasd',
+                                '${_checkOutGetxController.scheduleOrders1[index].mealType}',
+
                                 style: TextStyle(
                                     color: ColorManager.primaryDark,
                                     fontSize: FontSize.s18,
@@ -101,8 +101,8 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                                 width: AppSize.s16,
                               ),
                               Text(
-                                // '${_checkOutGetxController.scheduleOrders1[index].branch!.branchAddress}',
-                                'aasdasd',
+                                '${_checkOutGetxController.scheduleOrders1[index].branch!.branchAddress!.addressName}',
+
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: FontSize.s16,
@@ -118,11 +118,12 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                           SizedBox(height: AppSize.s4),
                           Row(
                             children: [
-                              Icon(Icons.timer, color: ColorManager.primaryDark),
+                              Icon(Icons.timer,
+                                  color: ColorManager.primaryDark),
                               SizedBox(width: AppSize.s16),
                               Text(
-                                // '${_checkOutGetxController.scheduleOrders1[index].hourNumber}',
-                                'aasdasd',
+                                '${_checkOutGetxController.scheduleOrders1[index].hourNumber}',
+
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: FontSize.s16,
@@ -137,8 +138,8 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                   },
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

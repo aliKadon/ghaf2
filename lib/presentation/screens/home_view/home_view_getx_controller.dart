@@ -6,19 +6,20 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/data/api/controllers/auth_api_controller.dart';
 import 'package:ghaf_application/data/api/controllers/store_api_controller.dart';
 import 'package:ghaf_application/domain/model/category.dart';
 import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/domain/model/product_type.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget.dart';
-import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../data/api/controllers/adds_api_controller.dart';
 import '../../../domain/model/adds.dart';
 import '../../../domain/model/nearby_stores.dart';
+import '../../../domain/model/reg_status.dart';
 import '../../../domain/model/store_adds.dart';
 import '../checkout/check_out_getx_controller.dart';
 
@@ -30,9 +31,9 @@ class HomeViewGetXController extends GetxController with Helpers {
 
   // var durationForNearByStore = [];
 
-  //controller
-  // late final CheckOutGetxController _checkOutGetxController =
-  //     Get.put(CheckOutGetxController());
+  // controller
+  late final CheckOutGetxController _checkOutGetxController =
+      Get.put(CheckOutGetxController());
 
   // #############################################
   //get all information from latitude and longitude
@@ -89,6 +90,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   late BuildContext context;
   late final StoreApiController _storeApiController = StoreApiController();
   late final AddsApiController _addsApiController = AddsApiController();
+  late final AuthApiController _regStatus = AuthApiController();
   List<Category> categories = [];
   List<Product> products = [];
   List<Product> payLaterProduct = [];
@@ -101,6 +103,7 @@ class HomeViewGetXController extends GetxController with Helpers {
   List<StoreAdds> storeAddsList = [];
   List<NearbyStores> nearbyStores = [];
   List<ProductType> productType = [];
+  RegStatus regStatus = RegStatus(status: true,id: 'llllll');
   List<Product> product = [];
   String search = '';
 
@@ -124,12 +127,22 @@ class HomeViewGetXController extends GetxController with Helpers {
     getStoreAdds(context: context);
   }
 
-  void getFreeDeliveryProduct({required BuildContext context}) async{
+  void getRegStatus({required BuildContext context}) async {
+    try {
+      regStatus = (await _regStatus.getRegStatus())!;
+      update();
+    } catch (e) {
+      showSnackBar(context, message: e.toString(), error: true);
+    }
+  }
+
+  void getFreeDeliveryProduct({required BuildContext context}) async {
     try {
       freeDeliveryProduct = await _storeApiController.getFreeDeliveryProducts();
+      isFilterProductLoading = false;
       update();
-    }catch(e) {
-      showSnackBar(context, message: e.toString(),error: true);
+    } catch (e) {
+      showSnackBar(context, message: e.toString(), error: true);
     }
   }
 
@@ -264,34 +277,46 @@ class HomeViewGetXController extends GetxController with Helpers {
   }) async {
     // if (notifyLoading) isProductsLoading = true;
 
-    try {
-      // if (notifyLoading) isProductsLoading = true;
-      // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
-      // print(ModalRoute.of(context)?.settings.arguments as String);
-      products = await _storeApiController.getFilterProducts(
-        did: did,
-        search: search,
-        maxPrice: maxPrice,
-        minPrice: minPrice,
-        filterBy: filterBy,
-        stars: stars,
-        // filterBy: ModalRoute.of(context)?.settings.arguments as String,
-      );
-      isFilterProductLoading = false;
-      update();
-    } on DioError catch (error) {
-      // error.
-      print(error.response?.data);
-      print(error.toString());
-      showSnackBar(context,
-          message: 'An Error Occurred, Please Try again', error: true);
-    } catch (error) {
-      // error.
-      debugPrint(error.toString());
-      print(error);
-      // showSnackBar(context,
-      //     message: 'An Error Occurred, Please Try again!!', error: true);
-    }
+    products = await _storeApiController.getFilterProducts(
+      did: did,
+      search: search,
+      maxPrice: maxPrice,
+      minPrice: minPrice,
+      filterBy: filterBy,
+      stars: stars,
+      // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+    );
+    isFilterProductLoading = false;
+    update();
+
+    // try {
+    //   // if (notifyLoading) isProductsLoading = true;
+    //   // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
+    //   // print(ModalRoute.of(context)?.settings.arguments as String);
+    //   products = await _storeApiController.getFilterProducts(
+    //     did: did,
+    //     search: search,
+    //     maxPrice: maxPrice,
+    //     minPrice: minPrice,
+    //     filterBy: filterBy,
+    //     stars: stars,
+    //     // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+    //   );
+    //   isFilterProductLoading = false;
+    //   update();
+    // } on DioError catch (error) {
+    //   // error.
+    //   print(error.response?.data);
+    //   print(error.toString());
+    //   showSnackBar(context,
+    //       message: 'An Error Occurred, Please Try again', error: true);
+    // } catch (error) {
+    //   // error.
+    //   debugPrint(error.toString());
+    //   print(error);
+    //   // showSnackBar(context,
+    //   //     message: 'An Error Occurred, Please Try again!!', error: true);
+    // }
   }
 
   // get products.
@@ -313,7 +338,7 @@ class HomeViewGetXController extends GetxController with Helpers {
         // filterBy: ModalRoute.of(context)?.settings.arguments as String,
       );
       for (Product product in products) {
-        if(product.canPayLater!) {
+        if (product.canPayLater!) {
           payLaterProduct.removeWhere((element) => element.id == product.id);
           payLaterProduct.add(product);
         }
@@ -362,7 +387,7 @@ class HomeViewGetXController extends GetxController with Helpers {
       nearbyStores = await _storeApiController.getNearbyStores(
           lat: lat, long: long, distance: distance);
       _isNearbyStoresLoading = false;
-      update(['nearbyStores']);
+      update();
     } catch (error) {
       // showSnackBar(context, message: error.toString(),error: true);
     }
