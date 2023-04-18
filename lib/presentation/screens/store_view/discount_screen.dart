@@ -105,6 +105,7 @@ class _DisicountScreenState extends State<DisicountScreen> {
                 )
                     : ListView.builder(
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: controller.promoCodes.length,
                   itemBuilder: (context, index) {
                     return Column(
