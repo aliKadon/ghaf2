@@ -927,6 +927,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           return Builder(
                             builder: (context) {
                               return NearByWidget(
+                                is24: controller.nearbyStores[index].is24Hours!,
                                 details:
                                     controller.nearbyStores[index].details!,
                                 index: index,

@@ -16,7 +16,8 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
   final String text;
   final String imageUrl;
   final String bid;
-  WidgetInStoreScreenWidget({required this.text,required this.imageUrl,required this.bid});
+  final bool is24;
+  WidgetInStoreScreenWidget({required this.text,required this.imageUrl,required this.bid,required this.is24});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
         }else if (text == AppLocalizations.of(context)!.on_sale) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => OnsaleView(bid: bid),
+              builder: (context) => OnsaleView(bid: bid,is24: is24),
             ),
           );
         }else if (text == AppLocalizations.of(context)!.trending ) {

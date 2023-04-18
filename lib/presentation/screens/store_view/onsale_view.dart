@@ -21,8 +21,9 @@ import '../../widgets/onsale_widget.dart';
 
 class OnsaleView extends StatefulWidget {
   final String bid;
+  final bool is24;
 
-  OnsaleView({required this.bid});
+  OnsaleView({required this.bid,required this.is24});
 
   @override
   State<OnsaleView> createState() => _OnsaleViewState();
@@ -58,7 +59,7 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
       onWillPop: () async {
         _cartViewGetXController.emptyBasket(context);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => StoreView(branchId: widget.bid),
+          builder: (context) => StoreView(branchId: widget.bid,is24: widget.is24),
         ));
         // _offersScreenGetXController.subtotal =
         //     _offersScreenGetXController.offers[0].branch!.minOrder!;
@@ -78,7 +79,7 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
                       onTap: () async {
                         _cartViewGetXController.emptyBasket(context);
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => StoreView(branchId: widget.bid),
+                          builder: (context) => StoreView(branchId: widget.bid,is24: widget.is24),
                         ));
                         // _offersScreenGetXController.subtotal =
                         //     _offersScreenGetXController
