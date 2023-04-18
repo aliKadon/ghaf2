@@ -8,12 +8,13 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 
 import '../../resources/color_manager.dart';
 
 class SubscribeViewFromHomePage extends StatefulWidget {
-
   String? last4DigitNumber;
+
   SubscribeViewFromHomePage({this.last4DigitNumber});
 
   @override
@@ -299,11 +300,19 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                                     color: ColorManager.primaryDark,
                                     fontSize: FontSize.s14,
                                     fontWeight: FontWeight.w500)),
-                            Text(AppLocalizations.of(context)!.terms_apply,
-                                style: TextStyle(
-                                    color: ColorManager.primary,
-                                    fontSize: FontSize.s14,
-                                    fontWeight: FontWeight.w500)),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => TermsOfUseView(),
+                                ));
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.terms_apply,
+                                  style: TextStyle(
+                                      color: ColorManager.primary,
+                                      fontSize: FontSize.s14,
+                                      fontWeight: FontWeight.w500)),
+                            ),
                           ],
                         ),
                       ),
