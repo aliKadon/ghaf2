@@ -206,6 +206,8 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                 return Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: NearByWidget(
+                                    is24: _homeViewGetXController
+                                        .nearbyStores[index].is24Hours!,
                                     details: _homeViewGetXController
                                         .nearbyStores[index].details!,
                                     index: index,

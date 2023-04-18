@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 
-import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -16,7 +15,7 @@ class StoreByCategory extends StatefulWidget {
   final String cid;
   final String nameStore;
 
-  StoreByCategory({required this.cid,required this.nameStore});
+  StoreByCategory({required this.cid, required this.nameStore});
 
   @override
   State<StoreByCategory> createState() => _StoreByCategoryState();
@@ -27,7 +26,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
   late final CategoriesGetxController _categoriesGetxController =
       Get.put(CategoriesGetxController());
   late final CheckOutGetxController _checkOutGetxController =
-  Get.put(CheckOutGetxController());
+      Get.put(CheckOutGetxController());
 
   @override
   void initState() {
@@ -93,7 +92,9 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                         return InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => StoreView(branchId: controller.branches[index].id!),
+                              builder: (context) => StoreView(
+                                  branchId: controller.branches[index].id!,
+                                  is24: controller.branches[index].is24Hours!),
                             ));
                           },
                           child: Column(
@@ -116,7 +117,8 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                               _categoriesGetxController
                                                   .branches[index]
                                                   .branchLogoImage!,
-                                              errorBuilder: (context, error, stackTrace) {
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
                                                 return Image.asset(
                                                   ImageAssets.brIcon,
                                                   height: 60,
@@ -132,13 +134,17 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                           Row(
                                             children: [
                                               Container(
-                                                width: MediaQuery.of(context).size.width * 0.4,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4,
                                                 child: Text(
                                                   '${_categoriesGetxController.branches[index].storeName} (${_categoriesGetxController.branches[index].branchName})',
                                                   style: TextStyle(
                                                       color: ColorManager
                                                           .primaryDark,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: FontSize.s14),
                                                 ),
                                               ),
@@ -155,15 +161,22 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                     color: ColorManager.primary,
                                                   ),
                                                   SizedBox(width: 5),
-                                                  GetBuilder<CategoriesGetxController>(
-                                                    builder: (controller) => Container(
-                                                      width: MediaQuery.of(context).size.width * 0.17,
+                                                  GetBuilder<
+                                                      CategoriesGetxController>(
+                                                    builder: (controller) =>
+                                                        Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.17,
                                                       child: Text(
                                                         '${controller.durations[index]} ',
                                                         style: TextStyle(
-                                                            color:
-                                                                ColorManager.grey,
-                                                            fontSize: FontSize.s10),
+                                                            color: ColorManager
+                                                                .grey,
+                                                            fontSize:
+                                                                FontSize.s10),
                                                       ),
                                                     ),
                                                   )

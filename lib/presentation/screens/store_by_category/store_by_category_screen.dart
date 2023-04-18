@@ -187,7 +187,7 @@ class _StoreByCategryScreenState extends State<StoreByCategryScreen> {
                         ? Padding(
                             padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height / 2),
-                            child: Text('No Product Found'),
+                            child: Text('${AppLocalizations.of(context)!.no_product_found}'),
                           )
                         : ListView.builder(
                             itemCount: storeName.length,

@@ -231,6 +231,8 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                               if (controller.branches[index].isOpen!) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => StoreView(
+                                    is24: controller
+                                        .branches[index].is24Hours!,
                                       branchId: controller
                                           .branches[index].id!),
                                 ));
@@ -240,6 +242,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                               }
                             },
                             child: StoreWidget(
+                              is24: controller.branches[index].is24Hours!,
                               storeName:
                                   controller.branches[index].branchName ?? '',
                               storeImageUrl:

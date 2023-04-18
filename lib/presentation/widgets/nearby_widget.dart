@@ -19,11 +19,13 @@ class NearByWidget extends StatefulWidget {
   final String branchId;
   final Address address;
   final String details;
+  final bool is24;
 
   NearByWidget(
       {required this.index,
       required this.imageUrl,
       required this.details,
+      required this.is24,
       required this.storeName,
       required this.address,
       required this.branchId});
@@ -60,7 +62,7 @@ class _NearByWidgetState extends State<NearByWidget> {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>
-              StoreView(branchId: widget.branchId),
+              StoreView(branchId: widget.branchId,is24: widget.is24),
         ));
       },
       child: Padding(

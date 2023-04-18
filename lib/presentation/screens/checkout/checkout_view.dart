@@ -1546,6 +1546,12 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(
                                                 builder: (context) => StoreView(
+                                                  is24: _checkOutGetxController
+                                                      .orderToPay[
+                                                  _checkOutGetxController
+                                                      .orderToPay
+                                                      .length -
+                                                      1].orderDetails!.branch!.is24Hours!,
                                                     isFromCheckout: true,
                                                     orderId: _checkOutGetxController
                                                         .orderToPay[

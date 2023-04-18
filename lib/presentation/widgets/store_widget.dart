@@ -16,10 +16,12 @@ class StoreWidget extends StatefulWidget {
   final String workTime;
   final List<StoreDeliveryCost> imageDeliveryUrl;
   final bool isOpen;
+  final bool is24;
   final num reviewCount;
 
   StoreWidget({
     required this.storeName,
+    required this.is24,
     required this.storeImageUrl,
     required this.storeStars,
     required this.isOpen,
@@ -81,7 +83,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                           Icons.star,
                           color: Colors.yellow,
                         ),
-                        Text('1'),
+                        Text('${widget.storeStars}'),
                         SizedBox(
                           width: AppSize.s10,
                         ),
@@ -99,8 +101,14 @@ class _StoreWidgetState extends State<StoreWidget> {
                         SizedBox(
                           width: AppSize.s6,
                         ),
-                        Text(
-                          widget.isOpen ? '${widget.workTime}' : '${AppLocalizations.of(context)!.close}',
+                        widget.isOpen ? Text(
+                          widget.is24 ? '${AppLocalizations.of(context)!.open_24_hours}' : '${widget.workTime}',
+                          style: TextStyle(
+                              color: ColorManager.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: AppSize.s14),
+                        ) : Text(
+                          '${AppLocalizations.of(context)!.close}',
                           style: TextStyle(
                               color: ColorManager.primary,
                               fontWeight: FontWeight.bold,

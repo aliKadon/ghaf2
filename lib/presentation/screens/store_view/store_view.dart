@@ -21,8 +21,9 @@ class StoreView extends StatefulWidget {
   final String branchId;
   bool? isFromCheckout;
   String? orderId;
+  final bool is24;
 
-  StoreView({required this.branchId, this.isFromCheckout, this.orderId});
+  StoreView({required this.branchId, this.isFromCheckout, this.orderId,required this.is24});
 
   @override
   State<StoreView> createState() => _StoreViewState();
@@ -50,6 +51,8 @@ class _StoreViewState extends State<StoreView> {
     _homeViewGetXController.getProductType(
         context: context, bid: widget.branchId);
 
+    print('===================================is24');
+    print(widget.is24);
 
     // _homeViewGetXController.getProductByType(
     //     context: context,
@@ -238,24 +241,29 @@ class _StoreViewState extends State<StoreView> {
                                     scrollDirection: Axis.horizontal,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
-                                      return _categoriesGetxController
-                                              .branchById!
-                                              .storeDeliveryCost![index]
-                                              .methodImage!
-                                              .isEmpty
-                                          ? Image.asset(
-                                              ImageAssets.carDelivery,
-                                              height: AppSize.s17,
-                                              width: AppSize.s17,
-                                            )
-                                          : Image.network(
-                                              _categoriesGetxController
+                                      return Row(
+                                        children: [
+                                          _categoriesGetxController
                                                   .branchById!
                                                   .storeDeliveryCost![index]
-                                                  .methodImage!,
-                                              height: AppSize.s17,
-                                              width: AppSize.s17,
-                                            );
+                                                  .methodImage!
+                                                  .isEmpty
+                                              ? Image.asset(
+                                                  ImageAssets.carDelivery,
+                                                  height: AppSize.s20,
+                                                  width: AppSize.s20,
+                                                )
+                                              : Image.network(
+                                                  _categoriesGetxController
+                                                      .branchById!
+                                                      .storeDeliveryCost![index]
+                                                      .methodImage!,
+                                                  height: AppSize.s20,
+                                                  width: AppSize.s20,
+                                                ),
+                                          SizedBox(width: AppSize.s4,)
+                                        ],
+                                      );
                                     },
                                   ),
                             VerticalDivider(
@@ -277,7 +285,7 @@ class _StoreViewState extends State<StoreView> {
                                       color: ColorManager.primary,
                                     ),
                                     Text(
-                                        '${_categoriesGetxController.branchById!.todayWorkHoursToString}'),
+                                        widget.is24 ? AppLocalizations.of(context)!.open_24_hours : '${_categoriesGetxController.branchById!.todayWorkHoursToString}'),
                                   ],
                                 ),
                               ],
@@ -319,6 +327,7 @@ class _StoreViewState extends State<StoreView> {
                               padding:
                                   const EdgeInsets.only(left: 8.0, right: 8.0),
                               child: WidgetInStoreScreenWidget(
+                                is24: _categoriesGetxController.branchById!.is24Hours!,
                                 imageUrl: imageOfType[index],
                                 text: typeOfList[index],
                                 bid: _categoriesGetxController.branchById!.id!,
