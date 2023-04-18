@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
+import 'package:ghaf_application/presentation/screens/store_view/discount_screen.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -24,7 +25,7 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
         if(text == AppLocalizations.of(context)!.discount) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => OffersScreenNew(),
+              builder: (context) => DisicountScreen(),
             ),
           );
         }else if (text == AppLocalizations.of(context)!.on_sale) {

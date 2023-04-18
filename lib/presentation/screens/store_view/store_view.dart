@@ -15,6 +15,7 @@ import 'package:ghaf_application/presentation/widgets/widget_in_store_screen_wid
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
+import '../checkout/check_out_getx_controller.dart';
 
 class StoreView extends StatefulWidget {
   final String branchId;
@@ -34,6 +35,7 @@ class _StoreViewState extends State<StoreView> {
   late final HomeViewGetXController _homeViewGetXController =
       Get.put(HomeViewGetXController());
 
+
   var selected = 0;
 
   @override
@@ -47,6 +49,7 @@ class _StoreViewState extends State<StoreView> {
         context: context, bid: widget.branchId);
     _homeViewGetXController.getProductType(
         context: context, bid: widget.branchId);
+
 
     // _homeViewGetXController.getProductByType(
     //     context: context,
