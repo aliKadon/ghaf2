@@ -271,28 +271,28 @@ class _HomeViewState extends State<HomeView> with Helpers {
     return ChangeNotifierProvider.value(
       value: ProductProvider(),
       child: Scaffold(
-        floatingActionButton: AppSharedData.currentUser == null
-            ? Container()
-            : Container(
-                width: AppSize.s73,
-                height: AppSize.s73,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    // Add your onPressed code here!
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => OrdersScreen(),
-                    ));
-                  },
-                  backgroundColor: ColorManager.primary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Image.asset(
-                      ImageAssets.delivery_gif,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+        // floatingActionButton: AppSharedData.currentUser == null
+        //     ? Container()
+        //     : Container(
+        //         width: AppSize.s73,
+        //         height: AppSize.s73,
+        //         child: FloatingActionButton(
+        //           onPressed: () {
+        //             // Add your onPressed code here!
+        //             Navigator.of(context).push(MaterialPageRoute(
+        //               builder: (context) => OrdersScreen(),
+        //             ));
+        //           },
+        //           backgroundColor: ColorManager.primary,
+        //           child: Padding(
+        //             padding: const EdgeInsets.all(6.0),
+        //             child: Image.asset(
+        //               ImageAssets.delivery_gif,
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         ),
+        //       ),
         body: WillPopScope(
           onWillPop: _onWillPop,
           child: SafeArea(
@@ -442,7 +442,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     '${AppLocalizations.of(context)!.shipping} ${HomeView.result == null ? controller.addresses == null || controller.addresses.length == 0 ? AppLocalizations.of(context)!.address : controller.addresses[0].addressName : HomeView.result['addressName']}',
                                                     style: getRegularStyle(
                                                         color: ColorManager
-                                                            .primaryDark),
+                                                            .primaryDark,
+
+                                                    ),
                                                   ),
                                             Icon(Icons.arrow_drop_down)
                                           ],
@@ -520,7 +522,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           ? SizedBox()
                           : Column(
                               children: [
-                                _homeViewGetXController.regStatus!.status!
+                                _homeViewGetXController.regStatus.status!
                                     ? Container(
                                         alignment: Alignment.center,
                                         child: Stack(
@@ -1064,6 +1066,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 itemCount: controller.addsList.length,
                                 itemBuilder: (context, index) {
                                   return SliderImage(
+
                                       listAdds: controller.addsList,
                                       imagesUrl: controller
                                           .addsList[index].imageToShow!,

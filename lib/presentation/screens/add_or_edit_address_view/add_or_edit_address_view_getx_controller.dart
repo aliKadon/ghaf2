@@ -60,10 +60,10 @@ class AddOrEditAddressViewGetXController extends GetxController with Helpers {
           title: address == null ? 'Adding Address' : 'Editing Address');
       final ApiResponse apiResponse = address == null
           ? await _addressesApiController.addAddress(
-              addressName: addressName!,
+              addressName: addressName,
               lat: lat,
               long: long,
-              phoneNumber: phoneNumber!,
+              phoneNumber: phoneNumber,
               cityName: cityName,
               countryName: countryName,
               villaOrApprtmentNumber: villaOrApprtmentNumber,
@@ -71,10 +71,10 @@ class AddOrEditAddressViewGetXController extends GetxController with Helpers {
             )
           : await _addressesApiController.editAddress(
               addressId: address!.id,
-              addressName: addressName!,
+              addressName: addressName,
               lat: selectedLatLng!.latitude.toString(),
               long: selectedLatLng!.longitude.toString(),
-              phoneNumber: phoneNumber!,
+              phoneNumber: phoneNumber,
             );
       if (apiResponse.status == 200) {
         // success.

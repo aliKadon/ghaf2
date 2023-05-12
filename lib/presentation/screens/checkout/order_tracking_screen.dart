@@ -352,9 +352,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   CameraPosition(
                                     target: LatLng(
                                         double.parse(
-                                            widget.source!.altitude!),
+                                            widget.source.altitude!),
                                         double.parse(widget
-                                            .source!.longitude!)),
+                                            .source.longitude!)),
                                     zoom: 12.5,
                                   ),
                                   markers: {
@@ -362,19 +362,19 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       markerId: MarkerId("source"),
                                       position: LatLng(
                                           double.parse(widget
-                                              .source!.altitude!),
+                                              .source.altitude!),
                                           double.parse(widget
-                                              .source!.longitude!)),
+                                              .source.longitude!)),
                                     ),
                                     Marker(
                                       markerId:
                                       MarkerId("destination"),
                                       position: LatLng(
                                           double.parse(widget
-                                              .destination!
+                                              .destination
                                               .altitude!),
                                           double.parse(widget
-                                              .destination!
+                                              .destination
                                               .longitude!)),
                                     ),
                                   },

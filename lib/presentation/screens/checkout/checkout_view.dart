@@ -1071,12 +1071,12 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                 LatTow: double.parse(
                                                     _addressesViewGetXController
                                                         .addresses[
-                                                            selectedAddress]!
+                                                            selectedAddress]
                                                         .altitude!),
                                                 LonTow: double.parse(
                                                     _addressesViewGetXController
                                                         .addresses[
-                                                            selectedAddress]!
+                                                            selectedAddress]
                                                         .longitude!));
                                           });
                                           print(

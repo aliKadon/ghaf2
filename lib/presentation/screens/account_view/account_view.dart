@@ -545,7 +545,7 @@ class _AccountViewState extends State<AccountView> {
                             IconsAssets.share,
                             AppLocalizations.of(context)!.invite_friend,
                           )),
-                      _homeViewGetXController.regStatus!.status!
+                      _homeViewGetXController.regStatus.status!
                           ? GestureDetector(
                               onTap: () {
                                 Navigator.push(

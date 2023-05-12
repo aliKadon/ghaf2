@@ -56,7 +56,7 @@ class _LoginViewState extends State<LoginView> with Helpers {
     super.dispose();
   }
 
-  String userName = "User Name";
+  String? userName = "User Name";
   String? email = "Your Email";
 
   @override

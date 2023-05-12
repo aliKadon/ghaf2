@@ -103,9 +103,9 @@ class _AddressHomeState extends State<AddressHome> {
                               LatOne: SharedPrefController().locationLat,
                               LonOne: SharedPrefController().locationLong,
                               LatTow: double.parse(controller
-                                  .addresses[selectedAddress]!.altitude!),
+                                  .addresses[selectedAddress].altitude!),
                               LonTow: double.parse(controller
-                                  .addresses[selectedAddress]!.longitude!));
+                                  .addresses[selectedAddress].longitude!));
                         });
                         Navigator.of(context).pop({
                           'addressName':

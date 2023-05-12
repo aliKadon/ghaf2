@@ -33,7 +33,7 @@ class CartItem extends GetxController with Helpers {
       _ChangeCartItemCountRequest(
           context: context,
           type: 1,
-          productCount: productCount1!,
+          productCount: productCount1,
           idProduct: idProduct);
   }
 
