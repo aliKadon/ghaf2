@@ -103,7 +103,7 @@ class SharedPrefController {
       _sharedPreferences.getBool(PrefKeys.loggedIn.name) ?? false;
 
   String get userNameGoogle =>
-      _sharedPreferences.getString(PrefKeys.googleUserName.toString()) ?? '';
+      _sharedPreferences.getString(PrefKeys.googleUserName.name) ?? '';
 
   String get firstStoreName =>
       _sharedPreferences.getString(PrefKeys.firstStoreName.toString()) ?? '';
@@ -111,11 +111,10 @@ class SharedPrefController {
   int get indexOfPayLaterProduct =>
       _sharedPreferences.getInt(PrefKeys.indexOfPayLaterProduct.name) ?? 0;
 
-  String get city =>
-      _sharedPreferences.getString(PrefKeys.city.name) ?? '';
+  String get city => _sharedPreferences.getString(PrefKeys.city.name) ?? '';
 
   String get emailGoogle =>
-      _sharedPreferences.getString(PrefKeys.googleEmail.toString()) ?? '';
+      _sharedPreferences.getString(PrefKeys.googleEmail.name) ?? '';
 
   String get idPayLater =>
       _sharedPreferences.getString(PrefKeys.idPayLater.name) ?? '';
@@ -124,19 +123,19 @@ class SharedPrefController {
     return _sharedPreferences.getString(PrefKeys.language.toString()) ?? 'en';
   }
 
-
   double get locationLat {
-    return _sharedPreferences.getDouble(PrefKeys.locationLat.toString()) ?? 24.400661;
+    return _sharedPreferences.getDouble(PrefKeys.locationLat.toString()) ??
+        24.400661;
   }
 
   double get locationLong {
-    return _sharedPreferences.getDouble(PrefKeys.locationLong.toString()) ?? 54.635448;
+    return _sharedPreferences.getDouble(PrefKeys.locationLong.toString()) ??
+        54.635448;
   }
 
   bool get enableNotifications =>
-      _sharedPreferences.getBool(PrefKeys.enableNotification.toString()) ?? true;
-
-
+      _sharedPreferences.getBool(PrefKeys.enableNotification.toString()) ??
+      true;
 
   Future<void> setUserName(String userName) async {
     await _sharedPreferences.setString(PrefKeys.userName.name, '${userName}');
@@ -144,7 +143,8 @@ class SharedPrefController {
   }
 
   Future<void> setIndexOfPayLaterProduct(int indexOfPayLaterProduct) async {
-    await _sharedPreferences.setInt(PrefKeys.indexOfPayLaterProduct.name, indexOfPayLaterProduct);
+    await _sharedPreferences.setInt(
+        PrefKeys.indexOfPayLaterProduct.name, indexOfPayLaterProduct);
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 
@@ -159,16 +159,19 @@ class SharedPrefController {
   }
 
   Future<void> setFirstStoreName(String firstStoretName) async {
-    await _sharedPreferences.setString(PrefKeys.firstStoreName.toString(), '${firstStoretName}');
+    await _sharedPreferences.setString(
+        PrefKeys.firstStoreName.toString(), '${firstStoretName}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
+
   Future<void> setLastName(String lastName) async {
     await _sharedPreferences.setString(PrefKeys.lastName.name, '${lastName}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 
   Future<void> setIdPayLaterProduct(String idPayLaterProduct) async {
-    await _sharedPreferences.setString(PrefKeys.idPayLater.name, '${idPayLaterProduct}');
+    await _sharedPreferences.setString(
+        PrefKeys.idPayLater.name, '${idPayLaterProduct}');
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 
@@ -183,7 +186,8 @@ class SharedPrefController {
   }
 
   Future<void> setEnableNotification(bool enable) async {
-      await _sharedPreferences.setBool(PrefKeys.enableNotification.toString(), enable);
+    await _sharedPreferences.setBool(
+        PrefKeys.enableNotification.toString(), enable);
     // _sharedPreferences.setBool(PrefKeys.loggedIn.name, loggedIn);
   }
 
@@ -209,25 +213,28 @@ class SharedPrefController {
   }
 
   Future<bool> setLocationLat({required double locationLat}) async {
-    return  _sharedPreferences.setDouble(PrefKeys.locationLat.toString(), locationLat);
+    return _sharedPreferences.setDouble(
+        PrefKeys.locationLat.toString(), locationLat);
   }
 
   Future<bool> setLocationLong({required double locationLong}) async {
-    return  _sharedPreferences.setDouble(PrefKeys.locationLong.toString(), locationLong);
+    return _sharedPreferences.setDouble(
+        PrefKeys.locationLong.toString(), locationLong);
   }
 
   Future<bool> setgoogleUserName({required String googleUserName}) async {
-    return  _sharedPreferences.setString(PrefKeys.googleUserName.toString(), googleUserName);
+    return _sharedPreferences.setString(
+        PrefKeys.googleUserName.name, googleUserName);
   }
 
   Future<bool> setgoogleEmail({required String googleEmail}) async {
-    return  _sharedPreferences.setString(PrefKeys.googleEmail.toString(), googleEmail);
+    return _sharedPreferences.setString(
+        PrefKeys.googleEmail.name, googleEmail);
   }
 
   Future<bool> changeLanguage({required String language}) async {
-    return  _sharedPreferences.setString(PrefKeys.language.toString(), language);
+    return _sharedPreferences.setString(PrefKeys.language.toString(), language);
   }
-
 
   Future<bool> removeValue({required String key}) async {
     if (_sharedPreferences.containsKey(key)) {
@@ -260,5 +267,10 @@ class SharedPrefController {
     _sharedPreferences.remove(PrefKeys.sellerSubmittedForm.name);
     _sharedPreferences.remove(PrefKeys.fcmToken.name);
     AppSharedData.currentUser = null;
+  }
+
+  Future<void> emptyGoogleSignIn() async {
+    _sharedPreferences.remove(PrefKeys.googleUserName.name);
+    _sharedPreferences.remove(PrefKeys.googleEmail.name);
   }
 }

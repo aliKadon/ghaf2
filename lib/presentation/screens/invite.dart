@@ -49,10 +49,14 @@ class _InviteState extends State<Invite> with Helpers {
                     onTap: () => Navigator.pop(context),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                   ),
@@ -96,6 +100,8 @@ class _InviteState extends State<Invite> with Helpers {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
@@ -109,7 +115,7 @@ class _InviteState extends State<Invite> with Helpers {
                               // ),
                             ),
                             child: Image.asset('assets/images/icons1.png',
-                                width: 38, height: 38),
+                                width: AppSize.s40, height: AppSize.s40),
                           ),
                           SizedBox(
                             height: AppSize.s8,
@@ -159,7 +165,7 @@ class _InviteState extends State<Invite> with Helpers {
                               // ),
                             ),
                             child: Image.asset('assets/images/icons2.png',
-                                width: 38, height: 38),
+                                width: AppSize.s40, height: AppSize.s40),
                           ),
                           SizedBox(
                             height: AppSize.s8,
@@ -209,7 +215,7 @@ class _InviteState extends State<Invite> with Helpers {
                               // ),
                             ),
                             child: Image.asset('assets/images/icons3.png',
-                                width: 38, height: 38),
+                                width: AppSize.s40, height: AppSize.s40),
                           ),
                           SizedBox(
                             height: AppSize.s8,

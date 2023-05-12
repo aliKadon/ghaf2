@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           var isArabic = SharedPrefController().lang1;
           // print('isArabic : $isArabic');
 
-          return MaterialApp(
+          return GetMaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

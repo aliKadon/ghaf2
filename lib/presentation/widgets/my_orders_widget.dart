@@ -87,11 +87,16 @@ class MyOrdersWidget extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: FontSize.s14)),
                 statusName == 'Canceled'
-                    ? Text('canceled',
+                    ? Text(AppLocalizations.of(context)!.canceled,
                         style: TextStyle(
                             color: ColorManager.red,
                             fontWeight: FontWeight.w600,
-                            fontSize: FontSize.s16))
+                            fontSize: FontSize.s16)) : statusName == 'Done'
+                    ? Text(AppLocalizations.of(context)!.delivered,
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w600,
+                        fontSize: FontSize.s16))
                     : Container(),
               ],
             )

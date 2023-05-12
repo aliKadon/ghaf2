@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
@@ -19,8 +20,10 @@ import '../home_view/home_view_getx_controller.dart';
 
 class AllProductScreen extends StatefulWidget {
   String type;
+  String? addressLong;
+  String? addressLat;
 
-  AllProductScreen({required this.type});
+  AllProductScreen({required this.type,this.addressLong,this.addressLat});
 
   @override
   State<AllProductScreen> createState() => _AllProductScreenState();
@@ -30,6 +33,8 @@ class _AllProductScreenState extends State<AllProductScreen> {
   // controller.
   late final ProductsScreenGetXController _productsScreenGetXController =
       Get.put(ProductsScreenGetXController());
+  late final AddressesViewGetXController _addressesViewGetXController =
+  Get.find<AddressesViewGetXController>();
 
   // controller.
   HomeViewGetXController _homeViewGetXController =
@@ -141,7 +146,10 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                         orderId:
                                         _checkOutGetxController.customerOrder[index].id!,
                                         source: _checkOutGetxController.customerOrder[index]
-                                            .deliveryPoint!,
+                                            .deliveryPoint ?? _checkOutGetxController
+                                            .customerOrder[index]
+                                            .branch!
+                                            .branchAddress!,
                                         destination: _checkOutGetxController
                                             .customerOrder[index]
                                             .branch!
@@ -206,10 +214,20 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                 return Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: NearByWidget(
+                                    addressLat: widget.addressLat == null
+                                        ? _addressesViewGetXController
+                                        .addresses.length == 0 ? null : _addressesViewGetXController
+                                        .addresses[0].altitude!
+                                        : widget.addressLat!,
+                                    addressLong: widget.addressLong == null
+                                        ? _addressesViewGetXController
+                                        .addresses.length == 0 ? null : _addressesViewGetXController
+                                        .addresses[0].longitude!
+                                        : widget.addressLong!,
                                     is24: _homeViewGetXController
                                         .nearbyStores[index].is24Hours!,
                                     details: _homeViewGetXController
-                                        .nearbyStores[index].details!,
+                                        .nearbyStores[index].details ?? '',
                                     index: index,
                                     imageUrl: _homeViewGetXController
                                                     .nearbyStores[index]

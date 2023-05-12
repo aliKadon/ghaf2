@@ -4,22 +4,16 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ghaf_application/app/constants.dart';
+
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
-import 'package:ghaf_application/app/utils/app_shared_data.dart';
-import 'package:ghaf_application/presentation/resources/font_manager.dart';
-import 'package:ghaf_application/presentation/resources/styles_manager.dart';
+
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:ghaf_application/services/local_notifications_service.dart';
-import 'package:location/location.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
-import '../resources/constants_manager.dart';
-import '../resources/routes_manager.dart';
-import '../resources/values_manager.dart';
+
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -32,14 +26,14 @@ class _SplashViewState extends State<SplashView> {
   Timer? _timer;
 
   _startDelay() {
-    _timer = Timer(const Duration(seconds: 12), _goNext);
+    _timer = Timer(const Duration(seconds: 10), _goNext);
   }
 
   // LocationData? locationData;
   _goNext() async {
     // init firebase.
     await Firebase.initializeApp();
-    await FirebaseMessagingService.instance.init();
+    await FirebaseMessagingService.instance.init(context: context);
     await LocalNotificationsService.instance.init();
     //
     SharedPrefController().getUser();

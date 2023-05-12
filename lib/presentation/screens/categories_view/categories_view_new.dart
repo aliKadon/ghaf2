@@ -49,7 +49,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                AppLocalizations.of(context)!.categories_by_store,
+                AppLocalizations.of(context)!.stores,
                 style: getSemiBoldStyle(
                   color: ColorManager.primaryDark,
                   fontSize: FontSize.s18,

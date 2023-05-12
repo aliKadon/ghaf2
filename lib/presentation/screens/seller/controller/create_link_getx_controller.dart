@@ -373,11 +373,7 @@ class CreateLinkGetxController extends GetxController with Helpers {
                       },
                       child: Row(
                         children: [
-                          Image.asset(
-                            IconsAssets.email,
-                            height: AppSize.s16,
-                            width: AppSize.s16,
-                          ),
+                          Icon(Icons.qr_code_scanner,size: AppSize.s16),
                           SizedBox(
                             width: AppSize.s8,
                           ),

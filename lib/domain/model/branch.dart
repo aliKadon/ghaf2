@@ -29,6 +29,8 @@ class Branch {
     this.reviewCount,
     this.isItRestaurant,
     this.mealTimes,
+    this.storeLogoImage,
+    this.storeCoverImage,
   });
 
   String? id;
@@ -43,6 +45,7 @@ class Branch {
   dynamic deleted;
   String? branchLogoImage;
   String? branchNumber;
+  String? storeLogoImage;
   bool? is24Hours;
   bool? hidden;
   String? storeId;
@@ -54,6 +57,7 @@ class Branch {
   num? storeStars;
   num? reviewCount;
   bool? isItRestaurant;
+  String? storeCoverImage;
   List<MealTimes>? mealTimes;
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
@@ -64,6 +68,7 @@ class Branch {
             : Address.fromJson(json["branchAddress"]),
         telephone: json["telephone"],
         email: json["email"],
+        storeCoverImage: json["storeCoverImage"],
         details: json["details"],
         branchNumber: json["branchNumber"],
         is24Hours: json["is24Hours"],
@@ -87,6 +92,7 @@ class Branch {
         branchLogo: json["branchLogo"],
         deleted: json["deleted"],
         isOpen: json["isOpen"],
+        storeLogoImage: json["storeLogoImage"],
         todayWorkHoursToString: json["todayWorkHoursToString"],
         storeStars: json['storeStars'],
         reviewCount: json['reviewCount'],
@@ -107,6 +113,7 @@ class Branch {
         "telephone": telephone,
         "email": email,
         "details": details,
+        "storeCoverImage": storeCoverImage,
         "branchNumber": branchNumber,
         "is24Hours": is24Hours,
         "hidden": hidden,
@@ -125,6 +132,7 @@ class Branch {
         "reviewCount": reviewCount,
         'isItRestaurant': isItRestaurant,
         'mealTimes': mealTimes,
+        'storeLogoImage': storeLogoImage,
 
         // "storeDeliveryCost": List<dynamic>.from(storeDeliveryCost!.map((x) => x.toJson()))
       };

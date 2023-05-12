@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/domain/model/address.dart';
+import 'package:ghaf_application/presentation/resources/font_manager.dart';
+import 'package:ghaf_application/presentation/resources/values_manager.dart';
 
 import '../../app/preferences/shared_pref_controller.dart';
 import '../resources/assets_manager.dart';
@@ -12,11 +14,16 @@ class PreviousOrderWidget extends StatefulWidget {
   String storeImage;
   String storeName;
   Address storeAddress;
+  String? addressLong;
+  String? addressLat;
 
   PreviousOrderWidget(
       {required this.storeName,
       required this.storeAddress,
-      required this.storeImage});
+      required this.storeImage,
+      this.addressLat,
+      this.addressLong,
+      });
 
   @override
   State<PreviousOrderWidget> createState() => _PreviousOrderWidgetState();
@@ -34,8 +41,8 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
     // TODO: implement initState
     _checkOutGetxController
         .getDurationGoogleMap(
-            LatOne: SharedPrefController().locationLat,
-            LonOne: SharedPrefController().locationLong,
+            LatOne:widget.addressLat == null || widget.addressLat!.isEmpty ? SharedPrefController().locationLat : double.parse((widget.addressLat!)),
+            LonOne:widget.addressLong == null || widget.addressLong!.isEmpty ? SharedPrefController().locationLong : double.parse((widget.addressLong!)),
             LatTow: double.parse((widget.storeAddress.altitude!)),
             LonTow: double.parse((widget.storeAddress.longitude!)))
         .then((value) => dur = _checkOutGetxController.duration);
@@ -73,7 +80,7 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
           ),
           Text('${widget.storeName}',
               style: TextStyle(
-                  fontSize: 13,
+                  fontSize: FontSize.s14,
                   fontWeight: FontWeight.w400,
                   color: ColorManager.primaryDark)),
           Row(
@@ -81,13 +88,14 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
               Icon(
                 Icons.timer,
                 color: ColorManager.grey,
+                size: AppSize.s20,
               ),
               SizedBox(
                 width: 8,
               ),
               Text('${dur}',
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: FontSize.s12,
                       fontWeight: FontWeight.w500,
                       color: ColorManager.primaryDark)),
             ],

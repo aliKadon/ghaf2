@@ -26,7 +26,8 @@
   "add_to_order" : "Add to order",
   "payment_confirmation" : "Payment confirmation",
   "estimated_delivery_time" : "Estimated delivery time",
-
+  "redeem_for" : "Redeem for",
+  "points_to_redeem_this_offer" : "points to redeem this offer",
   "join_us_now_and_get" : "Join us now and get",
   "introduce_to_subscribe1" : "No commission",
   "introduce_to_subscribe2" : "Easy POS integration",
@@ -284,7 +285,9 @@
   "register_as_seller" : "Register as seller",
   "register_as_seller_individual" : "Register as seller (individual)",
   "no_offer_found" : "No offer found",
-
+  "how_fees_work" : "How fees work",
+  "delivered" : "Delivered",
+  "canceled" : "Canceled",
 
 
 
@@ -294,7 +297,7 @@
   "welcome_back": "Welcome back",
   "hint_email_phone": "Enter email",
   "hint_password": "Password",
-  "forget_password": "Forget password?",
+  "forget_password": "Forgot password?",
   "or": "OR",
   "login_with_google": "Log in with google",
   "login_with_apple": "Log in with apple",
@@ -515,7 +518,7 @@
   "name_address": "Name address",
   "address1" : "address",
   "shipping": "Shipping to",
-  "userName_or_email": "UserName or email",
+  "userName_or_email": "User name or email",
   "something_went_wrong": "Something went wrong",
   "register_create_account": "Register to create an account",
   "register_payment_link": "Register for Payment link Solution",

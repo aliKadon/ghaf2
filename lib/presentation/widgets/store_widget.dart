@@ -90,94 +90,100 @@ class _StoreWidgetState extends State<StoreWidget> {
                         Text('(${widget.reviewCount}+)')
                       ],
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.timer_sharp,
-                          color: ColorManager.primary,
-                        ),
-                        SizedBox(
-                          width: AppSize.s6,
-                        ),
-                        widget.isOpen ? Text(
-                          widget.is24 ? '${AppLocalizations.of(context)!.open_24_hours}' : '${widget.workTime}',
-                          style: TextStyle(
-                              color: ColorManager.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: AppSize.s14),
-                        ) : Text(
-                          '${AppLocalizations.of(context)!.close}',
-                          style: TextStyle(
-                              color: ColorManager.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: AppSize.s14),
-                        ),
-                      ],
+                    Container(
+                      width: AppSize.s222,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.timer_sharp,
+                            color: ColorManager.primary,
+                          ),
+                          SizedBox(
+                            width: AppSize.s6,
+                          ),
+                          widget.isOpen ? Text(
+                            widget.is24 ? '${AppLocalizations.of(context)!.open_24_hours}' : '${widget.workTime}',
+                            style: TextStyle(
+                                color: ColorManager.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: AppSize.s14),
+                          ) : Text(
+                            '${AppLocalizations.of(context)!.close}',
+                            style: TextStyle(
+                                color: ColorManager.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: AppSize.s14),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
+                    Container(
+                      width: AppSize.s222,
+                      child: Row(
+                        children: [
 
-                        Container(
-                          height: AppSize.s30,
-                          // width: 100,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: widget.imageDeliveryUrl.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  Image.network(
-                                    widget.imageDeliveryUrl[index].methodImage!,
-                                    height: AppSize.s20,
-                                    width: AppSize.s20,
-                                  ),
-                                  SizedBox(width: AppSize.s6,)
-                                ],
-                              );
-                            },
+                          Container(
+                            height: AppSize.s30,
+                            width: AppSize.s110,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: widget.imageDeliveryUrl.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  children: [
+                                    Image.network(
+                                      widget.imageDeliveryUrl[index].methodImage!,
+                                      height: AppSize.s20,
+                                      width: AppSize.s20,
+                                    ),
+                                    SizedBox(width: AppSize.s6,)
+                                  ],
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: AppSize.s44,
-                        ),
-
-                        // Container(
-                        //   padding: EdgeInsets.all(6),
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(10),
-                        //       color: ColorManager.primaryDark),
-                        //   child: Text('deals up to 50 % off',
-                        //       style: TextStyle(
-                        //           color: Colors.white, fontSize: FontSize.s10)),
-                        // ),
-                        // SizedBox(
-                        //   width: AppSize.s6,
-                        // ),
-
-                        Visibility(
-                          visible: !widget.isOpen,
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                ImageAssets.preOrder,
-                                height: AppSize.s20,
-                                width: AppSize.s20,
-                              ),
-                              Text(
-                                'pre order',
-                                style: TextStyle(
-                                    fontSize: FontSize.s10,
-                                    color: ColorManager.primary),
-                              ),
-                            ],
+                          SizedBox(
+                            width: AppSize.s44,
                           ),
-                        ),
 
-                      ],
+                          // Container(
+                          //   padding: EdgeInsets.all(6),
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       color: ColorManager.primaryDark),
+                          //   child: Text('deals up to 50 % off',
+                          //       style: TextStyle(
+                          //           color: Colors.white, fontSize: FontSize.s10)),
+                          // ),
+                          // SizedBox(
+                          //   width: AppSize.s6,
+                          // ),
+
+                          Visibility(
+                            visible: !widget.isOpen,
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  ImageAssets.preOrder,
+                                  height: AppSize.s20,
+                                  width: AppSize.s20,
+                                ),
+                                Text(
+                                  'pre order',
+                                  style: TextStyle(
+                                      fontSize: FontSize.s10,
+                                      color: ColorManager.primary),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
                     ),
                   ],
                 )

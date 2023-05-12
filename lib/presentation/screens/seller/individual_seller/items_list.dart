@@ -54,10 +54,14 @@ class _ItemsListState extends State<ItemsList> {
                     print(_createLinkGetxController.productCount);
                     Navigator.pop(context);
                   },
-                  child: Image.asset(
-                    IconsAssets.arrow,
-                    height: AppSize.s18,
-                    width: AppSize.s10,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.038,
+                    width: MediaQuery.of(context).size.width * 0.08,
+                    child: Image.asset(
+                      IconsAssets.arrow,
+                      height: AppSize.s18,
+                      width: AppSize.s10,
+                    ),
                   ),
                 ),
                 Spacer(),
@@ -91,19 +95,27 @@ class _ItemsListState extends State<ItemsList> {
                     shrinkWrap: true,
                     itemCount: controller.individualProducts.length,
                     itemBuilder: (context, index) {
-                      return ItemWidgetForIndividualSeller(
-                        index: index,
-                        isoCurrencySymbol: controller
-                            .individualProducts[index].isoCurrencySymbol!,
-                        price: controller.individualProducts[index].price!,
-                        name: controller.individualProducts[index].name!,
-                        idProduct: controller.individualProducts[index].id!,
-                        image: controller.individualProducts[index]
-                            .ghafImageIndividual ==
-                            null
-                            ? ''
-                            : controller.individualProducts[index]
-                            .ghafImageIndividual![0].data!,
+                      return Column(
+                        children: [
+                          ItemWidgetForIndividualSeller(
+                            index: index,
+                            isoCurrencySymbol: controller
+                                .individualProducts[index].isoCurrencySymbol!,
+                            price: controller.individualProducts[index].price!,
+                            name: controller.individualProducts[index].name!,
+                            idProduct: controller.individualProducts[index].id!,
+                            image: controller.individualProducts[index]
+                                .ghafImageIndividual ==
+                                null
+                                ? ''
+                                : controller.individualProducts[index]
+                                .ghafImageIndividual![0].data!,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 25.0,left: 25),
+                            child: Divider(thickness: 1,color: ColorManager.greyLight,),
+                          )
+                        ],
                       );
                     },
                   ),

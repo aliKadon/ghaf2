@@ -125,6 +125,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     getCategories();
     getProducts(context: context);
     getStoreAdds(context: context);
+
   }
 
   void getRegStatus({required BuildContext context}) async {

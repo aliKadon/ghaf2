@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
+import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/model/cart_item.dart';
@@ -81,14 +82,14 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                   style: TextStyle(
                       color: ColorManager.primaryDark,
                       fontWeight: FontWeight.w600,
-                      fontSize: 15),
+                      fontSize: FontSize.s14),
                 ),
                 Text(
                   'item ${count!}',
                   style: TextStyle(
                       color: ColorManager.greyLight,
                       fontWeight: FontWeight.w400,
-                      fontSize: 15),
+                      fontSize: FontSize.s14),
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -96,7 +97,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                   style: TextStyle(
                       color: ColorManager.primary,
                       fontWeight: FontWeight.w600,
-                      fontSize: 15),
+                      fontSize: FontSize.s14),
                 ),
               ],
             ),

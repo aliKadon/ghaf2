@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -9,9 +8,7 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/add_or_edit_address_view/add_or_edit_address_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 
-import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -29,15 +26,12 @@ class AddOrEditAddressView extends StatefulWidget {
 }
 
 class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
-
-
   Completer<GoogleMapController> _controller = Completer();
   TextEditingController _addressTextController = TextEditingController();
   TextEditingController _nameAddressTextController = TextEditingController();
   TextEditingController _phoneNumberTextController = TextEditingController();
   TextEditingController _streetTextController = TextEditingController();
   TextEditingController _buildingTextController = TextEditingController();
-
 
   late Placemark place;
 
@@ -46,12 +40,12 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
   // #############################################
   Future<void> GetAddressFromLatLong(LatLng latLng) async {
     List<Placemark> placemarks =
-    await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
     print('======================================my address');
     print(placemarks);
     place = placemarks[0];
     _addressTextController.text =
-    '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     print('================myaddress');
     print(_addressTextController.text);
   }
@@ -76,10 +70,11 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
 
   // created method for getting user current location
   Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission().then((value){
-    }).onError((error, stackTrace) async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) async {
       await Geolocator.requestPermission();
-      print("ERROR"+error.toString());
+      print("ERROR" + error.toString());
     });
     return await Geolocator.getCurrentPosition();
   }
@@ -91,11 +86,10 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
         position: LatLng(20.42796133580664, 75.885749655962),
         infoWindow: InfoWindow(
           title: 'My Position',
-        )
-    ),
+        )),
   ];
 
-    // controller.
+  // controller.
   late final AddOrEditAddressViewGetXController _addAddressViewGetXController =
       Get.find<AddOrEditAddressViewGetXController>();
 
@@ -116,6 +110,17 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
 
   @override
   void initState() {
+    if (_addAddressViewGetXController.address != null) {
+      _nameAddressTextController.text =
+          _addAddressViewGetXController.address!.addressName ?? '';
+      _phoneNumberTextController.text =
+          _addAddressViewGetXController.address!.phone ?? '';
+      _streetTextController.text =
+          _addAddressViewGetXController.address!.buildingOrStreetName ?? '';
+      _buildingTextController.text =
+          _addAddressViewGetXController.address!.villaOrApprtmentNumber ?? '';
+    }
+
     // ############################################
     //get all information from latitude and longitude
     // #############################################
@@ -140,10 +145,14 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                   Spacer(),
@@ -166,7 +175,6 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
             Expanded(
               child: Stack(
                 children: [
-
                   GoogleMap(
                     mapType: MapType.normal,
                     // on below line setting user location enabled.
@@ -174,7 +182,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                     // on below line setting compass enabled.
                     compassEnabled: true,
                     // on below line specifying controller on map complete.
-                    onMapCreated: (GoogleMapController controller){
+                    onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
                     // onMapCreated: (GoogleMapController controller) {
@@ -187,12 +195,13 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                     // ),
                     initialCameraPosition: _kGoogle,
                     markers: {
-                            Marker(
-                              markerId: MarkerId('address'),
-                              position:
-                                  _addAddressViewGetXController.selectedLatLng ?? LatLng(24.400661, 54.635448),
-                            )
-                          },
+                      Marker(
+                        markerId: MarkerId('address'),
+                        position:
+                            _addAddressViewGetXController.selectedLatLng ??
+                                LatLng(24.400661, 54.635448),
+                      )
+                    },
                     onTap: (latLng) async {
                       setState(() {
                         _addAddressViewGetXController.selectedLatLng = latLng;
@@ -208,20 +217,21 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                     right: 0,
                     child: FloatingActionButton(
                       backgroundColor: ColorManager.primary,
-                      onPressed: () async{
+                      onPressed: () async {
                         getUserCurrentLocation().then((value) async {
-                          print(value.latitude.toString() +" "+value.longitude.toString());
+                          print(value.latitude.toString() +
+                              " " +
+                              value.longitude.toString());
 
                           // marker added for current users location
-                          _markers.add(
-                              Marker(
-                                markerId: MarkerId("2"),
-                                position: LatLng(value.latitude, value.longitude),
-                                infoWindow: InfoWindow(
-                                  title: AppLocalizations.of(context)!.my_current_location,
-                                ),
-                              )
-                          );
+                          _markers.add(Marker(
+                            markerId: MarkerId("2"),
+                            position: LatLng(value.latitude, value.longitude),
+                            infoWindow: InfoWindow(
+                              title: AppLocalizations.of(context)!
+                                  .my_current_location,
+                            ),
+                          ));
 
                           // specified current users location
                           CameraPosition cameraPosition = new CameraPosition(
@@ -229,10 +239,11 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                             zoom: 14,
                           );
 
-                          final GoogleMapController controller = await _controller.future;
-                          controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-                          setState(() {
-                          });
+                          final GoogleMapController controller =
+                              await _controller.future;
+                          controller.animateCamera(
+                              CameraUpdate.newCameraPosition(cameraPosition));
+                          setState(() {});
                         });
                       },
                       child: Icon(Icons.my_location),
@@ -270,19 +281,13 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                   height: 6,
                                 ),
                                 AppTextField(
-                                  textController:
-                                  _addressTextController,
-                                  hint:
-                                  AppLocalizations.of(context)!
-                                      .address,
-                                  textInputType:
-                                  TextInputType.phone,
+                                  textController: _addressTextController,
+                                  hint: AppLocalizations.of(context)!.address,
+                                  textInputType: TextInputType.phone,
                                   onSaved: (value) {},
                                   validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty) {
-                                      return AppLocalizations.of(
-                                          context)!
+                                    if (value == null || value.isEmpty) {
+                                      return AppLocalizations.of(context)!
                                           .address_name_required;
                                     }
                                     return null;
@@ -292,37 +297,28 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                   // initialValue:
                                   // _addAddressViewGetXController.addressName,
                                   // hint: 'Address name',
-                                  textController:
-                                  _nameAddressTextController,
-                                  hint:
-                                  AppLocalizations.of(context)!
+                                  textController: _nameAddressTextController,
+                                  hint: AppLocalizations.of(context)!
                                       .name_address,
                                   onSaved: (value) {},
                                   validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty) {
+                                    if (value == null || value.isEmpty) {
                                       // return 'Address name is required';
-                                      return AppLocalizations.of(
-                                          context)!
+                                      return AppLocalizations.of(context)!
                                           .address_name_required;
                                     }
                                     return null;
                                   },
                                 ),
                                 AppTextField(
-                                  textController:
-                                  _phoneNumberTextController,
-                                  hint:
-                                  AppLocalizations.of(context)!
+                                  textController: _phoneNumberTextController,
+                                  hint: AppLocalizations.of(context)!
                                       .phone_number,
-                                  textInputType:
-                                  TextInputType.phone,
+                                  textInputType: TextInputType.phone,
                                   onSaved: (value) {},
                                   validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty) {
-                                      return AppLocalizations.of(
-                                          context)!
+                                    if (value == null || value.isEmpty) {
+                                      return AppLocalizations.of(context)!
                                           .phone_number_is_required;
                                     }
                                     return null;
@@ -332,10 +328,8 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                   // initialValue:
                                   // _addAddressViewGetXController.addressName,
                                   // hint: 'Address name',
-                                  textController:
-                                  _streetTextController,
-                                  hint:
-                                  AppLocalizations.of(context)!
+                                  textController: _streetTextController,
+                                  hint: AppLocalizations.of(context)!
                                       .street_address,
                                   onSaved: (value) {},
                                   // validator: (value) {
@@ -353,10 +347,8 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                   // initialValue:
                                   // _addAddressViewGetXController.addressName,
                                   // hint: 'Address name',
-                                  textController:
-                                  _buildingTextController,
-                                  hint:
-                                  AppLocalizations.of(context)!
+                                  textController: _buildingTextController,
+                                  hint: AppLocalizations.of(context)!
                                       .building_address,
                                   onSaved: (value) {},
                                   // validator: (value) {
@@ -380,21 +372,31 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                     onPressed: () {
                                       _addAddressViewGetXController
                                           .addOrEditAddress(
-                                        buildingOrStreetName: _streetTextController.text,
-                                        villaOrApprtmentNumber: _buildingTextController.text,
+                                        buildingOrStreetName:
+                                            _streetTextController.text,
+                                        villaOrApprtmentNumber:
+                                            _buildingTextController.text,
                                         countryName: place.country!,
                                         cityName: place.locality!,
-                                        addressName: _nameAddressTextController.text,
-                                        lat: (_addAddressViewGetXController.latLng.latitude).toString(),
-                                        long: (_addAddressViewGetXController.latLng.longitude).toString(),
-                                        phoneNumber: _phoneNumberTextController.text,
+                                        addressName:
+                                            _nameAddressTextController.text,
+                                        lat: (_addAddressViewGetXController
+                                                .latLng.latitude)
+                                            .toString(),
+                                        long: (_addAddressViewGetXController
+                                                .latLng.longitude)
+                                            .toString(),
+                                        phoneNumber:
+                                            _phoneNumberTextController.text,
                                       );
                                     },
                                     child: Text(
                                       _addAddressViewGetXController.address ==
                                               null
-                                          ? AppLocalizations.of(context)!.add_address
-                                          : AppLocalizations.of(context)!.edit_address,
+                                          ? AppLocalizations.of(context)!
+                                              .add_address
+                                          : AppLocalizations.of(context)!
+                                              .edit_address,
                                       style: getSemiBoldStyle(
                                           color: ColorManager.white,
                                           fontSize: FontSize.s18),

@@ -1,8 +1,10 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
+import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/filter_screen.dart';
 import 'package:ghaf_application/presentation/screens/home_view/sheets/filter_sheet_widget_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
@@ -112,54 +114,62 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
               ),
               Container(
                   height: MediaQuery.of(context).size.height * 0.25,
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisExtent: 50,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10),
+                  child: CustomScrollView(
                     shrinkWrap: true,
-                    itemCount: flitterType.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selected = index;
+                    slivers: [
+                      SliverDynamicHeightGridView(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        // shrinkWrap: true,
+                        itemCount: flitterType.length,
 
-                              if(flitterType[index] == 'recommended') {
-                                stars = 'stars';
-                                type = 'Name';
-                                did = '';
-                              }else if(flitterType[index] == 'New arrival') {
-                                stars = 'Name';
-                                type = 'Name';
-                                did = '';
-                              }else if(flitterType[index] == 'Pick up order') {
-                                type = 'Name';
-                                stars = 'Name';
-                                did = '7cc577e9-7d5c-4a12-0149-08dafd69d37b';
-                              }else if(flitterType[index] == 'Price') {
-                                search = '';
-                                type = null;
-                                did = '';
-                              }else if(flitterType[index] == 'Deliver to car window') {
-                                type = 'Name';
-                                stars = 'Name';
-                                did = 'bbcb7d68-8dc4-46ae-014a-08dafd69d37b';
-                              }else if(flitterType[index] == 'Fast Delivery') {
-                                type = 'Name';
-                                stars = 'Name';
-                                did = 'bc4f3b43-df7b-48ca-014c-08dafd69d37b';
-                              }else if(flitterType[index] == 'Free delivery') {
-                                type = flitterType[index];
-                              }
-                              print(selected);
-                            });
-                          },
-                          child: selected == index
-                              ? containerFilterSelected(flitterType[index])
-                              : containerFilter(flitterType[index]));
-                    },
+                        builder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selected = index;
+
+                                  if (flitterType[index] == 'recommended') {
+                                    stars = 'stars';
+                                    type = 'Name';
+                                    did = '';
+                                  } else if (flitterType[index] == 'New arrival') {
+                                    stars = 'Name';
+                                    type = 'Name';
+                                    did = '';
+                                  } else if (flitterType[index] ==
+                                      'Pick up order') {
+                                    type = 'Name';
+                                    stars = 'Name';
+                                    did = '7cc577e9-7d5c-4a12-0149-08dafd69d37b';
+                                  } else if (flitterType[index] == 'Price') {
+                                    search = '';
+                                    type = null;
+                                    did = '';
+                                  } else if (flitterType[index] ==
+                                      'Deliver to car window') {
+                                    type = 'Name';
+                                    stars = 'Name';
+                                    did = 'bbcb7d68-8dc4-46ae-014a-08dafd69d37b';
+                                  } else if (flitterType[index] ==
+                                      'Fast Delivery') {
+                                    type = 'Name';
+                                    stars = 'Name';
+                                    did = 'bc4f3b43-df7b-48ca-014c-08dafd69d37b';
+                                  } else if (flitterType[index] ==
+                                      'Free delivery') {
+                                    type = flitterType[index];
+                                  }
+                                  print(selected);
+                                });
+                              },
+                              child: selected == index
+                                  ? containerFilterSelected(flitterType[index])
+                                  : containerFilter(flitterType[index]));
+                        },
+                      )
+                    ],
                   )),
               // Row(
               //   children: [
@@ -261,16 +271,18 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
               //   ],
               // ),
 
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.range,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.black,
+              Container(
+                child: Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.range,
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 5.h,
@@ -318,11 +330,15 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FilterScreen(
-                            did: did,
+                              did: did,
                               search: search,
                               stars: stars,
-                              minPrice:_minPriceController.text.isEmpty ? 0 :  num.parse(_minPriceController.text),
-                              maxPrice:_maxPriceController.text.isEmpty ? 1000 : num.parse(_maxPriceController.text),
+                              minPrice: _minPriceController.text.isEmpty
+                                  ? 0
+                                  : num.parse(_minPriceController.text),
+                              maxPrice: _maxPriceController.text.isEmpty
+                                  ? 1000
+                                  : num.parse(_maxPriceController.text),
                               filterBy: type),
                         ));
                       },
@@ -393,9 +409,15 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
           border: Border.all(color: ColorManager.primaryDark)),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Text(filterType,
-            style: TextStyle(
-                color: ColorManager.primaryDark, fontWeight: FontWeight.bold)),
+        child: Flexible(
+          child: Center(
+            child: Text(filterType,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                    color: ColorManager.primaryDark,
+                    fontWeight: FontWeight.bold)),
+          ),
+        ),
       ),
     );
   }
@@ -408,9 +430,13 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
           border: Border.all(color: ColorManager.primaryDark)),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Text(filterType,
-            style: TextStyle(
-                color: ColorManager.white, fontWeight: FontWeight.bold)),
+        child: Flexible(
+          child: Center(
+            child: Text(filterType,
+                style: TextStyle(
+                    color: ColorManager.white, fontWeight: FontWeight.bold)),
+          ),
+        ),
       ),
     );
   }

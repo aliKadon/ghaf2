@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/screens/cart_view/cart_view_getx_controller.dart';
@@ -53,6 +54,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
     );
     super.initState();
   }
+
+  var language = SharedPrefController().lang1;
 
   // dispose.
   @override
@@ -112,10 +115,14 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12),
-                            child: Image.asset(
-                              IconsAssets.arrow,
-                              height: MediaQuery.of(context).size.height * 0.03,
-                              width: MediaQuery.of(context).size.width * 0.03,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.038,
+                              width: MediaQuery.of(context).size.width * 0.08,
+                              child: Image.asset(
+                                IconsAssets.arrow,
+                                height: AppSize.s18,
+                                width: AppSize.s10,
+                              ),
                             ),
                           ),
                         ),
@@ -153,7 +160,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                           Positioned(
                             left: 0,
                             right: 0,
-                            top: 300,
+                            top: AppSize.s300,
                             // bottom: -10,
                             child: Container(
                               padding: EdgeInsets.all(20),
@@ -180,8 +187,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                                     .size
                                                     .width *
                                                 0.7,
-                                            child: Text(
-                                              productById["name"],
+                                            child: Text( language == 'en' ?
+                                              productById["name"] : productById["nameAr"] ?? productById["name"],
                                               overflow: TextOverflow.clip,
                                               style: getSemiBoldStyle(
                                                 color: ColorManager.primaryDark,
@@ -240,8 +247,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                             MediaQuery.of(context).size.height *
                                                 0.02,
                                       ),
-                                      Text(
-                                        productById["description"],
+                                      Text(language == 'en' ?
+                                        productById["description"] : productById["description"],
                                         style: getSemiBoldStyle(
                                           color: ColorManager.black,
                                           fontSize: FontSize.s14,
@@ -258,65 +265,65 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                               ),
                             ),
                           ),
-                          Positioned(
-                            left: 20,
-                            top: 20,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              child: Container(
-                                height: AppSize.s46,
-                                width: AppSize.s110,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.timer,
-                                        color: ColorManager.primaryDark),
-                                    SizedBox(
-                                      width: AppSize.s26,
-                                    ),
-                                    Text(productById["timeToPrepareMinutes"]
-                                            .toString() ??
-                                        '20 - 40 min')
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          PositionedDirectional(
-                            bottom: 390,
-                            end: 30,
-                            child: Container(
-                              height: AppSize.s30,
-                              width: AppSize.s130,
-                              decoration: BoxDecoration(
-                                color: ColorManager.primaryDark,
-                                borderRadius:
-                                    BorderRadius.circular(AppRadius.r4),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorManager.primaryDark,
-                                    spreadRadius: 2,
-                                    blurRadius: AppSize.s20,
-                                    offset: Offset(AppSize.s2,
-                                        AppSize.s2), // Shadow position
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '${AppLocalizations.of(context)!.aed} ${(productById["branch"]["storeDeliveryCost"] ?? 0)} deliver',
-                                    style: getRegularStyle(
-                                      color: ColorManager.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Positioned(
+                          //   left: 20,
+                          //   top: 20,
+                          //   child: Padding(
+                          //     padding: EdgeInsets.symmetric(horizontal: 12),
+                          //     child: Container(
+                          //       height: AppSize.s46,
+                          //       width: AppSize.s110,
+                          //       decoration: BoxDecoration(
+                          //           color: Colors.white,
+                          //           borderRadius: BorderRadius.circular(10)),
+                          //       child: Row(
+                          //         children: [
+                          //           Icon(Icons.timer,
+                          //               color: ColorManager.primaryDark),
+                          //           SizedBox(
+                          //             width: AppSize.s26,
+                          //           ),
+                          //           Text(productById["timeToPrepareMinutes"]
+                          //                   .toString() ??
+                          //               '20 - 40 min')
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // PositionedDirectional(
+                          //   bottom: 390,
+                          //   end: 30,
+                          //   child: Container(
+                          //     height: AppSize.s30,
+                          //     width: AppSize.s130,
+                          //     decoration: BoxDecoration(
+                          //       color: ColorManager.primaryDark,
+                          //       borderRadius:
+                          //           BorderRadius.circular(AppRadius.r4),
+                          //       boxShadow: [
+                          //         BoxShadow(
+                          //           color: ColorManager.primaryDark,
+                          //           spreadRadius: 2,
+                          //           blurRadius: AppSize.s20,
+                          //           offset: Offset(AppSize.s2,
+                          //               AppSize.s2), // Shadow position
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         Text(
+                          //           '${AppLocalizations.of(context)!.aed} ${(productById["branch"]["storeDeliveryCost"] ?? 0)} deliver',
+                          //           style: getRegularStyle(
+                          //             color: ColorManager.white,
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                           Positioned(
                               left: 0,
                               right: 0,

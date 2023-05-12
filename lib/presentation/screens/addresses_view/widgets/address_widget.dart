@@ -15,6 +15,7 @@ class AddressWidget extends StatelessWidget {
   final void Function()? onEditFinished;
   final void Function({
     required String addressId,
+  required BuildContext context,
   })? onDeleteTapped;
 
   const AddressWidget({
@@ -156,7 +157,7 @@ class AddressWidget extends StatelessWidget {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    onDeleteTapped!(addressId: address.id!);
+                    onDeleteTapped!(addressId: address.id!,context: context);
                   },
                   child: Container(
                     padding:

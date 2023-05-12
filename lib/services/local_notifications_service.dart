@@ -1,8 +1,16 @@
+import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/services/firebase_messaging_service.dart';
 
 class LocalNotificationsService {
   static LocalNotificationsService? _instance;
   FlutterLocalNotificationsPlugin? _flutterLocalNotificationsPlugin;
+  late FirebaseMessagingService _firebaseMessagingService;
   int _id = 0;
 
   // ||.. private constructor ..||
@@ -24,7 +32,7 @@ class LocalNotificationsService {
   // local notifications init.
   Future<void> _initLocalNotifications() async {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('logo2');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = DarwinInitializationSettings(
         onDidReceiveLocalNotification: _onDidReceiveLocalNotification);
     var initializationSettings = InitializationSettings(
@@ -64,9 +72,15 @@ class LocalNotificationsService {
 
   // on notification tapped.
   Future onNotificationTapped(String? payload) async {
-    // debugPrint('starting [onNotificationTapped][LocalNotificationsService]...');
-    // debugPrint('payload : $payload');
-    // if (payload == null) return;
+    debugPrint('starting [onNotificationTapped][LocalNotificationsService]...');
+    debugPrint('payload : $payload');
+    if (payload == null) return;
+    if (payload != null) {
+      print('=========================Done navigat from the app');
+      print(payload);
+      Get.toNamed('/${payload}');
+    }
+
     // RemoteMessage message = RemoteMessage.fromMap(jsonDecode(payload));
     // int? chatRoomId = int.tryParse(message.data['chat_room_id'] ?? '');
     // int? receiverId = int.tryParse(message.data['send_to'] ?? '');
@@ -109,6 +123,7 @@ class LocalNotificationsService {
           'ghaf',
 
           enableVibration: true,
+          icon: 'logo2',
           importance: Importance.high,
           priority: Priority.high,
         ),

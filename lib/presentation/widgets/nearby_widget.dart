@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -8,6 +7,7 @@ import '../../app/preferences/shared_pref_controller.dart';
 import '../../domain/model/address.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/checkout/check_out_getx_controller.dart';
 import '../screens/store_view/store_view.dart';
@@ -20,49 +20,58 @@ class NearByWidget extends StatefulWidget {
   final Address address;
   final String details;
   final bool is24;
+  String? addressLong;
+  String? addressLat;
 
-  NearByWidget(
-      {required this.index,
-      required this.imageUrl,
-      required this.details,
-      required this.is24,
-      required this.storeName,
-      required this.address,
-      required this.branchId});
+  NearByWidget({
+    required this.index,
+    required this.imageUrl,
+    required this.details,
+    required this.is24,
+    required this.storeName,
+    required this.address,
+    required this.branchId,
+    required this.addressLat,
+    required this.addressLong,
+  });
 
   @override
   State<NearByWidget> createState() => _NearByWidgetState();
 }
 
 class _NearByWidgetState extends State<NearByWidget> {
-
   //controller
   late final CheckOutGetxController _checkOutGetxController =
       Get.put(CheckOutGetxController());
 
-  var dur= "0";
+  var dur = "0";
 
   @override
   void initState() {
     // TODO: implement initState
     _checkOutGetxController
-          .getDurationGoogleMap(
-              LatOne: SharedPrefController().locationLat,
-              LonOne: SharedPrefController().locationLong,
-              LatTow: double.parse((widget.address.altitude!)),
-              LonTow: double.parse((widget.address.longitude!))).then((value) => dur = _checkOutGetxController.duration);
+        .getDurationGoogleMap(
+            LatOne: widget.addressLat == null || widget.addressLat!.isEmpty
+                ? SharedPrefController().locationLat
+                : double.parse((widget.addressLat!)),
+            LonOne: widget.addressLong == null || widget.addressLong!.isEmpty
+                ? SharedPrefController().locationLong
+                : double.parse((widget.addressLong!)),
+            LatTow: double.parse((widget.address.altitude!)),
+            LonTow: double.parse((widget.address.longitude!)))
+        .then((value) => dur = _checkOutGetxController.duration);
     super.initState();
   }
+
   // late var dur = _checkOutGetxController.duration;
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) =>
-              StoreView(branchId: widget.branchId,is24: widget.is24),
+              StoreView(branchId: widget.branchId, is24: widget.is24),
         ));
       },
       child: Padding(
@@ -73,8 +82,7 @@ class _NearByWidgetState extends State<NearByWidget> {
           children: [
             Row(
               children: [
-                widget.imageUrl ==
-                            ''
+                widget.imageUrl == ''
                     ? Container(
                         height: MediaQuery.of(context).size.height * 0.11,
                         width: MediaQuery.of(context).size.width * 0.27,
@@ -93,7 +101,7 @@ class _NearByWidgetState extends State<NearByWidget> {
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                             image: NetworkImage(widget.imageUrl),
-                            fit: BoxFit.scaleDown,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -105,38 +113,47 @@ class _NearByWidgetState extends State<NearByWidget> {
             SizedBox(
               height: 8,
             ),
-            Text(widget.storeName,
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: ColorManager.primaryDark)),
+            Container(
+              width: AppSize.s154,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(widget.storeName,
+                      style: TextStyle(
+                          fontSize: FontSize.s12,
+                          fontWeight: FontWeight.w400,
+                          color: ColorManager.primaryDark)),
+                  Text(widget.details,
+                      style: TextStyle(
+                          fontSize: FontSize.s12,
+                          fontWeight: FontWeight.w400,
+                          color: ColorManager.greyLight)),
+                  Row(
+                    children: [
+                      Image.asset(
+                        IconsAssets.timer,
+                        height: AppSize.s20,
+                        width: AppSize.s20,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      GetBuilder<CheckOutGetxController>(
+                        builder: (controller) => Text('${dur}',
+                            style: TextStyle(
+                                fontSize: FontSize.s12,
+                                fontWeight: FontWeight.w500,
+                                color: ColorManager.primaryDark)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             // SizedBox(
             //   height: 8,
             // ),
-            Text(widget.details,
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: ColorManager.greyLight)),
-            Row(
-              children: [
-                Image.asset(
-                  IconsAssets.timer,
-                  height: AppSize.s20,
-                  width: AppSize.s20,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                GetBuilder<CheckOutGetxController>(
-                  builder: (controller) => Text('${dur}',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: ColorManager.primaryDark)),
-                ),
-              ],
-            ),
           ],
         ),
       ),

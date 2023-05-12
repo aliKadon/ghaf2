@@ -111,11 +111,14 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
-                        color: ColorManager.primaryDark,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                   ),

@@ -102,7 +102,9 @@ class Product extends GetxController with Helpers {
       this.isInCart,
       this.category,
       this.canPayLater,
-      this.storeStars});
+      this.storeStars,
+      this.nameAr,
+      this.storeReviewCount,});
 
   String? id;
   String? name;
@@ -134,7 +136,8 @@ class Product extends GetxController with Helpers {
   String? redeemDescription;
   num? stars;
   List<dynamic>? productImages;
-
+  num? storeReviewCount;
+  String? nameAr;
   bool? isFavorite;
   bool? isInCart;
   Category? category;
@@ -143,6 +146,8 @@ class Product extends GetxController with Helpers {
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         name: json["name"],
+        nameAr: json['nameAr'],
+        storeReviewCount: json['storeReviewCount'],
         canPayLater: json["canPayLater"],
         description: json["description"],
         characteristics: json["characteristics"],
@@ -214,6 +219,8 @@ class Product extends GetxController with Helpers {
         "isFavourite": isFavorite,
         "isInCart": isInCart,
         "category": category?.toJson(),
+    "nameAr" : nameAr,
+    "storeReviewCount" : storeReviewCount,
       };
 
   // toggle favorite request.

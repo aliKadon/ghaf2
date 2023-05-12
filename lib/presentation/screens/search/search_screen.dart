@@ -56,15 +56,19 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                           builder: (context) => MainView(),
                         ));
                       },
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                     Spacer(),
                     Container(
-                      height: 50,
+                      height: AppSize.s50,
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: TextField(
                         textInputAction: TextInputAction.search,
@@ -265,7 +269,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 13),
+                                                fontSize: FontSize.s12),
                                           ),
                                         )
                                       ],
@@ -290,21 +294,21 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                   builder: (controller) => GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        mainAxisExtent: 350,
+                        mainAxisExtent: AppSize.s311,
                         crossAxisSpacing: 0),
                     itemCount: controller.products.length,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Builder(builder: (context) {
-                          Get.put<Product>(
-                            _homeViewGetXController.products[index],
-                            tag:
-                                '${_homeViewGetXController.products[index].id}',
-                          );
-                          return ProductItemNew(
+                      return Builder(builder: (context) {
+                        Get.put<Product>(
+                          _homeViewGetXController.products[index],
+                          tag:
+                              '${_homeViewGetXController.products[index].id}',
+                        );
+                        return Container(
+                          width: AppSize.s206,
+                          child: ProductItemNew(
                               tag:
                                   '${_homeViewGetXController.products[index].id}',
                               image: controller.products[index].productImages
@@ -320,9 +324,9 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                               idProduct: controller.products[index].id!,
                               isFavorite:
                                   controller.products[index].isFavorite!,
-                              index: index);
-                        }),
-                      );
+                              index: index),
+                        );
+                      });
                     },
                   ),
                 )

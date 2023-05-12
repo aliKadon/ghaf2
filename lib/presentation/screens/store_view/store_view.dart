@@ -15,7 +15,6 @@ import 'package:ghaf_application/presentation/widgets/widget_in_store_screen_wid
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/values_manager.dart';
-import '../checkout/check_out_getx_controller.dart';
 
 class StoreView extends StatefulWidget {
   final String branchId;
@@ -23,7 +22,11 @@ class StoreView extends StatefulWidget {
   String? orderId;
   final bool is24;
 
-  StoreView({required this.branchId, this.isFromCheckout, this.orderId,required this.is24});
+  StoreView(
+      {required this.branchId,
+      this.isFromCheckout,
+      this.orderId,
+      required this.is24});
 
   @override
   State<StoreView> createState() => _StoreViewState();
@@ -35,7 +38,6 @@ class _StoreViewState extends State<StoreView> {
       Get.put(CategoriesGetxController());
   late final HomeViewGetXController _homeViewGetXController =
       Get.put(HomeViewGetXController());
-
 
   var selected = 0;
 
@@ -111,30 +113,55 @@ class _StoreViewState extends State<StoreView> {
                                   ),
                                 ),
                               ),
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.18,
-                                width: MediaQuery.of(context).size.width * 1,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          ImageAssets.imageStoreView),
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
+                              child: _categoriesGetxController
+                                              .branchById?.storeLogoImage ==
+                                          null ||
+                                      _categoriesGetxController
+                                          .branchById!.storeLogoImage!.isEmpty
+                                  ? Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.18,
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                ImageAssets.imageStoreView),
+                                            fit: BoxFit.cover),
+                                      ),
+                                    )
+                                  : Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.18,
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                _categoriesGetxController
+                                                    .branchById!
+                                                    .storeCoverImage!),
+                                            fit: BoxFit.scaleDown),
+                                      ),
+                                    ),
                             ),
                             PositionedDirectional(
                               bottom: AppSize.s92,
                               start: 0,
                               end: 0,
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     width: AppSize.s50,
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
                                         builder: (context) => MainView(),
                                       ));
                                       // if(widget.isFromCheckout != null && widget.isFromCheckout!) {
@@ -143,22 +170,29 @@ class _StoreViewState extends State<StoreView> {
                                       //   Navigator.pop(context);
                                       // }
                                     },
-                                    child: Image.asset(
-                                      IconsAssets.arrow,
-                                      height: AppSize.s18,
-                                      width: AppSize.s10,
-                                      color: Colors.white,
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.038,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.08,
+                                      child: Image.asset(
+                                        IconsAssets.arrow,
+                                        height: AppSize.s18,
+                                        width: AppSize.s10,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
-                                    width: AppSize.s92,
+                                    width: AppSize.s184,
                                   ),
                                   RatingBar.builder(
                                     initialRating: (_categoriesGetxController
                                             .branchById!.storeStars!)
                                         .toDouble(),
                                     minRating: 1,
-                                    itemSize: 20,
+                                    itemSize: AppSize.s15,
                                     updateOnDrag: true,
                                     allowHalfRating: true,
                                     ignoreGestures: false,
@@ -178,7 +212,9 @@ class _StoreViewState extends State<StoreView> {
                                   ),
                                   Text(
                                       '${_categoriesGetxController.branchById!.reviewCount}',
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: FontSize.s16)),
                                   Spacer(),
                                 ],
                               ),
@@ -216,7 +252,7 @@ class _StoreViewState extends State<StoreView> {
                         ),
                       ),
                       Text(
-                        '${_categoriesGetxController.branchById!.branchName}',
+                        '${_categoriesGetxController.branchById!.storeName}',
                         style: TextStyle(
                             color: ColorManager.primaryDark,
                             fontSize: FontSize.s20,
@@ -227,84 +263,107 @@ class _StoreViewState extends State<StoreView> {
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       Container(
-                        height: AppSize.s84,
-                        padding: EdgeInsets.all(8),
+                        height: AppSize.s125,
+                        width: MediaQuery.of(context).size.width * 1,
+                        padding: EdgeInsets.all(14),
                         child: Row(
                           children: [
                             _categoriesGetxController
                                         .branchById!.storeDeliveryCost ==
                                     null
                                 ? Container()
-                                : ListView.builder(
-                                    itemCount: _categoriesGetxController
-                                        .branchById!.storeDeliveryCost!.length,
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        children: [
-                                          _categoriesGetxController
-                                                  .branchById!
-                                                  .storeDeliveryCost![index]
-                                                  .methodImage!
-                                                  .isEmpty
-                                              ? Image.asset(
-                                                  ImageAssets.carDelivery,
-                                                  height: AppSize.s20,
-                                                  width: AppSize.s20,
-                                                )
-                                              : Image.network(
-                                                  _categoriesGetxController
-                                                      .branchById!
-                                                      .storeDeliveryCost![index]
-                                                      .methodImage!,
-                                                  height: AppSize.s20,
-                                                  width: AppSize.s20,
-                                                ),
-                                          SizedBox(width: AppSize.s4,)
-                                        ],
-                                      );
-                                    },
+                                : Expanded(
+                                    child: ListView.builder(
+                                      itemCount: _categoriesGetxController
+                                          .branchById!
+                                          .storeDeliveryCost!
+                                          .length,
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return Row(
+                                          children: [
+                                            _categoriesGetxController
+                                                    .branchById!
+                                                    .storeDeliveryCost![index]
+                                                    .methodImage!
+                                                    .isEmpty
+                                                ? Image.asset(
+                                                    ImageAssets.carDelivery,
+                                                    height: AppSize.s20,
+                                                    width: AppSize.s20,
+                                                  )
+                                                : Image.network(
+                                                    _categoriesGetxController
+                                                        .branchById!
+                                                        .storeDeliveryCost![
+                                                            index]
+                                                        .methodImage!,
+                                                    height: AppSize.s20,
+                                                    width: AppSize.s20,
+                                                  ),
+                                            SizedBox(
+                                              width: AppSize.s4,
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    ),
                                   ),
                             VerticalDivider(
                               thickness: 1,
                               color: ColorManager.grey,
                             ),
-                            Column(
-                              children: [
-                                SizedBox(height: AppSize.s10),
-                                Text(
-                                  AppLocalizations.of(context)!.open_close_time,
-                                  style: TextStyle(color: ColorManager.primary),
-                                ),
-                                SizedBox(height: AppSize.s10),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.access_time,
-                                      color: ColorManager.primary,
-                                    ),
-                                    Text(
-                                        widget.is24 ? AppLocalizations.of(context)!.open_24_hours : '${_categoriesGetxController.branchById!.todayWorkHoursToString}'),
-                                  ],
-                                ),
-                              ],
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SizedBox(height: AppSize.s10),
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .open_close_time,
+                                    style: TextStyle(
+                                        color: ColorManager.primary,
+                                        fontSize: FontSize.s12),
+                                  ),
+                                  SizedBox(height: AppSize.s10),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.access_time,
+                                        color: ColorManager.primary,
+                                      ),
+                                      Container(
+                                        width: AppSize.s60,
+                                        child: Text(
+                                            overflow: TextOverflow.clip,
+                                            widget.is24
+                                                ? AppLocalizations.of(context)!
+                                                    .open_24_hours
+                                                : '${_categoriesGetxController.branchById!.todayWorkHoursToString}'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             VerticalDivider(
                               thickness: 1,
                               color: ColorManager.grey,
                             ),
-                            Column(
-                              children: [
-                                SizedBox(height: AppSize.s10),
-                                Text(
-                                  AppLocalizations.of(context)!.minimum_order,
-                                  style: TextStyle(color: ColorManager.primary),
-                                ),
-                                SizedBox(height: AppSize.s10),
-                                Text(
-                                    '${AppLocalizations.of(context)!.aed} ${_categoriesGetxController.branchById!.minOrder} '),
-                              ],
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SizedBox(height: AppSize.s10),
+                                  Text(
+                                    AppLocalizations.of(context)!.minimum_order,
+                                    style:
+                                        TextStyle(color: ColorManager.primary),
+                                  ),
+                                  SizedBox(height: AppSize.s10),
+                                  Text(
+                                      '${AppLocalizations.of(context)!.aed} ${_categoriesGetxController.branchById!.minOrder == null ? 0 : _categoriesGetxController.branchById!.minOrder} '),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -327,7 +386,8 @@ class _StoreViewState extends State<StoreView> {
                               padding:
                                   const EdgeInsets.only(left: 8.0, right: 8.0),
                               child: WidgetInStoreScreenWidget(
-                                is24: _categoriesGetxController.branchById!.is24Hours!,
+                                is24: _categoriesGetxController
+                                    .branchById!.is24Hours!,
                                 imageUrl: imageOfType[index],
                                 text: typeOfList[index],
                                 bid: _categoriesGetxController.branchById!.id!,
@@ -385,32 +445,35 @@ class _StoreViewState extends State<StoreView> {
                                         tag:
                                             '${controller.recommendedProduct[index].id}recommend',
                                       );
-                                      return ProductItemNew(
-                                          isFromCheckOut: widget.isFromCheckout,
-                                          orderId: widget.orderId,
-                                          tag:
-                                              '${controller.recommendedProduct[index].id}recommend',
-                                          image: controller
-                                                      .recommendedProduct[index]
-                                                      .productImages
-                                                      ?.length ==
-                                                  0
-                                              ? ''
-                                              : controller
-                                                  .recommendedProduct[index]
-                                                  .productImages![0],
-                                          name: controller
-                                              .recommendedProduct[index].name!,
-                                          stars: controller
-                                              .recommendedProduct[index].stars!,
-                                          index: index,
-                                          price: controller
-                                              .recommendedProduct[index].price!,
-                                          isFavorite: controller
-                                              .recommendedProduct[index]
-                                              .isFavorite!,
-                                          idProduct: controller
-                                              .recommendedProduct[index].id!);
+                                      return Container(
+                                        width: AppSize.s206,
+                                        child: ProductItemNew(
+                                            isFromCheckOut: widget.isFromCheckout,
+                                            orderId: widget.orderId,
+                                            tag:
+                                                '${controller.recommendedProduct[index].id}recommend',
+                                            image: controller
+                                                        .recommendedProduct[index]
+                                                        .productImages
+                                                        ?.length ==
+                                                    0
+                                                ? ''
+                                                : controller
+                                                    .recommendedProduct[index]
+                                                    .productImages![0],
+                                            name: controller
+                                                .recommendedProduct[index].name!,
+                                            stars: controller
+                                                .recommendedProduct[index].stars!,
+                                            index: index,
+                                            price: controller
+                                                .recommendedProduct[index].price!,
+                                            isFavorite: controller
+                                                .recommendedProduct[index]
+                                                .isFavorite!,
+                                            idProduct: controller
+                                                .recommendedProduct[index].id!),
+                                      );
                                     });
                                   },
                                 ),
@@ -433,7 +496,7 @@ class _StoreViewState extends State<StoreView> {
                                       fontSize: FontSize.s16)),
                             )
                           : Container(
-                              height: AppSize.s50,
+                              height: AppSize.s77,
                               padding: const EdgeInsets.all(8.0),
                               child: GetBuilder<HomeViewGetXController>(
                                   builder: (controller) {
@@ -530,28 +593,31 @@ class _StoreViewState extends State<StoreView> {
                                         tag:
                                             '${_homeViewGetXController.productByType[index].id}storeView',
                                       );
-                                      return ProductItemNew(
-                                          isFromCheckOut: widget.isFromCheckout,
-                                          orderId: widget.orderId,
-                                          tag:
-                                              '${_homeViewGetXController.productByType[index].id}storeView',
-                                          image: controller.productByType[index]
-                                                      .productImages?.length ==
-                                                  0
-                                              ? ''
-                                              : controller.productByType[index]
-                                                  .productImages?[0],
-                                          name: controller
-                                              .productByType[index].name!,
-                                          stars: controller
-                                              .productByType[index].stars!,
-                                          price: controller
-                                              .productByType[index].price!,
-                                          index: index,
-                                          isFavorite: controller
-                                              .productByType[index].isFavorite!,
-                                          idProduct: controller
-                                              .productByType[index].id!);
+                                      return Container(
+                                        width: AppSize.s206,
+                                        child: ProductItemNew(
+                                            isFromCheckOut: widget.isFromCheckout,
+                                            orderId: widget.orderId,
+                                            tag:
+                                                '${_homeViewGetXController.productByType[index].id}storeView',
+                                            image: controller.productByType[index]
+                                                        .productImages?.length ==
+                                                    0
+                                                ? ''
+                                                : controller.productByType[index]
+                                                    .productImages?[0],
+                                            name: controller
+                                                .productByType[index].name!,
+                                            stars: controller
+                                                .productByType[index].stars!,
+                                            price: controller
+                                                .productByType[index].price!,
+                                            index: index,
+                                            isFavorite: controller
+                                                .productByType[index].isFavorite!,
+                                            idProduct: controller
+                                                .productByType[index].id!),
+                                      );
                                     });
                                   },
                                 ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ghaf_application/presentation/resources/font_manager.dart';
+import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_product_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -82,38 +84,54 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
                     ],
                   ),
                   SizedBox(
-                    width: 14,
+                    width: AppSize.s14,
                   )
                 ],
               ),
-              Text(widget.name,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: ColorManager.primaryDark)),
-              Row(
-                children: [
-                  Text('${widget.price} ${AppLocalizations.of(context)!.aed}',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.primaryDark)),
-                  SizedBox(
-                    width: 28,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text('${widget.stars}.0',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: ColorManager.primaryDark)),
-                ],
+              Container(
+                // color: Colors.red,
+                width: AppSize.s222,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(widget.name,
+                        style: TextStyle(
+                            fontSize: FontSize.s16,
+                            fontWeight: FontWeight.bold,
+                            color: ColorManager.primaryDark)),
+                  ],
+                ),
+              ),
+              Container(
+                // color: Colors.green,
+                width: AppSize.s222,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('${widget.price} ${AppLocalizations.of(context)!.aed}',
+                        style: TextStyle(
+                            fontSize: FontSize.s14,
+                            fontWeight: FontWeight.bold,
+                            color: ColorManager.primaryDark)),
+                    SizedBox(
+                      width: AppSize.s28,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: AppSize.s8,
+                    ),
+                    Text('${widget.stars}.0',
+                        style: TextStyle(
+                            fontSize: FontSize.s14,
+                            fontWeight: FontWeight.w500,
+                            color: ColorManager.primaryDark)),
+                  ],
+                ),
               ),
             ],
           )),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/addresses_api_controller.dart';
 import 'package:ghaf_application/domain/model/address.dart';
@@ -47,8 +48,13 @@ class AddressesViewGetXController extends GetxController with Helpers {
       isAddressesLoading = false;
     } catch (error) {
       // error.
-      debugPrint('error : ${error.toString()}');
-      showSnackBar(context, message: error.toString(), error: true);
+      if (AppSharedData.currentUser == null) {
+        isAddressesLoading = false;
+      }else if (AppSharedData.currentUser != null){
+        debugPrint('error : ${error.toString()}');
+        showSnackBar(context, message: error.toString(), error: true);
+        isAddressesLoading = false;
+      }
     }
   }
 
@@ -60,6 +66,7 @@ class AddressesViewGetXController extends GetxController with Helpers {
   // on delete tapped.
   void onDeleteTapped({
     required String addressId,
+    required BuildContext context,
   }) async {
     try {
       showLoadingDialog(context: context, title: 'Deleting Address');

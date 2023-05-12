@@ -63,10 +63,14 @@ class _PasswordSettingState extends State<PasswordSetting> {
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                   Spacer(),

@@ -46,7 +46,7 @@ class _AccountViewState extends State<AccountView> {
   late final AccountViewGetXController _accountViewGetXController =
       Get.put(AccountViewGetXController());
   late final HomeViewGetXController _homeViewGetXController =
-  Get.put(HomeViewGetXController());
+      Get.put(HomeViewGetXController());
 
   var subscribe = '';
 
@@ -124,8 +124,8 @@ class _AccountViewState extends State<AccountView> {
                               ),
                             ),
                             Positioned(
-                              left: AppSize.s210,
-                              top: AppSize.s24,
+                              left: MediaQuery.of(context).size.width * 0.6,
+                              top: MediaQuery.of(context).size.width * 0.09,
                               child: ClipOval(
                                 // borderRadius: BorderRadius.circular(AppRadius.r14),
                                 child: Image.asset(
@@ -152,7 +152,8 @@ class _AccountViewState extends State<AccountView> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: AppSize.s10,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03,
                                   ),
                                   Row(
                                     children: [
@@ -165,7 +166,9 @@ class _AccountViewState extends State<AccountView> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: AppSize.s10,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.03,
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -206,8 +209,8 @@ class _AccountViewState extends State<AccountView> {
                               ),
                             ),
                             Positioned(
-                              right: AppSize.s210,
-                              top: AppSize.s24,
+                              right: MediaQuery.of(context).size.width * 0.6,
+                              top: MediaQuery.of(context).size.width * 0.09,
                               child: ClipOval(
                                 // borderRadius: BorderRadius.circular(AppRadius.r14),
                                 child: Image.asset(
@@ -224,7 +227,8 @@ class _AccountViewState extends State<AccountView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    height: AppSize.s20,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03,
                                   ),
                                   Text(
                                     '${AppSharedData.currentUser?.firstName ?? AppLocalizations.of(context)!.hello_welcome} ${AppSharedData.currentUser?.lastName ?? ''}',
@@ -234,7 +238,8 @@ class _AccountViewState extends State<AccountView> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: AppSize.s10,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03,
                                   ),
                                   Row(
                                     children: [
@@ -247,7 +252,9 @@ class _AccountViewState extends State<AccountView> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: AppSize.s10,
+                                        width:
+                                            MediaQuery.of(context).size.height *
+                                                0.01,
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -273,7 +280,7 @@ class _AccountViewState extends State<AccountView> {
                         ),
                 ),
                 SizedBox(
-                  height: AppSize.s28,
+                  height: MediaQuery.of(context).size.height * 0.028,
                 ),
                 AppSharedData.currentUser == null
                     ? Container()
@@ -470,21 +477,23 @@ class _AccountViewState extends State<AccountView> {
                   ),
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          // info@ghafgate.com
-                          //send from email
-                          // _contactEmail();
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => GetHelpScreen(),
-                          ));
-                        },
-                        child: accountWidget(
-                          context,
-                          IconsAssets.help,
-                          AppLocalizations.of(context)!.get_help,
-                        ),
-                      ),
+                      AppSharedData.currentUser == null
+                          ? Container()
+                          : GestureDetector(
+                              onTap: () {
+                                // info@ghafgate.com
+                                //send from email
+                                // _contactEmail();
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => GetHelpScreen(),
+                                ));
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.help,
+                                AppLocalizations.of(context)!.get_help,
+                              ),
+                            ),
                       // GestureDetector(
                       //   onTap: () {
                       //     // Navigator.pushNamed(context, Routes.rateUs);
@@ -536,19 +545,21 @@ class _AccountViewState extends State<AccountView> {
                             IconsAssets.share,
                             AppLocalizations.of(context)!.invite_friend,
                           )),
-                      _homeViewGetXController.regStatus!.status! ? GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (builder) => SellWithUsScreen()),
-                            );
-                          },
-                          child: accountWidget(
-                            context,
-                            IconsAssets.sell,
-                            AppLocalizations.of(context)!.sell_with_us,
-                          )) : Container(),
+                      _homeViewGetXController.regStatus!.status!
+                          ? GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => SellWithUsScreen()),
+                                );
+                              },
+                              child: accountWidget(
+                                context,
+                                IconsAssets.sell,
+                                AppLocalizations.of(context)!.sell_with_us,
+                              ))
+                          : Container(),
                       // GestureDetector(
                       //     onTap: () {
                       //       // Navigator.push(

@@ -87,12 +87,26 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Image.asset(
-                      // base64Decode(category.categoryImage ?? ''),
-                      imageUrl,
-                      width: AppSize.s40,
-                      height: AppSize.s36,
-                      fit: BoxFit.fill,
+                    text == 'On sale' ? Container(
+                      width:AppSize.s50,
+                      height: AppSize.s38,
+                      child: Image.asset(
+                        // base64Decode(category.categoryImage ?? ''),
+                        imageUrl,
+                        // width: AppSize.s40,
+                        // height: AppSize.s36,
+                        fit: BoxFit.fill,
+                      ),
+                    ) : Container(
+                      width:AppSize.s34,
+                      height: AppSize.s40,
+                      child: Image.asset(
+                        // base64Decode(category.categoryImage ?? ''),
+                        imageUrl,
+                        // width: AppSize.s40,
+                        // height: AppSize.s36,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     SizedBox(
                       height: AppSize.s12,

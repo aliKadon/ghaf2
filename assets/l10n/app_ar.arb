@@ -16,6 +16,8 @@
   "select_one_item" : "من فضلك اختر منتج واحد لكل رابط!!",
   "expired_month" : "شهر انتهاء الصلاحية",
   "expired_year" : "سنة انتهاء الصلاحية",
+  "redeem_for" : "استبدالها ب",
+  "points_to_redeem_this_offer" : "لاسترداد هذا العرض",
   "amount" : "الكمية",
   "no_payment_method" : "لا يوجد طريقة الدفع",
   "password_setting" : "إعداد كلمة السر",
@@ -31,6 +33,7 @@
   "payment_confirmation" : "تأكيد الدفع",
   "estimated_delivery_time" : "الوقت المقدر للتسليم",
   "open_24_hours" : "مفتوح 24 ساعة",
+  "how_fees_work" : "كيف تعمل الرسوم",
 
 
 
@@ -389,7 +392,9 @@
   "stay_home_we_deliver": "ابقى في المنزل \nتأتيك طلبيتك",
   "any_where_any_time": "في أي مكان... في أي وقت!!",
   "most_popular": "الأكثر استخدام",
-  "more": "أكثر",
+  "more": "مزيد",
+  "delivered" : "سلمت",
+  "canceled" : "ملغاة",
 
   "are_you_sure_cancel" : "هل أنت متأكد من إلغاء الطلب",
   "view_edit_profile" : "عرض وتعديل الملف الشخصي",

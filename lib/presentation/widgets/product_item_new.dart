@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 
 import '../../domain/model/product.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/home_view/home_view_getx_controller.dart';
 import '../screens/product_view/product_view_new.dart';
@@ -41,6 +43,10 @@ class ProductItemNew extends StatefulWidget {
 }
 
 class _ProductItemNewState extends State<ProductItemNew> with Helpers {
+
+
+  var language = SharedPrefController().lang1;
+
   late final Product _product = Get.find<Product>(tag: widget.tag);
   HomeViewGetXController _homeViewGetXController =
       Get.find<HomeViewGetXController>();
@@ -87,23 +93,24 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                       widget.image == ''
                           ? Container(
                               height: MediaQuery.of(context).size.height * 0.2,
-                              width: MediaQuery.of(context).size.width * 0.35,
+                              width: AppSize.s146,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
                                   image: AssetImage(ImageAssets.logo1),
-                                  fit: BoxFit.scaleDown,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             )
                           : Container(
                               height: MediaQuery.of(context).size.height * 0.24,
-                              width: MediaQuery.of(context).size.width * 0.36,
+                              width: AppSize.s154,
+
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
                                   image: NetworkImage(widget.image),
-                                  fit: BoxFit.scaleDown,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -147,18 +154,21 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                     ],
                   ),
                   SizedBox(
-                    width: 14,
+                    width: AppSize.s14,
                   )
                 ],
               ),
               SizedBox(
-                height: 5,
+                height: AppSize.s5,
               ),
-              Text(widget.name,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: ColorManager.primaryDark)),
+              Container(
+                width: AppSize.s161,
+                child: Text(language == 'en' ? widget.name : _product.nameAr ?? widget.name,
+                    style: TextStyle(
+                        fontSize: FontSize.s14,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.primaryDark)),
+              ),
               Row(
                 children: [
                   Container(
@@ -167,7 +177,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                         '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
                         overflow: TextOverflow.clip,
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: FontSize.s10,
                             fontWeight: FontWeight.bold,
                             color: ColorManager.primaryDark)),
                   ),
@@ -183,7 +193,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                   ),
                   Text(widget.stars.toString(),
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: FontSize.s14,
                           fontWeight: FontWeight.w500,
                           color: ColorManager.primaryDark)),
                 ],

@@ -27,7 +27,7 @@ class AddressesView extends StatefulWidget {
 class _AddressesViewState extends State<AddressesView> {
   // controller.
   late final AddressesViewGetXController _addressesViewGetXController =
-      Get.find<AddressesViewGetXController>();
+      Get.find<AddressesViewGetXController >();
 
   // dispose.
   @override
@@ -51,11 +51,19 @@ class _AddressesViewState extends State<AddressesView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+                    onTap: () {
+
+                      Navigator.pop(context);
+                      _addressesViewGetXController.getMyAddresses();
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                   Spacer(),

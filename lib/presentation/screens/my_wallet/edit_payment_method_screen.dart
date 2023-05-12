@@ -7,6 +7,7 @@ import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
 
 class EditPaymentMethodScreen extends StatefulWidget {
   @override
@@ -44,10 +45,14 @@ class _EditPaymentMethodScreenState extends State<EditPaymentMethodScreen> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: 18,
-                        width: 10,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                     Spacer(),

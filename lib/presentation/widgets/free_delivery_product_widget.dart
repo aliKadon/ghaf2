@@ -8,6 +8,7 @@ import '../../app/utils/app_shared_data.dart';
 import '../../domain/model/product.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/product_view/product_view_new.dart';
 
@@ -137,14 +138,14 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> w
               ),
               Text('${_product.name}',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: FontSize.s16,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
                 children: [
                   Text('${_product.price} ${_product.isoCurrencySymbol}',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: FontSize.s14,
                           fontWeight: FontWeight.bold,
                           color: ColorManager.primaryDark)),
                   SizedBox(
@@ -159,7 +160,7 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> w
                   ),
                   Text('${_product.stars}.0',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: FontSize.s14,
                           fontWeight: FontWeight.w500,
                           color: ColorManager.primaryDark)),
                 ],

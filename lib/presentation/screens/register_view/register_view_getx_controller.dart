@@ -186,7 +186,7 @@ class RegisterViewGetXController extends GetxController with Helpers {
       initialDate: birthDate == null
           ? DateTime(DateTime.now().year - 15)
           : DateTime.parse(birthDate!),
-      firstDate: DateTime(DateTime.now().year - 50),
+      firstDate: DateTime(DateTime.now().year - 123),
       lastDate: DateTime(DateTime.now().year - 15),
     );
     if (date == null) return;

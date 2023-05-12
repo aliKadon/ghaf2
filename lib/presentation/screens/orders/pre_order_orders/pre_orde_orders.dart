@@ -4,17 +4,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
-import '../../../../domain/model/product.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 import '../../../widgets/my_orders_widget.dart';
-import '../../../widgets/product_item_new.dart';
+
 import '../../checkout/check_out_getx_controller.dart';
-import '../../checkout/order_tracking_screen.dart';
-import '../../home_view/home_view_getx_controller.dart';
+
 
 
 class PreOrderOrders extends StatefulWidget {
@@ -64,10 +62,14 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                     Spacer(),

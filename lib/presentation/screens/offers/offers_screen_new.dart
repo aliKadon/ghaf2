@@ -64,11 +64,14 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
-                      color: ColorManager.primaryDark,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                 ),
@@ -88,7 +91,7 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
               color: ColorManager.greyLight,
             ),
             controller.offers.length == 0 ? Center(child: Text(
-                AppLocalizations.of(context)!.no_product_found, style: TextStyle(
+                AppLocalizations.of(context)!.no_offer_found, style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: FontSize.s16,
                 color: ColorManager.primary)),) : Container(

@@ -55,11 +55,14 @@ class _PreOrderProductsScreenState extends State<PreOrderProductsScreen> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
-                        color: ColorManager.primaryDark,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                   ),
@@ -96,7 +99,7 @@ class _PreOrderProductsScreenState extends State<PreOrderProductsScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisExtent: 300,
+                              mainAxisExtent: AppSize.s280,
                             ),
                             shrinkWrap: true,
                             itemCount: controller.products.length,

@@ -60,10 +60,14 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => MainView(),
                     )),
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                 ),
@@ -185,7 +189,8 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
                                     controller.payLaterProductActive.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2, mainAxisExtent: 300),
+                                        crossAxisCount: 2, mainAxisExtent: AppSize.s311
+                                    ),
                                 itemBuilder: (context, index) {
                                   return PayLaterProductWidget(
                                     index: index,
@@ -226,7 +231,8 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
                                     controller.payLaterProductComplete.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2, mainAxisExtent: 300),
+                                        crossAxisCount: 2, mainAxisExtent: AppSize.s311
+                                    ),
                                 itemBuilder: (context, index) {
                                   return PayLaterProductWidget(
                                     index: index,

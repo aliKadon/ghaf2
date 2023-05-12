@@ -13,6 +13,10 @@ class NotificationApiController with ApiHelper {
         '${Constants.baseUrl}/Auth/get-customer-notifications?Type&pageIndex&pageRows');
     var response = await http.get(url, headers: headers);
 
+    print('=============================notifications');
+    print(jsonDecode(response.body));
+
+
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
       if (jsonData['status'] == 200) {

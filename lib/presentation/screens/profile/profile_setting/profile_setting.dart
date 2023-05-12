@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 
@@ -76,10 +77,14 @@ class _ProfileSettingState extends State<ProfileSetting> {
                   children: [
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.038,
+                        width: MediaQuery.of(context).size.width * 0.08,
+                        child: Image.asset(
+                          IconsAssets.arrow,
+                          height: AppSize.s18,
+                          width: AppSize.s10,
+                        ),
                       ),
                     ),
                     Spacer(),
@@ -254,6 +259,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddressesView(),));
                     Navigator.pushNamed(context, Routes.addressesRoute);
                   },
                   child: Row(

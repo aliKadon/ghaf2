@@ -22,6 +22,9 @@
 <!--       AIzaSyCzcAIfdvdael9wc1YRXaogyQ7AxjujYUM-->
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyCzcAIfdvdael9wc1YRXaogyQ7AxjujYUM" />
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_icon"
+           android:resource="@drawable/logo2"/>
 
 
         <activity

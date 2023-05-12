@@ -46,6 +46,7 @@ import 'package:ghaf_application/presentation/screens/register_view/register_vie
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
+import 'package:ghaf_application/presentation/screens/rewards/rewards_view_new.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_bank_account_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';
@@ -327,7 +328,7 @@ class RouteGenerator {
           ),
         );
       case Routes.rewardsRoute:
-        return MaterialPageRoute(builder: (_) => const RewardsView());
+        return MaterialPageRoute(builder: (_) => RewardsViewNew());
       case Routes.fAQRoute:
         return MaterialPageRoute(builder: (_) => const FAQView());
 

@@ -71,10 +71,14 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                                 .pushReplacement(MaterialPageRoute(
                               builder: (context) => PayLaterViewNew(),
                             )),
-                            child: Image.asset(
-                              IconsAssets.arrow,
-                              height: AppSize.s18,
-                              width: AppSize.s10,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.038,
+                              width: MediaQuery.of(context).size.width * 0.08,
+                              child: Image.asset(
+                                IconsAssets.arrow,
+                                height: AppSize.s18,
+                                width: AppSize.s10,
+                              ),
                             ),
                           ),
                         ),
@@ -311,12 +315,13 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                                         .select_the_payment_method
                                     : 'card : **** **** **** ${widget.cardNumber}',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13)),
+                                    fontWeight: FontWeight.w500, fontSize: FontSize.s16)),
                             // SizedBox(width: AppSize.s20,),
                             Spacer(),
                             Icon(
                               Icons.arrow_drop_down_circle_rounded,
                               color: ColorManager.primaryDark,
+                              size: AppSize.s28,
                             )
                           ],
                         ),

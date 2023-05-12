@@ -85,10 +85,14 @@ class _CreatePaymentLink2SellerViewState
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pushReplacementNamed(context, Routes.mainSellerRoute),
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s24,
-                      width: AppSize.s24,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                   Spacer(),

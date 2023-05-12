@@ -53,10 +53,14 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Image.asset(
-                      IconsAssets.arrow,
-                      height: AppSize.s18,
-                      width: AppSize.s10,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
                   ),
                   Spacer(),
@@ -100,7 +104,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                           child: Column(
                             children: [
                               Container(
-                                color: ColorManager.greyLight,
+                                color: ColorManager.grey1,
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Row(
@@ -110,8 +114,8 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                               null
                                           ? Image.asset(
                                               ImageAssets.brIcon,
-                                              height: 60,
-                                              width: 60,
+                                              height: AppSize.s60,
+                                              width: AppSize.s60,
                                             )
                                           : Image.network(
                                               _categoriesGetxController
@@ -121,164 +125,204 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                   (context, error, stackTrace) {
                                                 return Image.asset(
                                                   ImageAssets.brIcon,
-                                                  height: 60,
-                                                  width: 60,
+                                                  height: AppSize.s60,
+                                                  width: AppSize.s60,
                                                 );
                                               },
-                                              height: 60,
-                                              width: 60,
+                                              height: AppSize.s60,
+                                              width: AppSize.s60,
                                             ),
-                                      // SizedBox(width: 2),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4,
-                                                child: Text(
-                                                  '${_categoriesGetxController.branches[index].storeName} (${_categoriesGetxController.branches[index].branchName})',
-                                                  style: TextStyle(
-                                                      color: ColorManager
-                                                          .primaryDark,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: FontSize.s14),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.08,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.timer,
-                                                    color: ColorManager.primary,
+                                      SizedBox(width: AppSize.s16),
+                                      Container(
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.4,
+                                                  child: Text(
+                                                    '${_categoriesGetxController.branches[index].storeName} (${_categoriesGetxController.branches[index].branchName})',
+                                                    style: TextStyle(
+                                                        color: ColorManager
+                                                            .primaryDark,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: FontSize.s14),
                                                   ),
-                                                  SizedBox(width: 5),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.08,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.timer,
+                                                      color:
+                                                          ColorManager.primary,
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    GetBuilder<
+                                                        CategoriesGetxController>(
+                                                      builder: (controller) =>
+                                                          Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.17,
+                                                        child: Text(
+                                                          '${controller.durations[index]} ',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  ColorManager
+                                                                      .grey,
+                                                              fontSize:
+                                                                  FontSize.s10),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              width: AppSize.s222,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  // Text(
+                                                  //   'Ice cream',
+                                                  //   style: TextStyle(
+                                                  //       color: ColorManager.grey,
+                                                  //       fontSize: 14),
+                                                  // ),
+                                                  // SizedBox(
+                                                  //   width: MediaQuery.of(context)
+                                                  //           .size
+                                                  //           .width *
+                                                  //       0.22,
+                                                  // ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: Colors.yellow,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    '${_categoriesGetxController.branches[index].storeStars}.0',
+                                                    style: TextStyle(
+                                                        color: ColorManager
+                                                            .primaryDark,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    '(${_categoriesGetxController.branches[index].reviewCount}+)',
+                                                    style: TextStyle(
+                                                        color:
+                                                            ColorManager.grey,
+                                                        fontSize: FontSize.s10),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              width: AppSize.s258,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                children: [
                                                   GetBuilder<
                                                       CategoriesGetxController>(
                                                     builder: (controller) =>
                                                         Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.17,
-                                                      child: Text(
-                                                        '${controller.durations[index]} ',
-                                                        style: TextStyle(
-                                                            color: ColorManager
-                                                                .grey,
-                                                            fontSize:
-                                                                FontSize.s10),
+                                                      height: AppSize.s35,
+                                                      child: ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: controller
+                                                            .branches[index]
+                                                            .storeDeliveryCost!
+                                                            .length,
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemBuilder:
+                                                            (context, index1) {
+                                                          return Flexible(
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                                              children: [
+                                                                _categoriesGetxController
+                                                                            .branches[
+                                                                                index]
+                                                                            .storeDeliveryCost![
+                                                                                index1]
+                                                                            .methodImage ==
+                                                                        null
+                                                                    ? Image.asset(
+                                                                        ImageAssets
+                                                                            .carDelivery,
+                                                                        height: AppSize.s20,
+                                                                        width: AppSize.s20,
+                                                                      )
+                                                                    : Image.network(
+                                                                        _categoriesGetxController
+                                                                            .branches[
+                                                                                index]
+                                                                            .storeDeliveryCost![
+                                                                                index1]
+                                                                            .methodImage!,
+                                                                        height: AppSize.s20,
+                                                                        width: AppSize.s20,
+                                                                      ),
+                                                                SizedBox(
+                                                                  width: 3,
+                                                                ),
+                                                                Text(_categoriesGetxController
+                                                                                .branches[
+                                                                                    index]
+                                                                                .storeDeliveryCost![
+                                                                                    index1]
+                                                                                .cost ==
+                                                                            0 ||
+                                                                        _categoriesGetxController
+                                                                                .branches[
+                                                                                    index]
+                                                                                .storeDeliveryCost![
+                                                                                    index1]
+                                                                                .cost ==
+                                                                            null
+                                                                    ? ''
+                                                                    : '${_categoriesGetxController.branches[index].storeDeliveryCost![index1].cost} ${AppLocalizations.of(context)!.aed}'),
+                                                                SizedBox(
+                                                                  width: 10,
+                                                                )
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              // Text(
-                                              //   'Ice cream',
-                                              //   style: TextStyle(
-                                              //       color: ColorManager.grey,
-                                              //       fontSize: 14),
-                                              // ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.22,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Colors.yellow,
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(
-                                                '${_categoriesGetxController.branches[index].storeStars}.0',
-                                                style: TextStyle(
-                                                    color: ColorManager
-                                                        .primaryDark,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(
-                                                '(${_categoriesGetxController.branches[index].reviewCount}+)',
-                                                style: TextStyle(
-                                                    color: ColorManager.grey,
-                                                    fontSize: FontSize.s10),
-                                              )
-                                            ],
-                                          ),
-                                          GetBuilder<CategoriesGetxController>(
-                                            builder: (controller) => Container(
-                                              height: 40,
-                                              child: ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: controller
-                                                    .branches[index]
-                                                    .storeDeliveryCost!
-                                                    .length,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemBuilder: (context, index1) {
-                                                  return Row(
-                                                    children: [
-                                                      _categoriesGetxController
-                                                                  .branches[
-                                                                      index]
-                                                                  .storeDeliveryCost![
-                                                                      index1]
-                                                                  .methodImage ==
-                                                              null
-                                                          ? Image.asset(
-                                                              ImageAssets
-                                                                  .carDelivery,
-                                                              height: 20,
-                                                              width: 20,
-                                                            )
-                                                          : Image.network(
-                                                              _categoriesGetxController
-                                                                  .branches[
-                                                                      index]
-                                                                  .storeDeliveryCost![
-                                                                      index1]
-                                                                  .methodImage!,
-                                                              height: 20,
-                                                              width: 20,
-                                                            ),
-                                                      SizedBox(
-                                                        width: 3,
-                                                      ),
-                                                      Text(
-                                                          '${_categoriesGetxController.branches[index].storeDeliveryCost![index1].cost} ${AppLocalizations.of(context)!.aed}'),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      )
-                                                    ],
-                                                  );
-                                                },
-                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                              // 'open - closed at 10 am',
-                                              '${_categoriesGetxController.branches[index].todayWorkHoursToString}')
-                                        ],
+                                            Text(
+                                                // 'open - closed at 10 am',
+                                                '${_categoriesGetxController.branches[index].todayWorkHoursToString}')
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
