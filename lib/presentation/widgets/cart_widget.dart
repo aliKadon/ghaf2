@@ -57,6 +57,7 @@ class _CartWidgetState extends State<CartWidget> {
         Row(
           children: [
             Container(
+              padding: EdgeInsets.all(8),
               height: AppSize.s110,
               width: AppSize.s110,
               decoration: BoxDecoration(

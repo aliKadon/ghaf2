@@ -92,7 +92,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                     children: [
                       widget.image == ''
                           ? Container(
-                              height: MediaQuery.of(context).size.height * 0.2,
+                              height: MediaQuery.of(context).size.height * 0.24,
                               width: AppSize.s146,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
@@ -104,7 +104,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                             )
                           : Container(
                               height: MediaQuery.of(context).size.height * 0.24,
-                              width: AppSize.s154,
+                              width: AppSize.s138,
 
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
@@ -162,8 +162,9 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                 height: AppSize.s5,
               ),
               Container(
-                width: AppSize.s161,
+                width: AppSize.s138,
                 child: Text(language == 'en' ? widget.name : _product.nameAr ?? widget.name,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: FontSize.s14,
                         fontWeight: FontWeight.bold,

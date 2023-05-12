@@ -56,6 +56,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
       children: [
         Row(
           children: [
+            SizedBox(width: AppSize.s16),
             widget.image == ''
                 ? Container(
                     height: AppSize.s110,
@@ -73,6 +74,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                             DecorationImage(image: NetworkImage(widget.image)),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
+            SizedBox(width: AppSize.s16),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

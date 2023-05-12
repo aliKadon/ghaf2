@@ -87,7 +87,7 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    text == 'On sale' ? Container(
+                    text == AppLocalizations.of(context)!.on_sale ? Container(
                       width:AppSize.s50,
                       height: AppSize.s38,
                       child: Image.asset(
@@ -97,8 +97,18 @@ class WidgetInStoreScreenWidget extends StatelessWidget {
                         // height: AppSize.s36,
                         fit: BoxFit.fill,
                       ),
+                    ) :text == AppLocalizations.of(context)!.trending ? Container(
+                      width:AppSize.s30,
+                      height: AppSize.s40,
+                      child: Image.asset(
+                        // base64Decode(category.categoryImage ?? ''),
+                        imageUrl,
+                        // width: AppSize.s40,
+                        // height: AppSize.s36,
+                        fit: BoxFit.fill,
+                      ),
                     ) : Container(
-                      width:AppSize.s34,
+                      width:AppSize.s35,
                       height: AppSize.s40,
                       child: Image.asset(
                         // base64Decode(category.categoryImage ?? ''),

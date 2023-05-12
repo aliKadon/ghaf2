@@ -64,6 +64,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
         _cartItem.toggleAddToCartRequest();
       },
       background: Container(
+        padding: EdgeInsets.all(8),
         margin: EdgeInsetsDirectional.only(end: 290),
         alignment: AlignmentDirectional.center,
         decoration: BoxDecoration(

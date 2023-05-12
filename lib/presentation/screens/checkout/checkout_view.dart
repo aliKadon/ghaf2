@@ -1029,7 +1029,6 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       width: AppSize.s6,
                                     ),
                                     GetBuilder<AddressesViewGetXController>(
-                                      id: 'isAddressesLoading',
                                       builder: (controller) => GestureDetector(
                                         onTap: () {
                                           Navigator.of(context)
@@ -1049,12 +1048,12 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                 height: AppSize.s20,
                                                 color: ColorManager.primaryDark,
                                               ),
+
                                       ),
                                     ),
                                   ]),
                                 ),
                                 GetBuilder<AddressesViewGetXController>(
-                                  id: 'isAddressesLoading',
                                   builder: (controller) => ListView.builder(
                                     shrinkWrap: true,
                                     physics: BouncingScrollPhysics(),

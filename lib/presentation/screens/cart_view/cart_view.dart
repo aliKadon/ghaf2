@@ -57,9 +57,9 @@ class _CartViewState extends State<CartView> {
                 children: [
                   Spacer(),
                   Text(
-                    AppLocalizations.of(context)!.my_cart,
+                    AppLocalizations.of(context)!.get,
                     style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
+                      color: ColorManager.primary,
                       fontSize: FontSize.s18,
                     ),
                   ),

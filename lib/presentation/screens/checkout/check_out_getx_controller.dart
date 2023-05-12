@@ -243,15 +243,20 @@ class CheckOutGetxController extends GetxController with Helpers {
   }
 
   void getOrderToPay({required BuildContext context}) async {
-    try {
-      orderToPay = await _ordersApiController.getReadyOrdersToPay();
-      isLoadingOrderToPay = false;
-      update(["orderToPay"]);
-    } catch (error) {
-      print('===============error in get order to pay');
-      print(error.toString());
-      // showSnackBar(context, message: error.toString());
-    }
+    orderToPay = await _ordersApiController.getReadyOrdersToPay();
+    isLoadingOrderToPay = false;
+    update(["orderToPay"]);
+
+
+    // try {
+    //   orderToPay = await _ordersApiController.getReadyOrdersToPay();
+    //   isLoadingOrderToPay = false;
+    //   update(["orderToPay"]);
+    // } catch (error) {
+    //   print('===============error in get order to pay');
+    //   print(error.toString());
+    //   // showSnackBar(context, message: error.toString());
+    // }
   }
 
   void getOrderById(

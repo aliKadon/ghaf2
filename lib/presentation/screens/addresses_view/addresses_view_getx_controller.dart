@@ -10,7 +10,6 @@ import 'package:ghaf_application/domain/model/api_response.dart';
 class AddressesViewGetXController extends GetxController with Helpers {
   // notifiable.
   bool _isAddressesLoading = true;
-
   bool get isAddressesLoading => _isAddressesLoading;
 
   set isAddressesLoading(bool value) {

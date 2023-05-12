@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ghaf_application/app/constants.dart';
+import 'package:ghaf_application/app/utils/app_shared_data.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/domain/model/product.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
 
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -21,7 +26,7 @@ class MyFavoriteScreen extends StatefulWidget {
   State<MyFavoriteScreen> createState() => _MyFavoriteScreenState();
 }
 
-class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
+class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
   // controller.
   late final MyFavoriteScreenGetXController _myFavoriteScreenGetXController =
       Get.put(MyFavoriteScreenGetXController());
@@ -40,7 +45,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
   // dispose.
   @override
   void dispose() {
-    Get.delete<MyFavoriteScreenGetXController>();
+    // Get.delete<MyFavoriteScreenGetXController>();
     super.dispose();
   }
 
@@ -108,7 +113,6 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
               Container(
                 padding: EdgeInsets.all(16.h),
                 child: GetBuilder<MyFavoriteScreenGetXController>(
-                  id: 'myFavorite',
                   builder: (controller) => controller.isMyFavoriteLoading
                       ? Center(
                           child: CircularProgressIndicator(
@@ -173,7 +177,13 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                                           backgroundColor:
                                               MaterialStatePropertyAll(
                                                   Colors.white)),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        if(AppSharedData.currentUser == null) {
+                                          showSignInSheet(context: context, role: Constants.roleRegisterCustomer);
+                                        }else {
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView(),));
+                                        }
+                                      },
                                       child: Text(
                                         AppLocalizations.of(context)!
                                             .find_restaurant,
@@ -193,7 +203,9 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                mainAxisExtent: 300,
+                                mainAxisExtent: AppSize.s300,
+                                crossAxisSpacing: AppSize.s16,
+
                                 // mainAxisSpacing: Constants.mainAxisSpacing,
                               ),
                               itemBuilder: (context, index) {

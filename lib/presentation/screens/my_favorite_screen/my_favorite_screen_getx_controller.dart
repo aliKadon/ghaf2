@@ -13,7 +13,7 @@ class MyFavoriteScreenGetXController extends GetxController with Helpers {
   set isMyFavoriteLoading(bool value) {
     _isMyFavoriteLoading = value;
     getMyFavorite();
-    update(['myFavorite']);
+    update();
   }
 
   // vars.

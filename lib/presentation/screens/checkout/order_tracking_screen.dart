@@ -10,6 +10,7 @@ import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
+import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/get_help/controller/help_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/get_help/report_issue_with_order_Screen.dart';
@@ -42,6 +43,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   //controller
   late final CheckOutGetxController _checkOutGetxController =
       Get.put(CheckOutGetxController());
+  late final AddressesViewGetXController _addressesViewGetXController =
+  Get.put(AddressesViewGetXController(context: context));
   final HelpGetxController _helpGetxController = Get.put(HelpGetxController());
 
 
@@ -783,11 +786,13 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   ),
                                   Row(
                                     children: [
-                                      Text(
-                                        '${controller.order!.deliveryPoint?.addressName ?? SharedPrefController().city}',
-                                        style: getSemiBoldStyle(
-                                          color: ColorManager.primaryDark,
-                                          fontSize: FontSize.s16,
+                                      GetBuilder<AddressesViewGetXController>(
+                                        builder: (controller2) => Text(
+                                          controller.order!.deliveryPoint?.cityName != null ?'${controller.order!.deliveryPoint?.cityName}' : controller2.addresses.length != 0 ? '${controller2.addresses[0].addressName}' :'${ SharedPrefController().city}',
+                                          style: getSemiBoldStyle(
+                                            color: ColorManager.primaryDark,
+                                            fontSize: FontSize.s16,
+                                          ),
                                         ),
                                       ),
                                       Spacer(),
@@ -804,22 +809,24 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   SizedBox(
                                     height: AppSize.s10,
                                   ),
-                                  Row(children: [
-                                    Image.asset(
-                                      IconsAssets.location,
-                                      height: AppSize.s15,
-                                      width: AppSize.s11,
-                                    ),
-                                    SizedBox(
-                                      width: AppSize.s8,
-                                    ),
-                                    Text(
-                                      '${controller.order!.deliveryPoint?.cityName ?? SharedPrefController().city}',
-                                      style: getRegularStyle(
-                                        color: ColorManager.black,
+                                  GetBuilder<AddressesViewGetXController>(
+                                    builder: (controller1) => Row(children: [
+                                      Image.asset(
+                                        IconsAssets.location,
+                                        height: AppSize.s15,
+                                        width: AppSize.s11,
                                       ),
-                                    ),
-                                  ]),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(
+                                        controller.order!.deliveryPoint?.cityName != null ?'${controller.order!.deliveryPoint?.cityName}' : controller1.addresses.length != 0 ? '${controller1.addresses[0].addressName}' :'${ SharedPrefController().city}',
+                                        style: getRegularStyle(
+                                          color: ColorManager.black,
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
                                   SizedBox(
                                     height: AppSize.s10,
                                   ),
@@ -842,22 +849,24 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   SizedBox(
                                     height: AppSize.s10,
                                   ),
-                                  Row(children: [
-                                    Image.asset(
-                                      IconsAssets.call,
-                                      height: AppSize.s18,
-                                      width: AppSize.s18,
-                                    ),
-                                    SizedBox(
-                                      width: AppSize.s8,
-                                    ),
-                                    Text(
-                                      '${controller.order!.deliveryPoint?.phone ?? 000000}',
-                                      style: getRegularStyle(
-                                        color: ColorManager.black,
+                                  GetBuilder<AddressesViewGetXController>(
+                                    builder: (controller3) => Row(children: [
+                                      Image.asset(
+                                        IconsAssets.call,
+                                        height: AppSize.s18,
+                                        width: AppSize.s18,
                                       ),
-                                    ),
-                                  ]),
+                                      SizedBox(
+                                        width: AppSize.s8,
+                                      ),
+                                      Text(
+                                        controller.order!.deliveryPoint?.cityName != null ?'${controller.order!.deliveryPoint?.phone}' : controller3.addresses.length != 0 ? '${controller3.addresses[0].phone}' :'0',
+                                        style: getRegularStyle(
+                                          color: ColorManager.black,
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
                                   SizedBox(
                                     height: AppSize.s22,
                                   ),
