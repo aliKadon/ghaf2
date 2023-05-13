@@ -3,25 +3,27 @@ import '../preferences/shared_pref_controller.dart';
 
 class LanguageGetXController extends GetxController {
   static LanguageGetXController get to => Get.find<LanguageGetXController>();
-  Rx<String> language =
-      SharedPrefController().getValueFor<String>(key: PrefKeys.lang.name) ==
+  String language =
+      SharedPrefController().lang1 ==
               null
-          ? 'ar'.obs
+          ? 'ar'
           : SharedPrefController()
-              .getValueFor<String>(key: PrefKeys.lang.name)!
-              .obs;
+              .lang1;
 
   void changeLanguage({required String language1}) {
     print('===========================language1');
-    print(language.value);
+    print(language);
     print('===========================language1');
     if (language1 == 'en') {
-      language.value = 'en';
+      language = 'en';
     }else if(language1 == 'ar' ) {
-      language.value = 'ar';
+      language = 'ar';
     }
+    print('===========================language2');
+    print(language);
+    print('===========================language2');
     // language.value = language.value == 'ar' ? 'en' : 'ar';
-    SharedPrefController().changeLanguage(language: language.value);
+    SharedPrefController().changeLanguage(language: language);
     update();
   }
 }

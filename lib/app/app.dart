@@ -30,7 +30,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final LanguageGetXController languageGetXController =
-      Get.put<LanguageGetXController>(LanguageGetXController());
+  Get.put<LanguageGetXController>(LanguageGetXController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +58,30 @@ class _MyAppState extends State<MyApp> {
 
           var isArabic = SharedPrefController().lang1;
           print('isArabic : $isArabic');
-          print(languageGetXController.language.value);
+          print(languageGetXController.language);
 
-          return Obx(
-            () => GetMaterialApp(
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: L10n.all,
-              locale: Locale(languageGetXController.language.value),
-              // locale: provider.locale,
-              builder: DevicePreview.appBuilder,
-              debugShowCheckedModeBanner: false,
-              onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute: Routes.splashRoute,
-              // home: HomeView(),
-              theme: getApplicationTheme(),
-            ),
+          return GetBuilder<LanguageGetXController>(
+              builder: (controller) {
+                print('isArabic : $isArabic');
+                print(languageGetXController.language);
+                return GetMaterialApp(
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                  ],
+                  supportedLocales: L10n.all,
+                  locale: Locale(controller.language),
+                  // locale: provider.locale,
+                  builder: DevicePreview.appBuilder,
+                  debugShowCheckedModeBanner: false,
+                  onGenerateRoute: RouteGenerator.getRoute,
+                  initialRoute: Routes.splashRoute,
+                  // home: HomeView(),
+                  theme: getApplicationTheme(),
+                );
+              }
           );
         },
       ),

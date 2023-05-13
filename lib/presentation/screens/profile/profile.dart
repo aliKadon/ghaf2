@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
   var language = SharedPrefController().lang1;
 
   final LanguageGetXController languageGetXController =
-  Get.put<LanguageGetXController>(LanguageGetXController());
+  Get.find<LanguageGetXController>();
 
   Locale? local;
  late final curLocale = Provider.of<LocaleProvider>(context, listen: false);
