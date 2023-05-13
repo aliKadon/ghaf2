@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               builder: (controller) {
                 print('isArabic : $isArabic');
                 print(languageGetXController.language);
-                return GetMaterialApp(
+                return MaterialApp(
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
                     GlobalMaterialLocalizations.delegate,
