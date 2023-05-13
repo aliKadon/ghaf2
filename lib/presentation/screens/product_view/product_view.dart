@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/screens/product_view/product_view_getx_controller.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../providers/product_provider.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -90,7 +91,7 @@ class _ProductViewState extends State<ProductView> {
                             height: MediaQuery.of(context).size.height * 0.038,
                             width: MediaQuery.of(context).size.width * 0.08,
                             child: Image.asset(
-                              IconsAssets.arrow,
+                              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                               height: AppSize.s18,
                               width: AppSize.s10,
                             ),
@@ -208,7 +209,7 @@ class _ProductViewState extends State<ProductView> {
                                   buildRating(
                                       Text(
                                         "${_product.storeStars}",
-                                        style: TextStyle(fontSize: 16),
+                                        style: TextStyle(fontSize: FontSize.s16),
                                       ),
                                       _product),
                                   SizedBox(

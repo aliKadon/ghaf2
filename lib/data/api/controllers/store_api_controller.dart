@@ -53,7 +53,7 @@ class StoreApiController with ApiHelper, Helpers {
     Uri uri = Uri.parse('${Constants.baseUrl}/Category/GetCategories');
     var response = await http.get(
       uri,
-      headers: headers,
+      headers: headers1,
     );
     // // print('111');
     // // print('============================================');
@@ -221,7 +221,7 @@ class StoreApiController with ApiHelper, Helpers {
       '/Product/read-product/',
       queryParameters: queryParameters,
       options: Options(
-        headers: headers,
+        headers: headers1,
       ),
     );
     print('============================================filter PRODUCT');

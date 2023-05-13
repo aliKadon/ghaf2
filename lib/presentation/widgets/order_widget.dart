@@ -28,7 +28,7 @@ class OrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.h),
+      padding: EdgeInsets.all(AppSize.s8.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(

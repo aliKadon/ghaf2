@@ -25,11 +25,11 @@ class _AddCreditWidgetState extends State<AddCreditWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(AppSize.s8),
       child: Container(
-        padding: EdgeInsets.all(14),
+        padding: EdgeInsets.all(AppSize.s14),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AppSize.s10),
             border: Border.all(color: ColorManager.grey)),
         child: Row(
           children: [

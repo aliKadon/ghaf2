@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
+import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
@@ -54,7 +55,7 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
               SizedBox(
                   height: MediaQuery.of(context).size.height * 0.06),
               Padding(
-                padding: const EdgeInsets.only(left: 12.0, right: 12),
+                padding:  EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -66,7 +67,7 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -134,8 +135,8 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                                 .branchAddress ??
                                 null),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 12.0, left: 12.0),
+                          padding:  EdgeInsets.only(
+                              right: AppSize.s12, left: AppSize.s12),
                           child: Divider(
                             thickness: 1,
                             color: ColorManager.greyLight,
@@ -148,7 +149,7 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
               ),
               // Container(
               //   height: MediaQuery.of(context).size.height * 0.08,
-              //   padding: EdgeInsets.all(5),
+              //   padding:EdgeInsets.all(AppSize.s5),
               //   child: ElevatedButton(
               //     onPressed: () {},
               //     child: Row(

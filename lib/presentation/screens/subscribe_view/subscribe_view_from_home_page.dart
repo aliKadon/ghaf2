@@ -83,7 +83,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                             top: 0,
                             // bottom: 0,
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -100,7 +100,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                                             borderRadius:
                                                 BorderRadius.circular(50)),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(AppSize.s8),
                                           child: Image.asset(ImageAssets.x,
                                               color: ColorManager.grey,
                                               fit: BoxFit.scaleDown,
@@ -118,7 +118,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                                       ),
                                       Container(
                                         color: Colors.white,
-                                        padding: EdgeInsets.all(8),
+                                        padding: EdgeInsets.all(AppSize.s8),
                                         child: Text(
                                             AppLocalizations.of(context)!.gold,
                                             style: TextStyle(
@@ -155,7 +155,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Text(
                             AppLocalizations.of(context)!
                                 .monthly_subscribe_text,
@@ -276,7 +276,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                         height: AppSize.s20,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Divider(
                           thickness: 1,
                           color: ColorManager.greyLight,
@@ -291,7 +291,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                         height: AppSize.s20,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -319,7 +319,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                       Container(
                         height: AppSize.s82,
                         width: double.infinity,
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.all(AppSize.s12),
                         child: ElevatedButton(
                             onPressed: () {
                               showSubscribeSheet(

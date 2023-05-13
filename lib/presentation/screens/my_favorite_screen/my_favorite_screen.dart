@@ -14,6 +14,7 @@ import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../widgets/product_item_new.dart';
@@ -88,7 +89,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -147,7 +148,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                                   style: TextStyle(
                                       color: ColorManager.primaryDark,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25),
+                                      fontSize: FontSize.s25),
                                 ),
                                 SizedBox(
                                   height: AppSize.s20,
@@ -157,7 +158,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                                         .save_the_restaurant,
                                     style: TextStyle(
                                         color: ColorManager.greyLight,
-                                        fontSize: 12)),
+                                        fontSize: FontSize.s12)),
                                 SizedBox(
                                   height: AppSize.s110,
                                 ),
@@ -171,7 +172,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                                               side: BorderSide(
                                                   color: ColorManager.primary),
                                               borderRadius:
-                                                  BorderRadius.circular(10),
+                                                  BorderRadius.circular(AppSize.s10),
                                             ),
                                           ),
                                           backgroundColor:

@@ -179,7 +179,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                                 },
                               ),
                             ),
-                            const SizedBox(width: 16),
+                             SizedBox(width: AppSize.s16),
                             Expanded(
                               child: TextFormField(
                                 controller: expireYearController,
@@ -215,7 +215,7 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
                     height: AppSize.s44,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding:  EdgeInsets.only(top: AppSize.s16),
                     child: ElevatedButton(
                       child: Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
@@ -319,13 +319,13 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
         //         child: Column(
         //           children: [
         //             Container(
-        //               margin: EdgeInsets.all(15),
+        //               margin:EdgeInsets.all(AppSize.s15),
         //               child: TextFormField(
         //                 decoration: InputDecoration(
         //                   label: Text('Card Number'),
-        //                   contentPadding: EdgeInsets.all(8),
+        //                   contentPadding: EdgeInsets.all(AppSize.s8),
         //                   border: OutlineInputBorder(
-        //                     borderRadius: BorderRadius.circular(10),
+        //                     borderRadius: BorderRadius.circular(AppSize.s10),
         //                   ),
         //                 ),
         //                 textInputAction: TextInputAction.next,
@@ -341,13 +341,13 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
         //               ),
         //             ),
         //             Container(
-        //               margin: EdgeInsets.all(15),
+        //               margin:EdgeInsets.all(AppSize.s15),
         //               child: TextFormField(
         //                 decoration: InputDecoration(
         //                   label: Text('Expired Date'),
-        //                   contentPadding: EdgeInsets.all(8),
+        //                   contentPadding: EdgeInsets.all(AppSize.s8),
         //                   border: OutlineInputBorder(
-        //                     borderRadius: BorderRadius.circular(10),
+        //                     borderRadius: BorderRadius.circular(AppSize.s10),
         //                   ),
         //                 ),
         //                 textInputAction: TextInputAction.next,
@@ -363,13 +363,13 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
         //               ),
         //             ),
         //             Container(
-        //               margin: EdgeInsets.all(15),
+        //               margin:EdgeInsets.all(AppSize.s15),
         //               child: TextFormField(
         //                 decoration: InputDecoration(
         //                   label: Text('Card Number'),
-        //                   contentPadding: EdgeInsets.all(8),
+        //                   contentPadding: EdgeInsets.all(AppSize.s8),
         //                   border: OutlineInputBorder(
-        //                     borderRadius: BorderRadius.circular(10),
+        //                     borderRadius: BorderRadius.circular(AppSize.s10),
         //                   ),
         //                 ),
         //                 textInputAction: TextInputAction.next,
@@ -395,13 +395,13 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
         //             //       // Spacer(),
         //             //       Container(
         //             //
-        //             //         margin: EdgeInsets.all(15),
+        //             //         margin:EdgeInsets.all(AppSize.s15),
         //             //         child: TextFormField(
         //             //           decoration: InputDecoration(
         //             //             label: Text('Card Number'),
-        //             //             contentPadding: EdgeInsets.all(8),
+        //             //             contentPadding: EdgeInsets.all(AppSize.s8),
         //             //             border: OutlineInputBorder(
-        //             //               borderRadius: BorderRadius.circular(10),
+        //             //               borderRadius: BorderRadius.circular(AppSize.s10),
         //             //             ),
         //             //           ),
         //             //           textInputAction: TextInputAction.next,
@@ -418,13 +418,13 @@ class _SnapsheetScreenState extends State<SnapsheetScreen> {
         //             //       ),
         //             //       // Spacer(),
         //             //       Container(
-        //             //         margin: EdgeInsets.all(15),
+        //             //         margin:EdgeInsets.all(AppSize.s15),
         //             //         child: TextFormField(
         //             //           decoration: InputDecoration(
         //             //             label: Text('Card Number'),
-        //             //             contentPadding: EdgeInsets.all(8),
+        //             //             contentPadding: EdgeInsets.all(AppSize.s8),
         //             //             border: OutlineInputBorder(
-        //             //               borderRadius: BorderRadius.circular(10),
+        //             //               borderRadius: BorderRadius.circular(AppSize.s10),
         //             //
         //             //             ),
         //             //           ),

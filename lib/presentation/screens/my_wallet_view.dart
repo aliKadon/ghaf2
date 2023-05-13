@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../app/preferences/shared_pref_controller.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -58,7 +59,7 @@ class _MyWalletViewState extends State<MyWalletView> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -179,14 +180,14 @@ class _MyWalletViewState extends State<MyWalletView> {
                       )
                     : completeOrder == null
                         ? Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(AppSize.s8),
                             child: Center(
                                 child: Text(AppLocalizations.of(context)!
                                     .no_order_found)),
                           )
                         : completeOrder.length == 0
                             ? Padding(
-                                padding: const EdgeInsets.all(100.0),
+                                padding: EdgeInsets.all(AppSize.s100),
                                 child: Center(
                                     child: Text(AppLocalizations.of(context)!
                                         .no_order_found)),
@@ -203,11 +204,11 @@ class _MyWalletViewState extends State<MyWalletView> {
                                   return Container(
                                     decoration: BoxDecoration(
                                         borderRadius:
-                                            BorderRadius.circular(30)),
+                                            BorderRadius.circular(AppRadius.r30)),
                                     child: Card(
                                       elevation: 2,
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.all(AppSize.s8),
                                         child: ListTile(
                                           leading: Image.asset(
                                               'assets/images/product_image.png',),

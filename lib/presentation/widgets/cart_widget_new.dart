@@ -93,7 +93,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                       fontWeight: FontWeight.w400,
                       fontSize: FontSize.s14),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: AppSize.s20),
                 Text(
                   '${widget.price} ${widget.isoCurrencySymbol}',
                   style: TextStyle(
@@ -105,7 +105,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(right: 14.0),
+              padding:  EdgeInsets.only(right: AppSize.s14),
               child: Column(
                 children: [
                   GestureDetector(

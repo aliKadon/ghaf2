@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -51,7 +52,7 @@ class _OnlyOnGhafScreenState extends State<OnlyOnGhafScreen> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),

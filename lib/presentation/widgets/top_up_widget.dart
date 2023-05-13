@@ -4,6 +4,8 @@ import 'package:ghaf_application/presentation/resources/color_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 
+import '../../app/preferences/shared_pref_controller.dart';
+
 class TopUpWidget extends StatefulWidget {
   final String imageUrl;
   final String cardType;
@@ -23,11 +25,11 @@ class _TopUpWidgetState extends State<TopUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(AppSize.s8),
       child: Container(
-        padding: EdgeInsets.all(14),
+        padding: EdgeInsets.all(AppSize.s14),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AppSize.s10),
             border: Border.all(color: ColorManager.grey)),
         child: Row(
           children: [
@@ -52,7 +54,7 @@ class _TopUpWidgetState extends State<TopUpWidget> {
             ),
             Spacer(),
             Image.asset(
-              IconsAssets.arrow2,
+              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
               height: AppSize.s20,
               color: ColorManager.greyLight,
             )

@@ -6,6 +6,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 
 import 'package:share/share.dart';
 
+import '../../app/preferences/shared_pref_controller.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -53,7 +54,7 @@ class _InviteState extends State<Invite> with Helpers {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -96,7 +97,7 @@ class _InviteState extends State<Invite> with Helpers {
                 height: AppSize.s12,
               ),
               Padding(
-                padding: EdgeInsets.all(1),
+                padding: EdgeInsets.all(AppSize.s1),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,
                   child: Row(
@@ -106,7 +107,7 @@ class _InviteState extends State<Invite> with Helpers {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(AppSize.s8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xff7FA5A4).withOpacity(0.2),
@@ -156,7 +157,7 @@ class _InviteState extends State<Invite> with Helpers {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(AppSize.s8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xff7FA5A4).withOpacity(0.2),
@@ -206,7 +207,7 @@ class _InviteState extends State<Invite> with Helpers {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(AppSize.s8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xff7FA5A4).withOpacity(0.2),

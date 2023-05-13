@@ -46,7 +46,7 @@ class PaymentController extends GetxController {
       //     snackPosition: SnackPosition.BOTTOM,
       //     backgroundColor: Colors.green,
       //     colorText: Colors.white,
-      //     margin: const EdgeInsets.all(10),
+      //     margin: const EdgeInsets.all(AppSize.s10),
       //     duration: const Duration(seconds: 2));
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Payment Success',style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.green,

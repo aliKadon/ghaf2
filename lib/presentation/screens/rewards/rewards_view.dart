@@ -8,6 +8,7 @@ import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_
 import 'package:provider/provider.dart';
 
 import '../../../app/constants.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../providers/product_provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -73,7 +74,7 @@ class _RewardsViewState extends State<RewardsView> {
                             height: MediaQuery.of(context).size.height * 0.038,
                             width: MediaQuery.of(context).size.width * 0.08,
                             child: Image.asset(
-                              IconsAssets.arrow,
+                              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                               height: AppSize.s18,
                               width: AppSize.s10,
                             ),
@@ -366,7 +367,7 @@ class _RewardsViewState extends State<RewardsView> {
               height: MediaQuery.of(context).size.height * 0.038,
               width: MediaQuery.of(context).size.width * 0.08,
               child: Image.asset(
-                IconsAssets.arrow,
+                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                 height: AppSize.s18,
                 width: AppSize.s10,
               ),

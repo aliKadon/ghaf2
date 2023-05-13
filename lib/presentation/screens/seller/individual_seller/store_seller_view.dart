@@ -138,7 +138,7 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Column(
                           crossAxisAlignment:
                           CrossAxisAlignment.start,
@@ -203,7 +203,7 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Column(
                           crossAxisAlignment:
                           CrossAxisAlignment.center,

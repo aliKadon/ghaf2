@@ -405,10 +405,10 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
     return Container(
       decoration: BoxDecoration(
           color: ColorManager.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AppSize.s10),
           border: Border.all(color: ColorManager.primaryDark)),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(AppSize.s15),
         child: Flexible(
           child: Center(
             child: Text(filterType,
@@ -426,10 +426,10 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> {
     return Container(
       decoration: BoxDecoration(
           color: ColorManager.primaryDark,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AppSize.s10),
           border: Border.all(color: ColorManager.primaryDark)),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(AppSize.s15),
         child: Flexible(
           child: Center(
             child: Text(filterType,

@@ -39,7 +39,7 @@ class _PreOrderWidget2State extends State<PreOrderWidget2> {
         ));
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(AppSize.s8),
         child: Container(
           child: Row(
             children: [
@@ -66,12 +66,12 @@ class _PreOrderWidget2State extends State<PreOrderWidget2> {
               Spacer(),
               language == 'en'
                   ? Image.asset(
-                IconsAssets.arrow2,
+                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                 height: AppSize.s30,
                 color: ColorManager.primary,
               )
                   : Image.asset(
-                IconsAssets.arrow,
+                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                 height: AppSize.s30,
                 color: ColorManager.primary,
               ),

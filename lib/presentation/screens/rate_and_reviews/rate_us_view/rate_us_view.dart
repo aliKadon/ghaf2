@@ -13,6 +13,8 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_us_view/rate_us_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/review_getx_controller.dart';
 
+import '../../../../app/preferences/shared_pref_controller.dart';
+
 class RateUsView extends StatefulWidget {
   const RateUsView({Key? key}) : super(key: key);
 
@@ -60,7 +62,7 @@ class _RateUsViewState extends State<RateUsView> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -169,7 +171,7 @@ class _RateUsViewState extends State<RateUsView> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      contentPadding: EdgeInsets.only(bottom: 80, left: 7),
+                      contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
                       label: Text('${_rateUsViewGetXController.description}'),
                       labelStyle: TextStyle(fontSize: AppSize.s26),
                     ),

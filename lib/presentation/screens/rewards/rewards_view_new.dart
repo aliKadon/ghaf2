@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/screens/rewards/rewards_getx_contr
 import 'package:ghaf_application/presentation/widgets/free_delivery_product_widget.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -48,7 +49,7 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Column(
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -64,7 +65,7 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -94,7 +95,7 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                     padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         color: ColorManager.greyLight,
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(AppSize.s10)),
                     child: Image.asset(
                       ImageAssets.gift,
                       height: AppSize.s40,
@@ -155,8 +156,8 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: ColorManager.greyLight,
-                    borderRadius: BorderRadius.circular(10)),
-                padding: EdgeInsets.all(14),
+                    borderRadius: BorderRadius.circular(AppSize.s10)),
+                padding: EdgeInsets.all(AppSize.s14),
                 child: Row(children: [
                   GetBuilder<RewardsGetxController>(
                     builder: (controller) => Text(

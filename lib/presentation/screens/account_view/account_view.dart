@@ -137,7 +137,7 @@ class _AccountViewState extends State<AccountView> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(AppSize.s8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -222,7 +222,7 @@ class _AccountViewState extends State<AccountView> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(AppSize.s8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -907,7 +907,7 @@ class _AccountViewState extends State<AccountView> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.only(left: 22),
+                        padding: EdgeInsets.only(left: AppSize.s22),
                       child: Text(
                         '${AppLocalizations.of(context)!.invite_your_friend} \n ${AppLocalizations.of(context)!.and_earn_points}',
                         style: TextStyle(fontSize: AppSize.s24),

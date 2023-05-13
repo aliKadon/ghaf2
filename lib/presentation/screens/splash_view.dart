@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +14,7 @@ import 'package:ghaf_application/services/local_notifications_service.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/routes_manager.dart';
 
 
 class SplashView extends StatefulWidget {
@@ -39,6 +41,7 @@ class _SplashViewState extends State<SplashView> {
     SharedPrefController().getUser();
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MainView(),));
+
     // if (AppSharedData.currentUser != null) {
     //   if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
     //     Navigator.pushReplacementNamed(context, Routes.mainRoute);
@@ -85,11 +88,16 @@ class _SplashViewState extends State<SplashView> {
     // }
   }
   AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
+  void _handleMessage(RemoteMessage message) {
+    Navigator.of(context).pushNamed(Routes.aboutAppRoute);
+  }
 
   @override
   void initState() {
+
     super.initState();
     _assetsAudioPlayer.open(Audio('assets/images/sound.mp3'));
+
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     _startDelay();
   }

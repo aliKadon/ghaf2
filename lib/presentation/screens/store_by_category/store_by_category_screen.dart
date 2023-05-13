@@ -158,7 +158,7 @@ class _StoreByCategryScreenState extends State<StoreByCategryScreen> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -207,7 +207,7 @@ class _StoreByCategryScreenState extends State<StoreByCategryScreen> {
                                 },
                                 child: Card(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding:  EdgeInsets.all(AppSize.s16),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -230,9 +230,9 @@ class _StoreByCategryScreenState extends State<StoreByCategryScreen> {
                                                   store[index1]
                                                           .branch?['storeName'] ??
                                                       'sasa',
-                                                  style: TextStyle(fontSize: 15.0),
+                                                  style: TextStyle(fontSize: FontSize.s15),
                                                 ),
-                                                SizedBox(width: 11,),
+                                                SizedBox(width: AppSize.s11,),
                                                 Row(
                                                   children: [
                                                     Icon(
@@ -248,7 +248,7 @@ class _StoreByCategryScreenState extends State<StoreByCategryScreen> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 2,),
+                                            SizedBox(height: AppSize.s2,),
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               mainAxisAlignment: MainAxisAlignment.start,

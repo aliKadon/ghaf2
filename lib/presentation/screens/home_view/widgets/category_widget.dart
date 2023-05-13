@@ -432,7 +432,7 @@ class CategoryWidget extends StatelessWidget {
                     // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(AppSize.s10),
                       child: Text('${AppLocalizations.of(context)!.we_deliver}',style: TextStyle(fontSize: AppSize.s18),),
                     ),
                     Text('${AppLocalizations.of(context)!.order_from}',style: TextStyle(fontSize: AppSize.s18),),

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_from_home_page.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -39,7 +40,7 @@ class _PaymentViewForSubscribeNewState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(AppSize.s12),
         child: Column(
           children: [
             SizedBox(height: AppSize.s30),
@@ -52,7 +53,7 @@ class _PaymentViewForSubscribeNewState
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -116,7 +117,7 @@ class _PaymentViewForSubscribeNewState
                             },
                             child: Container(
                               width: double.infinity,
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(AppSize.s8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: Colors.white,

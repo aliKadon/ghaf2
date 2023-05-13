@@ -37,7 +37,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Padding(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(AppSize.s8),
         child: Column(
           children: [
             SizedBox(
@@ -54,7 +54,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -120,7 +120,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
               child: Container(
                 width: double.infinity,
                 height: AppSize.s65,
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(AppSize.s8),
                 child: ElevatedButton(onPressed: (){}, child: Text(AppLocalizations.of(context)!.save)),
               ),
             ),

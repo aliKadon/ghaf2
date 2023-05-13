@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_getx_controller.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -39,7 +40,7 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
           SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(AppSize.s12),
           child: Column(
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -55,7 +56,7 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -99,11 +100,11 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                         itemCount: controller.redeemHistory!.list!.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(AppSize.s8),
                             child: Column(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(AppSize.s8),
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                         color: ColorManager.greyLight,

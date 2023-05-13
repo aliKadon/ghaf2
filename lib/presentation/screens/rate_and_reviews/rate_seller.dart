@@ -17,6 +17,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/product.dart';
 import '../../../domain/model/product2.dart';
 
@@ -86,7 +87,7 @@ class _RateSellerState extends State<RateSeller> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -191,7 +192,7 @@ class _RateSellerState extends State<RateSeller> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 6,),
+                    SizedBox(width: AppSize.s6,),
                     InkWell(
                       onTap: () {
                         setState(() {
@@ -217,7 +218,7 @@ class _RateSellerState extends State<RateSeller> {
                     ),
                   ],
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: AppSize.s5,),
                 InkWell(
                   onTap: () {
                     setState(() {
@@ -235,12 +236,12 @@ class _RateSellerState extends State<RateSeller> {
                       child: Text(
                         review6!,
                         style: getSemiBoldStyle(
-                            color: ColorManager.white, fontSize: 12),
+                            color: ColorManager.white, fontSize: FontSize.s12),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: AppSize.s5,),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -269,7 +270,7 @@ class _RateSellerState extends State<RateSeller> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 6,),
+                    SizedBox(width:AppSize.s6,),
                     InkWell(
                       onTap: () {
                         setState(() {
@@ -296,7 +297,7 @@ class _RateSellerState extends State<RateSeller> {
 
                   ],
                 ),
-                SizedBox(height: 5,),
+                SizedBox(height: AppSize.s5,),
                 InkWell(
                   onTap: () {
                     setState(() {
@@ -314,12 +315,12 @@ class _RateSellerState extends State<RateSeller> {
                       child: Text(
                         review5!,
                         style: getSemiBoldStyle(
-                            color: ColorManager.white, fontSize: 12),
+                            color: ColorManager.white, fontSize: FontSize.s12),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: AppSize.s10,),
 
                 Container(
                   height: AppSize.s73,
@@ -328,7 +329,7 @@ class _RateSellerState extends State<RateSeller> {
                     decoration: InputDecoration(border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                      contentPadding: EdgeInsets.only(bottom: 50, left: 7),
+                      contentPadding: EdgeInsets.only(bottom: AppSize.s50, left: AppSize.s7),
                       // label: Text('${_rateUsViewGetXController.description}'),
                       label: Text(opinion),
                       labelStyle: TextStyle(fontSize: AppSize.s20),

@@ -50,7 +50,7 @@ class _NotificationViewState extends State<NotificationView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(AppSize.s8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -60,7 +60,7 @@ class _NotificationViewState extends State<NotificationView> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),

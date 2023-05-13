@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../app/preferences/shared_pref_controller.dart';
 import '../../domain/model/models.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -47,7 +48,7 @@ class _FAQViewState extends State<FAQView> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -117,7 +118,7 @@ class _FAQViewState extends State<FAQView> {
           Transform(
             transform: Matrix4.rotationY(math.pi),
             child: Image.asset(
-              IconsAssets.arrow,
+              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
               height: AppSize.s18,
               width: AppSize.s10,
             ),

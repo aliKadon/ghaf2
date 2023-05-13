@@ -37,7 +37,7 @@ class ChoosePaymentMethodView extends StatelessWidget {
               Expanded(
                 child: GridView.count(
                   primary: false,
-                  padding: const EdgeInsets.all(20),
+                  padding: EdgeInsets.all(AppSize.s20),
                   crossAxisSpacing: AppSize.s16,
                   mainAxisSpacing: AppSize.s16,
                   crossAxisCount: 3,

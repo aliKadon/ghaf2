@@ -41,7 +41,7 @@ class _EnterAmountState extends State<EnterAmount> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Column(
             children: [
               SizedBox(
@@ -60,7 +60,7 @@ class _EnterAmountState extends State<EnterAmount> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -217,7 +217,7 @@ class _EnterAmountState extends State<EnterAmount> {
                     },
                     child: Container(
                       width: AppSize.s84,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       decoration: BoxDecoration(
                           border: Border.all(
                             color: ColorManager.primary,
@@ -235,7 +235,7 @@ class _EnterAmountState extends State<EnterAmount> {
                     },
                     child: Container(
                       width: AppSize.s84,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       decoration: BoxDecoration(
                           border: Border.all(
                             color: ColorManager.primary,
@@ -253,7 +253,7 @@ class _EnterAmountState extends State<EnterAmount> {
                     },
                     child: Container(
                       width: AppSize.s84,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       decoration: BoxDecoration(
                           border: Border.all(
                             color: ColorManager.primary,
@@ -276,7 +276,7 @@ class _EnterAmountState extends State<EnterAmount> {
               Container(
                 height: AppSize.s73,
                 width: double.infinity,
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(AppSize.s12),
                 child: widget.typeOfPage == 0
                     ? ElevatedButton(
                     onPressed: () {
@@ -388,7 +388,7 @@ class _EnterAmountState extends State<EnterAmount> {
                                   shape: MaterialStatePropertyAll(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10)))),
+                                          BorderRadius.circular(AppSize.s10)))),
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => ErrorTopUp(),
@@ -486,7 +486,7 @@ class _EnterAmountState extends State<EnterAmount> {
                                   shape: MaterialStatePropertyAll(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10)))),
+                                          BorderRadius.circular(AppSize.s10)))),
                               onPressed: () {},
                               child: Text(AppLocalizations.of(context)!.close)),
                         ),
@@ -517,10 +517,10 @@ void _infoDialog(BuildContext context, String text) async {
                     .size
                     .height * 0.14,
                 width: 250,
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(AppSize.s8),
                 decoration: BoxDecoration(
                     color: ColorManager.greyLight,
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(AppSize.s10)),
                 child: Center(
                     child: Text(text,
                         style:
@@ -536,10 +536,10 @@ void _infoDialog(BuildContext context, String text) async {
               child: Container(
                 height: 85,
                 width: 100,
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(AppSize.s8),
                 decoration: BoxDecoration(
                     color: ColorManager.greyLight,
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(AppSize.s10)),
                 child: Text(AppLocalizations.of(context)!.pay_later_text,
                     style: TextStyle(color: ColorManager.primaryDark)),
               ),

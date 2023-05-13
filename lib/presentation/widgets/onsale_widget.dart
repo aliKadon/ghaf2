@@ -8,6 +8,7 @@ import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_
 import '../../app/utils/app_shared_data.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/product_view/product_view_new.dart';
 
@@ -38,7 +39,7 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
         ));
       },
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +67,7 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
                           ),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           child: GridTile(
                             footer: GridTileBar(
 
@@ -95,7 +96,7 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
                           ),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           child: GridTile(
                             footer: GridTileBar(
                                 backgroundColor: ColorManager.primaryDark,
@@ -121,12 +122,12 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
                                 }
                               },
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(AppSize.s8),
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(100),
                                       color: Colors.black54),
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(AppSize.s8),
                                   child: _product.isFavorite!
                                       ? Image.asset(
                                     IconsAssets.heart1,
@@ -152,14 +153,14 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
               ),
               Text(_product.name!,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: FontSize.s18,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
                 children: [
                   Text('${_product.price} ${_product.isoCurrencySymbol}',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: FontSize.s14,
                           fontWeight: FontWeight.bold,
                           color: ColorManager.primaryDark)),
                   SizedBox(
@@ -174,7 +175,7 @@ class _OnsaleWidgetState extends State<OnsaleWidget> with Helpers {
                   ),
                   Text('${_product.stars}',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: FontSize.s14,
                           fontWeight: FontWeight.w500,
                           color: ColorManager.primaryDark)),
                 ],

@@ -33,6 +33,8 @@ class StoreView extends StatefulWidget {
 }
 
 class _StoreViewState extends State<StoreView> {
+
+  var language = SharedPrefController().lang1;
   //controller
   late final CategoriesGetxController _categoriesGetxController =
       Get.put(CategoriesGetxController());
@@ -177,7 +179,7 @@ class _StoreViewState extends State<StoreView> {
                                       width: MediaQuery.of(context).size.width *
                                           0.08,
                                       child: Image.asset(
-                                        IconsAssets.arrow,
+                                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                         height: AppSize.s18,
                                         width: AppSize.s10,
                                         color: ColorManager.primary,
@@ -265,7 +267,7 @@ class _StoreViewState extends State<StoreView> {
                       Container(
                         height: AppSize.s125,
                         width: MediaQuery.of(context).size.width * 1,
-                        padding: EdgeInsets.all(14),
+                        padding: EdgeInsets.all(AppSize.s14),
                         child: Row(
                           children: [
                             _categoriesGetxController
@@ -369,7 +371,7 @@ class _StoreViewState extends State<StoreView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Divider(
                           color: ColorManager.greyLight,
                           thickness: 1,
@@ -384,7 +386,7 @@ class _StoreViewState extends State<StoreView> {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:
-                                  const EdgeInsets.only(left: 8.0, right: 8.0),
+                                   EdgeInsets.only(left: AppSize.s8, right: AppSize.s8),
                               child: WidgetInStoreScreenWidget(
                                 is24: _categoriesGetxController
                                     .branchById!.is24Hours!,
@@ -397,14 +399,14 @@ class _StoreViewState extends State<StoreView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                        padding:  EdgeInsets.only(right: AppSize.s8, left: AppSize.s8),
                         child: Divider(
                           color: ColorManager.greyLight,
                           thickness: 1,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(AppSize.s8),
                         child: Row(
                           children: [
                             Text(
@@ -480,7 +482,7 @@ class _StoreViewState extends State<StoreView> {
                               ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                        padding:  EdgeInsets.only(right: AppSize.s8, left: AppSize.s8),
                         child: Divider(
                           color: ColorManager.greyLight,
                           thickness: 1,
@@ -497,7 +499,7 @@ class _StoreViewState extends State<StoreView> {
                             )
                           : Container(
                               height: AppSize.s77,
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(AppSize.s8),
                               child: GetBuilder<HomeViewGetXController>(
                                   builder: (controller) {
                                 if (_homeViewGetXController.productType.length >

@@ -559,8 +559,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     left: MediaQuery.of(context)
                                                         .size
                                                         .height *
-                                                        0.40,
-                                                    top: AppSize.s52,
+                                                        0.35,
+                                                    top: AppSize.s65,
                                                     child: Image.asset(
                                                       ImageAssets.imageInMain4,
                                                       height: AppSize.s110,
@@ -571,8 +571,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     right: MediaQuery.of(context)
                                                         .size
                                                         .height *
-                                                        0.40,
-                                                    top: AppSize.s52,
+                                                        0.37,
+                                                    top: AppSize.s65,
                                                     child: Image.asset(
                                                       ImageAssets.imageInMain4,
                                                       height: AppSize.s110,
@@ -696,113 +696,111 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                     builder:
                                         (HomeViewGetXController controller) {
                                       return Container(
-                                        child: Flexible(
-                                          child: GridView.builder(
-                                            // key: _innerListKey,
-                                            // controller: _innerScrollController,
-                                            shrinkWrap: true,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 3,
-                                                    mainAxisSpacing: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                        0.01,
-                                                    // childAspectRatio: AppDimensions.getHeight(0.4,context),
-                                                    childAspectRatio: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                        0.0001,
-                                                    crossAxisSpacing: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                        0.01,
-                                                    mainAxisExtent:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.12),
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemCount: _homeViewGetXController
-                                                .categories.length,
-                                            itemBuilder: (context, index) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context)
-                                                      .push(MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        StoreByCategory(
-                                                            nameStore:
-                                                                _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .name!,
-                                                            cid:
-                                                                _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .id!),
-                                                  ));
-                                                },
-                                                child: Column(
-                                                  children: [
-                                                    Card(
-                                                      child: Padding(
-                                                        padding: EdgeInsets
-                                                                .all(MediaQuery.of(context).size.height * 0.0015),
-                                                        child: _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .categoryImageData ==
-                                                                null
-                                                            ? Image.asset(
-                                                                ImageAssets
-                                                                    .grocery,
-                                                                fit: BoxFit
-                                                                    .scaleDown)
-                                                            : Image.network(
-                                                                _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .categoryImageData!,
-                                                                height:
-                                                                    AppSize.s70,
-                                                                width:
-                                                                    AppSize.s92,
-                                                                fit: BoxFit
-                                                                    .scaleDown),
-                                                      ),
+                                        child: GridView.builder(
+                                          // key: _innerListKey,
+                                          // controller: _innerScrollController,
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  mainAxisSpacing: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                      0.01,
+                                                  // childAspectRatio: AppDimensions.getHeight(0.4,context),
+                                                  childAspectRatio: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                      0.0001,
+                                                  crossAxisSpacing: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                      0.01,
+                                                  mainAxisExtent:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.14),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: _homeViewGetXController
+                                              .categories.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      StoreByCategory(
+                                                          nameStore:
+                                                              _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .name!,
+                                                          cid:
+                                                              _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .id!),
+                                                ));
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Card(
+                                                    child: Padding(
+                                                      padding: EdgeInsets
+                                                              .all(MediaQuery.of(context).size.height * 0.0015),
+                                                      child: _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .categoryImageData ==
+                                                              null
+                                                          ? Image.asset(
+                                                              ImageAssets
+                                                                  .grocery,
+                                                              fit: BoxFit
+                                                                  .scaleDown)
+                                                          : Image.network(
+                                                              _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .categoryImageData!,
+                                                              height:
+                                                                  AppSize.s70,
+                                                              width:
+                                                                  AppSize.s92,
+                                                              fit: BoxFit
+                                                                  .scaleDown),
                                                     ),
-                                                    Text(
-                                                      language == 'en'
-                                                          ? _homeViewGetXController
-                                                              .categories[index]
-                                                              .name!
-                                                          : _homeViewGetXController
-                                                                      .categories[
-                                                                          index]
-                                                                      .categoriesAr ==
-                                                                  null
-                                                              ? _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .name!
-                                                              : _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .categoriesAr!,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize:
-                                                              FontSize.s10),
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
+                                                  ),
+                                                  Text(
+                                                    language == 'en'
+                                                        ? _homeViewGetXController
+                                                            .categories[index]
+                                                            .name!
+                                                        : _homeViewGetXController
+                                                                    .categories[
+                                                                        index]
+                                                                    .categoriesAr?.name ==
+                                                                null
+                                                            ? _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .name!
+                                                            : _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .categoriesAr!.name!,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize:
+                                                            FontSize.s10),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
                                         ),
                                       );
                                     },
@@ -899,10 +897,11 @@ class _HomeViewState extends State<HomeView> with Helpers {
                               .height *
                               0.012,
                         ),
-                        Flexible(
+                        Container(
                           child: GetBuilder<HomeViewGetXController>(
                             // id: 'products',
                             builder: (controller) => Container(
+                              width: AppSize.s370,
                               height: controller.mostPopular.length == 0
                                   ? 0
                                   : MediaQuery.of(context).size.height * 0.34,
@@ -913,7 +912,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                       padding: EdgeInsets.all(MediaQuery.of(context)
                                           .size
                                           .height *
-                                          0.0090),
+                                          0.0070),
                                       scrollDirection: Axis.horizontal,
                                       physics: BouncingScrollPhysics(),
                                       itemCount: controller.mostPopular.length,
@@ -1176,7 +1175,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                       builder: (controller) => Container(
                         height: MediaQuery.of(context).size.height * 0.25,
                         child: ListView.builder(
-                          padding: EdgeInsets.all(8),
+                          padding: EdgeInsets.all(AppSize.s8),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: controller.nearbyStores.length,
@@ -1243,7 +1242,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                   child: Row(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.all(9.0),
+                                        padding:  EdgeInsets.all(AppSize.s9),
                                         child: isArabic == 'en'
                                             ? Image.asset(
                                                 ImageAssets.save,

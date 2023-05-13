@@ -60,8 +60,8 @@ class _MainSellerViewState extends State<MainSellerView> {
           },
           type: BottomNavigationBarType.fixed,
           selectedItemColor: ColorManager.primary,
-          selectedFontSize: 16,
-          unselectedFontSize: 14,
+          selectedFontSize: FontSize.s16,
+          unselectedFontSize: FontSize.s14,
           elevation: 30,
           selectedLabelStyle: getMediumStyle(
               color: ColorManager.primary, fontSize: FontSize.s12),

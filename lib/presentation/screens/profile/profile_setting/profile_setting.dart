@@ -64,7 +64,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Column(
             children: [
               SizedBox(
@@ -81,7 +81,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -256,7 +256,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                 height: AppSize.s14,
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(AppSize.s8),
                 child: InkWell(
                   onTap: () {
                     // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddressesView(),));
@@ -269,12 +269,12 @@ class _ProfileSettingState extends State<ProfileSetting> {
                       Spacer(),
                       language == 'en'
                           ? Image.asset(
-                        IconsAssets.arrow2,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         color: ColorManager.primary,
                       )
                           : Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         color: ColorManager.primary,
                       ),
@@ -288,7 +288,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
               Container(
                 width: double.infinity,
                 height: AppSize.s65,
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(AppSize.s8),
                 child: ElevatedButton(
                     onPressed: () {
                       _profileSettingGetxController.editUserDetails(

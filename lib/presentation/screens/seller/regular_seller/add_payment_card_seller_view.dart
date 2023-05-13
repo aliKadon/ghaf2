@@ -212,7 +212,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
 
                           _customDialogCancel(context);
                         }, child: Text(AppLocalizations.of(context)!.cancel)),
-                    SizedBox(width: 5,),
+                    SizedBox(width: AppSize.s5,),
                     userInfo['role'] == 'Seller' ? ElevatedButton(
                       onPressed: () {
                         _checkData();

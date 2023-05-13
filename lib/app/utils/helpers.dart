@@ -28,6 +28,7 @@ import '../../domain/model/subscription_plan.dart';
 import '../../presentation/resources/color_manager.dart';
 import '../../presentation/resources/styles_manager.dart';
 import '../../presentation/screens/checkout/cancelling_order_screen.dart';
+import '../../presentation/screens/terms_use_view.dart';
 
 mixin Helpers {
   //controller
@@ -102,7 +103,7 @@ mixin Helpers {
           ),
           builder: (context, state) => Material(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -141,12 +142,12 @@ mixin Helpers {
                                 RoundedRectangleBorder(
                                     side:
                                         BorderSide(color: ColorManager.primary),
-                                    borderRadius: BorderRadius.circular(10)))),
+                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.ok,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.white, fontSize: 18),
+                              color: ColorManager.white, fontSize: FontSize.s18),
                         ),
                       ),
                     ),
@@ -166,7 +167,7 @@ mixin Helpers {
           ),
           builder: (context, state) => Material(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -178,7 +179,7 @@ mixin Helpers {
                     ),
                     Text(AppLocalizations.of(context)!.canceling_order,
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: FontSize.s25,
                             fontWeight: FontWeight.w600,
                             color: ColorManager.primaryDark)),
                     SizedBox(
@@ -186,7 +187,7 @@ mixin Helpers {
                     ),
                     Text(AppLocalizations.of(context)!.are_you_sure_cancel,
                         style: TextStyle(
-                            fontSize: 15,
+                            fontSize: FontSize.s15,
                             fontWeight: FontWeight.w400,
                             color: ColorManager.primary)),
                     SizedBox(
@@ -213,12 +214,12 @@ mixin Helpers {
                                 shape: MaterialStatePropertyAll(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10)))),
+                                            BorderRadius.circular(AppSize.s10)))),
                             child: Text(
                               AppLocalizations.of(context)!.yes,
                               // 'Login',
                               style: getSemiBoldStyle(
-                                  color: ColorManager.white, fontSize: 18),
+                                  color: ColorManager.white, fontSize: FontSize.s18),
                             ),
                           ),
                         ),
@@ -240,13 +241,13 @@ mixin Helpers {
                                         side: BorderSide(
                                             color: ColorManager.primaryDark),
                                         borderRadius:
-                                            BorderRadius.circular(10)))),
+                                            BorderRadius.circular(AppSize.s10)))),
                             child: Text(
                               AppLocalizations.of(context)!.no,
                               // 'Login',
                               style: getSemiBoldStyle(
                                   color: ColorManager.primaryDark,
-                                  fontSize: 18),
+                                  fontSize: FontSize.s18),
                             ),
                           ),
                         ),
@@ -254,7 +255,7 @@ mixin Helpers {
                       ],
                     ),
                     SizedBox(
-                      height: 150,
+                      height: AppSize.s150,
                     ),
                   ],
                 ),
@@ -285,7 +286,7 @@ mixin Helpers {
         builder: (context, state) => Material(
           child: StatefulBuilder(
             builder: (context, setState) => Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -305,9 +306,9 @@ mixin Helpers {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           color: ColorManager.greyLight),
-                      padding: EdgeInsets.all(14),
+                      padding: EdgeInsets.all(AppSize.s14),
                       child: Row(children: [
                         Icon(
                           Icons.wallet_giftcard,
@@ -346,10 +347,10 @@ mixin Helpers {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           border: Border.all(color: ColorManager.greyLight),
                         ),
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.all(AppSize.s12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -408,11 +409,11 @@ mixin Helpers {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(AppSize.s15),
                                 border:
                                     Border.all(color: ColorManager.greyLight),
                               ),
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -454,7 +455,7 @@ mixin Helpers {
                     Container(
                       height: AppSize.s82,
                       width: double.infinity,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       child: ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
@@ -499,7 +500,7 @@ mixin Helpers {
         builder: (context, state) => Material(
           child: StatefulBuilder(
             builder: (context, setState) => Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -548,9 +549,9 @@ mixin Helpers {
                     ),
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(AppSize.s10),
                           border: Border.all(color: ColorManager.greyLight)),
                       child: Row(
                         children: [
@@ -605,12 +606,19 @@ mixin Helpers {
                               fontWeight: FontWeight.w600,
                               fontSize: FontSize.s14),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.terms_apply1,
-                          style: TextStyle(
-                              color: ColorManager.primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s14),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => TermsOfUseView(),
+                            ));
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.terms_apply1,
+                            style: TextStyle(
+                                color: ColorManager.primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSize.s14),
+                          ),
                         ),
                       ],
                     ),
@@ -620,7 +628,7 @@ mixin Helpers {
                     Container(
                       height: AppSize.s82,
                       width: double.infinity,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       child: ElevatedButton(
                           onPressed: () {
                             _subscribeViewGetXController.subscribeAsGhafGolden(
@@ -658,7 +666,7 @@ mixin Helpers {
           builder: (context, state) => StatefulBuilder(
             builder: (context, setState) => Material(
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.all(AppSize.s15),
                 child: Container(
                   width: double.infinity,
                   child: Column(
@@ -750,7 +758,7 @@ mixin Helpers {
                           Container(
                             height: AppSize.s82,
                             width: double.infinity,
-                            padding: EdgeInsets.all(12),
+                            padding: EdgeInsets.all(AppSize.s12),
                             child: ElevatedButton(
                                 onPressed: () {
                                   categoriesGetxController.getBranches(
@@ -794,7 +802,7 @@ mixin Helpers {
             child: StatefulBuilder(
               builder: (context, setState) {
                 return Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: EdgeInsets.all(AppSize.s15),
                   child: Container(
                     width: double.infinity,
                     child: Column(
@@ -922,10 +930,10 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding: EdgeInsets.all(5),
+                                    padding:EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue,
@@ -959,10 +967,10 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding: EdgeInsets.all(5),
+                                    padding:EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue1,
@@ -1003,7 +1011,7 @@ mixin Helpers {
                             Container(
                               height: AppSize.s82,
                               width: double.infinity,
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   onPressed: () {
                                     print('=============result');
@@ -1057,7 +1065,7 @@ mixin Helpers {
                   print('====================hours1');
                   print(hours);
                   return Padding(
-                    padding: const EdgeInsets.all(15),
+                    padding: EdgeInsets.all(AppSize.s15),
                     child: Container(
                       width: double.infinity,
                       child: Column(
@@ -1177,10 +1185,10 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding: EdgeInsets.all(5),
+                                    padding:EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue,
@@ -1214,10 +1222,10 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding: EdgeInsets.all(5),
+                                    padding:EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue1,
@@ -1249,7 +1257,7 @@ mixin Helpers {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(AppSize.s8),
                                 child: Row(
                                   children: [
                                     Text(AppLocalizations.of(context)!.frequency,
@@ -1384,7 +1392,7 @@ mixin Helpers {
                               Container(
                                 height: AppSize.s82,
                                 width: double.infinity,
-                                padding: EdgeInsets.all(12),
+                                padding: EdgeInsets.all(AppSize.s12),
                                 child: ElevatedButton(
                                     onPressed: () {
                                       print('=============result');
@@ -1443,7 +1451,7 @@ mixin Helpers {
             child: StatefulBuilder(
               builder: (context, setState) {
                 return Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: EdgeInsets.all(AppSize.s15),
                   child: Container(
                     width: double.infinity,
                     child: Column(
@@ -1567,10 +1575,10 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding: EdgeInsets.all(5),
+                                    padding:EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue,
@@ -1604,10 +1612,10 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding: EdgeInsets.all(5),
+                                    padding:EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue1,
@@ -1780,7 +1788,7 @@ mixin Helpers {
                             Container(
                               height: AppSize.s82,
                               width: double.infinity,
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   onPressed: () {
                                     print(frequency);
@@ -1838,7 +1846,7 @@ mixin Helpers {
           ),
           builder: (context, state) => Material(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -1936,7 +1944,7 @@ mixin Helpers {
                             Container(
                               height: AppSize.s82,
                               // width: double.infinity,
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   style: ButtonStyle(
                                       backgroundColor: MaterialStatePropertyAll(
@@ -1946,7 +1954,7 @@ mixin Helpers {
                                             side: BorderSide(
                                                 color: ColorManager.primary),
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                                BorderRadius.circular(AppSize.s10)),
                                       )),
                                   onPressed: () {},
                                   child: Text(
@@ -1960,7 +1968,7 @@ mixin Helpers {
                             Container(
                               height: AppSize.s82,
                               // width: double.infinity,
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -1996,7 +2004,7 @@ mixin Helpers {
           ),
           builder: (context, state) => Material(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -2051,7 +2059,7 @@ mixin Helpers {
                             Container(
                               height: AppSize.s82,
                               // width: double.infinity,
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   style: ButtonStyle(
                                       backgroundColor: MaterialStatePropertyAll(
@@ -2062,7 +2070,7 @@ mixin Helpers {
                                                 color:
                                                     ColorManager.primaryDark),
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                                BorderRadius.circular(AppSize.s10)),
                                       )),
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -2077,7 +2085,7 @@ mixin Helpers {
                             Container(
                               height: AppSize.s82,
                               // width: double.infinity,
-                              padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreOrderProductsScreen(bid: bid),));
@@ -2113,7 +2121,7 @@ mixin Helpers {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: EdgeInsets.all(AppSize.s15),
                   child: Row(
                     children: [
                       RedirectSocialIcon(
@@ -2180,7 +2188,7 @@ mixin Helpers {
           ),
           builder: (context, state) => Material(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -2192,7 +2200,7 @@ mixin Helpers {
                     ),
                     Text(AppLocalizations.of(context)!.register_now,
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: FontSize.s25,
                             fontWeight: FontWeight.w600,
                             color: ColorManager.primary)),
                     SizedBox(
@@ -2202,7 +2210,7 @@ mixin Helpers {
                         AppLocalizations.of(context)!
                             .you_must_register_or_log_in,
                         style: TextStyle(
-                            fontSize: 15,
+                            fontSize: FontSize.s15,
                             fontWeight: FontWeight.w400,
                             color: ColorManager.primaryDark)),
                     SizedBox(
@@ -2223,12 +2231,12 @@ mixin Helpers {
                                 ColorManager.primaryDark),
                             shape: MaterialStatePropertyAll(
                                 RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)))),
+                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.login,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.white, fontSize: 18),
+                              color: ColorManager.white, fontSize: FontSize.s18),
                         ),
                       ),
                     ),
@@ -2254,17 +2262,17 @@ mixin Helpers {
                                 RoundedRectangleBorder(
                                     side: BorderSide(
                                         color: ColorManager.primaryDark),
-                                    borderRadius: BorderRadius.circular(10)))),
+                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.sign_up,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.primaryDark, fontSize: 18),
+                              color: ColorManager.primaryDark, fontSize: FontSize.s18),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 150,
+                      height: AppSize.s150,
                     ),
                   ],
                 ),

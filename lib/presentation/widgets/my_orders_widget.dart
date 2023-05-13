@@ -28,7 +28,7 @@ class MyOrdersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(AppSize.s12),
       child: Container(
         child: Row(
           children: [

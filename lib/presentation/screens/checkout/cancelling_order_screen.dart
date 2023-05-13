@@ -36,7 +36,7 @@ class CancellingOrderScreen extends StatelessWidget {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.3),
             Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: EdgeInsets.all(AppSize.s14),
               child: Container(
                 width: double.infinity,
                 height: AppSize.s60,

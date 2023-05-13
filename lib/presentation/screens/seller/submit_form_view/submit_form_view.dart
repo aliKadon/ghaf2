@@ -454,7 +454,7 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                                     bottom: AppMargin.m16,
                                     right: AppMargin.m16,
                                   ),
-                                  padding: EdgeInsets.all(8.h),
+                                  padding: EdgeInsets.all(AppSize.s8.h),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8.r),
                                     border: Border.all(

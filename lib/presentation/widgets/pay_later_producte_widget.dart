@@ -37,7 +37,7 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
         ));
       },
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
                         height: MediaQuery.of(context).size.height * 0.29,
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           image: DecorationImage(
                             image: AssetImage(ImageAssets.pizza),
                             fit: BoxFit.scaleDown,
@@ -61,7 +61,7 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
                         height: MediaQuery.of(context).size.height * 0.29,
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           image: DecorationImage(
                             image: NetworkImage(widget.imageUrl),
                             fit: BoxFit.scaleDown,
@@ -69,12 +69,12 @@ class _PayLaterProductWidgetState extends State<PayLaterProductWidget> {
                         ),
                       ),
                       // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
+                      //   padding: EdgeInsets.all(AppSize.s8),
                       //   child: Container(
                       //       decoration: BoxDecoration(
                       //           borderRadius: BorderRadius.circular(100),
                       //           color: Colors.black54),
-                      //       padding: EdgeInsets.all(8),
+                      //       padding: EdgeInsets.all(AppSize.s8),
                       //       child: Image.asset(
                       //         IconsAssets.heart,
                       //         height: AppSize.s24,

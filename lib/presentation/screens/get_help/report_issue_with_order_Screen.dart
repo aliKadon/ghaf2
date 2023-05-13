@@ -10,6 +10,7 @@ import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -95,7 +96,7 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(AppSize.s12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -115,7 +116,7 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -138,14 +139,14 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                 color: ColorManager.greyLight,
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(AppSize.s8),
                 child: Row(
                   children: [
                     Container(
                       height: AppSize.s110,
                       width: AppSize.s110,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(AppSize.s20),
                           image: DecorationImage(
                               image: AssetImage(ImageAssets.pizza))),
                     ),
@@ -233,7 +234,7 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                 height: AppSize.s24,
               ),
               Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: EdgeInsets.all(AppSize.s14),
                 child: Row(
                   children: [
                     Container(
@@ -347,7 +348,7 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
           ),
           builder: (context, state) => Material(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(AppSize.s15),
               child: Container(
                 width: double.infinity,
                 child: Column(
@@ -383,12 +384,12 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                                 RoundedRectangleBorder(
                                     side:
                                         BorderSide(color: ColorManager.primary),
-                                    borderRadius: BorderRadius.circular(10)))),
+                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.ok,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.white, fontSize: 18),
+                              color: ColorManager.white, fontSize: FontSize.s18),
                         ),
                       ),
                     ),

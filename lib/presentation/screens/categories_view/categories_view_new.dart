@@ -73,7 +73,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                 itemCount: controller.categories.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                    padding: EdgeInsets.only(left: AppSize.s8),
                     child: selected == index
                         ? GestureDetector(
                             onTap: () {
@@ -123,7 +123,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
           Divider(thickness: 1, color: ColorManager.greyLight),
           Container(
             height: MediaQuery.of(context).size.height * 0.07,
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(AppSize.s8),
             child: Row(
               children: [
                 GestureDetector(
@@ -134,12 +134,12 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                         categoriesGetxController: _categoriesGetxController);
                   },
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(AppSize.s8),
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: ColorManager.grey,
                         ),
-                        borderRadius: BorderRadius.circular(15)),
+                        borderRadius: BorderRadius.circular(AppSize.s15)),
                     child: Row(
                       children: [
                         Image.asset(ImageAssets.sorted, height: AppSize.s20),
@@ -170,12 +170,12 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                 //       return Row(
                 //         children: [
                 //           Container(
-                //             padding: EdgeInsets.all(8),
+                //             padding: EdgeInsets.all(AppSize.s8),
                 //             decoration: BoxDecoration(
                 //                 border: Border.all(
                 //                   color: ColorManager.grey,
                 //                 ),
-                //                 borderRadius: BorderRadius.circular(15)),
+                //                 borderRadius: BorderRadius.circular(AppSize.s15)),
                 //             child: Text('Delivery type'),
                 //           ),
                 //           SizedBox(
@@ -192,7 +192,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(AppSize.s8),
                 child: Text(
                   AppLocalizations.of(context)!.store,
                   style: TextStyle(

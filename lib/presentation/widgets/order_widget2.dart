@@ -36,7 +36,7 @@ class _OrderWidget2State extends State<OrderWidget2> {
   Widget build(BuildContext context) {
     var orderById = Provider.of<ProductProvider>(context,listen: false).orderById;
     return Container(
-      padding: EdgeInsets.all(8.h),
+      padding: EdgeInsets.all(AppSize.s8.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(

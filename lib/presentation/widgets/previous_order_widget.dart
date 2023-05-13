@@ -52,7 +52,7 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(AppSize.s8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,7 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
                 height: MediaQuery.of(context).size.height * 0.11,
                 width: MediaQuery.of(context).size.width * 0.27,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(AppSize.s10),
                 ),
                 child: Image.network(widget.storeImage,
                     errorBuilder: (context, error, stackTrace) {
@@ -71,12 +71,12 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
                 }, fit: BoxFit.scaleDown),
               ),
               SizedBox(
-                width: 14,
+                width: AppSize.s14,
               )
             ],
           ),
           SizedBox(
-            height: 8,
+            height: AppSize.s8,
           ),
           Text('${widget.storeName}',
               style: TextStyle(
@@ -91,7 +91,7 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
                 size: AppSize.s20,
               ),
               SizedBox(
-                width: 8,
+                width: AppSize.s8,
               ),
               Text('${dur}',
                   style: TextStyle(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -45,7 +46,7 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),

@@ -40,11 +40,11 @@ class _StoreWidgetState extends State<StoreWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Container(
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.all(AppSize.s12),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                color: Colors.white, borderRadius: BorderRadius.circular(AppSize.s10)),
             child: Row(
               // crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
@@ -153,7 +153,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                           // Container(
                           //   padding: EdgeInsets.all(6),
                           //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderRadius: BorderRadius.circular(AppSize.s10),
                           //       color: ColorManager.primaryDark),
                           //   child: Text('deals up to 50 % off',
                           //       style: TextStyle(

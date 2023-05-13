@@ -8,6 +8,7 @@ import 'package:ghaf_application/presentation/screens/get_help/report_delayed_sc
 import 'package:ghaf_application/presentation/screens/get_help/report_issue_with_order_Screen.dart';
 import 'package:ghaf_application/presentation/screens/get_help/return_order_item_details_get_help.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -41,7 +42,7 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(AppSize.s12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,7 +62,7 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -293,7 +294,7 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                               width: AppSize.s110,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(20),
+                                                      BorderRadius.circular(AppSize.s20),
                                                   image: DecorationImage(
                                                       image: AssetImage(
                                                           ImageAssets.pizza))),
@@ -303,7 +304,7 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                               width: AppSize.s110,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(20),
+                                                      BorderRadius.circular(AppSize.s20),
                                                   image: DecorationImage(
                                                       image: NetworkImage(
                                                           controller
@@ -338,7 +339,7 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                       ),
                                       Spacer(),
                                       Image.asset(
-                                        IconsAssets.arrow2,
+                                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                         height: AppSize.s18,
                                         color: ColorManager.primary,
                                       ),

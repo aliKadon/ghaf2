@@ -59,7 +59,7 @@ class _SliderImageState extends State<SliderImage> {
             height: MediaQuery.of(context).size.height * 0.23,
             decoration: BoxDecoration(
                 color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(15)),
+                borderRadius: BorderRadius.circular(AppSize.s15)),
             child: Stack(
               children: [
                 isArabic == 'en'
@@ -75,7 +75,7 @@ class _SliderImageState extends State<SliderImage> {
                     ? Positioned(
                         top: AppSize.s20,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding:  EdgeInsets.only(left: AppSize.s8),
                           child: Image.asset(
                             ImageAssets.brIcon,
                             height: AppSize.s46,
@@ -85,7 +85,7 @@ class _SliderImageState extends State<SliderImage> {
                     : Positioned(
                         top: AppSize.s20,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding:  EdgeInsets.only(left: AppSize.s8),
                           child: Image.network(
                             widget.imagesUrl,
                             errorBuilder: (context, error, stackTrace) =>
@@ -101,7 +101,7 @@ class _SliderImageState extends State<SliderImage> {
                 Positioned(
                     top: AppSize.s73,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                      padding:  EdgeInsets.only(left: AppSize.s8),
                       child: Text(
                         '${widget.header}',
                         style: TextStyle(
@@ -113,7 +113,7 @@ class _SliderImageState extends State<SliderImage> {
                 Positioned(
                     top: AppSize.s110,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                      padding:  EdgeInsets.only(left: AppSize.s8),
                       child: Text(
                         '${widget.addDescription}',
                         style: TextStyle(
@@ -126,7 +126,7 @@ class _SliderImageState extends State<SliderImage> {
                     ? Positioned(
                         top: 140,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding:  EdgeInsets.only(left: AppSize.s8),
                           child: Text(
                             '${widget.addFooter}',
                             style: TextStyle(
@@ -151,7 +151,7 @@ class _SliderImageState extends State<SliderImage> {
     //         (index) {
     //       return GestureDetector(
     //         child: ClipRRect(
-    //           borderRadius: BorderRadius.circular(15),
+    //           borderRadius: BorderRadius.circular(AppSize.s15),
     //           child: Image.asset(
     //             ImageAssets.productImage,
     //             fit: BoxFit.cover,

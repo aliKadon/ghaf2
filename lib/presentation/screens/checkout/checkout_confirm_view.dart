@@ -73,7 +73,7 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                           // GestureDetector(
                           //   // onTap: () => Navigator.pop(context),
                           //   child: Image.asset(
-                          //     IconsAssets.arrow,
+                          //     SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           //     height: AppSize.s18,
                           //     width: AppSize.s10,
                           //   ),
@@ -125,9 +125,9 @@ class _CheckOutConfirmViewState extends State<CheckOutConfirmView> {
                       Container(
                         height: MediaQuery.of(context).size.height * 0.1,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(AppSize.s10),
                             color: ColorManager.greyLight),
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.all(AppSize.s12),
                         child: Text(
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.clip,

@@ -119,7 +119,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                               height: MediaQuery.of(context).size.height * 0.038,
                               width: MediaQuery.of(context).size.width * 0.08,
                               child: Image.asset(
-                                IconsAssets.arrow,
+                                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                 height: AppSize.s18,
                                 width: AppSize.s10,
                               ),
@@ -163,7 +163,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                             top: AppSize.s300,
                             // bottom: -10,
                             child: Container(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(AppSize.s20),
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadiusDirectional.circular(50),
@@ -275,7 +275,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                           //       width: AppSize.s110,
                           //       decoration: BoxDecoration(
                           //           color: Colors.white,
-                          //           borderRadius: BorderRadius.circular(10)),
+                          //           borderRadius: BorderRadius.circular(AppSize.s10)),
                           //       child: Row(
                           //         children: [
                           //           Icon(Icons.timer,
@@ -329,7 +329,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                               right: 0,
                               bottom: 0,
                               child: Container(
-                                padding: EdgeInsets.all(15),
+                                padding:EdgeInsets.all(AppSize.s15),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(50),

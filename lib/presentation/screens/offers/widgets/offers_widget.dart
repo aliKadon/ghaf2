@@ -29,7 +29,7 @@ class OffersWidget extends StatelessWidget {
         ));
       },
       child: Container(
-        padding: EdgeInsets.all(14),
+        padding: EdgeInsets.all(AppSize.s14),
         child: Row(
           children: [
             productImages == ''
@@ -41,11 +41,11 @@ class OffersWidget extends StatelessWidget {
                     height: AppSize.s75,
                     width: AppSize.s75,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(AppSize.s10),
                         image: DecorationImage(
                             image: NetworkImage(productImages),
                             fit: BoxFit.fill)),
-                    // padding: EdgeInsets.all(12),
+                    // padding: EdgeInsets.all(AppSize.s12),
                   ),
             SizedBox(width: AppSize.s15),
             Column(

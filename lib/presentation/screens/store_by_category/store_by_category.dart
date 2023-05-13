@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/categories_view/categories_getx_controller.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -60,7 +61,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -112,7 +113,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                               Container(
                                 color: ColorManager.grey1,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: EdgeInsets.all(AppSize.s12),
                                   child: Row(
                                     children: [
                                       _categoriesGetxController.branches[index]
@@ -172,7 +173,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                       color:
                                                           ColorManager.primary,
                                                     ),
-                                                    SizedBox(width: 5),
+                                                    SizedBox(width: AppSize.s5),
                                                     GetBuilder<
                                                         CategoriesGetxController>(
                                                       builder: (controller) =>

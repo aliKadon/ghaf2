@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -32,6 +33,22 @@ class _MyAppState extends State<MyApp> {
   final LanguageGetXController languageGetXController =
   Get.put<LanguageGetXController>(LanguageGetXController());
 
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) {
+      if (message != null && message.data["screen"] != null) {
+        var route = message.data["screen"];
+        navigatorKey.currentState!.pushNamed('/$route');
+      }
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -63,8 +80,9 @@ class _MyAppState extends State<MyApp> {
           return GetBuilder<LanguageGetXController>(
               builder: (controller) {
                 print('isArabic : $isArabic');
-                print(languageGetXController.language);
+                print(controller.language);
                 return MaterialApp(
+                  navigatorKey: navigatorKey,
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
                     GlobalMaterialLocalizations.delegate,

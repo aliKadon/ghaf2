@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_shop
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/review_getx_controller.dart';
 
 import '../../../../app/constants.dart';
+import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
@@ -64,7 +65,7 @@ class _RateShopState extends State<RateShop> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -114,7 +115,7 @@ class _RateShopState extends State<RateShop> {
                   direction: Axis.horizontal,
                   itemCount: 5,
                   glow: false,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                  itemPadding: EdgeInsets.symmetric(horizontal: AppSize.s8),
                   itemBuilder: (context, _) => SvgPicture.asset(
                     '${Constants.vectorsPath}star.svg',
                   ),
@@ -170,9 +171,9 @@ class _RateShopState extends State<RateShop> {
                     enabled: false,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(AppRadius.r10),
                       ),
-                      contentPadding: EdgeInsets.only(bottom: 80, left: 7),
+                      contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
                       label: Text('${_rateShopGetxController.description}'),
                       labelStyle: TextStyle(fontSize: AppSize.s26),
                     ),

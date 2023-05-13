@@ -253,7 +253,7 @@ class _RegisterPaymentLinkSellerViewState
                                   bottom: AppMargin.m16,
                                   right: AppMargin.m16,
                                 ),
-                                padding: EdgeInsets.all(8.h),
+                                padding: EdgeInsets.all(AppSize.s8.h),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.r),
                                   border: Border.all(
@@ -290,7 +290,7 @@ class _RegisterPaymentLinkSellerViewState
                 ),
                 Container(
                   // height: AppSize.s75,
-                  margin: EdgeInsets.only(left: 12, right: 12),
+                  margin: EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
                   width: MediaQuery.of(context).size.width * 1,
                   padding: EdgeInsets.only(left: AppPadding.p12),
                   decoration: BoxDecoration(
@@ -335,7 +335,7 @@ class _RegisterPaymentLinkSellerViewState
                 ),
                 Container(
                   // height: AppSize.s75,
-                  margin: EdgeInsets.only(left: 12, right: 12),
+                  margin: EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
                   width: MediaQuery.of(context).size.width * 1,
                   // padding: EdgeInsets.all(AppPadding.p12),
                   padding: EdgeInsets.only(left: AppPadding.p12),

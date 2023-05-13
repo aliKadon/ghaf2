@@ -198,18 +198,24 @@ class HomeViewGetXController extends GetxController with Helpers {
 
   // get categories.
   void getCategories() async {
-    try {
-      categories = await _storeApiController.getCategories();
-      print('================category');
-      print(categories[0].id!);
-      SharedPrefController().setFirstStoreName(categories[0].id!);
-      isCategoryLoading = false;
-      update();
-    } catch (error) {
-      // error.
-      showSnackBar(context,
-          message: 'An Error Occurred, Please Try again', error: true);
-    }
+    categories = await _storeApiController.getCategories();
+    print('================category');
+    print(categories[0].id!);
+    SharedPrefController().setFirstStoreName(categories[0].id!);
+    isCategoryLoading = false;
+    update();
+    // try {
+    //   categories = await _storeApiController.getCategories();
+    //   print('================category');
+    //   print(categories[0].id!);
+    //   SharedPrefController().setFirstStoreName(categories[0].id!);
+    //   isCategoryLoading = false;
+    //   update();
+    // } catch (error) {
+    //   // error.
+    //   showSnackBar(context,
+    //       message: 'An Error Occurred, Please Try again', error: true);
+    // }
   }
 
   //get recommended product
@@ -277,47 +283,34 @@ class HomeViewGetXController extends GetxController with Helpers {
     bool notifyLoading = true,
   }) async {
     // if (notifyLoading) isProductsLoading = true;
-
-    products = await _storeApiController.getFilterProducts(
-      did: did,
-      search: search,
-      maxPrice: maxPrice,
-      minPrice: minPrice,
-      filterBy: filterBy,
-      stars: stars,
-      // filterBy: ModalRoute.of(context)?.settings.arguments as String,
-    );
-    isFilterProductLoading = false;
-    update();
-
-    // try {
-    //   // if (notifyLoading) isProductsLoading = true;
-    //   // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
-    //   // print(ModalRoute.of(context)?.settings.arguments as String);
-    //   products = await _storeApiController.getFilterProducts(
-    //     did: did,
-    //     search: search,
-    //     maxPrice: maxPrice,
-    //     minPrice: minPrice,
-    //     filterBy: filterBy,
-    //     stars: stars,
-    //     // filterBy: ModalRoute.of(context)?.settings.arguments as String,
-    //   );
-    //   isFilterProductLoading = false;
-    //   update();
-    // } on DioError catch (error) {
-    //   // error.
-    //   print(error.response?.data);
-    //   print(error.toString());
-    //   showSnackBar(context,
-    //       message: 'An Error Occurred, Please Try again', error: true);
-    // } catch (error) {
-    //   // error.
-    //   debugPrint(error.toString());
-    //   print(error);
-    //   // showSnackBar(context,
-    //   //     message: 'An Error Occurred, Please Try again!!', error: true);
-    // }
+    try {
+      // if (notifyLoading) isProductsLoading = true;
+      // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');
+      // print(ModalRoute.of(context)?.settings.arguments as String);
+      products = await _storeApiController.getFilterProducts(
+        did: did,
+        search: search,
+        maxPrice: maxPrice,
+        minPrice: minPrice,
+        filterBy: filterBy,
+        stars: stars,
+        // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+      );
+      isFilterProductLoading = false;
+      update();
+    } on DioError catch (error) {
+      // error.
+      print(error.response?.data);
+      print(error.toString());
+      showSnackBar(context,
+          message: 'An Error Occurred, Please Try again', error: true);
+    } catch (error) {
+      // error.
+      debugPrint(error.toString());
+      print(error);
+      // showSnackBar(context,
+      //     message: 'An Error Occurred, Please Try again!!', error: true);
+    }
   }
 
   // get products.

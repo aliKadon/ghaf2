@@ -206,7 +206,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                                 },
                               ),
                             ),
-                            const SizedBox(width: 16),
+                             SizedBox(width: AppSize.s16),
                             Expanded(
                               child: TextFormField(
                                 keyboardType: TextInputType.number,
@@ -240,7 +240,7 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
                     height: AppSize.s44,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding:  EdgeInsets.only(top: AppSize.s16),
                     child: ElevatedButton(
                       child:  Text(AppLocalizations.of(context)!.add_card),
                       onPressed: () {
@@ -278,13 +278,13 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
         //         child: Column(
         //           children: [
         //             Container(
-        //               margin: EdgeInsets.all(15),
+        //               margin:EdgeInsets.all(AppSize.s15),
         //               child: TextFormField(
         //                 decoration: InputDecoration(
         //                   label: Text('Card Number'),
-        //                   contentPadding: EdgeInsets.all(8),
+        //                   contentPadding: EdgeInsets.all(AppSize.s8),
         //                   border: OutlineInputBorder(
-        //                     borderRadius: BorderRadius.circular(10),
+        //                     borderRadius: BorderRadius.circular(AppSize.s10),
         //                   ),
         //                 ),
         //                 textInputAction: TextInputAction.next,
@@ -300,13 +300,13 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
         //               ),
         //             ),
         //             Container(
-        //               margin: EdgeInsets.all(15),
+        //               margin:EdgeInsets.all(AppSize.s15),
         //               child: TextFormField(
         //                 decoration: InputDecoration(
         //                   label: Text('Expired Date'),
-        //                   contentPadding: EdgeInsets.all(8),
+        //                   contentPadding: EdgeInsets.all(AppSize.s8),
         //                   border: OutlineInputBorder(
-        //                     borderRadius: BorderRadius.circular(10),
+        //                     borderRadius: BorderRadius.circular(AppSize.s10),
         //                   ),
         //                 ),
         //                 textInputAction: TextInputAction.next,
@@ -322,13 +322,13 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
         //               ),
         //             ),
         //             Container(
-        //               margin: EdgeInsets.all(15),
+        //               margin:EdgeInsets.all(AppSize.s15),
         //               child: TextFormField(
         //                 decoration: InputDecoration(
         //                   label: Text('Card Number'),
-        //                   contentPadding: EdgeInsets.all(8),
+        //                   contentPadding: EdgeInsets.all(AppSize.s8),
         //                   border: OutlineInputBorder(
-        //                     borderRadius: BorderRadius.circular(10),
+        //                     borderRadius: BorderRadius.circular(AppSize.s10),
         //                   ),
         //                 ),
         //                 textInputAction: TextInputAction.next,
@@ -354,13 +354,13 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
         //             //       // Spacer(),
         //             //       Container(
         //             //
-        //             //         margin: EdgeInsets.all(15),
+        //             //         margin:EdgeInsets.all(AppSize.s15),
         //             //         child: TextFormField(
         //             //           decoration: InputDecoration(
         //             //             label: Text('Card Number'),
-        //             //             contentPadding: EdgeInsets.all(8),
+        //             //             contentPadding: EdgeInsets.all(AppSize.s8),
         //             //             border: OutlineInputBorder(
-        //             //               borderRadius: BorderRadius.circular(10),
+        //             //               borderRadius: BorderRadius.circular(AppSize.s10),
         //             //             ),
         //             //           ),
         //             //           textInputAction: TextInputAction.next,
@@ -377,13 +377,13 @@ class _PaymentMethodeForSubscribeState extends State<PaymentMethodeForSubscribe>
         //             //       ),
         //             //       // Spacer(),
         //             //       Container(
-        //             //         margin: EdgeInsets.all(15),
+        //             //         margin:EdgeInsets.all(AppSize.s15),
         //             //         child: TextFormField(
         //             //           decoration: InputDecoration(
         //             //             label: Text('Card Number'),
-        //             //             contentPadding: EdgeInsets.all(8),
+        //             //             contentPadding: EdgeInsets.all(AppSize.s8),
         //             //             border: OutlineInputBorder(
-        //             //               borderRadius: BorderRadius.circular(10),
+        //             //               borderRadius: BorderRadius.circular(AppSize.s10),
         //             //
         //             //             ),
         //             //           ),

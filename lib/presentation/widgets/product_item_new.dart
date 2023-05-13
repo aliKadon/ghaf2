@@ -80,7 +80,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
         ));
       },
       child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding:  EdgeInsets.all(AppSize.s4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

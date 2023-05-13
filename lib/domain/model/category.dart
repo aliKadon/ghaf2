@@ -1,8 +1,10 @@
+import 'categories_ar.dart';
+
 class Category {
   String? id;
   String? name;
   String? categoryImage;
-  String? categoriesAr;
+  CategoriesAr? categoriesAr;
   String? categoryImageData;
 
   Category({
@@ -18,7 +20,7 @@ class Category {
     name = json['name'];
     categoryImage = json['categoryImage'];
     categoryImageData = json['categoryImageData'];
-    categoriesAr = json['categoriesAr'];
+    categoriesAr = json['categoriesAr'] == null ? null : CategoriesAr.fromJson(json['categoriesAr']);
   }
 
   Map<String, dynamic> toJson() {

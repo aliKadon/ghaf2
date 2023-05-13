@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../app/utils/app_shared_data.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -51,7 +52,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.all(AppSize.s15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -63,7 +64,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -141,7 +142,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
               height: MediaQuery.of(context).size.height * 0.038,
               width: MediaQuery.of(context).size.width * 0.08,
               child: Image.asset(
-                IconsAssets.arrow,
+                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                 height: AppSize.s18,
                 width: AppSize.s10,
               ),

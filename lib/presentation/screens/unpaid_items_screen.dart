@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
+import '../../app/preferences/shared_pref_controller.dart';
 import '../../domain/model/unpaid_order.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -48,7 +49,7 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -74,8 +75,8 @@ class _UnpaiadItemsScreenState extends State<UnpaiadItemsScreen> {
                 itemCount: widget.unpaidOrder.items!.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.all(8),
+                    margin: EdgeInsets.all(AppSize.s10),
+                    padding: EdgeInsets.all(AppSize.s8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.r),
                       color: Colors.white,

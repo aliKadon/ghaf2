@@ -69,7 +69,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                               height: MediaQuery.of(context).size.height * 0.038,
                               width: MediaQuery.of(context).size.width * 0.08,
                               child: Image.asset(
-                                IconsAssets.arrow,
+                                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                 height: AppSize.s18,
                                 width: AppSize.s10,
                               ),
@@ -106,7 +106,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                   height: MediaQuery.of(context).size.height * 0.038,
                                   width: MediaQuery.of(context).size.width * 0.08,
                                   child: Image.asset(
-                                    IconsAssets.arrow,
+                                    SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                     height: AppSize.s18,
                                     width: AppSize.s10,
                                     color: ColorManager.primaryDark,
@@ -141,7 +141,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                   height: MediaQuery.of(context).size.height * 0.038,
                                   width:  MediaQuery.of(context).size.width * 0.08,
                                   child: Image.asset(
-                                    IconsAssets.arrow,
+                                    SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                     height: AppSize.s18,
                                     width: AppSize.s10,
                                     color: ColorManager.primaryDark,
@@ -166,8 +166,8 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                 ));
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 14.0, right: 14.0),
+                                padding:  EdgeInsets.only(
+                                    left: AppSize.s14, right: AppSize.s14),
                                 child: Text(
                                   AppLocalizations.of(context)!.edit,
                                   style: TextStyle(
@@ -288,7 +288,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(AppSize.s8),
                       child: Text(
                         '${AppLocalizations.of(context)!.add_new_card}',
                         style: TextStyle(

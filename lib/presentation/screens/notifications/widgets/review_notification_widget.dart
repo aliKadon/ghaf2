@@ -83,7 +83,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
                     color: ColorManager.white,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(AppRadius.r8),
                   ),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -110,8 +110,8 @@ class ReviewNotificationWidget extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                               border: Border.all(color: ColorManager.greyLight),
-                              borderRadius: BorderRadius.circular(15)),
-                          padding: EdgeInsets.all(14),
+                              borderRadius: BorderRadius.circular(AppSize.s15)),
+                          padding: EdgeInsets.all(AppSize.s14),
                           child: Column(
                             children: [
                               ListView.builder(
@@ -215,7 +215,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                                       shape: MaterialStatePropertyAll(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(10)))),
+                                                  BorderRadius.circular(AppSize.s10)))),
                                   onPressed: () {
                                     Navigator.push(
                                         context,
@@ -236,7 +236,7 @@ class ReviewNotificationWidget extends StatelessWidget {
                                       shape: MaterialStatePropertyAll(
                                           RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(10)))),
+                                                  BorderRadius.circular(AppSize.s10)))),
                                   onPressed: () {
                                     Navigator.push(
                                         context,

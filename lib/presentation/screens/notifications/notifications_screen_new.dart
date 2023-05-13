@@ -7,6 +7,7 @@ import 'package:ghaf_application/presentation/screens/notifications/widgets/revi
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -70,7 +71,7 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -114,7 +115,7 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                           ? Container(
                               height: AppSize.s38,
                               width: AppSize.s92,
-                              // padding: EdgeInsets.all(12),
+                              // padding: EdgeInsets.all(AppSize.s12),
                               decoration: BoxDecoration(
                                   color: ColorManager.primary,
                                   border:
@@ -131,7 +132,7 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
                           : Container(
                               height: AppSize.s38,
                               width: AppSize.s92,
-                              // padding: EdgeInsets.all(12),
+                              // padding: EdgeInsets.all(AppSize.s12),
                               decoration: BoxDecoration(
                                   border:
                                       Border.all(color: ColorManager.greyLight),
@@ -152,7 +153,7 @@ class _NotificationsScreenNewState extends State<NotificationsScreenNew> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(AppSize.s8),
             child: Text(
               selected == 0
                   ? AppLocalizations.of(context)!

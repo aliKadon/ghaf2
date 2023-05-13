@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/offers/widgets/offers_widget.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -65,7 +66,7 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
                                   MediaQuery.of(context).size.height * 0.038,
                               width: MediaQuery.of(context).size.width * 0.08,
                               child: Image.asset(
-                                IconsAssets.arrow,
+                                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                 height: AppSize.s18,
                                 width: AppSize.s10,
                               ),
@@ -129,7 +130,7 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
                                                     .discountDescription ??
                                                 ''),
                                     Padding(
-                                      padding: const EdgeInsets.all(14.0),
+                                      padding: EdgeInsets.all(AppSize.s14),
                                       child: Divider(
                                         thickness: 1,
                                         color: Colors.grey,

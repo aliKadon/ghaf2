@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -44,7 +45,7 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(AppSize.s12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -64,7 +65,7 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -87,7 +88,7 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
               color: ColorManager.greyLight,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(AppSize.s8),
               child: Row(
                 children: [
                   widget.imageUrl == null || widget.imageUrl == ''
@@ -95,7 +96,7 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
                           height: AppSize.s110,
                           width: AppSize.s110,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(AppSize.s20),
                               image: DecorationImage(
                                   image: AssetImage(ImageAssets.pizza))),
                         )
@@ -103,7 +104,7 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
                           height: AppSize.s110,
                           width: AppSize.s110,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(AppSize.s20),
                               image: DecorationImage(
                                   image: NetworkImage(widget.imageUrl!))),
                         ),
@@ -429,10 +430,10 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
                   height: MediaQuery.of(context).size.height * 0.16,
                   // color: Colors.transparent,
                   width: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(AppSize.s8),
                   decoration: BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(AppSize.s10)),
                   child: Column(
                     children: [
                       Container(

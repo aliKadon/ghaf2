@@ -9,6 +9,7 @@ import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dar
 import 'package:ghaf_application/presentation/screens/checkout/edit_payment_method.dart';
 import 'package:ghaf_application/presentation/screens/checkout/snapsheet_screen.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -45,7 +46,7 @@ class _PaymentMethodRedeemPointScreenState
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.only(top: 60.0, right: 12.0, left: 12.0),
+          padding:  EdgeInsets.only(top: AppSize.s60, right: AppSize.s12, left: AppSize.s12),
           child: Column(
             children: [
               Row(
@@ -61,7 +62,7 @@ class _PaymentMethodRedeemPointScreenState
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -125,7 +126,7 @@ class _PaymentMethodRedeemPointScreenState
               //   },
               //   child: Container(
               //     width: double.infinity,
-              //     padding: EdgeInsets.all(8),
+              //     padding: EdgeInsets.all(AppSize.s8),
               //     decoration: BoxDecoration(
               //       borderRadius: BorderRadius.circular(12),
               //       color: Colors.white,
@@ -136,7 +137,7 @@ class _PaymentMethodRedeemPointScreenState
               //     child: Row(
               //       children: [
               //         Padding(
-              //           padding: const EdgeInsets.all(15.0),
+              //           padding: EdgeInsets.all(AppSize.s15),
               //           child: Text(
               //             AppLocalizations.of(context)!.point,
               //             style: getSemiBoldStyle(
@@ -233,7 +234,7 @@ class _PaymentMethodRedeemPointScreenState
               //                     },
               //                     child: Container(
               //                       width: double.infinity,
-              //                       padding: EdgeInsets.all(8),
+              //                       padding: EdgeInsets.all(AppSize.s8),
               //                       decoration: BoxDecoration(
               //                         borderRadius: BorderRadius.circular(12),
               //                         color: Colors.white,
@@ -351,7 +352,7 @@ class _PaymentMethodRedeemPointScreenState
                 builder: (controller) {
                   return controller.paymentMethod == 0
                       ? Padding(
-                          padding: const EdgeInsets.only(top: 225.0),
+                          padding:  EdgeInsets.only(top: AppSize.s225),
                           child: Text(
                               AppLocalizations.of(context)!.no_payment_method,
                               style: TextStyle(
@@ -419,10 +420,10 @@ class _PaymentMethodRedeemPointScreenState
                                       },
                                       child: Container(
                                         width: double.infinity,
-                                        padding: EdgeInsets.all(8),
+                                        padding: EdgeInsets.all(AppSize.s8),
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(AppSize.s12),
                                           color: Colors.white,
                                           border: Border.all(
                                             color: ColorManager.greyLight,

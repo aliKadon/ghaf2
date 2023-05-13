@@ -178,8 +178,8 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                             .branchAddress ??
                                         null),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 12.0, left: 12.0),
+                                  padding:  EdgeInsets.only(
+                                      right: AppSize.s12, left: AppSize.s12),
                                   child: Divider(
                                     thickness: 1,
                                     color: ColorManager.greyLight,
@@ -206,13 +206,13 @@ class _AllProductScreenState extends State<AllProductScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisExtent: 200,
+                              mainAxisExtent: AppSize.s206,
                               // mainAxisSpacing: Constants.mainAxisSpacing,
                             ),
                             itemBuilder: (context, index) {
                               return Builder(builder: (context) {
                                 return Padding(
-                                  padding: const EdgeInsets.all(5.0),
+                                  padding: EdgeInsets.all(AppSize.s5),
                                   child: NearByWidget(
                                     addressLat: widget.addressLat == null
                                         ? _addressesViewGetXController

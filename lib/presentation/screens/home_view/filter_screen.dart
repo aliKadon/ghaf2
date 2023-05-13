@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -66,7 +67,7 @@ class _FilterScreenState extends State<FilterScreen> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(AppSize.s12),
           child: Column(
             children: [
               SizedBox(
@@ -85,7 +86,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),

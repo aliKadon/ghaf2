@@ -343,7 +343,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                 GestureDetector(
                   // onTap: () => Navigator.pop(context),
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(AppSize.s8),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: ColorManager.greyLight)),
@@ -382,7 +382,7 @@ class _SubscriptionSellerViewState extends State<SubscriptionSellerView> {
                   child: GestureDetector(
                     // onTap: () => Navigator.pop(context),
                     child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(AppSize.s8),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: ColorManager.greyLight)),

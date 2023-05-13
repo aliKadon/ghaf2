@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../domain/model/cart_item.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/cart_view/cart_view_getx_controller.dart';
 
@@ -57,7 +58,7 @@ class _CartWidgetState extends State<CartWidget> {
         Row(
           children: [
             Container(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(AppSize.s8),
               height: AppSize.s110,
               width: AppSize.s110,
               decoration: BoxDecoration(
@@ -77,7 +78,7 @@ class _CartWidgetState extends State<CartWidget> {
                   style: TextStyle(
                       color: ColorManager.primaryDark,
                       fontWeight: FontWeight.w600,
-                      fontSize: 15),
+                      fontSize: FontSize.s15),
                 ),
                 GetBuilder<CartItem>(
                   id: 'productCount',
@@ -86,22 +87,22 @@ class _CartWidgetState extends State<CartWidget> {
                     style: TextStyle(
                         color: ColorManager.greyLight,
                         fontWeight: FontWeight.w400,
-                        fontSize: 15),
+                        fontSize: FontSize.s15),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: AppSize.s20),
                 Text(
                   '${widget.price} ${widget.isoCurrencySymbol}',
                   style: TextStyle(
                       color: ColorManager.primary,
                       fontWeight: FontWeight.w600,
-                      fontSize: 15),
+                      fontSize: FontSize.s15),
                 ),
               ],
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(right: 14.0),
+              padding:  EdgeInsets.only(right: AppSize.s14),
               child: Column(
                 children: [
                   GestureDetector(

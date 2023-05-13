@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/values_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,13 +28,13 @@ class _VerifiedEmailState extends State<VerifiedEmail> {
             Text(
               AppLocalizations.of(context)!.must_verify,
               style: TextStyle(
-                fontSize: 30,
+                fontSize: FontSize.s30,
                 color: Colors.red,
               ),
 
             ),
             SizedBox(
-              height: 20,
+              height: AppSize.s20,
             ),
             ElevatedButton(
               onPressed: _customDialogProgress,

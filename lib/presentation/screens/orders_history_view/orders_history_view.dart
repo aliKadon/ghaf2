@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/order.dart';
 import '../../../providers/product_provider.dart';
 import '../../resources/assets_manager.dart';
@@ -75,7 +76,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -189,7 +190,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(8.h),
+                            padding: EdgeInsets.all(AppSize.s8.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.r),
                             ),

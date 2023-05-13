@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -35,7 +36,7 @@ class _EditPaymentMethodScreenState extends State<EditPaymentMethodScreen> {
       body: GetBuilder<CheckOutGetxController>(
         builder: (controller) => SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 60.0, right: 12.0, left: 12.0),
+            padding:  EdgeInsets.only(top: AppSize.s60, right: AppSize.s12, left: AppSize.s12),
             child: Column(
               children: [
                 Row(
@@ -49,7 +50,7 @@ class _EditPaymentMethodScreenState extends State<EditPaymentMethodScreen> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -109,7 +110,7 @@ class _EditPaymentMethodScreenState extends State<EditPaymentMethodScreen> {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.8,
-                                padding: EdgeInsets.all(8),
+                                padding: EdgeInsets.all(AppSize.s8),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: Colors.white,

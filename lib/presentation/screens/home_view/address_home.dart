@@ -94,7 +94,7 @@ class _AddressHomeState extends State<AddressHome> {
                 itemCount: controller.addresses.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: EdgeInsets.all(AppSize.s12),
                     child: GestureDetector(
                       onTap: () {
                         setState(() {

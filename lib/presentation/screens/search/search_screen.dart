@@ -8,6 +8,7 @@ import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/search/search_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -40,7 +41,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
         physics: BouncingScrollPhysics(),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(AppSize.s12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,7 +61,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -156,7 +157,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
                                     child: Row(
@@ -178,7 +179,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 13),
+                                                fontSize: FontSize.s13),
                                           ),
                                         )
                                       ],
@@ -245,7 +246,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
                                     child: Row(

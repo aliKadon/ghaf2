@@ -10,6 +10,7 @@ mixin ApiHelper {
 
   Map<String, String> get headers {
     return {
+      'Accept-Language' : SharedPrefController().lang1,
       HttpHeaders.authorizationHeader: SharedPrefController().token,
       HttpHeaders.contentTypeHeader: 'application/json',
       // HttpHeaders.acceptHeader: 'application/json; charset=UTF-8',

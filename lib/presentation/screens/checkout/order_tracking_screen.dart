@@ -312,7 +312,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                     MediaQuery.of(context).size.width *
                                         0.08,
                                     child: Image.asset(
-                                      IconsAssets.arrow,
+                                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                       height: AppSize.s18,
                                       width: AppSize.s10,
                                     ),
@@ -346,7 +346,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 ),
                               )
                                   : Container(
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(AppSize.s10),
                                 child: GoogleMap(
                                   initialCameraPosition:
                                   CameraPosition(
@@ -398,7 +398,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                               AppLocalizations.of(context)!
                                   .estimated_delivery_time,
                               style: TextStyle(
-                                  fontSize: 18.0,
+                                  fontSize: FontSize.s18,
                                   color: ColorManager.primaryDark,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -410,7 +410,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   AppLocalizations.of(context)!
                                       .calculate_time,
                               style: TextStyle(
-                                  fontSize: 18.0,
+                                  fontSize: FontSize.s18,
                                   color: ColorManager.primary),
                             ),
                             SizedBox(
@@ -424,7 +424,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(AppSize.s8),
                                     decoration: BoxDecoration(
                                       borderRadius:
                                       BorderRadius.circular(12.r),
@@ -439,7 +439,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   ),
                                   Spacer(),
                                   Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(AppSize.s8),
                                     decoration: BoxDecoration(
                                       borderRadius:
                                       BorderRadius.circular(12.r),
@@ -456,7 +456,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   ),
                                   Spacer(),
                                   Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(AppSize.s8),
                                     decoration: BoxDecoration(
                                       borderRadius:
                                       BorderRadius.circular(12.r),
@@ -472,7 +472,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   ),
                                   Spacer(),
                                   Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(AppSize.s8),
                                     decoration: BoxDecoration(
                                       borderRadius:
                                       BorderRadius.circular(12.r),
@@ -509,7 +509,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   BorderRadius.circular(8),
                                   border: Border.all(
                                       color: ColorManager.greyLight)),
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.all(AppSize.s10),
                               child: Row(
                                 children: [
                                   Image.asset(
@@ -528,7 +528,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                                 .primaryDark,
                                             fontWeight:
                                             FontWeight.w600,
-                                            fontSize: 14),
+                                            fontSize: FontSize.s14),
                                       ),
                                       Container(
                                         width: MediaQuery.of(context)
@@ -664,7 +664,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                               height: 20,
                             ),
                             Container(
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(AppSize.s8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12.r),
                                 color: Colors.white,
@@ -1148,7 +1148,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                     // Text('Delicious food near you',style: TextStyle(fontSize: AppSize.s24),),
                     // Text('Your favorites food\ndelivered at your doorstep',style: TextStyle(fontSize: AppSize.s14),),
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(AppSize.s10),
                       child: Text(
                         AppLocalizations.of(context)!.tell_experience,
                         style: TextStyle(fontSize: AppSize.s18),
@@ -1252,10 +1252,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                   height: MediaQuery.of(context).size.height * 0.16,
                   // color: Colors.transparent,
                   width: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(AppSize.s8),
                   decoration: BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(AppSize.s10)),
                   child: Column(
                     children: [
                       Container(

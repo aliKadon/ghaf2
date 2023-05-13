@@ -14,6 +14,7 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_delivery/rate_delivery_getx_controller.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../../providers/product_provider.dart';
 import '../../../resources/routes_manager.dart';
 import '../review_getx_controller.dart';
@@ -65,7 +66,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -173,7 +174,7 @@ class _RateDeliveryState extends State<RateDelivery> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      contentPadding: EdgeInsets.only(bottom: 80, left: 7),
+                      contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
                       label: Text('${_rateShopGetxController.description}'),
                       labelStyle: TextStyle(fontSize: AppSize.s26),
                     ),

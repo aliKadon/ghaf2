@@ -234,10 +234,10 @@ class _PaymentLinkSubscriptionSellerViewState
                               GestureDetector(
                                 // onTap: () => Navigator.pop(context),
                                 child: Container(
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(AppSize.s12),
                                   decoration: BoxDecoration(
                                       borderRadius:
-                                      BorderRadius.circular(12),
+                                      BorderRadius.circular(AppRadius.r12),
                                       border: Border.all(
                                           color: ColorManager.greyLight)),
                                   child: Row(
@@ -292,10 +292,10 @@ class _PaymentLinkSubscriptionSellerViewState
                                 child: GestureDetector(
                                   // onTap: () => Navigator.pop(context),
                                   child: Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: EdgeInsets.all(AppSize.s8),
                                     decoration: BoxDecoration(
                                         borderRadius:
-                                        BorderRadius.circular(12),
+                                        BorderRadius.circular(AppRadius.r12),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
                                     child: Row(

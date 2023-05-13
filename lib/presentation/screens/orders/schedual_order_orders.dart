@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -40,7 +41,7 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.06),
               Padding(
-                padding: const EdgeInsets.only(left: 12.0, right: 12),
+                padding:  EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -52,7 +53,7 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -82,7 +83,7 @@ class _SchedualOrderOrdersState extends State<SchedualOrderOrders> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding:  EdgeInsets.all(AppSize.s20),
                       child: Column(
                         children: [
                           Row(

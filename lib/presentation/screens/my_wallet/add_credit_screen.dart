@@ -5,6 +5,7 @@ import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_co
 import 'package:ghaf_application/presentation/screens/my_wallet/enter_amount.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/transaction.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -54,7 +55,7 @@ class _AddCreditScreenState extends State<AddCreditScreen> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -151,7 +152,7 @@ class _AddCreditScreenState extends State<AddCreditScreen> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(AppSize.s8),
                               child: Text(
                                 '${AppLocalizations.of(context)!.add_new_card}',
                                 style: TextStyle(

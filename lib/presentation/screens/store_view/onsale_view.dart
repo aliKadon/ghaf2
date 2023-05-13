@@ -11,6 +11,7 @@ import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_
 import 'package:ghaf_application/presentation/screens/store_view/store_view.dart';
 
 import '../../../app/constants.dart';
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../app/utils/helpers.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -71,7 +72,7 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.06),
               Padding(
-                padding: const EdgeInsets.only(left: 12.0, right: 12),
+                padding:  EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -90,7 +91,7 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -163,7 +164,7 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
                       ? Container()
                       : Container(
                           height: MediaQuery.of(context).size.height * 0.08,
-                          padding: EdgeInsets.all(5),
+                          padding:EdgeInsets.all(AppSize.s5),
                           child: (((controller1.offers[0].branch!.minOrder!) -
                                       (controller.subTotal)) >
                                   0)

@@ -53,7 +53,7 @@ class ErrorTopUp extends StatelessWidget {
             Container(
               height: AppSize.s73,
               width: double.infinity,
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.all(AppSize.s12),
               child: ElevatedButton(
                   onPressed: () {
                     // _customDialogSuccess(context);

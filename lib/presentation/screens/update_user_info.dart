@@ -97,7 +97,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                             height: MediaQuery.of(context).size.height * 0.038,
                             width: MediaQuery.of(context).size.width * 0.08,
                             child: Image.asset(
-                              IconsAssets.arrow,
+                              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                               height: AppSize.s18,
                               width: AppSize.s10,
                             ),
@@ -156,7 +156,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                           width: AppSize.s40,
                         ),
                         Container(
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(AppSize.s12),
                           width: MediaQuery.of(context).size.width * 0.6,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.r),
@@ -265,7 +265,7 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
                           child: Container(
                             height: AppSize.s75,
                             width: AppSize.s75,
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(AppSize.s8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.r),
                               color: Colors.white,

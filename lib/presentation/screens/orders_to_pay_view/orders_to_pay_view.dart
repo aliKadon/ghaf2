@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
@@ -64,7 +65,7 @@ class _OrdersToPayViewState extends State<OrdersToPayView> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),

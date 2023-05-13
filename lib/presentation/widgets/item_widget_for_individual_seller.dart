@@ -49,7 +49,7 @@ class _ItemWidgetForIndividualSellerState
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.all(AppSize.s12),
       child: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         // mainAxisAlignment: MainAxisAlignment.start,
@@ -120,13 +120,13 @@ class _ItemWidgetForIndividualSellerState
                             print(_createLinkGetxController.itemForLinkList);
                           },
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: AppSize.s20),
                         Text(
                           '${widget.price} ${widget.isoCurrencySymbol}',
                           style: TextStyle(
                               color: ColorManager.primary,
                               fontWeight: FontWeight.w600,
-                              fontSize: 15),
+                              fontSize: FontSize.s15),
                         ),
                       ],
                     ),
@@ -134,7 +134,7 @@ class _ItemWidgetForIndividualSellerState
                 ),
                 // Spacer(),
                 Padding(
-                  padding: const EdgeInsets.only(right: 14.0),
+                  padding:  EdgeInsets.only(right: AppSize.s14),
                   child: Column(
                     children: [
                       GestureDetector(

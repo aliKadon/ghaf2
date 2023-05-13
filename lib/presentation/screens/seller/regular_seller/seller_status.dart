@@ -91,7 +91,7 @@ class _SellerStatusState extends State<SellerStatus> {
                   height: AppSize.s50,
                 ),
                 Container(
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(AppSize.s30),
 
                   child: Text(
                     sellerStatus['submittedFormStatus'],

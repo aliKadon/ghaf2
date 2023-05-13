@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -54,7 +55,7 @@ class _PastOrderScreenState extends State<PastOrderScreen> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -135,8 +136,8 @@ class _PastOrderScreenState extends State<PastOrderScreen> {
                                 .branchAddress ??
                                 null),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              right: 12.0, left: 12.0),
+                          padding:  EdgeInsets.only(
+                              right: AppSize.s12, left: AppSize.s12),
                           child: Divider(
                             thickness: 1,
                             color: ColorManager.greyLight,

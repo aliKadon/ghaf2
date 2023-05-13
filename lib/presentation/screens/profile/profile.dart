@@ -41,7 +41,7 @@ class _ProfileState extends State<Profile> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(AppSize.s8),
         child: Column(
           children: [
             SizedBox(
@@ -63,7 +63,7 @@ class _ProfileState extends State<Profile> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -134,8 +134,8 @@ class _ProfileState extends State<Profile> {
                   //   child: accountWidget(
                   //       context,
                   //       language == 'en'
-                  //           ? IconsAssets.arrow2
-                  //           : IconsAssets.arrow,
+                  //           ? SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,2
+                  //           : SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                   //       AppLocalizations.of(context)!.change_email),
                   // ),
                   AppSharedData.currentUser == null?Container():     GestureDetector(
@@ -153,7 +153,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            AppSharedData.currentUser == null?SizedBox(height: 40,):Container(),
+            AppSharedData.currentUser == null?SizedBox(height: AppSize.s40,):Container(),
             AppSharedData.currentUser == null
                 ? GestureDetector(
                 onTap: () {
@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 )):Container(),
 
-            AppSharedData.currentUser == null?SizedBox(height: 10,):Container(),
+            AppSharedData.currentUser == null?SizedBox(height: AppSize.s10,):Container(),
             AppSharedData.currentUser == null?Container():      SizedBox(
               height: AppSize.s20,
             ),

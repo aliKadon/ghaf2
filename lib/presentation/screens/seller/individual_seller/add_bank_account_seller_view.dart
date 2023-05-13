@@ -79,7 +79,7 @@ class _AddBankAccountSellerViewState extends State<AddBankAccountSellerView>
                   // GestureDetector(
                   //   onTap: () => Navigator.pop(context),
                   //   child: Image.asset(
-                  //     IconsAssets.arrow,
+                  //     SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                   //     height: AppSize.s18,
                   //     width: AppSize.s10,
                   //   ),

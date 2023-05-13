@@ -7,6 +7,7 @@ import 'package:ghaf_application/presentation/screens/checkout/order_tracking_sc
 import 'package:ghaf_application/presentation/screens/orders/pre_order_orders/pre_orde_orders.dart';
 import 'package:ghaf_application/presentation/widgets/pre_order_widget.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -67,7 +68,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -96,7 +97,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               height: MediaQuery.of(context).size.height * 0.05,
               child: ListView.builder(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(right: 8, left: 8),
+                padding: EdgeInsets.only(right: AppSize.s8, left: AppSize.s8),
                 scrollDirection: Axis.horizontal,
                 itemCount: orderType.length,
                 itemBuilder: (context, index) {
@@ -126,7 +127,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(3.0),
+              padding: EdgeInsets.all(AppSize.s3),
               child: Divider(thickness: 1, color: ColorManager.greyLight),
             ),
             Container(
@@ -210,8 +211,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               .branchAddress ??
                                           null),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 12.0, left: 12.0),
+                                    padding:  EdgeInsets.only(
+                                        right: AppSize.s12, left: AppSize.s12),
                                     child: Divider(
                                       thickness: 1,
                                       color: ColorManager.greyLight,

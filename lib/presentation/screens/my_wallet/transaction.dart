@@ -10,6 +10,7 @@ import 'package:ghaf_application/presentation/screens/my_wallet/top_up_screen.da
 import 'package:ghaf_application/presentation/screens/my_wallet/wallet_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/transaction_widget.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
@@ -58,7 +59,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -87,7 +88,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 color: ColorManager.grey.withOpacity(0.2),
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(AppSize.s15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -111,7 +112,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       height: AppSize.s28,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding:  EdgeInsets.all(AppSize.s25),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -213,7 +214,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
           //   height: AppSize.s6,
           // ),
           // Padding(
-          //   padding: const EdgeInsets.all(15.0),
+          //   padding: EdgeInsets.all(AppSize.s15),
           //   child: Column(
           //     children: [
           //       Text(
@@ -236,7 +237,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(AppSize.s8),
                       child: Column(
                         children: [
                           TransactionWidget(

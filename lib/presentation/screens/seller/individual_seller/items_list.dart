@@ -40,7 +40,7 @@ class _ItemsListState extends State<ItemsList> {
             height: AppSize.s33,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 14.0, right: 14),
+            padding:  EdgeInsets.only(left: AppSize.s14, right: AppSize.s14),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -58,7 +58,7 @@ class _ItemsListState extends State<ItemsList> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -112,7 +112,7 @@ class _ItemsListState extends State<ItemsList> {
                                 .ghafImageIndividual![0].data!,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 25.0,left: 25),
+                            padding:  EdgeInsets.only(right: AppSize.s25,left: AppSize.s25),
                             child: Divider(thickness: 1,color: ColorManager.greyLight,),
                           )
                         ],
@@ -134,7 +134,7 @@ class _ItemsListState extends State<ItemsList> {
                             side: BorderSide(
                               color: ColorManager.primaryDark,
                             ),
-                            borderRadius: BorderRadius.circular(12))),
+                            borderRadius: BorderRadius.circular(AppRadius.r12))),
                         backgroundColor:
                         MaterialStatePropertyAll(Colors.white)),
                     onPressed: () {

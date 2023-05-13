@@ -164,7 +164,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
               ),
               Container(
                 color: Colors.black12,
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(AppSize.s10),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -193,14 +193,14 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                       height: MediaQuery.of(context).size.height * 0.15,
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: ListView.builder(
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.all(AppSize.s12),
                         itemCount: 3,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(AppSize.s8),
                             child: Container(
 
                                 // padding: EdgeInsets.all(AppPadding.p10),
@@ -214,7 +214,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                                         decoration: BoxDecoration(
                                             color: ColorManager.greyLight,
                                             borderRadius:
-                                                BorderRadius.circular(12),
+                                                BorderRadius.circular(AppRadius.r12),
                                             image: DecorationImage(
                                                 image: MemoryImage(base64Decode(
                                                     imageList[index])),
@@ -226,7 +226,7 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                                         decoration: BoxDecoration(
                                             color: Colors.black26,
                                             borderRadius:
-                                                BorderRadius.circular(12)),
+                                                BorderRadius.circular(AppRadius.r12)),
                                         height: AppSize.s75,
                                         width: AppSize.s75,
                                       )),
@@ -241,8 +241,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                 height: AppSize.s20,
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 17.0, right: 17.0, left: 17.0),
+                padding:  EdgeInsets.only(
+                    bottom: AppSize.s17, right: AppSize.s17, left: AppSize.s17),
                 child: Text(AppLocalizations.of(context)!.name_of_product,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -254,8 +254,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                 hint: AppLocalizations.of(context)!.name_of_product,
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 17.0, right: 17.0, left: 17.0),
+                padding:  EdgeInsets.only(
+                    bottom: AppSize.s17, right: AppSize.s17, left: AppSize.s17),
                 child: Text(AppLocalizations.of(context)!.price,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -267,8 +267,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
                 hint: AppLocalizations.of(context)!.price,
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 17.0, right: 17.0, left: 17.0),
+                padding:  EdgeInsets.only(
+                    bottom: AppSize.s17, right: AppSize.s17, left: AppSize.s17),
                 child: Text(AppLocalizations.of(context)!.description,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -283,8 +283,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
               //   height: AppSize.s16,
               // ),
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 17.0, right: 17.0, left: 17.0),
+                padding:  EdgeInsets.only(
+                    bottom: AppSize.s17, right: AppSize.s17, left: AppSize.s17),
                 child: Text(AppLocalizations.of(context)!.characteristics,
                     style: TextStyle(
                         color: ColorManager.primaryDark,
@@ -299,8 +299,8 @@ class _AddItem2SellerViewState extends State<AddItem2SellerView> with Helpers {
               //   height: AppSize.s16,
               // ),
               Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 17.0, right: 17.0, left: 17.0),
+                padding:  EdgeInsets.only(
+                    bottom: AppSize.s17, right: AppSize.s17, left: AppSize.s17),
                 child: Text(AppLocalizations.of(context)!.productType,
                     style: TextStyle(
                         color: ColorManager.primaryDark,

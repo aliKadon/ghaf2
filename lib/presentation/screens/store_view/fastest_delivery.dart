@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/product_item_new.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/product.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -55,7 +56,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.06),
                       Padding(
-                        padding: const EdgeInsets.only(left: 12.0, right: 12),
+                        padding:  EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -67,7 +68,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                                 height: MediaQuery.of(context).size.height * 0.038,
                                 width: MediaQuery.of(context).size.width * 0.08,
                                 child: Image.asset(
-                                  IconsAssets.arrow,
+                                  SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                   height: AppSize.s18,
                                   width: AppSize.s10,
                                 ),
@@ -93,7 +94,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.75,
-                        padding: EdgeInsets.all(12),
+                        padding: EdgeInsets.all(AppSize.s12),
                         child: GridView.builder(
                           scrollDirection: Axis.vertical,
                           physics: BouncingScrollPhysics(),
@@ -133,7 +134,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                       ),
                       // Container(
                       //   height: MediaQuery.of(context).size.height * 0.08,
-                      //   padding: EdgeInsets.all(5),
+                      //   padding:EdgeInsets.all(AppSize.s5),
                       //   child: ElevatedButton(
                       //     onPressed: () {},
                       //     child: Row(

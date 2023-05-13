@@ -187,7 +187,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                             MediaQuery.of(context).size.width *
                                                 0.08,
                                         child: Image.asset(
-                                          IconsAssets.arrow,
+                                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                           height: AppSize.s18,
                                           width: AppSize.s10,
                                         ),
@@ -413,10 +413,10 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         .isItRestaurant!
                                     ? Container(
                                         height: AppSize.s58,
-                                        padding: EdgeInsets.all(12),
+                                        padding: EdgeInsets.all(AppSize.s12),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                                BorderRadius.circular(AppSize.s10),
                                             color: ColorManager.white,
                                             border: Border.all(
                                                 color: ColorManager.greyLight)),
@@ -546,9 +546,9 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 ),
                                 Container(
                                   height: AppSize.s58,
-                                  padding: EdgeInsets.all(12),
+                                  padding: EdgeInsets.all(AppSize.s12),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppSize.s10),
                                       color: ColorManager.white,
                                       border: Border.all(
                                           color: ColorManager.greyLight)),
@@ -706,7 +706,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   height: AppSize.s12,
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(AppSize.s8),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12.r),
                                     color: Colors.white,
@@ -784,7 +784,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   height: AppSize.s12,
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(AppSize.s8),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12.r),
                                     color: Colors.white,
@@ -1422,7 +1422,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppSize.s10),
                                       border: Border.all(
                                           color: ColorManager.greyLight)),
                                   child: TextField(
@@ -1567,7 +1567,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       height: AppSize.s55,
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(10)),
+                                              BorderRadius.circular(AppSize.s10)),
                                       child: ElevatedButton(
                                           style: ButtonStyle(
                                               backgroundColor:
@@ -1680,10 +1680,10 @@ void _infoDialog(BuildContext context, String text) async {
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.14,
                       width: 250,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(AppSize.s8),
                       decoration: BoxDecoration(
                           color: ColorManager.greyLight,
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(AppSize.s10)),
                       child: Center(
                           child: Text(text,
                               style:
@@ -1699,10 +1699,10 @@ void _infoDialog(BuildContext context, String text) async {
                     child: Container(
                       height: 85,
                       width: 100,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(AppSize.s8),
                       decoration: BoxDecoration(
                           color: ColorManager.greyLight,
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(AppSize.s10)),
                       child: Text(AppLocalizations.of(context)!.pay_later_text,
                           style: TextStyle(color: ColorManager.primaryDark)),
                     ),

@@ -54,7 +54,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                 child: CircularProgressIndicator(),
               )
             : Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(AppSize.s12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -65,7 +65,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(AppSize.s8),
                           child: GestureDetector(
                             onTap: () => Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
@@ -75,7 +75,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                               height: MediaQuery.of(context).size.height * 0.038,
                               width: MediaQuery.of(context).size.width * 0.08,
                               child: Image.asset(
-                                IconsAssets.arrow,
+                                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                                 height: AppSize.s18,
                                 width: AppSize.s10,
                               ),
@@ -100,7 +100,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                     Container(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.15,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       child: Row(
                         children: [
                           controller.payLaterInstallments[0]
@@ -110,7 +110,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                                   width: AppSize.s75,
                                   height: AppSize.s92,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppSize.s10),
                                       // color: Colors.green,
                                       image: DecorationImage(
                                           image: AssetImage(
@@ -122,7 +122,7 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                                   width: AppSize.s75,
                                   height: AppSize.s92,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppSize.s10),
                                       // color: Colors.green,
                                       image: DecorationImage(
                                           image: NetworkImage(
@@ -292,9 +292,9 @@ class _PayLaterProductViewState extends State<PayLaterProductView>
                     ),
                     Container(
                       height: AppSize.s58,
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSize.s12),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(AppSize.s10),
                           color: ColorManager.white,
                           border: Border.all(color: ColorManager.greyLight)),
                       child: InkWell(

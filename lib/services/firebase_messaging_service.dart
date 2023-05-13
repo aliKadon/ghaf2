@@ -19,6 +19,9 @@ class FirebaseMessagingService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
 
+  var c ;
+
+
   FirebaseMessagingService._() {
     _fcm = FirebaseMessaging.instance;
     _localNotificationsService = LocalNotificationsService.instance;
@@ -33,6 +36,8 @@ class FirebaseMessagingService {
   Future<String?> getToken() async {
     return _fcm?.getToken();
   }
+
+
 
   Future<void> init({required BuildContext context}) async {
     await _fcm?.requestPermission(
@@ -78,6 +83,10 @@ class FirebaseMessagingService {
             ),
           );
         }
+
+        if(c== 'ok') {
+          Navigator.of(context).pushNamed(Routes.aboutAppRoute);
+        }
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
@@ -85,8 +94,9 @@ class FirebaseMessagingService {
       if(message.data != null || message.data.isEmpty) {
         print('=====================there is data and the screen is :');
         print(message.data['screen']);
-        Get.toNamed('/${message.data['screen']}');
-        // Navigator.of(context).pushNamed(Routes.aboutAppRoute);
+        // Get.toNamed('/${message.data['screen']}');
+        c= 'ok';
+
       }
       print('on message opened app');
       print(message.notification?.title);

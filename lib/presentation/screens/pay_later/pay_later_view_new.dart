@@ -5,6 +5,7 @@ import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/pay_later/pay_later_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/pay_later_producte_widget.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -54,7 +55,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(AppSize.s8),
                   child: GestureDetector(
                     onTap: () =>
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -64,7 +65,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -91,7 +92,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
               width: double.infinity,
               color: ColorManager.greyLight,
               child: Padding(
-                padding: const EdgeInsets.only(right: 24.0, left: 24.0),
+                padding:  EdgeInsets.only(right: AppSize.s24, left: AppSize.s24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +162,7 @@ class _PayLaterViewNewState extends State<PayLaterViewNew> {
             ),
             GetBuilder<PayLaterGetxController>(
               builder: (controller) => Container(
-                padding: EdgeInsets.all(5),
+                padding:EdgeInsets.all(AppSize.s5),
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: controller.payLaterProducts == 0
                     ? Center(

@@ -10,6 +10,7 @@ import '../../app/utils/app_shared_data.dart';
 import '../../domain/model/product.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
 import '../screens/home_view/home_view_getx_controller.dart';
 
 class MostPopularProductWidget extends StatefulWidget {
@@ -54,7 +55,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
         ));
       },
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(AppSize.s8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +69,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
                         height: MediaQuery.of(context).size.height * 0.29,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           image: DecorationImage(
                             image: AssetImage(ImageAssets.pizza),
                             fit: BoxFit.cover,
@@ -78,7 +79,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
                         height: MediaQuery.of(context).size.height * 0.29,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(AppSize.s15),
                           image: DecorationImage(
                             image: NetworkImage(widget.image),
                             fit: BoxFit.cover,
@@ -99,12 +100,12 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
 
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(AppSize.s8),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(AppRadius.r100),
                                   color: Colors.black54),
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(AppSize.s8),
                               child: widget.controller[widget.index].isFavorite ?? false
                                   ? Image.asset(
                                       IconsAssets.heart1,
@@ -124,13 +125,13 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
                     ],
                   ),
                   SizedBox(
-                    width: 14,
+                    width: AppSize.s14,
                   )
                 ],
               ),
               Text(widget.name,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: FontSize.s18,
                       fontWeight: FontWeight.bold,
                       color: ColorManager.primaryDark)),
               Row(
@@ -141,12 +142,12 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
                         '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
                         overflow: TextOverflow.clip,
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: FontSize.s14,
                             fontWeight: FontWeight.bold,
                             color: ColorManager.primaryDark)),
                   ),
                   SizedBox(
-                    width: 28,
+                    width: AppSize.s28,
                   ),
                   Icon(
                     Icons.star,
@@ -157,7 +158,7 @@ class _MostPopularProductWidgetState extends State<MostPopularProductWidget> wit
                   ),
                   Text(widget.stars.toString(),
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: FontSize.s14,
                           fontWeight: FontWeight.w500,
                           color: ColorManager.primaryDark)),
                 ],

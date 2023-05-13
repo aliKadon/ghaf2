@@ -34,7 +34,7 @@ class IntroduceToSubscribe extends StatelessWidget {
             height: AppSize.s15,
           ),
           Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.all(AppSize.s14),
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -65,7 +65,7 @@ class IntroduceToSubscribe extends StatelessWidget {
 
   Widget introduceToSubscribeWidget({required BuildContext context,required String text}) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(AppSize.s8),
       child: Row(
         children: [
           Icon(

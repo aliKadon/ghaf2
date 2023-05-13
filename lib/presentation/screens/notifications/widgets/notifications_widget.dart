@@ -17,7 +17,7 @@ class NotificationsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: EdgeInsets.all(AppSize.s14),
       child: Column(
         children: [
           language == 'en'

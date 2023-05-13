@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/presentation/screens/get_help/return_order_get_help.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -37,7 +38,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -60,7 +61,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
             color: ColorManager.greyLight,
           ),
           Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.all(AppSize.s14),
             child: Text(
               '${AppLocalizations.of(context)!.hi} ${AppSharedData.currentUser?.firstName} ${AppSharedData.currentUser?.lastName}. ${AppLocalizations.of(context)!.what_we_can_help_you}',
               style: TextStyle(
@@ -70,7 +71,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding:  EdgeInsets.all(AppSize.s24),
             child: Text(
               AppLocalizations.of(context)!
                   .if_you_have_issue_please_select_one_of_the_option,
@@ -132,7 +133,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
 
   Widget GetHelpType(String text) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: EdgeInsets.all(AppSize.s14),
       child: Row(
         children: [
           Icon(
@@ -147,7 +148,7 @@ class _GetHelpScreenState extends State<GetHelpScreen> {
                   fontSize: FontSize.s16, fontWeight: FontWeight.w500)),
           Spacer(),
           Image.asset(
-            IconsAssets.arrow2,
+            SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow : IconsAssets.arrow2,
             height: AppSize.s18,
             color: ColorManager.primary,
           ),
