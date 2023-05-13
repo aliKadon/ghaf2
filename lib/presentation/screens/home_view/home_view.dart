@@ -271,28 +271,28 @@ class _HomeViewState extends State<HomeView> with Helpers {
     return ChangeNotifierProvider.value(
       value: ProductProvider(),
       child: Scaffold(
-        // floatingActionButton: AppSharedData.currentUser == null
-        //     ? Container()
-        //     : Container(
-        //         width: AppSize.s73,
-        //         height: AppSize.s73,
-        //         child: FloatingActionButton(
-        //           onPressed: () {
-        //             // Add your onPressed code here!
-        //             Navigator.of(context).push(MaterialPageRoute(
-        //               builder: (context) => OrdersScreen(),
-        //             ));
-        //           },
-        //           backgroundColor: ColorManager.primary,
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(6.0),
-        //             child: Image.asset(
-        //               ImageAssets.delivery_gif,
-        //               color: Colors.white,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
+        floatingActionButton: AppSharedData.currentUser == null
+            ? Container()
+            : Container(
+                width: AppSize.s73,
+                height: AppSize.s73,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    // Add your onPressed code here!
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => OrdersScreen(),
+                    ));
+                  },
+                  backgroundColor: ColorManager.primary,
+                  child: Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Image.asset(
+                      ImageAssets.delivery_gif,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
         body: WillPopScope(
           onWillPop: _onWillPop,
           child: SafeArea(
@@ -564,7 +564,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                         .upgrade_your_shopping_experience,
                                                     style: TextStyle(
                                                         height: AppSize.s1,
-                                                        fontSize: FontSize.s20,
+                                                        fontSize: FontSize.s18,
                                                         fontFamily:
                                                             FontConstants
                                                                 .fontFamily,
@@ -668,103 +668,101 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                     builder:
                                         (HomeViewGetXController controller) {
                                       return Container(
-                                        child: Flexible(
-                                          child: GridView.builder(
-                                            // key: _innerListKey,
-                                            // controller: _innerScrollController,
-                                            shrinkWrap: true,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 3,
-                                                    childAspectRatio: 0.4,
-                                                    crossAxisSpacing: 20,
-                                                    mainAxisExtent:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.28),
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemCount: _homeViewGetXController
-                                                .categories.length,
-                                            itemBuilder: (context, index) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context)
-                                                      .push(MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        StoreByCategory(
-                                                            nameStore:
-                                                                _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .name!,
-                                                            cid:
-                                                                _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .id!),
-                                                  ));
-                                                },
-                                                child: Column(
-                                                  children: [
-                                                    Card(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .categoryImageData ==
-                                                                null
-                                                            ? Image.asset(
-                                                                ImageAssets
-                                                                    .grocery,
-                                                                fit: BoxFit
-                                                                    .scaleDown)
-                                                            : Image.network(
-                                                                _homeViewGetXController
-                                                                    .categories[
-                                                                        index]
-                                                                    .categoryImageData!,
-                                                                height:
-                                                                    AppSize.s60,
-                                                                width:
-                                                                    AppSize.s60,
-                                                                fit: BoxFit
-                                                                    .scaleDown),
-                                                      ),
+                                        child: GridView.builder(
+                                          // key: _innerListKey,
+                                          // controller: _innerScrollController,
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  childAspectRatio: 0.4,
+                                                  crossAxisSpacing: 20,
+                                                  mainAxisExtent:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.28),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: _homeViewGetXController
+                                              .categories.length,
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      StoreByCategory(
+                                                          nameStore:
+                                                              _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .name!,
+                                                          cid:
+                                                              _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .id!),
+                                                ));
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Card(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .all(8.0),
+                                                      child: _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .categoryImageData ==
+                                                              null
+                                                          ? Image.asset(
+                                                              ImageAssets
+                                                                  .grocery,
+                                                              fit: BoxFit
+                                                                  .scaleDown)
+                                                          : Image.network(
+                                                              _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .categoryImageData!,
+                                                              height:
+                                                                  AppSize.s60,
+                                                              width:
+                                                                  AppSize.s60,
+                                                              fit: BoxFit
+                                                                  .scaleDown),
                                                     ),
-                                                    Text(
-                                                      language == 'en'
-                                                          ? _homeViewGetXController
-                                                              .categories[index]
-                                                              .name!
-                                                          : _homeViewGetXController
-                                                                      .categories[
-                                                                          index]
-                                                                      .categoriesAr ==
-                                                                  null
-                                                              ? _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .name!
-                                                              : _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .categoriesAr!,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize:
-                                                              FontSize.s10),
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
+                                                  ),
+                                                  Text(
+                                                    language == 'en'
+                                                        ? _homeViewGetXController
+                                                            .categories[index]
+                                                            .name!
+                                                        : _homeViewGetXController
+                                                                    .categories[
+                                                                        index]
+                                                                    .categoriesAr ==
+                                                                null
+                                                            ? _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .name!
+                                                            : _homeViewGetXController
+                                                                .categories[
+                                                                    index]
+                                                                .categoriesAr!,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize:
+                                                            FontSize.s10),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
                                         ),
                                       );
                                     },

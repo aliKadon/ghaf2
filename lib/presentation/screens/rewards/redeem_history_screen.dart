@@ -31,56 +31,69 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-      // _rewardsGetxController.isLoadingHistory
-      //     ? Center(
-      //         child: CircularProgressIndicator(),
-      //       )
-      //     :
-      SingleChildScrollView(
+          // _rewardsGetxController.isLoadingHistory
+          //     ? Center(
+          //         child: CircularProgressIndicator(),
+          //       )
+          //     :
+          SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            // allRedeemPoint = 0;
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.038,
-                            width: MediaQuery.of(context).size.width * 0.08,
-                            child: Image.asset(
-                              IconsAssets.arrow,
-                              height: AppSize.s18,
-                              width: AppSize.s10,
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                        Text(
-                          AppLocalizations.of(context)!.redeem_history,
-                          style: getSemiBoldStyle(
-                            color: ColorManager.primaryDark,
-                            fontSize: FontSize.s18,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // allRedeemPoint = 0;
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.038,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      child: Image.asset(
+                        IconsAssets.arrow,
+                        height: AppSize.s18,
+                        width: AppSize.s10,
+                      ),
                     ),
-                    SizedBox(
-                      height: AppSize.s12,
+                  ),
+                  Spacer(),
+                  Text(
+                    AppLocalizations.of(context)!.redeem_history,
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s18,
                     ),
-                    Divider(height: 1, color: ColorManager.greyLight),
-                    // SizedBox(
-                    //   height: AppSize.s30,
-                    // ),
-                    GetBuilder<RewardsGetxController>(
-                      builder: (controller) => ListView.builder(
+                  ),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(
+                height: AppSize.s12,
+              ),
+              Divider(height: 1, color: ColorManager.greyLight),
+              // SizedBox(
+              //   height: AppSize.s30,
+              // ),
+              GetBuilder<RewardsGetxController>(
+                builder: (controller) => controller
+                            .redeemHistory!.list!.length ==
+                        0
+                    ? Container(
+                        height: MediaQuery.of(context).size.height * 0.9,
+                        child: Center(
+                          child: Text(
+                              AppLocalizations.of(context)!.no_product_found,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: FontSize.s16,
+                                  color: ColorManager.primary)),
+                        ))
+                    : ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.redeemHistory!.list!.length,
@@ -115,7 +128,8 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                                               controller.redeemHistory!
                                                   .list![index].storeName!,
                                               style: TextStyle(
-                                                  color: ColorManager.primaryDark,
+                                                  color:
+                                                      ColorManager.primaryDark,
                                                   fontSize: FontSize.s16,
                                                   fontWeight: FontWeight.w600)),
                                           Text(
@@ -145,11 +159,13 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                           );
                         },
                       ),
-                    ),
-                    SizedBox(height: AppSize.s30,),
-                  ],
-                ),
               ),
+              SizedBox(
+                height: AppSize.s30,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -57,24 +57,27 @@ class _MyAppState extends State<MyApp> {
           print(provider.locale);
 
           var isArabic = SharedPrefController().lang1;
-          // print('isArabic : $isArabic');
+          print('isArabic : $isArabic');
+          print(languageGetXController.language.value);
 
-          return GetMaterialApp(
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: L10n.all,
-            locale: isArabic == 'ar' ? Locale('ar') : Locale('en'),
-            // locale: provider.locale,
-            builder: DevicePreview.appBuilder,
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: RouteGenerator.getRoute,
-            initialRoute: Routes.splashRoute,
-            // home: HomeView(),
-            theme: getApplicationTheme(),
+          return Obx(
+            () => GetMaterialApp(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: L10n.all,
+              locale: Locale(languageGetXController.language.value),
+              // locale: provider.locale,
+              builder: DevicePreview.appBuilder,
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: RouteGenerator.getRoute,
+              initialRoute: Routes.splashRoute,
+              // home: HomeView(),
+              theme: getApplicationTheme(),
+            ),
           );
         },
       ),

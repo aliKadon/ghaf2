@@ -186,76 +186,82 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
               SizedBox(
                 height: AppSize.s30,
               ),
-              _homeViewGetXController.freeDeliveryProduct.length == 0
-                  ? Container()
-                  : Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.free_delivery_rewards,
-                          style: TextStyle(
-                              color: ColorManager.primaryDark,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s16),
-                        ),
-                        // Spacer(),
-                        // Text(
-                        //   AppLocalizations.of(context)!.more,
-                        //   style: TextStyle(
-                        //       color: ColorManager.greyLight,
-                        //       fontWeight: FontWeight.w600,
-                        //       fontSize: FontSize.s16),
-                        // ),
-                      ],
-                    ),
-              _homeViewGetXController.freeDeliveryProduct.length == 0
-                  ? Container()
-                  : GetBuilder<HomeViewGetXController>(
-                      builder: (controller) => Container(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: ListView.builder(
-                          itemCount: controller.freeDeliveryProduct.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Builder(builder: (context) {
-                              Get.put<Product>(
-                                  _homeViewGetXController
-                                      .freeDeliveryProduct[index],
+              GetBuilder<HomeViewGetXController>(
+                builder: (controller) =>  controller.freeDeliveryProduct.length == 0
+                    ? Container()
+                    : Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.free_delivery_rewards,
+                            style: TextStyle(
+                                color: ColorManager.primaryDark,
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSize.s16),
+                          ),
+                          // Spacer(),
+                          // Text(
+                          //   AppLocalizations.of(context)!.more,
+                          //   style: TextStyle(
+                          //       color: ColorManager.greyLight,
+                          //       fontWeight: FontWeight.w600,
+                          //       fontSize: FontSize.s16),
+                          // ),
+                        ],
+                      ),
+              ),
+              GetBuilder<HomeViewGetXController>(
+                builder: (controller) =>  controller.freeDeliveryProduct.length == 0
+                    ? Container()
+                    : GetBuilder<HomeViewGetXController>(
+                        builder: (controller) => Container(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          child: ListView.builder(
+                            itemCount: controller.freeDeliveryProduct.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Builder(builder: (context) {
+                                Get.put<Product>(
+                                    controller
+                                        .freeDeliveryProduct[index],
+                                    tag:
+                                        '${controller.freeDeliveryProduct[index].id}');
+                                return FreeDeliveryProductWidget(
                                   tag:
-                                      '${_homeViewGetXController.freeDeliveryProduct[index].id}');
-                              return FreeDeliveryProductWidget(
-                                tag:
-                                    '${_homeViewGetXController.freeDeliveryProduct[index].id}',
-                              );
-                            });
-                          },
+                                      '${controller.freeDeliveryProduct[index].id}',
+                                );
+                              });
+                            },
+                          ),
                         ),
                       ),
-                    ),
+              ),
               SizedBox(
                 height: AppSize.s30,
               ),
-              _offersScreenGetXController.offers.length == 0
-                  ? Container()
-                  : Row(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.offers,
-                          style: TextStyle(
-                              color: ColorManager.primaryDark,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s16),
-                        ),
-                        Spacer(),
-                        // Text(
-                        //   AppLocalizations.of(context)!.more,
-                        //   style: TextStyle(
-                        //       color: ColorManager.greyLight,
-                        //       fontWeight: FontWeight.w600,
-                        //       fontSize: FontSize.s16),
-                        // ),
-                      ],
-                    ),
+              GetBuilder<OffersScreenGetXController>(
+                builder: (controller) => controller.offers.length == 0
+                    ? Container()
+                    : Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.offers,
+                            style: TextStyle(
+                                color: ColorManager.primaryDark,
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSize.s16),
+                          ),
+                          Spacer(),
+                          // Text(
+                          //   AppLocalizations.of(context)!.more,
+                          //   style: TextStyle(
+                          //       color: ColorManager.greyLight,
+                          //       fontWeight: FontWeight.w600,
+                          //       fontSize: FontSize.s16),
+                          // ),
+                        ],
+                      ),
+              ),
               GetBuilder<OffersScreenGetXController>(
                 builder: (controller) => controller.isOffersLoading
                     ? Container()

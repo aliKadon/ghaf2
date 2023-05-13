@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/screens/profile/notification/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/change_email.dart';
@@ -9,6 +11,7 @@ import 'package:ghaf_application/presentation/screens/profile/profile_setting/pr
 import 'package:provider/provider.dart';
 
 import '../../../app/constants.dart';
+import '../../../app/get/language_getx_controller.dart';
 import '../../../app/utils/app_shared_data.dart';
 import '../../../providers/language_provider.dart';
 import '../../resources/assets_manager.dart';
@@ -27,6 +30,9 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   var language = SharedPrefController().lang1;
+
+  final LanguageGetXController languageGetXController =
+  Get.put<LanguageGetXController>(LanguageGetXController());
 
   Locale? local;
  late final curLocale = Provider.of<LocaleProvider>(context, listen: false);
@@ -323,6 +329,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     GestureDetector(
                       onTap: (){
+                        languageGetXController.changeLanguage(language1: 'en');
                         curLocale.setLocale( Locale('en'));
                         print(SharedPrefController().lang1);
                         SharedPrefController().changeLanguage(language: 'en');
@@ -345,6 +352,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     GestureDetector(
                       onTap: (){
+                        languageGetXController.changeLanguage(language1: 'ar');
                         curLocale.setLocale(Locale('ar'));
                         SharedPrefController().changeLanguage(language: 'ar');
                         print(SharedPrefController().lang1);

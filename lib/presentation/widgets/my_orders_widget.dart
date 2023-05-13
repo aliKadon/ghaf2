@@ -50,16 +50,19 @@ class MyOrdersWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('${branchName}',
-                        style: TextStyle(
-                            color: ColorManager.primaryDark,
-                            fontWeight: FontWeight.w600,
-                            fontSize: FontSize.s16)),
+                    Container(
+                      width: AppSize.s123,
+                      child: Text('${branchName}',
+                          style: TextStyle(
+                              color: ColorManager.primaryDark,
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s16)),
+                    ),
                     SizedBox(
                       width: AppSize.s60,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.16,
+                      width: AppSize.s82,
                       child: Text(
                           '${price} ${AppLocalizations.of(context)!.aed}',
                           overflow: TextOverflow.ellipsis,
@@ -75,13 +78,16 @@ class MyOrdersWidget extends StatelessWidget {
                         color: ColorManager.greyLight,
                         fontWeight: FontWeight.w600,
                         fontSize: FontSize.s16)),
-                Text(
-                    '${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
-                    style: TextStyle(
-                        color: ColorManager.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s14)),
-                Text('order id :${orderSequence}',
+                Container(
+                  width: AppSize.s222,
+                  child: Text(
+                      '${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
+                      style: TextStyle(
+                          color: ColorManager.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: FontSize.s14)),
+                ),
+                Text('order id : ${orderSequence == 'null' ? 0 : orderSequence}',
                     style: TextStyle(
                         color: ColorManager.primaryDark,
                         fontWeight: FontWeight.w500,

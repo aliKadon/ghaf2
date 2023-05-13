@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
+import '../../app/get/language_getx_controller.dart';
 import '../../providers/language_provider.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -22,9 +23,9 @@ class Language extends StatefulWidget {
 }
 
 class _LanguageState extends State<Language> {
-
-
   Locale? local;
+  final LanguageGetXController languageGetXController =
+  Get.put<LanguageGetXController>(LanguageGetXController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,6 @@ class _LanguageState extends State<Language> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 GestureDetector(
                   onTap: () => Navigator.of(context)
                       .pushReplacementNamed(Routes.mainRoute),
@@ -57,7 +57,6 @@ class _LanguageState extends State<Language> {
                     ),
                   ),
                 ),
-
                 Spacer(),
                 Text(
                   AppLocalizations.of(context)!.language,
@@ -88,19 +87,29 @@ class _LanguageState extends State<Language> {
                 SizedBox(
                   width: AppSize.s60,
                 ),
-                ElevatedButton(onPressed: (){
-                  curLocale.setLocale(Locale('ar'));
-                  SharedPrefController().changeLanguage(language: 'ar');
-                  print(SharedPrefController().lang1);
-                  Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-                }, child: Text(AppLocalizations.of(context)!.arabic)),
+                ElevatedButton(
+                    onPressed: () {
+
+                      curLocale.setLocale(Locale('ar'));
+                      // SharedPrefController().changeLanguage(language: 'ar');
+                      print(SharedPrefController().lang1);
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed(Routes.mainRoute);
+                      languageGetXController.changeLanguage(language1: 'ar');
+                    },
+                    child: Text(AppLocalizations.of(context)!.arabic)),
                 Spacer(),
-                ElevatedButton(onPressed: (){
-                  curLocale.setLocale( Locale('en'));
-                  print(SharedPrefController().lang1);
-                  SharedPrefController().changeLanguage(language: 'en');
-                  Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-                }, child: Text(AppLocalizations.of(context)!.english)),
+                ElevatedButton(
+                    onPressed: () {
+
+                      curLocale.setLocale(Locale('en'));
+                      print(SharedPrefController().lang1);
+                      // SharedPrefController().changeLanguage(language: 'en');
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed(Routes.mainRoute);
+                      languageGetXController.changeLanguage(language1: 'en');
+                    },
+                    child: Text(AppLocalizations.of(context)!.english)),
                 SizedBox(
                   width: AppSize.s60,
                 ),

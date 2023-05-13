@@ -180,7 +180,7 @@ class _StoreViewState extends State<StoreView> {
                                         IconsAssets.arrow,
                                         height: AppSize.s18,
                                         width: AppSize.s10,
-                                        color: Colors.black,
+                                        color: ColorManager.primary,
                                       ),
                                     ),
                                   ),

@@ -82,13 +82,16 @@ class _StoreByCategoryState extends State<StoreByCategory> {
             ),
             GetBuilder<CategoriesGetxController>(
               builder: (controller) => controller.branches.length == 0
-                  ? Center(
-                      child: Text(AppLocalizations.of(context)!.no_stores_found,
-                          style: TextStyle(
-                              fontSize: FontSize.s18,
-                              fontWeight: FontWeight.w600,
-                              color: ColorManager.primary)),
-                    )
+                  ? Container(
+                height: MediaQuery.of(context).size.height * 0.9,
+                    child: Center(
+                        child: Text(AppLocalizations.of(context)!.no_stores_found,
+                            style: TextStyle(
+                                fontSize: FontSize.s18,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.primary)),
+                      ),
+                  )
                   : ListView.builder(
                       shrinkWrap: true,
                       itemCount: controller.branches.length,
@@ -258,7 +261,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                             Axis.horizontal,
                                                         itemBuilder:
                                                             (context, index1) {
-                                                          return Flexible(
+                                                          return Container(
                                                             child: Row(
                                                               mainAxisAlignment: MainAxisAlignment.start,
                                                               crossAxisAlignment: CrossAxisAlignment.end,

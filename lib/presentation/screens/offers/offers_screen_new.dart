@@ -12,7 +12,6 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class OffersScreenNew extends StatefulWidget {
-
   String? bid;
 
   OffersScreenNew({this.bid});
@@ -23,7 +22,7 @@ class OffersScreenNew extends StatefulWidget {
 
 class _OffersScreenNewState extends State<OffersScreenNew> {
   late final OffersScreenGetXController _offersScreenGetXController =
-  Get.put<OffersScreenGetXController>(OffersScreenGetXController());
+      Get.put<OffersScreenGetXController>(OffersScreenGetXController());
 
   @override
   void initState() {
@@ -36,101 +35,114 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<OffersScreenGetXController>(
-        builder: (controller) =>
-        controller.isOffersLoading
+        builder: (controller) => controller.isOffersLoading
             ? Center(
-          child: Container(
-            width: 20,
-            height: 20,
-            child: CircularProgressIndicator(
-              strokeWidth: 1,
-            ),
-          ),
-        )
-            : Column(
-          children: [
-            SizedBox(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.06,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(AppSize.s6),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.038,
-                      width: MediaQuery.of(context).size.width * 0.08,
-                      child: Image.asset(
-                        IconsAssets.arrow,
-                        height: AppSize.s18,
-                        width: AppSize.s10,
-                      ),
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1,
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
                     ),
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  AppLocalizations.of(context)!.offers,
-                  style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark,
-                    fontSize: FontSize.s18,
-                  ),
-                ),
-                Spacer(),
-              ],
-            ),
-            Divider(
-              thickness: 1,
-              color: ColorManager.greyLight,
-            ),
-            controller.offers.length == 0 ? Center(child: Text(
-                AppLocalizations.of(context)!.no_offer_found, style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: FontSize.s16,
-                color: ColorManager.primary)),) : Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.84,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _offersScreenGetXController.offers.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      OffersWidget(
-                          idProduct: _offersScreenGetXController
-                              .offers[index].id!,
-                          branchName: _offersScreenGetXController
-                              .offers[index].branch!.branchName!,
-                          productImages: _offersScreenGetXController
-                              .offers[index].productImages!.length != 0
-                              ? _offersScreenGetXController
-                              .offers[index].productImages![0]
-                              : '',
-                          discountDescription: _offersScreenGetXController
-                              .offers[index].discountDescription ?? ''),
-                      Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Divider(
-                          thickness: 1,
-                          color: Colors.grey,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(AppSize.s6),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.038,
+                              width: MediaQuery.of(context).size.width * 0.08,
+                              child: Image.asset(
+                                IconsAssets.arrow,
+                                height: AppSize.s18,
+                                width: AppSize.s10,
+                              ),
+                            ),
+                          ),
                         ),
-                      )
-                    ],
-                  );
-                },
+                        Spacer(),
+                        Text(
+                          AppLocalizations.of(context)!.offers,
+                          style: getSemiBoldStyle(
+                            color: ColorManager.primaryDark,
+                            fontSize: FontSize.s18,
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: ColorManager.greyLight,
+                    ),
+                    controller.offers.length == 0
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.9,
+                            child: Center(
+                              child: Text(
+                                  AppLocalizations.of(context)!.no_offer_found,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: FontSize.s16,
+                                      color: ColorManager.primary)),
+                            ),
+                          )
+                        : Container(
+                            height: MediaQuery.of(context).size.height * 0.84,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  _offersScreenGetXController.offers.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    OffersWidget(
+                                        idProduct: _offersScreenGetXController
+                                            .offers[index].id!,
+                                        branchName: _offersScreenGetXController
+                                            .offers[index].branch!.branchName!,
+                                        productImages:
+                                            _offersScreenGetXController
+                                                        .offers[index]
+                                                        .productImages!
+                                                        .length !=
+                                                    0
+                                                ? _offersScreenGetXController
+                                                    .offers[index]
+                                                    .productImages![0]
+                                                : '',
+                                        discountDescription:
+                                            _offersScreenGetXController
+                                                    .offers[index]
+                                                    .discountDescription ??
+                                                ''),
+                                    Padding(
+                                      padding: const EdgeInsets.all(14.0),
+                                      child: Divider(
+                                        thickness: 1,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          )
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
       ),
     );
   }
