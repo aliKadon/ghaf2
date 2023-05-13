@@ -285,10 +285,12 @@ class _HomeViewState extends State<HomeView> with Helpers {
                   },
                   backgroundColor: ColorManager.primary,
                   child: Padding(
-                    padding: const EdgeInsets.all(6.0),
+                    padding: EdgeInsets.all(AppSize.s6),
                     child: Image.asset(
                       ImageAssets.delivery_gif,
                       color: Colors.white,
+                      width: AppSize.s55,
+                      height: AppSize.s55
                     ),
                   ),
                 ),
@@ -308,7 +310,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                       height: AppSize.s5,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppPadding.p16,),
                       child: Row(
                         children: [
                           SizedBox(
@@ -348,7 +351,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                   Text(
                                     AppLocalizations.of(context)!.hello_welcome,
                                     style: getRegularStyle(
-                                        color: ColorManager.blackLight),
+                                        color: ColorManager.blackLight,
+                                    fontSize: AppSize.s15,
+                                    ),
                                   ),
                                   // SizedBox(
                                   //   width:
@@ -436,17 +441,21 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     '${AppLocalizations.of(context)!.shipping} ${AppLocalizations.of(context)!.address}',
                                                     style: getRegularStyle(
                                                         color: ColorManager
-                                                            .primaryDark),
+                                                            .primaryDark,
+                                                      fontSize: FontSize.s14
+                                                    ),
                                                   )
                                                 : Text(
                                                     '${AppLocalizations.of(context)!.shipping} ${HomeView.result == null ? controller.addresses == null || controller.addresses.length == 0 ? AppLocalizations.of(context)!.address : controller.addresses[0].addressName : HomeView.result['addressName']}',
                                                     style: getRegularStyle(
                                                         color: ColorManager
                                                             .primaryDark,
-
+                                                        fontSize: FontSize.s14
                                                     ),
                                                   ),
-                                            Icon(Icons.arrow_drop_down)
+                                            Icon(Icons.arrow_drop_down,
+                                            size: AppSize.s24,
+                                            )
                                           ],
                                         ),
                                       ),
@@ -472,11 +481,11 @@ class _HomeViewState extends State<HomeView> with Helpers {
                               margin: EdgeInsets.only(
                                   bottom: AppMargin.m16,
                                   right: AppMargin.m16,
-                                  left: AppMargin.m16),
+                                  left: AppMargin.m16,),
                               child: Container(
-                                  padding: EdgeInsets.all(13),
+                                  padding: EdgeInsets.all(AppSize.s10),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(AppSize.s10),
                                       border: Border.all(
                                           color: ColorManager.primaryDark)),
                                   child: GestureDetector(
@@ -488,7 +497,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                     },
                                     child: Row(
                                       children: [
-                                        Icon(Icons.search),
+                                        Icon(Icons.search,
+                                        size: AppSize.s30,
+                                        ),
                                         SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -497,6 +508,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                         Text(
                                           AppLocalizations.of(context)!
                                               .search_flower,
+                                          style: TextStyle(
+                                            fontSize: AppSize.s15
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -530,7 +544,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                             Image.asset(
                                               ImageAssets.main4,
                                               height: AppSize.s148,
-                                              width: AppSize.s360,
+                                              width: AppSize.s410,
                                               fit: BoxFit.fill,
                                             ),
                                             isArabic == 'en'
@@ -564,7 +578,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                         .upgrade_your_shopping_experience,
                                                     style: TextStyle(
                                                         height: AppSize.s1,
-                                                        fontSize: FontSize.s18,
+                                                        fontSize: FontSize.s20,
                                                         fontFamily:
                                                             FontConstants
                                                                 .fontFamily,
@@ -668,101 +682,103 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                     builder:
                                         (HomeViewGetXController controller) {
                                       return Container(
-                                        child: GridView.builder(
-                                          // key: _innerListKey,
-                                          // controller: _innerScrollController,
-                                          shrinkWrap: true,
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  childAspectRatio: 0.4,
-                                                  crossAxisSpacing: 20,
-                                                  mainAxisExtent:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.28),
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount: _homeViewGetXController
-                                              .categories.length,
-                                          itemBuilder: (context, index) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context)
-                                                    .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      StoreByCategory(
-                                                          nameStore:
-                                                              _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .name!,
-                                                          cid:
-                                                              _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .id!),
-                                                ));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Card(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets
-                                                              .all(8.0),
-                                                      child: _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .categoryImageData ==
-                                                              null
-                                                          ? Image.asset(
-                                                              ImageAssets
-                                                                  .grocery,
-                                                              fit: BoxFit
-                                                                  .scaleDown)
-                                                          : Image.network(
-                                                              _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .categoryImageData!,
-                                                              height:
-                                                                  AppSize.s60,
-                                                              width:
-                                                                  AppSize.s60,
-                                                              fit: BoxFit
-                                                                  .scaleDown),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    language == 'en'
-                                                        ? _homeViewGetXController
-                                                            .categories[index]
-                                                            .name!
-                                                        : _homeViewGetXController
+                                        child: Flexible(
+                                          child: GridView.builder(
+                                            // key: _innerListKey,
+                                            // controller: _innerScrollController,
+                                            shrinkWrap: true,
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3,
+                                                    childAspectRatio: 0.4,
+                                                    crossAxisSpacing: 20,
+                                                    mainAxisExtent:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.28),
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            itemCount: _homeViewGetXController
+                                                .categories.length,
+                                            itemBuilder: (context, index) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        StoreByCategory(
+                                                            nameStore:
+                                                                _homeViewGetXController
                                                                     .categories[
                                                                         index]
-                                                                    .categoriesAr ==
+                                                                    .name!,
+                                                            cid:
+                                                                _homeViewGetXController
+                                                                    .categories[
+                                                                        index]
+                                                                    .id!),
+                                                  ));
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Card(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: _homeViewGetXController
+                                                                    .categories[
+                                                                        index]
+                                                                    .categoryImageData ==
                                                                 null
-                                                            ? _homeViewGetXController
-                                                                .categories[
-                                                                    index]
-                                                                .name!
-                                                            : _homeViewGetXController
-                                                                .categories[
-                                                                    index]
-                                                                .categoriesAr!,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize:
-                                                            FontSize.s10),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          },
+                                                            ? Image.asset(
+                                                                ImageAssets
+                                                                    .grocery,
+                                                                fit: BoxFit
+                                                                    .scaleDown)
+                                                            : Image.network(
+                                                                _homeViewGetXController
+                                                                    .categories[
+                                                                        index]
+                                                                    .categoryImageData!,
+                                                                height:
+                                                                    AppSize.s60,
+                                                                width:
+                                                                    AppSize.s60,
+                                                                fit: BoxFit
+                                                                    .scaleDown),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      language == 'en'
+                                                          ? _homeViewGetXController
+                                                              .categories[index]
+                                                              .name!
+                                                          : _homeViewGetXController
+                                                                      .categories[
+                                                                          index]
+                                                                      .categoriesAr ==
+                                                                  null
+                                                              ? _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .name!
+                                                              : _homeViewGetXController
+                                                                  .categories[
+                                                                      index]
+                                                                  .categoriesAr!,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize:
+                                                              FontSize.s10),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       );
                                     },
