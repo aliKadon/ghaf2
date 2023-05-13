@@ -91,6 +91,7 @@ class AppSize {
   static double s60 = 60.h;
   static double s62 = 62.h;
   static double s65 = 65.h;
+  static double s70 = 70.h;
   static double s73 = 73.h;
   static double s75 = 75.h;
   static double s77 = 77.h;

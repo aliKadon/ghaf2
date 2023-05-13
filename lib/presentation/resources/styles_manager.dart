@@ -33,3 +33,4 @@ TextStyle getBoldStyle({double? fontSize, required Color color}) {
 TextStyle getExtraBoldStyle({double? fontSize, required Color color}) {
   return _getTextStyle(fontSize, FontWeightManager.extraBold, color);
 }
+

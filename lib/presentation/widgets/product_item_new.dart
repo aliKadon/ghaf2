@@ -95,7 +95,10 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                               height: MediaQuery.of(context).size.height * 0.24,
                               width: AppSize.s146,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(MediaQuery.of(context)
+                                    .size
+                                    .height *
+                                    0.012),
                                 image: DecorationImage(
                                   image: AssetImage(ImageAssets.logo1),
                                   fit: BoxFit.cover,
@@ -107,7 +110,10 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                               width: AppSize.s138,
 
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(MediaQuery.of(context)
+                                    .size
+                                    .height *
+                                    0.017),
                                 image: DecorationImage(
                                   image: NetworkImage(widget.image),
                                   fit: BoxFit.cover,
@@ -129,12 +135,21 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                             }
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding:  EdgeInsets.all(MediaQuery.of(context)
+                                .size
+                                .height *
+                                0.017),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
+                                  borderRadius: BorderRadius.circular(MediaQuery.of(context)
+                                      .size
+                                      .height *
+                                      0.10),
                                   color: Colors.black54),
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(MediaQuery.of(context)
+                                  .size
+                                  .height *
+                                  0.010),
                               child: _product.isFavorite!
                                   ? Image.asset(
                                       IconsAssets.heart1,
@@ -170,34 +185,47 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                         fontWeight: FontWeight.bold,
                         color: ColorManager.primaryDark)),
               ),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: Text(
-                        '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
-                        overflow: TextOverflow.clip,
+              Padding(
+                padding:  EdgeInsets.only(
+
+                  right: MediaQuery.of(context).size.width * 0.021,
+                  left: MediaQuery.of(context).size.width * 0.021,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: Text(
+                          '${widget.price.toDouble()} ${AppLocalizations.of(context)!.aed}',
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                              fontSize: FontSize.s10,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.primaryDark)),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context)
+                          .size
+                          .height *
+                          0.00011,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context)
+                          .size
+                          .height *
+                          0.00011,
+                    ),
+                    Text(widget.stars.toString(),
                         style: TextStyle(
-                            fontSize: FontSize.s10,
-                            fontWeight: FontWeight.bold,
+                            fontSize: FontSize.s14,
+                            fontWeight: FontWeight.w500,
                             color: ColorManager.primaryDark)),
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Text(widget.stars.toString(),
-                      style: TextStyle(
-                          fontSize: FontSize.s14,
-                          fontWeight: FontWeight.w500,
-                          color: ColorManager.primaryDark)),
-                ],
+                  ],
+                ),
               ),
             ],
           )),

@@ -45,7 +45,10 @@ class _StoreByCategoryState extends State<StoreByCategory> {
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * 0.06),
             Padding(
-              padding: const EdgeInsets.only(left: 12.0, right: 12),
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.height * 0.01,
+                right: MediaQuery.of(context).size.height * 0.01,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
