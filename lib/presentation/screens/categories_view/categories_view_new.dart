@@ -33,6 +33,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
     // TODO: implement initState
     _homeViewGetXController.getCategories();
     _categoriesGetxController.getBranches(
+      context: context,
         cid: SharedPrefController().firstStoreName);
 
     super.initState();
@@ -99,6 +100,7 @@ class _CategoriesViewNewState extends State<CategoriesViewNew> with Helpers {
                         : GestureDetector(
                             onTap: () {
                               _categoriesGetxController.getBranches(
+                                context: context,
                                   cid: _homeViewGetXController
                                       .categories[index].id);
                               setState(() {

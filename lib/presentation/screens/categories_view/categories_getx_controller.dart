@@ -18,32 +18,46 @@ class CategoriesGetxController extends GetxController with Helpers {
   List<dynamic> durations = [];
   Branch? branchById;
   var isLoadingBranchById = true;
+  var isLoadingBranch = true;
 
   void getBranches(
-      {String? cid,
+      {
+        required BuildContext context,
+        String? cid,
       String? filterType = '',
       String? filterContent = '',
       String? sortType = ''}) async {
     var time = '';
-    branches = await _storeApiController.getBranchByCategoriy(
-        cid: cid,
-        filterContent: filterContent,
-        filterType: filterType,
-        sortType: sortType);
-    for(Branch branch in branches) {
-      _checkOutGetxController
-          .getDurationGoogleMap(
-          LatOne: SharedPrefController().locationLat,
-          LonOne: SharedPrefController().locationLong,
-          LatTow: double.parse((branch.branchAddress!.altitude!)),
-          LonTow: double.parse((branch.branchAddress!.longitude!)));
-      time = _checkOutGetxController.duration;
 
-      durations.add(time);
+    try {
+
+      branches = await _storeApiController.getBranchByCategoriy(
+          cid: cid,
+          filterContent: filterContent,
+          filterType: filterType,
+          sortType: sortType);
+
+      for(Branch branch in branches) {
+        _checkOutGetxController
+            .getDurationGoogleMap(
+            LatOne: SharedPrefController().locationLat,
+            LonOne: SharedPrefController().locationLong,
+            LatTow: double.parse((branch.branchAddress!.altitude!)),
+            LonTow: double.parse((branch.branchAddress!.longitude!)));
+        time = _checkOutGetxController.duration;
+
+        durations.add(time);
+      }
+      isLoadingBranch = false;
+
+      update();
+
+    }catch(error){
+      showSnackBar(context, message: error.toString(), error: true);
+
     }
 
 
-    update();
   }
 
   void getBranchById(

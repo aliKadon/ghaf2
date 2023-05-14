@@ -15,10 +15,7 @@ import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
-import 'cart_view/cart_view.dart';
-import 'categories_view/categories_view.dart';
 import 'home_view/home_view.dart';
-import 'login_view/login_view_getx_controller.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);

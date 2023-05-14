@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,12 +10,9 @@ import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/styles_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:ghaf_application/providers/product_provider.dart';
-import 'package:provider/provider.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-import '../../domain/model/product2.dart';
 
 class ProductWidget extends StatefulWidget {
   final String tag;
@@ -186,6 +182,7 @@ class _ProductWidgetState extends State<ProductWidget> {
             alignment: AlignmentDirectional.centerStart,
             child: Text(
               _product.name ?? '',
+              overflow: TextOverflow.ellipsis,
               style: getSemiBoldStyle(
                 color: ColorManager.primaryDark,
                 fontSize: FontSize.s14,

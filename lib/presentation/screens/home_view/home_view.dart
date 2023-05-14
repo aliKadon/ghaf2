@@ -17,7 +17,6 @@ import '../../../domain/model/product.dart';
 import '../../../providers/product_provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
-import '../../resources/dimensions.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';

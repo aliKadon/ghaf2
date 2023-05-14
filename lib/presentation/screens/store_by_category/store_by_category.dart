@@ -33,7 +33,10 @@ class _StoreByCategoryState extends State<StoreByCategory> {
   void initState() {
     // TODO: implement initState
 
-    _categoriesGetxController.getBranches(cid: widget.cid);
+    _categoriesGetxController.getBranches(
+        context: context,
+        cid: widget.cid);
+
     super.initState();
   }
 
@@ -47,8 +50,8 @@ class _StoreByCategoryState extends State<StoreByCategory> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.06),
             Padding(
               padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.height * 0.01,
-                right: MediaQuery.of(context).size.height * 0.01,
+                  left: MediaQuery.of(context).size.width * 0.08,
+                right: MediaQuery.of(context).size.width * 0.08,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +88,22 @@ class _StoreByCategoryState extends State<StoreByCategory> {
               thickness: 1,
             ),
             GetBuilder<CategoriesGetxController>(
-              builder: (controller) => controller.branches.length == 0
+              builder: (controller) => _categoriesGetxController.isLoadingBranch? Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    // horizontal: MediaQuery.of(context).size.height *0.5,
+                    vertical: MediaQuery.of(context).size.height *0.5,
+                  ),
+                  child: Container(
+                    width: AppSize.s20,
+                    height: AppSize.s20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
+                  ),
+                ),
+              )
+                  : controller.branches.length == 0
                   ? Container(
                 height: MediaQuery.of(context).size.height * 0.9,
                     child: Center(
@@ -132,18 +150,20 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                   (context, error, stackTrace) {
                                                 return Image.asset(
                                                   ImageAssets.brIcon,
-                                                  height: AppSize.s60,
-                                                  width: AppSize.s60,
+                                                  height: AppSize.s65,
+                                                  width: AppSize.s65,
                                                 );
                                               },
-                                              height: AppSize.s60,
-                                              width: AppSize.s60,
+                                              height: AppSize.s65,
+                                              width: AppSize.s65,
                                             ),
-                                      SizedBox(width: AppSize.s16),
+                                      SizedBox(width: AppSize.s10),
                                       Container(
                                         child: Column(
                                           children: [
                                             Row(
+                                              // mainAxisAlignment:MainAxisAlignment.spaceAround ,
+                                              // crossAxisAlignment: CrossAxisAlignment.,
                                               children: [
                                                 Container(
                                                   width: MediaQuery.of(context)
@@ -161,10 +181,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.08,
+                                                  width: AppSizeWidth.s45,
                                                 ),
                                                 Row(
                                                   children: [
@@ -199,7 +216,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                               ],
                                             ),
                                             Container(
-                                              width: AppSize.s222,
+                                              width: AppSizeWidth.s240,
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
@@ -221,7 +238,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                     color: Colors.yellow,
                                                   ),
                                                   SizedBox(
-                                                    width: 8,
+                                                    width: AppSize.s8,
                                                   ),
                                                   Text(
                                                     '${_categoriesGetxController.branches[index].storeStars}.0',
@@ -245,7 +262,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                               ),
                                             ),
                                             Container(
-                                              width: AppSize.s258,
+                                              width: AppSizeWidth.s280,
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -336,7 +353,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                 ),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: AppSize.s12,
                               )
                             ],
                           ),

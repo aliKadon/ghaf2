@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ghaf_application/app/constants.dart';
-import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-
 import '../../app/preferences/shared_pref_controller.dart';
-import '../../domain/model/models.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
-import '../resources/routes_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'dart:math' as math; // import this
 
 class TermsOfUseView extends StatelessWidget {
   const TermsOfUseView({Key? key}) : super(key: key);

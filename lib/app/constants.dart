@@ -7,7 +7,7 @@ class Constants {
   static const int crossAxisCount = 2;
   static const double mainAxisExtent = 290;
   static const double crossAxisSpacing = 20;
-  static const double mainAxisSpacing = 10;
+  static const double mainAxisSpacing = 5;
   static const int orderDetailsLines = 5;
   static const String roleRegisterCustomer = 'Customer';
   static const String roleRegisterSeller = 'Seller';

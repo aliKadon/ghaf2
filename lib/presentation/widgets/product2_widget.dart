@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-import '../../app/constants.dart';
 import '../../domain/model/product2.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -137,6 +135,7 @@ class _ProductWidget2State extends State<ProductWidget2> {
               alignment: AlignmentDirectional.centerStart,
               child: Text(
                 widget.product.name ?? '',
+                overflow: TextOverflow.ellipsis,
                 style: getSemiBoldStyle(
                   color: ColorManager.primaryDark,
                   fontSize: FontSize.s14,

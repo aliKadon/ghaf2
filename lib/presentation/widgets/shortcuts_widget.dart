@@ -7,13 +7,11 @@ import 'package:ghaf_application/presentation/screens/home_view/past_order_scree
 import 'package:ghaf_application/presentation/screens/offers/offers_screen_new.dart';
 import 'package:ghaf_application/presentation/screens/store_view/top_rated_view.dart';
 
-import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 import '../screens/store_view/fastest_delivery.dart';
-import '../screens/store_view/onsale_view.dart';
 import '../screens/store_view/trending_view.dart';
 
 class ShortcutsWidget extends StatelessWidget with Helpers{

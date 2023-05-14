@@ -180,6 +180,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                 width: AppSize.s138,
                 child: Text(language == 'en' ? widget.name : _product.nameAr ?? widget.name,
                     textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontSize: FontSize.s14,
                         fontWeight: FontWeight.bold,

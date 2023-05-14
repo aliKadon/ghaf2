@@ -132,29 +132,41 @@ class _CartScreenState extends State<CartScreen> {
                   )
                 : _cartViewGetXController.isMyCartLoading
                     ? Center(
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            // horizontal: MediaQuery.of(context).size.height *0.5,
+                            vertical: MediaQuery.of(context).size.height *0.5,
+                          ),
+                          child: Container(
+                            width: AppSize.s20,
+                            height: AppSize.s20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1,
+                            ),
                           ),
                         ),
                       )
                     : _cartViewGetXController.cartItems.length == 0
                         ? Center(
-                            child: Text(
-                                AppLocalizations.of(context)!.cart_is_empty,
-                                style: TextStyle(
-                                    fontSize: FontSize.s18,
-                                    color: ColorManager.primary,
-                                    fontWeight: FontWeight.w600)),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                // horizontal: MediaQuery.of(context).size.height *0.5,
+                                vertical: MediaQuery.of(context).size.height *0.5,
+                              ),
+                              child: Text(
+                                  AppLocalizations.of(context)!.cart_is_empty,
+                                  style: TextStyle(
+                                      fontSize: FontSize.s18,
+                                      color: ColorManager.primary,
+                                      fontWeight: FontWeight.w600)),
+                            ),
                           )
                         : Column(
                             // crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 10,
+                                height: AppSize.s10,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
