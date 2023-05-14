@@ -25,7 +25,11 @@ class ProductViewNew extends StatefulWidget {
   String? orderId;
   num? minOrder;
 
-  ProductViewNew({required this.idProduct, this.isFromChekOut, this.orderId,this.minOrder});
+  ProductViewNew(
+      {required this.idProduct,
+      this.isFromChekOut,
+      this.orderId,
+      this.minOrder});
 
   @override
   State<ProductViewNew> createState() => _ProductViewNewState();
@@ -116,10 +120,13 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12),
                             child: Container(
-                              height: MediaQuery.of(context).size.height * 0.038,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.038,
                               width: MediaQuery.of(context).size.width * 0.08,
                               child: Image.asset(
-                                SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                                SharedPrefController().lang1 == 'ar'
+                                    ? IconsAssets.arrow2
+                                    : IconsAssets.arrow,
                                 height: AppSize.s18,
                                 width: AppSize.s10,
                               ),
@@ -152,11 +159,21 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                   width: double.infinity,
                                   height:
                                       MediaQuery.of(context).size.height * 0.4)
-                              : Image.network(productById["productImages"][0],
+                              : Image.network(
+                                  productById["productImages"][0],
                                   fit: BoxFit.scaleDown,
                                   width: double.infinity,
                                   height:
-                                      MediaQuery.of(context).size.height * 0.4),
+                                      MediaQuery.of(context).size.height * 0.4,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(ImageAssets.logo1,
+                                        fit: BoxFit.scaleDown,
+                                        width: double.infinity,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.4);
+                                  },
+                                ),
                           Positioned(
                             left: 0,
                             right: 0,
@@ -187,8 +204,11 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                                     .size
                                                     .width *
                                                 0.7,
-                                            child: Text( language == 'en' ?
-                                              productById["name"] : productById["nameAr"] ?? productById["name"],
+                                            child: Text(
+                                              language == 'en'
+                                                  ? productById["name"]
+                                                  : productById["nameAr"] ??
+                                                      productById["name"],
                                               overflow: TextOverflow.clip,
                                               style: getSemiBoldStyle(
                                                 color: ColorManager.primaryDark,
@@ -247,8 +267,10 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                             MediaQuery.of(context).size.height *
                                                 0.02,
                                       ),
-                                      Text(language == 'en' ?
-                                        productById["description"] : productById["description"],
+                                      Text(
+                                        language == 'en'
+                                            ? productById["description"]
+                                            : productById["description"],
                                         style: getSemiBoldStyle(
                                           color: ColorManager.black,
                                           fontSize: FontSize.s14,
@@ -329,7 +351,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                               right: 0,
                               bottom: 0,
                               child: Container(
-                                padding:EdgeInsets.all(AppSize.s15),
+                                padding: EdgeInsets.all(AppSize.s15),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(50),
@@ -352,7 +374,6 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                                     context: context,
                                                     role: 'Customer');
                                               } else {
-
                                                 _checkOutGetxController
                                                     .addItems(
                                                         context: context,
@@ -388,7 +409,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                                         context: context,
                                                         role: 'Customer');
                                                   } else {
-                                                    print('============================min order');
+                                                    print(
+                                                        '============================min order');
                                                     print(widget.minOrder);
 
                                                     // _cartViewGetXController.calculate(minOrder1: widget.minOrder!);
@@ -409,7 +431,10 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                                               backgroundColor:
                                                                   Colors.green,
                                                             )));
-                                                    _cartViewGetXController.calculateBell(minOrder1: widget.minOrder);
+                                                    _cartViewGetXController
+                                                        .calculateBell(
+                                                            minOrder1: widget
+                                                                .minOrder);
                                                   }
                                                 },
                                                 style: ButtonStyle(

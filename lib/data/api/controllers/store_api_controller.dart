@@ -163,7 +163,7 @@ class StoreApiController with ApiHelper, Helpers {
     String? filterBy,
     String? did,
   }) async {
-    // // print('send request : getProducts');
+    // print('send request : $queryParameters1');
     Map<String, dynamic> queryParameters1 = {
       'sid': sid,
       'filter':
@@ -212,7 +212,7 @@ class StoreApiController with ApiHelper, Helpers {
       'bid' : bid,
       'sid': sid,
       'filter':
-          "Name~contains~'$search'~and~${filterBy ?? 'Price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'Price'}~lte~${maxPrice ?? 500}",
+          "Name~contains~'$search'~and~${filterBy ?? 'Price'}~gte~${minPrice ?? 0}~and~${filterBy ?? 'Price'}~lte~${maxPrice ?? 100000}",
     };
     print('queryParameters product : $queryParameters');
 

@@ -30,8 +30,17 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
   @override
   void initState() {
     // TODO: implement initState
-    _homeViewGetXController.getMostPopularProduct(bid: widget.bid);
-    _homeViewGetXController.getProducts(context: context);
+    _homeViewGetXController.getFilterProducts(
+      did: 'bc4f3b43-df7b-48ca-014c-08dafd69d37b',
+      context: context,
+      sid: '',
+      filterBy: 'Name',
+      maxPrice: 100000,
+      minPrice: 0,
+      search: '',
+      stars:'Name',
+    );
+    // _homeViewGetXController.getProducts(context: context);
     super.initState();
   }
 
@@ -99,7 +108,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                           scrollDirection: Axis.vertical,
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: controller.mostPopular.length,
+                          itemCount: controller.products.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
@@ -109,24 +118,24 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                               builder: (context) {
                                 Get.put<Product>(
                                   controller
-                                      .mostPopular[index],tag:
-                                '${controller.mostPopular[index].id}trending',);
+                                      .products[index],tag:
+                                '${controller.products[index].id}trending',);
                                 return ProductItemNew(
-                                  tag: '${controller.mostPopular[index].id}trending',
-                                    image: controller.mostPopular[index]
+                                  tag: '${controller.products[index].id}trending',
+                                    image: controller.products[index]
                                                 .productImages?.length ==
                                             0
                                         ? ''
                                         : controller
-                                            .mostPopular[index].productImages![0],
-                                    name: controller.mostPopular[index].name!,
-                                    stars: controller.mostPopular[index].stars!,
+                                            .products[index].productImages![0],
+                                    name: controller.products[index].name!,
+                                    stars: controller.products[index].stars!,
                                     index: index,
-                                    price: controller.mostPopular[index].price!,
+                                    price: controller.products[index].price!,
                                     isFavorite:
-                                        controller.mostPopular[index].isFavorite!,
+                                        controller.products[index].isFavorite!,
                                     // controller: _homeViewGetXController.mostPopular,
-                                    idProduct: controller.mostPopular[index].id!);
+                                    idProduct: controller.products[index].id!);
                               }
                             );
                           },
