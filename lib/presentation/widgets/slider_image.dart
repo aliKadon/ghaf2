@@ -48,7 +48,7 @@ class _SliderImageState extends State<SliderImage> {
   @override
   Widget build(BuildContext context) {
     return ImageSlideshow(
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.24,
         // width: double.infinity,
         indicatorRadius: 4,
         isLoop: isLoop,

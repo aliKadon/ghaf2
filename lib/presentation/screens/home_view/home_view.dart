@@ -901,7 +901,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           child: GetBuilder<HomeViewGetXController>(
                             // id: 'products',
                             builder: (controller) => Container(
-                              width: AppSize.s370,
+                              width: MediaQuery.of(context).size.width * 0.95,
                               height: controller.mostPopular.length == 0
                                   ? 0
                                   : MediaQuery.of(context).size.height * 0.34,
@@ -912,7 +912,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                       padding: EdgeInsets.all(MediaQuery.of(context)
                                           .size
                                           .height *
-                                          0.0070),
+                                          0.0050),
                                       scrollDirection: Axis.horizontal,
                                       physics: BouncingScrollPhysics(),
                                       itemCount: controller.mostPopular.length,
@@ -1308,85 +1308,85 @@ class _HomeViewState extends State<HomeView> with Helpers {
     );
   }
 
-  void _customDialogProgress() async {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: Container(
-              height: AppSize.s258,
-              width: AppSize.s258,
-              decoration: BoxDecoration(
-                color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(AppRadius.r8),
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: AppSize.s38,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          ImageAssets.logo1,
-                          height: AppSize.s26,
-                          width: AppSize.s28,
-                        ),
-                        SizedBox(
-                          width: AppSize.s12,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.ghaf,
-                          style: getMediumStyle(
-                              color: ColorManager.primaryDark,
-                              fontSize: FontSize.s20),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: AppSize.s30,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppPadding.p12,
-                      ),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        'Dear Shorooq Mirdif, we havereceived your message andare currently working towardsa solution. We will get back toyou shortly. Thank you for yourpatience!',
-                        style: getMediumStyle(
-                            color: ColorManager.white, fontSize: FontSize.s12),
-                      ),
-                    ),
-                    SizedBox(
-                      height: AppSize.s24,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p55,
-                          vertical: AppPadding.p8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: ColorManager.primaryDark,
-                          borderRadius: BorderRadius.circular(AppRadius.r8),
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)!.close,
-                          style: getMediumStyle(color: ColorManager.white),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
-                  ]),
-            ),
-          );
-        });
-  }
+  // void _customDialogProgress() async {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return Dialog(
+  //           child: Container(
+  //             height: AppSize.s258,
+  //             width: AppSize.s258,
+  //             decoration: BoxDecoration(
+  //               color: ColorManager.primary,
+  //               borderRadius: BorderRadius.circular(AppRadius.r8),
+  //             ),
+  //             child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   SizedBox(
+  //                     height: AppSize.s38,
+  //                   ),
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                       Image.asset(
+  //                         ImageAssets.logo1,
+  //                         height: AppSize.s26,
+  //                         width: AppSize.s28,
+  //                       ),
+  //                       SizedBox(
+  //                         width: AppSize.s12,
+  //                       ),
+  //                       Text(
+  //                         AppLocalizations.of(context)!.ghaf,
+  //                         style: getMediumStyle(
+  //                             color: ColorManager.primaryDark,
+  //                             fontSize: FontSize.s20),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s30,
+  //                   ),
+  //                   Padding(
+  //                     padding: EdgeInsets.symmetric(
+  //                       horizontal: AppPadding.p12,
+  //                     ),
+  //                     child: Text(
+  //                       textAlign: TextAlign.center,
+  //                       'Dear Shorooq Mirdif, we havereceived your message andare currently working towardsa solution. We will get back toyou shortly. Thank you for yourpatience!',
+  //                       style: getMediumStyle(
+  //                           color: ColorManager.white, fontSize: FontSize.s12),
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s24,
+  //                   ),
+  //                   GestureDetector(
+  //                     onTap: () => Navigator.pop(context),
+  //                     child: Container(
+  //                       padding: EdgeInsets.symmetric(
+  //                         horizontal: AppPadding.p55,
+  //                         vertical: AppPadding.p8,
+  //                       ),
+  //                       decoration: BoxDecoration(
+  //                         color: ColorManager.primaryDark,
+  //                         borderRadius: BorderRadius.circular(AppRadius.r8),
+  //                       ),
+  //                       child: Text(
+  //                         AppLocalizations.of(context)!.close,
+  //                         style: getMediumStyle(color: ColorManager.white),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     height: AppSize.s12,
+  //                   ),
+  //                 ]),
+  //           ),
+  //         );
+  //       });
+  // }
 
   OutlineInputBorder buildOutlineInputBorder({required Color color}) {
     return OutlineInputBorder(
