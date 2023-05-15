@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/pay_later_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/pay_later_produc.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 
 import '../../../domain/model/pay_later_installment.dart';
 
@@ -25,9 +26,8 @@ class PayLaterGetxController extends GetxController with Helpers {
     final subStringFirstDate = firstDate.substring(0, 10);
     final first = DateTime.parse(subStringFirstDate);
 
-    final subStringSecondDate = secondDate.substring(0,10);
+    final subStringSecondDate = secondDate.substring(0, 10);
     final second = DateTime.parse(subStringSecondDate);
-
 
     // final regex = RegExp(r'^(.*)-(.*)-(.*)$');
     // final firstMatch = regex.firstMatch('2024-05-06');
@@ -58,7 +58,6 @@ class PayLaterGetxController extends GetxController with Helpers {
           payLaterProductComplete
               .removeWhere((m) => m.groupId == payLaterProduct.groupId);
           payLaterProductComplete.add(payLaterProduct);
-
         }
       }
       update();
@@ -91,7 +90,9 @@ class PayLaterGetxController extends GetxController with Helpers {
       showLoadingDialog(context: context, title: 'loading...');
       apiResponse = await _payLaterApiController.payForInstallment(
           paymentMethodId: paymentMethodId, productId: productId);
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => MainView(),
+      ));
       showSnackBar(context, message: apiResponse.message);
       update();
     } catch (error) {

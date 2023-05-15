@@ -84,34 +84,30 @@ class _NearByWidgetState extends State<NearByWidget> {
               children: [
                 widget.imageUrl == ''
                     ? Container(
-                        height: MediaQuery.of(context).size.height * 0.11,
+                        height: MediaQuery.of(context).size.height * 0.2,
                         width: MediaQuery.of(context).size.width * 0.27,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(AppSize.s10),
                           image: DecorationImage(
                             image: AssetImage(ImageAssets.coffeeHouse),
-                            fit: BoxFit.scaleDown,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       )
                     : Container(
-                        height: MediaQuery.of(context).size.height * 0.11,
-                        width: MediaQuery.of(context).size.width * 0.27,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppSize.s10),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.imageUrl),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(AppSize.s10),
+                            child: Image.network(
+                              widget.imageUrl,
+                              fit: BoxFit.scaleDown,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(ImageAssets.coffeeHouse,);
+                              },
+                            )),
                       ),
-                SizedBox(
-                  width: AppSize.s14,
-                )
               ],
-            ),
-            SizedBox(
-              height: AppSize.s8,
             ),
             Container(
               width: AppSize.s154,

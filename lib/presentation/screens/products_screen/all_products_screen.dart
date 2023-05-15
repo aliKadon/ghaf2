@@ -82,50 +82,55 @@ class _AllProductScreenState extends State<AllProductScreen> {
                       AppLocalizations.of(context)!.no_product_found,
                     ),
                   )
-                : GridView.builder(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppPadding.p8, vertical: AppPadding.p4),
-                    itemCount: _homeViewGetXController.mostPopular.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: Constants.crossAxisCount,
-                      mainAxisExtent: Constants.mainAxisExtent,
-                      mainAxisSpacing: Constants.mainAxisSpacing,
-                    ),
-                    itemBuilder: (context, index) {
-                      // Get.put<Product>(
-                      //   _productsScreenGetXController.products[index],
-                      //   tag:
-                      //   '${_productsScreenGetXController.products[index].id}products',
-                      // );
-                      return Builder(builder: (context) {
-                        Get.put<Product>(
-                          _homeViewGetXController.mostPopular[index],
-                          tag:
-                              '${_homeViewGetXController.mostPopular[index].id}',
-                        );
-                        return ProductItemNew(
-                            image: _homeViewGetXController.mostPopular[index]
-                                        .productImages!.length ==
-                                    0
-                                ? ''
-                                : _homeViewGetXController
-                                    .mostPopular[index].productImages![0],
-                            name: _homeViewGetXController
-                                .mostPopular[index].name!,
+                : Container(
+                  child: GridView.builder(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppPadding.p8, vertical: AppPadding.p4),
+                      itemCount: _homeViewGetXController.mostPopular.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: Constants.crossAxisCount,
+                        mainAxisExtent: Constants.mainAxisExtent,
+                        mainAxisSpacing: Constants.mainAxisSpacing,
+                        crossAxisSpacing: Constants.crossAxisSpacing
+                      ),
+                      itemBuilder: (context, index) {
+                        // Get.put<Product>(
+                        //   _productsScreenGetXController.products[index],
+                        //   tag:
+                        //   '${_productsScreenGetXController.products[index].id}products',
+                        // );
+                        return Builder(builder: (context) {
+                          Get.put<Product>(
+                            _homeViewGetXController.mostPopular[index],
                             tag:
                                 '${_homeViewGetXController.mostPopular[index].id}',
-                            stars: _homeViewGetXController
-                                .mostPopular[index].stars!,
-                            price: _homeViewGetXController
-                                .mostPopular[index].price!,
-                            index: index,
-                            isFavorite: _homeViewGetXController
-                                .mostPopular[index].isFavorite!,
-                            idProduct:
-                                _homeViewGetXController.mostPopular[index].id!);
-                      });
-                    },
-                  )
+                          );
+                          return Container(
+                            child: ProductItemNew(
+                                image: _homeViewGetXController.mostPopular[index]
+                                            .productImages!.length ==
+                                        0
+                                    ? ''
+                                    : _homeViewGetXController
+                                        .mostPopular[index].productImages![0],
+                                name: _homeViewGetXController
+                                    .mostPopular[index].name!,
+                                tag:
+                                    '${_homeViewGetXController.mostPopular[index].id}',
+                                stars: _homeViewGetXController
+                                    .mostPopular[index].stars!,
+                                price: _homeViewGetXController
+                                    .mostPopular[index].price!,
+                                index: index,
+                                isFavorite: _homeViewGetXController
+                                    .mostPopular[index].isFavorite!,
+                                idProduct:
+                                    _homeViewGetXController.mostPopular[index].id!),
+                          );
+                        });
+                      },
+                    ),
+                )
             : widget.type == 'order'
                 ? _checkOutGetxController.customerOrder.isEmpty
                     ? Center(
@@ -209,48 +214,50 @@ class _AllProductScreenState extends State<AllProductScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisExtent: AppSize.s206,
+                              mainAxisExtent: AppSize.s258,
                               // mainAxisSpacing: Constants.mainAxisSpacing,
                             ),
                             itemBuilder: (context, index) {
                               return Builder(builder: (context) {
                                 return Padding(
                                   padding: EdgeInsets.all(AppSize.s5),
-                                  child: NearByWidget(
-                                    addressLat: widget.addressLat == null
-                                        ? _addressesViewGetXController
-                                        .addresses.length == 0 ? null : _addressesViewGetXController
-                                        .addresses[0].altitude!
-                                        : widget.addressLat!,
-                                    addressLong: widget.addressLong == null
-                                        ? _addressesViewGetXController
-                                        .addresses.length == 0 ? null : _addressesViewGetXController
-                                        .addresses[0].longitude!
-                                        : widget.addressLong!,
-                                    is24: _homeViewGetXController
-                                        .nearbyStores[index].is24Hours!,
-                                    details: _homeViewGetXController
-                                        .nearbyStores[index].details ?? '',
-                                    index: index,
-                                    imageUrl: _homeViewGetXController
-                                                    .nearbyStores[index]
-                                                    .branchLogoImage
-                                                    ?.length ==
-                                                0 ||
-                                            _homeViewGetXController
-                                                    .nearbyStores[index]
-                                                    .branchLogoImage ==
-                                                null
-                                        ? ''
-                                        : _homeViewGetXController
-                                            .nearbyStores[index]
-                                            .branchLogoImage!,
-                                    storeName: _homeViewGetXController
-                                        .nearbyStores[index].branchName!,
-                                    branchId: _homeViewGetXController
-                                        .nearbyStores[index].id!,
-                                    address: _homeViewGetXController
-                                        .nearbyStores[index].branchAddress!,
+                                  child: Container(
+                                    child: NearByWidget(
+                                      addressLat: widget.addressLat == null
+                                          ? _addressesViewGetXController
+                                          .addresses.length == 0 ? null : _addressesViewGetXController
+                                          .addresses[0].altitude!
+                                          : widget.addressLat!,
+                                      addressLong: widget.addressLong == null
+                                          ? _addressesViewGetXController
+                                          .addresses.length == 0 ? null : _addressesViewGetXController
+                                          .addresses[0].longitude!
+                                          : widget.addressLong!,
+                                      is24: _homeViewGetXController
+                                          .nearbyStores[index].is24Hours!,
+                                      details: _homeViewGetXController
+                                          .nearbyStores[index].details ?? '',
+                                      index: index,
+                                      imageUrl: _homeViewGetXController
+                                                      .nearbyStores[index]
+                                                      .branchLogoImage
+                                                      ?.length ==
+                                                  0 ||
+                                              _homeViewGetXController
+                                                      .nearbyStores[index]
+                                                      .branchLogoImage ==
+                                                  null
+                                          ? ''
+                                          : _homeViewGetXController
+                                              .nearbyStores[index]
+                                              .branchLogoImage!,
+                                      storeName: _homeViewGetXController
+                                          .nearbyStores[index].branchName!,
+                                      branchId: _homeViewGetXController
+                                          .nearbyStores[index].id!,
+                                      address: _homeViewGetXController
+                                          .nearbyStores[index].branchAddress!,
+                                    ),
                                   ),
                                 );
                               });

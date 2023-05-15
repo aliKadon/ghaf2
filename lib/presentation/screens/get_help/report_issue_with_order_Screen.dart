@@ -148,7 +148,7 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(AppSize.s20),
                           image: DecorationImage(
-                              image: AssetImage(ImageAssets.pizza))),
+                              image: AssetImage(ImageAssets.logo2))),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

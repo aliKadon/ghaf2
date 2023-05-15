@@ -8,7 +8,7 @@ class Constants {
   static const int apiTimeOut = 60000;
   static const int crossAxisCount = 2;
   static double mainAxisExtent = AppSize.s290;
-  static double crossAxisSpacing = AppSize.s20;
+  static double crossAxisSpacing = AppSize.s1;
   static double mainAxisSpacing = AppSize.s5;
   static const int orderDetailsLines = 5;
   static const String roleRegisterCustomer = 'Customer';

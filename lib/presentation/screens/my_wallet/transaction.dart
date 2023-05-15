@@ -101,7 +101,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     ),
                     GetBuilder<WalletGetxController>(
                       builder: (controller) => Text(
-                        'AED ${_walletGetxController.balance}',
+                        '${AppLocalizations.of(context)!.aed} ${_walletGetxController.balance}',
                         style: getSemiBoldStyle(
                           color: ColorManager.primaryDark,
                           fontSize: FontSize.s18,

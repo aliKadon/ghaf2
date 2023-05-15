@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/review_api_controller.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 
 class ReviewGetxController extends GetxController with Helpers {
   late final ReviewApiController _reviewApiController = ReviewApiController();
@@ -56,6 +58,7 @@ class ReviewGetxController extends GetxController with Helpers {
           opinion: description, points: points);
       if(apiResponse.status == 200) {
         Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainView(),));
         showSnackBar(context, message: apiResponse.message);
       }else {
         Navigator.of(context).pop();

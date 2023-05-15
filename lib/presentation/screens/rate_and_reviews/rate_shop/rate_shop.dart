@@ -164,18 +164,20 @@ class _RateShopState extends State<RateShop> {
                 SizedBox(
                   height: 10,
                 ),
-
-                Container(
-                  height: AppSize.s123,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r10),
+                Visibility(
+                  visible: false,
+                  child: Container(
+                    height: AppSize.s123,
+                    child: TextFormField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.r10),
+                        ),
+                        contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
+                        label: Text('${_rateShopGetxController.description}'),
+                        labelStyle: TextStyle(fontSize: AppSize.s26),
                       ),
-                      contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
-                      label: Text('${_rateShopGetxController.description}'),
-                      labelStyle: TextStyle(fontSize: AppSize.s26),
                     ),
                   ),
                 ),

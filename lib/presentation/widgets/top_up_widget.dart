@@ -54,7 +54,7 @@ class _TopUpWidgetState extends State<TopUpWidget> {
             ),
             Spacer(),
             Image.asset(
-              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+              SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow : IconsAssets.arrow2,
               height: AppSize.s20,
               color: ColorManager.greyLight,
             )

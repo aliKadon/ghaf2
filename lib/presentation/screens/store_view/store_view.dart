@@ -118,10 +118,10 @@ class _StoreViewState extends State<StoreView> {
                                 ),
                               ),
                               child: _categoriesGetxController
-                                              .branchById?.storeLogoImage ==
+                                              .branchById?.storeCoverImage ==
                                           null ||
                                       _categoriesGetxController
-                                          .branchById!.storeLogoImage!.isEmpty
+                                          .branchById!.storeCoverImage!.isEmpty
                                   ? Container(
                                       height:
                                           MediaQuery.of(context).size.height *
@@ -147,7 +147,7 @@ class _StoreViewState extends State<StoreView> {
                                                 _categoriesGetxController
                                                     .branchById!
                                                     .storeCoverImage!),
-                                            fit: BoxFit.scaleDown),
+                                            fit: BoxFit.cover),
                                       ),
                                     ),
                             ),
@@ -375,13 +375,13 @@ class _StoreViewState extends State<StoreView> {
                                         color: ColorManager.primary,
                                       ),
                                       Container(
-                                        width: AppSizeWidth.s80,
+                                        width: AppSizeWidth.s110,
                                         child: Text(
                                           overflow: TextOverflow.clip,
                                           widget.is24
                                               ? AppLocalizations.of(context)!
                                                   .open_24_hours
-                                              : '${_categoriesGetxController.branchById!.todayWorkHoursToString}',
+                                              :controller.branchById!.isOpen! ? '${_categoriesGetxController.branchById!.todayWorkHoursToString}' : '${AppLocalizations.of(context)!.store_currently_closed}',
                                           style: TextStyle(
                                               color: ColorManager.primaryDark),
                                         ),
@@ -486,7 +486,7 @@ class _StoreViewState extends State<StoreView> {
                                       width: AppSizeWidth.s5,
                                     ),
                                     Container(
-                                      height: AppSize.s270,
+                                      height: AppSize.s300,
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
@@ -501,7 +501,7 @@ class _StoreViewState extends State<StoreView> {
                                                   '${controller.recommendedProduct[index].id}recommend',
                                             );
                                             return Container(
-                                              width: AppSizeWidth.s154,
+                                              // width: AppSizeWidth.s154,
                                               child: ProductItemNew(
                                                   isFromCheckOut:
                                                       widget.isFromCheckout,
@@ -685,7 +685,7 @@ class _StoreViewState extends State<StoreView> {
                                       width: AppSizeWidth.s5,
                                     ),
                                     Container(
-                                      height: AppSize.s270,
+                                      height: AppSize.s300,
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
@@ -700,7 +700,7 @@ class _StoreViewState extends State<StoreView> {
                                                   '${_homeViewGetXController.productByType[index].id}storeView',
                                             );
                                             return Container(
-                                              width: AppSizeWidth.s154,
+                                              // width: AppSizeWidth.s154,
                                               child: ProductItemNew(
                                                   isFromCheckOut:
                                                       widget.isFromCheckout,

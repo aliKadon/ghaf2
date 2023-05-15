@@ -62,7 +62,9 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar'
+                              ? IconsAssets.arrow2
+                              : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -253,30 +255,27 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         ReportAnotherIssueScreen(
-                                          imageUrl:  controller
-                                              .itemsToReturn[index]
-                                              .product
-                                              ?.productImages
-                                              ?.length ==
-                                              0 ||
-                                              controller
-                                                  .itemsToReturn[index]
-                                                  .product
-                                                  ?.productImages ==
+                                      imageUrl: controller
+                                                      .itemsToReturn[index]
+                                                      .product
+                                                      ?.productImages
+                                                      ?.length ==
+                                                  0 ||
+                                              controller.itemsToReturn[index]
+                                                      .product?.productImages ==
                                                   null
-                                              ? null
-                                              : controller.itemsToReturn[index]
+                                          ? null
+                                          : controller.itemsToReturn[index]
                                               .product?.productImages?[0],
-                                          name: controller.itemsToReturn[index]
-                                              .product?.name,
-                                          orderId:  controller
-                                              .itemsToReturn[index].orderId,
-                                        ),
+                                      name: controller
+                                          .itemsToReturn[index].product?.name,
+                                      orderId: controller
+                                          .itemsToReturn[index].orderId,
+                                    ),
                                   ));
                                 }
                               },
                               child: Column(
-
                                 children: [
                                   Row(
                                     children: [
@@ -294,29 +293,45 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                               width: AppSize.s110,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(AppSize.s20),
+                                                      BorderRadius.circular(
+                                                          AppSize.s20),
                                                   image: DecorationImage(
                                                       image: AssetImage(
-                                                          ImageAssets.pizza))),
+                                                          ImageAssets.logo2))),
                                             )
                                           : Container(
-                                              height: AppSize.s110,
+                                        height: AppSize.s110,
                                               width: AppSize.s110,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(AppSize.s20),
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          controller
-                                                                  .itemsToReturn[
-                                                                      index]
-                                                                  .product!
-                                                                  .productImages![
-                                                              0]))),
-                                            ),
+                                              child: Image.network(
+                                                controller.itemsToReturn[index]
+                                                    .product!.productImages![0],
+                                                errorBuilder:
+                                                    (context, error, stackTrace) {
+                                                  return Image.asset(
+                                                      ImageAssets.logo2);
+                                                },
+                                              ),
+                                          ),
+                                      // Container(
+                                      //         height: AppSize.s110,
+                                      //         width: AppSize.s110,
+                                      //         decoration: BoxDecoration(
+                                      //             borderRadius:
+                                      //                 BorderRadius.circular(AppSize.s20),
+                                      //             image: DecorationImage(
+                                      //                 image: NetworkImage(
+                                      //                     controller
+                                      //                             .itemsToReturn[
+                                      //                                 index]
+                                      //                             .product!
+                                      //                             .productImages![
+                                      //                         0]))),
+                                      //       ),
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             '${_helpGetxController.itemsToReturn[index].product?.name}',
@@ -329,7 +344,8 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                             height: AppSize.s30,
                                           ),
                                           Text(
-                                            '${(_helpGetxController.itemsToReturn[index].product!.addedAt!)}'.substring(0,10),
+                                            '${(_helpGetxController.itemsToReturn[index].product!.addedAt!)}'
+                                                .substring(0, 10),
                                             style: TextStyle(
                                               color: ColorManager.greyLight,
                                               fontWeight: FontWeight.w500,
@@ -339,7 +355,9 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                       ),
                                       Spacer(),
                                       Image.asset(
-                                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                                        SharedPrefController().lang1 == 'ar'
+                                            ? IconsAssets.arrow2
+                                            : IconsAssets.arrow,
                                         height: AppSize.s18,
                                         color: ColorManager.primary,
                                       ),

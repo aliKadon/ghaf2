@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/font_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 
 class CancellingOrderScreen extends StatelessWidget {
   @override
@@ -40,14 +41,15 @@ class CancellingOrderScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: AppSize.s60,
-
-                child: ElevatedButton(onPressed: () {
-                  Navigator.of(context).pop();
-
-                }, child: Text(AppLocalizations.of(context)!.ok)),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => MainView(),
+                      ));
+                    },
+                    child: Text(AppLocalizations.of(context)!.ok)),
               ),
             )
-
           ],
         ),
       ),

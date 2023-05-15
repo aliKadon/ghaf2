@@ -111,7 +111,7 @@ class _ReportAnotherIssueScreenState extends State<ReportAnotherIssueScreen>
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
-                              image: AssetImage(ImageAssets.pizza))),
+                              image: AssetImage(ImageAssets.logo2))),
                     )
                         : Container(
                       height: AppSize.s110,

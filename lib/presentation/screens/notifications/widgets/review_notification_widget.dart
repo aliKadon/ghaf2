@@ -226,8 +226,8 @@ class ReviewNotificationWidget extends StatelessWidget {
                                   child: Text(AppLocalizations.of(context)!
                                       .rate_shop1)),
                             ),
-                            Spacer(),
-                            Container(
+                            deliveryId == null ? Container() :Spacer(),
+                            deliveryId == null ? Container() : Container(
                               height: AppSize.s46,
                               child: ElevatedButton(
                                   style: ButtonStyle(

@@ -901,6 +901,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                               0.012,
                         ),
                         Container(
+                          height: AppSize.s300,
                           child: GetBuilder<HomeViewGetXController>(
                             // id: 'products',
                             builder: (controller) => Container(
@@ -1176,7 +1177,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                     ),
                     GetBuilder<HomeViewGetXController>(
                       builder: (controller) => Container(
-                        height: MediaQuery.of(context).size.height * 0.25,
+                        height: MediaQuery.of(context).size.height * 0.33,
                         child: ListView.builder(
                           padding: EdgeInsets.all(AppSize.s8),
                           shrinkWrap: true,

@@ -50,12 +50,12 @@ class _PreOrderWidgetState extends State<PreOrderWidget> {
             Spacer(),
             language == 'en'
                 ? Image.asset(
-                    SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                    SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow : IconsAssets.arrow2,
                     height: AppSize.s30,
                     color: ColorManager.primary,
                   )
                 : Image.asset(
-                    SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                    SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow : IconsAssets.arrow2,
                     height: AppSize.s30,
                     color: ColorManager.primary,
                   ),

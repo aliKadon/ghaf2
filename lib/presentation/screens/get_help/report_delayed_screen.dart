@@ -98,7 +98,7 @@ class _ReportDelayedScreenState extends State<ReportDelayedScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(AppSize.s20),
                               image: DecorationImage(
-                                  image: AssetImage(ImageAssets.pizza))),
+                                  image: AssetImage(ImageAssets.logo2))),
                         )
                       : Container(
                           height: AppSize.s110,

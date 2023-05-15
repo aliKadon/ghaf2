@@ -52,8 +52,10 @@ class CheckOutGetxController extends GetxController with Helpers {
 
   void getPaymentMethod({required BuildContext context}) async {
     try {
-      paymentMethod = await _paymentMethodApiController.getPaymentMethod();
+      List<PaymentMethod> paymentMethods = [];
+      paymentMethods = await _paymentMethodApiController.getPaymentMethod();
       isLoading.value = false;
+    paymentMethod = paymentMethods.reversed.toList();
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
@@ -272,13 +274,15 @@ class CheckOutGetxController extends GetxController with Helpers {
 
   void getCustomerOrder({required BuildContext context}) async {
     try {
-      customerOrder = await _ordersApiController.getCustomerOrder();
+      List<Order> orders = [];
+      orders = await _ordersApiController.getCustomerOrder();
       for (Order order in customerOrder) {
         if (order.statusName == 'Done') {
           doneorder.removeWhere((element) => element.id == order.id);
           doneorder.add(order);
         }
       }
+    customerOrder = orders.reversed.toList();
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);

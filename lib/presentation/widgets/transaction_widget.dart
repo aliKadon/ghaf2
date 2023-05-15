@@ -26,9 +26,16 @@ class _TransactionWidgetState extends State<TransactionWidget> {
           widget.imageUrl.isEmpty ? Image.asset(
             ImageAssets.brIcon,
             height: AppSize.s60,
-          ) : Image.network(
-            widget.imageUrl,
-            height: AppSize.s60,
+          ) : Container(
+            height: AppSize.s73,
+            child: Image.network(
+              widget.imageUrl,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(ImageAssets.logo2,);
+              },
+              // ImageAssets.brIcon,
+              // height: AppSize.s60,
+            ),
           ),
           SizedBox(
             width: AppSize.s30,
