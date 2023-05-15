@@ -111,9 +111,9 @@ class _AllProductScreenState extends State<AllProductScreen> {
                             // color: Colors.red,
                             child: Padding(
                               padding:  EdgeInsets.only(
-                                left: AppSizeWidth.s12,
+                                left: MediaQuery.of(context).size.width * 0.03,
                                 // top: AppSize.s43
-                                right: AppSizeWidth.s12,
+                                right: MediaQuery.of(context).size.width * 0.03,
                               ),
                               child: ProductItemNew(
                                   image: _homeViewGetXController.mostPopular[index]
