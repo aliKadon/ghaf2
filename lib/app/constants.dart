@@ -1,3 +1,5 @@
+import 'package:ghaf_application/presentation/resources/values_manager.dart';
+
 class Constants {
   static const String baseUrl = "https://api.ghafgate.com";
   static const String token = "SEND TOKEN HERE";
@@ -5,9 +7,9 @@ class Constants {
   static const int zero = 0;
   static const int apiTimeOut = 60000;
   static const int crossAxisCount = 2;
-  static const double mainAxisExtent = 290;
-  static const double crossAxisSpacing = 20;
-  static const double mainAxisSpacing = 5;
+  static double mainAxisExtent = AppSize.s290;
+  static double crossAxisSpacing = AppSize.s20;
+  static double mainAxisSpacing = AppSize.s5;
   static const int orderDetailsLines = 5;
   static const String roleRegisterCustomer = 'Customer';
   static const String roleRegisterSeller = 'Seller';

@@ -157,7 +157,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                               height: AppSize.s65,
                                               width: AppSize.s65,
                                             ),
-                                      SizedBox(width: AppSize.s10),
+                                      SizedBox(width: AppSizeWidth.s6),
                                       Container(
                                         child: Column(
                                           children: [
@@ -181,7 +181,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  width: AppSizeWidth.s45,
+                                                  width: AppSizeWidth.s30,
                                                 ),
                                                 Row(
                                                   children: [

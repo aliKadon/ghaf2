@@ -283,20 +283,20 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                         ],
                       ),
                       SizedBox(height: AppSize.s14),
-                      Row(
-                        children: [
-                          Text(
-                            '${AppLocalizations.of(context)!.subscription} : ',
-                            style: TextStyle(fontSize: FontSize.s14),
-                          ),
-                          Text(
-                            AppSharedData.currentUser!.email!,
-                            style: TextStyle(
-                                fontSize: FontSize.s14,
-                                color: ColorManager.primaryDark),
-                          )
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       '${AppLocalizations.of(context)!.subscription} : ',
+                      //       style: TextStyle(fontSize: FontSize.s14),
+                      //     ),
+                      //     Text(
+                      //       AppSharedData.currentUser!.email!,
+                      //       style: TextStyle(
+                      //           fontSize: FontSize.s14,
+                      //           color: ColorManager.primaryDark),
+                      //     )
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

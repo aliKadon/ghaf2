@@ -319,6 +319,22 @@ class HomeViewGetXController extends GetxController with Helpers {
     String? bid,
     bool notifyLoading = true,
   }) async {
+    // products = await _storeApiController.getProducts(
+    //   bid: bid,
+    //   search: search,
+    //   maxPrice: maxPrice,
+    //   minPrice: minPrice,
+    //   filterBy: filterBy,
+    //   // filterBy: ModalRoute.of(context)?.settings.arguments as String,
+    // );
+    // for (Product product in products) {
+    //   if (product.canPayLater!) {
+    //     payLaterProduct.removeWhere((element) => element.id == product.id);
+    //     payLaterProduct.add(product);
+    //   }
+    // }
+    // isProductsLoading = false;
+
     try {
       if (notifyLoading) isProductsLoading = true;
       // print('NEWWWWWWWWWWWWWWWWWWWWWWWWEWWWWWWWWWWWWWWWWWW');

@@ -35,6 +35,12 @@
   "introduce_to_subscribe4" : "Leave hiring a driver to us",
   "introduce_to_subscribe5" : "Helping you build your first menu and products",
 
+  "no_internet_connection" : "No internet connection!, please check your connection and try again",
+
+  "enter_min_price" : "Enter min price",
+  "enter_max_price" : "Enter max price",
+
+  "try_again" : "Try again",
   "open_24_hours" : "Open 24 hours",
   "business_name" : "Business name",
   "business_email" : "Business email",

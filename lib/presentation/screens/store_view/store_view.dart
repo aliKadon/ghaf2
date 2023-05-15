@@ -33,8 +33,8 @@ class StoreView extends StatefulWidget {
 }
 
 class _StoreViewState extends State<StoreView> {
-
   var language = SharedPrefController().lang1;
+
   //controller
   late final CategoriesGetxController _categoriesGetxController =
       Get.put(CategoriesGetxController());
@@ -110,8 +110,10 @@ class _StoreViewState extends State<StoreView> {
                               clipper: ShapeBorderClipper(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(AppSizeWidth.s161),
-                                    bottomRight: Radius.circular(AppSizeWidth.s161),
+                                    bottomLeft:
+                                        Radius.circular(AppSizeWidth.s161),
+                                    bottomRight:
+                                        Radius.circular(AppSizeWidth.s161),
                                   ),
                                 ),
                               ),
@@ -173,16 +175,18 @@ class _StoreViewState extends State<StoreView> {
                                       // }
                                     },
                                     child: Container(
-                                      height:AppSize.s30,
+                                      height: AppSize.s30,
                                       width: AppSize.s30,
                                       // width: MediaQuery.of(context).size.width *
                                       //     0.08,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(AppSizeWidth.s10),
-                                          color: ColorManager.primaryDark
-                                      ),
+                                          borderRadius: BorderRadius.circular(
+                                              AppSizeWidth.s10),
+                                          color: ColorManager.primaryDark),
                                       child: Image.asset(
-                                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                                        SharedPrefController().lang1 == 'ar'
+                                            ? IconsAssets.arrow2
+                                            : IconsAssets.arrow,
                                         height: AppSize.s14,
                                         width: AppSize.s30,
                                         color: ColorManager.primary,
@@ -216,22 +220,27 @@ class _StoreViewState extends State<StoreView> {
                                   SizedBox(
                                     width: AppSizeWidth.s4,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(AppSizeWidth.s25),
-                                      color: ColorManager.primary
-                                    ),
-                                    width: AppSizeWidth.s14,
-                                    height: AppSizeWidth.s14,
-                                    child: Center(
-                                      child: Text(
-                                          '${_categoriesGetxController.branchById!.reviewCount}',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: FontSize.s12)),
-                                    ),
-                                  ),
+                                  _categoriesGetxController
+                                              .branchById!.reviewCount ==
+                                          0
+                                      ? Container()
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppSizeWidth.s25),
+                                              color: ColorManager.primary),
+                                          width: AppSizeWidth.s14,
+                                          height: AppSizeWidth.s14,
+                                          child: Center(
+                                            child: Text(
+                                                '${_categoriesGetxController.branchById!.reviewCount}',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: FontSize.s12)),
+                                          ),
+                                        ),
                                   Spacer(),
                                 ],
                               ),
@@ -339,7 +348,8 @@ class _StoreViewState extends State<StoreView> {
                                 children: [
                                   SizedBox(height: AppSize.s10),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
@@ -356,25 +366,24 @@ class _StoreViewState extends State<StoreView> {
                                   ),
                                   SizedBox(height: AppSize.s10),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.access_time,
                                         color: ColorManager.primary,
-
                                       ),
                                       Container(
                                         width: AppSizeWidth.s80,
                                         child: Text(
-                                            overflow: TextOverflow.clip,
-                                            widget.is24
-                                                ? AppLocalizations.of(context)!
-                                                    .open_24_hours
-                                                : '${_categoriesGetxController.branchById!.todayWorkHoursToString}',
-                                        style: TextStyle(
-                                          color: ColorManager.primaryDark
-                                        ),
+                                          overflow: TextOverflow.clip,
+                                          widget.is24
+                                              ? AppLocalizations.of(context)!
+                                                  .open_24_hours
+                                              : '${_categoriesGetxController.branchById!.todayWorkHoursToString}',
+                                          style: TextStyle(
+                                              color: ColorManager.primaryDark),
                                         ),
                                       ),
                                     ],
@@ -419,11 +428,10 @@ class _StoreViewState extends State<StoreView> {
                           itemCount: typeOfList.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding:
-                                   EdgeInsets.only(
-                                     left: AppSize.s8,
-                                     right: AppSize.s8,
-                                   ),
+                              padding: EdgeInsets.only(
+                                left: AppSize.s8,
+                                right: AppSize.s8,
+                              ),
                               child: WidgetInStoreScreenWidget(
                                 is24: _categoriesGetxController
                                     .branchById!.is24Hours!,
@@ -436,7 +444,8 @@ class _StoreViewState extends State<StoreView> {
                         ),
                       ),
                       Padding(
-                        padding:  EdgeInsets.only(right: AppSize.s8, left: AppSize.s8),
+                        padding: EdgeInsets.only(
+                            right: AppSize.s8, left: AppSize.s8),
                         child: Divider(
                           color: ColorManager.greyLight,
                           thickness: 1,
@@ -470,66 +479,74 @@ class _StoreViewState extends State<StoreView> {
                                         fontSize: FontSize.s16)),
                               )
                             : SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width:AppSizeWidth.s5,
-                                  ),
-                                  Container(
-                                      height:
-                                      AppSize.s270,
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: AppSizeWidth.s5,
+                                    ),
+                                    Container(
+                                      height: AppSize.s270,
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
-                                        itemCount:
-                                            controller.recommendedProduct.length,
+                                        itemCount: controller
+                                            .recommendedProduct.length,
                                         itemBuilder: (context, index) {
                                           return Builder(builder: (context) {
                                             Get.put<Product>(
-                                              controller.recommendedProduct[index],
+                                              controller
+                                                  .recommendedProduct[index],
                                               tag:
                                                   '${controller.recommendedProduct[index].id}recommend',
                                             );
                                             return Container(
-                                              width: AppSizeWidth.s138,
+                                              width: AppSizeWidth.s154,
                                               child: ProductItemNew(
-                                                  isFromCheckOut: widget.isFromCheckout,
+                                                  isFromCheckOut:
+                                                      widget.isFromCheckout,
                                                   orderId: widget.orderId,
                                                   tag:
                                                       '${controller.recommendedProduct[index].id}recommend',
                                                   image: controller
-                                                              .recommendedProduct[index]
+                                                              .recommendedProduct[
+                                                                  index]
                                                               .productImages
                                                               ?.length ==
                                                           0
                                                       ? ''
                                                       : controller
-                                                          .recommendedProduct[index]
+                                                          .recommendedProduct[
+                                                              index]
                                                           .productImages![0],
                                                   name: controller
-                                                      .recommendedProduct[index].name!,
+                                                      .recommendedProduct[index]
+                                                      .name!,
                                                   stars: controller
-                                                      .recommendedProduct[index].stars!,
+                                                      .recommendedProduct[index]
+                                                      .stars!,
                                                   index: index,
                                                   price: controller
-                                                      .recommendedProduct[index].price!,
+                                                      .recommendedProduct[index]
+                                                      .price!,
                                                   isFavorite: controller
                                                       .recommendedProduct[index]
                                                       .isFavorite!,
                                                   idProduct: controller
-                                                      .recommendedProduct[index].id!),
+                                                      .recommendedProduct[index]
+                                                      .id!),
                                             );
                                           });
                                         },
                                       ),
                                     ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
                       ),
                       Padding(
-                        padding:  EdgeInsets.only(right: AppSize.s8, left: AppSize.s8),
+                        padding: EdgeInsets.only(
+                            right: AppSize.s8, left: AppSize.s8),
                         child: Divider(
                           color: ColorManager.greyLight,
                           thickness: 1,
@@ -545,117 +562,135 @@ class _StoreViewState extends State<StoreView> {
                                       fontSize: FontSize.s16)),
                             )
                           : SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width:AppSizeWidth.s5,
-                                ),
-                                Container(
-                                    height: AppSize.s40,
-                                    padding: EdgeInsets.all(AppSize.s8),
-                                    child: GetBuilder<HomeViewGetXController>(
-                                        builder: (controller) {
-                                      if (_homeViewGetXController.productType.length >
-                                          0) {
-                                        _homeViewGetXController.getProductByType(
-                                            context: context,
-                                            bid: widget.branchId,
-                                            productTypeId: _homeViewGetXController
-                                                .productType[selected].id);
-                                      }
-                                      return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemCount: controller.productType.length,
-                                        itemExtent: 100,
-                                        itemBuilder: (context, index) {
-                                          return SharedPrefController().lang1 == 'en'
-                                              ? selected == index
-                                                  ? Text(
-                                                      '${controller.productType[index].productType}',
-                                                      style: TextStyle(
-                                                          color: ColorManager.primary,
-                                                          fontWeight: FontWeight.w600,
-                                                          fontSize: FontSize.s14),
-                                                    )
-                                                  : GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selected = index;
-                                                        });
-                                                      },
-                                                      child: Text(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: AppSizeWidth.s5,
+                                  ),
+                                  Container(
+                                      height: AppSize.s40,
+                                      padding: EdgeInsets.all(AppSize.s8),
+                                      child: GetBuilder<HomeViewGetXController>(
+                                          builder: (controller) {
+                                        if (_homeViewGetXController
+                                                .productType.length >
+                                            0) {
+                                          _homeViewGetXController
+                                              .getProductByType(
+                                                  context: context,
+                                                  bid: widget.branchId,
+                                                  productTypeId:
+                                                      _homeViewGetXController
+                                                          .productType[selected]
+                                                          .id);
+                                        }
+                                        return ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              controller.productType.length,
+                                          itemExtent: 100,
+                                          itemBuilder: (context, index) {
+                                            return SharedPrefController()
+                                                        .lang1 ==
+                                                    'en'
+                                                ? selected == index
+                                                    ? Text(
                                                         '${controller.productType[index].productType}',
                                                         style: TextStyle(
                                                             color: ColorManager
-                                                                .primaryDark,
+                                                                .primary,
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: FontSize.s14),
-                                                      ),
-                                                    )
-                                              : selected == index
-                                                  ? Text(
-                                                      '${controller.productType[index].productTypeAr}',
-                                                      style: TextStyle(
-                                                          color: ColorManager.primary,
-                                                          fontWeight: FontWeight.w600,
-                                                          fontSize: FontSize.s14),
-                                                    )
-                                                  : GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selected = index;
-                                                        });
-                                                      },
-                                                      child: Text(
+                                                            fontSize:
+                                                                FontSize.s14),
+                                                      )
+                                                    : GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selected = index;
+                                                          });
+                                                        },
+                                                        child: Text(
+                                                          '${controller.productType[index].productType}',
+                                                          style: TextStyle(
+                                                              color: ColorManager
+                                                                  .primaryDark,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize:
+                                                                  FontSize.s14),
+                                                        ),
+                                                      )
+                                                : selected == index
+                                                    ? Text(
                                                         '${controller.productType[index].productTypeAr}',
                                                         style: TextStyle(
                                                             color: ColorManager
-                                                                .primaryDark,
+                                                                .primary,
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: FontSize.s14),
-                                                      ),
-                                                    );
-                                        },
-                                      );
-                                    })),
-                              ],
+                                                            fontSize:
+                                                                FontSize.s14),
+                                                      )
+                                                    : GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selected = index;
+                                                          });
+                                                        },
+                                                        child: Text(
+                                                          '${controller.productType[index].productTypeAr}',
+                                                          style: TextStyle(
+                                                              color: ColorManager
+                                                                  .primaryDark,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize:
+                                                                  FontSize.s14),
+                                                        ),
+                                                      );
+                                          },
+                                        );
+                                      })),
+                                ],
+                              ),
                             ),
-                          ),
                       GetBuilder<HomeViewGetXController>(
                         builder: (controller) => controller
                                     .productByType.length ==
                                 0
                             ? Container(
-                          height: AppSize.s192,
-                              child: Center(
-                                  child: Text(
-                                  AppLocalizations.of(context)!.no_product_found,
+                                height: AppSize.s192,
+                                child: Center(
+                                    child: Text(
+                                  AppLocalizations.of(context)!
+                                      .no_product_found,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: ColorManager.primary,
                                       fontSize: FontSize.s18),
                                 )),
-                            )
+                              )
                             : SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width:AppSizeWidth.s5,
-                                  ),
-                                  Container(
-                                      height:
-                                      AppSize.s270,
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: AppSizeWidth.s5,
+                                    ),
+                                    Container(
+                                      height: AppSize.s270,
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
-                                        itemCount: controller.productByType.length,
+                                        itemCount:
+                                            controller.productByType.length,
                                         itemBuilder: (context, index) {
                                           return Builder(builder: (context) {
                                             Get.put<Product>(
@@ -665,37 +700,47 @@ class _StoreViewState extends State<StoreView> {
                                                   '${_homeViewGetXController.productByType[index].id}storeView',
                                             );
                                             return Container(
-                                              width: AppSizeWidth.s138,
+                                              width: AppSizeWidth.s154,
                                               child: ProductItemNew(
-                                                  isFromCheckOut: widget.isFromCheckout,
+                                                  isFromCheckOut:
+                                                      widget.isFromCheckout,
                                                   orderId: widget.orderId,
                                                   tag:
                                                       '${_homeViewGetXController.productByType[index].id}storeView',
-                                                  image: controller.productByType[index]
-                                                              .productImages?.length ==
+                                                  image: controller
+                                                              .productByType[
+                                                                  index]
+                                                              .productImages
+                                                              ?.length ==
                                                           0
                                                       ? ''
-                                                      : controller.productByType[index]
+                                                      : controller
+                                                          .productByType[index]
                                                           .productImages?[0],
                                                   name: controller
-                                                      .productByType[index].name!,
+                                                      .productByType[index]
+                                                      .name!,
                                                   stars: controller
-                                                      .productByType[index].stars!,
+                                                      .productByType[index]
+                                                      .stars!,
                                                   price: controller
-                                                      .productByType[index].price!,
+                                                      .productByType[index]
+                                                      .price!,
                                                   index: index,
                                                   isFavorite: controller
-                                                      .productByType[index].isFavorite!,
+                                                      .productByType[index]
+                                                      .isFavorite!,
                                                   idProduct: controller
-                                                      .productByType[index].id!),
+                                                      .productByType[index]
+                                                      .id!),
                                             );
                                           });
                                         },
                                       ),
                                     ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
                       )
                     ],
                   ),

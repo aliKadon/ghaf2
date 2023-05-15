@@ -23,15 +23,23 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> with Helpers {
   // controller.
+  // HomeViewGetXController _homeViewGetXController =
+  //     Get.put<HomeViewGetXController>(HomeViewGetXController());
   HomeViewGetXController _homeViewGetXController =
-      Get.put<HomeViewGetXController>(HomeViewGetXController());
+  Get.find<HomeViewGetXController>();
   SearchGetxController _searchGetxController =
       Get.put<SearchGetxController>(SearchGetxController());
 
   @override
   void initState() {
+
     _searchGetxController.init(context);
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _homeViewGetXController.getProducts(context: context);
+    });
+
   }
 
   @override
@@ -63,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                         child: Image.asset(
                           SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
                           height: AppSize.s18,
-                          width: AppSize.s10,
+                          width: AppSizeWidth.s10,
                         ),
                       ),
                     ),
@@ -85,7 +93,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                                 horizontal: AppPadding.p12),
                             child: Image.asset(
                               IconsAssets.search,
-                              width: AppSize.s16,
+                              width: AppSizeWidth.s16,
                               height: AppSize.s16,
                             ),
                           ),
@@ -303,15 +311,15 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                     itemBuilder: (context, index) {
                       return Builder(builder: (context) {
                         Get.put<Product>(
-                          _homeViewGetXController.products[index],
+                          controller.products[index],
                           tag:
-                              '${_homeViewGetXController.products[index].id}',
+                              '${controller.products[index].id}',
                         );
                         return Container(
-                          width: AppSize.s206,
+                          width: AppSizeWidth.s206,
                           child: ProductItemNew(
                               tag:
-                                  '${_homeViewGetXController.products[index].id}',
+                                  '${controller.products[index].id}',
                               image: controller.products[index].productImages
                                           ?.length ==
                                       0
@@ -343,7 +351,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(AppRadius.r8),
       borderSide: BorderSide(
-        width: AppSize.s1,
+        width: AppSizeWidth.s1,
         color: color,
       ),
     );

@@ -93,8 +93,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
         body: isLoading
             ? Center(
                 child: Container(
-                  width: 20,
-                  height: 20,
+                  width: AppSizeWidth.s20,
+                  height: AppSize.s20,
                   child: CircularProgressIndicator(
                     strokeWidth: 1,
                   ),
@@ -106,7 +106,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 20,
+                      height: AppSize.s20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +128,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                     ? IconsAssets.arrow2
                                     : IconsAssets.arrow,
                                 height: AppSize.s18,
-                                width: AppSize.s10,
+                                width: AppSizeWidth.s10,
                               ),
                             ),
                           ),
@@ -217,7 +217,8 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                             ),
                                           ),
                                           Container(
-                                            width: AppSize.s75,
+                                            width: AppSizeWidth.s73
+                                            ,
                                             child: Text(
                                               '${productById["price"]} ${AppLocalizations.of(context)!.aed}',
                                               overflow: TextOverflow.clip,
@@ -360,7 +361,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                 ),
                                 height:
                                     MediaQuery.of(context).size.height * 0.1,
-                                width: 50,
+                                width: AppSizeWidth.s50,
                                 child: Row(
                                   children: [
                                     Spacer(),

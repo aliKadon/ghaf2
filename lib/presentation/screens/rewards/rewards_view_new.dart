@@ -65,7 +65,9 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar'
+                            ? IconsAssets.arrow2
+                            : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -188,54 +190,57 @@ class _RewardsViewNewState extends State<RewardsViewNew> {
                 height: AppSize.s30,
               ),
               GetBuilder<HomeViewGetXController>(
-                builder: (controller) =>  controller.freeDeliveryProduct.length == 0
-                    ? Container()
-                    : Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.free_delivery_rewards,
-                            style: TextStyle(
-                                color: ColorManager.primaryDark,
-                                fontWeight: FontWeight.w600,
-                                fontSize: FontSize.s16),
+                builder: (controller) =>
+                    controller.freeDeliveryProduct.length == 0
+                        ? Container()
+                        : Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .free_delivery_rewards,
+                                style: TextStyle(
+                                    color: ColorManager.primaryDark,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: FontSize.s16),
+                              ),
+                              // Spacer(),
+                              // Text(
+                              //   AppLocalizations.of(context)!.more,
+                              //   style: TextStyle(
+                              //       color: ColorManager.greyLight,
+                              //       fontWeight: FontWeight.w600,
+                              //       fontSize: FontSize.s16),
+                              // ),
+                            ],
                           ),
-                          // Spacer(),
-                          // Text(
-                          //   AppLocalizations.of(context)!.more,
-                          //   style: TextStyle(
-                          //       color: ColorManager.greyLight,
-                          //       fontWeight: FontWeight.w600,
-                          //       fontSize: FontSize.s16),
-                          // ),
-                        ],
-                      ),
               ),
               GetBuilder<HomeViewGetXController>(
-                builder: (controller) =>  controller.freeDeliveryProduct.length == 0
-                    ? Container()
-                    : GetBuilder<HomeViewGetXController>(
-                        builder: (controller) => Container(
-                          height: MediaQuery.of(context).size.height * 0.4,
-                          child: ListView.builder(
-                            itemCount: controller.freeDeliveryProduct.length,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Builder(builder: (context) {
-                                Get.put<Product>(
-                                    controller
-                                        .freeDeliveryProduct[index],
-                                    tag:
-                                        '${controller.freeDeliveryProduct[index].id}');
-                                return FreeDeliveryProductWidget(
-                                  tag:
-                                      '${controller.freeDeliveryProduct[index].id}',
-                                );
-                              });
-                            },
+                builder: (controller) =>
+                    controller.freeDeliveryProduct.length == 0
+                        ? Container()
+                        : GetBuilder<HomeViewGetXController>(
+                            builder: (controller) => Container(
+                              height: MediaQuery.of(context).size.height * 0.45,
+                              child: ListView.builder(
+                                itemCount:
+                                    controller.freeDeliveryProduct.length,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Builder(builder: (context) {
+                                    Get.put<Product>(
+                                        controller.freeDeliveryProduct[index],
+                                        tag:
+                                            '${controller.freeDeliveryProduct[index].id}');
+                                    return FreeDeliveryProductWidget(
+                                      tag:
+                                          '${controller.freeDeliveryProduct[index].id}',
+                                    );
+                                  });
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
               ),
               SizedBox(
                 height: AppSize.s30,

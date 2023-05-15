@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
+import 'package:ghaf_application/presentation/screens/internet_checking/no_internet_screen.dart';
 
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:ghaf_application/services/local_notifications_service.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
@@ -25,6 +27,13 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+
+  // checking the internet connection
+  // Map _source = {ConnectivityResult.none: false};
+  // final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
+  // String string = '';
+
+
   Timer? _timer;
 
   _startDelay() {
@@ -39,8 +48,47 @@ class _SplashViewState extends State<SplashView> {
     await LocalNotificationsService.instance.init();
     //
     SharedPrefController().getUser();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => MainView(),));
+    // Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => MainView(),));
+
+
+    bool result = await InternetConnectionChecker().hasConnection;
+    print('=======================check internet');
+    print(result);
+    if(result == true) {
+      print('YAY! Free cute dog pics!');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => MainView(),));
+    } else {
+      print('No internet :( Reason:');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => NoInternetScreen(),));
+      // print(InternetConnectionChecker().lastTryResults);
+    }
+
+    // checking the internet connection
+    // _networkConnectivity.myStream.listen((source) {
+    //   _source = source;
+    //   print('source $_source');
+    //   // 1.
+    //   print('======================connection network');
+    //   print(ConnectivityResult.wifi);
+    //   switch (_source.keys.toList()[0]) {
+    //     case ConnectivityResult.mobile:
+    //       Navigator.of(context).pushReplacement(
+    //           MaterialPageRoute(builder: (context) => MainView(),));
+    //       break;
+    //     case ConnectivityResult.wifi:
+    //       Navigator.of(context).pushReplacement(
+    //           MaterialPageRoute(builder: (context) => MainView(),));
+    //       break;
+    //     case ConnectivityResult.none:
+    //     default:
+    //       string = 'Offline';
+    //   }
+    // });
+
+
 
     // if (AppSharedData.currentUser != null) {
     //   if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
@@ -96,6 +144,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
 
     super.initState();
+    // _networkConnectivity.initialise();
     _assetsAudioPlayer.open(Audio('assets/images/sound.mp3'));
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);

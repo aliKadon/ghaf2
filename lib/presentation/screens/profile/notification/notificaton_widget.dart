@@ -60,7 +60,7 @@ class NotificationWidget extends StatelessWidget {
                   width: AppSize.s32,
                 ),
                 SizedBox(
-                  width: AppSize.s14,
+                  width: AppSizeWidth.s14,
                 ),
                 Text(
                   '${header}',
@@ -73,25 +73,29 @@ class NotificationWidget extends StatelessWidget {
                 Visibility(
                   visible: !isRead,
                   child: Container(
-                    height: AppSize.s4,
-                    width: AppSize.s4,
+                    height: AppSize.s6,
+                    width: AppSizeWidth.s6,
                     decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(400)),
                   ),
                 ),
-                Spacer(),
+
               ],
             ),
             SizedBox(
               height: AppSize.s16,
             ),
-            Text(
-              '${body}',
-              style: getRegularStyle(
-                color: ColorManager.grey,
-                fontSize: FontSize.s14,
-              ),
+            Row(
+              children: [
+                Text(
+                  '${body}',
+                  style: getRegularStyle(
+                    color: ColorManager.grey,
+                    fontSize: FontSize.s14,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

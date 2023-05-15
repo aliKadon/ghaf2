@@ -26,7 +26,7 @@ class NotificationGetxController extends GetxController with Helpers {
     try {
       apiResponse = await _notificationApiController.markAsRead(id: id);
       getCustomerNotification(context: context);
-      showSnackBar(context, message: apiResponse.message);
+      // showSnackBar(context, message: apiResponse.message);
       update();
     } catch (e) {
       showSnackBar(context, message: e.toString(), error: true);

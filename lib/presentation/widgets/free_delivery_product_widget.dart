@@ -18,13 +18,13 @@ class FreeDeliveryProductWidget extends StatefulWidget {
   FreeDeliveryProductWidget({required this.tag});
 
   @override
-  State<FreeDeliveryProductWidget> createState() => _FreeDeliveryProductWidgetState();
+  State<FreeDeliveryProductWidget> createState() =>
+      _FreeDeliveryProductWidgetState();
 }
 
-class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> with Helpers {
-
+class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget>
+    with Helpers {
   late final Product _product = Get.find<Product>(tag: widget.tag);
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,32 +45,56 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> w
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      _product.productImages!.length == 0 ? Container(
-                        height: MediaQuery.of(context).size.height * 0.29,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppSize.s15),
-                          image: DecorationImage(
-                            image: AssetImage(ImageAssets.pizza),
-                            fit: BoxFit.scaleDown,
-                          ),
-                        ),
-                      ) : Container(
-                        height: MediaQuery.of(context).size.height * 0.29,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppSize.s15),
-                          image: DecorationImage(
-                            image: NetworkImage(_product.productImages![0]),
-                            fit: BoxFit.scaleDown,
-                          ),
-                        ),
-                      ),
+                      _product.productImages!.length == 0 ||
+                              _product.productImages == null
+                          ? Container(
+                              height: MediaQuery.of(context).size.height * 0.29,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(AppSize.s15),
+                                image: DecorationImage(
+                                  image: AssetImage(ImageAssets.pizza),
+                                  fit: BoxFit.scaleDown,
+                                ),
+                              ),
+                            )
+                          : Container(
+                              height: MediaQuery.of(context).size.height * 0.29,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(AppSize.s15),
+                                child: Image.network(
+                                  _product.productImages![0],
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return ClipRRect(
+                                        borderRadius:
+                                        BorderRadius.circular(AppSize.s15),
+                                        child: Image.asset(
+                                      ImageAssets.pizza,
+                                      fit: BoxFit.cover,
+                                    ));
+                                  },
+                                ),
+                              ),
+                            ),
+                      // Container(
+                      //   height: MediaQuery.of(context).size.height * 0.29,
+                      //   width: MediaQuery.of(context).size.width * 0.4,
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(AppSize.s15),
+                      //     image: DecorationImage(
+                      //       image: NetworkImage(_product.productImages![0]),
+                      //       fit: BoxFit.cover,
+                      //     ),
+                      //   ),
+                      // ),
                       InkWell(
                         onTap: () {
                           if (AppSharedData.currentUser == null) {
-                            showSignInSheet(
-                                context: context, role: 'Customer');
+                            showSignInSheet(context: context, role: 'Customer');
                           } else {
                             _product.toggleIsFavorite(
                               context: context,
@@ -81,22 +105,23 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> w
                         child: Padding(
                           padding: EdgeInsets.all(AppSize.s8),
                           child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color: Colors.black54),
-                              padding: EdgeInsets.all(AppSize.s8),
-                              child: _product.isFavorite!
-                                  ? Image.asset(
-                                IconsAssets.heart1,
-                                height: AppSize.s20,
-                                width: AppSize.s20,
-                                color: ColorManager.red,
-                              )
-                                  : Image.asset(
-                                IconsAssets.heart,
-                                height: AppSize.s20,
-                                width: AppSize.s20,
-                              ),),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Colors.black54),
+                            padding: EdgeInsets.all(AppSize.s8),
+                            child: _product.isFavorite!
+                                ? Image.asset(
+                                    IconsAssets.heart1,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                    color: ColorManager.red,
+                                  )
+                                : Image.asset(
+                                    IconsAssets.heart,
+                                    height: AppSize.s20,
+                                    width: AppSize.s20,
+                                  ),
+                          ),
                         ),
                       ),
                       PositionedDirectional(
@@ -109,8 +134,9 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> w
                             // width: AppSize.s60,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(AppSize.s10)),
-                            padding:EdgeInsets.all(AppSize.s5),
+                                borderRadius:
+                                    BorderRadius.circular(AppSize.s10)),
+                            padding: EdgeInsets.all(AppSize.s5),
                             child: Row(
                               children: [
                                 Icon(
@@ -136,34 +162,43 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget> w
                   )
                 ],
               ),
-              Text('${_product.name}',
-                  style: TextStyle(
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeight.bold,
-                      color: ColorManager.primaryDark)),
-              Row(
-                children: [
-                  Text('${_product.price} ${_product.isoCurrencySymbol}',
-                      style: TextStyle(
-                          fontSize: FontSize.s14,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.primaryDark)),
-                  SizedBox(
-                    width: AppSize.s28,
-                  ),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                  ),
-                  SizedBox(
-                    width: AppSize.s8,
-                  ),
-                  Text('${_product.stars}.0',
-                      style: TextStyle(
-                          fontSize: FontSize.s14,
-                          fontWeight: FontWeight.w500,
-                          color: ColorManager.primaryDark)),
-                ],
+              Container(
+                width: AppSizeWidth.s154,
+                child: Text('${_product.name}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: FontSize.s16,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.primaryDark)),
+              ),
+              Container(
+                width: AppSizeWidth.s154,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${_product.price} ${_product.isoCurrencySymbol}',
+                        style: TextStyle(
+                            fontSize: FontSize.s14,
+                            fontWeight: FontWeight.bold,
+                            color: ColorManager.primaryDark)),
+                    SizedBox(
+                      width: AppSize.s28,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: AppSize.s8,
+                    ),
+                    Text('${_product.stars}.0',
+                        style: TextStyle(
+                            fontSize: FontSize.s14,
+                            fontWeight: FontWeight.w500,
+                            color: ColorManager.primaryDark)),
+                  ],
+                ),
               ),
             ],
           )),

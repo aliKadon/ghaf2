@@ -74,7 +74,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Container(
-        padding: EdgeInsets.all(14.h),
+        // padding: EdgeInsets.all(14.h),
         child: widget.type == 'mostPopular'
             ? _homeViewGetXController.product.isEmpty
                 ? Center(
@@ -158,25 +158,28 @@ class _AllProductScreenState extends State<AllProductScreen> {
                             },
                             child: Column(
                               children: [
-                                MyOrdersWidget(
-                                  image: _checkOutGetxController.customerOrder[index].branch!.branchLogoImage!,
-                                    statusName: _checkOutGetxController.customerOrder[index].statusName!,
-                                    date: _checkOutGetxController
-                                        .customerOrder[index].createDate!,
-                                    price: (_checkOutGetxController
-                                            .customerOrder[index]
-                                            .orderCostForCustomer)
-                                        .toString(),
-                                    orderSequence: (_checkOutGetxController
-                                            .customerOrder[index].sequenceNumber)
-                                        .toString(),
-                                    branchName: _checkOutGetxController
-                                        .customerOrder[index].branch!.storeName!,
-                                    branchAddress: _checkOutGetxController
-                                            .customerOrder[index]
-                                            .branch!
-                                            .branchAddress ??
-                                        null),
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 1,
+                                  child: MyOrdersWidget(
+                                    image: _checkOutGetxController.customerOrder[index].branch!.branchLogoImage!,
+                                      statusName: _checkOutGetxController.customerOrder[index].statusName!,
+                                      date: _checkOutGetxController
+                                          .customerOrder[index].createDate!,
+                                      price: (_checkOutGetxController
+                                              .customerOrder[index]
+                                              .orderCostForCustomer)
+                                          .toString(),
+                                      orderSequence: (_checkOutGetxController
+                                              .customerOrder[index].sequenceNumber)
+                                          .toString(),
+                                      branchName: _checkOutGetxController
+                                          .customerOrder[index].branch!.storeName!,
+                                      branchAddress: _checkOutGetxController
+                                              .customerOrder[index]
+                                              .branch!
+                                              .branchAddress ??
+                                          null),
+                                ),
                                 Padding(
                                   padding:  EdgeInsets.only(
                                       right: AppSize.s12, left: AppSize.s12),

@@ -274,7 +274,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
         floatingActionButton: AppSharedData.currentUser == null
             ? Container()
             : Container(
-                width: AppSize.s73,
+                width: AppSizeWidth.s73,
                 height: AppSize.s73,
                 child: FloatingActionButton(
                   onPressed: () {
@@ -289,7 +289,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                     child: Image.asset(
                       ImageAssets.delivery_gif,
                       color: Colors.white,
-                      width: AppSize.s55,
+                      width: AppSizeWidth.s55,
                       height: AppSize.s55
                     ),
                   ),
@@ -328,17 +328,21 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                   ),
                                   InkWell(
                                       onTap: () {
-                                        //NotificationView
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              NotificationView(),
-                                        ));
+                                        if (AppSharedData.currentUser == null) {
+                                          showSignInSheet(context: context, role: Constants.roleRegisterCustomer);
+                                        }else {
+                                          //NotificationView
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                NotificationView(),
+                                          ));
+                                        }
                                       },
                                       child: Image.asset(
                                         'assets/icons/bell.png',
                                         height: AppSize.s26,
-                                        width: AppSize.s26,
+                                        width: AppSizeWidth.s26,
                                       )),
                                 ],
                               ),
@@ -368,7 +372,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                       Image.asset(
                                         ImageAssets.homePoints,
                                         height: AppSize.s18,
-                                        width: AppSize.s20,
+                                        width: AppSizeWidth.s20,
                                       ),
 
                                       SizedBox(
@@ -400,7 +404,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                         child: Image.asset(
                                           IconsAssets.heart,
                                           height: AppSize.s20,
-                                          width: AppSize.s20,
+                                          width: AppSizeWidth.s20,
                                           color: ColorManager.primaryDark,
                                         ),
                                       ),
@@ -477,7 +481,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                         // SizedBox(width: AppPadding.p12,),
                         Expanded(
                           child: Container(
-                              width: AppSize.s280,
+                              width: AppSizeWidth.s280,
                               margin: EdgeInsets.only(
                                   bottom: AppMargin.m16,
                                   right: AppMargin.m16,
@@ -520,13 +524,13 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           onTap: _homeViewGetXController.onFilterButtonTapped,
                           child: Image.asset(
                             IconsAssets.filter,
-                            width: AppSize.s40,
+                            width: AppSizeWidth.s40,
                             height: AppSize.s55,
                             color: ColorManager.primary,
                           ),
                         ),
                         SizedBox(
-                          width: AppPadding.p18,
+                          width: AppSizeWidth.s18,
                         ),
                       ],
                     ),
@@ -563,7 +567,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     child: Image.asset(
                                                       ImageAssets.imageInMain4,
                                                       height: AppSize.s110,
-                                                      width: AppSize.s110,
+                                                      width: AppSizeWidth.s110,
                                                       fit: BoxFit.fill,
                                                     ))
                                                 : Positioned(
@@ -575,7 +579,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     child: Image.asset(
                                                       ImageAssets.imageInMain4,
                                                       height: AppSize.s110,
-                                                      width: AppSize.s110,
+                                                      width: AppSizeWidth.s110,
                                                     )),
                                             PositionedDirectional(
                                               top: AppSize.s24,
@@ -767,7 +771,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                               height:
                                                                   AppSize.s70,
                                                               width:
-                                                                  AppSize.s92,
+                                                              AppSizeWidth.s92,
                                                               fit: BoxFit
                                                                   .scaleDown),
                                                     ),
@@ -811,7 +815,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: AppSize.s24,
+                                      width: AppSizeWidth.s24,
                                     ),
                                     Text(
                                       AppLocalizations.of(context)!.shortcut,
@@ -1262,8 +1266,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                   ImageAssets.save,
                                                   height: MediaQuery.of(context)
                                                           .size
-                                                          .width *
-                                                      0.2,
+                                                          .height *
+                                                      0.14,
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *

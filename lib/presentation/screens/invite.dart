@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 
 import 'package:share/share.dart';
 
@@ -253,11 +254,14 @@ class _InviteState extends State<Invite> with Helpers {
               SizedBox(
                 height: AppSize.s60,
               ),
-              Text(
-                AppLocalizations.of(context)!.terms_and_conditions,
-                textAlign: TextAlign.center,
-                style: getMediumStyle(
-                    color: ColorManager.primary, fontSize: FontSize.s18),
+              InkWell(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => TermsOfUseView(),)),
+                child: Text(
+                  AppLocalizations.of(context)!.terms_and_conditions,
+                  textAlign: TextAlign.center,
+                  style: getMediumStyle(
+                      color: ColorManager.primary, fontSize: FontSize.s18),
+                ),
               ),
               SizedBox(
                 height: AppSize.s60,
