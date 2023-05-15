@@ -96,7 +96,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                         widget.image == ''
                             ? Container(
                                 height: MediaQuery.of(context).size.height * 0.28,
-                          width: MediaQuery.of(context).size.height * 0.28 / 1.327,
+                          width: MediaQuery.of(context).size.height * 0.28 / 1.4,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(MediaQuery.of(context)
                                       .size
@@ -111,7 +111,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                               )
                             : Container(
                                 height: MediaQuery.of(context).size.height * 0.28,
-                                width: MediaQuery.of(context).size.height * 0.28 / 1.327,
+                                width: MediaQuery.of(context).size.height * 0.28 / 1.4,
 
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(MediaQuery.of(context)
