@@ -7,7 +7,7 @@ class Constants {
   static const int zero = 0;
   static const int apiTimeOut = 60000;
   static const int crossAxisCount = 2;
-  static double mainAxisExtent = AppSize.s290;
+  static double mainAxisExtent = AppSize.s289;
   static double crossAxisSpacing = AppSize.s1;
   static double mainAxisSpacing = AppSize.s5;
   static const int orderDetailsLines = 5;

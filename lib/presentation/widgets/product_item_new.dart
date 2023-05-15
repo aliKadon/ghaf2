@@ -70,6 +70,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // height: AppSize.s206,
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -95,13 +96,14 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                         widget.image == ''
                             ? Container(
                                 height: MediaQuery.of(context).size.height * 0.28,
-                                width: MediaQuery.of(context).size.height * 0.28 / 1.4,
+                          width: MediaQuery.of(context).size.height * 0.28 / 1.327,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(MediaQuery.of(context)
                                       .size
                                       .height *
                                       0.012),
                                   image: DecorationImage(
+                                    // alignment: Alignment.center,
                                     image: AssetImage(ImageAssets.logo1),
                                     fit: BoxFit.scaleDown,
                                   ),
@@ -109,7 +111,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                               )
                             : Container(
                                 height: MediaQuery.of(context).size.height * 0.28,
-                                width: MediaQuery.of(context).size.height * 0.28 / 1.4,
+                                width: MediaQuery.of(context).size.height * 0.28 / 1.327,
 
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(MediaQuery.of(context)
@@ -117,6 +119,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                                       .height *
                                       0.017),
                                   image: DecorationImage(
+                                    // alignment: Alignment.bottomCenter,
                                     image: NetworkImage(widget.image),
                                     fit: BoxFit.cover,
                                   ),
@@ -171,7 +174,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                       ],
                     ),
                     SizedBox(
-                      width: AppSize.s14,
+                      width: AppSizeWidth.s14,
                     )
                   ],
                 ),
@@ -179,7 +182,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                   height: AppSize.s5,
                 ),
                 Container(
-                  width: AppSize.s138,
+                  width: AppSizeWidth.s138,
                   child: Text(language == 'en' ? widget.name : _product.nameAr ?? widget.name,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,

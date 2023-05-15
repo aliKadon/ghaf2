@@ -83,13 +83,14 @@ class _AllProductScreenState extends State<AllProductScreen> {
                     ),
                   )
                 : Container(
+
                   child: GridView.builder(
                       padding: EdgeInsets.symmetric(
                           horizontal: AppPadding.p8, vertical: AppPadding.p4),
                       itemCount: _homeViewGetXController.mostPopular.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: Constants.crossAxisCount,
-                        mainAxisExtent: Constants.mainAxisExtent,
+                        mainAxisExtent: MediaQuery.of(context).size.height * 0.36,
                         mainAxisSpacing: Constants.mainAxisSpacing,
                         crossAxisSpacing: Constants.crossAxisSpacing
                       ),
@@ -106,26 +107,35 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                 '${_homeViewGetXController.mostPopular[index].id}',
                           );
                           return Container(
-                            child: ProductItemNew(
-                                image: _homeViewGetXController.mostPopular[index]
-                                            .productImages!.length ==
-                                        0
-                                    ? ''
-                                    : _homeViewGetXController
-                                        .mostPopular[index].productImages![0],
-                                name: _homeViewGetXController
-                                    .mostPopular[index].name!,
-                                tag:
-                                    '${_homeViewGetXController.mostPopular[index].id}',
-                                stars: _homeViewGetXController
-                                    .mostPopular[index].stars!,
-                                price: _homeViewGetXController
-                                    .mostPopular[index].price!,
-                                index: index,
-                                isFavorite: _homeViewGetXController
-                                    .mostPopular[index].isFavorite!,
-                                idProduct:
-                                    _homeViewGetXController.mostPopular[index].id!),
+                            // height: AppSize.s125,
+                            // color: Colors.red,
+                            child: Padding(
+                              padding:  EdgeInsets.only(
+                                left: AppSizeWidth.s12,
+                                // top: AppSize.s43
+                                right: AppSizeWidth.s12,
+                              ),
+                              child: ProductItemNew(
+                                  image: _homeViewGetXController.mostPopular[index]
+                                              .productImages!.length ==
+                                          0
+                                      ? ''
+                                      : _homeViewGetXController
+                                          .mostPopular[index].productImages![0],
+                                  name: _homeViewGetXController
+                                      .mostPopular[index].name!,
+                                  tag:
+                                      '${_homeViewGetXController.mostPopular[index].id}',
+                                  stars: _homeViewGetXController
+                                      .mostPopular[index].stars!,
+                                  price: _homeViewGetXController
+                                      .mostPopular[index].price!,
+                                  index: index,
+                                  isFavorite: _homeViewGetXController
+                                      .mostPopular[index].isFavorite!,
+                                  idProduct:
+                                      _homeViewGetXController.mostPopular[index].id!),
+                            ),
                           );
                         });
                       },
