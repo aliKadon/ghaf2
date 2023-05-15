@@ -174,7 +174,7 @@ class _ProductItemNewState extends State<ProductItemNew> with Helpers {
                       ],
                     ),
                     SizedBox(
-                      width: AppSizeWidth.s14,
+                      width: AppSize.s14,
                     )
                   ],
                 ),

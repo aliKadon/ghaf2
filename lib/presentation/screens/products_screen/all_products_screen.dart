@@ -109,33 +109,26 @@ class _AllProductScreenState extends State<AllProductScreen> {
                           return Container(
                             // height: AppSize.s125,
                             // color: Colors.red,
-                            child: Padding(
-                              padding:  EdgeInsets.only(
-                                left: MediaQuery.of(context).size.height * 0.02,
-                                // top: AppSize.s43
-                                right: MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              child: ProductItemNew(
-                                  image: _homeViewGetXController.mostPopular[index]
-                                              .productImages!.length ==
-                                          0
-                                      ? ''
-                                      : _homeViewGetXController
-                                          .mostPopular[index].productImages![0],
-                                  name: _homeViewGetXController
-                                      .mostPopular[index].name!,
-                                  tag:
-                                      '${_homeViewGetXController.mostPopular[index].id}',
-                                  stars: _homeViewGetXController
-                                      .mostPopular[index].stars!,
-                                  price: _homeViewGetXController
-                                      .mostPopular[index].price!,
-                                  index: index,
-                                  isFavorite: _homeViewGetXController
-                                      .mostPopular[index].isFavorite!,
-                                  idProduct:
-                                      _homeViewGetXController.mostPopular[index].id!),
-                            ),
+                            child: ProductItemNew(
+                                image: _homeViewGetXController.mostPopular[index]
+                                            .productImages!.length ==
+                                        0
+                                    ? ''
+                                    : _homeViewGetXController
+                                        .mostPopular[index].productImages![0],
+                                name: _homeViewGetXController
+                                    .mostPopular[index].name!,
+                                tag:
+                                    '${_homeViewGetXController.mostPopular[index].id}',
+                                stars: _homeViewGetXController
+                                    .mostPopular[index].stars!,
+                                price: _homeViewGetXController
+                                    .mostPopular[index].price!,
+                                index: index,
+                                isFavorite: _homeViewGetXController
+                                    .mostPopular[index].isFavorite!,
+                                idProduct:
+                                    _homeViewGetXController.mostPopular[index].id!),
                           );
                         });
                       },
