@@ -86,7 +86,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
 
                   child: GridView.builder(
                       padding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p8, vertical: AppPadding.p4),
+                          horizontal: AppPadding.p4, vertical: AppPadding.p4),
                       itemCount: _homeViewGetXController.mostPopular.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: Constants.crossAxisCount,
