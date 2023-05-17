@@ -106,6 +106,8 @@ class HomeViewGetXController extends GetxController with Helpers {
   RegStatus regStatus = RegStatus(status: true,id: 'llllll');
   List<Product> product = [];
   String search = '';
+  var isLoadingRecommended = true;
+  var isLoadingProductByType = true;
 
   // filter.
   num? minPrice;
@@ -224,6 +226,7 @@ class HomeViewGetXController extends GetxController with Helpers {
     try {
       recommendedProduct =
           await _storeApiController.getRecommendedProduct(bid: bid);
+      isLoadingRecommended = false;
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
@@ -243,6 +246,7 @@ class HomeViewGetXController extends GetxController with Helpers {
         bid: bid,
         productTypeId: productTypeId,
       );
+      isLoadingProductByType = false;
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);

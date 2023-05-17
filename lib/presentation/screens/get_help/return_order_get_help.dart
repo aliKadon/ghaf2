@@ -356,8 +356,8 @@ class _ReturnOrderGetHelpState extends State<ReturnOrderGetHelp> {
                                       Spacer(),
                                       Image.asset(
                                         SharedPrefController().lang1 == 'ar'
-                                            ? IconsAssets.arrow2
-                                            : IconsAssets.arrow,
+                                            ? IconsAssets.arrow
+                                            : IconsAssets.arrow2,
                                         height: AppSize.s18,
                                         color: ColorManager.primary,
                                       ),

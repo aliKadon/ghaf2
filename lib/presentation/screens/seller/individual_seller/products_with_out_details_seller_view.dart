@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
 import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/store_seller_view.dart';
 
 import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../resources/color_manager.dart';
@@ -14,22 +17,24 @@ class ProductsWithOutDetailsSellerView extends StatefulWidget {
   const ProductsWithOutDetailsSellerView({Key? key}) : super(key: key);
 
   @override
-  State<ProductsWithOutDetailsSellerView> createState() => _ProductsWithOutDetailsSellerViewState();
+  State<ProductsWithOutDetailsSellerView> createState() =>
+      _ProductsWithOutDetailsSellerViewState();
 }
 
-class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetailsSellerView> {
+
+
+class _ProductsWithOutDetailsSellerViewState
+    extends State<ProductsWithOutDetailsSellerView> {
+  bool _doubleBackToExitPressedOnce = false;
+
+
   var isShow = true;
+
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        await SharedPrefController().logout();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => MainView(),
-        ));
-        return false;
-      },
+      onWillPop: _onWillPop,
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -37,7 +42,28 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: AppSize.s15,
+                height: AppSize.s50,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => StoreSellerView(),
+                  ));
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      size: AppSize.s35,
+                      color: ColorManager.primary,
+                    ),
+                    SizedBox(
+                      width: AppSize.s6,
+                    ),
+                  ],
+                ),
               ),
               Image.asset(
                 ImageAssets.logo2,
@@ -56,7 +82,8 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, Routes.createPaymentLinkSellerRoute);
+                    Navigator.pushNamed(
+                        context, Routes.createPaymentLinkSellerRoute);
                   },
                   child: Text(
                     AppLocalizations.of(context)!.generate_payment_link,
@@ -76,8 +103,8 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
                 height: AppSize.s55,
                 child: ElevatedButton(
                   onPressed: () {
-
-                    Navigator.pushNamed(context, Routes.addItem2SellerRoute,arguments: isShow);
+                    Navigator.pushNamed(context, Routes.addItem2SellerRoute,
+                        arguments: isShow);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ColorManager.transparent,
@@ -88,9 +115,11 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
                     ),
                   ),
                   child: Text(
-                    AppLocalizations.of(context)!.generate_detailed_payment_link,
+                    AppLocalizations.of(context)!
+                        .generate_detailed_payment_link,
                     style: getSemiBoldStyle(
-                        color: ColorManager.primaryDark, fontSize: FontSize.s18),
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s18),
                   ),
                 ),
               ),
@@ -99,5 +128,21 @@ class _ProductsWithOutDetailsSellerViewState extends State<ProductsWithOutDetail
         ),
       ),
     );
+  }
+  Future<bool> _onWillPop() async {
+    if (_doubleBackToExitPressedOnce) {
+      return true;
+    }
+
+    _doubleBackToExitPressedOnce = true;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Press back again to exit')),
+    );
+
+    Timer(Duration(seconds: 2), () {
+      _doubleBackToExitPressedOnce = false;
+    });
+
+    return false;
   }
 }

@@ -12,7 +12,6 @@ import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/search/search_screen.dart';
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/font_manager.dart';
@@ -112,7 +111,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                 color: ColorManager.greyLight,
               ),
               Container(
-                padding: EdgeInsets.all(16.h),
+                padding: EdgeInsets.only(left:16.h,right: 16.h),
                 child: GetBuilder<MyFavoriteScreenGetXController>(
                   builder: (controller) => controller.isMyFavoriteLoading
                       ? Center(
@@ -197,9 +196,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                           : GridView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: AppPadding.p8,
-                                  vertical: AppPadding.p4),
+
                               itemCount: controller.products.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
@@ -211,40 +208,37 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                               ),
                               itemBuilder: (context, index) {
                                 return Builder(builder: (context) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(0.0),
-                                    child: Builder(
-                                      builder: (context) {
-                                        Get.put<Product>(
-                                          controller.products[index],
+                                  return Builder(
+                                    builder: (context) {
+                                      Get.put<Product>(
+                                        controller.products[index],
+                                        tag:
+                                            '${controller.products[index].id}',
+                                      );
+                                      return ProductItemNew(
                                           tag:
                                               '${controller.products[index].id}',
-                                        );
-                                        return ProductItemNew(
-                                            tag:
-                                                '${controller.products[index].id}',
-                                            image: controller
-                                                        .products[index]
-                                                        .productImages
-                                                        ?.length ==
-                                                    0
-                                                ? ''
-                                                : controller.products[index]
-                                                        .productImages?[0] ??
-                                                    '',
-                                            name: controller
-                                                .products[index].name!,
-                                            stars: controller
-                                                .products[index].stars!,
-                                            price: controller
-                                                .products[index].price!,
-                                            idProduct:
-                                                controller.products[index].id!,
-                                            isFavorite: controller
-                                                .products[index].isFavorite!,
-                                            index: index);
-                                      },
-                                    ),
+                                          image: controller
+                                                      .products[index]
+                                                      .productImages
+                                                      ?.length ==
+                                                  0
+                                              ? ''
+                                              : controller.products[index]
+                                                      .productImages?[0] ??
+                                                  '',
+                                          name: controller
+                                              .products[index].name!,
+                                          stars: controller
+                                              .products[index].stars!,
+                                          price: controller
+                                              .products[index].price!,
+                                          idProduct:
+                                              controller.products[index].id!,
+                                          isFavorite: controller
+                                              .products[index].isFavorite!,
+                                          index: index);
+                                    },
                                   );
                                 });
                               },

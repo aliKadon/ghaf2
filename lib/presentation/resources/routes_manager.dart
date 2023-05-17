@@ -79,6 +79,7 @@ import 'package:ghaf_application/presentation/screens/update_user_info.dart';
 import '../../domain/model/unpaid_order.dart';
 import '../screens/language_store.dart';
 import '../screens/login_view/login_view.dart';
+import '../screens/notifications/notifications_screen_new.dart';
 import '../screens/onboarding_view.dart';
 import '../screens/rate_and_reviews/rate_delivery/rate_delivery.dart';
 import '../screens/rate_and_reviews/rate_us_view/rate_us_view.dart';
@@ -92,6 +93,7 @@ import '../screens/splash_view.dart';
 import '../screens/subscribe_view/payment_methode_for_subscribe.dart';
 import '../screens/unpaid_items_screen.dart';
 import '../screens/verified_email.dart';
+import '../screens/vouchers/vouchers.dart';
 import '../screens/welcome_view.dart';
 
 class Routes {
@@ -120,6 +122,7 @@ class Routes {
   static const String sitePrivacyRoute = "/sitePrivacy";
   static const String termsOfUseRoute = "/termsOfUse";
   static const String offersRoute = "/offers";
+  static const String vouchers = "/vouchers";
   static const String myWalletRoute = "/myWallet";
   static const String paymentMethodRoute = "/paymentMethod";
   static const String addOrEditAddressRoute = "/addOrEditAddress";
@@ -141,6 +144,7 @@ class Routes {
   static const String updateSellerInfo = "/updateSellerInfo";
   static const String accountView = "/accountView";
   static const String storeByCategoryScreen = "/storeByCategoryScreen";
+  static const String notificationNew = "/notificationNew";
 
   //seller
   static const String welcomeSellerRoute = "/welcome_seller";
@@ -202,6 +206,12 @@ class RouteGenerator {
 
       case Routes.rateSeller:
         return MaterialPageRoute(builder: (_) => RateSeller());
+
+      case Routes.notificationNew:
+        return MaterialPageRoute(builder: (_) => NotificationsScreenNew());
+
+      case Routes.vouchers:
+        return MaterialPageRoute(builder: (_) => Vouchers());
 
       case Routes.verifiedEmail:
         return MaterialPageRoute(builder: (_) => VerifiedEmail());
@@ -515,7 +525,7 @@ class RouteGenerator {
 
       case Routes.sellerStatus:
         return MaterialPageRoute(
-            builder: (_) => SellerStatus(settings.arguments as String));
+            builder: (_) => SellerStatus());
 
       case Routes.addItem2SellerRoute:
         return MaterialPageRoute(

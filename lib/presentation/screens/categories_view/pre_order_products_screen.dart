@@ -100,7 +100,7 @@ class _PreOrderProductsScreenState extends State<PreOrderProductsScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisExtent: AppSize.s280,
+                              mainAxisExtent: AppSize.s300,
                             ),
                             shrinkWrap: true,
                             itemCount: controller.products.length,

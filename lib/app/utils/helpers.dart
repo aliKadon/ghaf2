@@ -13,6 +13,7 @@ import 'package:ghaf_application/presentation/screens/categories_view/pre_order_
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/home_view/home_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
+import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/payment_view_for_subscribe_new.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
@@ -130,7 +131,10 @@ mixin Helpers {
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => MainView(),
+                          ));
                           // Navigator.of(context).pushReplacement(MaterialPageRoute(
                           //   builder: (context) => RegisterScreen(),
                           // ));
@@ -142,12 +146,14 @@ mixin Helpers {
                                 RoundedRectangleBorder(
                                     side:
                                         BorderSide(color: ColorManager.primary),
-                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
+                                    borderRadius:
+                                        BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.ok,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.white, fontSize: FontSize.s18),
+                              color: ColorManager.white,
+                              fontSize: FontSize.s18),
                         ),
                       ),
                     ),
@@ -213,13 +219,14 @@ mixin Helpers {
                                     ColorManager.primaryDark),
                                 shape: MaterialStatePropertyAll(
                                     RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(AppSize.s10)))),
+                                        borderRadius: BorderRadius.circular(
+                                            AppSize.s10)))),
                             child: Text(
                               AppLocalizations.of(context)!.yes,
                               // 'Login',
                               style: getSemiBoldStyle(
-                                  color: ColorManager.white, fontSize: FontSize.s18),
+                                  color: ColorManager.white,
+                                  fontSize: FontSize.s18),
                             ),
                           ),
                         ),
@@ -240,8 +247,8 @@ mixin Helpers {
                                     RoundedRectangleBorder(
                                         side: BorderSide(
                                             color: ColorManager.primaryDark),
-                                        borderRadius:
-                                            BorderRadius.circular(AppSize.s10)))),
+                                        borderRadius: BorderRadius.circular(
+                                            AppSize.s10)))),
                             child: Text(
                               AppLocalizations.of(context)!.no,
                               // 'Login',
@@ -409,7 +416,8 @@ mixin Helpers {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(AppSize.s15),
+                                borderRadius:
+                                    BorderRadius.circular(AppSize.s15),
                                 border:
                                     Border.all(color: ColorManager.greyLight),
                               ),
@@ -762,7 +770,7 @@ mixin Helpers {
                             child: ElevatedButton(
                                 onPressed: () {
                                   categoriesGetxController.getBranches(
-                                    context: context,
+                                      context: context,
                                       cid: cid,
                                       sortType: sortedType[selected] ==
                                               AppLocalizations.of(context)!
@@ -931,10 +939,11 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppSize.s10),
+                                        borderRadius:
+                                            BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding:EdgeInsets.all(AppSize.s5),
+                                    padding: EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue,
@@ -968,15 +977,18 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppSize.s10),
+                                        borderRadius:
+                                            BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding:EdgeInsets.all(AppSize.s5),
+                                    padding: EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue1,
                                       // Step 4.
-                                      items: mealTimes.toSet().toList()
+                                      items: mealTimes
+                                          .toSet()
+                                          .toList()
                                           .map<DropdownMenuItem<String>>(
                                               (String value) {
                                         return DropdownMenuItem<String>(
@@ -1055,378 +1067,393 @@ mixin Helpers {
       showSlidingBottomSheet(
         context,
         builder: (context) => SlidingSheetDialog(
-          snapSpec: SnapSpec(
-            snappings: [0.5, 0.7],
-          ),
-          builder: (context, state) {
-            return Material(
-              child: StatefulBuilder(
-                builder: (context, setState) {
-
-                  print('====================hours1');
-                  print(hours);
-                  return Padding(
-                    padding: EdgeInsets.all(AppSize.s15),
-                    child: Container(
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.024,
-                          ),
-                          Text('$text',
-                              style: TextStyle(
-                                  fontSize: FontSize.s20,
-                                  fontWeight: FontWeight.w600,
-                                  color: ColorManager.primaryDark)),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.024,
-                          ),
-                          Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (isSelectedToday == true) {
-                                      isSelectedAsap = true;
-                                      isSelectedToday = false;
-                                      isAsap = true;
-                                    }
-                                    if (isSelectedToday == false) {
-                                      isAsap = false;
-                                      isSelectedAsap = false;
-                                      isSelectedToday = true;
-                                    }
-                                  });
-                                },
-                                child: Row(
+            snapSpec: SnapSpec(
+              snappings: [0.5, 0.7],
+            ),
+            builder: (context, state) {
+              return Material(
+                child: StatefulBuilder(
+                  builder: (context, setState) {
+                    print('====================hours1');
+                    print(hours);
+                    return Padding(
+                      padding: EdgeInsets.all(AppSize.s15),
+                      child: Container(
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Text('$text',
+                                style: TextStyle(
+                                    fontSize: FontSize.s20,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.primaryDark)),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.024,
+                            ),
+                            Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (isSelectedToday == true) {
+                                        isSelectedAsap = true;
+                                        isSelectedToday = false;
+                                        isAsap = true;
+                                      }
+                                      if (isSelectedToday == false) {
+                                        isAsap = false;
+                                        isSelectedAsap = false;
+                                        isSelectedToday = true;
+                                      }
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.access_time,
+                                        color: ColorManager.primary,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s10,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.today,
+                                          style: TextStyle(
+                                              color: ColorManager.grey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: FontSize.s18)),
+                                      // SizedBox(width: AppSize.s30,),
+                                      Spacer(),
+                                      isSelectedToday
+                                          ? Icon(
+                                              Icons.radio_button_checked,
+                                              color: ColorManager.primary,
+                                            )
+                                          : Icon(
+                                              Icons.radio_button_off,
+                                              color: ColorManager.primary,
+                                            )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.024,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (isSelectedAsap == true) {
+                                        isSelectedAsap = false;
+                                        isSelectedToday = true;
+                                        isAsap = false;
+                                      }
+                                      if (isSelectedAsap == false) {
+                                        isAsap = true;
+                                        isSelectedAsap = true;
+                                        isSelectedToday = false;
+                                      }
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        ImageAssets.tomorrowTimer,
+                                        height: AppSize.s20,
+                                        width: AppSize.s20,
+                                      ),
+                                      SizedBox(
+                                        width: AppSize.s10,
+                                      ),
+                                      Text(
+                                          AppLocalizations.of(context)!
+                                              .tomorrow,
+                                          style: TextStyle(
+                                              color: ColorManager.grey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: FontSize.s18)),
+                                      // SizedBox(width: AppSize.s30,),
+                                      Spacer(),
+                                      isSelectedAsap
+                                          ? Icon(
+                                              Icons.radio_button_checked,
+                                              color: ColorManager.primary,
+                                            )
+                                          : Icon(
+                                              Icons.radio_button_off,
+                                              color: ColorManager.primary,
+                                            )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.024,
+                                ),
+                                Row(
                                   children: [
-                                    Icon(
-                                      Icons.access_time,
-                                      color: ColorManager.primary,
-                                    ),
-                                    SizedBox(
-                                      width: AppSize.s10,
-                                    ),
-                                    Text(AppLocalizations.of(context)!.today,
-                                        style: TextStyle(
-                                            color: ColorManager.grey,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: FontSize.s18)),
-                                    // SizedBox(width: AppSize.s30,),
                                     Spacer(),
-                                    isSelectedToday
-                                        ? Icon(
-                                      Icons.radio_button_checked,
-                                      color: ColorManager.primary,
-                                    )
-                                        : Icon(
-                                      Icons.radio_button_off,
-                                      color: ColorManager.primary,
-                                    )
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              AppSize.s10),
+                                          border: Border.all(
+                                              color: ColorManager.greyLight)),
+                                      padding: EdgeInsets.all(AppSize.s5),
+                                      child: DropdownButton<String>(
+                                        // Step 3.
+                                        value: dropdownValue,
+                                        // Step 4.
+
+                                        items: days
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(
+                                                  color:
+                                                      ColorManager.primaryDark,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: AppSize.s12),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        // Step 5.
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            dropdownValue = newValue!;
+                                            print(
+                                                '=====================number of days');
+                                            print(days.indexOf(newValue));
+                                            numberOfDay =
+                                                days.indexOf(newValue);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              AppSize.s10),
+                                          border: Border.all(
+                                              color: ColorManager.greyLight)),
+                                      padding: EdgeInsets.all(AppSize.s5),
+                                      child: DropdownButton<String>(
+                                        // Step 3.
+                                        value: dropdownValue1,
+                                        // Step 4.
+                                        items: mealTimes
+                                            .toSet()
+                                            .toList()
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(
+                                                  color:
+                                                      ColorManager.primaryDark,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: AppSize.s12),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        // Step 5.
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            print(
+                                                '=========================hours');
+                                            print(dropdownValue1);
+                                            dropdownValue1 = newValue!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Spacer(),
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height:
-                                MediaQuery.of(context).size.height * 0.024,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (isSelectedAsap == true) {
-                                      isSelectedAsap = false;
-                                      isSelectedToday = true;
-                                      isAsap = false;
-                                    }
-                                    if (isSelectedAsap == false) {
-                                      isAsap = true;
-                                      isSelectedAsap = true;
-                                      isSelectedToday = false;
-                                    }
-                                  });
-                                },
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      ImageAssets.tomorrowTimer,
-                                      height: AppSize.s20,
-                                      width: AppSize.s20,
-                                    ),
-                                    SizedBox(
-                                      width: AppSize.s10,
-                                    ),
-                                    Text(AppLocalizations.of(context)!.tomorrow,
-                                        style: TextStyle(
-                                            color: ColorManager.grey,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: FontSize.s18)),
-                                    // SizedBox(width: AppSize.s30,),
-                                    Spacer(),
-                                    isSelectedAsap
-                                        ? Icon(
-                                      Icons.radio_button_checked,
-                                      color: ColorManager.primary,
-                                    )
-                                        : Icon(
-                                      Icons.radio_button_off,
-                                      color: ColorManager.primary,
-                                    )
-                                  ],
+                                Padding(
+                                  padding: EdgeInsets.all(AppSize.s8),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                          AppLocalizations.of(context)!
+                                              .frequency,
+                                          style: TextStyle(
+                                              color: ColorManager.grey,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: FontSize.s14)),
+                                      // SizedBox(width: AppSize.s30,),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height:
-                                MediaQuery.of(context).size.height * 0.024,
-                              ),
-                              Row(
-                                children: [
-                                  Spacer(),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppSize.s10),
-                                        border: Border.all(
-                                            color: ColorManager.greyLight)),
-                                    padding:EdgeInsets.all(AppSize.s5),
-                                    child: DropdownButton<String>(
-                                      // Step 3.
-                                      value: dropdownValue,
-                                      // Step 4.
-
-                                      items: days.map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: ColorManager.primaryDark,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: AppSize.s12),
-                                              ),
-                                            );
-                                          }).toList(),
-                                      // Step 5.
-                                      onChanged: (String? newValue) {
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.024,
+                                ),
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
                                         setState(() {
-                                          dropdownValue = newValue!;
-                                          print(
-                                              '=====================number of days');
-                                          print(days.indexOf(newValue));
-                                          numberOfDay = days.indexOf(newValue);
+                                          if (isOneTime == true) {
+                                            isWeekly = false;
+                                            isMonthly = false;
+                                            isOneTime = false;
+                                          }
+                                          if (isOneTime == false) {
+                                            isWeekly = false;
+                                            isMonthly = false;
+                                            isOneTime = true;
+                                          }
+                                          frequency = 0;
                                         });
                                       },
+                                      child: Row(
+                                        children: [
+                                          isOneTime
+                                              ? Icon(
+                                                  Icons.radio_button_checked,
+                                                  color: ColorManager.primary,
+                                                )
+                                              : Icon(
+                                                  Icons.radio_button_off,
+                                                  color: ColorManager.primary,
+                                                ),
+                                          SizedBox(
+                                            width: AppSize.s8,
+                                          ),
+                                          Text(AppLocalizations.of(context)!
+                                              .one_time),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppSize.s10),
-                                        border: Border.all(
-                                            color: ColorManager.greyLight)),
-                                    padding:EdgeInsets.all(AppSize.s5),
-                                    child: DropdownButton<String>(
-                                      // Step 3.
-                                      value: dropdownValue1,
-                                      // Step 4.
-                                      items: mealTimes.toSet().toList().map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: ColorManager.primaryDark,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: AppSize.s12),
-                                              ),
-                                            );
-                                          }).toList(),
-                                      // Step 5.
-                                      onChanged: (String? newValue) {
+                                    Spacer(),
+                                    InkWell(
+                                      onTap: () {
                                         setState(() {
-                                          print('=========================hours');
-                                          print(dropdownValue1);
-                                          dropdownValue1 = newValue!;
+                                          if (isWeekly == true) {
+                                            isWeekly = false;
+                                            isMonthly = false;
+                                            isOneTime = false;
+                                          }
+                                          if (isWeekly == false) {
+                                            isWeekly = true;
+                                            isMonthly = false;
+                                            isOneTime = false;
+                                          }
+                                          frequency = 1;
                                         });
                                       },
+                                      child: Row(
+                                        children: [
+                                          isWeekly
+                                              ? Icon(
+                                                  Icons.radio_button_checked,
+                                                  color: ColorManager.primary,
+                                                )
+                                              : Icon(
+                                                  Icons.radio_button_off,
+                                                  color: ColorManager.primary,
+                                                ),
+                                          SizedBox(
+                                            width: AppSize.s8,
+                                          ),
+                                          Text(AppLocalizations.of(context)!
+                                              .weekly),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Spacer(),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(AppSize.s8),
-                                child: Row(
-                                  children: [
-                                    Text(AppLocalizations.of(context)!.frequency,
-                                        style: TextStyle(
-                                            color: ColorManager.grey,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: FontSize.s14)),
-                                    // SizedBox(width: AppSize.s30,),
+                                    Spacer(),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          if (isMonthly == true) {
+                                            isWeekly = false;
+                                            isMonthly = false;
+                                            isOneTime = false;
+                                          }
+                                          if (isMonthly == false) {
+                                            isWeekly = false;
+                                            isMonthly = true;
+                                            isOneTime = false;
+                                          }
+                                          frequency = 2;
+                                        });
+                                      },
+                                      child: Row(
+                                        children: [
+                                          isMonthly
+                                              ? Icon(
+                                                  Icons.radio_button_checked,
+                                                  color: ColorManager.primary,
+                                                )
+                                              : Icon(
+                                                  Icons.radio_button_off,
+                                                  color: ColorManager.primary,
+                                                ),
+                                          SizedBox(
+                                            width: AppSize.s8,
+                                          ),
+                                          Text(AppLocalizations.of(context)!
+                                              .monthly),
+                                        ],
+                                      ),
+                                    ),
+                                    Spacer(),
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height:
-                                MediaQuery.of(context).size.height * 0.024,
-                              ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isOneTime == true) {
-                                          isWeekly = false;
-                                          isMonthly = false;
-                                          isOneTime = false;
-                                        }
-                                        if (isOneTime == false) {
-                                          isWeekly = false;
-                                          isMonthly = false;
-                                          isOneTime = true;
-                                        }
-                                        frequency = 0;
-                                      });
-                                    },
-                                    child: Row(
-                                      children: [
-                                        isOneTime
-                                            ? Icon(
-                                          Icons.radio_button_checked,
-                                          color: ColorManager.primary,
-                                        )
-                                            : Icon(
-                                          Icons.radio_button_off,
-                                          color: ColorManager.primary,
-                                        ),
-                                        SizedBox(
-                                          width: AppSize.s8,
-                                        ),
-                                        Text(AppLocalizations.of(context)!
-                                            .one_time),
-                                      ],
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isWeekly == true) {
-                                          isWeekly = false;
-                                          isMonthly = false;
-                                          isOneTime = false;
-                                        }
-                                        if (isWeekly == false) {
-                                          isWeekly = true;
-                                          isMonthly = false;
-                                          isOneTime = false;
-                                        }
-                                        frequency = 1;
-                                      });
-                                    },
-                                    child: Row(
-                                      children: [
-                                        isWeekly
-                                            ? Icon(
-                                          Icons.radio_button_checked,
-                                          color: ColorManager.primary,
-                                        )
-                                            : Icon(
-                                          Icons.radio_button_off,
-                                          color: ColorManager.primary,
-                                        ),
-                                        SizedBox(
-                                          width: AppSize.s8,
-                                        ),
-                                        Text(
-                                            AppLocalizations.of(context)!.weekly),
-                                      ],
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isMonthly == true) {
-                                          isWeekly = false;
-                                          isMonthly = false;
-                                          isOneTime = false;
-                                        }
-                                        if (isMonthly == false) {
-                                          isWeekly = false;
-                                          isMonthly = true;
-                                          isOneTime = false;
-                                        }
-                                        frequency = 2;
-                                      });
-                                    },
-                                    child: Row(
-                                      children: [
-                                        isMonthly
-                                            ? Icon(
-                                          Icons.radio_button_checked,
-                                          color: ColorManager.primary,
-                                        )
-                                            : Icon(
-                                          Icons.radio_button_off,
-                                          color: ColorManager.primary,
-                                        ),
-                                        SizedBox(
-                                          width: AppSize.s8,
-                                        ),
-                                        Text(AppLocalizations.of(context)!
-                                            .monthly),
-                                      ],
-                                    ),
-                                  ),
-                                  Spacer(),
-                                ],
-                              ),
-                              SizedBox(
-                                height:
-                                MediaQuery.of(context).size.height * 0.024,
-                              ),
-                              Container(
-                                height: AppSize.s82,
-                                width: double.infinity,
-                                padding: EdgeInsets.all(AppSize.s12),
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      print('=============result');
-                                      print(frequency);
-                                      print(numberOfDay);
-                                      print(dropdownValue1);
-                                      print(isAsap);
-                                      Navigator.of(context).pop({
-                                        'WeeklyOrMonthly': frequency,
-                                        'DayNumber': numberOfDay,
-                                        'HourNumber': int.parse(dropdownValue1),
-                                        'MinuteNumber': 0,
-                                        'asap': false,
-                                      });
-                                    },
-                                    child: Text(
-                                        AppLocalizations.of(context)!.confirm)),
-                              ),
-                              SizedBox(
-                                height:
-                                MediaQuery.of(context).size.height * 0.024,
-                              ),
-                            ],
-                          )
-                        ],
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.024,
+                                ),
+                                Container(
+                                  height: AppSize.s82,
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(AppSize.s12),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        print('=============result');
+                                        print(frequency);
+                                        print(numberOfDay);
+                                        print(dropdownValue1);
+                                        print(isAsap);
+                                        Navigator.of(context).pop({
+                                          'WeeklyOrMonthly': frequency,
+                                          'DayNumber': numberOfDay,
+                                          'HourNumber':
+                                              int.parse(dropdownValue1),
+                                          'MinuteNumber': 0,
+                                          'asap': false,
+                                        });
+                                      },
+                                      child: Text(AppLocalizations.of(context)!
+                                          .confirm)),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.024,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
-          }
-        ),
+                    );
+                  },
+                ),
+              );
+            }),
       );
 
   Future showArrivalTimeSheet({
@@ -1576,10 +1603,11 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppSize.s10),
+                                        borderRadius:
+                                            BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding:EdgeInsets.all(AppSize.s5),
+                                    padding: EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue,
@@ -1613,10 +1641,11 @@ mixin Helpers {
                                   Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppSize.s10),
+                                        borderRadius:
+                                            BorderRadius.circular(AppSize.s10),
                                         border: Border.all(
                                             color: ColorManager.greyLight)),
-                                    padding:EdgeInsets.all(AppSize.s5),
+                                    padding: EdgeInsets.all(AppSize.s5),
                                     child: DropdownButton<String>(
                                       // Step 3.
                                       value: dropdownValue1,
@@ -1954,8 +1983,8 @@ mixin Helpers {
                                         RoundedRectangleBorder(
                                             side: BorderSide(
                                                 color: ColorManager.primary),
-                                            borderRadius:
-                                                BorderRadius.circular(AppSize.s10)),
+                                            borderRadius: BorderRadius.circular(
+                                                AppSize.s10)),
                                       )),
                                   onPressed: () {},
                                   child: Text(
@@ -2070,8 +2099,8 @@ mixin Helpers {
                                             side: BorderSide(
                                                 color:
                                                     ColorManager.primaryDark),
-                                            borderRadius:
-                                                BorderRadius.circular(AppSize.s10)),
+                                            borderRadius: BorderRadius.circular(
+                                                AppSize.s10)),
                                       )),
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -2089,7 +2118,11 @@ mixin Helpers {
                               padding: EdgeInsets.all(AppSize.s12),
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PreOrderProductsScreen(bid: bid),));
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          PreOrderProductsScreen(bid: bid),
+                                    ));
                                     // homeViewGetXController.getProducts(
                                     //     context: context, bid: bid);
                                   },
@@ -2232,12 +2265,14 @@ mixin Helpers {
                                 ColorManager.primaryDark),
                             shape: MaterialStatePropertyAll(
                                 RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
+                                    borderRadius:
+                                        BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.login,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.white, fontSize: FontSize.s18),
+                              color: ColorManager.white,
+                              fontSize: FontSize.s18),
                         ),
                       ),
                     ),
@@ -2263,12 +2298,14 @@ mixin Helpers {
                                 RoundedRectangleBorder(
                                     side: BorderSide(
                                         color: ColorManager.primaryDark),
-                                    borderRadius: BorderRadius.circular(AppSize.s10)))),
+                                    borderRadius:
+                                        BorderRadius.circular(AppSize.s10)))),
                         child: Text(
                           AppLocalizations.of(context)!.sign_up,
                           // 'Login',
                           style: getSemiBoldStyle(
-                              color: ColorManager.primaryDark, fontSize: FontSize.s18),
+                              color: ColorManager.primaryDark,
+                              fontSize: FontSize.s18),
                         ),
                       ),
                     ),

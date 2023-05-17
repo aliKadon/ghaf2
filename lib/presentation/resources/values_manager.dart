@@ -247,6 +247,8 @@ class AppSizeWidth {
   static double s306 = 306.w;
   static double s311 = 311.w;
   static double s315 = 315.w;
+  static double s317 = 317.w;
+  static double s321 = 321.w;
   static double s326 = 326.w;
   static double s343 = 343.w;
   static double s150 = 150.w;

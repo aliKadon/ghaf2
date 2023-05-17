@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/items_list.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/profile_getx_controller/profile_controller.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/profile_seller.dart';
 import 'package:ghaf_application/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,6 +21,7 @@ import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 import '../../account_view/account_view_getx_controller.dart';
+import '../../profile/profile.dart';
 
 class StoreSellerView extends StatefulWidget {
   const StoreSellerView({Key? key}) : super(key: key);
@@ -30,6 +33,8 @@ class StoreSellerView extends StatefulWidget {
 class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
   late final AccountViewGetXController _accountViewGetXController =
   Get.put(AccountViewGetXController());
+  late final ProfileController _profileController =
+  Get.put(ProfileController());
 
   var isLoading = true;
   var language = SharedPrefController().lang1;
@@ -43,38 +48,29 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
     // }
   }
 
-  // @override
-  // void initState() {
-  //
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    // Provider.of<SellerProvider>(context,listen: false)
+    //     .getUserDetails()
+    //     .then((value) => isLoading = false);
+    _profileController.getSellerDetails(context: context);
+    super.initState();
+  }
   @override
   void didChangeDependencies() {
-    Provider.of<SellerProvider>(context)
-        .getUserDetails()
-        .then((value) => isLoading = false);
+
     super.didChangeDependencies();
   }
 
-  late var userDetails = Provider
-      .of<SellerProvider>(context)
-      .userDetails;
+  // late var userDetails = Provider
+  //     .of<SellerProvider>(context)
+  //     .userDetails;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: isLoading
-            ? Center(
-          child: Container(
-            width: 20.h,
-            height: 20.h,
-            child: CircularProgressIndicator(
-              strokeWidth: 1,
-            ),
-          ),
-        )
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
             child: Column(
@@ -156,6 +152,38 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                                 fontSize: FontSize.s14,
                               ),
                             ),
+                            Row(
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .view_edit_profile,
+                                  style: getRegularStyle(
+                                    color: ColorManager.white,
+                                    fontSize: FontSize.s12,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                  MediaQuery.of(context).size.width *
+                                      0.03,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    // _accountViewGetXController.logout(context: context);
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => ProfileSeller(),
+                                    ));
+                                  },
+                                  child: Image.asset(
+                                    ImageAssets.editProfile,
+                                    width: AppSize.s20,
+                                    height: AppSize.s20,
+                                    color: ColorManager.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                             SizedBox(
                               height: AppSize.s10,
                             ),
@@ -206,9 +234,9 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                         padding: EdgeInsets.all(AppSize.s8),
                         child: Column(
                           crossAxisAlignment:
-                          CrossAxisAlignment.center,
+                          CrossAxisAlignment.start,
                           mainAxisAlignment:
-                          MainAxisAlignment.center,
+                          MainAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: AppSize.s20,
@@ -223,9 +251,42 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                                 fontSize: FontSize.s14,
                               ),
                             ),
+                            Row(
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .view_edit_profile,
+                                  style: getRegularStyle(
+                                    color: ColorManager.white,
+                                    fontSize: FontSize.s12,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                  MediaQuery.of(context).size.width *
+                                      0.03,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    // _accountViewGetXController.logout(context: context);
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => Profile(),
+                                    ));
+                                  },
+                                  child: Image.asset(
+                                    ImageAssets.editProfile,
+                                    width: AppSize.s20,
+                                    height: AppSize.s20,
+                                    color: ColorManager.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                             SizedBox(
                               height: AppSize.s10,
                             ),
+
                           ],
                         ),
                       ),
@@ -275,7 +336,7 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                             style: TextStyle(fontSize: FontSize.s14),
                           ),
                           Text(
-                            AppSharedData.currentUser!.email!,
+                            '${AppSharedData.currentUser?.email}',
                             style: TextStyle(
                                 fontSize: FontSize.s14,
                                 color: ColorManager.primaryDark),

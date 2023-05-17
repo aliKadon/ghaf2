@@ -17,13 +17,13 @@ import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 import '../../account_view/account_view_getx_controller.dart';
 
-class ProfileSetting extends StatefulWidget {
+class ProfileSettingSeller extends StatefulWidget {
 
   @override
-  State<ProfileSetting> createState() => _ProfileSettingState();
+  State<ProfileSettingSeller> createState() => _ProfileSettingSellerState();
 }
 
-class _ProfileSettingState extends State<ProfileSetting> {
+class _ProfileSettingSellerState extends State<ProfileSettingSeller> {
   // controller.
   late final ProfileSettingGetxController _profileSettingGetxController =
   Get.put(ProfileSettingGetxController());
@@ -253,36 +253,7 @@ class _ProfileSettingState extends State<ProfileSetting> {
                   onSaved: (value) {},
                 ),
               ),
-              SizedBox(
-                height: AppSize.s14,
-              ),
-              Padding(
-                padding: EdgeInsets.all(AppSize.s8),
-                child: InkWell(
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddressesView(),));
-                    Navigator.pushNamed(context, Routes.addressesRoute);
-                  },
-                  child: Row(
-                    children: [
-                      Text(AppLocalizations.of(context)!.saved_address,
-                          style: TextStyle(fontSize: FontSize.s18)),
-                      Spacer(),
-                      language == 'en'
-                          ? Image.asset(
-                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow : IconsAssets.arrow2,
-                        height: AppSize.s18,
-                        color: ColorManager.primary,
-                      )
-                          : Image.asset(
-                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow : IconsAssets.arrow2,
-                        height: AppSize.s18,
-                        color: ColorManager.primary,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
               SizedBox(
                 height: AppSize.s65,
               ),

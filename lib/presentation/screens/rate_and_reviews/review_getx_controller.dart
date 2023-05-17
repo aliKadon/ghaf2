@@ -16,11 +16,15 @@ class ReviewGetxController extends GetxController with Helpers {
       {required BuildContext context,
       required String description,
       required num points}) async {
+    showLoadingDialog(context: context,title: 'Loading ...');
     try {
       apiResponse = await _reviewApiController.addAppReview(
           description: description, points: points);
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainView(),));
       showSnackBar(context, message: apiResponse.message);
     } catch (error) {
+      Navigator.of(context).pop();
       showSnackBar(context, message: error.toString(), error: true);
     }
   }

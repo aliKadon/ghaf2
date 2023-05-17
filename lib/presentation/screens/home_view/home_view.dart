@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +26,7 @@ import '../../widgets/previous_order_widget.dart';
 import '../../widgets/product_item_new.dart';
 import '../../widgets/shortcuts_widget.dart';
 import '../../widgets/slider_image.dart';
+import '../../widgets/slider_image_save.dart';
 import '../addresses_view/addresses_view_getx_controller.dart';
 import '../checkout/check_out_getx_controller.dart';
 import '../checkout/order_tracking_screen.dart';
@@ -39,7 +40,6 @@ import '../store_by_category/store_by_category.dart';
 import '../subscribe_view/subscribe_view_getx_controller.dart';
 import 'address_home.dart';
 import 'home_view_getx_controller.dart';
-
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -214,6 +214,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                 lat: position.latitude.toString(),
                 long: position.longitude.toString()))));
     super.initState();
+    // _internetCheckerGetxController.startMonitoringConnectivity(context: context);
     // _scrollController.addListener(scrollListener);
     // _innerScrollController.addListener(_scrollListener);
   }
@@ -286,12 +287,10 @@ class _HomeViewState extends State<HomeView> with Helpers {
                   backgroundColor: ColorManager.primary,
                   child: Padding(
                     padding: EdgeInsets.all(AppSize.s6),
-                    child: Image.asset(
-                      ImageAssets.delivery_gif,
-                      color: Colors.white,
-                      width: AppSizeWidth.s55,
-                      height: AppSize.s55
-                    ),
+                    child: Image.asset(ImageAssets.delivery_gif,
+                        color: Colors.white,
+                        width: AppSizeWidth.s55,
+                        height: AppSize.s55),
                   ),
                 ),
               ),
@@ -311,7 +310,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: AppPadding.p16,),
+                        horizontal: AppPadding.p16,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -324,13 +324,16 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 children: [
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width *
-                                        0.826,
+                                        0.73,
                                   ),
                                   InkWell(
                                       onTap: () {
                                         if (AppSharedData.currentUser == null) {
-                                          showSignInSheet(context: context, role: Constants.roleRegisterCustomer);
-                                        }else {
+                                          showSignInSheet(
+                                              context: context,
+                                              role: Constants
+                                                  .roleRegisterCustomer);
+                                        } else {
                                           //NotificationView
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
@@ -355,8 +358,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                   Text(
                                     AppLocalizations.of(context)!.hello_welcome,
                                     style: getRegularStyle(
-                                        color: ColorManager.blackLight,
-                                    fontSize: AppSize.s15,
+                                      color: ColorManager.blackLight,
+                                      fontSize: AppSize.s15,
                                     ),
                                   ),
                                   // SizedBox(
@@ -383,7 +386,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.16,
+                                                0.14,
                                         child: Text(
                                             '${AppSharedData.currentUser?.customerPoints ?? 0} ${AppLocalizations.of(context)!.point}',
                                             overflow: TextOverflow.ellipsis,
@@ -446,19 +449,18 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     style: getRegularStyle(
                                                         color: ColorManager
                                                             .primaryDark,
-                                                      fontSize: FontSize.s14
-                                                    ),
+                                                        fontSize: FontSize.s14),
                                                   )
                                                 : Text(
                                                     '${AppLocalizations.of(context)!.shipping} ${HomeView.result == null ? controller.addresses == null || controller.addresses.length == 0 ? AppLocalizations.of(context)!.address : controller.addresses[0].addressName : HomeView.result['addressName']}',
                                                     style: getRegularStyle(
                                                         color: ColorManager
                                                             .primaryDark,
-                                                        fontSize: FontSize.s14
-                                                    ),
+                                                        fontSize: FontSize.s14),
                                                   ),
-                                            Icon(Icons.arrow_drop_down,
-                                            size: AppSize.s24,
+                                            Icon(
+                                              Icons.arrow_drop_down,
+                                              size: AppSize.s24,
                                             )
                                           ],
                                         ),
@@ -483,13 +485,15 @@ class _HomeViewState extends State<HomeView> with Helpers {
                           child: Container(
                               width: AppSizeWidth.s280,
                               margin: EdgeInsets.only(
-                                  bottom: AppMargin.m16,
-                                  right: AppMargin.m16,
-                                  left: AppMargin.m16,),
+                                bottom: AppMargin.m16,
+                                right: AppMargin.m16,
+                                left: AppMargin.m16,
+                              ),
                               child: Container(
                                   padding: EdgeInsets.all(AppSize.s10),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(AppSize.s10),
+                                      borderRadius:
+                                          BorderRadius.circular(AppSize.s10),
                                       border: Border.all(
                                           color: ColorManager.primaryDark)),
                                   child: GestureDetector(
@@ -501,8 +505,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                     },
                                     child: Row(
                                       children: [
-                                        Icon(Icons.search,
-                                        size: AppSize.s30,
+                                        Icon(
+                                          Icons.search,
+                                          size: AppSize.s30,
                                         ),
                                         SizedBox(
                                             width: MediaQuery.of(context)
@@ -512,9 +517,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                         Text(
                                           AppLocalizations.of(context)!
                                               .search_flower,
-                                          style: TextStyle(
-                                            fontSize: AppSize.s15
-                                          ),
+                                          style:
+                                              TextStyle(fontSize: AppSize.s15),
                                         ),
                                       ],
                                     ),
@@ -548,21 +552,21 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                             Image.asset(
                                               ImageAssets.main4,
                                               height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
+                                                      .size
+                                                      .height *
                                                   0.21,
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
+                                                      .size
+                                                      .height *
                                                   0.55,
                                               fit: BoxFit.fill,
                                             ),
                                             isArabic == 'en'
                                                 ? Positioned(
                                                     left: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                        0.35,
+                                                            .size
+                                                            .width *
+                                                        0.7,
                                                     top: AppSize.s65,
                                                     child: Image.asset(
                                                       ImageAssets.imageInMain4,
@@ -571,10 +575,11 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                       fit: BoxFit.fill,
                                                     ))
                                                 : Positioned(
-                                                    right: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                        0.37,
+                                                    right:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.7,
                                                     top: AppSize.s65,
                                                     child: Image.asset(
                                                       ImageAssets.imageInMain4,
@@ -589,21 +594,25 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   // Text for image up
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .upgrade_your_shopping_experience,
-                                                    style: TextStyle(
-                                                        height: AppSize.s1,
-                                                        fontSize: FontSize.s20,
-                                                        fontFamily:
-                                                            FontConstants
-                                                                .fontFamily,
-                                                        color: ColorManager
-                                                            .primaryDark,
-                                                        fontWeight:
-                                                            FontWeightManager
-                                                                .medium),
+                                                  Container(
+                                                    width: AppSizeWidth.s321,
+                                                    child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .upgrade_your_shopping_experience,
+                                                      style: TextStyle(
+                                                          height: AppSize.s1,
+                                                          fontSize:
+                                                              FontSize.s19,
+                                                          fontFamily:
+                                                              FontConstants
+                                                                  .fontFamily,
+                                                          color: ColorManager
+                                                              .primaryDark,
+                                                          fontWeight:
+                                                              FontWeightManager
+                                                                  .medium),
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                       height:
@@ -706,19 +715,22 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                           gridDelegate:
                                               SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: 3,
-                                                  mainAxisSpacing: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                      0.01,
+                                                  mainAxisSpacing:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.01,
                                                   // childAspectRatio: AppDimensions.getHeight(0.4,context),
-                                                  childAspectRatio: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                      0.0001,
-                                                  crossAxisSpacing: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                      0.01,
+                                                  childAspectRatio:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.0001,
+                                                  crossAxisSpacing:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.01,
                                                   mainAxisExtent:
                                                       MediaQuery.of(context)
                                                               .size
@@ -733,26 +745,26 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                               onTap: () {
                                                 Navigator.of(context)
                                                     .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      StoreByCategory(
-                                                          nameStore:
-                                                              _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .name!,
-                                                          cid:
-                                                              _homeViewGetXController
-                                                                  .categories[
-                                                                      index]
-                                                                  .id!),
+                                                  builder: (context) => StoreByCategory(
+                                                      nameStore:
+                                                          _homeViewGetXController
+                                                              .categories[index]
+                                                              .name!,
+                                                      cid:
+                                                          _homeViewGetXController
+                                                              .categories[index]
+                                                              .id!),
                                                 ));
                                               },
                                               child: Column(
                                                 children: [
                                                   Card(
                                                     child: Padding(
-                                                      padding: EdgeInsets
-                                                              .all(MediaQuery.of(context).size.height * 0.0015),
+                                                      padding: EdgeInsets.all(
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.0015),
                                                       child: _homeViewGetXController
                                                                   .categories[
                                                                       index]
@@ -771,7 +783,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                               height:
                                                                   AppSize.s70,
                                                               width:
-                                                              AppSizeWidth.s92,
+                                                                  AppSizeWidth
+                                                                      .s92,
                                                               fit: BoxFit
                                                                   .scaleDown),
                                                     ),
@@ -784,7 +797,8 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                         : _homeViewGetXController
                                                                     .categories[
                                                                         index]
-                                                                    .categoriesAr?.name ==
+                                                                    .categoriesAr
+                                                                    ?.name ==
                                                                 null
                                                             ? _homeViewGetXController
                                                                 .categories[
@@ -793,12 +807,12 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                             : _homeViewGetXController
                                                                 .categories[
                                                                     index]
-                                                                .categoriesAr!.name!,
+                                                                .categoriesAr!
+                                                                .name!,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize:
-                                                            FontSize.s10),
+                                                        fontSize: FontSize.s10),
                                                   )
                                                 ],
                                               ),
@@ -832,7 +846,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                 ),
                                 Container(
                                   height: MediaQuery.of(context).size.height *
-                                      0.137,
+                                      0.143,
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: AppPadding.p16),
@@ -895,10 +909,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                     Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context)
-                              .size
-                              .height *
-                              0.012,
+                          width: MediaQuery.of(context).size.height * 0.012,
                         ),
                         Container(
                           height: AppSize.s300,
@@ -913,10 +924,9 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                   ? Container()
                                   : ListView.builder(
                                       shrinkWrap: true,
-                                      padding: EdgeInsets.all(MediaQuery.of(context)
-                                          .size
-                                          .height *
-                                          0.0050),
+                                      padding: EdgeInsets.all(
+                                          MediaQuery.of(context).size.height *
+                                              0.0050),
                                       scrollDirection: Axis.horizontal,
                                       physics: BouncingScrollPhysics(),
                                       itemCount: controller.mostPopular.length,
@@ -1005,10 +1015,13 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                     MediaQuery.of(context).size.height * 0.22,
                                 child: GetBuilder<CheckOutGetxController>(
                                   builder: (controller) => ListView.builder(
-                                    padding:
-                                        controller.customerOrder.length == 0
-                                            ? EdgeInsets.all(0)
-                                            : EdgeInsets.all(MediaQuery.of(context).size.height * 0.005,),
+                                    padding: controller.customerOrder.length ==
+                                            0
+                                        ? EdgeInsets.all(0)
+                                        : EdgeInsets.all(
+                                            MediaQuery.of(context).size.height *
+                                                0.005,
+                                          ),
 
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
@@ -1109,11 +1122,11 @@ class _HomeViewState extends State<HomeView> with Helpers {
                         builder: (controller) => controller.isAddsLoading
                             ? Container()
                             : ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: controller.addsList.length,
                                 itemBuilder: (context, index) {
                                   return SliderImage(
-
                                       listAdds: controller.addsList,
                                       imagesUrl: controller
                                           .addsList[index].imageToShow!,
@@ -1239,69 +1252,27 @@ class _HomeViewState extends State<HomeView> with Helpers {
                       ),
                     ),
                     GetBuilder<HomeViewGetXController>(
-                      builder: (controller) =>
-                          controller.storeAddsList.length == 0
-                              ? Container()
-                              : Card(
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:  EdgeInsets.all(AppSize.s9),
-                                        child: isArabic == 'en'
-                                            ? Image.asset(
-                                                ImageAssets.save,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.2,
-                                              )
-                                            : Transform(
-                                                alignment: Alignment.center,
-                                                transform:
-                                                    Matrix4.rotationY(math.pi),
-                                                child: Image.asset(
-                                                  ImageAssets.save,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.14,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.2,
-                                                ),
-                                              ),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            '${controller.storeAddsList[0].addHeader} ${AppLocalizations.of(context)!.aed} ${controller.storeAddsList.isEmpty ? 0 : controller.storeAddsList[0].saveValue}',
-                                            style: TextStyle(
-                                                fontSize: FontSize.s16,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.01,
-                                          ),
-                                          Text(
-                                            '${controller.storeAddsList[0].addDescription}',
-                                            style: TextStyle(
-                                                fontSize: FontSize.s12,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                    )
+                        builder: (controller) =>
+                            controller.storeAddsList.length == 0
+                                ? Container()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.storeAddsList.length,
+                                    itemBuilder: (context, index) {
+                                      return SliderImageSave(
+                                          imagesUrl: controller
+                                              .storeAddsList[index]
+                                              .imageToShow!,
+                                          header: controller
+                                              .storeAddsList[index].addHeader!,
+                                          addDescription: controller
+                                              .storeAddsList[index]
+                                              .addDescription!,
+                                          addFooter: controller
+                                              .storeAddsList[index].addFooter!,
+                                          listAdds: controller.storeAddsList);
+                                    },
+                                  ))
                   ],
                 ),
               ),

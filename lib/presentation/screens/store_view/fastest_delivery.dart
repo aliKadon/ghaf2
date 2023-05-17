@@ -38,7 +38,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
       maxPrice: 100000,
       minPrice: 0,
       search: '',
-      stars:'Name',
+      stars: 'Name',
     );
     // _homeViewGetXController.getProducts(context: context);
     super.initState();
@@ -52,20 +52,25 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : controller.mostPopular.isEmpty
-                ? Center(
-                    child: Text(AppLocalizations.of(context)!.no_product_found,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: FontSize.s18,
-                            color: ColorManager.primary)),
+            : controller.products.isEmpty
+                ? Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: Center(
+                      child: Text(
+                          AppLocalizations.of(context)!.no_product_found,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: FontSize.s18,
+                              color: ColorManager.primary)),
+                    ),
                   )
                 : Column(
                     children: [
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.06),
                       Padding(
-                        padding:  EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
+                        padding: EdgeInsets.only(
+                            left: AppSize.s12, right: AppSize.s12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -74,10 +79,13 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                height: MediaQuery.of(context).size.height * 0.038,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.038,
                                 width: MediaQuery.of(context).size.width * 0.08,
                                 child: Image.asset(
-                                  SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                                  SharedPrefController().lang1 == 'ar'
+                                      ? IconsAssets.arrow2
+                                      : IconsAssets.arrow,
                                   height: AppSize.s18,
                                   width: AppSize.s10,
                                 ),
@@ -102,7 +110,7 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                         thickness: 1,
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.75,
+                        height: MediaQuery.of(context).size.height * 0.85,
                         padding: EdgeInsets.all(AppSize.s12),
                         child: GridView.builder(
                           scrollDirection: Axis.vertical,
@@ -114,30 +122,29 @@ class _FastestDeliveryViewState extends State<FastestDeliveryView> {
                                   crossAxisCount: 2,
                                   mainAxisExtent: AppSize.s311),
                           itemBuilder: (context, index) {
-                            return Builder(
-                              builder: (context) {
-                                Get.put<Product>(
-                                  controller
-                                      .products[index],tag:
-                                '${controller.products[index].id}trending',);
-                                return ProductItemNew(
-                                  tag: '${controller.products[index].id}trending',
-                                    image: controller.products[index]
-                                                .productImages?.length ==
-                                            0
-                                        ? ''
-                                        : controller
-                                            .products[index].productImages![0],
-                                    name: controller.products[index].name!,
-                                    stars: controller.products[index].stars!,
-                                    index: index,
-                                    price: controller.products[index].price!,
-                                    isFavorite:
-                                        controller.products[index].isFavorite!,
-                                    // controller: _homeViewGetXController.mostPopular,
-                                    idProduct: controller.products[index].id!);
-                              }
-                            );
+                            return Builder(builder: (context) {
+                              Get.put<Product>(
+                                controller.products[index],
+                                tag: '${controller.products[index].id}trending',
+                              );
+                              return ProductItemNew(
+                                  tag:
+                                      '${controller.products[index].id}trending',
+                                  image: controller.products[index]
+                                              .productImages?.length ==
+                                          0
+                                      ? ''
+                                      : controller
+                                          .products[index].productImages![0],
+                                  name: controller.products[index].name!,
+                                  stars: controller.products[index].stars!,
+                                  index: index,
+                                  price: controller.products[index].price!,
+                                  isFavorite:
+                                      controller.products[index].isFavorite!,
+                                  // controller: _homeViewGetXController.mostPopular,
+                                  idProduct: controller.products[index].id!);
+                            });
                           },
                         ),
                       ),

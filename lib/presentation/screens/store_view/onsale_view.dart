@@ -58,15 +58,19 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _cartViewGetXController.emptyBasket(context);
+
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => StoreView(branchId: widget.bid,is24: widget.is24),
         ));
         // _offersScreenGetXController.subtotal =
         //     _offersScreenGetXController.offers[0].branch!.minOrder!;
+        if(AppSharedData.currentUser != null) {
+          _cartViewGetXController.emptyBasket(context);
+
+        }
         return false;
       },
-      child: AppSharedData.currentUser == null ? Container() : GetBuilder<OffersScreenGetXController>(
+      child:  GetBuilder<OffersScreenGetXController>(
         builder: (controller1) => Scaffold(
           body: Column(
             children: [
@@ -78,7 +82,7 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        _cartViewGetXController.emptyBasket(context);
+
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => StoreView(branchId: widget.bid,is24: widget.is24),
                         ));
@@ -86,6 +90,10 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
                         //     _offersScreenGetXController
                         //         .offers[0].branch!.minOrder!;
                         Navigator.pop(context);
+                        if(AppSharedData.currentUser != null) {
+                          _cartViewGetXController.emptyBasket(context);
+
+                        }
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.038,
@@ -114,9 +122,9 @@ class _OnsaleViewState extends State<OnsaleView> with Helpers {
                 color: ColorManager.greyLight,
                 thickness: 1,
               ),
-              GetBuilder<OffersScreenGetXController>(
+              AppSharedData.currentUser == null ? Container() : GetBuilder<OffersScreenGetXController>(
                 builder: (controller) => Container(
-                  height: MediaQuery.of(context).size.height * 0.75,
+                  height: MediaQuery.of(context).size.height * 0.85,
                   child: controller.offers.length == 0
                       ? Center(
                           child: Text(

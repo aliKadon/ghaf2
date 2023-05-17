@@ -98,7 +98,7 @@ class _TrendingViewState extends State<TrendingView> {
                           ),
                         )
                       : Container(
-                          height: MediaQuery.of(context).size.height * 0.75,
+                          height: MediaQuery.of(context).size.height * 0.85,
                           padding: EdgeInsets.all(AppSize.s12),
                           child: GridView.builder(
                             scrollDirection: Axis.vertical,

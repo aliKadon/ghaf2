@@ -30,6 +30,7 @@ enum PrefKeys {
   city,
   indexOfPayLaterProduct,
   idPayLater,
+  individualSellerSubmittedForm,
 }
 
 class SharedPrefController {
@@ -67,6 +68,9 @@ class SharedPrefController {
         PrefKeys.ghafGold.name, user.ghafGold ?? false);
     await _sharedPreferences.setBool(
         PrefKeys.sellerSubmittedForm.name, user.sellerSubmittedForm ?? false);
+    await _sharedPreferences.setBool(
+        PrefKeys.individualSellerSubmittedForm.name,
+        user.individualSellerSubmittedForm ?? false);
     if (user.fcmToken != null)
       await _sharedPreferences.setString(
           PrefKeys.fcmToken.name, user.fcmToken!);
@@ -89,6 +93,8 @@ class SharedPrefController {
             ghafGold: _sharedPreferences.getBool(PrefKeys.ghafGold.name),
             sellerSubmittedForm:
                 _sharedPreferences.getBool(PrefKeys.sellerSubmittedForm.name),
+            individualSellerSubmittedForm: _sharedPreferences
+                .getBool(PrefKeys.individualSellerSubmittedForm.name),
             fcmToken: _sharedPreferences.getString(PrefKeys.fcmToken.name),
           );
   }
@@ -228,8 +234,7 @@ class SharedPrefController {
   }
 
   Future<bool> setgoogleEmail({required String googleEmail}) async {
-    return _sharedPreferences.setString(
-        PrefKeys.googleEmail.name, googleEmail);
+    return _sharedPreferences.setString(PrefKeys.googleEmail.name, googleEmail);
   }
 
   Future<bool> changeLanguage({required String language}) async {
@@ -265,6 +270,7 @@ class SharedPrefController {
     _sharedPreferences.remove(PrefKeys.active.name);
     _sharedPreferences.remove(PrefKeys.ghafGold.name);
     _sharedPreferences.remove(PrefKeys.sellerSubmittedForm.name);
+    _sharedPreferences.remove(PrefKeys.individualSellerSubmittedForm.name);
     _sharedPreferences.remove(PrefKeys.fcmToken.name);
     AppSharedData.currentUser = null;
   }

@@ -126,7 +126,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisExtent: 300,
+                              mainAxisExtent: AppSize.s300,
                             ),
                             shrinkWrap: true,
                             itemCount: controller.products.length,

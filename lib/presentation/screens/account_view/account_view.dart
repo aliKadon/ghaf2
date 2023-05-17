@@ -590,46 +590,47 @@ class _AccountViewState extends State<AccountView> {
                       ),
                     ],
                   ),
+
                 ),
 
-                // Container(
-                //   width: MediaQuery.of(context).size.width * 1,
-                //   height: MediaQuery.of(context).size.height * 0.2,
-                //   child: Center(
-                //     child: Container(
-                //       padding: EdgeInsets.only(top: 30),
-                //       child: GestureDetector(
-                //           onTap: () {
-                //             // Navigator.push(
-                //             //   context,
-                //             //   MaterialPageRoute(
-                //             //       builder: (builder) => AboutAppView()),
-                //             // );
-                //             _accountViewGetXController.logout(context: context);
-                //           },
-                //           child: Column(
-                //             children: [
-                //               Icon(
-                //                 Icons.logout,
-                //                 color: ColorManager.primary,
-                //                 size: 35,
-                //               ),
-                //               SizedBox(
-                //                 width: AppSize.s8,
-                //               ),
-                //               Text(
-                //                 // AppLocalizations.of(context)!.language,
-                //                 '${AppLocalizations.of(context)!.logout}',
-                //                 style: getRegularStyle(
-                //                   color: ColorManager.red,
-                //                   fontSize: FontSize.s20,
-                //                 ),
-                //               ),
-                //             ],
-                //           )),
-                //     ),
-                //   ),
-                // ),
+                AppSharedData.currentUser == null ? Container() : Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 30),
+                      child: GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (builder) => AboutAppView()),
+                            // );
+                            _accountViewGetXController.logout(context: context);
+                          },
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.logout,
+                                color: ColorManager.primary,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                width: AppSize.s8,
+                              ),
+                              Text(
+                                // AppLocalizations.of(context)!.language,
+                                '${AppLocalizations.of(context)!.logout}',
+                                style: getRegularStyle(
+                                  color: ColorManager.red,
+                                  fontSize: FontSize.s20,
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

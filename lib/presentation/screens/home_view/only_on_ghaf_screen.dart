@@ -52,7 +52,9 @@ class _OnlyOnGhafScreenState extends State<OnlyOnGhafScreen> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar'
+                            ? IconsAssets.arrow2
+                            : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -76,13 +78,16 @@ class _OnlyOnGhafScreenState extends State<OnlyOnGhafScreen> {
             ),
             GetBuilder<HomeViewGetXController>(
               builder: (controller) => controller.onlyOnghaf.length == 0
-                  ? Center(
-                      child: Text(
-                          AppLocalizations.of(context)!.no_product_found,
-                          style: TextStyle(
-                              color: ColorManager.primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s18)),
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: Center(
+                        child: Text(
+                            AppLocalizations.of(context)!.no_product_found,
+                            style: TextStyle(
+                                color: ColorManager.primary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: FontSize.s18)),
+                      ),
                     )
                   : GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -94,15 +99,17 @@ class _OnlyOnGhafScreenState extends State<OnlyOnGhafScreen> {
                         return Builder(
                           builder: (context) {
                             Get.put<Product>(
-                              _homeViewGetXController
-                                  .products[index],tag:
-                            '${_homeViewGetXController.products[index].id}onlyOnGhaf',);
+                              _homeViewGetXController.products[index],
+                              tag:
+                                  '${_homeViewGetXController.products[index].id}onlyOnGhaf',
+                            );
                             return ProductItemNew(
-                               tag: '${_homeViewGetXController.products[index].id}onlyOnGhaf',
+                                tag:
+                                    '${_homeViewGetXController.products[index].id}onlyOnGhaf',
                                 image: _homeViewGetXController
                                     .onlyOnghaf[index].productImages![0],
-                                name:
-                                _homeViewGetXController.onlyOnghaf[index].name!,
+                                name: _homeViewGetXController
+                                    .onlyOnghaf[index].name!,
                                 stars: _homeViewGetXController
                                     .onlyOnghaf[index].stars!,
                                 price: _homeViewGetXController
@@ -110,8 +117,8 @@ class _OnlyOnGhafScreenState extends State<OnlyOnGhafScreen> {
                                 index: index,
                                 isFavorite: _homeViewGetXController
                                     .onlyOnghaf[index].isFavorite!,
-                                idProduct:
-                                _homeViewGetXController.onlyOnghaf[index].id!);
+                                idProduct: _homeViewGetXController
+                                    .onlyOnghaf[index].id!);
                           },
                         );
                       },

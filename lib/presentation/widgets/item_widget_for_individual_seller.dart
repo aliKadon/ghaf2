@@ -32,7 +32,6 @@ class ItemWidgetForIndividualSeller extends StatefulWidget {
 
 class _ItemWidgetForIndividualSellerState
     extends State<ItemWidgetForIndividualSeller> {
-
   //controller
   late final CreateLinkGetxController _createLinkGetxController =
       Get.find<CreateLinkGetxController>();
@@ -41,9 +40,9 @@ class _ItemWidgetForIndividualSellerState
   num count = 1;
   bool isChecked = false;
 
-  Map<String,dynamic> itemForLink = {
+  Map<String, dynamic> itemForLink = {
     'prodId': '',
-    'Quantity' : 1,
+    'Quantity': 1,
   };
 
   @override
@@ -61,25 +60,34 @@ class _ItemWidgetForIndividualSellerState
                 widget.image == null
                     ? Container(
                         height: AppSize.s110,
-                        width: AppSize.s110,
+                        width: AppSize.s60,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(ImageAssets.logo2),
                                 fit: BoxFit.scaleDown),
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                       )
-                    : Expanded(
-                  flex: 2,
-                      child: Container(
-                          height: AppSize.s110,
-                          width: AppSize.s84,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(widget.image!),
-                                  fit: BoxFit.scaleDown),
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                    : Container(
+                        height: AppSize.s123,
+                        width: AppSize.s84,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: ClipRRect(
+                          child: Image.network(
+                            widget.image!,
+                            fit: BoxFit.scaleDown,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                ImageAssets.logo2,
+                                fit: BoxFit.scaleDown,
+                              );
+                            },
+                          ),
                         ),
-                    ),
+                      ),
                 SizedBox(
                   width: AppSize.s22,
                 ),
@@ -104,17 +112,18 @@ class _ItemWidgetForIndividualSellerState
                             print('==================check box');
                             print(isChecked);
                             setState(() {
-
                               isChecked = !isChecked;
                             });
-                            if(isChecked) {
-                              itemForLink.update('prodId', (value) => widget.idProduct);
+                            if (isChecked) {
+                              itemForLink.update(
+                                  'prodId', (value) => widget.idProduct);
                               itemForLink.update('Quantity', (value) => count);
 
-
-                              _createLinkGetxController.itemForLinkList.add(itemForLink);
-                            }else {
-                              _createLinkGetxController.itemForLinkList.remove(itemForLink);
+                              _createLinkGetxController.itemForLinkList
+                                  .add(itemForLink);
+                            } else {
+                              _createLinkGetxController.itemForLinkList
+                                  .remove(itemForLink);
                             }
                             print('==================productId');
                             print(_createLinkGetxController.itemForLinkList);
@@ -134,7 +143,7 @@ class _ItemWidgetForIndividualSellerState
                 ),
                 // Spacer(),
                 Padding(
-                  padding:  EdgeInsets.only(right: AppSize.s14),
+                  padding: EdgeInsets.only(right: AppSize.s14),
                   child: Column(
                     children: [
                       GestureDetector(

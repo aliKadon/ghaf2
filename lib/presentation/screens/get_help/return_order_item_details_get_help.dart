@@ -308,7 +308,7 @@ class _ReturnOrderItemDetailsGetHelpState
                           orderId: widget.orderId!,
                           productId: widget.productId!,
                           comment: returnType[selected] ,
-                          ticketImage: listImage[0]);
+                          ticketImage: listImage.length == 0 ? null : listImage[0]);
                     },
                     child: Text(AppLocalizations.of(context)!.confirm)),
               )

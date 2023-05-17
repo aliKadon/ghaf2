@@ -73,8 +73,8 @@ class _FreeDeliveryProductWidgetState extends State<FreeDeliveryProductWidget>
                                         borderRadius:
                                         BorderRadius.circular(AppSize.s15),
                                         child: Image.asset(
-                                      ImageAssets.pizza,
-                                      fit: BoxFit.cover,
+                                      ImageAssets.logo2,
+                                      fit: BoxFit.scaleDown,
                                     ));
                                   },
                                 ),

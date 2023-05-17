@@ -22,7 +22,7 @@ class ItemsList extends StatefulWidget {
 class _ItemsListState extends State<ItemsList> {
   //controller
   late final CreateLinkGetxController _createLinkGetxController =
-  Get.find<CreateLinkGetxController>();
+  Get.put<CreateLinkGetxController>(CreateLinkGetxController());
 
   @override
   void initState() {

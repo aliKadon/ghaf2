@@ -72,6 +72,10 @@ class LoginViewGetXController extends GetxController with Helpers {
         // print(AppSharedData.currentUser!.role);
         // success.
         Navigator.pop(context);
+        print('======================current user');
+        print(AppSharedData.currentUser?.role);
+        print(AppSharedData.currentUser!.individualSellerSubmittedForm);
+        print(AppSharedData.currentUser!.active);
         if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
           if (AppSharedData.currentUser!.active!) {
             Navigator.pushReplacementNamed(context, Routes.mainRoute);
@@ -120,7 +124,11 @@ class LoginViewGetXController extends GetxController with Helpers {
       } else if (loginApiResponse.status >= 400) {
         Navigator.pop(context);
         _customDialogProgress(
-            loginApiResponse.message, loginApiResponse.status);
+            loginApiResponse.message, loginApiResponse.status,context);
+      }else {
+        Navigator.pop(context);
+        _customDialogProgress(
+            loginApiResponse.message, loginApiResponse.status,context);
       }
 
       // else {
@@ -152,7 +160,7 @@ class LoginViewGetXController extends GetxController with Helpers {
     }
   }
 
-  void _customDialogProgress(String message, int status) async {
+  void _customDialogProgress(String message, int status,BuildContext context) async {
     showDialog(
         context: context,
         builder: (context) {

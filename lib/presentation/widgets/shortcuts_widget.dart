@@ -56,8 +56,8 @@ class ShortcutsWidget extends StatelessWidget with Helpers{
         }
       },
       child: Container(
-        width: AppSize.s92,
-        // height: AppSize.s110,
+        width: AppSize.s110,
+        // height: AppSize.s222,
         padding: EdgeInsetsDirectional.only(
           end: AppSize.s8,
         ),
@@ -74,7 +74,7 @@ class ShortcutsWidget extends StatelessWidget with Helpers{
                     .of(context)
                     .size
                     .height *
-                    0.135,
+                    0.14,
                 width: AppSize.s92,
                 padding: EdgeInsets.all(
                     AppPadding.p12),

@@ -19,9 +19,6 @@ import '../../account_view/account_view_getx_controller.dart';
 import '../../main_view.dart';
 
 class SellerStatus extends StatefulWidget {
-  final String message;
-
-  SellerStatus(this.message);
 
   @override
   State<SellerStatus> createState() => _SellerStatusState();
@@ -95,6 +92,7 @@ class _SellerStatusState extends State<SellerStatus> {
 
                   child: Text(
                     sellerStatus['submittedFormStatus'],
+                    textAlign: TextAlign.center,
                     style: getSemiBoldStyle(
                       color: ColorManager.primaryDark,
                       fontSize: FontSize.s20,
@@ -118,7 +116,7 @@ class _SellerStatusState extends State<SellerStatus> {
                 ElevatedButton(
                     onPressed: () =>
                         _accountViewGetXController.logout(context: context),
-                    child: Text(AppLocalizations.of(context)!.go_to_login)),
+                    child: Text(AppLocalizations.of(context)!.go_to_home)),
                 SizedBox(
                   height: FontSize.s8,
                 ),

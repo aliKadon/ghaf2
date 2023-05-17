@@ -913,7 +913,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                               height: 6,
                                             ),
                                             Text(
-                                              'Call Shop',
+                                              AppLocalizations.of(context)!.call_shop,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: FontSize.s10,
                                                   fontWeight:
@@ -956,7 +957,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                               height: 5,
                                             ),
                                             Text(
-                                              'Cancel\norder',
+                                              AppLocalizations.of(context)!.cancel_order,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: FontSize.s12,
                                                   fontWeight:
@@ -1002,7 +1004,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                               height: 5,
                                             ),
                                             Text(
-                                              'request\ncall\nback',
+                                              AppLocalizations.of(context)!.request_call_back,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: FontSize.s12,
                                                   fontWeight:
@@ -1058,7 +1061,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                             height: 5,
                                           ),
                                           Text(
-                                            'Report an\nissue',
+                                            AppLocalizations.of(context)!.report_an_issue,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize: FontSize.s10,
                                                 fontWeight:

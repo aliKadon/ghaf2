@@ -4,11 +4,7 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../app/preferences/shared_pref_controller.dart';
-import '../../../app/preferences/shared_pref_controller.dart';
-import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -18,7 +14,8 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class RegisterView extends StatefulWidget {
-  final Map<String,dynamic> role;
+  final Map<String, dynamic> role;
+
   RegisterView({required this.role});
 
   @override
@@ -28,7 +25,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> with Helpers {
   // controller.
   late final RegisterViewGetXController _registerViewGetXController =
-      Get.find<RegisterViewGetXController>();
+  Get.find<RegisterViewGetXController>();
 
   late TextEditingController _nameTextController;
   late TextEditingController _emailTextController;
@@ -54,6 +51,7 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
 
     super.initState();
   }
+
   // dispose.
   @override
   void dispose() {
@@ -65,16 +63,17 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
 
   @override
   Widget build(BuildContext context) {
-    if (SharedPrefController().emailGoogle.isNotEmpty && SharedPrefController().userNameGoogle.isNotEmpty) {
-      _nameTextController.text = SharedPrefController().userNameGoogle;
+    if (SharedPrefController().emailGoogle.isNotEmpty &&
+        SharedPrefController().userNameGoogle.isNotEmpty) {
+      // _nameTextController.text = SharedPrefController().userNameGoogle;
       _emailTextController.text = SharedPrefController().emailGoogle;
-      _firstNameTextController.text = _nameTextController.text.split(' ')[0];
-      _LastNameTextController.text = _nameTextController.text.split(' ')[1];
+      _firstNameTextController.text = SharedPrefController().userNameGoogle.split(' ')[0];
+      _LastNameTextController.text = SharedPrefController().userNameGoogle.split(' ')[1];
     }
 
     return Scaffold(
       body: WillPopScope(
-        onWillPop: () async{
+        onWillPop: () async {
           Navigator.of(context).pop();
           SharedPrefController().emptyGoogleSignIn();
           return false;
@@ -92,7 +91,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                   Text(
                     AppLocalizations.of(context)!.getting_started,
                     style: getSemiBoldStyle(
-                        color: ColorManager.primaryDark, fontSize: FontSize.s24),
+                        color: ColorManager.primaryDark,
+                        fontSize: FontSize.s24),
                   ),
                   SizedBox(
                     height: AppSize.s31,
@@ -134,16 +134,19 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                           textInputType: TextInputType.name,
                           validator: (value) {
                             if (value == null || value.isEmpty)
-                              return AppLocalizations.of(context)!.first_name_is_required;
+                              return AppLocalizations.of(context)!
+                                  .first_name_is_required;
                             return null;
                           },
                           onSaved: (value) {
-                            if( value == null) {
-                              _registerViewGetXController.firstName = _firstNameTextController.text;
-                            }else {
+                            if (value == null) {
+                              _registerViewGetXController.firstName =
+                                  _firstNameTextController.text;
+                            } else {
                               _registerViewGetXController.firstName = value;
                             }
-                            print('=================================first name');
+                            print(
+                                '=================================first name');
                             print(_registerViewGetXController.firstName);
                           },
                         ),
@@ -155,13 +158,15 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                           textInputType: TextInputType.name,
                           validator: (value) {
                             if (value == null || value.isEmpty)
-                              return AppLocalizations.of(context)!.last_name_is_required;
+                              return AppLocalizations.of(context)!
+                                  .last_name_is_required;
                             return null;
                           },
                           onSaved: (value) {
-                            if( value == null) {
-                              _registerViewGetXController.lastName = _LastNameTextController.text;
-                            }else {
+                            if (value == null) {
+                              _registerViewGetXController.lastName =
+                                  _LastNameTextController.text;
+                            } else {
                               _registerViewGetXController.lastName = value;
                             }
                             print('=================================last name');
@@ -171,41 +176,44 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                       ),
                     ],
                   ),
-                   AppTextField(
-                     textController: _nameTextController,
-                          hint: AppLocalizations.of(context)!.user_name,
-                          // hint: SharedPrefController().userNameGoogle,
-                          validator: (value) {
-                            if (value == null || value.isEmpty)
-                              return AppLocalizations.of(context)!.userName_or_Email_is_required;
-                            return null;
-                          },
-                          onSaved: (value) {
-                            print('=========================my value');
-                            print(value);
-                            if( value == null) {
-                              _registerViewGetXController.userName = SharedPrefController().emailGoogle;
-                            }else {
-                              _registerViewGetXController.userName = value;
-                            }
-                            print('=================================userName');
-                            print(_registerViewGetXController.userName);
-
-                          },
-                        ),
+                  AppTextField(
+                    textController: _nameTextController,
+                    hint: AppLocalizations.of(context)!.user_name,
+                    // hint: SharedPrefController().userNameGoogle,
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return AppLocalizations.of(context)!
+                            .userName_or_Email_is_required;
+                      return null;
+                    },
+                    onSaved: (value) {
+                      print('=========================my value');
+                      print(value);
+                      if (value == null) {
+                        _registerViewGetXController.userName =
+                            SharedPrefController().emailGoogle;
+                      } else {
+                        _registerViewGetXController.userName = value;
+                      }
+                      print('=================================userName');
+                      print(_registerViewGetXController.userName);
+                    },
+                  ),
                   AppTextField(
                     textController: _emailTextController,
                     hint: AppLocalizations.of(context)!.email_address,
                     textInputType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return AppLocalizations.of(context)!.email_address_is_required;
+                        return AppLocalizations.of(context)!
+                            .email_address_is_required;
                       return null;
                     },
                     onSaved: (value) {
-                      if( value == null) {
-                        _registerViewGetXController.email = SharedPrefController().emailGoogle;
-                      }else {
+                      if (value == null) {
+                        _registerViewGetXController.email =
+                            SharedPrefController().emailGoogle;
+                      } else {
                         _registerViewGetXController.email = value;
                       }
                       print('=================================email');
@@ -218,7 +226,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return AppLocalizations.of(context)!.password_is_required;
+                        return AppLocalizations.of(context)!
+                            .password_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -231,7 +240,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return AppLocalizations.of(context)!.confirmed_password_is_required;
+                        return AppLocalizations.of(context)!
+                            .confirmed_password_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -257,7 +267,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                         ),
                         filled: false,
                         contentPadding: EdgeInsets.symmetric(
-                            vertical: AppPadding.p18, horizontal: AppPadding.p4),
+                            vertical: AppPadding.p18, horizontal: AppPadding
+                            .p4),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(AppRadius.r10),
                           borderSide: BorderSide(
@@ -279,12 +290,16 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                               SizedBox(
                                 width: AppSize.s15,
                               ),
-                              Image.asset(
-                                ImageAssets.uaeFlag,
-                                fit: BoxFit.fill,
-                                height: AppSize.s34,
-                                width: AppSize.s34,
-                              ),
+                              Text('+971', style: TextStyle(
+                                  fontSize: FontSize.s14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black)),
+                              // Image.asset(
+                              //   ImageAssets.uaeFlag,
+                              //   fit: BoxFit.fill,
+                              //   height: AppSize.s34,
+                              //   width: AppSize.s34,
+                              // ),
                               SizedBox(
                                 width: AppSize.s15,
                               ),
@@ -302,11 +317,26 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty)
-                          return AppLocalizations.of(context)!.phone_number_is_required;
+                          return AppLocalizations.of(context)!
+                              .phone_number_is_required;
+                        else if (value[0] == '0' && (value.length > 10 || value.length < 10)){
+                          return AppLocalizations.of(context)!.wrong_phone_number;
+                        }
+
+                        else if (value[0] != '0'  && (value.length < 9 || value.length > 9)){
+
+                          return AppLocalizations.of(context)!.wrong_phone_number;
+                        }
+
                         return null;
                       },
                       onSaved: (value) {
-                        _registerViewGetXController.telephone = value;
+                        if(value![0] == '0') {
+                          var number = value.substring(1,value.length);
+                          _registerViewGetXController.telephone = '00971${number}';
+                        }else {
+                          _registerViewGetXController.telephone = '00971${value}';
+                        }
                       },
                     ),
                   ),
@@ -334,7 +364,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     textInputType: TextInputType.datetime,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return AppLocalizations.of(context)!.date_of_barth_is_required;
+                        return AppLocalizations.of(context)!
+                            .date_of_barth_is_required;
                       return null;
                     },
                     onSaved: (value) {
@@ -390,7 +421,8 @@ class _RegisterViewState extends State<RegisterView> with Helpers {
                     onTap: () {
                       print('=====================role');
                       print(widget.role['role']);
-                      Navigator.pushReplacementNamed(context, Routes.loginRoute,arguments: widget.role['role']);
+                      Navigator.pushReplacementNamed(context, Routes.loginRoute,
+                          arguments: widget.role['role']);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

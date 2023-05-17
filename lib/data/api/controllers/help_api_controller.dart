@@ -27,7 +27,7 @@ class HelpApiController with ApiHelper {
       {required String orderId,
       required String productId,
       required String comment,
-      required String ticketImage}) async {
+      String? ticketImage}) async {
     var url = Uri.parse('${Constants.baseUrl}/GetHelp/return-item-ticket');
     var response = await http.post(url,
         headers: headers,

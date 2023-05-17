@@ -90,7 +90,7 @@ class _OffersScreenNewState extends State<OffersScreenNew> {
                     ),
                     controller.offers.length == 0
                         ? Container(
-                            height: MediaQuery.of(context).size.height * 0.9,
+                            height: MediaQuery.of(context).size.height * 0.8,
                             child: Center(
                               child: Text(
                                   AppLocalizations.of(context)!.no_offer_found,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ghaf_application/app/constants.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
+
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -8,7 +10,6 @@ import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SharaYourOpinionView extends StatefulWidget {
   const SharaYourOpinionView({Key? key}) : super(key: key);
@@ -19,16 +20,19 @@ class SharaYourOpinionView extends StatefulWidget {
 
 class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
   late TextEditingController _notesTextController;
+
   @override
   void initState() {
     super.initState();
     _notesTextController = TextEditingController();
   }
+
   @override
   void dispose() {
     _notesTextController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +45,14 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: ()=>Navigator.pop(context),
+                    onTap: () => Navigator.pop(context),
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar'
+                            ? IconsAssets.arrow2
+                            : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -96,31 +102,41 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
                     height: AppSize.s33,
                     width: AppSize.s35,
                   ),
-                  SizedBox(width: AppSize.s18,),
+                  SizedBox(
+                    width: AppSize.s18,
+                  ),
                   Image.asset(
                     IconsAssets.start,
                     height: AppSize.s33,
                     width: AppSize.s35,
                   ),
-                  SizedBox(width: AppSize.s18,),
+                  SizedBox(
+                    width: AppSize.s18,
+                  ),
                   Image.asset(
                     IconsAssets.start,
                     height: AppSize.s33,
                     width: AppSize.s35,
                   ),
-                  SizedBox(width: AppSize.s18,),
+                  SizedBox(
+                    width: AppSize.s18,
+                  ),
                   Image.asset(
                     IconsAssets.start,
                     height: AppSize.s33,
                     width: AppSize.s35,
                   ),
-                  SizedBox(width: AppSize.s18,),
+                  SizedBox(
+                    width: AppSize.s18,
+                  ),
                   Image.asset(
                     IconsAssets.start,
                     height: AppSize.s33,
                     width: AppSize.s35,
                   ),
-                  SizedBox(width: AppSize.s18,),
+                  SizedBox(
+                    width: AppSize.s18,
+                  ),
                 ],
               ),
               SizedBox(
@@ -139,7 +155,13 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
               SizedBox(
                 height: AppSize.s18,
               ),
-              AppTextField(textController: _notesTextController, hint: '',lines: Constants.orderDetailsLines,),
+              Visibility(
+                visible: false,
+                  child: AppTextField(
+                textController: _notesTextController,
+                hint: '',
+                lines: Constants.orderDetailsLines,
+              )),
               SizedBox(
                 height: AppSize.s18,
               ),
@@ -150,7 +172,8 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
                 width: double.infinity,
                 height: AppSize.s55,
                 child: ElevatedButton(
-                  onPressed: () =>Navigator.pushReplacementNamed(context, Routes.registerRoute),
+                  onPressed: () => Navigator.pushReplacementNamed(
+                      context, Routes.registerRoute),
                   child: Text(
                     AppLocalizations.of(context)!.send_note,
                     style: getSemiBoldStyle(
@@ -164,5 +187,4 @@ class _SharaYourOpinionViewState extends State<SharaYourOpinionView> {
       ),
     );
   }
-
 }

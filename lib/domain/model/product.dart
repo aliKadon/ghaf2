@@ -28,26 +28,10 @@ class Product extends GetxController with Helpers {
     required BuildContext context,
     bool sendRequest = true,
   }) {
-    _homeViewGetXController.getProducts(context: context);
-    // _homeViewGetXController.getMostPopularProduct();
-    // _offersScreenGetXController.getOffers(context: context);
-
-    // print('====================is fave');
-    // print(isFavorite);
-    // if(isFavorite == null){
-    //   isFavorite = isFave;
-    // }
     isFavorite = !isFavorite!;
     print('====================is fave1');
     print(isFavorite);
-    //
-    // isFav = !isFav!;
-
-    //
-    // isFavorite = !isFavorite!;
-
-    // update(['isFavorite']);
-
+    _homeViewGetXController.getProducts(context: context);
     update();
     if (sendRequest) _toggleFavoriteRequest(context: context, id: id);
   }

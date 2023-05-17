@@ -94,6 +94,7 @@ class CreateLinkGetxController extends GetxController with Helpers {
       //   showSnackBar(context, message: apiResponse.message);
       // }
     } catch (e) {
+      Navigator.of(context).pop();
       showSnackBar(context, message: e.toString(), error: true);
     }
   }

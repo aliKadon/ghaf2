@@ -10,11 +10,11 @@ import '../../../domain/model/customer_notification.dart';
 class NotificationApiController with ApiHelper {
   Future<List<CustomerNotification>> getCustomerNotification() async {
     var url = Uri.parse(
-        '${Constants.baseUrl}/Auth/get-customer-notifications?Type&pageIndex&pageRows');
+        '${Constants.baseUrl}/Auth/get-customer-notifications');
     var response = await http.get(url, headers: headers);
 
-    print('=============================notifications');
-    print(jsonDecode(response.body));
+    // print('=============================notifications');
+    // print(jsonDecode(response.body));
 
 
     if (response.statusCode == 200) {

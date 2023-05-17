@@ -62,11 +62,14 @@ class NotificationWidget extends StatelessWidget {
                 SizedBox(
                   width: AppSizeWidth.s14,
                 ),
-                Text(
-                  '${header}',
-                  style: getSemiBoldStyle(
-                    color: ColorManager.primaryDark,
-                    fontSize: FontSize.s16,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    '${header}',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.primaryDark,
+                      fontSize: FontSize.s16,
+                    ),
                   ),
                 ),
                 Spacer(),
@@ -88,11 +91,14 @@ class NotificationWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  '${body}',
-                  style: getRegularStyle(
-                    color: ColorManager.grey,
-                    fontSize: FontSize.s14,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    '${body}',
+                    style: getRegularStyle(
+                      color: ColorManager.grey,
+                      fontSize: FontSize.s14,
+                    ),
                   ),
                 ),
               ],

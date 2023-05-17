@@ -316,7 +316,7 @@ class _SearchScreenState extends State<SearchScreen> with Helpers {
                               '${controller.products[index].id}',
                         );
                         return Container(
-                          width: AppSizeWidth.s206,
+                          width: AppSizeWidth.s192,
                           child: ProductItemNew(
                               tag:
                                   '${controller.products[index].id}',

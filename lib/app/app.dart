@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../presentation/resources/routes_manager.dart';
 import '../presentation/resources/theme_manager.dart';
+import '../presentation/screens/internet_checking/controller/internet_checker.dart';
 import 'L10n.dart';
 import 'get/language_getx_controller.dart';
 
@@ -32,6 +33,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final LanguageGetXController languageGetXController =
   Get.put<LanguageGetXController>(LanguageGetXController());
+  late final InternetCheckerGetxController _internetCheckerGetxController =
+  Get.put(InternetCheckerGetxController());
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -39,6 +42,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
+    _internetCheckerGetxController.checkInternetConnectivity();
+    _internetCheckerGetxController.startMonitoringConnectivity(navigatorKey: navigatorKey);
+
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) {
       if (message != null && message.data["screen"] != null) {
         var route = message.data["screen"];
@@ -46,6 +52,7 @@ class _MyAppState extends State<MyApp> {
       }
     });
     super.initState();
+
   }
 
 

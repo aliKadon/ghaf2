@@ -37,7 +37,7 @@ class HelpGetxController extends GetxController with Helpers {
     required String orderId,
     required String productId,
     required String comment,
-    required String ticketImage}) async {
+    String? ticketImage}) async {
     try {
       showLoadingDialog(context: context, title: 'loading...');
       apiResponse = await _helpApiController.returnItemTicket(

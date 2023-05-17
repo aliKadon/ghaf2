@@ -88,7 +88,7 @@ class _RedeemHistoryScreenState extends State<RedeemHistoryScreen> {
                         height: MediaQuery.of(context).size.height * 0.9,
                         child: Center(
                           child: Text(
-                              AppLocalizations.of(context)!.no_product_found,
+                              AppLocalizations.of(context)!.no_items_found,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: FontSize.s16,

@@ -83,4 +83,22 @@ class IndividualSellerApiController with ApiHelper {
     }
     return [];
   }
+
+  Future<ApiResponse> getSellerDetails() async {
+    var url =
+    Uri.parse('${Constants.baseUrl}/Auth/get-user-details');
+    var response = await http.post(url,
+        headers: headers,);
+    print('=========================seller details');
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+      }
+    }
+    return failedResponse;
+  }
 }

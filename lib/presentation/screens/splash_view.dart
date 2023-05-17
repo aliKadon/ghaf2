@@ -5,18 +5,29 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/screens/internet_checking/no_internet_screen.dart';
 
 import 'package:ghaf_application/presentation/screens/main_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/payment_link_subscription_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/controller/seller_getx_controller.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:ghaf_application/services/local_notifications_service.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+import '../../app/constants.dart';
+import '../../app/utils/app_shared_data.dart';
+import '../../data/api/controllers/auth_api_controller.dart';
+import '../../domain/model/api_response.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
+import 'internet_checking/controller/internet_checker.dart';
 
 
 class SplashView extends StatefulWidget {
@@ -33,6 +44,15 @@ class _SplashViewState extends State<SplashView> {
   // final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
   // String string = '';
 
+  late final InternetCheckerGetxController _internetCheckerGetxController =
+  Get.put(InternetCheckerGetxController());
+  late final SellerGetxController _sellerGetxController =
+  Get.put(SellerGetxController());
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
+
 
   Timer? _timer;
 
@@ -46,6 +66,7 @@ class _SplashViewState extends State<SplashView> {
     await Firebase.initializeApp();
     await FirebaseMessagingService.instance.init(context: context);
     await LocalNotificationsService.instance.init();
+
     //
     SharedPrefController().getUser();
     // Navigator.of(context).pushReplacement(
@@ -57,14 +78,68 @@ class _SplashViewState extends State<SplashView> {
     print(result);
     if(result == true) {
       print('YAY! Free cute dog pics!');
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => MainView(),));
+
+      // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainView(),));
+      print('======================current user');
+      print(AppSharedData.currentUser?.role);
+      print(AppSharedData.currentUser?.individualSellerSubmittedForm);
+      print(AppSharedData.currentUser?.active);
+      print(AppSharedData.currentUser?.sellerSubmittedForm);
+    if (AppSharedData.currentUser == null) {
+      Navigator.pushReplacementNamed(context, Routes.mainRoute);
+    }else
+      if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
+        if (AppSharedData.currentUser!.active!) {
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
+        } else {
+          // Navigator.pushReplacementNamed(
+          //     context, Routes.subscribeFromHomePage);
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
+        }
+      } else if (AppSharedData.currentUser!.role ==
+          Constants.roleRegisterSeller) {
+        if (AppSharedData.currentUser!.sellerSubmittedForm! == false) {
+          Navigator.of(context)
+              .pushNamed(Routes.submitForm, arguments: {'': 20.222});
+        } else {
+          // _sellerGetxController.getSellerDetails(context: context);
+          Navigator.pushReplacementNamed(context, Routes.sellerStatus,)
+              .then((value) => ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('success'))));
+        }
+      } else if (AppSharedData.currentUser!.role ==
+          Constants.roleRegisterIndividual) {
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => AddItem2SellerView(true),));
+        if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+            false) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => RegisterPaymentLinkSellerView(),
+          ));
+        } else if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+            true &&
+            AppSharedData.currentUser!.active == false) {
+          print('========================you need to subscribe');
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => PaymentLinkSubscriptionSellerView(),
+          ));
+        } else if (AppSharedData.currentUser!.individualSellerSubmittedForm ==
+            true &&
+            AppSharedData.currentUser!.active == true) {
+          print('========================add item');
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => ProductsWithOutDetailsSellerView(),
+          ));
+        }
+      }
     } else {
       print('No internet :( Reason:');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => NoInternetScreen(),));
       // print(InternetConnectionChecker().lastTryResults);
     }
+    _internetCheckerGetxController.startMonitoringConnectivity(navigatorKey: navigatorKey);
+
 
     // checking the internet connection
     // _networkConnectivity.myStream.listen((source) {
@@ -145,6 +220,7 @@ class _SplashViewState extends State<SplashView> {
 
     super.initState();
     // _networkConnectivity.initialise();
+
     _assetsAudioPlayer.open(Audio('assets/images/sound.mp3'));
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);

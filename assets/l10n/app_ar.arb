@@ -6,6 +6,8 @@
   "order_statistics" : "إحصائيات الطلب",
   "pending" : "انتظار",
   "completed" : "المكتملة",
+  "no_items_found" : "لم يتم العثور على عناصر",
+
   "pending_order" : "الطلبات قيد الانتظار",
   "pdf_attach_success" : "تم رفع ملف pdf بنجاح",
   "shop_address_is_required" : "عنوان المتجر خانة مطلوبة",
@@ -38,7 +40,11 @@
   "try_again" : "حاول مجددا",
   "enter_min_price" : "أدخل سعر الحد الأدنى",
   "enter_max_price" : "أدخل السعر الأقصى",
-
+  "call_shop" : "اتصل بالمتجر",
+  "cancel_order" : "إلغاء الطلب",
+  "request_call_back" : "طلب معاودة الاتصال",
+  "report_an_issue" : "الإبلاغ عن مشكلة",
+  "go_to_home" : "اذهب إلى الرئيسية",
 
 
 
@@ -786,7 +792,9 @@
   "last_text": "صالح",
   "are_you_sure": "هل أنت متأكد من معلوماتك؟",
   "are_you_sure_subscribe": "هل أنت متأكد من الإشتراك ؟",
-  "sell_with_us": "تاجر منا",
+  "sell_with_us": "تاجر معنا",
+  "wrong_phone_number" : "رقم هاتف خاطئ",
+
   "how_it_work": "آلية عملها",
   "points_spent2": "النقاط المنفقة",
   "recommended" : "الموصى بها",

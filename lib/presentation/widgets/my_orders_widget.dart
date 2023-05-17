@@ -59,7 +59,7 @@ class MyOrdersWidget extends StatelessWidget {
                               fontSize: FontSize.s16)),
                     ),
                     SizedBox(
-                      width: AppSize.s60,
+                      width: AppSizeWidth.s30,
                     ),
                     Container(
                       width: AppSize.s82,
@@ -103,7 +103,11 @@ class MyOrdersWidget extends StatelessWidget {
                         color: Colors.green,
                         fontWeight: FontWeight.w600,
                         fontSize: FontSize.s16))
-                    : Container(),
+                    : Text(AppLocalizations.of(context)!.pending,
+                    style: TextStyle(
+                        color: ColorManager.primary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: FontSize.s16)),
               ],
             )
           ],

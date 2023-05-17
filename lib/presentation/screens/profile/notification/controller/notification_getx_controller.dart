@@ -13,6 +13,7 @@ class NotificationGetxController extends GetxController with Helpers {
       NotificationApiController();
 
   void getCustomerNotification({required BuildContext context}) async {
+
     try {
       customerNotification =
           await _notificationApiController.getCustomerNotification();

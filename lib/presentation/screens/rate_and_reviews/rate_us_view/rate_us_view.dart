@@ -163,17 +163,20 @@ class _RateUsViewState extends State<RateUsView> {
                   height: 10,
                 ),
 
-                Container(
-                  height: AppSize.s123,
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                Visibility(
+                  visible: false,
+                  child: Container(
+                    height: AppSize.s123,
+                    child: TextFormField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
+                        label: Text('${_rateUsViewGetXController.description}'),
+                        labelStyle: TextStyle(fontSize: AppSize.s26),
                       ),
-                      contentPadding: EdgeInsets.only(bottom: AppSize.s80, left: AppSize.s7),
-                      label: Text('${_rateUsViewGetXController.description}'),
-                      labelStyle: TextStyle(fontSize: AppSize.s26),
                     ),
                   ),
                 ),
