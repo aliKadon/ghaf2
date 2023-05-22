@@ -140,13 +140,16 @@ class HomeViewGetXController extends GetxController with Helpers {
   }
 
   void getFreeDeliveryProduct({required BuildContext context}) async {
-    try {
-      freeDeliveryProduct = await _storeApiController.getFreeDeliveryProducts();
-      isFilterProductLoading = false;
-      update();
-    } catch (e) {
-      showSnackBar(context, message: e.toString(), error: true);
-    }
+    freeDeliveryProduct = await _storeApiController.getFreeDeliveryProducts();
+    isFilterProductLoading = false;
+    update();
+    // try {
+    //   freeDeliveryProduct = await _storeApiController.getFreeDeliveryProducts();
+    //   isFilterProductLoading = false;
+    //   update();
+    // } catch (e) {
+    //   showSnackBar(context, message: e.toString(), error: true);
+    // }
   }
 
   Future<Position> determinePosition() async {

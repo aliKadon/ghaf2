@@ -271,7 +271,7 @@ class _StoreSellerViewState extends State<StoreSellerView> with Helpers {
                                     // _accountViewGetXController.logout(context: context);
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => Profile(),
+                                      builder: (context) => ProfileSeller(),
                                     ));
                                   },
                                   child: Image.asset(

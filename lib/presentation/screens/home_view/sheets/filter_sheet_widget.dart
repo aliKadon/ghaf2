@@ -55,9 +55,9 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> with Helpers {
     'New arrival',
     'Free delivery',
     'Pick up order',
-    'Deliver to car window',
+    'car window',
     'Fast Delivery',
-    'recommended'
+    'Popular'
   ];
 
   var isSelected = false;
@@ -137,7 +137,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> with Helpers {
                                   setState(() {
                                     selected = index;
 
-                                    if (flitterType[index] == 'recommended') {
+                                    if (flitterType[index] == 'Popular') {
                                       stars = 'stars';
                                       type = 'Name';
                                       did = '';
@@ -157,7 +157,7 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> with Helpers {
                                       stars = 'Name';
                                       typePrice = true;
                                     } else if (flitterType[index] ==
-                                        'Deliver to car window') {
+                                        'car window') {
                                       type = 'Name';
                                       stars = 'Name';
                                       did = 'bbcb7d68-8dc4-46ae-014a-08dafd69d37b';

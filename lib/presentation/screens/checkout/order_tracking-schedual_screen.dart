@@ -13,7 +13,7 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/get_help/controller/help_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/get_help/get_help_screen.dart';
+import 'package:ghaf_application/presentation/screens/get_help/report_issue_with_order_Screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,20 +26,21 @@ import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
-class OrderTrackingScreen extends StatefulWidget {
+class OrderTrackingSchedualScreen extends StatefulWidget {
   final String orderId;
   final Address source;
   final Address destination;
 
-  OrderTrackingScreen(
+  OrderTrackingSchedualScreen(
       {required this.orderId, required this.source, required this.destination});
 
   @override
-  State<OrderTrackingScreen> createState() => _OrderTrackingScreenState();
+  State<OrderTrackingSchedualScreen> createState() =>
+      _OrderTrackingSchedualScreenState();
 }
 
-class _OrderTrackingScreenState extends State<OrderTrackingScreen>
-    with Helpers {
+class _OrderTrackingSchedualScreenState
+    extends State<OrderTrackingSchedualScreen> with Helpers {
   //controller
   late final CheckOutGetxController _checkOutGetxController =
       Get.put(CheckOutGetxController());
@@ -47,143 +48,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
       Get.put(AddressesViewGetXController(context: context));
   final HelpGetxController _helpGetxController = Get.put(HelpGetxController());
 
-  Color color1 = ColorManager.primary;
-  Color color2 = Colors.green;
-  Color color3 = Colors.green;
-  Color color4 = Colors.green;
-
-  Color cIcon1 = Colors.green;
-  Color cIcon2 = Colors.green;
-  Color cIcon3 = Colors.green;
-  Color cIcon4 = Colors.green;
-
   var textSetuaition = '';
 
   var isLoadingColor = true;
-
-  void getColorBackground(String? statusName) {
-    if (statusName == 'Intialized' ||
-        statusName == 'NotAssignedToEmployee' ||
-        statusName == 'UnPaid' ||
-        statusName == 'Paid') {
-      color1 = ColorManager.primary;
-      color2 = ColorManager.white;
-      color3 = ColorManager.white;
-      color4 = ColorManager.white;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'AssignedToEmployee' ||
-        statusName == 'Received' ||
-        statusName == 'NotAssignedToDriver') {
-      color2 = ColorManager.primary;
-      color1 = ColorManager.white;
-      color3 = ColorManager.white;
-      color4 = ColorManager.white;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'ReadyForDriver' ||
-        statusName == 'AssignedToDriver' ||
-        statusName == 'OnWay') {
-      color3 = ColorManager.primary;
-      color2 = ColorManager.white;
-      color1 = ColorManager.white;
-      color4 = ColorManager.white;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'Done') {
-      color4 = ColorManager.primary;
-      color2 = ColorManager.white;
-      color3 = ColorManager.white;
-      color1 = ColorManager.white;
-      // setState(() {
-      //
-      // });
-    }
-    isLoadingColor = false;
-  }
-
-  var initializeImage = ImageAssets.initialize_order;
-
-  void getColorIcon(String? statusName) {
-    if (statusName == 'Intialized' ||
-        statusName == 'NotAssignedToEmployee' ||
-        statusName == 'UnPaid' ||
-        statusName == 'Paid') {
-      cIcon1 = ColorManager.primary;
-      cIcon2 = ColorManager.white;
-      cIcon3 = ColorManager.primaryDark;
-      cIcon4 = ColorManager.white;
-      initializeImage = ImageAssets.initialize_order1;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'AssignedToEmployee' ||
-        statusName == 'Received' ||
-        statusName == 'NotAssignedToDriver') {
-      cIcon2 = ColorManager.white;
-      cIcon1 = ColorManager.primary;
-      cIcon3 = ColorManager.primaryDark;
-      cIcon4 = ColorManager.primaryDark;
-      initializeImage = ImageAssets.initialize_order;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'ReadyForDriver' ||
-        statusName == 'AssignedToDriver' ||
-        statusName == 'OnWay') {
-      cIcon3 = ColorManager.white;
-      cIcon2 = ColorManager.primary;
-      cIcon1 = ColorManager.primary;
-      cIcon4 = ColorManager.primaryDark;
-      initializeImage = ImageAssets.initialize_order;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'Done') {
-      cIcon4 = ColorManager.white;
-      cIcon2 = ColorManager.primary;
-      cIcon3 = ColorManager.primaryDark;
-      cIcon1 = ColorManager.primary;
-      initializeImage = ImageAssets.initialize_order;
-      // setState(() {
-      //
-      // });
-    }
-  }
-
-  void getTextSetuaition(String? statusName) {
-    if (statusName == 'Intialized' ||
-        statusName == 'NotAssignedToEmployee' ||
-        statusName == 'UnPaid' ||
-        statusName == 'Paid') {
-      textSetuaition = AppLocalizations.of(context)!.great_you_have_an_order_now;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'AssignedToEmployee' ||
-        statusName == 'Received' ||
-        statusName == 'NotAssignedToDriver') {
-      textSetuaition = AppLocalizations.of(context)!.staff_processing;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'ReadyForDriver' ||
-        statusName == 'AssignedToDriver' ||
-        statusName == 'OnWay') {
-      textSetuaition = AppLocalizations.of(context)!.order_with_driver;
-      // setState(() {
-      //
-      // });
-    } else if (statusName == 'Done') {
-      textSetuaition = AppLocalizations.of(context)!.order_done;
-      // setState(() {
-      //
-      // });
-    }
-  }
 
   var isLoading1 = true;
 
@@ -197,8 +64,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
             double.parse(widget.source.longitude!)),
         LatLng(double.parse(widget.destination.altitude!),
             double.parse(widget.destination.longitude!)));
-    _checkOutGetxController.getOrderById(
-        context: context, orderId: widget.orderId);
+    _checkOutGetxController.getSchedualOrderById(
+        context: context, id: widget.orderId);
     print('=====================statusName!');
     // print(_checkOutGetxController.order!.statusName!);
 
@@ -266,20 +133,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
   @override
   Widget build(BuildContext context) {
     print('==============================status');
-    print(_checkOutGetxController.order?.statusName);
 
-    if (_checkOutGetxController.order != null) {}
+    if (_checkOutGetxController.scheduleOrderById != null) {}
     return Scaffold(
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : GetBuilder<CheckOutGetxController>(builder: (controller) {
-              getColorBackground(controller.order?.statusName);
-              getColorIcon(controller.order?.statusName);
-              getTextSetuaition(controller.order?.statusName);
+      body: GetBuilder<CheckOutGetxController>(builder: (controller) {
               return SafeArea(
-                child: controller.isLoadingOrderById
+                child: controller.isLoadingScheduleOrderById
                     ? Center(
                         child: Container(
                           width: 20.h,
@@ -417,218 +276,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                 SizedBox(
                                   height: 10,
                                 ),
-                                isLoadingColor
-                                    ? Center(child: CircularProgressIndicator())
-                                    : Container(
-                                        // height: MediaQuery.of(context).size.height * 0.4,
-                                        // width: MediaQuery.of(context).size.height * 1,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.all(AppPadding.p4),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                                color: color1,
-                                                border: Border.all(
-                                                  color: ColorManager.primary,
-                                                ),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                                child: Image.asset(
-                                                  fit: BoxFit.cover,
-                                                  initializeImage,
-                                                  height: AppSize.s58,
-                                                ),
-                                              ),
-                                              // Icon(Icons.done,
-                                              //     color: cIcon1, size: 35),
-                                            ),
-                                            Spacer(),
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.all(AppPadding.p4),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                                color: color2,
-                                                border: Border.all(
-                                                  color: ColorManager.primary,
-                                                ),
-                                              ),
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.r),
-                                                  child: Image.asset(
-                                                    ImageAssets.stuff_order,
-                                                    height: AppSize.s58,
-                                                    fit: BoxFit.cover,
-                                                  )),
-
-                                              // Icon(
-                                              //     Icons
-                                              //         .local_print_shop_rounded,
-                                              //     color: cIcon2,
-                                              //     size: 35),
-                                            ),
-                                            Spacer(),
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.all(AppPadding.p4),
-
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                                color: color3,
-                                                border: Border.all(
-                                                  color: ColorManager.primary,
-                                                ),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                                child: Image.asset(
-                                                  ImageAssets.driver_order,
-                                                  height: AppSize.s58,
-                                                  color: cIcon3,
-                                                ),
-                                              ),
-
-                                              // Icon(
-                                              //     Icons.drive_eta_rounded,
-                                              //     color: cIcon3,
-                                              //     size: 35),
-                                            ),
-                                            Spacer(),
-                                            Container(
-                                              padding: EdgeInsets.all(
-                                                  AppPadding.p12),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.r),
-                                                color: color4,
-                                                border: Border.all(
-                                                  color: ColorManager.primary,
-                                                ),
-                                              ),
-                                              child:
-                                                  // ClipRRect(
-                                                  //   borderRadius: BorderRadius.circular(12.r),
-                                                  //   child: Image.asset(
-                                                  //     ImageAssets.done_order,
-                                                  //     height: AppSize.s58,
-                                                  //   ),
-                                                  // ),
-
-                                                  Icon(Icons.done_all,
-                                                      color: cIcon4, size: 35),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                 SizedBox(
                                   height: AppSize.s16,
                                 ),
-                                Text(
-                                  textSetuaition,
-                                  style: getSemiBoldStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: AppSize.s16,
-                                ),
-                                _checkOutGetxController.order?.driverName ==
-                                        null
-                                    ? Container()
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                                color: ColorManager.greyLight)),
-                                        padding: EdgeInsets.all(AppSize.s10),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              ImageAssets.image1,
-                                              height: AppSize.s60,
-                                              width: AppSize.s60,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${_checkOutGetxController.order!.driverName}',
-                                                  style: TextStyle(
-                                                      color: ColorManager
-                                                          .primaryDark,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: FontSize.s14),
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: Text(
-                                                    'One of our delivery representatives',
-                                                    overflow: TextOverflow.clip,
-                                                    style: TextStyle(
-                                                        color: ColorManager
-                                                            .greyLight),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              width: AppSize.s10,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () async {
-                                                var whatsapp =
-                                                    "+971${_checkOutGetxController.order!.driverPhone}";
-                                                var whatsappURl_android =
-                                                    "whatsapp://send?phone=" +
-                                                        whatsapp +
-                                                        "&text=hello";
-                                                await launch(
-                                                    whatsappURl_android);
-                                              },
-                                              child: Icon(
-                                                Icons.textsms_outlined,
-                                                color: ColorManager.primary,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: AppSize.s16,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                _contactPhoneNumber(
-                                                    _checkOutGetxController
-                                                        .order!
-                                                        .branch!
-                                                        .telephone!);
-                                              },
-                                              child: Icon(
-                                                Icons.phone_outlined,
-                                                color: ColorManager.primary,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                SizedBox(
-                                  height: AppSize.s16,
-                                ),
+
                                 Container(
                                   width: MediaQuery.of(context).size.width * 1,
                                   child: Column(
@@ -661,7 +312,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       Row(
                                         children: [
                                           Text(
-                                            '# ${controller.order?.sequenceNumber}',
+                                            '# ${controller.scheduleOrderById?.sequenceNumber}',
                                             style: getSemiBoldStyle(
                                               color: ColorManager.primary,
                                               fontSize: FontSize.s16,
@@ -669,7 +320,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                           ),
                                           Spacer(),
                                           Text(
-                                            '${controller.order?.branch?.branchName}',
+                                            '${controller.scheduleOrderById?.branch?.branchName}',
                                             style: getSemiBoldStyle(
                                               color: ColorManager.primary,
                                               fontSize: FontSize.s16,
@@ -719,52 +370,53 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                   //     bottom: AppMargin.m16,
                                   //     right: AppMargin.m16,
                                   //     left: AppMargin.m16),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.scheduleOrderById?.items!.length,
+                                    itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'X ${ controller.scheduleOrderById?.items![index].quanity}',
+                                              style: getSemiBoldStyle(
+                                                color: ColorManager.grey,
+                                                fontSize: FontSize.s16,
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            Text(
+                                              '${controller.scheduleOrderById?.items![index].name}',
+                                              style: getSemiBoldStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontSize: FontSize.s16,
+                                              ),
+                                            ),
+                                            SizedBox(height: AppSize.s8,)
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  },)
+                                ),
+                                SizedBox(height: AppSize.s12,),
+                                Container(
+                                  padding: EdgeInsets.all(AppSize.s8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: ColorManager.greyLight,
+                                    ),
+                                  ),
+                                  // margin: EdgeInsets.only(
+                                  //     bottom: AppMargin.m16,
+                                  //     right: AppMargin.m16,
+                                  //     left: AppMargin.m16),
                                   child: Column(
                                     children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .subtotal,
-                                            style: getSemiBoldStyle(
-                                              color: ColorManager.grey,
-                                              fontSize: FontSize.s16,
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            '${controller.order?.totalCostForItems} ${AppLocalizations.of(context)!.aed}',
-                                            style: getSemiBoldStyle(
-                                              color: ColorManager.primaryDark,
-                                              fontSize: FontSize.s16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .discount,
-                                            style: getSemiBoldStyle(
-                                              color: ColorManager.grey,
-                                              fontSize: FontSize.s16,
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            '${(controller.order!.totalCostForItems!) - (controller.order!.orderCostForCustomer!)} ${AppLocalizations.of(context)!.aed}',
-                                            style: getSemiBoldStyle(
-                                              color: ColorManager.primaryDark,
-                                              fontSize: FontSize.s16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(
-                                        thickness: 1,
-                                        color: ColorManager.grey,
-                                      ),
+
                                       Row(
                                         children: [
                                           Text(
@@ -776,7 +428,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                           ),
                                           Spacer(),
                                           Text(
-                                            '${(controller.order?.orderCostForCustomer)} ${AppLocalizations.of(context)!.aed}',
+                                            '${(controller.scheduleOrderById?.totalCostForItems)} ${AppLocalizations.of(context)!.aed}',
                                             style: getSemiBoldStyle(
                                               color: ColorManager.primaryDark,
                                               fontSize: FontSize.s16,
@@ -829,22 +481,24 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       ),
                                       Row(
                                         children: [
-                                          Text(
-                                              controller.order?.deliveryPoint
-                                                          ?.addressName !=
+                                          GetBuilder<
+                                              AddressesViewGetXController>(
+                                            builder: (controller2) => Text(
+                                              controller.scheduleOrderById!.deliveryPoint
+                                                          ?.cityName !=
                                                       null
-                                                  ? '${controller.order!.deliveryPoint?.addressName}'
-                                                  : _addressesViewGetXController.addresses
+                                                  ? '${controller.scheduleOrderById!.deliveryPoint?.cityName}'
+                                                  : controller2.addresses
                                                               .length !=
                                                           0
-                                                      ? '${_addressesViewGetXController.addresses[0].addressName}'
+                                                      ? '${controller2.addresses[0].addressName}'
                                                       : '${SharedPrefController().city}',
                                               style: getSemiBoldStyle(
                                                 color: ColorManager.primaryDark,
                                                 fontSize: FontSize.s16,
                                               ),
                                             ),
-
+                                          ),
                                           Spacer(),
                                           Visibility(
                                             visible: false,
@@ -859,7 +513,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       SizedBox(
                                         height: AppSize.s10,
                                       ),
-
+                                      GetBuilder<AddressesViewGetXController>(
+                                        builder: (controller1) =>
                                             Row(children: [
                                           Image.asset(
                                             IconsAssets.location,
@@ -870,21 +525,21 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                             width: AppSize.s8,
                                           ),
                                           Text(
-                                            controller.order?.deliveryPoint
+                                            controller.scheduleOrderById!.deliveryPoint
                                                         ?.cityName !=
                                                     null
-                                                ? '${controller.order!.deliveryPoint?.cityName}'
-                                                : _addressesViewGetXController
+                                                ? '${controller.scheduleOrderById!.deliveryPoint?.cityName}'
+                                                : controller1
                                                             .addresses.length !=
                                                         0
-                                                    ? '${_addressesViewGetXController.addresses[0].addressName}'
+                                                    ? '${controller1.addresses[0].addressName}'
                                                     : '${SharedPrefController().city}',
                                             style: getRegularStyle(
                                               color: ColorManager.black,
                                             ),
                                           ),
                                         ]),
-
+                                      ),
                                       SizedBox(
                                         height: AppSize.s10,
                                       ),
@@ -907,7 +562,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       SizedBox(
                                         height: AppSize.s10,
                                       ),
-                                      Row(children: [
+                                      GetBuilder<AddressesViewGetXController>(
+                                        builder: (controller3) =>
+                                            Row(children: [
                                           Image.asset(
                                             IconsAssets.call,
                                             height: AppSize.s18,
@@ -917,20 +574,21 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                             width: AppSize.s8,
                                           ),
                                           Text(
-                                            controller.order?.deliveryPoint
+                                            controller.scheduleOrderById!.deliveryPoint
                                                         ?.cityName !=
                                                     null
-                                                ? '${controller.order!.deliveryPoint?.phone}'
-                                                : _addressesViewGetXController
+                                                ? '${controller.scheduleOrderById!.deliveryPoint?.phone}'
+                                                : controller3
                                                             .addresses.length !=
                                                         0
-                                                    ? '${_addressesViewGetXController.addresses[0].phone}'
+                                                    ? '${controller3.addresses[0].phone}'
                                                     : '0',
                                             style: getRegularStyle(
                                               color: ColorManager.black,
                                             ),
                                           ),
                                         ]),
+                                      ),
                                       SizedBox(
                                         height: AppSize.s22,
                                       ),
@@ -956,7 +614,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                             _callShopDialog(
                                                 context,
                                                 controller
-                                                    .order!.branch!.telephone!);
+                                                    .scheduleOrderById!.branch!.telephone!);
                                           },
                                           child: Container(
                                             width: AppSize.s60,
@@ -991,55 +649,48 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       SizedBox(
                                         width: 15,
                                       ),
-                                      _checkOutGetxController
-                                                  .order?.statusName ==
-                                              'Done'
-                                          ? Container()
-                                          : ElevatedButton(
-                                              onPressed: () async {
-                                                _helpGetxController.cancelOrder(
-                                                    context: context,
-                                                    id: _checkOutGetxController
-                                                        .order!.id!);
-                                                // showSheet(context);
-                                                // canLaunchUrl('tel://+1234567890'),
-                                                // await call(
-                                                //     Telephone: widget.orderId['branch']
-                                                //         ['telephone']);
-                                              },
-                                              child: Container(
-                                                width: AppSize.s60,
-                                                height: AppSize.s110,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      ImageAssets.x,
-                                                      color: Colors.white,
-                                                      height: AppSize.s22,
-                                                      width: AppSize.s22,
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .cancel_order,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              FontSize.s12,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
+                                      ElevatedButton(
+                                          onPressed: () async {
+                                            _helpGetxController.cancelOrder(
+                                                context: context,
+                                                id: _checkOutGetxController
+                                                    .order!.id!);
+                                            // showSheet(context);
+                                            // canLaunchUrl('tel://+1234567890'),
+                                            // await call(
+                                            //     Telephone: widget.orderId['branch']
+                                            //         ['telephone']);
+                                          },
+                                          child: Container(
+                                            width: AppSize.s60,
+                                            height: AppSize.s110,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  ImageAssets.x,
+                                                  color: Colors.white,
+                                                  height: AppSize.s22,
+                                                  width: AppSize.s22,
                                                 ),
-                                              )),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .cancel_order,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: FontSize.s12,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          )),
                                       SizedBox(
                                         width: 15,
                                       ),
@@ -1048,7 +699,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                             _helpGetxController.requestCallBack(
                                                 context: context,
                                                 bid: _checkOutGetxController
-                                                    .order!.branch!.id!);
+                                                    .scheduleOrderById!.branch!.id!);
                                             // canLaunchUrl('tel://+1234567890'),
                                             // await call(
                                             //     Telephone: widget.orderId['branch']
@@ -1093,30 +744,24 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen>
                                       ),
                                       ElevatedButton(
                                         onPressed: () async {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                GetHelpScreen(),
-                                          ));
-                                          // Navigator.of(context).push(
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             ReportIssueWithOrderScreen(
-                                          //               name:
-                                          //               _checkOutGetxController
-                                          //                   .order!
-                                          //                   .items![0]
-                                          //                   .name!,
-                                          //               orderId:
-                                          //               _checkOutGetxController
-                                          //                   .order!.id,
-                                          //               productId:
-                                          //               _checkOutGetxController
-                                          //                   .order!
-                                          //                   .items![0]
-                                          //                   .id,
-                                          //             )
-                                          //     ));
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ReportIssueWithOrderScreen(
+                                                        name:
+                                                            _checkOutGetxController
+                                                                .scheduleOrderById!
+                                                                .items![0]
+                                                                .name!,
+                                                        orderId:
+                                                            _checkOutGetxController
+                                                                .scheduleOrderById!.id,
+                                                        productId:
+                                                            _checkOutGetxController
+                                                                .scheduleOrderById!
+                                                                .items![0]
+                                                                .id,
+                                                      )));
                                           // await whatsapp(
                                           //     phone: widget.orderId['branch']
                                           //         ['branchAddress']['phone']);

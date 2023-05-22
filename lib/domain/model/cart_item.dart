@@ -21,7 +21,7 @@ class CartItem extends GetxController with Helpers {
   }) {
     print('=================product count');
     print(productCount);
-    _cartViewGetXController.getMyCart();
+    _cartViewGetXController.getMyCart(context: context);
     count = (productCount1).toInt();
     // productCount = count;
     // productCount1 = productCount1! + 1;
@@ -48,7 +48,7 @@ class CartItem extends GetxController with Helpers {
     print(productCount);
     count = (productCount).toInt();
     // productCount = productCount - 1;
-    _cartViewGetXController.getMyCart();
+    _cartViewGetXController.getMyCart(context: context);
 
     update();
     if (sendRequest)

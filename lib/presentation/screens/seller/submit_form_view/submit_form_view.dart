@@ -217,7 +217,8 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                         ),
                         filled: false,
                         contentPadding: EdgeInsets.symmetric(
-                            vertical: AppPadding.p18, horizontal: AppPadding.p4),
+                            vertical: AppPadding.p18, horizontal: AppPadding
+                            .p4),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(AppRadius.r10),
                           borderSide: BorderSide(
@@ -239,12 +240,16 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                               SizedBox(
                                 width: AppSize.s15,
                               ),
-                              Image.asset(
-                                ImageAssets.uaeFlag,
-                                fit: BoxFit.fill,
-                                height: AppSize.s34,
-                                width: AppSize.s34,
-                              ),
+                              Text('+971', style: TextStyle(
+                                  fontSize: FontSize.s14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black)),
+                              // Image.asset(
+                              //   ImageAssets.uaeFlag,
+                              //   fit: BoxFit.fill,
+                              //   height: AppSize.s34,
+                              //   width: AppSize.s34,
+                              // ),
                               SizedBox(
                                 width: AppSize.s15,
                               ),
@@ -264,13 +269,101 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                         if (value == null || value.isEmpty)
                           return AppLocalizations.of(context)!
                               .phone_number_is_required;
+                        else if (value[0] == '0' && (value.length > 10 || value.length < 10)){
+                          return AppLocalizations.of(context)!.wrong_phone_number;
+                        }
+
+                        else if (value[0] != '0'  && (value.length < 9 || value.length > 9)){
+
+                          return AppLocalizations.of(context)!.wrong_phone_number;
+                        }
+
                         return null;
                       },
                       onSaved: (value) {
-                        _submitFormViewGetXController.phoneNumber = value!;
+                        if(value![0] == '0') {
+                          var number = value.substring(1,value.length);
+                          _submitFormViewGetXController.phoneNumber = '00971${number}';
+                        }else {
+                          _submitFormViewGetXController.phoneNumber = '00971${value}';
+                        }
                       },
                     ),
+
                   ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //     horizontal: AppPadding.p16,
+                  //   ),
+                  //   child: TextFormField(
+                  //     keyboardType: TextInputType.number,
+                  //     textInputAction: TextInputAction.next,
+                  //     textAlign: TextAlign.start,
+                  //     style: getMediumStyle(
+                  //       color: ColorManager.black,
+                  //       fontSize: FontSize.s14,
+                  //     ),
+                  //     decoration: InputDecoration(
+                  //       hintText: AppLocalizations.of(context)!.phone_number,
+                  //       hintStyle: getMediumStyle(
+                  //         color: ColorManager.hintTextFiled,
+                  //       ),
+                  //       filled: false,
+                  //       contentPadding: EdgeInsets.symmetric(
+                  //           vertical: AppPadding.p18, horizontal: AppPadding.p4),
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(AppRadius.r10),
+                  //         borderSide: BorderSide(
+                  //           width: AppSize.s1,
+                  //           color: ColorManager.grey,
+                  //         ),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(AppRadius.r10),
+                  //         borderSide: BorderSide(
+                  //           width: AppSize.s1,
+                  //           color: ColorManager.grey,
+                  //         ),
+                  //       ),
+                  //       prefixIcon: IntrinsicHeight(
+                  //         child: Row(
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: [
+                  //             SizedBox(
+                  //               width: AppSize.s15,
+                  //             ),
+                  //             Image.asset(
+                  //               ImageAssets.uaeFlag,
+                  //               fit: BoxFit.fill,
+                  //               height: AppSize.s34,
+                  //               width: AppSize.s34,
+                  //             ),
+                  //             SizedBox(
+                  //               width: AppSize.s15,
+                  //             ),
+                  //             Container(
+                  //               height: double.infinity,
+                  //               width: AppSize.s1,
+                  //               color: ColorManager.grey,
+                  //             ),
+                  //             SizedBox(
+                  //               width: AppSize.s15,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     validator: (value) {
+                  //       if (value == null || value.isEmpty)
+                  //         return AppLocalizations.of(context)!
+                  //             .phone_number_is_required;
+                  //       return null;
+                  //     },
+                  //     onSaved: (value) {
+                  //       _submitFormViewGetXController.phoneNumber = value!;
+                  //     },
+                  //   ),
+                  // ),
                   SizedBox(
                     height: AppSize.s16,
                   ),
@@ -642,9 +735,10 @@ class _SubmitFormViewState extends State<SubmitFormView> with Helpers {
                     height: AppSize.s55,
                     child: ElevatedButton(
                       onPressed: () {
+                        _submitFormViewGetXController.submitForm(
+                            city: city, country: country);
                         if(agree && agree1) {
-                          _submitFormViewGetXController.submitForm(
-                              city: city, country: country);
+
                         }else {
 
                         }

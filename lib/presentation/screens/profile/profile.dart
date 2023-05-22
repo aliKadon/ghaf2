@@ -7,7 +7,9 @@ import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/presentation/screens/profile/notification/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/change_email.dart';
 import 'package:ghaf_application/presentation/screens/profile/password_setting.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting.dart';
+import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/constants.dart';
@@ -33,6 +35,8 @@ class _ProfileState extends State<Profile> {
 
   final LanguageGetXController languageGetXController =
   Get.find<LanguageGetXController>();
+  final ProfileGetxController _profileGetxController =
+  Get.put<ProfileGetxController>(ProfileGetxController());
 
   Locale? local;
  late final curLocale = Provider.of<LocaleProvider>(context, listen: false);
@@ -54,10 +58,11 @@ class _ProfileState extends State<Profile> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                          builder: (context) => MainView()));
+                      Navigator.of(context).pop();
+                      // Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //     builder: (context) => MainView()));
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.038,
@@ -141,7 +146,7 @@ class _ProfileState extends State<Profile> {
                   AppSharedData.currentUser == null?Container():     GestureDetector(
                     onTap: (){
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PasswordSetting(),));
+                        builder: (context) => PasswordSetting(isSeller: false),));
                     },
                     child: accountWidget(
                         context,
@@ -150,9 +155,21 @@ class _ProfileState extends State<Profile> {
                             : IconsAssets.arrow,
                         AppLocalizations.of(context)!.change_password),
                   ),
+                  AppSharedData.currentUser == null?Container():        GestureDetector(
+                    onTap: () {
+                      _profileGetxController.deleteAccount(context: context);
+                    },
+                    child: accountWidget(
+                        context,
+                        language == 'en'
+                            ? IconsAssets.arrow2
+                            : IconsAssets.arrow,
+                        AppLocalizations.of(context)!.delete_account),
+                  ),
                 ],
               ),
             ),
+
             AppSharedData.currentUser == null?SizedBox(height: AppSize.s40,):Container(),
             AppSharedData.currentUser == null
                 ? GestureDetector(

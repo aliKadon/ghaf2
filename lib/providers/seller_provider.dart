@@ -355,7 +355,7 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
     var url =
     Uri.parse('${Constants.urlBase}/Auth/get-seller-plans');
     final response = await http.get(url, headers: headers);
-    getSellerPlansData = json.decode(response.body)['data'];
+    getSellerPlansData = jsonDecode(response.body)['data'];
     print('getSellerPlansData+++++++++++++++++++++++++++++++++++++++++');
     print(getSellerPlansData);
     notifyListeners();
@@ -400,9 +400,9 @@ class SellerProvider with ChangeNotifier, ApiHelper,Helpers {
     final response = await http.get(url,headers: headers);
 
     var data = jsonDecode(response.body)['data'];
-    //
-    // print('============================userDetails');
-    // print(data);
+
+    print('============================userDetails');
+    print(data);
 
     userDetails = data;
     notifyListeners();

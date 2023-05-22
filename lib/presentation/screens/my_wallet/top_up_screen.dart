@@ -247,7 +247,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) => EnterAmount(
-                                          typeOfPage: 0,
+                                          typeOfPage: 1,
                                           paymentMethodId:
                                               _checkOutGetxController
                                                   .paymentMethod[index].id!),

@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
+import 'package:ghaf_application/presentation/screens/login_view/login_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/app_text_field.dart';
 import 'package:ghaf_application/providers/product_provider.dart';
@@ -47,7 +48,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
   @override
   void initState() {
     Provider.of<SellerProvider>(context,listen: false).getUserDetails();
-    // _profileSettingGetxController.init(context: context);
+    _profileSettingGetxController.init(context: context);
     super.initState();
     _nameTextController = TextEditingController();
     _emailTextController = TextEditingController();
@@ -75,7 +76,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
     print(userInfo);
     return Scaffold(
       body: GetBuilder<ProfileSettingGetxController>(
-        builder: (controller) => controller.isLoading ? Center(child: CircularProgressIndicator(),) : SafeArea(
+        builder: (controller) =>  controller.isLoading ? Center(child: CircularProgressIndicator(),) :SafeArea(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -254,7 +255,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                               _emailTextController.text,
                               int.parse(_passwordTextController.text),
                               int.parse(_phoneTextController.text),
-                              widget.planeId);
+                              widget.planeId).then((value) => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginView(role: Constants.roleRegisterIndividual),)));
                           //     .then((value) => ScaffoldMessenger.of(context)
                           //     .showSnackBar(SnackBar(
                           //   content: Text(repo,style: TextStyle(color: Colors.white)),

@@ -57,6 +57,7 @@ class _MyWalletNewState extends State<MyWalletNew> {
                         padding: EdgeInsets.all(AppSize.s6),
                         child: GestureDetector(
                           onTap: () {
+                            // Navigator.of(context).pop();
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                               builder: (context) => MainView(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
@@ -23,7 +22,7 @@ class AllProductScreen extends StatefulWidget {
   String? addressLong;
   String? addressLat;
 
-  AllProductScreen({required this.type,this.addressLong,this.addressLat});
+  AllProductScreen({required this.type, this.addressLong, this.addressLat});
 
   @override
   State<AllProductScreen> createState() => _AllProductScreenState();
@@ -34,7 +33,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
   late final ProductsScreenGetXController _productsScreenGetXController =
       Get.put(ProductsScreenGetXController());
   late final AddressesViewGetXController _addressesViewGetXController =
-  Get.find<AddressesViewGetXController>();
+      Get.find<AddressesViewGetXController>();
 
   // controller.
   HomeViewGetXController _homeViewGetXController =
@@ -83,17 +82,16 @@ class _AllProductScreenState extends State<AllProductScreen> {
                     ),
                   )
                 : Container(
-
-                  child: GridView.builder(
+                    child: GridView.builder(
                       padding: EdgeInsets.symmetric(
                           horizontal: AppPadding.p4, vertical: AppPadding.p4),
                       itemCount: _homeViewGetXController.mostPopular.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: Constants.crossAxisCount,
-                        mainAxisExtent: MediaQuery.of(context).size.height * 0.36,
-                        mainAxisSpacing: Constants.mainAxisSpacing,
-                        crossAxisSpacing: Constants.crossAxisSpacing
-                      ),
+                          crossAxisCount: Constants.crossAxisCount,
+                          mainAxisExtent:
+                              MediaQuery.of(context).size.height * 0.36,
+                          mainAxisSpacing: Constants.mainAxisSpacing,
+                          crossAxisSpacing: Constants.crossAxisSpacing),
                       itemBuilder: (context, index) {
                         // Get.put<Product>(
                         //   _productsScreenGetXController.products[index],
@@ -110,8 +108,10 @@ class _AllProductScreenState extends State<AllProductScreen> {
                             // height: AppSize.s125,
                             // color: Colors.red,
                             child: ProductItemNew(
-                                image: _homeViewGetXController.mostPopular[index]
-                                            .productImages!.length ==
+                                image: _homeViewGetXController
+                                            .mostPopular[index]
+                                            .productImages!
+                                            .length ==
                                         0
                                     ? ''
                                     : _homeViewGetXController
@@ -127,80 +127,95 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                 index: index,
                                 isFavorite: _homeViewGetXController
                                     .mostPopular[index].isFavorite!,
-                                idProduct:
-                                    _homeViewGetXController.mostPopular[index].id!),
+                                idProduct: _homeViewGetXController
+                                    .mostPopular[index].id!),
                           );
                         });
                       },
                     ),
-                )
+                  )
             : widget.type == 'order'
-                ? _checkOutGetxController.customerOrder.isEmpty
-                    ? Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.no_order_found,
-                        ),
-                      )
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _checkOutGetxController.customerOrder.length,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    OrderTrackingScreen(
-                                        orderId:
-                                        _checkOutGetxController.customerOrder[index].id!,
-                                        source: _checkOutGetxController.customerOrder[index]
-                                            .deliveryPoint ?? _checkOutGetxController
-                                            .customerOrder[index]
-                                            .branch!
-                                            .branchAddress!,
+                ? GetBuilder<CheckOutGetxController>(
+                    builder: (controller) => controller.customerOrder.isEmpty ||
+                            controller.customerOrder.length == 0
+                        ? Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.no_order_found,
+                            ),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                _checkOutGetxController.customerOrder.length,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => OrderTrackingScreen(
+                                        orderId: _checkOutGetxController
+                                            .customerOrder[index].id!,
+                                        source: _checkOutGetxController
+                                                .customerOrder[index]
+                                                .deliveryPoint ??
+                                            _checkOutGetxController
+                                                .customerOrder[index]
+                                                .branch!
+                                                .branchAddress!,
                                         destination: _checkOutGetxController
                                             .customerOrder[index]
                                             .branch!
                                             .branchAddress!),
-                              ));
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width * 1,
-                                  child: MyOrdersWidget(
-                                    image: _checkOutGetxController.customerOrder[index].branch!.branchLogoImage!,
-                                      statusName: _checkOutGetxController.customerOrder[index].statusName!,
-                                      date: _checkOutGetxController
-                                          .customerOrder[index].createDate!,
-                                      price: (_checkOutGetxController
-                                              .customerOrder[index]
-                                              .orderCostForCustomer)
-                                          .toString(),
-                                      orderSequence: (_checkOutGetxController
-                                              .customerOrder[index].sequenceNumber)
-                                          .toString(),
-                                      branchName: _checkOutGetxController
-                                          .customerOrder[index].branch!.storeName!,
-                                      branchAddress: _checkOutGetxController
+                                  ));
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      child: MyOrdersWidget(
+                                          image: _checkOutGetxController
                                               .customerOrder[index]
                                               .branch!
-                                              .branchAddress ??
-                                          null),
+                                              .branchLogoImage!,
+                                          statusName: _checkOutGetxController
+                                              .customerOrder[index].statusName!,
+                                          date: _checkOutGetxController
+                                              .customerOrder[index].createDate!,
+                                          price: (_checkOutGetxController
+                                                  .customerOrder[index]
+                                                  .orderCostForCustomer)
+                                              .toString(),
+                                          orderSequence:
+                                              (_checkOutGetxController
+                                                      .customerOrder[index]
+                                                      .sequenceNumber)
+                                                  .toString(),
+                                          branchName: _checkOutGetxController
+                                              .customerOrder[index]
+                                              .branch!
+                                              .storeName!,
+                                          branchAddress: _checkOutGetxController
+                                                  .customerOrder[index]
+                                                  .branch!
+                                                  .branchAddress ??
+                                              null),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          right: AppSize.s12,
+                                          left: AppSize.s12),
+                                      child: Divider(
+                                        thickness: 1,
+                                        color: ColorManager.greyLight,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Padding(
-                                  padding:  EdgeInsets.only(
-                                      right: AppSize.s12, left: AppSize.s12),
-                                  child: Divider(
-                                    thickness: 1,
-                                    color: ColorManager.greyLight,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      )
+                              );
+                            },
+                          ),
+                  )
                 : widget.type == 'near'
                     ? _homeViewGetXController.nearbyStores.isEmpty
                         ? Center(
@@ -228,18 +243,25 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                     child: NearByWidget(
                                       addressLat: widget.addressLat == null
                                           ? _addressesViewGetXController
-                                          .addresses.length == 0 ? null : _addressesViewGetXController
-                                          .addresses[0].altitude!
+                                                      .addresses.length ==
+                                                  0
+                                              ? null
+                                              : _addressesViewGetXController
+                                                  .addresses[0].altitude!
                                           : widget.addressLat!,
                                       addressLong: widget.addressLong == null
                                           ? _addressesViewGetXController
-                                          .addresses.length == 0 ? null : _addressesViewGetXController
-                                          .addresses[0].longitude!
+                                                      .addresses.length ==
+                                                  0
+                                              ? null
+                                              : _addressesViewGetXController
+                                                  .addresses[0].longitude!
                                           : widget.addressLong!,
                                       is24: _homeViewGetXController
                                           .nearbyStores[index].is24Hours!,
                                       details: _homeViewGetXController
-                                          .nearbyStores[index].details ?? '',
+                                              .nearbyStores[index].details ??
+                                          '',
                                       index: index,
                                       imageUrl: _homeViewGetXController
                                                       .nearbyStores[index]

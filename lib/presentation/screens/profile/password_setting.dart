@@ -11,7 +11,8 @@ import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
 class PasswordSetting extends StatefulWidget {
-  const PasswordSetting({Key? key}) : super(key: key);
+  bool isSeller;
+  PasswordSetting({required this.isSeller});
 
   @override
   State<PasswordSetting> createState() => _PasswordSettingState();
@@ -198,11 +199,20 @@ class _PasswordSettingState extends State<PasswordSetting> {
                 child: ElevatedButton(
                     onPressed: () {
                       if (!formKey.currentState!.validate()) return;
-                      _profileSettingGetxController.changePassword(
-                          context: context,
-                          oldPassword: _oldPassword.text,
-                          newPassword: _newPassword.text,
-                          confirmPassword: _confirmPassword.text);
+                      if (widget.isSeller) {
+                        _profileSettingGetxController.changePasswordSeller(
+                            context: context,
+                            oldPassword: _oldPassword.text,
+                            newPassword: _newPassword.text,
+                            confirmPassword: _confirmPassword.text);
+                      }else {
+                        _profileSettingGetxController.changePassword(
+                            context: context,
+                            oldPassword: _oldPassword.text,
+                            newPassword: _newPassword.text,
+                            confirmPassword: _confirmPassword.text);
+                      }
+
                     },
                     child: Text(AppLocalizations.of(context)!.save)),
               ),

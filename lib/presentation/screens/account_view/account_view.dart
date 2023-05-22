@@ -58,10 +58,10 @@ class _AccountViewState extends State<AccountView> {
       subscribe = '';
     }
     if (AppSharedData.currentUser?.ghafGold == false) {
-      subscribe = 'Unsubscribed';
+      subscribe = 'Unsubscribe';
     }
     if (AppSharedData.currentUser?.ghafGold == true) {
-      subscribe = 'Subscribed';
+      subscribe = 'Subscribe';
     }
   }
 
@@ -595,7 +595,7 @@ class _AccountViewState extends State<AccountView> {
 
                 AppSharedData.currentUser == null ? Container() : Container(
                   width: MediaQuery.of(context).size.width * 1,
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.15,
                   child: Center(
                     child: Container(
                       padding: EdgeInsets.only(top: 30),
@@ -613,7 +613,7 @@ class _AccountViewState extends State<AccountView> {
                               Icon(
                                 Icons.logout,
                                 color: ColorManager.primary,
-                                size: 35,
+                                size: AppSize.s30,
                               ),
                               SizedBox(
                                 width: AppSize.s8,
@@ -621,10 +621,7 @@ class _AccountViewState extends State<AccountView> {
                               Text(
                                 // AppLocalizations.of(context)!.language,
                                 '${AppLocalizations.of(context)!.logout}',
-                                style: getRegularStyle(
-                                  color: ColorManager.red,
-                                  fontSize: FontSize.s20,
-                                ),
+                                style: TextStyle(color: Colors.red,fontWeight: FontWeight.w500,fontSize: FontSize.s16),
                               ),
                             ],
                           )),

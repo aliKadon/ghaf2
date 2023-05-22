@@ -50,14 +50,15 @@ class CartViewGetXController extends GetxController with Helpers {
 
       print(AppSharedData.currentUser);
     }else {
-      getMyCart();
+      getMyCart(context: context);
     }
 
   }
 
 
   // get my cart.
-  void getMyCart() async {
+  void getMyCart({required BuildContext context}) async {
+
     try {
       cartItems = await _storeApiController.getMyCart();
       calculateBell();
@@ -77,7 +78,7 @@ class CartViewGetXController extends GetxController with Helpers {
       try {
         apiResponse = await _storeApiController.changeCartItemCount(
             cartItemId: cartItemId, count: count);
-        _cartViewGetXController.getMyCart();
+        _cartViewGetXController.getMyCart(context: context);
         update();
       } catch (error) {
         showSnackBar(context, message: error.toString(), error: true);
@@ -185,7 +186,6 @@ class CartViewGetXController extends GetxController with Helpers {
         showSnackBar(context, message: apiResponse.message, error: false);
         notifyBell();
         notifyMyCart();
-        emptyBasket(context);
         // Provider.of<ProductProvider>(context, listen: false).clearCart();
         // Navigator.pushNamed(context, Routes.ordersToPay, arguments: '');
         Navigator.of(context).pushReplacement(MaterialPageRoute(

@@ -83,7 +83,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
     var provider = Provider.of<ProductProvider>(context);
     return WillPopScope(
       onWillPop: () async {
-        _cartViewGetXController.getMyCart();
+        _cartViewGetXController.getMyCart(context: context);
         _cartViewGetXController.calculateBell();
         Navigator.of(context).pop();
         return false;
@@ -113,7 +113,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            _cartViewGetXController.getMyCart();
+                            _cartViewGetXController.getMyCart(context: context);
                             _cartViewGetXController.calculateBell();
                             Navigator.of(context).pop();
                           },

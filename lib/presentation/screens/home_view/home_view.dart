@@ -977,145 +977,168 @@ class _HomeViewState extends State<HomeView> with Helpers {
                     ),
                     AppSharedData.currentUser == null
                         ? Container()
-                        : Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: AppPadding.p24),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .previous_order,
-                                      style: getMediumStyle(
-                                        color: ColorManager.primaryDark,
-                                        fontSize: FontSize.s18,
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, Routes.allProductScreen,
-                                            arguments: 'order');
-                                      },
-                                      child: Text(
-                                        AppLocalizations.of(context)!.more,
-                                        style: getMediumStyle(
-                                          color: ColorManager.greyLight,
-                                          fontSize: FontSize.s16,
+                        : GetBuilder<CheckOutGetxController>(
+                            builder: (controller) => controller
+                                        .customerOrder.length ==
+                                    0
+                                ? Container()
+                                : Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: AppPadding.p24),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .previous_order,
+                                              style: getMediumStyle(
+                                                color: ColorManager.primaryDark,
+                                                fontSize: FontSize.s18,
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(context,
+                                                    Routes.allProductScreen,
+                                                    arguments: 'order');
+                                              },
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .more,
+                                                style: getMediumStyle(
+                                                  color: ColorManager.greyLight,
+                                                  fontSize: FontSize.s16,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.22,
-                                child: GetBuilder<CheckOutGetxController>(
-                                  builder: (controller) => ListView.builder(
-                                    padding: controller.customerOrder.length ==
-                                            0
-                                        ? EdgeInsets.all(0)
-                                        : EdgeInsets.all(
+                                      Container(
+                                        height:
                                             MediaQuery.of(context).size.height *
-                                                0.005,
-                                          ),
+                                                0.22,
+                                        child:
+                                            GetBuilder<CheckOutGetxController>(
+                                          builder: (controller) =>
+                                              ListView.builder(
+                                            padding: controller
+                                                        .customerOrder.length ==
+                                                    0
+                                                ? EdgeInsets.all(0)
+                                                : EdgeInsets.all(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.005,
+                                                  ),
 
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: controller.customerOrder.length,
-                                    physics: const BouncingScrollPhysics(),
-                                    // gridDelegate:
-                                    //     SliverGridDelegateWithFixedCrossAxisCount(
-                                    //   crossAxisCount: Constants.crossAxisCount,
-                                    //   mainAxisExtent: Constants.mainAxisExtent,
-                                    //   mainAxisSpacing: Constants.mainAxisSpacing,
-                                    // ),
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                OrderTrackingScreen(
-                                                    orderId: controller
-                                                        .customerOrder[index]
-                                                        .id!,
-                                                    source: controller
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount:
+                                                controller.customerOrder.length,
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            // gridDelegate:
+                                            //     SliverGridDelegateWithFixedCrossAxisCount(
+                                            //   crossAxisCount: Constants.crossAxisCount,
+                                            //   mainAxisExtent: Constants.mainAxisExtent,
+                                            //   mainAxisSpacing: Constants.mainAxisSpacing,
+                                            // ),
+                                            itemBuilder: (context, index) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (context) => OrderTrackingScreen(
+                                                        orderId: controller
                                                             .customerOrder[
                                                                 index]
-                                                            .deliveryPoint ??
-                                                        controller
+                                                            .id!,
+                                                        source: controller
+                                                                .customerOrder[
+                                                                    index]
+                                                                .deliveryPoint ??
+                                                            controller
+                                                                .customerOrder[
+                                                                    index]
+                                                                .branch!
+                                                                .branchAddress!,
+                                                        destination: controller
                                                             .customerOrder[
                                                                 index]
                                                             .branch!
-                                                            .branchAddress!,
-                                                    destination: controller
-                                                        .customerOrder[index]
-                                                        .branch!
-                                                        .branchAddress!),
-                                          ));
-                                        },
-                                        child: Builder(
-                                          builder: (context) {
-                                            // Get.put<Product>(
-                                            //   _homeViewGetXController.products[index],
-                                            //   tag:
-                                            //       '${_homeViewGetXController.products[index].id}home',
-                                            // );
-                                            return _addressesViewGetXController
-                                                    .isAddressesLoading
-                                                ? Container()
-                                                : PreviousOrderWidget(
-                                                    addressLat: HomeView
-                                                                .result ==
-                                                            null
-                                                        ? _addressesViewGetXController
-                                                                    .addresses
-                                                                    .length ==
-                                                                0
-                                                            ? null
-                                                            : _addressesViewGetXController
-                                                                .addresses[0]
-                                                                .altitude
-                                                        : HomeView
-                                                            .result['lat'],
-                                                    addressLong: HomeView
-                                                                .result ==
-                                                            null
-                                                        ? _addressesViewGetXController
-                                                                    .addresses
-                                                                    .length ==
-                                                                0
-                                                            ? null
-                                                            : _addressesViewGetXController
-                                                                .addresses[0]
-                                                                .longitude
-                                                        : HomeView
-                                                            .result['long'],
-                                                    storeName: controller
-                                                        .customerOrder[index]
-                                                        .branch!
-                                                        .storeName!,
-                                                    storeAddress: controller
-                                                        .customerOrder[index]
-                                                        .branch!
-                                                        .branchAddress!,
-                                                    storeImage: controller
-                                                        .customerOrder[index]
-                                                        .branch!
-                                                        .branchLogoImage!,
-                                                  );
-                                          },
+                                                            .branchAddress!),
+                                                  ));
+                                                },
+                                                child: Builder(
+                                                  builder: (context) {
+                                                    // Get.put<Product>(
+                                                    //   _homeViewGetXController.products[index],
+                                                    //   tag:
+                                                    //       '${_homeViewGetXController.products[index].id}home',
+                                                    // );
+                                                    return _addressesViewGetXController
+                                                            .isAddressesLoading
+                                                        ? Container()
+                                                        : PreviousOrderWidget(
+                                                            addressLat: HomeView
+                                                                        .result ==
+                                                                    null
+                                                                ? _addressesViewGetXController
+                                                                            .addresses
+                                                                            .length ==
+                                                                        0
+                                                                    ? null
+                                                                    : _addressesViewGetXController
+                                                                        .addresses[
+                                                                            0]
+                                                                        .altitude
+                                                                : HomeView
+                                                                        .result[
+                                                                    'lat'],
+                                                            addressLong: HomeView
+                                                                        .result ==
+                                                                    null
+                                                                ? _addressesViewGetXController
+                                                                            .addresses
+                                                                            .length ==
+                                                                        0
+                                                                    ? null
+                                                                    : _addressesViewGetXController
+                                                                        .addresses[
+                                                                            0]
+                                                                        .longitude
+                                                                : HomeView
+                                                                        .result[
+                                                                    'long'],
+                                                            storeName: controller
+                                                                .customerOrder[
+                                                                    index]
+                                                                .branch!
+                                                                .storeName!,
+                                                            storeAddress: controller
+                                                                .customerOrder[
+                                                                    index]
+                                                                .branch!
+                                                                .branchAddress!,
+                                                            storeImage: controller
+                                                                .customerOrder[
+                                                                    index]
+                                                                .branch!
+                                                                .branchLogoImage!,
+                                                          );
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
-                                      );
-                                    },
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                            ],
                           ),
 
                     GetBuilder<HomeViewGetXController>(

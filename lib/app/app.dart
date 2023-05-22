@@ -46,8 +46,8 @@ class _MyAppState extends State<MyApp> {
     _internetCheckerGetxController.startMonitoringConnectivity(navigatorKey: navigatorKey);
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) {
-      if (message != null && message.data["screen"] != null) {
-        var route = message.data["screen"];
+      if (message != null && message.data["screenType1"] != null) {
+        var route = message.data["screenType1"];
         navigatorKey.currentState!.pushNamed('/$route');
       }
     });

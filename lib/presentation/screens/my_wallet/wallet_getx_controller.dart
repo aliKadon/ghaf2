@@ -32,6 +32,7 @@ class WalletGetxController extends GetxController with Helpers {
       apiResponse = await _walletApiController.topUp(
           paymentMethodId: paymentMethodId, amount: amount);
       update();
+      Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => TransactionScreen(),
       ));
@@ -48,6 +49,7 @@ class WalletGetxController extends GetxController with Helpers {
       apiResponse1 =
           await _walletApiController.sharePoints(email: email, amount: amount);
       update();
+      Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => TransactionScreen(),
       ));

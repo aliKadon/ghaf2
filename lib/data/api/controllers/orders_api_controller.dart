@@ -7,6 +7,7 @@ import 'package:ghaf_application/domain/model/address.dart';
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/order_to_pay.dart';
 import 'package:ghaf_application/domain/model/schedualed_order.dart';
+import 'package:ghaf_application/presentation/screens/orders/schedual_order_orders.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../domain/model/order.dart';
@@ -229,5 +230,22 @@ class OrdersApiController with ApiHelper {
       }
     }
     return [];
+  }
+
+  Future<ScheduledOrder?> getScheduleOrderById({String? id}) async {
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Orders/get-scheduled-order-by-id?id=$id');
+    var response = await http.get(url, headers: headers);
+
+    print('======================schedule order by id');
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ScheduledOrder.fromJson(jsonData['data']);
+      }
+    }
+    return null;
   }
 }

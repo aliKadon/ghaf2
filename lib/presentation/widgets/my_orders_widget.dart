@@ -37,7 +37,7 @@ class MyOrdersWidget extends StatelessWidget {
               height: AppSize.s92,
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
-                  ImageAssets.groceryOrder,
+                  ImageAssets.logo2,
                   height: AppSize.s92,
                 );
               },

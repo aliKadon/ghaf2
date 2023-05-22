@@ -101,7 +101,13 @@ class ShortcutsWidget extends StatelessWidget with Helpers{
                 ),
                 child: Column(
                   children: [
-                    Image.asset(
+                    text == AppLocalizations.of(context)!.offers ? Image.asset(
+                      // base64Decode(category.categoryImage ?? ''),
+                      imageUrl,
+                      height: AppSize.s50,
+                      color: ColorManager.primary,
+                      fit: BoxFit.fill,
+                    ) : Image.asset(
                       // base64Decode(category.categoryImage ?? ''),
                       imageUrl,
                       width: text == AppLocalizations.of(context)!.only_on_ghaf? AppSize.s44:AppSize.s34,

@@ -22,8 +22,11 @@ class SellerGetxController extends GetxController with Helpers {
   void getSellerDetails({required BuildContext context}) async {
     try {
       sellerDetails = await _regularSellerApiController.getSellerDetails();
-      update();
+      print('======================seller active');
+      print(sellerDetails!.active);
       _customDialogSellerStatus(context: context);
+      update();
+
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
     }

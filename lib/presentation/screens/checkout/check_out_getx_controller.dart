@@ -8,12 +8,14 @@ import 'package:ghaf_application/data/api/controllers/payment_method_api_control
 import 'package:ghaf_application/domain/model/api_response.dart';
 import 'package:ghaf_application/domain/model/promo_code.dart';
 import 'package:ghaf_application/domain/model/schedualed_order.dart';
+import 'package:ghaf_application/presentation/screens/cart_view/cart_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/checkout_view.dart';
 import 'package:ghaf_application/presentation/screens/checkout/payment_method_redeem_point_screen.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../app/constants.dart';
 import '../../../domain/model/address.dart';
+import '../../../domain/model/meal_times.dart';
 import '../../../domain/model/order.dart';
 import '../../../domain/model/order_to_pay.dart';
 import '../../../domain/model/payment_mathod.dart';
@@ -30,11 +32,13 @@ class CheckOutGetxController extends GetxController with Helpers {
   List<Order> doneorder = [];
   List<ScheduledOrder> scheduleOrders = [];
   List<ScheduledOrder> scheduleOrders1 = [];
+  ScheduledOrder? scheduleOrderById;
   List<String> storeName = [];
   List<dynamic> imageName = [];
   List<String> storeNamePreOrder = [];
   List<dynamic> imageNamePreOrder = [];
   Order? order;
+  var isLoadingScheduleOrderById = true;
   var isLoading = true.obs;
   var isLoadingOrderToPay = true;
   var isLoadingOrderById = true;
@@ -44,11 +48,14 @@ class CheckOutGetxController extends GetxController with Helpers {
   var distance = '0';
   var duration = '0';
   var isLoadingDistance = true;
+  List<String> hours = ['0'];
 
   late final PaymentMethodApiController _paymentMethodApiController =
       PaymentMethodApiController();
 
   final OrdersApiController _ordersApiController = OrdersApiController();
+
+  final CartViewGetXController _cartViewGetXController = Get.put(CartViewGetXController());
 
   void getPaymentMethod({required BuildContext context}) async {
     try {
@@ -151,11 +158,13 @@ class CheckOutGetxController extends GetxController with Helpers {
           SheduleInfo: SheduleInfo,
           useRedeemPoints: useRedeemPoints);
       if (apiResponse.status == 200) {
+
         Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => CheckOutConfirmView(orderId: orderId),
         ));
-        showSnackBar(context, message: apiResponse.message);
+        _cartViewGetXController.emptyBasket(context);
+        // showSnackBar(context, message: apiResponse.message);
       } else {
         Navigator.of(context).pop();
         showSnackBar(context, message: apiResponse.message, error: true);
@@ -245,20 +254,28 @@ class CheckOutGetxController extends GetxController with Helpers {
   }
 
   void getOrderToPay({required BuildContext context}) async {
-    orderToPay = await _ordersApiController.getReadyOrdersToPay();
-    isLoadingOrderToPay = false;
-    update(["orderToPay"]);
 
 
-    // try {
-    //   orderToPay = await _ordersApiController.getReadyOrdersToPay();
-    //   isLoadingOrderToPay = false;
-    //   update(["orderToPay"]);
-    // } catch (error) {
-    //   print('===============error in get order to pay');
-    //   print(error.toString());
-    //   // showSnackBar(context, message: error.toString());
-    // }
+    try {
+      orderToPay = await _ordersApiController.getReadyOrdersToPay();
+      isLoadingOrderToPay = false;
+      for (MealTimes meal in orderToPay[orderToPay.length - 1].orderDetails!.branch!.mealTimes! ) {
+        var startTime = int.parse(meal.startTime!);
+        var endTime = int.parse(meal.endTime!);
+        print('==========================hours hours1');
+        print(startTime);
+        print(endTime);
+        while(startTime < endTime) {
+          hours.add(startTime.toString());
+          startTime = startTime + 1;
+        }
+      }
+      update(["orderToPay"]);
+    } catch (error) {
+      print('===============error in get order to pay');
+      print(error.toString());
+      // showSnackBar(context, message: error.toString());
+    }
   }
 
   void getOrderById(
@@ -282,7 +299,7 @@ class CheckOutGetxController extends GetxController with Helpers {
           doneorder.add(order);
         }
       }
-    customerOrder = orders.reversed.toList();
+    customerOrder = orders;
       update();
     } catch (error) {
       showSnackBar(context, message: error.toString(), error: true);
@@ -341,6 +358,18 @@ class CheckOutGetxController extends GetxController with Helpers {
     try {
       scheduleOrders1 =
       await _ordersApiController.getScheduleOrder(storeName: store);
+      update();
+    }catch(e) {
+      showSnackBar(context, message: e.toString(),error: true);
+    }
+  }
+
+
+  void getSchedualOrderById({required BuildContext context, String? id}) async{
+    try {
+      scheduleOrderById =
+      await _ordersApiController.getScheduleOrderById(id: id);
+      isLoadingScheduleOrderById = false;
       update();
     }catch(e) {
       showSnackBar(context, message: e.toString(),error: true);

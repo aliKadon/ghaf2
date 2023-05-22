@@ -7,6 +7,7 @@ import 'package:ghaf_application/presentation/screens/main_view.dart';
 import '../../../../app/utils/helpers.dart';
 import '../../../../data/api/controllers/user_details_api_controller.dart';
 import '../../../../domain/model/user.dart';
+import '../../seller/individual_seller/products_with_out_details_seller_view.dart';
 
 class ProfileSettingGetxController extends GetxController with Helpers {
   late final UserDetailsApiController _userDetailsApiController =
@@ -28,6 +29,7 @@ class ProfileSettingGetxController extends GetxController with Helpers {
       isLoading = false;
     } catch (error) {
       // showSnackBar(context, message: error.toString(),error: true);
+      print('==============================error subscribe');
       print(error);
     }
   }
@@ -45,6 +47,27 @@ class ProfileSettingGetxController extends GetxController with Helpers {
           telephone: telephone);
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => MainView(),
+      ));
+
+      showSnackBar(context, message: apiResponse.message);
+    } catch (error) {
+      showSnackBar(context, message: error.toString());
+    }
+  }
+
+  void editUserDetailsSeller(
+      {required BuildContext context,
+        required String firstName,
+        required String lastName,
+        required String telephone}) async {
+    try {
+      apiResponse = await _userDetailsApiController.updateUserDetails(
+          context: context,
+          firstName: firstName,
+          lastName: lastName,
+          telephone: telephone);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => ProductsWithOutDetailsSellerView(),
       ));
       showSnackBar(context, message: apiResponse.message);
     } catch (error) {

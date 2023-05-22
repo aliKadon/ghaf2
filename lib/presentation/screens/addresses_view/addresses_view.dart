@@ -27,13 +27,20 @@ class AddressesView extends StatefulWidget {
 class _AddressesViewState extends State<AddressesView> {
   // controller.
   late final AddressesViewGetXController _addressesViewGetXController =
-      Get.find<AddressesViewGetXController >();
+      Get.put<AddressesViewGetXController >(AddressesViewGetXController(context: context));
 
   // dispose.
   @override
   void dispose() {
     Get.delete<AddressesViewGetXController>();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _addressesViewGetXController.onInit();
+    super.initState();
   }
   
   @override
@@ -52,9 +59,9 @@ class _AddressesViewState extends State<AddressesView> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      _addressesViewGetXController.onInit();
 
                       Navigator.pop(context);
-                      _addressesViewGetXController.getMyAddresses();
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.038,

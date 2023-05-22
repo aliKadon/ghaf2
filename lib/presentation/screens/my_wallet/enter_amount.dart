@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/transaction.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet/wallet_getx_controller.dart';
 
@@ -24,7 +25,7 @@ class EnterAmount extends StatefulWidget {
   State<EnterAmount> createState() => _EnterAmountState();
 }
 
-class _EnterAmountState extends State<EnterAmount> {
+class _EnterAmountState extends State<EnterAmount> with Helpers {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _amountTextController = TextEditingController();
 
@@ -277,9 +278,10 @@ class _EnterAmountState extends State<EnterAmount> {
                 height: AppSize.s73,
                 width: double.infinity,
                 padding: EdgeInsets.all(AppSize.s12),
-                child: widget.typeOfPage == 0
+                child: _emailTextController.text.isEmpty
                     ? ElevatedButton(
                     onPressed: () {
+                      showLoadingDialog(context: context,title: 'Loading.');
                       _walletGetxController.topUp(
                           context: context,
                           paymentMethodId: widget.paymentMethodId,
@@ -291,6 +293,7 @@ class _EnterAmountState extends State<EnterAmount> {
                     child: Text(AppLocalizations.of(context)!.top_up))
                     : ElevatedButton(
                     onPressed: () {
+                      showLoadingDialog(context: context,title: 'Loading.');
                       _walletGetxController.sharePoint(context: context,
                           email: _emailTextController.text,
                           amount: int.parse(_amountTextController.text));

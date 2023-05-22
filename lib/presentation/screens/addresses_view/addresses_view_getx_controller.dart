@@ -50,8 +50,8 @@ class AddressesViewGetXController extends GetxController with Helpers {
       if (AppSharedData.currentUser == null) {
         isAddressesLoading = false;
       }else if (AppSharedData.currentUser != null){
-        debugPrint('error : ${error.toString()}');
-        showSnackBar(context, message: error.toString(), error: true);
+        // debugPrint('error : ${error.toString()}');
+        // showSnackBar(context, message: error.toString(), error: true);
         isAddressesLoading = false;
       }
     }

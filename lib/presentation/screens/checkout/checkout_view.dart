@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,7 +42,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
   late final CheckOutGetxController _checkOutGetxController =
       Get.put(CheckOutGetxController());
   late final AddressesViewGetXController _addressesViewGetXController =
-      Get.put(AddressesViewGetXController(context: context));
+      Get.find<AddressesViewGetXController>();
 
   final TextEditingController _enterPromoCode = TextEditingController();
   final TextEditingController _sendNote = TextEditingController();
@@ -71,10 +70,10 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
 
   final paymentController = Get.put(PaymentController());
 
+
   bool _checkData() {
     if (selected != null &&
-        widget.cardNumber != null &&
-        widget.paymentMethodId != null) {
+        cardNumber != null ) {
       return true;
     }
     return false;
@@ -103,6 +102,16 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _addressesViewGetXController.getMyAddresses(notifyLoading: true);
+
+  }
+
+  var cardNumber;
+
   var deliveryFees = 0;
   var result;
 
@@ -125,17 +134,29 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
         body: GetBuilder<CheckOutGetxController>(
             id: "orderToPay",
             builder: (controller) {
-              if (controller.orderToPay.length != 0) {
-                for (MealTimes meal in controller
-                    .orderToPay[controller.orderToPay.length - 1]
-                    .orderDetails!
-                    .branch!
-                    .mealTimes!) {
-                  hours.add(meal.startTime!);
-                  hours.add(meal.endTime!);
-                }
-              }
-
+              // if (_checkOutGetxController.orderToPay.length != 0) {
+              //   var startTime;
+              //   var endTime;
+              //   for (MealTimes meal in _checkOutGetxController
+              //       .orderToPay[_checkOutGetxController.orderToPay.length - 1]
+              //       .orderDetails!
+              //       .branch!
+              //       .mealTimes!) {
+              //     startTime = int.parse(meal.startTime!);
+              //     endTime = int.parse(meal.endTime!);
+              //     print('====================meal time');
+              //     print(startTime);
+              //     print(endTime);
+              //     var x = startTime;
+              //     if (x != endTime) {
+              //       hours.add(x.toString());
+              //       x = x + 1;
+              //     }
+              //
+              //     // hours.add(meal.startTime!);
+              //     // hours.add(meal.endTime!);
+              //   }
+              // }
               return controller.isLoadingOrderToPay
                   ? Center(
                       child: Container(
@@ -187,7 +208,9 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                             MediaQuery.of(context).size.width *
                                                 0.08,
                                         child: Image.asset(
-                                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                                          SharedPrefController().lang1 == 'ar'
+                                              ? IconsAssets.arrow2
+                                              : IconsAssets.arrow,
                                           height: AppSize.s18,
                                           width: AppSize.s10,
                                         ),
@@ -256,15 +279,15 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                               selected = index;
                                               selectedTime = index;
                                               if (_checkOutGetxController
-                                                          .orderToPay[
-                                                              _checkOutGetxController
-                                                                      .orderToPay
-                                                                      .length -
-                                                                  1]
-                                                          .availableDeliveryMethod?[
-                                                              selected]
-                                                          .methodName ==
-                                                      'Pick up') {
+                                                      .orderToPay[
+                                                          _checkOutGetxController
+                                                                  .orderToPay
+                                                                  .length -
+                                                              1]
+                                                      .availableDeliveryMethod?[
+                                                          selected]
+                                                      .methodName ==
+                                                  'Pick up') {
                                                 isSelectedDelivery = false;
                                               } else {
                                                 isSelectedDelivery = true;
@@ -415,8 +438,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         height: AppSize.s58,
                                         padding: EdgeInsets.all(AppSize.s12),
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(AppSize.s10),
+                                            borderRadius: BorderRadius.circular(
+                                                AppSize.s10),
                                             color: ColorManager.white,
                                             border: Border.all(
                                                 color: ColorManager.greyLight)),
@@ -448,6 +471,17 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                           'please select delivery method first.',
                                                       error: true);
                                                 } else {
+                                                  print(
+                                                      '========================methode name');
+                                                  print(_checkOutGetxController
+                                                      .orderToPay[
+                                                          _checkOutGetxController
+                                                                  .orderToPay
+                                                                  .length -
+                                                              1]
+                                                      .availableDeliveryMethod![
+                                                          selected]
+                                                      .methodName!);
                                                   if (_checkOutGetxController
                                                           .orderToPay[
                                                               _checkOutGetxController
@@ -460,7 +494,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       'Pick up') {
                                                     result =
                                                         await showArrivalTimeTodaySheet(
-                                                            mealTimes: hours,
+                                                            mealTimes: controller.hours,
                                                             context: context,
                                                             text:
                                                                 '${AppLocalizations.of(context)!.arrival_time}');
@@ -473,10 +507,10 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                           .availableDeliveryMethod![
                                                               selected]
                                                           .methodName! ==
-                                                      'Delivery') {
+                                                      'Delivery driver') {
                                                     result =
                                                         await showArrivalTimeTodaySheet(
-                                                            mealTimes: hours,
+                                                            mealTimes: controller.hours,
                                                             context: context,
                                                             text: AppLocalizations
                                                                     .of(context)!
@@ -493,7 +527,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       'Car window') {
                                                     result =
                                                         await showArrivalTimeAsapSheet(
-                                                            mealTimes: hours,
+                                                            mealTimes: controller.hours,
                                                             context: context,
                                                             text: AppLocalizations
                                                                     .of(context)!
@@ -510,7 +544,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       'Express') {
                                                     result =
                                                         await showArrivalTimeAsapSheet(
-                                                            mealTimes: hours,
+                                                            mealTimes: controller.hours,
                                                             context: context,
                                                             text: AppLocalizations
                                                                     .of(context)!
@@ -548,7 +582,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                   height: AppSize.s58,
                                   padding: EdgeInsets.all(AppSize.s12),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(AppSize.s10),
+                                      borderRadius:
+                                          BorderRadius.circular(AppSize.s10),
                                       color: ColorManager.white,
                                       border: Border.all(
                                           color: ColorManager.greyLight)),
@@ -557,7 +592,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       SizedBox(
                                         width: AppSize.s20,
                                       ),
-                                      widget.cardNumber == null
+                                      cardNumber == null
                                           ? Text(
                                               AppLocalizations.of(context)!
                                                   .select_the_payment_method,
@@ -575,7 +610,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                   width: AppSize.s24,
                                                 ),
                                                 Text(
-                                                    '**** **** **** ${widget.cardNumber}',
+                                                    '**** **** **** ${cardNumber['cardNumber']}',
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -585,12 +620,15 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       // SizedBox(width: AppSize.s20,),
                                       Spacer(),
                                       InkWell(
-                                        onTap: () {
-                                          Navigator.of(context)
+                                        onTap: () async{
+                                          var cardNumber1 = await Navigator.of(context)
                                               .push(MaterialPageRoute(
                                             builder: (context) =>
                                                 PaymentMethodRedeemPointScreen(),
                                           ));
+                                          setState(() {
+                                           cardNumber = cardNumber1;
+                                          });
                                         },
                                         child: Icon(
                                           Icons.arrow_drop_down_circle_rounded,
@@ -728,11 +766,14 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         itemBuilder: (context, index) {
                                           return Row(
                                             children: [
-                                              Text(
-                                                '${_checkOutGetxController.orderToPay[_checkOutGetxController.orderToPay.length - 1].orderDetails!.items![index].quanity} x ${_checkOutGetxController.orderToPay[_checkOutGetxController.orderToPay.length - 1].orderDetails!.items![index].name}',
-                                                style: getSemiBoldStyle(
-                                                  color: ColorManager.grey,
-                                                  fontSize: FontSize.s16,
+                                              Container(
+                                                width: AppSizeWidth.s258,
+                                                child: Text(
+                                                  '${_checkOutGetxController.orderToPay[_checkOutGetxController.orderToPay.length - 1].orderDetails!.items![index].quanity} x ${_checkOutGetxController.orderToPay[_checkOutGetxController.orderToPay.length - 1].orderDetails!.items![index].name}',
+                                                  style: getSemiBoldStyle(
+                                                    color: ColorManager.grey,
+                                                    fontSize: FontSize.s16,
+                                                  ),
                                                 ),
                                               ),
                                               Spacer(),
@@ -1048,12 +1089,12 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                 height: AppSize.s20,
                                                 color: ColorManager.primaryDark,
                                               ),
-
                                       ),
                                     ),
                                   ]),
                                 ),
                                 GetBuilder<AddressesViewGetXController>(
+                                  id: 'isAddressesLoading',
                                   builder: (controller) => ListView.builder(
                                     shrinkWrap: true,
                                     physics: BouncingScrollPhysics(),
@@ -1063,21 +1104,24 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                         onTap: () {
                                           setState(() {
                                             selectedAddress = index;
-                                            _checkOutGetxController.getDurationGoogleMap(
-                                                LatOne: SharedPrefController()
-                                                    .locationLat,
-                                                LonOne: SharedPrefController()
-                                                    .locationLong,
-                                                LatTow: double.parse(
-                                                    _addressesViewGetXController
-                                                        .addresses[
-                                                            selectedAddress]
-                                                        .altitude!),
-                                                LonTow: double.parse(
-                                                    _addressesViewGetXController
-                                                        .addresses[
-                                                            selectedAddress]
-                                                        .longitude!));
+                                            _checkOutGetxController
+                                                .getDurationGoogleMap(
+                                                    LatOne:
+                                                        SharedPrefController()
+                                                            .locationLat,
+                                                    LonOne:
+                                                        SharedPrefController()
+                                                            .locationLong,
+                                                    LatTow: double.parse(
+                                                        _addressesViewGetXController
+                                                            .addresses[
+                                                                selectedAddress]
+                                                            .altitude!),
+                                                    LonTow: double.parse(
+                                                        _addressesViewGetXController
+                                                            .addresses[
+                                                                selectedAddress]
+                                                            .longitude!));
                                           });
                                           print(
                                               '====================address checkout');
@@ -1422,7 +1466,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(AppSize.s10),
+                                      borderRadius:
+                                          BorderRadius.circular(AppSize.s10),
                                       border: Border.all(
                                           color: ColorManager.greyLight)),
                                   child: TextField(
@@ -1479,7 +1524,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                           .addresses[
                                                       selectedAddress],
                                               PaymentMethodId:
-                                                  widget.paymentMethodId!,
+                                              cardNumber['paymentMethodId']!,
                                               useRedeemPoints: isSwitched,
                                               useWallet: isUseWallet,
                                               usePayLater: isSwitchedPayLater,
@@ -1506,16 +1551,17 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                                       ? null
                                                       : _enterPromoCode.text,
                                             );
-                                          }else {
-                                            ScaffoldMessenger.of(context)
-                                              ..hideCurrentSnackBar()
-                                              ..showSnackBar(SnackBar(
-                                                content: Text(
-                                                    AppLocalizations.of(
-                                                        context)!
-                                                        .enter_required_data),
-                                                backgroundColor: Colors.red,
-                                              ));
+                                          } else {
+                                            _customDialogProgressCheckData(context: context,paymentMethodId:cardNumber == null ? null :cardNumber['paymentMethodId'],deliveryMethodIndex:  selected,selectedAddress: selectedAddress);
+                                            // ScaffoldMessenger.of(context)
+                                            //   ..hideCurrentSnackBar()
+                                            //   ..showSnackBar(SnackBar(
+                                            //     content: Text(
+                                            //         AppLocalizations.of(
+                                            //                 context)!
+                                            //             .enter_required_data),
+                                            //     backgroundColor: Colors.red,
+                                            //   ));
                                           }
 
                                           // if (_checkData()) {
@@ -1566,8 +1612,8 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                     Container(
                                       height: AppSize.s55,
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(AppSize.s10)),
+                                          borderRadius: BorderRadius.circular(
+                                              AppSize.s10)),
                                       child: ElevatedButton(
                                           style: ButtonStyle(
                                               backgroundColor:
@@ -1663,6 +1709,112 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
     // birthDate = Helpers.formatDate(date);
     // birthDateTextEditingController.text = birthDate!;
   }
+}
+
+void _customDialogProgressCheckData({int? deliveryMethodIndex,
+  String? paymentMethodId, int? selectedAddress ,required BuildContext context}) async {
+  var deliveryMethod = '';
+  var paymentMethod = '';
+  var address = '';
+  if (deliveryMethodIndex == null) {
+    deliveryMethod = AppLocalizations.of(context)!.delivery_method;
+  }
+  if (paymentMethodId == '' || paymentMethodId == null) {
+    paymentMethod = AppLocalizations.of(context)!.payment_method;
+  }
+  if (selectedAddress == null) {
+    address = AppLocalizations.of(context)!.address;
+  }
+  showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Container(
+            height: AppSize.s306,
+            width: AppSize.s306,
+            padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+            decoration: BoxDecoration(
+              color: ColorManager.white,
+              borderRadius: BorderRadius.circular(AppRadius.r8),
+            ),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // SizedBox(
+                  //   height: AppSize.s28,
+                  // ),
+                  Image.asset(
+                    ImageAssets.logo2,
+                    height: AppSize.s130,
+                    width: AppSize.s130,
+                  ),
+                  SizedBox(
+                    height: AppSize.s5,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      AppLocalizations.of(context)!.please_add,
+                      textAlign: TextAlign.center,
+                      style: getMediumStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s20),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppSize.s10,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '${deliveryMethod}\n${paymentMethod}\n${address}',
+                      textAlign: TextAlign.center,
+                      style: getMediumStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s14),
+                    ),
+                  ),
+                  // status == 400
+                  //     ? Container(
+                  //   alignment: Alignment.center,
+                  //   child: Text(
+                  //     AppLocalizations.of(context)!.check_your_email,
+                  //     textAlign: TextAlign.center,
+                  //     style: getMediumStyle(
+                  //         color: ColorManager.red,
+                  //         fontSize: FontSize.s16),
+                  //   ),
+                  // )
+                  //     :
+                  Container(),
+                  SizedBox(
+                    height: AppSize.s20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+
+                      // Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      width: AppSize.s110,
+                      height: AppSize.s38,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: ColorManager.primaryDark,
+                        borderRadius: BorderRadius.circular(AppRadius.r8),
+                      ),
+                      child: Text(
+                        'Ok',
+                        textAlign: TextAlign.center,
+                        style: getMediumStyle(color: ColorManager.white),
+                      ),
+                    ),
+                  ),
+                ]),
+          ),
+        );
+      });
 }
 
 void _infoDialog(BuildContext context, String text) async {

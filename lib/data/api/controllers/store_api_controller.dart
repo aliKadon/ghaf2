@@ -424,7 +424,6 @@ class StoreApiController with ApiHelper, Helpers {
     // print(response.data);
     if (response.statusCode == 200) {
       if (response.data['status'] == 200) {
-        showSnackBar(context, message: response.data['message']);
         return ApiResponse(
           message: response.data['message'],
           status: response.data['status'],
@@ -439,7 +438,7 @@ class StoreApiController with ApiHelper, Helpers {
     var response = await _dio.get(
       '/Product/get-my-basket',
       options: Options(
-        headers: headers,
+        headers: headers1,
       ),
     );
     // print('============================================');

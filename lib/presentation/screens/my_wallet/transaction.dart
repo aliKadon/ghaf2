@@ -93,7 +93,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Available credit',
+                      AppLocalizations.of(context)!.available_credit,
                       style: getRegularStyle(
                         color: ColorManager.primaryDark,
                         fontSize: FontSize.s18,
@@ -136,7 +136,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   height: AppSize.s4,
                                 ),
                                 Text(
-                                  'Top up',
+                                  AppLocalizations.of(context)!.top_up,
                                   style: getSemiBoldStyle(
                                     color: ColorManager.primaryDark,
                                     fontSize: FontSize.s16,
@@ -164,7 +164,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   height: AppSize.s4,
                                 ),
                                 Text(
-                                  'Add Credit',
+                                  AppLocalizations.of(context)!.add_credit1,
                                   style: getSemiBoldStyle(
                                     color: ColorManager.primaryDark,
                                     fontSize: FontSize.s16,
@@ -193,7 +193,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   height: AppSize.s4,
                                 ),
                                 Text(
-                                  'Manage',
+                                  AppLocalizations.of(context)!.manage,
                                   style: getSemiBoldStyle(
                                     color: ColorManager.primaryDark,
                                     fontSize: FontSize.s16,

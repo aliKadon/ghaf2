@@ -79,12 +79,15 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.name,
-                  style: TextStyle(
-                      color: ColorManager.primaryDark,
-                      fontWeight: FontWeight.w600,
-                      fontSize: FontSize.s14),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(
+                    widget.name,
+                    style: TextStyle(
+                        color: ColorManager.primaryDark,
+                        fontWeight: FontWeight.w600,
+                        fontSize: FontSize.s14),
+                  ),
                 ),
                 Text(
                   'item ${count!}',
@@ -149,7 +152,7 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                           Provider.of<ProductProvider>(context, listen: false)
                               .addOrRemoveFromCard(productId: widget.idProduct)
                               .then((value) =>
-                                  _cartViewGetXController.getMyCart());
+                                  _cartViewGetXController.getMyCart(context: context));
                         }
                         // _cartItem.decrement(
                         //     idProduct: widget.cartItemId,

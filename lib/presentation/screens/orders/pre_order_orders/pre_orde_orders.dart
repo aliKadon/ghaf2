@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:ghaf_application/presentation/screens/checkout/order_tracking_screen.dart';
 
 import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../resources/assets_manager.dart';
@@ -11,14 +12,11 @@ import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 import '../../../widgets/my_orders_widget.dart';
-
 import '../../checkout/check_out_getx_controller.dart';
 
-
-
 class PreOrderOrders extends StatefulWidget {
-
   final String branchName;
+
   PreOrderOrders({required this.branchName});
 
   @override
@@ -33,16 +31,19 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
   @override
   void initState() {
     // TODO: implement initState
-    _checkOutGetxController.getPreOrder1(context: context,branchName: widget.branchName);
+    _checkOutGetxController.getPreOrder1(
+        context: context, branchName: widget.branchName);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: GetBuilder<CheckOutGetxController>(
-          builder: (controller) =>  controller.preOrders.isEmpty
+          builder: (controller) =>
+          controller.preOrders.isEmpty
               ? Center(
             child: Text(AppLocalizations.of(context)!.no_product_found,
                 style: TextStyle(
@@ -52,10 +53,13 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
           )
               : Column(
             children: [
-              SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.06),
+              SizedBox(height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.06),
               Padding(
-                padding:  EdgeInsets.only(left: AppSize.s12, right: AppSize.s12),
+                padding: EdgeInsets.only(
+                    left: AppSize.s12, right: AppSize.s12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -64,10 +68,19 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.038,
-                        width: MediaQuery.of(context).size.width * 0.08,
+                        height:
+                        MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.038,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.08,
                         child: Image.asset(
-                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar'
+                              ? IconsAssets.arrow2
+                              : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -85,8 +98,10 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                   ],
                 ),
               ),
-              SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01),
+              SizedBox(height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.01),
               Divider(
                 color: ColorManager.greyLight,
                 thickness: 1,
@@ -112,30 +127,36 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                     },
                     child: Column(
                       children: [
-                        MyOrdersWidget(
-                            image: controller.preOrders[index].branch!.branchLogoImage!,
-                            statusName: controller
-                                .preOrders[index].statusName!,
-                            date: controller
-                                .preOrders[index].createDate!,
-                            price: (controller.preOrders[index]
-                                .orderCostForCustomer)
-                                .toString(),
-                            orderSequence: (controller
-                                .preOrders[index]
-                                .sequenceNumber)
-                                .toString(),
-                            branchName: controller
-                                .preOrders[index]
-                                .branch!
-                                .storeName!,
-                            branchAddress: controller
-                                .preOrders[index]
-                                .branch!
-                                .branchAddress ??
-                                null),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  OrderTrackingScreen(
+                                      orderId: controller.preOrders[index].id!,
+                                      source: controller.preOrders[index].deliveryPoint!,
+                                      destination: controller.preOrders[index].branch!.branchAddress!),));
+                          },
+                          child: MyOrdersWidget(
+                              image: controller.preOrders[index].branch!
+                                  .branchLogoImage!,
+                              statusName:
+                              controller.preOrders[index].statusName!,
+                              date:
+                              controller.preOrders[index].createDate!,
+                              price: (controller.preOrders[index]
+                                  .orderCostForCustomer)
+                                  .toString(),
+                              orderSequence: (controller
+                                  .preOrders[index].sequenceNumber)
+                                  .toString(),
+                              branchName: controller
+                                  .preOrders[index].branch!.storeName!,
+                              branchAddress: controller.preOrders[index]
+                                  .branch!.branchAddress ??
+                                  null),
+                        ),
                         Padding(
-                          padding:  EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: AppSize.s12, left: AppSize.s12),
                           child: Divider(
                             thickness: 1,

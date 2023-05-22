@@ -18,7 +18,6 @@ import '../resources/values_manager.dart';
 import 'home_view/home_view.dart';
 
 class MainView extends StatefulWidget {
-  const MainView({Key? key}) : super(key: key);
 
   @override
   State<MainView> createState() => _MainViewState();

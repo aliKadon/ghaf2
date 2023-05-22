@@ -104,6 +104,12 @@ class ImageAssets {
   static const String connectionLost = "$imagePath/connection_lost.png";
   static const String homeOffers = "$imagePath/home_offers.png";
   static const String delivery_gif = "$imagePath/gif_delivery.gif";
+  static const String driver_order = "$imagePath/driver_order.png";
+  static const String driver_order1 = "$imagePath/driver_order1.png";
+  static const String stuff_order = "$imagePath/stuff_order.png";
+  static const String initialize_order = "$imagePath/initialize_order.png";
+  static const String initialize_order1 = "$imagePath/initialize_order1.png";
+  static const String done_order = "$imagePath/done_order.png";
   static const String introduceSubscribeSeller = "$imagePath/introduce_subscribe_seller.png";
 }
 

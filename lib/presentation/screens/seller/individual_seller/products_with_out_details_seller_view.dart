@@ -7,11 +7,9 @@ import 'package:ghaf_application/presentation/resources/routes_manager.dart';
 import 'package:ghaf_application/presentation/resources/values_manager.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/store_seller_view.dart';
 
-import '../../../../app/preferences/shared_pref_controller.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/font_manager.dart';
 import '../../../resources/styles_manager.dart';
-import '../../main_view.dart';
 
 class ProductsWithOutDetailsSellerView extends StatefulWidget {
   const ProductsWithOutDetailsSellerView({Key? key}) : super(key: key);

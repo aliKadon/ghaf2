@@ -408,15 +408,22 @@ class _PaymentMethodRedeemPointScreenState
                                     },
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context)
-                                            .pushReplacement(MaterialPageRoute(
-                                          builder: (context) => CheckOutView(
-                                              cardNumber: controller
-                                                  .paymentMethod[index]
-                                                  .last4Digits,
-                                              paymentMethodId: controller
-                                                  .paymentMethod[index].id),
-                                        ));
+                                        Navigator.of(context).pop({
+                                          'cardNumber':controller
+                                              .paymentMethod[index]
+                                              .last4Digits,
+                                          'paymentMethodId' : controller
+                                              .paymentMethod[index].id
+                                        });
+                                        // Navigator.of(context)
+                                        //     .pushReplacement(MaterialPageRoute(
+                                        //   builder: (context) => CheckOutView(
+                                        //       cardNumber: controller
+                                        //           .paymentMethod[index]
+                                        //           .last4Digits,
+                                        //       paymentMethodId: controller
+                                        //           .paymentMethod[index].id),
+                                        // ));
                                       },
                                       child: Container(
                                         width: double.infinity,

@@ -296,7 +296,7 @@ class RouteGenerator {
           ),
         );
       case Routes.mainRoute:
-        return MaterialPageRoute(builder: (_) => const MainView());
+        return MaterialPageRoute(builder: (_) =>  MainView());
       case Routes.language:
         return MaterialPageRoute(builder: (_) => Language());
       case Routes.languageStore:

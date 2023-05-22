@@ -16,6 +16,7 @@ import 'package:ghaf_application/presentation/screens/seller/individual_seller/p
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/regular_seller/controller/seller_getx_controller.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/subscription_seller_view.dart';
 import 'package:ghaf_application/services/firebase_messaging_service.dart';
 import 'package:ghaf_application/services/local_notifications_service.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -81,6 +82,7 @@ class _SplashViewState extends State<SplashView> {
 
       // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainView(),));
       print('======================current user');
+      print(AppSharedData.currentUser);
       print(AppSharedData.currentUser?.role);
       print(AppSharedData.currentUser?.individualSellerSubmittedForm);
       print(AppSharedData.currentUser?.active);
@@ -91,10 +93,13 @@ class _SplashViewState extends State<SplashView> {
       if (AppSharedData.currentUser!.role == Constants.roleRegisterCustomer) {
         if (AppSharedData.currentUser!.active!) {
           Navigator.pushReplacementNamed(context, Routes.mainRoute);
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SubscriptionSellerView(),));
         } else {
           // Navigator.pushReplacementNamed(
           //     context, Routes.subscribeFromHomePage);
           Navigator.pushReplacementNamed(context, Routes.mainRoute);
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SubscriptionSellerView(),));
+
         }
       } else if (AppSharedData.currentUser!.role ==
           Constants.roleRegisterSeller) {

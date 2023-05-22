@@ -67,8 +67,8 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
                 ),
                 child: Image.network(widget.storeImage,
                     errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(ImageAssets.brStore);
-                }, fit: BoxFit.scaleDown),
+                  return Image.asset(ImageAssets.logo2);
+                }, fit: BoxFit.cover),
               ),
               SizedBox(
                 width: AppSize.s14,
@@ -78,12 +78,18 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
           SizedBox(
             height: AppSize.s8,
           ),
-          Text('${widget.storeName}',
-              style: TextStyle(
-                  fontSize: FontSize.s14,
-                  fontWeight: FontWeight.w400,
-                  color: ColorManager.primaryDark)),
+          Container(
+            width: AppSizeWidth.s110,
+            child: Text('${widget.storeName}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: FontSize.s14,
+                    fontWeight: FontWeight.w400,
+                    color: ColorManager.primaryDark)),
+          ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.timer,

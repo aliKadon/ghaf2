@@ -126,7 +126,7 @@ class _AddCreditScreenState extends State<AddCreditScreen> {
                               Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
                                 builder: (context) => EnterAmount(
-                                    typeOfPage: 1,
+                                    typeOfPage: 0,
                                     paymentMethodId: _checkOutGetxController
                                         .paymentMethod[index].id!),
                               ));

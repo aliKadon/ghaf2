@@ -68,7 +68,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     height: MediaQuery.of(context).size.height * 0.038,
                     width: MediaQuery.of(context).size.width * 0.08,
                     child: Image.asset(
-                      SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                      SharedPrefController().lang1 == 'ar'
+                          ? IconsAssets.arrow2
+                          : IconsAssets.arrow,
                       height: AppSize.s18,
                       width: AppSize.s10,
                     ),
@@ -132,37 +134,37 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.7,
-              child: controller.customerOrder == 0
-                  ? Column(
-                      children: [
-                        SizedBox(
-                          height: AppSize.s60,
-                        ),
-                        Image.asset(
-                          ImageAssets.emptyBasket,
-                          height: AppSize.s258,
-                        ),
-                        SizedBox(
-                          height: AppSize.s30,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.no_order_found,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s20,
-                              color: ColorManager.primaryDark),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.order_placed,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: FontSize.s16,
-                              color: ColorManager.greyLight),
-                        ),
-                      ],
-                    )
-                  : selected == 0
-                      ? ListView.builder(
+              child: selected == 0
+                  ? controller.customerOrder.length == 0
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              height: AppSize.s60,
+                            ),
+                            Image.asset(
+                              ImageAssets.emptyBasket,
+                              height: AppSize.s258,
+                            ),
+                            SizedBox(
+                              height: AppSize.s30,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.no_order_found,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: FontSize.s20,
+                                  color: ColorManager.primaryDark),
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.order_placed,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: FontSize.s16,
+                                  color: ColorManager.greyLight),
+                            ),
+                          ],
+                        )
+                      : ListView.builder(
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: controller.customerOrder.length,
@@ -173,12 +175,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                   builder: (context) => OrderTrackingScreen(
                                       orderId:
                                           controller.customerOrder[index].id!,
-                                      source: controller
-                                          .customerOrder[index].deliveryPoint == null ? controller
-                                          .customerOrder[index]
-                                          .branch!
-                                          .branchAddress! : controller
-                                          .customerOrder[index].deliveryPoint!,
+                                      source: controller.customerOrder[index]
+                                                  .deliveryPoint ==
+                                              null
+                                          ? controller.customerOrder[index]
+                                              .branch!.branchAddress!
+                                          : controller.customerOrder[index]
+                                              .deliveryPoint!,
                                       destination: controller
                                           .customerOrder[index]
                                           .branch!
@@ -211,7 +214,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               .branchAddress ??
                                           null),
                                   Padding(
-                                    padding:  EdgeInsets.only(
+                                    padding: EdgeInsets.only(
                                         right: AppSize.s12, left: AppSize.s12),
                                     child: Divider(
                                       thickness: 1,
@@ -223,70 +226,108 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             );
                           },
                         )
-                      : selected == 1
-                          // ? PreOrderWidget(storeName: 'Albike',)
-                          ? _checkOutGetxController.storeNamePreOrder.length ==
-                                  0
-                              ? Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!
-                                        .no_product_found,
-                                    style:
-                                        TextStyle(color: ColorManager.primary),
+                  : selected == 1
+                      // ? PreOrderWidget(storeName: 'Albike',)
+                      ? _checkOutGetxController.storeNamePreOrder.length == 0
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: AppSize.s60,
+                                ),
+                                Image.asset(
+                                  ImageAssets.emptyBasket,
+                                  height: AppSize.s258,
+                                ),
+                                SizedBox(
+                                  height: AppSize.s30,
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)!.no_order_found,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: FontSize.s20,
+                                      color: ColorManager.primaryDark),
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)!.order_placed,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: FontSize.s16,
+                                      color: ColorManager.greyLight),
+                                ),
+                              ],
+                            )
+                          : ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: _checkOutGetxController
+                                  .storeNamePreOrder.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => PreOrderOrders(
+                                          branchName: _checkOutGetxController
+                                              .storeNamePreOrder[index]),
+                                    ));
+                                  },
+                                  child: PreOrderWidget(
+                                    image: _checkOutGetxController
+                                        .imageNamePreOrder[index]['image'],
+                                    storeName: _checkOutGetxController
+                                        .storeNamePreOrder[index],
                                   ),
+                                );
+                              },
+                            )
+                      : selected == 2
+                          ? _checkOutGetxController.storeName.length == 0
+                              ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: AppSize.s60,
+                                    ),
+                                    Image.asset(
+                                      ImageAssets.emptyBasket,
+                                      height: AppSize.s258,
+                                    ),
+                                    SizedBox(
+                                      height: AppSize.s30,
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .no_order_found,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: FontSize.s20,
+                                          color: ColorManager.primaryDark),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .order_placed,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: FontSize.s16,
+                                          color: ColorManager.greyLight),
+                                    ),
+                                  ],
                                 )
                               : ListView.builder(
                                   physics: BouncingScrollPhysics(),
-                                  itemCount: _checkOutGetxController
-                                      .storeNamePreOrder.length,
+                                  itemCount:
+                                      _checkOutGetxController.storeName.length,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) => PreOrderOrders(
-                                              branchName:
-                                                  _checkOutGetxController
-                                                          .storeNamePreOrder[
-                                                      index]),
-                                        ));
-                                      },
-                                      child: PreOrderWidget(
-                                        image: _checkOutGetxController
-                                            .imageNamePreOrder[index]['image'],
-                                        storeName: _checkOutGetxController
-                                            .storeNamePreOrder[index],
-                                      ),
+                                    return PreOrderWidget2(
+                                      image: _checkOutGetxController
+                                          .imageName[index]['image'],
+                                      storeName: _checkOutGetxController
+                                          .storeName[index],
                                     );
                                   },
                                 )
-                          : selected == 2
-                              ? _checkOutGetxController.storeName.length == 0
-                                  ? Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!
-                                            .no_product_found,
-                                        style: TextStyle(
-                                            color: ColorManager.primary),
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      physics: BouncingScrollPhysics(),
-                                      itemCount: _checkOutGetxController
-                                          .storeName.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return PreOrderWidget2(
-
-                                          image: _checkOutGetxController
-                                              .imageName[index]['image'],
-                                          storeName: _checkOutGetxController
-                                              .storeName[index],
-                                        );
-                                      },
-                                    )
-                              : Container(),
+                          : Container(),
             )
           ],
         ),

@@ -62,6 +62,7 @@ class FirebaseMessagingService {
       print(message.data.toString());
       print(message.notification?.title);
       print(message.notification?.body);
+      print(message.data['notiHeader1']);
       print(message);
       RemoteNotification? notification = message.notification;
       if (notification != null) {
@@ -93,7 +94,7 @@ class FirebaseMessagingService {
       // on message opened app.
       if(message.data != null || message.data.isEmpty) {
         print('=====================there is data and the screen is :');
-        print(message.data['screen']);
+        print(message.data['screenType1']);
         // Get.toNamed('/${message.data['screen']}');
         c= 'ok';
 

@@ -7,6 +7,7 @@ import '../../domain/model/store_delivery_cost.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
+import '../resources/styles_manager.dart';
 import '../resources/values_manager.dart';
 
 class StoreWidget extends StatefulWidget {
@@ -66,29 +67,41 @@ class _StoreWidgetState extends State<StoreWidget> {
                       ),
                 SizedBox(width: AppSize.s20),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${widget.storeName}',
-                          style: TextStyle(
-                              color: ColorManager.primaryDark,
-                              fontWeight: FontWeight.w600,
-                              fontSize: AppSize.s16),
-                        ),
-                        SizedBox(
-                          width: AppSize.s60,
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.yellow,
-                        ),
-                        Text('${widget.storeStars}'),
-                        SizedBox(
-                          width: AppSize.s10,
-                        ),
-                        Text('(${widget.reviewCount}+)')
-                      ],
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${widget.storeName}',
+                            style: TextStyle(
+                                color: ColorManager.primaryDark,
+                                fontWeight: FontWeight.w600,
+                                fontSize: AppSize.s16),
+                          ),
+                          // SizedBox(
+                          //   width: AppSizeWidth.s40,
+                          // ),
+                          Spacer(),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Colors.yellow,
+                              ),
+                              Text('${widget.storeStars}'),
+                              SizedBox(
+                                width: AppSize.s10,
+                              ),
+                              Text('(${widget.reviewCount}+)')
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     Container(
                       width: AppSize.s222,

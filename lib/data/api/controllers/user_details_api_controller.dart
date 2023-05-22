@@ -90,4 +90,21 @@ class UserDetailsApiController with ApiHelper, Helpers {
     }
     return failedResponse;
   }
+
+  Future<ApiResponse> deleteAccount() async {
+    var url = Uri.parse(
+        '${Constants.baseUrl}/Auth/delete-user-account');
+    var response = await http.post(url, headers: headers1);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if (jsonData['status'] == 200) {
+        return ApiResponse(
+            message: jsonData['message'], status: jsonData['status']);
+      }
+    }
+    return failedResponse;
+  }
+
+
 }

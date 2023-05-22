@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/data/api/controllers/user_details_api_controller.dart';
 import 'package:ghaf_application/presentation/screens/main_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 
 import '../../../domain/model/api_response.dart';
@@ -25,6 +26,45 @@ class ProfileGetxController extends GetxController with Helpers {
           oldPassword: oldPassword,
           newPassword: newPassword,
           confirmPassword: confirmPassword);
+      Navigator.of(context).pushReplacement(CupertinoDialogRoute(
+          builder: (context) => MainView(), context: context));
+      showSnackBar(context, message: apiResponse.message);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  void changePasswordSeller(
+      {required BuildContext context, required String oldPassword,
+        required String newPassword,
+        required String confirmPassword}) async {
+    try {
+      apiResponse = await _userDetailsApiController.changePassword(
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword);
+      Navigator.of(context).pushReplacement(CupertinoDialogRoute(
+          builder: (context) => ProductsWithOutDetailsSellerView(), context: context));
+      showSnackBar(context, message: apiResponse.message);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  void deleteAccount({required BuildContext context}) async {
+    try {
+      apiResponse = await _userDetailsApiController.deleteAccount();
+      Navigator.of(context).pushReplacement(CupertinoDialogRoute(
+          builder: (context) => MainView(), context: context));
+      showSnackBar(context, message: apiResponse.message);
+    } catch (error) {
+      showSnackBar(context, message: error.toString(), error: true);
+    }
+  }
+
+  void deleteAccountSeller({required BuildContext context}) async {
+    try {
+      apiResponse = await _userDetailsApiController.deleteAccount();
       Navigator.of(context).pushReplacement(CupertinoDialogRoute(
           builder: (context) => MainView(), context: context));
       showSnackBar(context, message: apiResponse.message);
