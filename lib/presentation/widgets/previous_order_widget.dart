@@ -82,6 +82,7 @@ class _PreviousOrderWidgetState extends State<PreviousOrderWidget> {
             width: AppSizeWidth.s110,
             child: Text('${widget.storeName}',
                 textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: FontSize.s14,
                     fontWeight: FontWeight.w400,

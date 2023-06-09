@@ -66,7 +66,7 @@ class HowItWorkRewardsScreen extends StatelessWidget {
                 .height * 0.4,
             width: double.infinity,
             decoration: BoxDecoration(
-                color: ColorManager.greyLight,
+                color: ColorManager.greyLight1,
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(150),
                     bottomLeft: Radius.circular(150))),
@@ -106,9 +106,9 @@ class HowItWorkRewardsScreen extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: ColorManager.greyLight,
+                color: ColorManager.greyLight1,
                 borderRadius: BorderRadius.circular(50)),
-            padding: EdgeInsets.all(AppSize.s14),
+            padding: EdgeInsets.all(AppSize.s10),
             child: Image.asset(image, height: AppSize.s30),
           ),
           SizedBox(
@@ -118,7 +118,7 @@ class HowItWorkRewardsScreen extends StatelessWidget {
             width: MediaQuery
                 .of(context)
                 .size
-                .width * 0.7,
+                .width * 0.65,
             child: Text(text,
                 softWrap: true,
                 overflow: TextOverflow.clip,

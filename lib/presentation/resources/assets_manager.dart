@@ -107,6 +107,9 @@ class ImageAssets {
   static const String driver_order = "$imagePath/driver_order.png";
   static const String driver_order1 = "$imagePath/driver_order1.png";
   static const String stuff_order = "$imagePath/stuff_order.png";
+  static const String driver1 = "$imagePath/driver1.png";
+  static const String done1 = "$imagePath/done1.png";
+  static const String stuff1 = "$imagePath/stuff1.png";
   static const String initialize_order = "$imagePath/initialize_order.png";
   static const String initialize_order1 = "$imagePath/initialize_order1.png";
   static const String done_order = "$imagePath/done_order.png";

@@ -36,7 +36,9 @@ class WalletGetxController extends GetxController with Helpers {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => TransactionScreen(),
       ));
+      showSnackBar(context, message: apiResponse.message);
     } catch (error) {
+      Navigator.of(context).pop();
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
@@ -53,14 +55,18 @@ class WalletGetxController extends GetxController with Helpers {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => TransactionScreen(),
       ));
+      showSnackBar(context, message: apiResponse1.message);
     } catch (error) {
+      Navigator.of(context).pop();
       showSnackBar(context, message: error.toString(), error: true);
     }
   }
 
   void getPaymentHistory ({required BuildContext context}) async {
     try {
-      paymentsHistory = await _walletApiController.getPaymentHistory();
+      List<PaymentHistory> list = [];
+      list = await _walletApiController.getPaymentHistory();
+      paymentsHistory = list.reversed.toList();
       update();
     }catch(error) {
       showSnackBar(context, message: error.toString());

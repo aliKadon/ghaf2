@@ -25,7 +25,6 @@ class NotificationsWidget extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.width * 1,
                   decoration: BoxDecoration(
-                      color: Colors.red,
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(45),
                           bottomLeft: Radius.circular(5),
@@ -55,7 +54,6 @@ class NotificationsWidget extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.25,
             width: MediaQuery.of(context).size.width * 1,
             decoration: BoxDecoration(
-                color: Colors.red,
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(45),
                     bottomLeft: Radius.circular(5),
@@ -63,7 +61,7 @@ class NotificationsWidget extends StatelessWidget {
                     topRight: Radius.circular(5)),
                 image: DecorationImage(
                     image: NetworkImage(imageUrl!),
-                    fit: BoxFit.cover)),
+                    fit: BoxFit.fill)),
             child: ClipRRect(
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(42),
@@ -122,7 +120,7 @@ class NotificationsWidget extends StatelessWidget {
                     topRight: Radius.circular(5)),
                 image: DecorationImage(
                     image: NetworkImage(imageUrl!),
-                    fit: BoxFit.cover)),
+                    fit: BoxFit.fill)),
             child: ClipRRect(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(42),

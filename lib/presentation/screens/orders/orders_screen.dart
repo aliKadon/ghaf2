@@ -173,6 +173,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => OrderTrackingScreen(
+                                    createdDate: DateTime.parse(controller.customerOrder[index].createDate!),
                                       orderId:
                                           controller.customerOrder[index].id!,
                                       source: controller.customerOrder[index]

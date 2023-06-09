@@ -75,6 +75,10 @@ class CartViewGetXController extends GetxController with Helpers {
       required String cartItemId,
       required num count}) async {
     if(count > 0) {
+      // apiResponse = await _storeApiController.changeCartItemCount(
+      //     cartItemId: cartItemId, count: count);
+      // _cartViewGetXController.getMyCart(context: context);
+      // update();
       try {
         apiResponse = await _storeApiController.changeCartItemCount(
             cartItemId: cartItemId, count: count);

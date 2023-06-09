@@ -55,8 +55,8 @@ class _FilterSheetWidgetState extends State<FilterSheetWidget> with Helpers {
     'New arrival',
     'Free delivery',
     'Pick up order',
-    'car window',
-    'Fast Delivery',
+    'Car window',
+    'Fast delivery',
     'Popular'
   ];
 

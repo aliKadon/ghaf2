@@ -12,22 +12,25 @@ class SubscriptionPlan {
   num? freeDays;
   String? typeName;
   bool? hide;
+  String? descriptionEn;
+  String? descriptionAr;
 
-  SubscriptionPlan({
-    this.id,
-    this.name,
-    this.description,
-    this.freeDays,
-    this.hide,
-    this.priceAmount,
-    this.priceCurrency,
-    this.priceId,
-    this.priceRecuencyInterval,
-    this.setUpCost,
-    this.stripeId,
-    this.type,
-    this.typeName,
-  });
+  SubscriptionPlan(
+      {this.id,
+      this.name,
+      this.description,
+      this.freeDays,
+      this.hide,
+      this.priceAmount,
+      this.priceCurrency,
+      this.priceId,
+      this.priceRecuencyInterval,
+      this.setUpCost,
+      this.stripeId,
+      this.type,
+      this.typeName,
+      this.descriptionAr,
+      this.descriptionEn});
 
   factory SubscriptionPlan.fromJson(Map<String, dynamic> json) =>
       SubscriptionPlan(
@@ -44,6 +47,8 @@ class SubscriptionPlan {
         stripeId: json['stripeId'],
         type: json['type'],
         typeName: json['typeName'],
+        descriptionAr: json['descriptionAr'],
+        descriptionEn: json['descriptionEn'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,5 +65,7 @@ class SubscriptionPlan {
         'stripeId': stripeId,
         'type': type,
         'typeName': typeName,
+        'descriptionEn': descriptionEn,
+        'descriptionAr': descriptionAr,
       };
 }

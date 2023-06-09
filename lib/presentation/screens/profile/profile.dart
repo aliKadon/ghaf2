@@ -155,17 +155,7 @@ class _ProfileState extends State<Profile> {
                             : IconsAssets.arrow,
                         AppLocalizations.of(context)!.change_password),
                   ),
-                  AppSharedData.currentUser == null?Container():        GestureDetector(
-                    onTap: () {
-                      _profileGetxController.deleteAccount(context: context);
-                    },
-                    child: accountWidget(
-                        context,
-                        language == 'en'
-                            ? IconsAssets.arrow2
-                            : IconsAssets.arrow,
-                        AppLocalizations.of(context)!.delete_account),
-                  ),
+
                 ],
               ),
             ),
@@ -249,6 +239,17 @@ class _ProfileState extends State<Profile> {
                             ? IconsAssets.arrow2
                             : IconsAssets.arrow,
                         AppLocalizations.of(context)!.language),
+                  ),
+                  AppSharedData.currentUser == null?Container():        GestureDetector(
+                    onTap: () {
+                      _profileGetxController.deleteAccount(context: context);
+                    },
+                    child: accountWidget(
+                        context,
+                        language == 'en'
+                            ? IconsAssets.arrow2
+                            : IconsAssets.arrow,
+                        AppLocalizations.of(context)!.delete_account),
                   ),
                 ],
               ),

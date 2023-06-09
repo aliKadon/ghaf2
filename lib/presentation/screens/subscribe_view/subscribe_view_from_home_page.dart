@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
 import 'package:ghaf_application/presentation/resources/assets_manager.dart';
@@ -10,6 +11,7 @@ import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/subscribe_view/subscribe_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/terms_use_view.dart';
 
+import '../../../app/preferences/shared_pref_controller.dart';
 import '../../resources/color_manager.dart';
 
 class SubscribeViewFromHomePage extends StatefulWidget {
@@ -36,6 +38,8 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
     _checkOutGetxController.getPaymentMethod(context: context);
     super.initState();
   }
+
+  var language = SharedPrefController().lang1;
 
   // dispose.
   @override
@@ -69,7 +73,7 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                           ),
                           PositionedDirectional(
                             start: 0,
-                            end: -200,
+                            end: -(AppSize.s200),
                             // top: 0,
                             bottom: 0,
                             child: Image.asset(
@@ -79,10 +83,11 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                           ),
                           PositionedDirectional(
                             start: 0,
-                            end: 200,
+                            end: AppSize.s150,
                             top: 0,
                             // bottom: 0,
-                            child: Padding(
+                            child: Container(
+                              // color: Colors.red,
                               padding: EdgeInsets.all(AppSize.s12),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,111 +172,124 @@ class _SubscribeViewFromHomePageState extends State<SubscribeViewFromHomePage>
                       SizedBox(
                         height: AppSize.s20,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Image.asset(
-                            ImageAssets.subscribe1,
-                            height: AppSize.s35,
-                          ),
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Text(
-                                AppLocalizations.of(context)!
-                                    .subscribe_benefits_1,
-                                style: TextStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16,
-                                    fontWeight: FontWeight.w500)),
-                          ),
-                        ],
+                      GetBuilder<SubscribeViewGetXController>(
+                        builder: (controller) => language == 'en'
+                            ? Padding(
+                                padding: EdgeInsets.all(AppPadding.p4),
+                                child: HtmlWidget(controller
+                                    .subscriptionPlan[0].descriptionEn!),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.all(AppPadding.p4),
+                                child: HtmlWidget(controller
+                                    .subscriptionPlan[0].descriptionAr!),
+                              ),
                       ),
-                      SizedBox(
-                        height: AppSize.s20,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Image.asset(
-                            ImageAssets.subscribe2,
-                            height: AppSize.s35,
-                          ),
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Text(
-                                AppLocalizations.of(context)!
-                                    .subscribe_benefits_2,
-                                style: TextStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16,
-                                    fontWeight: FontWeight.w500)),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: AppSize.s20,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Image.asset(
-                            ImageAssets.subscribe3,
-                            height: AppSize.s35,
-                          ),
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Text(
-                                AppLocalizations.of(context)!
-                                    .subscribe_benefits_3,
-                                style: TextStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16,
-                                    fontWeight: FontWeight.w500)),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: AppSize.s20,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Image.asset(
-                            ImageAssets.subscribe4,
-                            height: AppSize.s35,
-                          ),
-                          SizedBox(
-                            width: AppSize.s35,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Text(
-                                AppLocalizations.of(context)!
-                                    .subscribe_benefits_4,
-                                style: TextStyle(
-                                    color: ColorManager.primaryDark,
-                                    fontSize: FontSize.s16,
-                                    fontWeight: FontWeight.w500)),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Image.asset(
+                      //       ImageAssets.subscribe1,
+                      //       height: AppSize.s35,
+                      //     ),
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Container(
+                      //       width: MediaQuery.of(context).size.width * 0.7,
+                      //       child: Text(
+                      //           AppLocalizations.of(context)!
+                      //               .subscribe_benefits_1,
+                      //           style: TextStyle(
+                      //               color: ColorManager.primaryDark,
+                      //               fontSize: FontSize.s16,
+                      //               fontWeight: FontWeight.w500)),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: AppSize.s20,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Image.asset(
+                      //       ImageAssets.subscribe2,
+                      //       height: AppSize.s35,
+                      //     ),
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Container(
+                      //       width: MediaQuery.of(context).size.width * 0.7,
+                      //       child: Text(
+                      //           AppLocalizations.of(context)!
+                      //               .subscribe_benefits_2,
+                      //           style: TextStyle(
+                      //               color: ColorManager.primaryDark,
+                      //               fontSize: FontSize.s16,
+                      //               fontWeight: FontWeight.w500)),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: AppSize.s20,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Image.asset(
+                      //       ImageAssets.subscribe3,
+                      //       height: AppSize.s35,
+                      //     ),
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Container(
+                      //       width: MediaQuery.of(context).size.width * 0.7,
+                      //       child: Text(
+                      //           AppLocalizations.of(context)!
+                      //               .subscribe_benefits_3,
+                      //           style: TextStyle(
+                      //               color: ColorManager.primaryDark,
+                      //               fontSize: FontSize.s16,
+                      //               fontWeight: FontWeight.w500)),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: AppSize.s20,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Image.asset(
+                      //       ImageAssets.subscribe4,
+                      //       height: AppSize.s35,
+                      //     ),
+                      //     SizedBox(
+                      //       width: AppSize.s35,
+                      //     ),
+                      //     Container(
+                      //       width: MediaQuery.of(context).size.width * 0.7,
+                      //       child: Text(
+                      //           AppLocalizations.of(context)!
+                      //               .subscribe_benefits_4,
+                      //           style: TextStyle(
+                      //               color: ColorManager.primaryDark,
+                      //               fontSize: FontSize.s16,
+                      //               fontWeight: FontWeight.w500)),
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(
                         height: AppSize.s20,
                       ),

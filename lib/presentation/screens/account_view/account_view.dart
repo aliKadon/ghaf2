@@ -52,6 +52,7 @@ class _AccountViewState extends State<AccountView> {
 
   @override
   void initState() {
+    _accountViewGetXController.getSocialMediaAccounts(context: context);
     _homeViewGetXController.getRegStatus(context: context);
     super.initState();
     if (AppSharedData.currentUser == null) {

@@ -203,7 +203,7 @@ class _ProductViewNewState extends State<ProductViewNew> with Helpers {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.7,
+                                                0.65,
                                             child: Text(
                                               language == 'en'
                                                   ? productById["name"]

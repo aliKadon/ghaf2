@@ -59,7 +59,7 @@ class _ItemWidgetForIndividualSellerState
               children: [
                 widget.image == null
                     ? Container(
-                        height: AppSize.s110,
+                        height: AppSize.s70,
                         width: AppSize.s60,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -69,16 +69,17 @@ class _ItemWidgetForIndividualSellerState
                                 BorderRadius.all(Radius.circular(10))),
                       )
                     : Container(
-                        height: AppSize.s123,
+                        height: AppSize.s84,
                         width: AppSize.s84,
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadius.r10),
                           child: Image.network(
                             widget.image!,
-                            fit: BoxFit.scaleDown,
+                            fit: BoxFit.fill,
                             errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
                                 ImageAssets.logo2,

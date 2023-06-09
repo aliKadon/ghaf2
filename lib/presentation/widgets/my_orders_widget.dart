@@ -27,91 +27,89 @@ class MyOrdersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(AppSize.s12),
-      child: Container(
-        child: Row(
-          children: [
-            Image.network(
-              image,
-              height: AppSize.s92,
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  ImageAssets.logo2,
-                  height: AppSize.s92,
-                );
-              },
-            ),
-            SizedBox(
-              width: AppSize.s20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: AppSize.s123,
-                      child: Text('${branchName}',
-                          style: TextStyle(
-                              color: ColorManager.primaryDark,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s16)),
-                    ),
-                    SizedBox(
-                      width: AppSizeWidth.s30,
-                    ),
-                    Container(
-                      width: AppSize.s82,
-                      child: Text(
-                          '${price} ${AppLocalizations.of(context)!.aed}',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: ColorManager.primaryDark,
-                              fontWeight: FontWeight.w600,
-                              fontSize: FontSize.s16)),
-                    )
-                  ],
-                ),
-                Text('${date.substring(0, 10)}',
-                    style: TextStyle(
-                        color: ColorManager.greyLight,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16)),
-                Container(
-                  width: AppSize.s222,
-                  child: Text(
-                      '${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
-                      style: TextStyle(
-                          color: ColorManager.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: FontSize.s14)),
-                ),
-                Text('order id : ${orderSequence == 'null' ? 0 : orderSequence}',
-                    style: TextStyle(
-                        color: ColorManager.primaryDark,
-                        fontWeight: FontWeight.w500,
-                        fontSize: FontSize.s14)),
-                statusName == 'Canceled'
-                    ? Text(AppLocalizations.of(context)!.canceled,
+    return Container(
+      child: Row(
+        children: [
+          Image.network(
+            image,
+            height: AppSize.s92,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset(
+                ImageAssets.logo2,
+                height: AppSize.s92,
+              );
+            },
+          ),
+          SizedBox(
+            width: AppSize.s5
+            ,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: AppSize.s123,
+                    child: Text('${branchName}',
                         style: TextStyle(
-                            color: ColorManager.red,
+                            color: ColorManager.primaryDark,
                             fontWeight: FontWeight.w600,
-                            fontSize: FontSize.s16)) : statusName == 'Done'
-                    ? Text(AppLocalizations.of(context)!.delivered,
+                            fontSize: FontSize.s16)),
+                  ),
+                  SizedBox(
+                    width: AppSizeWidth.s20,
+                  ),
+                  Container(
+                    width: AppSizeWidth.s80,
+                    child: Text(
+                        '${price} ${AppLocalizations.of(context)!.aed}',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: ColorManager.primaryDark,
+                            fontWeight: FontWeight.w600,
+                            fontSize: FontSize.s16)),
+                  )
+                ],
+              ),
+              Text('${date.substring(0, 10)}',
+                  style: TextStyle(
+                      color: ColorManager.greyLight,
+                      fontWeight: FontWeight.w600,
+                      fontSize: FontSize.s16)),
+              Container(
+                width: AppSize.s222,
+                child: Text(
+                    '${branchAddress?.addressName},${branchAddress?.buildingOrStreetName}',
                     style: TextStyle(
-                        color: Colors.green,
+                        color: ColorManager.black,
                         fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16))
-                    : Text(AppLocalizations.of(context)!.pending,
-                    style: TextStyle(
-                        color: ColorManager.primary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: FontSize.s16)),
-              ],
-            )
-          ],
-        ),
+                        fontSize: FontSize.s14)),
+              ),
+              Text('order id : ${orderSequence == 'null' ? 0 : orderSequence}',
+                  style: TextStyle(
+                      color: ColorManager.primaryDark,
+                      fontWeight: FontWeight.w500,
+                      fontSize: FontSize.s14)),
+              statusName == 'Canceled'
+                  ? Text(AppLocalizations.of(context)!.canceled,
+                      style: TextStyle(
+                          color: ColorManager.red,
+                          fontWeight: FontWeight.w600,
+                          fontSize: FontSize.s16)) : statusName == 'Done'
+                  ? Text(AppLocalizations.of(context)!.delivered,
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.w600,
+                      fontSize: FontSize.s16))
+                  : Text(AppLocalizations.of(context)!.pending,
+                  style: TextStyle(
+                      color: ColorManager.primary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: FontSize.s16)),
+            ],
+          )
+        ],
       ),
     );
   }

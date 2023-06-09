@@ -9,7 +9,9 @@ import 'package:http/http.dart' as http;
 
 import '../../../app/preferences/shared_pref_controller.dart';
 import '../../../domain/model/api_response.dart';
+import '../../../domain/model/privacy_policy.dart';
 import '../../../domain/model/reg_status.dart';
+import '../../../domain/model/social-medial-accounts.dart';
 import '../../../domain/model/user.dart';
 import '../api_helper.dart';
 import '../api_settings.dart';
@@ -98,6 +100,32 @@ class AuthApiController with ApiHelper {
       );
     }
     return failedResponse;
+  }
+
+  Future<PrivacyPolicy?> getPrivacyAndTerms() async{
+    var url = Uri.parse('${Constants.baseUrl}/auth/get-privacy-policy');
+    var response = await http.get(url,headers: headers1);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if(jsonData['status'] == 200) {
+        return PrivacyPolicy.fromJson(jsonData['data']);
+      }
+    }
+    return null;
+  }
+
+  Future<SocialMediaAccounts?> getSocialMediaAccounts() async{
+    var url = Uri.parse('${Constants.baseUrl}/auth/get-social-medial-accounts');
+    var response = await http.get(url,headers: headers1);
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      if(jsonData['status'] == 200) {
+        return SocialMediaAccounts.fromJson(jsonData['data']);
+      }
+    }
+    return null;
   }
 
   // forgot password.

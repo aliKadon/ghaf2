@@ -54,8 +54,9 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
   // ##############################################
   // ##############################################
 
-  static final CameraPosition _kGoogle = const CameraPosition(
-    target: LatLng(24.400661, 54.635448),
+  static final CameraPosition _kGoogle = CameraPosition(
+    target: LatLng(SharedPrefController().locationLat,
+        SharedPrefController().locationLong),
     zoom: 14.4746,
   );
 
@@ -84,7 +85,8 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
   final List<Marker> _markers = <Marker>[
     Marker(
         markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 75.885749655962),
+        position: LatLng(SharedPrefController().locationLat,
+            SharedPrefController().locationLong),
         infoWindow: InfoWindow(
           title: 'My Position',
         )),
@@ -125,7 +127,8 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
     // ############################################
     //get all information from latitude and longitude
     // #############################################
-    GetAddressFromLatLong(LatLng(20.42796133580664, 75.885749655962));
+    GetAddressFromLatLong(LatLng(SharedPrefController().locationLat,
+        SharedPrefController().locationLong));
     // ##############################################
     // ##############################################
     super.initState();
@@ -150,7 +153,9 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                       height: MediaQuery.of(context).size.height * 0.038,
                       width: MediaQuery.of(context).size.width * 0.08,
                       child: Image.asset(
-                        SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                        SharedPrefController().lang1 == 'ar'
+                            ? IconsAssets.arrow2
+                            : IconsAssets.arrow,
                         height: AppSize.s18,
                         width: AppSize.s10,
                       ),
@@ -272,12 +277,13 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  AppLocalizations.of(context)!.add_address,
+                                _addAddressViewGetXController.address == null ? Text(
+                                  AppLocalizations.of(context)!
+                                          .add_address,
                                   style: getBoldStyle(
                                       color: ColorManager.primaryDark,
                                       fontSize: FontSize.s16),
-                                ),
+                                ) : Container(),
                                 SizedBox(
                                   height: 6,
                                 ),
@@ -397,7 +403,7 @@ class _AddOrEditAddressViewState extends State<AddOrEditAddressView> {
                                           ? AppLocalizations.of(context)!
                                               .add_address
                                           : AppLocalizations.of(context)!
-                                              .edit_address,
+                                              .confirm,
                                       style: getSemiBoldStyle(
                                           color: ColorManager.white,
                                           fontSize: FontSize.s18),

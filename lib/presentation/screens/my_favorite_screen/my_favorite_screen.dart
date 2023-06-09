@@ -26,7 +26,7 @@ class MyFavoriteScreen extends StatefulWidget {
   State<MyFavoriteScreen> createState() => _MyFavoriteScreenState();
 }
 
-class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
+class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers {
   // controller.
   late final MyFavoriteScreenGetXController _myFavoriteScreenGetXController =
       Get.put(MyFavoriteScreenGetXController());
@@ -88,7 +88,9 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                         height: MediaQuery.of(context).size.height * 0.038,
                         width: MediaQuery.of(context).size.width * 0.08,
                         child: Image.asset(
-                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                          SharedPrefController().lang1 == 'ar'
+                              ? IconsAssets.arrow2
+                              : IconsAssets.arrow,
                           height: AppSize.s18,
                           width: AppSize.s10,
                         ),
@@ -111,7 +113,7 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                 color: ColorManager.greyLight,
               ),
               Container(
-                padding: EdgeInsets.only(left:16.h,right: 16.h),
+                padding: EdgeInsets.only(left: 10.h, right: 10.h),
                 child: GetBuilder<MyFavoriteScreenGetXController>(
                   builder: (controller) => controller.isMyFavoriteLoading
                       ? Center(
@@ -171,17 +173,24 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                                               side: BorderSide(
                                                   color: ColorManager.primary),
                                               borderRadius:
-                                                  BorderRadius.circular(AppSize.s10),
+                                                  BorderRadius.circular(
+                                                      AppSize.s10),
                                             ),
                                           ),
                                           backgroundColor:
                                               MaterialStatePropertyAll(
                                                   Colors.white)),
                                       onPressed: () {
-                                        if(AppSharedData.currentUser == null) {
-                                          showSignInSheet(context: context, role: Constants.roleRegisterCustomer);
-                                        }else {
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeView(),));
+                                        if (AppSharedData.currentUser == null) {
+                                          showSignInSheet(
+                                              context: context,
+                                              role: Constants
+                                                  .roleRegisterCustomer);
+                                        } else {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => HomeView(),
+                                          ));
                                         }
                                       },
                                       child: Text(
@@ -193,55 +202,65 @@ class _MyFavoriteScreenState extends State<MyFavoriteScreen> with Helpers{
                                 )
                               ],
                             )
-                          : GridView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                          : Container(
+                              width: MediaQuery.of(context).size.width * 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: controller.products.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisExtent: AppSize.s300,
+                                      // crossAxisSpacing: AppSize.s2,
 
-                              itemCount: controller.products.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisExtent: AppSize.s300,
-                                crossAxisSpacing: AppSize.s16,
-
-                                // mainAxisSpacing: Constants.mainAxisSpacing,
-                              ),
-                              itemBuilder: (context, index) {
-                                return Builder(builder: (context) {
-                                  return Builder(
-                                    builder: (context) {
-                                      Get.put<Product>(
-                                        controller.products[index],
-                                        tag:
-                                            '${controller.products[index].id}',
-                                      );
-                                      return ProductItemNew(
-                                          tag:
-                                              '${controller.products[index].id}',
-                                          image: controller
-                                                      .products[index]
-                                                      .productImages
-                                                      ?.length ==
-                                                  0
-                                              ? ''
-                                              : controller.products[index]
-                                                      .productImages?[0] ??
-                                                  '',
-                                          name: controller
-                                              .products[index].name!,
-                                          stars: controller
-                                              .products[index].stars!,
-                                          price: controller
-                                              .products[index].price!,
-                                          idProduct:
-                                              controller.products[index].id!,
-                                          isFavorite: controller
-                                              .products[index].isFavorite!,
-                                          index: index);
+                                      // mainAxisSpacing: Constants.mainAxisSpacing,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return Builder(builder: (context) {
+                                        return Builder(
+                                          builder: (context) {
+                                            Get.put<Product>(
+                                              controller.products[index],
+                                              tag:
+                                                  '${controller.products[index].id}',
+                                            );
+                                            return ProductItemNew(
+                                                tag:
+                                                    '${controller.products[index].id}',
+                                                image: controller
+                                                            .products[index]
+                                                            .productImages
+                                                            ?.length ==
+                                                        0
+                                                    ? ''
+                                                    : controller.products[index]
+                                                                .productImages?[
+                                                            0] ??
+                                                        '',
+                                                name: controller
+                                                    .products[index].name!,
+                                                stars: controller
+                                                    .products[index].stars!,
+                                                price: controller
+                                                    .products[index].price!,
+                                                idProduct: controller
+                                                    .products[index].id!,
+                                                isFavorite: controller
+                                                    .products[index]
+                                                    .isFavorite!,
+                                                index: index);
+                                          },
+                                        );
+                                      });
                                     },
-                                  );
-                                });
-                              },
+                                  ),
+                                ],
+                              ),
                             ),
                 ),
               ),

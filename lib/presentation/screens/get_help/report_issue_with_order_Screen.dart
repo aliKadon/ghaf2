@@ -178,6 +178,7 @@ class _ReportIssueWithOrderScreenState extends State<ReportIssueWithOrderScreen>
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                               builder: (context) => OrderTrackingScreen(
+                                createdDate: DateTime.parse(_checkOutGetxController.order!.createDate!),
                                   orderId: widget.orderId!,
                                   source: _checkOutGetxController
                                       .order!.deliveryPoint!,

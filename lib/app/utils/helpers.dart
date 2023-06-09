@@ -644,7 +644,7 @@ mixin Helpers {
                                 paymentMethodId: paymentMethodId,
                                 planId: planId);
                           },
-                          child: Text(AppLocalizations.of(context)!.join_ghaf)),
+                          child: Text(AppLocalizations.of(context)!.confirm)),
                     ),
                   ],
                 ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghaf_application/domain/model/address.dart';
@@ -28,7 +27,6 @@ import 'package:ghaf_application/presentation/screens/login_view/login_view_getx
 import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/my_favorite_screen/my_favorite_screen.dart';
 import 'package:ghaf_application/presentation/screens/my_wallet_view.dart';
-import 'package:ghaf_application/presentation/screens/profile/notification/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_screen_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/offers_view/offers_view.dart';
 import 'package:ghaf_application/presentation/screens/order_information_view.dart';
@@ -39,31 +37,31 @@ import 'package:ghaf_application/presentation/screens/product_view/product_view.
 import 'package:ghaf_application/presentation/screens/product_view/product_view2.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/all_products_screen.dart';
 import 'package:ghaf_application/presentation/screens/products_screen/products_screen.dart';
+import 'package:ghaf_application/presentation/screens/profile/notification/notification_view.dart';
 import 'package:ghaf_application/presentation/screens/profile/profile_setting/profile_setting_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/rate_seller.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/register_view/register_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view.dart';
 import 'package:ghaf_application/presentation/screens/reset_password_view/reset_password_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/rewards/rewards_view.dart';
 import 'package:ghaf_application/presentation/screens/rewards/rewards_view_new.dart';
-import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_bank_account_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/add_item_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/regular_seller/add_payment_card_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/checkout_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/choose_payment_method_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_bank_account_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/individual_seller/add_item2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/create_payment_link_without_details/create_payment_link_2_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/main_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/payment_link_subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/products_with_out_details_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/register_payment_link_seller/register_payment_link_seller_view.dart';
-import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/shop_address_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/individual_seller/store_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/add_payment_card_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/register_seller_view.dart';
+import 'package:ghaf_application/presentation/screens/seller/regular_seller/subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/submit_form_view/submit_form_view_getx_controller.dart';
-import 'package:ghaf_application/presentation/screens/seller/regular_seller/subscription_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/update_info_seller.dart';
 import 'package:ghaf_application/presentation/screens/seller/welcome_seller_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
@@ -202,7 +200,10 @@ class RouteGenerator {
                 ReviewProduct(settings.arguments as Map<String, dynamic>));
 
       case Routes.rateDelivery:
-        return MaterialPageRoute(builder: (_) => RateDelivery(deliveryId: settings.arguments as String,));
+        return MaterialPageRoute(
+            builder: (_) => RateDelivery(
+                  deliveryId: settings.arguments as String,
+                ));
 
       case Routes.rateSeller:
         return MaterialPageRoute(builder: (_) => RateSeller());
@@ -233,6 +234,7 @@ class RouteGenerator {
                   orderId: settings.arguments as String,
                   destination: settings.arguments as Address,
                   source: settings.arguments as Address,
+                  createdDate: settings.arguments as DateTime,
                 ));
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnBoardingView());
@@ -251,7 +253,10 @@ class RouteGenerator {
       case Routes.homePage:
         return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.allProductScreen:
-        return MaterialPageRoute(builder: (_) => AllProductScreen(type: settings.arguments as String,));
+        return MaterialPageRoute(
+            builder: (_) => AllProductScreen(
+                  type: settings.arguments as String,
+                ));
       case Routes.accountView:
         return MaterialPageRoute(builder: (_) => AccountView());
       case Routes.loginRoute:
@@ -273,7 +278,9 @@ class RouteGenerator {
                   role: args?['role'],
                 ),
               );
-              return RegisterView(role: settings.arguments as Map<String,dynamic>,);
+              return RegisterView(
+                role: settings.arguments as Map<String, dynamic>,
+              );
             },
           ),
         );
@@ -282,7 +289,9 @@ class RouteGenerator {
           builder: (_) => Builder(
             builder: (context) {
               Get.put(ForgotPasswordViewGetXController(context: context));
-              return ForgetPasswordView(role: settings.arguments as String,);
+              return ForgetPasswordView(
+                role: settings.arguments as String,
+              );
             },
           ),
         );
@@ -291,12 +300,14 @@ class RouteGenerator {
           builder: (_) => Builder(
             builder: (context) {
               Get.put(ResetPasswordViewGetXController(context: context));
-              return ResetPasswordView(role: settings.arguments as String,);
+              return ResetPasswordView(
+                role: settings.arguments as String,
+              );
             },
           ),
         );
       case Routes.mainRoute:
-        return MaterialPageRoute(builder: (_) =>  MainView());
+        return MaterialPageRoute(builder: (_) => MainView());
       case Routes.language:
         return MaterialPageRoute(builder: (_) => Language());
       case Routes.languageStore:
@@ -480,20 +491,20 @@ class RouteGenerator {
       case Routes.addPaymentCardSelleRoute:
         return MaterialPageRoute(
             builder: (_) => Builder(builder: (context) {
-              Get.put<ProfileSettingGetxController>(ProfileSettingGetxController());
-              return AddPaymentCardSellerView(settings.arguments as String);
-            })
-                );
-        // MaterialPageRoute(
-        //   builder: (_) => Builder(
-        //     builder: (context) {
-        //       Get.put<SubmitFormViewGetXController>(
-        //         SubmitFormViewGetXController(context: _),
-        //       );
-        //       return SubmitFormView(settings.arguments as Map<String, dynamic>);
-        //     },
-        //   ),
-        // );
+                  Get.put<ProfileSettingGetxController>(
+                      ProfileSettingGetxController());
+                  return AddPaymentCardSellerView(settings.arguments as String);
+                }));
+      // MaterialPageRoute(
+      //   builder: (_) => Builder(
+      //     builder: (context) {
+      //       Get.put<SubmitFormViewGetXController>(
+      //         SubmitFormViewGetXController(context: _),
+      //       );
+      //       return SubmitFormView(settings.arguments as Map<String, dynamic>);
+      //     },
+      //   ),
+      // );
       case Routes.paymentLinkSubscriptionSellerRoute:
         return MaterialPageRoute(
             builder: (_) => const PaymentLinkSubscriptionSellerView());
@@ -506,7 +517,9 @@ class RouteGenerator {
                 settings.arguments as Map<String, dynamic>));
       case Routes.addBankAccountSellerRoute:
         return MaterialPageRoute(
-            builder: (_) =>  AddBankAccountSellerView(infoSubmit: settings.arguments as Map<String,dynamic>,));
+            builder: (_) => AddBankAccountSellerView(
+                  infoSubmit: settings.arguments as Map<String, dynamic>,
+                ));
       case Routes.productsWithOutDetailsSellerRoute:
         return MaterialPageRoute(
             builder: (_) => const ProductsWithOutDetailsSellerView());
@@ -524,8 +537,7 @@ class RouteGenerator {
             builder: (_) => AddItemSellerView(settings.arguments as bool));
 
       case Routes.sellerStatus:
-        return MaterialPageRoute(
-            builder: (_) => SellerStatus());
+        return MaterialPageRoute(builder: (_) => SellerStatus());
 
       case Routes.addItem2SellerRoute:
         return MaterialPageRoute(

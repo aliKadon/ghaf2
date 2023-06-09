@@ -7,7 +7,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
 import 'package:ghaf_application/app/utils/app_shared_data.dart';
 import 'package:ghaf_application/app/utils/helpers.dart';
-import 'package:ghaf_application/domain/model/meal_times.dart';
 import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view.dart';
 import 'package:ghaf_application/presentation/screens/addresses_view/addresses_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/checkout/check_out_getx_controller.dart';
@@ -1003,7 +1002,7 @@ class _CheckOutViewState extends State<CheckOutView> with Helpers {
                                       Row(
                                         children: [
                                           Container(
-                                            width: AppSize.s263,
+                                            width: AppSizeWidth.s240,
                                             child: Text(
                                               '${AppLocalizations.of(context)!.redeem_for} ${_checkOutGetxController.orderToPay[_checkOutGetxController.orderToPay.length - 1].orderDetails!.redeemPointsForProducts} ${AppLocalizations.of(context)!.points_to_redeem_this_offer}',
                                               style: getSemiBoldStyle(

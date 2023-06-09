@@ -44,7 +44,7 @@ class _PastOrderScreenState extends State<PastOrderScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.all(AppSize.s6),
+                padding: EdgeInsets.all(AppPadding.p2),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pop();
@@ -100,6 +100,7 @@ class _PastOrderScreenState extends State<PastOrderScreen> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => OrderTrackingScreen(
+                                createdDate: DateTime.parse(controller.customerOrder[index].createDate!),
                                   orderId: controller.customerOrder[index].id!,
                                   source: controller
                                           .customerOrder[index].deliveryPoint ??

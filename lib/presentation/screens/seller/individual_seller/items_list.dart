@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ghaf_application/app/preferences/shared_pref_controller.dart';
-import 'package:ghaf_application/presentation/screens/main_view.dart';
 import 'package:ghaf_application/presentation/screens/seller/controller/create_link_getx_controller.dart';
 import 'package:ghaf_application/presentation/widgets/item_widget_for_individual_seller.dart';
 

@@ -609,7 +609,7 @@ class _AddItemSellerViewState extends State<AddItemSellerView> with Helpers {
                     SizedBox(
                       height: AppSize.s20,
                     ),
-                    QrImage(
+                    QrImageView(
                       data: pro,
                       size: 200.0,
                     ),

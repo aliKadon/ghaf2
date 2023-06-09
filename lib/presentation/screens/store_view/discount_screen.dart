@@ -200,7 +200,7 @@ class _DisicountScreenState extends State<DisicountScreen> {
                                     onTap: () {
                                       Clipboard.setData(ClipboardData(
                                           text: _checkOutGetxController
-                                              .promoCodes[index].code));
+                                              .promoCodes[index].code!));
                                     },
                                     child: Text(
                                       AppLocalizations.of(context)!.copy,

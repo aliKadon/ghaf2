@@ -55,8 +55,10 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
     return Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: AppSize.s16),
+            SizedBox(width: AppSize.s4),
             widget.image == ''
                 ? Container(
                     height: AppSize.s110,
@@ -116,24 +118,15 @@ class _CartWidgetNewState extends State<CartWidgetNew> {
                         setState(() {
                           selected = widget.index;
                           count++;
-                          // count = widget.productCount;
                         });
-
-                        // _cartItem.increment(
-                        //     idProduct: widget.cartItemId,
-                        //     productCount1: count,
-                        //     context: context);
+                        print('===============================cart item id');
+                        print(_cartViewGetXController.cartItems[selected].id);
                         _cartViewGetXController.changeCartAmount(
                             context: context,
                             cartItemId:
                                 _cartViewGetXController.cartItems[selected].id!,
                             count: count);
                         _cartViewGetXController.calculateBell();
-
-                        // _cartItem.increment(
-                        //     context: context,
-                        //     productCount: count,
-                        //     idProduct: widget.idProduct);
                       },
                       child: Icon(
                         Icons.add_circle_outline,

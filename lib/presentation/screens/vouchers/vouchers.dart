@@ -265,7 +265,7 @@ class _VouchersState extends State<Vouchers> {
                                           onTap: () {
                                             Clipboard.setData(ClipboardData(
                                                 text: _checkOutGetxController
-                                                    .promoCodes[index].code));
+                                                    .promoCodes[index].code!));
                                           },
                                           child: Text(
                                             AppLocalizations.of(context)!.copy,

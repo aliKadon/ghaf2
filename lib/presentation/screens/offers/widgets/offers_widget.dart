@@ -29,7 +29,7 @@ class OffersWidget extends StatelessWidget {
         ));
       },
       child: Container(
-        padding: EdgeInsets.all(AppSize.s14),
+        padding: EdgeInsets.all(AppPadding.p4),
         child: Row(
           children: [
             productImages == ''

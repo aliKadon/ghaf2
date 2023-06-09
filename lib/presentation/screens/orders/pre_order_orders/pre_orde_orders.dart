@@ -132,6 +132,7 @@ class _PreOrderOrdersState extends State<PreOrderOrders> {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   OrderTrackingScreen(
+                                    createdDate: DateTime.parse(controller.preOrders[index].createDate!),
                                       orderId: controller.preOrders[index].id!,
                                       source: controller.preOrders[index].deliveryPoint!,
                                       destination: controller.preOrders[index].branch!.branchAddress!),));

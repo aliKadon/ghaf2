@@ -78,8 +78,8 @@ class _InviteState extends State<Invite> with Helpers {
               Image.asset(
                 'assets/images/invite.png',
                 // fit: BoxFit.fill,
-                height: 225,
-                width: 225,
+                height: AppSize.s225,
+                width: AppSizeWidth.s225,
               ),
               // SizedBox(
               //   height: AppSize.s1,
@@ -155,35 +155,37 @@ class _InviteState extends State<Invite> with Helpers {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(AppSize.s8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Color(0xff7FA5A4).withOpacity(0.2),
-                              // border: Border.all(
-                              //   color: Color(0xff7FA5A4),
-                              // ),
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(AppSize.s8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color(0xff7FA5A4).withOpacity(0.2),
+                                // border: Border.all(
+                                //   color: Color(0xff7FA5A4),
+                                // ),
+                              ),
+                              child: Image.asset('assets/images/icons2.png',
+                                  width: AppSize.s40, height: AppSize.s40),
                             ),
-                            child: Image.asset('assets/images/icons2.png',
-                                width: AppSize.s40, height: AppSize.s40),
-                          ),
-                          SizedBox(
-                            height: AppSize.s8,
-                          ),
-                          Container(
-                            width: AppSize.s110,
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .family_friend_download_ghaf,
-                              textAlign: TextAlign.center,
-                              style: getSemiBoldStyle(
-                                  color: ColorManager.primary,
-                                  fontSize: FontSize.s14),
+                            SizedBox(
+                              height: AppSize.s8,
                             ),
-                          )
-                        ],
+                            Container(
+                              width: AppSize.s92,
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .family_friend_download_ghaf,
+                                textAlign: TextAlign.center,
+                                style: getSemiBoldStyle(
+                                    color: ColorManager.primary,
+                                    fontSize: FontSize.s14),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       Column(
                         children: [
@@ -223,7 +225,7 @@ class _InviteState extends State<Invite> with Helpers {
                             height: AppSize.s8,
                           ),
                           Container(
-                            width: AppSize.s92,
+                            width: AppSize.s84,
                             child: Text(
                               AppLocalizations.of(context)!.place_the_first_order,
                               textAlign: TextAlign.center,

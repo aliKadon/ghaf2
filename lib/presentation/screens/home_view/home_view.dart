@@ -310,7 +310,7 @@ class _HomeViewState extends State<HomeView> with Helpers {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: AppPadding.p16,
+                        horizontal: AppPadding.p4,
                       ),
                       child: Row(
                         children: [
@@ -1053,6 +1053,11 @@ class _HomeViewState extends State<HomeView> with Helpers {
                                                   Navigator.of(context)
                                                       .push(MaterialPageRoute(
                                                     builder: (context) => OrderTrackingScreen(
+                                                        createdDate: DateTime
+                                                            .parse(controller
+                                                                .customerOrder[
+                                                                    index]
+                                                                .createDate!),
                                                         orderId: controller
                                                             .customerOrder[
                                                                 index]

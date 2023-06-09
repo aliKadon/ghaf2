@@ -2,6 +2,8 @@ import 'dart:math' as math; // import this
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:ghaf_application/presentation/screens/account_view/account_view_getx_controller.dart';
 import 'package:ghaf_application/presentation/screens/faq_view.dart';
 import 'package:ghaf_application/presentation/screens/rate_and_reviews/share_opinion_view.dart';
 import 'package:ghaf_application/presentation/screens/site_privacy_view.dart';
@@ -30,104 +32,108 @@ class _AboutAppViewState extends State<AboutAppView> {
   Widget build(BuildContext context) {
     var ghaf = Provider.of<ProductProvider>(context);
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(AppPadding.p16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.038,
-                        width: MediaQuery.of(context).size.width * 0.08,
-                        child: Image.asset(
-                          SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
-                          height: AppSize.s18,
-                          width: AppSize.s10,
+      body: GetBuilder<AccountViewGetXController>(
+        builder: (controller) => SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(AppPadding.p16),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.038,
+                          width: MediaQuery.of(context).size.width * 0.08,
+                          child: Image.asset(
+                            SharedPrefController().lang1 == 'ar' ?IconsAssets.arrow2 : IconsAssets.arrow,
+                            height: AppSize.s18,
+                            width: AppSize.s10,
+                          ),
                         ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      AppLocalizations.of(context)!.about_the_app,
-                      style: getSemiBoldStyle(
-                        color: ColorManager.primaryDark,
-                        fontSize: FontSize.s18,
+                      Spacer(),
+                      Text(
+                        AppLocalizations.of(context)!.about_the_app,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s18,
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                SizedBox(
-                  height: AppSize.s12,
-                ),
-                Divider(height: 1, color: ColorManager.greyLight),
-                SizedBox(
-                  height: AppSize.s40,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (builder) => FAQView()),
-                      );
-                    },
-                    child:
-                        aboutApp(context, AppLocalizations.of(context)!.faqs)),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(Routes.rateUs);
-                    },
-                    child: aboutApp(context,
-                        AppLocalizations.of(context)!.share_your_opinion)),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => SitePrivacyView()),
-                      );
-                    },
-                    child: aboutApp(
-                        context, AppLocalizations.of(context)!.site_privacy)),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => TermsOfUseView()),
-                      );
-                    },
-                    child: aboutApp(
-                        context, AppLocalizations.of(context)!.terms_of_use)),
-                GestureDetector(
+                      Spacer(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: AppSize.s12,
+                  ),
+                  Divider(height: 1, color: ColorManager.greyLight),
+                  SizedBox(
+                    height: AppSize.s40,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (builder) => FAQView()),
+                        );
+                      },
+                      child:
+                          aboutApp(context, AppLocalizations.of(context)!.faqs)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(Routes.rateUs);
+                      },
+                      child: aboutApp(context,
+                          AppLocalizations.of(context)!.share_your_opinion)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => SitePrivacyView()),
+                        );
+                      },
+                      child: aboutApp(
+                          context, AppLocalizations.of(context)!.site_privacy)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => TermsOfUseView()),
+                        );
+                      },
+                      child: aboutApp(
+                          context, AppLocalizations.of(context)!.terms_of_use)),
+                  GestureDetector(
+                      onTap: () {
+                        ghaf.getWebpage(
+                            '${controller.socialMediaAccounts!.facebookAccount}');
+                      },
+                      child: aboutApp(
+                          context, AppLocalizations.of(context)!.facebook)),
+                  GestureDetector(
                     onTap: () {
                       ghaf.getWebpage(
-                          'https://www.facebook.com/');
+                          '${controller.socialMediaAccounts!.twitterAccount}');
                     },
-                    child: aboutApp(
-                        context, AppLocalizations.of(context)!.facebook)),
-                GestureDetector(
-                  onTap: () {
-                    ghaf.getWebpage(
-                        'https://twitter.com/');
-                  },
-                    child: aboutApp(context, AppLocalizations.of(context)!.twitter)),
-                GestureDetector(
-                  onTap: () {
-                    ghaf.getWebpage(
-                        'https://www.instagram.com/ghaf.app/?igshid=MWI4MTIyMDE%3D');
-                  },
-                    child: aboutApp(context, AppLocalizations.of(context)!.instagram)),
-                SizedBox(
-                  height: AppSize.s22,
-                ),
-              ],
+                      child: aboutApp(context, AppLocalizations.of(context)!.twitter)),
+                  GestureDetector(
+                    onTap: () {
+                      // ghaf.getWebpage(
+                      //     'https://www.instagram.com/ghaf.app/?igshid=MWI4MTIyMDE%3D');
+                      ghaf.getWebpage(
+                          '${controller.socialMediaAccounts!.instagramAccount}');
+                    },
+                      child: aboutApp(context, AppLocalizations.of(context)!.instagram)),
+                  SizedBox(
+                    height: AppSize.s22,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -88,7 +88,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
               thickness: 1,
             ),
             GetBuilder<CategoriesGetxController>(
-              builder: (controller) => _categoriesGetxController.isLoadingBranch? Center(
+              builder: (controller) => controller.isLoadingBranch? Center(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     // horizontal: MediaQuery.of(context).size.height *0.5,
@@ -131,7 +131,7 @@ class _StoreByCategoryState extends State<StoreByCategory> {
                               Container(
                                 color: ColorManager.grey1,
                                 child: Padding(
-                                  padding: EdgeInsets.all(AppSize.s12),
+                                  padding: EdgeInsets.all(AppPadding.p4),
                                   child: Row(
                                     children: [
                                       _categoriesGetxController.branches[index]

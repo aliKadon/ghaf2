@@ -85,19 +85,19 @@ class _NotificationViewState extends State<NotificationView> {
             SizedBox(
               height: AppSize.s17,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: AppPadding.p16),
-              child: Text(
-                AppLocalizations.of(context)!.never_miss_a_chance,
-                style: getMediumStyle(
-                  color: ColorManager.primaryDark,
-                  fontSize: FontSize.s16,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: AppSize.s16,
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(left: AppPadding.p16),
+            //   child: Text(
+            //     AppLocalizations.of(context)!.never_miss_a_chance,
+            //     style: getMediumStyle(
+            //       color: ColorManager.primaryDark,
+            //       fontSize: FontSize.s16,
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: AppSize.s16,
+            // ),
             Container(
               padding: EdgeInsets.all(
                 AppPadding.p20,
@@ -275,8 +275,8 @@ class _NotificationViewState extends State<NotificationView> {
                               ));
                             },
                             child: Text(
-                              // AppLocalizations.of(context)!.,
-                              'Turn Off Notifications',
+                              AppLocalizations.of(context)!.turn_off_notification,
+                              // 'Turn Off Notifications',
                               style: getSemiBoldStyle(
                                   color: ColorManager.white,
                                   fontSize: FontSize.s18),

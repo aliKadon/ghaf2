@@ -185,225 +185,227 @@ class CreateLinkGetxController extends GetxController with Helpers {
         context: context,
         builder: (context) {
           return Dialog(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: AppSize.s343,
-              margin: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-              decoration: BoxDecoration(
-                color: ColorManager.white,
-                borderRadius: BorderRadius.circular(AppRadius.r8),
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: AppSize.s28,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.your_link_is_ready,
-                      style: getBoldStyle(
-                          color: ColorManager.grey, fontSize: FontSize.s20),
-                    ),
-                    SizedBox(
-                      height: AppSize.s34,
-                    ),
-                    Stack(
-                      children: [
-                        Container(
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: AppSize.s343,
+                margin: EdgeInsets.symmetric(horizontal: AppPadding.p16),
+                decoration: BoxDecoration(
+                  color: ColorManager.white,
+                  borderRadius: BorderRadius.circular(AppRadius.r8),
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: AppSize.s20,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.your_link_is_ready,
+                        style: getBoldStyle(
+                            color: ColorManager.grey, fontSize: FontSize.s20),
+                      ),
+                      SizedBox(
+                        height: AppSize.s34,
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                                vertical: AppPadding.p16,
+                                horizontal: AppPadding.p4),
+                            alignment: AlignmentDirectional.centerStart,
+                            decoration: BoxDecoration(
+                              color: ColorManager.greyLight,
+                              borderRadius: BorderRadius.circular(AppRadius.r8),
+                            ),
+                            child: Text(
+                              // controller: _textController,
+                              link,
+                              style: getMediumStyle(
+                                  color: ColorManager.grey,
+                                  fontSize: FontSize.s14),
+                            ),
+                          ),
+                          PositionedDirectional(
+                            end: 0,
+                            child: GestureDetector(
+                              onTap: () {
+                                Clipboard.setData(ClipboardData(text: link));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Copied"),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: AppSize.s92,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: AppPadding.p12,
+                                    horizontal: AppPadding.p4),
+                                alignment: AlignmentDirectional.center,
+                                decoration: BoxDecoration(
+                                  color: ColorManager.white,
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.r8),
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!.copy,
+                                  style: getSemiBoldStyle(
+                                      color: ColorManager.primary,
+                                      fontSize: FontSize.s20),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: AppSize.s8,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          ghaf.getWebpage(link);
+                        },
+                        child: Container(
                           width: double.infinity,
                           padding: EdgeInsets.symmetric(
-                              vertical: AppPadding.p16,
+                              vertical: AppPadding.p12,
                               horizontal: AppPadding.p4),
-                          alignment: AlignmentDirectional.centerStart,
+                          alignment: AlignmentDirectional.center,
                           decoration: BoxDecoration(
                             color: ColorManager.greyLight,
                             borderRadius: BorderRadius.circular(AppRadius.r8),
                           ),
                           child: Text(
-                            // controller: _textController,
-                            link,
-                            style: getMediumStyle(
-                                color: ColorManager.grey,
-                                fontSize: FontSize.s14),
+                            AppLocalizations.of(context)!.preview_link,
+                            style: getBoldStyle(
+                                color: ColorManager.grey, fontSize: FontSize.s16),
                           ),
                         ),
-                        PositionedDirectional(
-                          end: 0,
-                          child: GestureDetector(
-                            onTap: () {
-                              Clipboard.setData(ClipboardData(text: link));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Copied"),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: AppSize.s92,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: AppPadding.p12,
-                                  horizontal: AppPadding.p4),
-                              alignment: AlignmentDirectional.center,
-                              decoration: BoxDecoration(
-                                color: ColorManager.white,
-                                borderRadius:
-                                    BorderRadius.circular(AppRadius.r8),
-                              ),
-                              child: Text(
-                                AppLocalizations.of(context)!.copy,
-                                style: getSemiBoldStyle(
-                                    color: ColorManager.primary,
-                                    fontSize: FontSize.s20),
-                              ),
+                      ),
+                      SizedBox(
+                        height: AppSize.s8,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          String message = "Hello from Flutter!";
+                          final urlWhatsUP =
+                              "https://wa.me/?text=You can buy the product of my store through this link:\n${link}";
+                          await launch(urlWhatsUP);
+                          print(urlWhatsUP);
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              IconsAssets.whats_up,
+                              height: AppSize.s16,
+                              width: AppSize.s16,
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: AppSize.s8,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        ghaf.getWebpage(link);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                            vertical: AppPadding.p12,
-                            horizontal: AppPadding.p4),
-                        alignment: AlignmentDirectional.center,
-                        decoration: BoxDecoration(
-                          color: ColorManager.greyLight,
-                          borderRadius: BorderRadius.circular(AppRadius.r8),
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)!.preview_link,
-                          style: getBoldStyle(
-                              color: ColorManager.grey, fontSize: FontSize.s16),
+                            SizedBox(
+                              width: AppSize.s8,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.send_by_whatsapp,
+                              style: getMediumStyle(
+                                  color: ColorManager.black,
+                                  fontSize: FontSize.s14),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: AppSize.s8,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        String message = "Hello from Flutter!";
-                        final urlWhatsUP =
-                            "https://wa.me/?text=You can buy the product of my store through this link:\n${link}";
-                        await launch(urlWhatsUP);
-                        print(urlWhatsUP);
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            IconsAssets.whats_up,
-                            height: AppSize.s16,
-                            width: AppSize.s16,
-                          ),
-                          SizedBox(
-                            width: AppSize.s8,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.send_by_whatsapp,
-                            style: getMediumStyle(
-                                color: ColorManager.black,
-                                fontSize: FontSize.s14),
-                          ),
-                        ],
-                      ),
-                    ),
 
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
+                      SizedBox(
+                        height: AppSize.s12,
+                      ),
 
-                    GestureDetector(
-                      onTap: () {
-                        _contactEmail(link);
-                      },
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            IconsAssets.email,
-                            height: AppSize.s16,
-                            width: AppSize.s16,
-                          ),
-                          SizedBox(
-                            width: AppSize.s8,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.send_by_email,
-                            style: getMediumStyle(
-                                color: ColorManager.black,
-                                fontSize: FontSize.s14),
-                          ),
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          _contactEmail(link);
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              IconsAssets.email,
+                              height: AppSize.s16,
+                              width: AppSize.s16,
+                            ),
+                            SizedBox(
+                              width: AppSize.s8,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.send_by_email,
+                              style: getMediumStyle(
+                                  color: ColorManager.black,
+                                  fontSize: FontSize.s14),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
-                    // Row(
-                    //   children: [
-                    //     Image.asset(
-                    //       IconsAssets.email,
-                    //       height: AppSize.s16,
-                    //       width: AppSize.s16,
-                    //     ),
-                    //     SizedBox(
-                    //       width: AppSize.s8,
-                    //     ),
-                    //     Text(
-                    //       AppLocalizations.of(context)!
-                    //           .use_as_pay_button_on_website,
-                    //       style: getMediumStyle(
-                    //           color: ColorManager.black,
-                    //           fontSize: FontSize.s14),
-                    //     ),
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: AppSize.s12,
-                    // ),
+                      SizedBox(
+                        height: AppSize.s12,
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Image.asset(
+                      //       IconsAssets.email,
+                      //       height: AppSize.s16,
+                      //       width: AppSize.s16,
+                      //     ),
+                      //     SizedBox(
+                      //       width: AppSize.s8,
+                      //     ),
+                      //     Text(
+                      //       AppLocalizations.of(context)!
+                      //           .use_as_pay_button_on_website,
+                      //       style: getMediumStyle(
+                      //           color: ColorManager.black,
+                      //           fontSize: FontSize.s14),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: AppSize.s12,
+                      // ),
 
-                    InkWell(
-                      onTap: () {
-                        _customDialog(context: context, pro: link);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.qr_code_scanner,size: AppSize.s16),
-                          SizedBox(
-                            width: AppSize.s8,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.show_qr_code,
-                            style: getMediumStyle(
-                                color: ColorManager.black,
-                                fontSize: FontSize.s14),
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          _customDialog(context: context, pro: link);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.qr_code_scanner,size: AppSize.s16),
+                            SizedBox(
+                              width: AppSize.s8,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.show_qr_code,
+                              style: getMediumStyle(
+                                  color: ColorManager.black,
+                                  fontSize: FontSize.s14),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: AppSize.s12,
-                    ),
-                    Visibility(
-                      visible: withDetails,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => StoreSellerView(),
-                              ));
-                            },
-                            child: Text(AppLocalizations.of(context)!.ok)),
+                      SizedBox(
+                        height: AppSize.s12,
                       ),
-                    )
-                  ]),
+                      Visibility(
+                        visible: withDetails,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => StoreSellerView(),
+                                ));
+                              },
+                              child: Text(AppLocalizations.of(context)!.ok)),
+                        ),
+                      )
+                    ]),
+              ),
             ),
           );
         });
@@ -448,7 +450,7 @@ class CreateLinkGetxController extends GetxController with Helpers {
                     SizedBox(
                       height: AppSize.s20,
                     ),
-                    QrImage(
+                    QrImageView(
                       data: pro,
                       size: 200.0,
                     ),

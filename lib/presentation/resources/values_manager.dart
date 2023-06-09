@@ -119,6 +119,7 @@ class AppSize {
   static double s184 = 184.h;
   static double s192 = 192.h;
   static double s206 = 206.h;
+  static double s200 = 200.h;
   static double s207 = 207.h;
   static double s214 = 214.h;
   static double s222 = 222.h;

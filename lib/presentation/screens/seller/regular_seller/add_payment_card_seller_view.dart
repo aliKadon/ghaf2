@@ -125,7 +125,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                         textController: _passwordTextController,
                         hint: AppLocalizations.of(context)!.expired_month,
                         textInputType: TextInputType.visiblePassword,
-                        obscureText: true,
+                        obscureText: false,
                       ),
                     ),
                     Expanded(
@@ -133,7 +133,7 @@ class _AddPaymentCardSellerViewState extends State<AddPaymentCardSellerView>
                         textController: _phoneTextController,
                         hint: AppLocalizations.of(context)!.expired_year,
                         textInputType: TextInputType.visiblePassword,
-                        obscureText: true,
+                        obscureText: false,
                       ),
                     ),
                   ],

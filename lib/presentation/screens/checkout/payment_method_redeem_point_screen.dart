@@ -69,11 +69,17 @@ class _PaymentMethodRedeemPointScreenState
                     ),
                   ),
                   Spacer(),
-                  Text(
-                    AppLocalizations.of(context)!.payment_method_screen,
-                    style: getSemiBoldStyle(
-                      color: ColorManager.primaryDark,
-                      fontSize: FontSize.s18,
+                  Container(
+                    width: AppSizeWidth.s233,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        AppLocalizations.of(context)!.payment_method_screen,
+                        style: getSemiBoldStyle(
+                          color: ColorManager.primaryDark,
+                          fontSize: FontSize.s18,
+                        ),
+                      ),
                     ),
                   ),
                   Spacer(),

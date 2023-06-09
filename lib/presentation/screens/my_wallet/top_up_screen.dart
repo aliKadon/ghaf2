@@ -286,9 +286,11 @@ class _TopUpScreenState extends State<TopUpScreen> {
                   }
                 },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(AppSize.s8),
+                      padding: EdgeInsets.all(AppSize.s14),
                       child: Text(
                         '${AppLocalizations.of(context)!.add_new_card}',
                         style: TextStyle(

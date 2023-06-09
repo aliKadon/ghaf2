@@ -153,6 +153,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => OrderTrackingScreen(
+                                      createdDate: DateTime.parse(_checkOutGetxController.customerOrder[index].createDate!),
                                         orderId: _checkOutGetxController
                                             .customerOrder[index].id!,
                                         source: _checkOutGetxController

@@ -43,7 +43,7 @@ class _StoreWidgetState extends State<StoreWidget> {
         Padding(
           padding: EdgeInsets.all(AppSize.s8),
           child: Container(
-            padding: EdgeInsets.all(AppSize.s12),
+            padding: EdgeInsets.all(AppPadding.p4),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(AppSize.s10)),
             child: Row(
@@ -65,7 +65,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                     );
                   },
                       ),
-                SizedBox(width: AppSize.s20),
+                SizedBox(width: AppSizeWidth.s10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
